@@ -1,0 +1,107 @@
+view: dim_date {
+  sql_table_name: BI_New.Dim_Date ;;
+
+  dimension: date_key {
+    type: number
+    sql: ${TABLE}.Date_Key ;;
+    hidden: yes
+  }
+
+  dimension_group: date_yyyymmdd {
+    label: "Date"
+    type: time
+    timeframes: [
+      raw,
+      date,
+      day_of_month,
+      day_of_week,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.Date_YYYYMMDD ;;
+  }
+
+  dimension: day_number_in_month {
+    type: number
+    sql: ${TABLE}.Day_Number_In_Month ;;
+  }
+
+  dimension: day_number_in_week {
+    type: number
+    sql: ${TABLE}.Day_Number_In_Week ;;
+  }
+
+  dimension: day_number_in_year {
+    type: number
+    sql: ${TABLE}.Day_Number_In_Year ;;
+  }
+
+  dimension: day_of_week_name {
+    type: string
+    sql: ${TABLE}.Day_Of_Week_Name ;;
+  }
+
+  dimension: day_suffix {
+    type: string
+    sql: ${TABLE}.Day_Suffix ;;
+  }
+
+  dimension: holiday_text {
+    type: string
+    sql: ${TABLE}.Holiday_Text ;;
+  }
+
+  dimension: month_name {
+    type: string
+    sql: ${TABLE}.Month_Name ;;
+  }
+
+  dimension: month_number {
+    type: number
+    sql: ${TABLE}.Month_Number ;;
+  }
+
+  dimension: quarter_name {
+    type: string
+    sql: ${TABLE}.Quarter_Name ;;
+  }
+
+  dimension: quarter_name_short {
+    type: string
+    sql: ${TABLE}.Quarter_Name_Short ;;
+  }
+
+  dimension: quarter_number {
+    type: number
+    sql: ${TABLE}.Quarter_Number ;;
+  }
+
+  dimension: week_number_in_month {
+    type: number
+    sql: ${TABLE}.Week_Number_In_Month ;;
+  }
+
+  dimension: week_number_in_year {
+    type: number
+    sql: ${TABLE}.Week_Number_In_Year ;;
+  }
+
+  dimension: year_and_quarter {
+    type: string
+    sql: ${TABLE}.Year_And_Quarter ;;
+  }
+
+  dimension: year_number {
+    type: number
+    sql: ${TABLE}.Year_Number ;;
+  }
+
+  measure: count {
+    type: count
+    drill_fields: [quarter_name, month_name, day_of_week_name]
+  }
+}

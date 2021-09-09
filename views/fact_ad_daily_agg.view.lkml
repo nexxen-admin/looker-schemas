@@ -1,5 +1,5 @@
 view: fact_ad_daily_agg {
-  sql_table_name: BI_New.Fact_Ad_Daily_Agg_with_date ;;
+  sql_table_name: BI_New.Fact_Ad_Daily_Agg ;;
 
   dimension: a_domain_key {
     type: number

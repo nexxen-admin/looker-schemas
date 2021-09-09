@@ -4,7 +4,7 @@ view: dim_date {
   dimension: date_key {
     type: number
     sql: ${TABLE}.Date_Key ;;
-    hidden: yes
+
   }
 
   dimension_group: date_yyyymmdd {
@@ -23,6 +23,7 @@ view: dim_date {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.Date_YYYYMMDD ;;
+    hidden: yes
   }
 
   dimension: day_number_in_month {

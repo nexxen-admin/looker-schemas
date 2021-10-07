@@ -16,7 +16,7 @@ view: fact_ad_daily_agg {
   }
 
   measure:: cost {
-    label: "Cost(M)"
+    label: "Cost"
     type: sum
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
@@ -32,7 +32,7 @@ view: fact_ad_daily_agg {
   dimension: date_key {
     label: "Date"
     group_label: "Time Frame"
-    type: date
+    type:date
     sql: ${TABLE}.Date_Key ;;
 
   }
@@ -88,15 +88,15 @@ view: fact_ad_daily_agg {
 
   measure: impression_pixel {
     type: sum
-    label: "Impressions(M)"
-    value_format: "#,##0.0,,\"\""
+    label: "Impressions"
+    #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.impression_pixel ;;
   }
 
   measure: impression_win {
     type: sum
-    label: "Wins(M)"
+    label: "Wins"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.impression_win ;;
@@ -128,7 +128,7 @@ view: fact_ad_daily_agg {
 
   measure: requests {
     type: sum
-    label: "Inbound Requests(M)"
+    label: "Inbound Requests"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.requests ;;
@@ -142,7 +142,7 @@ view: fact_ad_daily_agg {
 
   measure: responses {
     type: sum
-    label: "Bids(M)"
+    label: "Bids"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.responses ;;
@@ -150,7 +150,7 @@ view: fact_ad_daily_agg {
 
   measure: revenue {
     type: sum
-    label: "Revenue(M)"
+    label: "Revenue"
     #value_format: "#,##0"
     group_label: "Daily Measures"
     sql: ${TABLE}.revenue ;;
@@ -158,7 +158,7 @@ view: fact_ad_daily_agg {
 
   measure: rmp_requests {
     type: sum
-    label: "Pub Requests(M)"
+    label: "Pub Requests"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.rmp_requests ;;

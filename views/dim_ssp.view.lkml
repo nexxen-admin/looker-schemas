@@ -1,4 +1,4 @@
-view: dim_ssp {
+view: v_dim_ssp {
   sql_table_name: BI_New.Dim_SSP ;;
 
   dimension: adstxt_hash {

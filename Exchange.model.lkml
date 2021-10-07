@@ -92,9 +92,9 @@ join: dim_publisher {
   sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
   relationship: many_to_one
 }
-join: dim_ssp {
+join: v_dim_ssp {
   view_label: "SSP"
-  sql_on: ${dim_ssp.ssp_key}=${dim_publisher_ssp.ssp_key};;
+  sql_on: ${v_dim_ssp.ssp_key}=${dim_publisher_ssp.ssp_key};;
   relationship: many_to_one
 }
 join: dim_dsp_flight {

@@ -11,6 +11,7 @@ datagroup: Clean_Cash_datagroup {
 }
 
 explore: fact_ad_daily_agg{
+  persist_with:  Clean_Cash_datagroup
   label: "Exchange"
   view_label: "Exchange Measures"
 

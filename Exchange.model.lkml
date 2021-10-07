@@ -11,7 +11,7 @@ explore: fact_ad_daily_agg{
 join: v_dim_date {
   type: inner
   view_label: "Time Frame"
-  sql_on: ${v_dim_date.date_key}=${fact_ad_daily_agg.date_key} ;;
+  sql_on: ${fact_ad_daily_agg.date_key}=${v_dim_date.date_key} ;;
   relationship: many_to_one
 }
 join: dim_country {

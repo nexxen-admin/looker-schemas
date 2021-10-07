@@ -3,6 +3,12 @@ connection: "bi_prod"
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 # include: "/**/*.view.lkml"                 # include all views in this project
 # include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
+datagroup: Clean_Cash_datagroup {
+  sql_trigger: SELECT max(date_key) FROM fact_ad_daily_agg ;;
+  max_cache_age: "24 hours"
+  label: "Clean Cash Trigger"
+  description: "Triggered when new date is added to ETL"
+}
 
 explore: fact_ad_daily_agg{
   label: "Exchange"

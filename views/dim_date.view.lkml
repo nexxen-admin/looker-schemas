@@ -7,12 +7,6 @@ view: dim_date {
 
   }
 
-  dimension: date_yyyymmdd {
-    label: "Date"
-    type:date
-    sql: ${TABLE}.Date_YYYYMMDD ;;
-  }
-
   dimension: day_number_in_month {
     type: number
     sql: ${TABLE}.Day_Number_In_Month ;;

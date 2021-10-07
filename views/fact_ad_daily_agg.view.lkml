@@ -10,7 +10,7 @@ view: fact_ad_daily_agg {
   measure:: cogs {
     label: "Cogs"
     type: sum
-    value_format: "#,##0.0,,\"\""
+    #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.cogs ;;
   }
@@ -18,7 +18,7 @@ view: fact_ad_daily_agg {
   measure:: cost {
     label: "Cost(M)"
     type: sum
-    value_format: "#,##0.0,,\"\""
+    #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.cost ;;
   }
@@ -29,20 +29,10 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
-  dimension_group: date_key {
+  dimension: date_key {
     label: "Date"
     group_label: "Time Frame"
-    type: time
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    convert_tz: no
-    datatype: date
+    type: date
     sql: ${TABLE}.Date_Key ;;
 
   }
@@ -107,7 +97,7 @@ view: fact_ad_daily_agg {
   measure: impression_win {
     type: sum
     label: "Wins(M)"
-    value_format: "#,##0.0,,\"\""
+    #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.impression_win ;;
   }
@@ -139,7 +129,7 @@ view: fact_ad_daily_agg {
   measure: requests {
     type: sum
     label: "Inbound Requests(M)"
-    value_format: "#,##0.0,,\"\""
+    #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.requests ;;
   }
@@ -153,7 +143,7 @@ view: fact_ad_daily_agg {
   measure: responses {
     type: sum
     label: "Bids(M)"
-    value_format: "#,##0.0,,\"\""
+    #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.responses ;;
   }
@@ -161,7 +151,7 @@ view: fact_ad_daily_agg {
   measure: revenue {
     type: sum
     label: "Revenue(M)"
-    value_format: "#,##0"
+    #value_format: "#,##0"
     group_label: "Daily Measures"
     sql: ${TABLE}.revenue ;;
   }
@@ -169,7 +159,7 @@ view: fact_ad_daily_agg {
   measure: rmp_requests {
     type: sum
     label: "Pub Requests(M)"
-    value_format: "#,##0.0,,\"\""
+    #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.rmp_requests ;;
   }

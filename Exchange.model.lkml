@@ -6,7 +6,13 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 
 explore: fact_ad_daily_agg{
   label: "Exchange"
-  view_label: "Exchange Measures "
+  view_label: "Exchange Measures"
+join: dim_date {
+  view_label: "Time Frame"
+  sql_on: ${dim_date.date_key}=${fact_ad_daily_agg.date_key} ;;
+  relationship: many_to_one
+
+}
 join: dim_country {
   view_label: "Geo"
   sql_on: ${dim_country.country_key}=${fact_ad_daily_agg.country_key} ;;

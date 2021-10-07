@@ -7,23 +7,10 @@ view: v_dim_date {
 
   }
 
-  dimension_group: date_yyyymmdd {
+  dimension: date_yyyymmdd {
     label: "Date"
-    type: time
-    timeframes: [
-      raw,
-      date,
-      day_of_month,
-      day_of_week,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    convert_tz: no
-    datatype: date
+    type:date
     sql: ${TABLE}.Date_YYYYMMDD ;;
-    hidden: yes
   }
 
   dimension: day_number_in_month {

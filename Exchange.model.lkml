@@ -8,10 +8,10 @@ explore: fact_ad_daily_agg{
   label: "Exchange"
   view_label: "Exchange Measures"
 
-join: v_dim_date {
+join: dim_date {
   type: inner
   view_label: "Time Frame"
-  sql_on: ${fact_ad_daily_agg.date_key}=${v_dim_date.date_key} ;;
+  sql_on: ${fact_ad_daily_agg.date_key}=${dim_date.date_key} ;;
   relationship: many_to_one
 }
 join: dim_country {

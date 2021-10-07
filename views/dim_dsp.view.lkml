@@ -1,4 +1,4 @@
-view: dim_dsp {
+view: v_dim_dsp {
   sql_table_name: BI_New.Dim_DSP ;;
 
   dimension_group: db_create {

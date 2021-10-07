@@ -45,9 +45,9 @@ join: dim_imp_sub_type {
   relationship: many_to_one
 }
 
-join: dim_a_domain  {
+join: v_dim_a_domain  {
   view_label: "Domain"
-  sql_on: ${dim_a_domain.a_domain_key}=${fact_ad_daily_agg.a_domain_key};;
+  sql_on: ${v_dim_a_domain.a_domain_key}=${fact_ad_daily_agg.a_domain_key};;
   relationship: many_to_one
 }
 join: dim_o_domain {
@@ -112,14 +112,14 @@ join: dim_flight {
   sql_on: ${dim_flight.flight_key}=${dim_dsp_flight.flight_key};;
   relationship: many_to_one
 }
-join: dim_dsp {
+join: v_dim_dsp {
   view_label: "DSP"
-  sql_on: ${dim_dsp.dsp_key}=${dim_dsp_flight.dsp_key};;
+  sql_on: ${v_dim_dsp.dsp_key}=${dim_dsp_flight.dsp_key};;
   relationship: many_to_one
 }
 join: dim_dsp_account {
   view_label: "DSP"
-  sql_on: ${dim_dsp_account.dsp_account_key}=${dim_dsp.dsp_account_key};;
+  sql_on: ${dim_dsp_account.dsp_account_key}=${v_dim_dsp.dsp_account_key};;
   relationship: many_to_one
 }
 join: dim_dsp_seat {

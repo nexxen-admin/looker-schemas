@@ -5,7 +5,7 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 # include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 datagroup: Clean_Cash_datagroup {
   sql_trigger: SELECT max(date_key) FROM fact_ad_daily_agg ;;
-  max_cache_age: "24 hours"
+  max_cache_age: "15 hours"
   label: "Clean Cash Trigger"
   description: "Triggered when new date is added to ETL"
 }

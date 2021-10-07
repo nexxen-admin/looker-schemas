@@ -1,5 +1,5 @@
 view: dim_date {
-  sql_table_name: BI_New.v_Dim_Date ;;
+  sql_table_name: BI_New.V_Dim_Date ;;
 
   dimension: date_key {
     type: date

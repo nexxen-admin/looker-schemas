@@ -1,5 +1,5 @@
 view: dim_seat {
-  sql_table_name: BI_New.Dim_Seat ;;
+  sql_table_name: BI_New.V_Dim_Seat ;;
 
   dimension_group: db_create {
     type: time

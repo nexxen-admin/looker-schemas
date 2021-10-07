@@ -1,5 +1,5 @@
 view: dim_country {
-  sql_table_name: BI_New.Dim_Country ;;
+  sql_table_name: BI_New.V_Dim_Country ;;
 
   dimension: continent {
     type: string

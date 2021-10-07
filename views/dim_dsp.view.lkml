@@ -1,5 +1,5 @@
-view: v_dim_dsp {
-  sql_table_name: BI_New.Dim_DSP ;;
+view: dim_dsp {
+  sql_table_name: BI_New.V_Dim_DSP ;;
 
   dimension_group: db_create {
     type: time

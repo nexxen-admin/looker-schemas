@@ -1,5 +1,5 @@
 view: dim_request_status {
-  sql_table_name: BI_New.Dim_Request_Status ;;
+  sql_table_name: BI_New.V_Dim_Request_Status ;;
 
   dimension_group: db_create {
     type: time

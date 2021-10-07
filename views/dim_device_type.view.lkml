@@ -1,5 +1,5 @@
 view: dim_device_type {
-  sql_table_name: BI_New.Dim_Device_Type ;;
+  sql_table_name: BI_New.V_Dim_Device_Type ;;
 
   dimension_group: db_create {
     type: time

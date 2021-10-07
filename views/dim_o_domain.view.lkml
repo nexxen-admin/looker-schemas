@@ -1,5 +1,5 @@
 view: dim_o_domain {
-  sql_table_name: BI_New.Dim_O_Domain ;;
+  sql_table_name: BI_New.V_Dim_O_Domain ;;
 
   dimension_group: db_create {
     type: time

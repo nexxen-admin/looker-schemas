@@ -1,5 +1,5 @@
 view: dim_publisher_ssp {
-  sql_table_name: BI_New.Dim_Publisher_SSP ;;
+  sql_table_name: BI_New.V_Dim_Publisher_SSP ;;
 
   dimension_group: db_create {
     type: time

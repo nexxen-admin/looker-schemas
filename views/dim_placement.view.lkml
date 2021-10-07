@@ -1,5 +1,5 @@
 view: dim_placement {
-  sql_table_name: BI_New.Dim_Placement ;;
+  sql_table_name: BI_New.v_Dim_Placement ;;
 
   dimension: bcat {
     type: string

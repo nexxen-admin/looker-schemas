@@ -1,5 +1,5 @@
 view: dim_deal_type {
-  sql_table_name: BI_New.Dim_Deal_Type ;;
+  sql_table_name: BI_New.V_Dim_Deal_Type ;;
 
   dimension_group: db_create {
     type: time

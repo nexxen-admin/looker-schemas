@@ -1,5 +1,5 @@
 view: dim_traffic_source {
-  sql_table_name: BI_New.Dim_Traffic_Source ;;
+  sql_table_name: BI_New.V_Dim_Traffic_Source ;;
 
   dimension_group: db_create {
     type: time

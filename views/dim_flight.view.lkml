@@ -1,5 +1,5 @@
 view: dim_flight {
-  sql_table_name: BI_New.Dim_Flight ;;
+  sql_table_name: BI_New.V_Dim_Flight ;;
 
   dimension: adjusted_amount {
     label: "Adjustment Amount"

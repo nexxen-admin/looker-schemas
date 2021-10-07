@@ -1,5 +1,5 @@
 view: dim_deal {
-  sql_table_name: BI_New.Dim_Deal ;;
+  sql_table_name: BI_New.V_Dim_Deal ;;
 
   dimension: agency_id {
     label: "Agency ID"

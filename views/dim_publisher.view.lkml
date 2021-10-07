@@ -1,5 +1,5 @@
 view: dim_publisher {
-  sql_table_name: BI_New.Dim_Publisher ;;
+  sql_table_name: BI_New.V_Dim_Publisher ;;
 
   dimension: bizdev_owner_id {
     type: number

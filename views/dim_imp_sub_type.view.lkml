@@ -1,5 +1,5 @@
 view: dim_imp_sub_type {
-  sql_table_name: BI_New.Dim_Imp_SubType ;;
+  sql_table_name: BI_New.V_Dim_Imp_SubType ;;
 
   dimension_group: db_create {
     type: time

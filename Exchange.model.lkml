@@ -11,7 +11,7 @@ explore: fact_ad_daily_agg{
 join: dim_date {
   type: inner
   view_label: "Time Frame"
-  sql_on: ${fact_ad_daily_agg.date_key}=${dim_date.date_key} ;;
+  sql_on: ${dim_date.date_key}=${fact_ad_daily_agg.date_key} ;;
   relationship: many_to_one
 }
 join: dim_country {
@@ -52,10 +52,10 @@ join: dim_imp_sub_type {
   relationship: many_to_one
 }
 
-join: v_dim_a_domain  {
+join: dim_a_domain  {
   type: inner
   view_label: "Domain"
-  sql_on: ${v_dim_a_domain.a_domain_key}=${fact_ad_daily_agg.a_domain_key};;
+  sql_on: ${dim_a_domain.a_domain_key}=${fact_ad_daily_agg.a_domain_key};;
   relationship: many_to_one
 }
 join: dim_o_domain {
@@ -107,10 +107,10 @@ join: dim_publisher {
   sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
   relationship: many_to_one
 }
-join: v_dim_ssp {
+join: dim_ssp {
   type: inner
   view_label: "SSP"
-  sql_on: ${v_dim_ssp.ssp_key}=${dim_publisher_ssp.ssp_key};;
+  sql_on: ${dim_ssp.ssp_key}=${dim_publisher_ssp.ssp_key};;
   relationship: many_to_one
 }
 join: dim_dsp_flight {
@@ -131,16 +131,16 @@ join: dim_flight {
   sql_on: ${dim_flight.flight_key}=${dim_dsp_flight.flight_key};;
   relationship: many_to_one
 }
-join: v_dim_dsp {
+join: dim_dsp {
   type: inner
   view_label: "DSP"
-  sql_on: ${v_dim_dsp.dsp_key}=${dim_dsp_flight.dsp_key};;
+  sql_on: ${dim_dsp.dsp_key}=${dim_dsp_flight.dsp_key};;
   relationship: many_to_one
 }
 join: dim_dsp_account {
   type: inner
   view_label: "DSP"
-  sql_on: ${dim_dsp_account.dsp_account_key}=${v_dim_dsp.dsp_account_key};;
+  sql_on: ${dim_dsp_account.dsp_account_key}=${dim_dsp.dsp_account_key};;
   relationship: many_to_one
 }
 join: dim_dsp_seat {

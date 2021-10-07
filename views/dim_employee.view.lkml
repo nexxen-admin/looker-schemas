@@ -1,5 +1,5 @@
 view: dim_employee {
-  sql_table_name: BI_New.Dim_Employee ;;
+  sql_table_name: BI_New.V_Dim_Employee ;;
 
   dimension_group: db_create {
     type: time

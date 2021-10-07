@@ -1,5 +1,5 @@
-view: v_dim_a_domain {
-  sql_table_name: BI_New.Dim_A_Domain ;;
+view: dim_a_domain {
+  sql_table_name: BI_New.V_Dim_A_Domain ;;
 
   dimension: a_domain {
     label: "A Domain"

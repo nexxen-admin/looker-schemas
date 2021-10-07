@@ -1,5 +1,5 @@
 view: dim_dsp_flight {
-  sql_table_name: BI_New.Dim_DSP_Flight ;;
+  sql_table_name: BI_New.V_Dim_DSP_Flight ;;
 
   dimension_group: db_create {
     type: time

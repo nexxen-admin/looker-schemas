@@ -32,7 +32,7 @@ view: fact_ad_daily_agg {
   dimension: date_key {
     label: "Date"
     group_label: "Time Frame"
-    type:date
+    type:date_raw
     sql: ${TABLE}.Date_Key ;;
 
   }

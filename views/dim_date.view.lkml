@@ -2,7 +2,7 @@ view: dim_date {
   sql_table_name: BI_New.V_Dim_Date ;;
 
   dimension: date_key {
-    type: date
+    type: date_raw
     sql: ${TABLE}.Date_Key ;;
 
   }

@@ -2,7 +2,18 @@ view: dim_date {
   sql_table_name: BI_New.V_Dim_Date ;;
 
   dimension: date_key {
+    label: "New Date"
     type: date
+    sql: ${TABLE}.Date_Key ;;
+  }
+
+  dimension_group: dates {
+    type: time
+    timeframes:
+    [date,
+    month,
+    raw
+    ]
     sql: ${TABLE}.Date_Key ;;
 
   }

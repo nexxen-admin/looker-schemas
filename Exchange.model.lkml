@@ -18,7 +18,7 @@ explore: fact_ad_daily_agg{
 join: dim_date {
   type: inner
   view_label: "Time Frame"
-  sql_on: ${dim_date.date_key}=${fact_ad_daily_agg.date_key} ;;
+  sql_on: ${dim_date.dates_raw}=${fact_ad_daily_agg.date_key_raw} ;;
   relationship: many_to_one
 }
 join: dim_country {
@@ -164,3 +164,6 @@ join: dim_seat {
 }
 
 }
+
+
+explore: dim_date {}

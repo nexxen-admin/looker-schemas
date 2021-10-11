@@ -29,10 +29,15 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
-  dimension: date_key {
+  dimension_group: date_key {
+    type: time
+    timeframes:
+    [ date,
+      month,
+      raw
+    ]
     label: "Date"
     group_label: "Time Frame"
-    type:date_raw
     sql: ${TABLE}.Date_Key ;;
 
   }

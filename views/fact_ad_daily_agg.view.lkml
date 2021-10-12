@@ -1,6 +1,15 @@
 view: fact_ad_daily_agg {
   sql_table_name: BI_New.V_Fact_Ad_Daily_Agg ;;
 
+  parameter: max_rank {
+    type: number
+  }
+
+  dimension: rank_limit {
+    type: number
+    sql: {% parameter max_rank %} ;;
+  }
+
   dimension: a_domain_key {
     type: number
     sql: ${TABLE}.A_Domain_Key ;;

@@ -37,6 +37,14 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.ias_measurable_impression ;;
   }
 
+  measure:: ias_viewability {
+    type: number
+    value_format: "0.0%"
+    label: "IAS Viewability"
+    group_label: "Daily Measures"
+    sql: ${ias_viewable_impression}/NULLIF(${ias_measurable_impression},0);;
+  }
+
   measure:: ias_total_impression {
     type: sum
     label: "Total IAS Count"

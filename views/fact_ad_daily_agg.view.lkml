@@ -23,6 +23,49 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.cost ;;
   }
 
+  measure:: ias_ivt_impression {
+    type: sum
+    label: "IAS IVT Viewable Impressions"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.ias_ivt_impression ;;
+  }
+
+  measure:: ias_measurable_impression {
+    type: sum
+    label: "IAS Measurable Impressions"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.ias_measurable_impression ;;
+  }
+
+  measure:: ias_total_impression {
+    type: sum
+    label: "Total IAS Count"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.ias_total_impression ;;
+  }
+
+  measure:: ias_viewable_impression {
+    type: sum
+    label: "IAS Viewable Impressions"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.ias_viewable_impression ;;
+  }
+
+  measure:: video_completes {
+    type: sum
+    label: "Video Completes"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.video_completes ;;
+  }
+
+  measure:: video_starts {
+    type: sum
+    label: "Video Starts"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.video_starts ;;
+  }
+
+
   dimension: country_key {
     type: number
     sql: ${TABLE}.Country_Key ;;
@@ -39,7 +82,7 @@ view: fact_ad_daily_agg {
     label: "Date"
     group_label: "Time Frame"
     sql: ${TABLE}.Date_Key ;;
-
+    hidden: yes
   }
 
   dimension: deal_key {

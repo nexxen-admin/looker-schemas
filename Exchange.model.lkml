@@ -11,6 +11,9 @@ datagroup: CleanCash_datagroup {
 }
 
 explore: fact_ad_daily_agg{
+  always_filter: {
+    filters: [dim_date.last_14_days_flag: "1"]
+  }
   persist_with: CleanCash_datagroup
   label: "Exchange"
   view_label: "Exchange Measures"
@@ -18,7 +21,7 @@ explore: fact_ad_daily_agg{
 join: dim_date {
   type: inner
   view_label: "Time Frame"
-  sql_on: ${dim_date.dates_raw}=${fact_ad_daily_agg.date_key_raw} ;;
+  sql_on: ${dim_date.date_key_raw}=${fact_ad_daily_agg.date_key_raw} ;;
   relationship: many_to_one
 }
 join: dim_country {
@@ -164,6 +167,3 @@ join: dim_seat {
 }
 
 }
-
-
-explore: dim_date {}

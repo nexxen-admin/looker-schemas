@@ -1,21 +1,19 @@
 view: dim_date {
   sql_table_name: BI_New.V_Dim_Date ;;
 
-  dimension: date_key {
-
-    type: date
-    sql: ${TABLE}.Date_Key ;;
-  }
-
-  dimension_group: dates {
+  dimension_group: date_key {
     type: time
-    timeframes:
-    [date,
-    month,
-    raw
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
     ]
+    convert_tz: no
+    datatype: date
     sql: ${TABLE}.Date_Key ;;
-
   }
 
   dimension: day_number_in_month {
@@ -46,6 +44,31 @@ view: dim_date {
   dimension: holiday_text {
     type: string
     sql: ${TABLE}.Holiday_Text ;;
+  }
+
+  dimension: last_120_days_flag {
+    type: number
+    sql: ${TABLE}.Last_120_Days_Flag ;;
+  }
+
+  dimension: last_14_days_flag {
+    type: number
+    sql: ${TABLE}.Last_14_Days_Flag ;;
+  }
+
+  dimension: last_180_days_flag {
+    type: number
+    sql: ${TABLE}.Last_180_Days_Flag ;;
+  }
+
+  dimension: last_30_days_flag {
+    type: number
+    sql: ${TABLE}.Last_30_Days_Flag ;;
+  }
+
+  dimension: last_90_days_flag {
+    type: number
+    sql: ${TABLE}.Last_90_Days_Flag ;;
   }
 
   dimension: month_name {

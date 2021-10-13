@@ -19,7 +19,7 @@ view: dim_country {
   }
 
   dimension: country_name {
-    label: "Country Name"
+    label: "Country"
     type: string
     sql: ${TABLE}.Country_Name ;;
   }

@@ -116,16 +116,11 @@ view: dim_flight {
   }
 
   dimension_group: end {
-    label: "End Date"
+    label: "End"
     type: time
     timeframes: [
       raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
+      date
     ]
     sql: ${TABLE}.End_Date ;;
   }

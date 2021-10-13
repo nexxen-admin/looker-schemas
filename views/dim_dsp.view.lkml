@@ -63,7 +63,7 @@ view: dim_dsp {
   }
 
   dimension: dsp_name {
-    label: "DSP Name"
+    label: "DSP"
     type: string
     sql: ${TABLE}.DSP_Name ;;
   }

@@ -44,7 +44,7 @@ view: dim_employee {
   }
 
   dimension: employee_name {
-    label: "Employee Name"
+    label: "Employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
   }

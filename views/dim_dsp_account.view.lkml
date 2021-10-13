@@ -44,7 +44,7 @@ view: dim_dsp_account {
   }
 
   dimension: dsp_account_name {
-    label: "DSP Account Name"
+    label: "DSP Account"
     type: string
     sql: ${TABLE}.DSP_Account_Name ;;
   }

@@ -34,8 +34,8 @@ view: dim_request_status {
   dimension:  is_valid_requests {
     label: "Is_Valid_Requests"
     sql: case
-    when ${TABLE}.Request_Status in ('nodsp','nodspbid','bidresponse')
-    or ${TABLE}.Request_Status = 'pass' then 'True' else 'False'
+    when ${TABLE}.Request_Status in ('nodsp','nodspbids','bidresponse')
+    or ${TABLE}.Request_Status = 'unknowm' then 'True' else 'False'
     end
     ;;
   }
@@ -43,7 +43,10 @@ view: dim_request_status {
   dimension: request_status {
     label: "Request Status"
     type: string
-    sql: ${TABLE}.Request_Status ;;
+    sql: case
+    when ${TABLE}.Request_Status = 'Unknown' then 'Pass'
+    else ${TABLE}.Request_Status
+    end;;
   }
 
   dimension: request_status_key {

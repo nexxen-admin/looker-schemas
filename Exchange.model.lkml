@@ -16,7 +16,7 @@ explore: fact_ad_daily_agg{
   }
   persist_with: CleanCash_datagroup
   label: "Exchange"
-  view_label: "Exchange Measures"
+  view_label: "Measures"
 
 join: dim_date {
   type: inner
@@ -32,32 +32,32 @@ join: dim_country {
   }
 join: dim_device_type {
   type: inner
-  view_label: "Placement"
+  view_label: "Request Attributes"
   sql_on: ${dim_device_type.device_type_key}= ${fact_ad_daily_agg.device_type_key};;
   relationship: many_to_one
 }
 join: dim_imp_type {
   type: inner
-  view_label: "Placement"
+  view_label: "Request Attributes"
   sql_on: ${dim_imp_type.imp_type_key}=${fact_ad_daily_agg.imp_type_key};;
   relationship: many_to_one
 }
 join: dim_response_status {
   type: inner
-  view_label: "DSP"
+  view_label: "Response Attributes"
   sql_on: ${dim_response_status.response_status_key}=${fact_ad_daily_agg.response_status_key};;
   relationship: many_to_one
 }
 join: dim_request_status {
   type: inner
-  view_label: "SSP"
+  view_label: "Request Attributes"
   sql_on: ${dim_request_status.request_status_key}= ${fact_ad_daily_agg.request_status_key};;
   relationship: many_to_one
 }
 
 join: dim_imp_sub_type {
   type: inner
-  view_label: "Placement"
+  view_label: "Request Attributes"
   sql_on: ${dim_imp_sub_type.imp_sub_type_key}=${dim_imp_sub_type.imp_sub_type_key};;
   relationship: many_to_one
 }

@@ -115,13 +115,9 @@ view: dim_flight {
     hidden: yes
   }
 
-  dimension_group: end {
-    label: "End"
-    type: time
-    timeframes: [
-      raw,
-      date
-    ]
+  dimension: end {
+    label: "End Date"
+    type: date
     sql: ${TABLE}.End_Date ;;
   }
 
@@ -179,18 +175,9 @@ view: dim_flight {
     hidden: yes
   }
 
-  dimension_group: start {
+  dimension: start {
     label: "Start_Date"
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+    type: date
     sql: ${TABLE}.Start_Date ;;
   }
 

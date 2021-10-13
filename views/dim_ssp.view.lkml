@@ -56,7 +56,7 @@ view: dim_ssp {
   }
 
   dimension: platform_fee_spend {
-    label: "Platform Fee Spand"
+    label: "Platform Fee Spand%"
     type: number
     sql: ${TABLE}.Platform_Fee_Spend ;;
   }
@@ -80,7 +80,7 @@ view: dim_ssp {
   }
 
   dimension: ssp_name {
-    label: "SSP Name"
+    label: "SSP"
     type: string
     sql: ${TABLE}.SSP_Name ;;
   }

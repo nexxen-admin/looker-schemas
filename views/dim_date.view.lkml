@@ -2,6 +2,7 @@ view: dim_date {
   sql_table_name: BI_New.V_Dim_Date ;;
 
   dimension_group: date_key {
+    label: "Date"
     type: time
     timeframes: [
       raw,

@@ -44,7 +44,7 @@ view: dim_ssp {
   }
 
   dimension: is_1st_party {
-    label: "Is 1st Party"
+    label: "Is 1st Party Supply"
     type: yesno
     sql: ${TABLE}.Is_1st_Party ;;
   }

@@ -115,11 +115,7 @@ view: dim_flight {
     hidden: yes
   }
 
-  dimension: end {
-    label: "End Date"
-    type: date
-    sql: ${TABLE}.End_Date ;;
-  }
+
 
   dimension: flight_id {
     label: "Flight ID"
@@ -179,6 +175,12 @@ view: dim_flight {
     label: "Start_Date"
     type: date
     sql: ${TABLE}.Start_Date ;;
+  }
+
+  dimension: end {
+    label: "End Date"
+    type: date
+    sql: ${TABLE}.End_Date ;;
   }
 
   dimension: status {

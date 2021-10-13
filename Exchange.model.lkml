@@ -12,7 +12,7 @@ datagroup: CleanCash_datagroup {
 
 explore: fact_ad_daily_agg{
   always_filter: {
-    filters: [dim_date.last_14_days_flag: "1"]
+    filters: [dim_date.date_key_date: "last 14 days"]
   }
   persist_with: CleanCash_datagroup
   label: "Exchange"

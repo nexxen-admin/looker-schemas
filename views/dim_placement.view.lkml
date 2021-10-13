@@ -26,23 +26,14 @@ view: dim_placement {
   }
 
   dimension: coppa {
-    label: "Coppa"
+    label: "COPPA"
     type: number
     sql: ${TABLE}.Coppa ;;
   }
 
-  dimension_group: created {
-    label: "Crated at"
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: created {
+    label: "Create Date"
+    type: date
     sql: ${TABLE}.Created_At ;;
 
   }
@@ -108,7 +99,7 @@ view: dim_placement {
   }
 
   dimension: lda {
-    label: "Ida"
+    label: "LDA"
     type: number
     sql: ${TABLE}.Lda ;;
   }
@@ -132,7 +123,7 @@ view: dim_placement {
   }
 
   dimension: placement_name {
-    label: "Placement Name"
+    label: "Placement"
     type: string
     sql: ${TABLE}.Placement_Name ;;
   }

@@ -34,8 +34,8 @@ view: dim_request_status {
   dimension:  is_valid_requests {
     label: "Is_Valid_Requests"
     sql: case
-    when ${TABLE}.Request_Status in ('nodsp','nodspbids','bidresponse')
-    or ${TABLE}.Request_Status = 'unknown' then 'True' else 'False'
+    when ${TABLE}.Request_Status in ('nodsp','nodspbids','bidresponse','pass')
+    then 'True' else 'False'
     end
     ;;
   }

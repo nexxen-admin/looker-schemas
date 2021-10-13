@@ -32,13 +32,13 @@ join: dim_country {
   }
 join: dim_device_type {
   type: inner
-  view_label: "Media"
+  view_label: "Placement"
   sql_on: ${dim_device_type.device_type_key}= ${fact_ad_daily_agg.device_type_key};;
   relationship: many_to_one
 }
 join: dim_imp_type {
   type: inner
-  view_label: "Media"
+  view_label: "Placement"
   sql_on: ${dim_imp_type.imp_type_key}=${fact_ad_daily_agg.imp_type_key};;
   relationship: many_to_one
 }
@@ -57,7 +57,7 @@ join: dim_request_status {
 
 join: dim_imp_sub_type {
   type: inner
-  view_label: "Media"
+  view_label: "Placement"
   sql_on: ${dim_imp_sub_type.imp_sub_type_key}=${dim_imp_sub_type.imp_sub_type_key};;
   relationship: many_to_one
 }
@@ -88,7 +88,7 @@ join: dim_deal_type {
 }
 join: dim_placement {
   type: inner
-  view_label: "Media"
+  view_label: "Placement"
   sql_on: ${dim_placement.placement_key}=${fact_ad_daily_agg.placement_key};;
   relationship: many_to_one
 }

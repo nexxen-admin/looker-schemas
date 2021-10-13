@@ -199,6 +199,94 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.requests ;;
   }
 
+  measure: Bid_Rate {
+    type: number
+    label: "Bid_Rate"
+    value_format: "0.0%"
+    group_label: "Daily Measures"
+    sql: ${responses}/NULLIF(${requests},0) ;;
+  }
+
+  measure: Fill_Rate {
+    type: number
+    label: "Fill_Rate"
+    value_format: "0.00%"
+    group_label: "Daily Measures"
+    sql: ${impression_pixel}/NULLIF(${requests},0) ;;
+  }
+
+  measure: Net_Revenue {
+    type: number
+    label: "Net_Revenue"
+    #value_format: "0.00%"
+    group_label: "Daily Measures"
+    sql: ${revenue} - ${cogs} ;;
+  }
+
+  measure: Margin {
+    type: number
+    label: "Margin%"
+    value_format: "0.0%"
+    group_label: "Daily Measures"
+    sql: (${revenue} - ${cogs})/NULLIF(${revenue},0) ;;
+  }
+
+  measure: Pub_eCPM {
+    type: number
+    label: "Pub_eCPM"
+    value_format: "0.0%"
+    group_label: "Daily Measures"
+    sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
+  }
+
+  measure: Render_Rate {
+    type: number
+    label: "Render_Rate"
+    value_format: "0.0%"
+    group_label: "Daily Measures"
+    sql: ${impression_pixel}/NULLIF(${impression_win},0) ;;
+  }
+
+  measure: Response_Rate {
+    type: number
+    label: "Response_Rate"
+    value_format: "0.0%"
+    group_label: "Daily Measures"
+    sql: ${responses}/NULLIF(${requests},0) ;;
+  }
+
+  measure: RPM {
+    type: number
+    label: "RPM"
+    value_format: "0.00%"
+    group_label: "Daily Measures"
+    sql: ${revenue}/NULLIF((${requests}/1000000),0) ;;
+  }
+
+  measure: VTR {
+    type: number
+    label: "VTR"
+    value_format: "0.0%"
+    group_label: "Daily Measures"
+    sql: ${video_completes}/NULLIF(${impression_pixel},0);;
+  }
+
+  measure: VCR {
+    type: number
+    label: "VCR"
+    value_format: "0.0%"
+    group_label: "Daily Measures"
+    sql: ${video_completes}/NULLIF(${video_starts},0);;
+  }
+
+  measure: Win_Rate {
+    type: number
+    label: "Win_Rate"
+    value_format: "0.0%"
+    group_label: "Daily Measures"
+    sql: ${impression_pixel}/NULLIF(${responses},0);;
+  }
+
   dimension: response_status_key {
     type: number
     sql: ${TABLE}.Response_Status_Key ;;
@@ -219,6 +307,14 @@ view: fact_ad_daily_agg {
     #value_format: "#,##0"
     group_label: "Daily Measures"
     sql: ${TABLE}.revenue ;;
+  }
+
+  measure: Ad_eCPM{
+    type: number
+    label: "Ad_eCPM"
+    value_format: "0.0%"
+    group_label: "Daily Measures"
+    sql: ${revenue}/NULLIF((${impression_pixel}/1000),0) ;;
   }
 
   measure: rmp_requests {

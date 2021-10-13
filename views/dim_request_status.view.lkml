@@ -35,7 +35,7 @@ view: dim_request_status {
     label: "Is_Valid_Requests"
     sql: case
     when ${TABLE}.Request_Status in ('nodsp','nodspbids','bidresponse')
-    or ${TABLE}.Request_Status = 'unknowm' then 'True' else 'False'
+    or ${TABLE}.Request_Status = 'unknown' then 'True' else 'False'
     end
     ;;
   }
@@ -44,7 +44,7 @@ view: dim_request_status {
     label: "Request Status"
     type: string
     sql: case
-    when ${TABLE}.Request_Status = 'Unknown' then 'Pass'
+    when ${TABLE}.Request_Status = 'unknown' then 'Pass'
     else ${TABLE}.Request_Status
     end;;
   }

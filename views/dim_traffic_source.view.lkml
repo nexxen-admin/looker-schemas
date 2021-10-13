@@ -44,28 +44,19 @@ view: dim_traffic_source {
   }
 
   dimension: traffic_source_id {
-    label: "Traffic Source"
+    label: "Traffic Source ID"
     type: number
     sql: ${TABLE}.Traffic_Source_ID ;;
   }
 
-  dimension_group: ts_create {
-    label: "Traffice Source Create Date"
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: ts_create {
+    label: "Create Date"
+    type: date
     sql: ${TABLE}.TS_Create_At ;;
   }
 
   dimension: ts_display_name {
-    label: "Traffic Source Name"
+    label: "Traffic Source"
     type: string
     sql: ${TABLE}.TS_Display_Name ;;
   }
@@ -80,6 +71,7 @@ view: dim_traffic_source {
     label: "Short Name"
     type: string
     sql: ${TABLE}.TS_Short_Name ;;
+    hidden: yes
   }
 
   dimension_group: ts_update {

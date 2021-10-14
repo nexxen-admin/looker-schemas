@@ -9,11 +9,7 @@ view: fact_ad_daily_agg {
     type: number
     sql: {% parameter max_rank %} ;;
   }
-  dimension: looker_image {
-    type: string
-    sql: ${TABLE}.homepage_url;;
-    html: <img src="https://www.generalcatalyst.com/portfolio/tremor-video/logo-tremor/" /> ;;
-  }
+
   dimension: a_domain_key {
     type: number
     sql: ${TABLE}.A_Domain_Key ;;

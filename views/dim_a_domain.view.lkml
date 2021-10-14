@@ -3,6 +3,7 @@ view: dim_a_domain {
 
   dimension: a_domain {
     label: "A Domain"
+    description: "Advertiser domain that we recevie the bid from"
     type: string
     sql: ${TABLE}.A_Domain ;;
   }

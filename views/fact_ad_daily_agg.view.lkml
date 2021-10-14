@@ -12,7 +12,7 @@ view: fact_ad_daily_agg {
   dimension: looker_image {
     type: string
     sql: ${TABLE}.homepage_url;;
-    html: <img src="https://www.tremorinternational.com/" /> ;;
+    html: <img src="https://www.generalcatalyst.com/portfolio/tremor-video/logo-tremor/" /> ;;
   }
   dimension: a_domain_key {
     type: number

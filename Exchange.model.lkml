@@ -83,7 +83,7 @@ join: dim_deal {
 join: dim_deal_type {
   type: inner
   view_label: "Deal"
-  sql_on: ${dim_deal_type.deal_type_key}=${fact_ad_daily_agg_with_date.deal_type_key } ;;
+  sql_on: ${dim_deal_type.deal_type_key}=${dim_deal.deal_type_key} ;;
   relationship: many_to_one
 }
 join: dim_placement {

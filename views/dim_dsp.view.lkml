@@ -33,6 +33,7 @@ view: dim_dsp {
 
   dimension: dsp_account_id {
     type: number
+    description: " "
     sql: ${TABLE}.DSP_Account_ID ;;
     hidden: yes
   }
@@ -51,6 +52,7 @@ view: dim_dsp {
   }
 
   dimension: dsp_id {
+    description: "The uniqe ID that recevied from the DSP in order to identified him  "
     label: "DSP ID"
     type: string
     sql: ${TABLE}.DSP_ID ;;
@@ -63,12 +65,14 @@ view: dim_dsp {
   }
 
   dimension: dsp_name {
+    description: "Describe the DSP Name"
     label: "DSP"
     type: string
     sql: ${TABLE}.DSP_Name ;;
   }
 
   dimension: is_1st_party {
+    description: "Indicate if the dsp connection is 1st party ot 3rd party --> 1 is yes , 0 is no "
     label: "Is 1st Party Demand"
     type: yesno
     sql: ${TABLE}.Is_1st_Party ;;

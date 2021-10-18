@@ -8,7 +8,7 @@ view: fact_ad_daily_agg {
   measure: impression_parameter {
     type: number
     sql: ${impression_pixel} ;;
-    value_format: "0.0"
+    value_format: "#,##0"
     html:
     <ul>
       <li> value: {{ value }} </li>
@@ -19,7 +19,7 @@ view: fact_ad_daily_agg {
     html:
     <div style="border-radius: 10px;box-shadow: inset 4.33643px -4.33643px 4.33643px; background-color: #fff; color: #010e0f;">
         <div style="display: block;  font-size: 25px;"><strong>Impressions</strong>
-        <div style="display: block; line-height: 10px; font-size: 25px;">{{ value }}</div>
+        <div style="display: block; line-height: 10px; font-size: 25px;">{{rendered_value}}</div>
         (last day increases to 22%)</div>
     </div> ;;
   }

@@ -19,7 +19,7 @@ view: fact_ad_daily_agg {
     html:
     <div style="border-radius: 20px; width: 300.07px; background-color: #d3363d; color: #fff;">
         <div style="display: block; line-heightt: 10px; font-size: 20px;"><strong>Impressions</strong>
-        <div style="display: block; line-height: 10px; font-size: 25px;">{{ value }} (20%)</div>
+        <div style="display: block; line-height: 10px; font-size: 25px;">{{ value }}</div>
         (Next tier increases to 22%)</div>
     </div> ;;
   }

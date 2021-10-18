@@ -21,7 +21,7 @@ view: fact_ad_daily_agg {
         <div style="font-size: 1rem; display: inline-block;">{{ value }} (20%)</div>
         <div style="display: inline-block;">
         <p style="font-size: 1rem;"><strong>Your latest rebate status</strong></p>
-        <p style="font-size: 1rem;">(Next tier increases to 22%)</p>
+        <br="font-size: 1rem;">(Next tier increases to 22%)
         </div>
     </div> ;;
   }

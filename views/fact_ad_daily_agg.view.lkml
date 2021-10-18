@@ -18,7 +18,7 @@ view: fact_ad_daily_agg {
     type: count
     html:
     <div style="border-radius: 15px; background-color: #d3363d; color: #fff;">
-        <div style="display: inline-block;"; "font-size: 10px;">Impressions</div>
+        <div style="display: inline-block; font-size: 10px;">Impressions</div>
         <div style="font-size: 10px;">(Next tier increases to 22%) </div>
         <div style="font-size: 10px; display: inline-block;">{{ value }} (20%)</div>
     </div> ;;

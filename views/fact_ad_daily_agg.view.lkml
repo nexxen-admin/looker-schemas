@@ -18,8 +18,8 @@ view: fact_ad_daily_agg {
     type: count
     html:
     <div style="border-radius: 15px; background-color: #d3363d; color: #fff;">
-        <div style="font-size: 1rem; display: inline-block;">{{ value }} (20%)
-        <br="font-size: 1rem;">(Next tier increases to 22%) </div>
+        <p style="font-size: 1rem; display: inline-block;">{{ value }} (20%)</p>
+        <br="font-size: 1rem;">(Next tier increases to 22%)
         <div style="display: inline-block;">
         <p style="font-size: 1rem;"><strong>Your latest rebate status</strong></p>
         </div>

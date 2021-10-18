@@ -8,7 +8,7 @@ view: fact_ad_daily_agg {
   measure: impression_parameter {
     type: number
     sql: ${impression_pixel} ;;
-    value_format: "0"
+    value_format: "#,##0.0,,\"\""
     html:
     <ul>
       <li> value: {{ value }} </li>

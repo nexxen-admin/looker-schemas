@@ -20,7 +20,7 @@ view: fact_ad_daily_agg {
     <div style="border-radius: 10px; background-color: #2fbacf; color: #010e0f;">
         <div style="display: block;  font-size: 25px;"><strong>Impressions</strong>
         <div style="display: block; line-height: 10px; font-size: 25px;">{{ value }}</div>
-        (Next tier increases to 22%)</div>
+        (last day increases to 22%)</div>
     </div> ;;
   }
   dimension: rank_limit {

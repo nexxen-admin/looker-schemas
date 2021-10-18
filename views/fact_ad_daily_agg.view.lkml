@@ -19,8 +19,8 @@ view: fact_ad_daily_agg {
     html:
     <div style="border-radius: 15px; background-color: #d3363d; color: #fff;">
         <div style="display: inline-block; font-size: 10px;">Impressions
-        <br><style = "font-size: 10px;">(Next tier increases to 22%)</style>
-        <br><style="font-size: 10px; display: inline-block;">{{ value }} (20%)</style></div>
+        <br>(Next tier increases to 22%)
+        <br>{{ value }} (20%)</div>
     </div> ;;
   }
   dimension: rank_limit {

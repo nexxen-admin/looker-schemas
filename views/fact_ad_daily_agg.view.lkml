@@ -14,7 +14,17 @@ view: fact_ad_daily_agg {
       <li> value: {{ value }} </li>
     </ul> ;;
   }
-
+  measure: example {
+    type: count
+    html:
+    <div style="border-radius: 10px; background-color: #d3363d; color: #fff;">
+        <div style="font-size: 4rem; display: inline-block;">{{ value }} (20%)</div>
+        <div style="display: inline-block;">
+        <p style="font-size: 1.5rem;"><strong>Your latest rebate status</strong></p>
+        <p style="font-size: 1.5rem;">(Next tier increases to 22%)</p>
+        </div>
+    </div> ;;
+  }
   dimension: rank_limit {
     type: number
     sql: {% parameter max_rank %} ;;

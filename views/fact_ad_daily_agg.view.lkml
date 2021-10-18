@@ -17,8 +17,8 @@ view: fact_ad_daily_agg {
   measure: example {
     type: count
     html:
-    <div style="border-radius: 20px; width: 300.07px; height: 200.39px; background-color: #d3363d; color: #fff;">
-        <div style="display: block; padding: 1px; font-size: 20px;"><strong>Impressions</strong>
+    <div style="border-radius: 20px; width: 300.07px; background-color: #d3363d; color: #fff;">
+        <div style="display: block;line-hight: 1px; font-size: 20px;"><strong>Impressions</strong>
         <div style="display: block; padding: 1px; font-size: 25px;">{{ value }} (20%)</div>
         (Next tier increases to 22%)</div>
     </div> ;;

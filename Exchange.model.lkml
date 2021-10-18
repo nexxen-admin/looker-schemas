@@ -125,7 +125,7 @@ join: dim_ssp {
 }
 join: dim_dsp_flight {
   type: inner
-  sql_on: ${dim_dsp_flight.flight_key}=${fact_ad_daily_agg.dsp_flight_key};;
+  sql_on: ${dim_dsp_flight.dsp_flight_key}=${fact_ad_daily_agg.dsp_flight_key};;
   relationship: many_to_one
   fields: []
 }

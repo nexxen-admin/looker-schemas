@@ -5,6 +5,16 @@ view: fact_ad_daily_agg {
     type: number
   }
 
+  measure: impression_parameter {
+    type: number
+    sql: ${impression_pixel} ;;
+    value_format: "0"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+
   dimension: rank_limit {
     type: number
     sql: {% parameter max_rank %} ;;

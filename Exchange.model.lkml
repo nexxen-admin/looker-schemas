@@ -58,7 +58,7 @@ join: dim_request_status {
 join: dim_imp_sub_type {
   type: inner
   view_label: "Request Attributes"
-  sql_on: ${dim_imp_sub_type.imp_sub_type_key}=${dim_imp_sub_type.imp_sub_type_key};;
+  sql_on: ${dim_imp_sub_type.imp_sub_type_key}=${fact_ad_daily_agg.imp_sub_type_key};;
   relationship: many_to_one
 }
 

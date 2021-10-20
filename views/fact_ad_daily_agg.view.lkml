@@ -335,16 +335,6 @@ view: fact_ad_daily_agg {
     sql: ${revenue}/NULLIF((${impression_pixel}/1000),0) ;;
   }
 
-  measure: revenue_last_day{
-    label: "Yesterday Revenue"
-    group_label: "Daily Measures"
-    type: number
-    #filters: [date_key_date: "yesterday"]
-    sql: case when ${date_key_date} = current_date-1
-    then ${revenue}
-    end
-    group by ${date_key_date};;
-  }
 
   measure: rmp_requests {
     type: sum

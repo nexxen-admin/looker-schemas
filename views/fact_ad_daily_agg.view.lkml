@@ -37,7 +37,7 @@ view: fact_ad_daily_agg {
   measure:: cogs {
     label: "Cogs"
     type: sum
-    value_format: "$0.00"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.cogs ;;
   }
@@ -45,7 +45,7 @@ view: fact_ad_daily_agg {
   measure:: cost {
     label: "Cost"
     type: sum
-    value_format: "$0.00"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.cost ;;
   }
@@ -236,7 +236,7 @@ view: fact_ad_daily_agg {
   measure: Net_Revenue {
     type: number
     label: "Net Revenue"
-    value_format: "$0.00"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue} - ${cogs} ;;
   }
@@ -252,7 +252,7 @@ view: fact_ad_daily_agg {
   measure: Pub_eCPM {
     type: number
     label: "Pub eCPM"
-    value_format: "$0.00"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
   }
@@ -276,7 +276,7 @@ view: fact_ad_daily_agg {
   measure: RPM {
     type: number
     label: "RPM"
-    value_format: "$0.00"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${requests}/1000000),0) ;;
   }
@@ -322,7 +322,7 @@ view: fact_ad_daily_agg {
   measure: revenue {
     type: sum
     label: "Revenue"
-    value_format: "$0.00"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.revenue ;;
   }
@@ -330,7 +330,7 @@ view: fact_ad_daily_agg {
   measure: Ad_eCPM{
     type: number
     label: "Ad eCPM"
-    value_format: "$0.00"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${impression_pixel}/1000),0) ;;
   }

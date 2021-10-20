@@ -340,7 +340,7 @@ view: fact_ad_daily_agg {
     group_label: "Daily Measures"
     type: number
     #filters: [date_key_date: "yesterday"]
-    sql: case when ${date_key_date} = yesterday
+    sql: case when ${date_key_date} = today()-1
     then ${revenue}
     end ;;
   }

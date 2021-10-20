@@ -172,7 +172,7 @@ view: dim_flight {
   }
 
   dimension: start {
-    label: "Start_Date"
+    label: "Start Date"
     type: date
     sql: ${TABLE}.Start_Date ;;
   }

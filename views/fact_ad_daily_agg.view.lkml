@@ -299,7 +299,7 @@ view: fact_ad_daily_agg {
 
   measure: Win_Rate {
     type: number
-    label: "Win_Rate"
+    label: "Win Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: ${impression_pixel}/NULLIF(${responses},0);;

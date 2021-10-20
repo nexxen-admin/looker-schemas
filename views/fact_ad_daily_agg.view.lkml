@@ -342,6 +342,7 @@ view: fact_ad_daily_agg {
     #filters: [date_key_date: "yesterday"]
     sql: case when ${date_key_date} = current_date-1
     then ${revenue}
+    group by ${date_key_date}
     end ;;
   }
 

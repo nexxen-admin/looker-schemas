@@ -336,6 +336,7 @@ view: fact_ad_daily_agg {
   }
 
 
+
   measure: rmp_requests {
     type: sum
     label: "Pub Requests"

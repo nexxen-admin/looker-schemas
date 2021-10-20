@@ -37,7 +37,7 @@ view: fact_ad_daily_agg {
   measure:: cogs {
     label: "Cogs"
     type: sum
-    #value_format: "#,##0.0,,\"\""
+    value_format: "$0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.cogs ;;
   }
@@ -45,7 +45,7 @@ view: fact_ad_daily_agg {
   measure:: cost {
     label: "Cost"
     type: sum
-    #value_format: "#,##0.0,,\"\""
+    value_format: "$0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.cost ;;
   }
@@ -66,7 +66,7 @@ view: fact_ad_daily_agg {
 
   measure:: ias_viewability {
     type: number
-    value_format: "0.0%"
+    value_format: "0.00\%"
     label: "IAS Viewability"
     group_label: "Daily Measures"
     sql: ${ias_viewable_impression}/NULLIF(${ias_measurable_impression},0);;
@@ -219,15 +219,15 @@ view: fact_ad_daily_agg {
 
   measure: Bid_Rate {
     type: number
-    label: "Bid_Rate"
-    value_format: "0.0%"
+    label: "Bid Rate"
+    value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: ${responses}/NULLIF(${requests},0) ;;
   }
 
   measure: Fill_Rate {
     type: number
-    label: "Fill_Rate"
+    label: "Fill Rate"
     value_format: "0.00%"
     group_label: "Daily Measures"
     sql: ${impression_pixel}/NULLIF(${requests},0) ;;
@@ -235,8 +235,8 @@ view: fact_ad_daily_agg {
 
   measure: Net_Revenue {
     type: number
-    label: "Net_Revenue"
-    #value_format: "0.00%"
+    label: "Net Revenue"
+    value_format: "$0.00"
     group_label: "Daily Measures"
     sql: ${revenue} - ${cogs} ;;
   }
@@ -244,31 +244,31 @@ view: fact_ad_daily_agg {
   measure: Margin {
     type: number
     label: "Margin%"
-    value_format: "0.0%"
+    value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: (${revenue} - ${cogs})/NULLIF(${revenue},0) ;;
   }
 
   measure: Pub_eCPM {
     type: number
-    label: "Pub_eCPM"
-    value_format: "0.0%"
+    label: "Pub eCPM"
+    value_format: "$0.00"
     group_label: "Daily Measures"
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
   }
 
   measure: Render_Rate {
     type: number
-    label: "Render_Rate"
-    value_format: "0.0%"
+    label: "Render Rate"
+    value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: ${impression_pixel}/NULLIF(${impression_win},0) ;;
   }
 
   measure: Response_Rate {
     type: number
-    label: "Response_Rate"
-    value_format: "0.0%"
+    label: "Response Rate"
+    value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: ${responses}/NULLIF(${requests},0) ;;
   }
@@ -276,7 +276,7 @@ view: fact_ad_daily_agg {
   measure: RPM {
     type: number
     label: "RPM"
-    value_format: "0.00%"
+    value_format: "$0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${requests}/1000000),0) ;;
   }
@@ -284,7 +284,7 @@ view: fact_ad_daily_agg {
   measure: VTR {
     type: number
     label: "VTR"
-    value_format: "0.0%"
+    value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: ${video_completes}/NULLIF(${impression_pixel},0);;
   }
@@ -292,7 +292,7 @@ view: fact_ad_daily_agg {
   measure: VCR {
     type: number
     label: "VCR"
-    value_format: "0.0%"
+    value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: ${video_completes}/NULLIF(${video_starts},0);;
   }
@@ -300,7 +300,7 @@ view: fact_ad_daily_agg {
   measure: Win_Rate {
     type: number
     label: "Win_Rate"
-    value_format: "0.0%"
+    value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: ${impression_pixel}/NULLIF(${responses},0);;
   }
@@ -322,7 +322,7 @@ view: fact_ad_daily_agg {
   measure: revenue {
     type: sum
     label: "Revenue"
-    #value_format: "#,##0"
+    value_format: "$0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.revenue ;;
   }
@@ -330,7 +330,7 @@ view: fact_ad_daily_agg {
   measure: Ad_eCPM{
     type: number
     label: "Ad_eCPM"
-    value_format: "0.0%"
+    value_format: "$0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${impression_pixel}/1000),0) ;;
   }

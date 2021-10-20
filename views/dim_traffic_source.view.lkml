@@ -35,7 +35,7 @@ view: dim_traffic_source {
     label: "Is Active"
     type: yesno
     sql: ${TABLE}.Is_Active ;;
-    hidden: yes
+
   }
 
   dimension: tmax {

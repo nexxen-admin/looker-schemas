@@ -36,7 +36,7 @@ view: fact_ad_daily_agg {
   measure: change_parameter {
     type: number
     sql: case when ${revenue_lastday_change_parameter}>0
-        then "▲"  else "▼" end;;
+        then '▲'  else '▼' end;;
     html:
     <ul>
       <li> value: {{ value }} </li>

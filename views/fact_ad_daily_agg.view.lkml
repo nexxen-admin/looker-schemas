@@ -52,8 +52,11 @@ view: fact_ad_daily_agg {
     <div style="border-radius: 10px;box-shadow: inset 4.33643px -4.33643px 4.33643px; background-color: #fff; color: #010e0f;">
         <div style="display: block;  font-size: 25px;"><strong>Revenue</strong>
         <div style="display: block; line-height: 10px; font-size: 25px;">{{ revenue_parameter._rendered_value }}
-        <div style="display: inline-block; font-size: 15px;"><span class="vis-single-value-comparison-value positive; style= font-sise:15px;">▲
-        <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">{{revenue_lastday_change_parameter._rendered_value}}</span></span></span></div></div></div>
+        <div style="display: inline-block; font-size: 15px;">{% if revenue_lastday_change_parameter._rendered_value >0 %}<span class="vis-single-value-comparison-value positive; style= font-sise:15px;">▲
+        <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">{{revenue_lastday_change_parameter._rendered_value}}</span></span></span>
+        {%else%} <span class="TextBase-sc-1sjok63-0 Span-sc-1ey747b-0 Text-sc-1wcc5y1-0 iXvmyS lntdba"><span>▼<span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">{{revenue_lastday_change_parameter._rendered_value}}</span></span></span>
+        {%endif%}
+       </div></div></div>
         (last day increases to 22%)</div>
     </div> ;;
   }

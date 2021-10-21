@@ -26,7 +26,7 @@ view: fact_ad_daily_agg {
   }
   measure: revenue_lastday_change_parameter {
     type: number
-    sql: abs(${Last_day_Revenue}-${Previous_day_Revenue})/${Previous_day_Revenue} ;;
+    sql: (${Last_day_Revenue}/${Previous_day_Revenue})-1 ;;
     value_format: "0.00%"
     html:
     <ul>

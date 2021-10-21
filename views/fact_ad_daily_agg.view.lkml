@@ -372,7 +372,7 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.revenue ;;
     value_format: "$#,##0.00"
-    filters: [date_key_date: " before 2 days ago"]
+    filters: [date_key_date: " before 1 days ago"]
   }
 
 

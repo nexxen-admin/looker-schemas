@@ -55,7 +55,7 @@ view: fact_ad_daily_agg {
         <div style="display: block; line-height: 10px; font-size: 25px;">{{ revenue_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;"><span class="vis-single-value-comparison-value positive; style= font-sise:15px;">▲
         <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">{{revenue_lastday_change_parameter._rendered_value}}</span></span></span>
-       </div></div></div>
+       </div></div>
         (last day increases to 22%)</div>
     </div> ;;
   }

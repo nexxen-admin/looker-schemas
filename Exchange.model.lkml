@@ -11,11 +11,8 @@ datagroup: CleanCash_datagroup {
 }
 
 explore: fact_ad_daily_agg{
-  conditionally_filter: {
+  always_filter: {
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
-    unless: [revenue_lastday_change_parameter]
-  #always_filter: {
-    #filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
   }
   persist_with: CleanCash_datagroup
   label: "Exchange"

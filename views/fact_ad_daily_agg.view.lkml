@@ -15,6 +15,14 @@ view: fact_ad_daily_agg {
     </ul> ;;
   }
 
+  measure:  Yesterday_Revenue {
+    type: sum
+    sql: ${TABLE}.revenue ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+
+  }
+
   measure: revenue_parameter {
     type: number
     sql: ${revenue} ;;
@@ -41,7 +49,7 @@ view: fact_ad_daily_agg {
     html:
     <div style="border-radius: 10px;box-shadow: inset 4.33643px -4.33643px 4.33643px; background-color: #fff; color: #010e0f;">
         <div style="display: block;  font-size: 25px;"><strong>Revenue</strong>
-        <div style="display: block; line-height: 10px; font-size: 25px;">${{ revenue_parameter._rendered_value }}</div>
+        <div style="display: block; line-height: 10px; font-size: 25px;">{{ revenue_parameter._rendered_value }}</div>
         (last day increases to 22%)</div>
     </div> ;;
   }

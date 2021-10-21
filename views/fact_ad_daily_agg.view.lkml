@@ -33,6 +33,15 @@ view: fact_ad_daily_agg {
       <li> value: {{ value }} </li>
     </ul> ;;
   }
+  measure: change_parameter {
+    type: number
+    sql: case when ${revenue_lastday_change_parameter}>0
+        then "▲"  else "▼" end;;
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
 
   measure: impression_variable {
     type: count
@@ -43,7 +52,7 @@ view: fact_ad_daily_agg {
         <div style="display: inline-block; font-size: 15px;"><span class="vis-single-value-comparison-value positive; style= font-sise:15px;"><script type="text/javascript">
         //<![CDATA] if (revenue_lastday_change_parameter._rendered_value >0){greeting ="▲";} else {greeting = "▼"} document.getElementById("demo").innerHTML = greeting;</script>
         <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">10%</span></span></span></div></div>
-         (last day increases to 22%)</div>
+         last day increases {{change_parameter._value}}{{revenue_lastday_change_parameter._rendered_value}} </div>
     </div> ;;
   }
 
@@ -53,10 +62,10 @@ view: fact_ad_daily_agg {
     <div style="border-radius: 10px;box-shadow: inset 4.33643px -4.33643px 4.33643px; background-color: #fff; color: #010e0f;">
         <div style="display: block;  font-size: 25px;"><strong>Revenue</strong>
         <div style="display: block; line-height: 10px; font-size: 25px;">{{ revenue_parameter._rendered_value }}
-        <div style="display: inline-block; font-size: 15px;"><span class="vis-single-value-comparison-value positive; style= font-sise:15px;">▲
-        <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">{{revenue_lastday_change_parameter._rendered_value}}</span></span></span>
+        <div style="display: inline-block; font-size: 15px;">
+        <span class="drillable-item-content">{{change_parameter._value}}{{revenue_lastday_change_parameter._rendered_value}}</span></span></span>
        </div></div>
-        (last day increases to 22%)</div>
+        last day {{change_parameter._value}}{{revenue_lastday_change_parameter._rendered_value}} </div>
     </div> ;;
   }
 

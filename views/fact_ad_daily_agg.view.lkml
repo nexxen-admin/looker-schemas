@@ -17,7 +17,7 @@ view: fact_ad_daily_agg {
 
   measure: revenue_parameter {
     type: number
-    sql: ${revenue} ;;
+    sql: ${Last_day_Revenue} ;;
     value_format: "$#,##0.00"
     html:
     <ul>

@@ -14,7 +14,17 @@ view: fact_ad_daily_agg {
       <li> value: {{ value }} </li>
     </ul> ;;
   }
-  measure: example {
+
+  measure: revenue_parameter {
+    type: number
+    sql: ${revenue} ;;
+    value_format: "$#,##0.00"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+  measure: impression_variable {
     type: count
     html:
     <div style="border-radius: 10px;box-shadow: inset 4.33643px -4.33643px 4.33643px; background-color: #fff; color: #010e0f;">
@@ -23,6 +33,17 @@ view: fact_ad_daily_agg {
         (last day increases to 22%)</div>
     </div> ;;
   }
+
+  measure: revenue_variable {
+    type: count
+    html:
+    <div style="border-radius: 10px;box-shadow: inset 4.33643px -4.33643px 4.33643px; background-color: #fff; color: #010e0f;">
+        <div style="display: block;  font-size: 25px;"><strong>Revenue</strong>
+        <div style="display: block; line-height: 10px; font-size: 25px;">{{rendered_value}}</div>
+        (last day increases to 22%)</div>
+    </div> ;;
+  }
+
   dimension: rank_limit {
     type: number
     sql: {% parameter max_rank %} ;;

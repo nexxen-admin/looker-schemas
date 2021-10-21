@@ -30,7 +30,6 @@ view: fact_ad_daily_agg {
     <div style="border-radius: 10px;box-shadow: inset 4.33643px -4.33643px 4.33643px; background-color: #fff; color: #010e0f;">
         <div style="display: block;  font-size: 25px;"><strong>Impressions</strong>
         <div style="display: block; line-height: 10px; font-size: 25px;">{{rendered_value}}</div>
-        <span class="vis-single-value-comparison-value positive">▲ <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">$13,751,340.35</span></span></span>
         (last day increases to 22%)</div>
     </div> ;;
   }

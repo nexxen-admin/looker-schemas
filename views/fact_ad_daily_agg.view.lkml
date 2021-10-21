@@ -52,7 +52,7 @@ view: fact_ad_daily_agg {
         <div style="display: inline-block; font-size: 15px;"><span class="vis-single-value-comparison-value positive; style= font-sise:15px;"><script type="text/javascript">
         //<![CDATA] if (revenue_lastday_change_parameter._rendered_value >0){greeting ="▲";} else {greeting = "▼"} document.getElementById("demo").innerHTML = greeting;</script>
         <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">10%</span></span></span></div></div>
-         <div style="display: inline-block; font-size: 15px;">last day increases</div></div>
+         <div style="display: inline-block; line-height: 15px; font-size: 15px;">last day increases</div></div>
     </div> ;;
   }
 

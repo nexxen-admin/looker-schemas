@@ -31,8 +31,7 @@ view: fact_ad_daily_agg {
         <div style="display: block;  font-size: 25px;"><strong>Impressions</strong>
         <div style="display: block; line-height: 10px; font-size: 25px;">{{rendered_value}}</div>
         <div style= "display:inline-block; font-size:15px;"> <span class="vis-single-value-comparison-value positive">▲ <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">$10%</span></span></span></div>
-
-               (last day increases to 22%)</div>
+         <div style="display: block; line-height: 10px; font-size: 25px;">(last day increases to 22%)</div></div>
     </div> ;;
   }
 

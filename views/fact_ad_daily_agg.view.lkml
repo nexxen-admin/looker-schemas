@@ -60,7 +60,7 @@ view: fact_ad_daily_agg {
     type: count
     html:
     <div style="border-radius: 10px;box-shadow: inset 4.33643px -4.33643px 4.33643px; background-color: #fff; color: #010e0f;">
-        <div style="display: block;  font-size: 25px;"><strong>Revenue</strong>
+        <div style="display: block;  font-size: 20px;"><strong>Revenue</strong>
         <div style="display: block; line-height: 10px; font-size: 25px;">{{ revenue_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;">
         <span class="drillable-item-content">{{change_parameter._value}}{{revenue_lastday_change_parameter._rendered_value}}</span></span></span>

@@ -15,12 +15,12 @@ view: fact_ad_daily_agg {
     </ul> ;;
   }
 
-  measure:  Yesterday_Revenue {
+  measure:  Last_day_Revenue {
+    label: "Last day Revenue"
     type: sum
     sql: ${TABLE}.revenue ;;
     value_format: "$#,##0.00"
     filters: [date_key_date: "last 1 day ago for 1 day"]
-
   }
 
   measure: revenue_parameter {
@@ -366,6 +366,14 @@ view: fact_ad_daily_agg {
     sql: ${revenue}/NULLIF((${impression_pixel}/1000),0) ;;
   }
 
+
+  measure:  Previous_day_Revenue {
+    label: "Previous day Revenue"
+    type: sum
+    sql: ${TABLE}.revenue ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "last 2 day ago for 2 day"]
+  }
 
 
   measure: rmp_requests {

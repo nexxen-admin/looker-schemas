@@ -376,7 +376,7 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.revenue ;;
     value_format: "$#,##0.00"
-    filters: [date_key_date: " 2021-10-19"]
+    filters: [date_key_date: "2 days"]
   }
 
   measure:  Last_day_Revenue {

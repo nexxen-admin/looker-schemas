@@ -29,8 +29,7 @@ view: fact_ad_daily_agg {
     html:
     <div style="border-radius: 10px;box-shadow: inset 4.33643px -4.33643px 4.33643px; background-color: #fff; color: #010e0f;">
         <div style="display: block;  font-size: 25px;"><strong>Impressions</strong>
-        <div style="display: block; line-height: 10px; font-size: 25px;">{{rendered_value}}
-        <div style=font-size: "10px;" <span class="vis-single-value-comparison-value positive">▲ <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">$10%</span></span></span></div>
+        <div style="display: block; line-height: 10px; font-size: 25px;">{{rendered_value}}<span class="vis-single-value-comparison-value positive" style=font-size: "10px;">▲ <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">$10%</span></span></span></div>
         (last day increases to 22%)</div>
     </div> ;;
   }

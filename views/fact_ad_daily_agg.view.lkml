@@ -62,7 +62,7 @@ view: fact_ad_daily_agg {
     <div style="linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
         <div style="display: block;  font-size: 20px;"><strong>Revenue</strong>
         <div style="display: block; line-height: 10px; font-size: 25px;">{{ revenue_parameter._rendered_value }}
-        <div style=" Left: 350px;display: inline-block; font-size: 15px; left: 500px;">
+        <div style="  margin-Left: -350px;display: inline-block; font-size: 15px;">
         <span class="drillable-item-content">{{change_parameter._value}}{{revenue_lastday_change_parameter._rendered_value}}</span></span></span>
        </div></div>
         last day change </div>

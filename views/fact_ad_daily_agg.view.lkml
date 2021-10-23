@@ -46,7 +46,7 @@ view: fact_ad_daily_agg {
   measure: impression_variable {
     type: count
     html:
-    <div style="border-radius: 10px;box-shadow: inset 6px 6px 10px hex: #fff; background-color: #bcd0d3; color: #010e0f;">
+    <div style="linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);>
         <div style="display: block;  font-size: 20px;"><strong>Impressions</strong>
         <div style="display: block; line-height: 12px; font-size: 25px;">{{rendered_value}}
         <div style="display: inline-block;line-height: 12px; font-size: font-size: 15px;"><span class="vis-single-value-comparison-value positive; style= font-sise:15px;"><script type="text/javascript">

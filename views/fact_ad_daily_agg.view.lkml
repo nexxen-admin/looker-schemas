@@ -59,7 +59,15 @@ view: fact_ad_daily_agg {
   measure: revenue_variable {
     type: count
     html:
-    <div style="linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);background:#393838">
+        <div style=" display: inline-block;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%); background:#393838">
+        <div style="display: block;  font-size: 20px;">Impressions
+        <div style="display: block; line-height: 12px; font-size: 25px;color:#fff">{{rendered_value}}
+        <div style="display: inline-block;line-height: 12px; font-size: font-size: 15px;color:#fff"><span class="vis-single-value-comparison-value positive; style= font-sise:15px;"><script type="text/javascript">
+        //<![CDATA] if (revenue_lastday_change_parameter._rendered_value >0){greeting ="▲";} else {greeting = "▼"} document.getElementById("demo").innerHTML = greeting;</script>
+        <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">10%</span></span></span></div></div>
+         last day change</div>
+    </div>
+    <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);background:#393838">
         <div style="display: block;  font-size: 20px; color:#fff">Revenue {{change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}
         <div style="  margin-Left: -400px ;display: inline-block; font-size: 15px;color:#fff">

@@ -24,6 +24,42 @@ view: fact_ad_daily_agg {
       <li> value: {{ value }} </li>
     </ul> ;;
   }
+  measure: request_parameter {
+    type: number
+    sql: ${Last_day_Requests} ;;
+    value_format: "$0.00,,\" M\""
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+  measure: fillRate_parameter {
+    type: number
+    sql: ${Last_day_Fill_Rate} ;;
+    value_format: "0.00\%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+  measure: bidRate_parameter {
+    type: number
+    sql: ${Last_day_Bid_Rate} ;;
+    value_format: "0.00\%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+  measure: Net_Margin_parameter {
+    type: number
+    sql: ${Last_Day_net_Revenue} ;;
+    value_format: "$0.00,,\" M\""
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
   measure: revenue_lastday_change_parameter {
     type: number
     sql: (${Last_day_Revenue}/${Previous_day_Revenue})-1 ;;
@@ -33,6 +69,34 @@ view: fact_ad_daily_agg {
       <li> value: {{ value }} </li>
     </ul> ;;
   }
+  measure: impressions_lastday_change_parameter {
+    type: number
+    sql: (${Last_day_impressions}/${Previous_day_impressions})-1 ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+  measure: request_lastday_change_parameter {
+    type: number
+    sql: (${Last_day_Requests}/${Previous_day_Requests})-1 ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+  measure: net_revenue_lastday_change_parameter {
+    type: number
+    sql: (${Last_Day_net_Revenue}/${prev_Day_net_Revenue})-1 ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+
   measure: change_parameter {
     type: number
     sql: case when ${revenue_lastday_change_parameter}>0
@@ -59,15 +123,23 @@ view: fact_ad_daily_agg {
   measure: revenue_variable {
     type: count
     html:
-
-    <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);background:#393838">
-        <div style="display: block;  font-size: 20px; color:#fff">Revenue {{change_parameter._value}}
+    <div style = "background:#393838">
+    <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+        <div style="display: block;  font-size: 20px; color:#fff">Reveenue {{change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}
         <div style="  margin-Left: -400px ;display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
        </div></div>
        {{revenue_lastday_change_parameter._rendered_value}} from previous day </div>
-    </div>;;
+    </div>
+    <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+        <div style="display: block;  font-size: 20px; color:#fff">Net Revenue {{change_parameter._value}}
+        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Net_Margin_parameter._rendered_value }}
+        <div style="  margin-Left: -400px ;display: inline-block; font-size: 15px;color:#fff">
+        <span class="drillable-item-content">  </span></span></span>
+       </div></div>
+       {{net_revenue_lastday_change_parameter._rendered_value}} from previous day </div>
+    </div></div>;;
   }
 
   dimension: rank_limit {
@@ -391,11 +463,87 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "2 days ago"]
   }
 
+  measure:  Previous_day_Requests {
+    label: "Previous day Requests"
+    type: sum
+    sql: ${TABLE}.requests ;;
+    value_format: "$0.00,,\" M\""
+    filters: [date_key_date: "2 days ago"]
+  }
+  measure:  Previous_day_impressions {
+    label: "Previous day Impressions"
+    type: sum
+    sql: ${TABLE}.impression_pixel ;;
+    value_format: "$0.00,,\" M\""
+    filters: [date_key_date: "2 days ago"]
+  }
+  measure:  previous_day_Bid_Rate {
+    label: "Bid Rate Previous day"
+    type: sum
+    sql: ${TABLE}.responses/NULLIF(${TABLE}.requests,0) ;;
+    value_format: "0.00\%"
+    filters: [date_key_date: "2 days ago"]
+  }
+  measure: previous_day_Fill_Rate {
+    type: sum
+    label: "Fill Rate Previous day"
+    value_format: "0.00%"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.impression_pixel/NULLIF(${TABLE}.requests,0)  ;;
+    filters: [date_key_date: "2 days ago"]
+  }
+  measure: prev_Day_net_Revenue {
+    type: sum
+    label: "Net Revenue Last Day"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.revenue - ${TABLE}.cogs  ;;
+    filters: [date_key_date: "2 days ago"]
+  }
   measure:  Last_day_Revenue {
     label: "Last day Revenue"
     type: sum
     sql: ${TABLE}.revenue ;;
     value_format: "$#,##0.00"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+  measure:  Last_day_impressions {
+    label: "Previous day Impressions"
+    type: sum
+    sql: ${TABLE}.impression_pixel ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+  measure: Last_Day_net_Revenue {
+    type: sum
+    label: "Net Revenue Last Day"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.revenue - ${TABLE}.cogs  ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure: Last_day_Fill_Rate {
+    type: sum
+    label: "Fill Rate Last day"
+    value_format: "0.00%"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.impression_pixel/NULLIF(${TABLE}.requests,0) ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure:  Last_day_Requests {
+    label: "Last day Revenue"
+    type: sum
+    sql: ${TABLE}.requests/NULLIF(${TABLE}.requests,0) ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+  measure:  Last_day_Bid_Rate {
+    label: "Last day Revenue"
+    type: sum
+    sql: ${TABLE}.responses/NULLIF(${TABLE}.requests,0) ;;
+    value_format: "0.00\%"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 

@@ -123,8 +123,8 @@ view: fact_ad_daily_agg {
   measure: revenue_variable {
     type: count
     html:
-    <div style = "background:#393838">
-    <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+    <div style = "background:#393838; border-radius: 4px;">
+    <div style="font-family: 'Gotham Book', sans-serif;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
         <div style="display: block;  font-size: 20px; color:#fff">Reveenue {{change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}
         <div style="  margin-Left: -400px ;display: inline-block; font-size: 15px;color:#fff">

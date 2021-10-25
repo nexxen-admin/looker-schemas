@@ -66,7 +66,7 @@ view: fact_ad_daily_agg {
         <div style="  margin-Left: -400px ;display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
        </div></div>
-       {{revenue_lastday_change_parameter._rendered_value}} Decrese from previous day </div>
+       {{revenue_lastday_change_parameter._rendered_value}} from previous day </div>
     </div>;;
   }
 

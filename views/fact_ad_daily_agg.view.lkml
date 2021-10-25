@@ -63,7 +63,7 @@ view: fact_ad_daily_agg {
         <div style="display: block;  font-size: 20px; color:#fff">Revenue {{change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}
         <div style="  margin-Left: -400px ;display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">{{revenue_lastday_change_parameter._rendered_value}}</span></span></span>
+        <span class="drillable-item-content">  {{revenue_lastday_change_parameter._rendered_value}}</span></span></span>
        </div></div>
         last day change </div>
     </div> ;;

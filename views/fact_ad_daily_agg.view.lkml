@@ -128,19 +128,18 @@ view: fact_ad_daily_agg {
     </div>
     <div style = "background:#393838;">
     <div style="margin-right: 60px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block; border-right: 3px solid #fff; font-size: 20px; color:#fff;letter-spacing: 0.01em;">Revenue {{change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}
-        <div style="  margin-Left: -800px ;display: inline-block; font-size: 15px;color:#fff">
+        <div style="display: block; font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{change_parameter._value}}
+        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
+        <div style="  display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{revenue_lastday_change_parameter._rendered_value}} from past day    </div>
-    </div>
+       </div><div>
+     </div>
      <div style="margin-right: 60px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
-        <div style="  margin-Left: -400px ;display: inline-block; font-size: 15px;color:#fff">
+        <div style="display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
-       </div></div>
+       </div><div>
        {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
     <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">

@@ -127,7 +127,7 @@ view: fact_ad_daily_agg {
      <img src="https://files.fm/thumb_show.php?i=mp8b8xfaq">
     </div>
     <div style = "background:#393838;">
-    <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+    <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
          <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;color:#fff">
@@ -177,6 +177,16 @@ view: fact_ad_daily_agg {
        </div></div>
        {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
+    </div>
+
+    <div style= "background:#eeeeee; display: inline-block ;">
+         <a style=" color: #13a79c; border: solid 1px #13a79c; float: left;  font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; user-select: none; padding: 10px; margin: 5px; font-size: 1rem; line-height: 1.5; border-radius: 5px;"
+    href="#"> This is a button! </a>
+    <a style=" color: #13a79c; border: solid 1px #13a79c; float: left;  font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; user-select: none; padding: 10px; margin: 5px; font-size: 1rem; line-height: 1.5; border-radius: 5px;"
+    href="#"> This is a button! </a>
+    </div>
+    <div>
+    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img style="width:100%;" src="https://files.fm/thumb_show.php?i=shesqzdxk"></a>
     </div>;;
   }
 

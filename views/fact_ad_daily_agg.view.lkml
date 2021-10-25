@@ -126,7 +126,7 @@ view: fact_ad_daily_agg {
      <div>
      <img src="https://files.fm/thumb_show.php?i=mp8b8xfaq">
     </div>
-    <div style = "background:#393838; border-radius: 10px;">
+    <div style = "background:#393838;">
     <div style="margin-right: 60px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Revenue {{change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}

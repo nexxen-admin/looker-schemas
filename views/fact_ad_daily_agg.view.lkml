@@ -59,7 +59,8 @@ view: fact_ad_daily_agg {
   measure: revenue_variable {
     type: count
     html:
-        <div style=" display: inline-block;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%); background:#393838">
+    <div style= "white-space: nowrap">
+    <div style=" display: inline-block;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%); background:#393838">
         <div style="display: block;  font-size: 20px;">Impressions
         <div style="display: block; line-height: 12px; font-size: 25px;color:#fff">{{rendered_value}}
         <div style="display: inline-block;line-height: 12px; font-size: font-size: 15px;color:#fff"><span class="vis-single-value-comparison-value positive; style= font-sise:15px;"><script type="text/javascript">
@@ -74,7 +75,8 @@ view: fact_ad_daily_agg {
         <span class="drillable-item-content">  </span></span></span>
        </div></div>
        {{revenue_lastday_change_parameter._rendered_value}} Decrese from previous day </div>
-    </div> ;;
+    </div>
+    </div>;;
   }
 
   dimension: rank_limit {

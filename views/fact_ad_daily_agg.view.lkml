@@ -123,6 +123,17 @@ view: fact_ad_daily_agg {
   measure: revenue_variable {
     type: count
     html:
+    <div style="text-align:center; border-radius: 0px; padding: 5px 10px; background:#eeeeee; height: 60px; color: red;">
+
+    <nav style="font-size: 18px;">
+       <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊
+       </a>
+      <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#news">News 📜</a>
+      <a style="color: #393838; padding: 5px 15px;line-height: 40px;" href="#contact">Data Dictionary❓</a>
+      <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#about">Contact️ 📒</a>
+    </nav>
+
+    </div>
      <div>
      <img src="https://files.fm/thumb_show.php?i=mp8b8xfaq">
     </div>
@@ -178,16 +189,23 @@ view: fact_ad_daily_agg {
        {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
     </div>
-
-    <div style= "background:#eeeeee; display: inline-block ;">
-         <a style=" color: #13a79c; border: solid 1px #13a79c; float: left;  font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; user-select: none; padding: 10px; margin: 5px; font-size: 1rem; line-height: 1.5; border-radius: 5px;"
-    href="#"> This is a button! </a>
-    <a style=" color: #13a79c; border: solid 1px #13a79c; float: left;  font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; user-select: none; padding: 10px; margin: 5px; font-size: 1rem; line-height: 1.5; border-radius: 5px;"
-    href="#"> This is a button! </a>
-    </div>
+    <div style="background:#fff;height: 300px;"></div>
     <div>
-    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img style="width:100%;" src="https://files.fm/thumb_show.php?i=shesqzdxk"></a>
-    </div>;;
+    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img style="width:110%;" src="https://files.fm/thumb_show.php?i=shesqzdxk"></a>
+    </div>
+    <div style="text-align:center; border-radius: 0px; padding: 5px 10px; background:#393838; height: 60px; color: red;">
+
+    <nav style="font-size: 18px;">
+      <img style="color: #efefef; padding: 5px 15px; float: left; height: 40px;background:#393838;" src="https://files.fm/thumb_show.php?i=nbde63ga4"/>
+      <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊
+       </a>
+      <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#news">News 📜</a>
+      <a style="color: #efefef; padding: 5px 15px;line-height: 40px;" href="#contact">Data Dictionary❓</a>
+      <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#about">Contact️ 📒</a>
+    </nav>
+
+    </div>
+    ;;
   }
 
   measure: revenue_variable_2 {
@@ -217,7 +235,16 @@ view: fact_ad_daily_agg {
         <span class="drillable-item-content">  </span></span></span>
        </div></div>
        {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
-    </div></div>;;
+    </div></div>
+    <div style="border-radius: 5px; text-align:center;padding: 5px 10px; background: background:#39383; height: 60px; color: red;">
+    <nav style="font-size: 18px;">
+      <a style="color: #efefef; padding: 5px 15px; float: left; line-height: 40px; font-weight: bold;" href="#home">☰
+     Home</a>
+      <a style="color: #efefef; padding: 5px 15px; float: left; line-height: 40px;" href="#news">News</a>
+      <a style="color: #efefef; padding: 5px 15px; float: left; line-height: 40px;" href="#contact">Contact</a>
+      <a style="color: #efefef; padding: 5px 15px; float: left; line-height: 40px;" href="#about">About</a>
+    </nav>
+    </div>;;
   }
 
   dimension: rank_limit {

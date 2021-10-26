@@ -155,6 +155,15 @@ view: fact_ad_daily_agg {
     </ul> ;;
   }
 
+  measure: negative_change_meaures{
+    type: number
+    sql: case when
+          ${net_revenue_lastday_change_parameter}<0 then 'Net Revenue'
+          end;;
+    html:
+    <ul>  <li> value: {{ value }} </li>  </ul> ;;
+  }
+
   measure: revenue_variable {
     type: count
     html:
@@ -225,7 +234,12 @@ view: fact_ad_daily_agg {
        {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
     </div>
-    <div style="background:#fff;height: 300px;"></div>
+    <div style="background:#fff;height: 300px;">
+      <p>
+      We saw in the above measures that we have change in some measure ,
+      What cause this change? specific country,maybe an ssp or maybe we have a tecnival issue,
+      to view more and investigate click here
+    </div>
     <div>
     <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img style="width:110%;" src="https://files.fm/thumb_show.php?i=shesqzdxk"></a>
     </div>

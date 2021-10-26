@@ -109,7 +109,7 @@ view: fact_ad_daily_agg {
     </ul> ;;
   }
 
-  measure: change_parameter {
+  measure: revenue_change_parameter {
     type: number
     sql: case when ${revenue_lastday_change_parameter}>0
       then '▲'  else '▼' end;;
@@ -118,7 +118,42 @@ view: fact_ad_daily_agg {
       <li> value: {{ value }} </li>
     </ul> ;;
   }
-
+  measure: impression_change_parameter {
+    type: number
+    sql: case when ${impressions_lastday_change_parameter}>0
+      then '▲'  else '▼' end;;
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+  measure: requests_change_parameter {
+    type: number
+    sql: case when ${request_lastday_change_parameter}>0
+      then '▲'  else '▼' end;;
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+  measure: bids_change_parameter {
+    type: number
+    sql: case when ${bids_lastday_change_parameter}>0
+      then '▲'  else '▼' end;;
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
+  measure: net_rev_change_parameter {
+    type: number
+    sql: case when ${net_revenue_lastday_change_parameter}>0
+      then '▲'  else '▼' end;;
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+  }
 
   measure: revenue_variable {
     type: count
@@ -139,7 +174,7 @@ view: fact_ad_daily_agg {
     </div>
     <div style = "background:#393838;">
     <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{change_parameter._value}}
+         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{impression_change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
@@ -147,7 +182,7 @@ view: fact_ad_daily_agg {
        {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
      </div>
      <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Requests {{change_parameter._value}}
+        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Requests {{requests_change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ request_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
@@ -155,7 +190,7 @@ view: fact_ad_daily_agg {
        {{request_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
      <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Bids {{change_parameter._value}}
+         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Bids {{bids_change_parameter._value}}
         <div style= "display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Bids_parameter._rendered_value }}
         <div style=" display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
@@ -165,7 +200,7 @@ view: fact_ad_daily_agg {
     </div>
     <div style = "background:#393838; margin-top: 10px;">
     <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Revenue {{change_parameter._value}}
+        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Revenue {{revenue_change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
@@ -174,7 +209,7 @@ view: fact_ad_daily_agg {
     </div>
 
      <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{change_parameter._value}}
+        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{impression_change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
@@ -182,7 +217,7 @@ view: fact_ad_daily_agg {
        {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
     <div style=" display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Net Revenue {{change_parameter._value}}
+        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Net Revenue {{net_rev_change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Net_Margin_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>

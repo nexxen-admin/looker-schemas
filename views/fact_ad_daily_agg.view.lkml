@@ -4,6 +4,7 @@ view: fact_ad_daily_agg {
   parameter: max_rank {
     type: number
     group_label: "Admins dim"
+    hidden: yes
   }
 
   measure: impression_parameter {
@@ -285,6 +286,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Admins dim"
     sql: {% parameter max_rank %} ;;
+    hidden: yes
   }
 
   dimension: a_domain_key {
@@ -666,6 +668,7 @@ view: fact_ad_daily_agg {
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
+    hidden: yes
   }
   measure: Last_Day_net_Revenue {
     type: sum
@@ -686,7 +689,7 @@ view: fact_ad_daily_agg {
   }
 
   measure:  Last_day_Requests {
-    label: "Last day Requests"
+    label: "Requests Last day "
     type: sum
     sql: ${TABLE}.requests ;;
     value_format: "#,##0.00"
@@ -694,7 +697,7 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
   measure:  Last_day_Bid_Rate {
-    label: "Last day Bid Rate"
+    label: " Bid Rate Last day"
     type: sum
     sql: ${TABLE}.responses/NULLIF(${TABLE}.requests,0) ;;
     value_format: "0.00\%"

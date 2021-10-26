@@ -654,7 +654,7 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
   measure:  Last_day_Revenue {
-    label: "Last day Revenue"
+    label: "Revenue Last day "
     type: sum
     sql: ${TABLE}.revenue ;;
     group_label: "Time Shifted Measures"

@@ -33,9 +33,9 @@ view: fact_ad_daily_agg {
       <li> value: {{ value }} </li>
     </ul> ;;
   }
-  measure: fillRate_parameter {
+  measure: Bids_parameter {
     type: number
-    sql: ${Last_day_Fill_Rate} ;;
+    sql: ${Last_day_bids} ;;
     value_format: "0.00\%"
     html:
     <ul>
@@ -50,7 +50,9 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
+
   measure: Net_Margin_parameter {
     type: number
     sql: ${Last_Day_net_Revenue} ;;
@@ -59,6 +61,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: revenue_lastday_change_parameter {
     type: number
@@ -96,29 +99,26 @@ view: fact_ad_daily_agg {
       <li> value: {{ value }} </li>
     </ul> ;;
   }
-
-  measure: change_parameter {
+  measure: bids_lastday_change_parameter {
     type: number
-    sql: case when ${revenue_lastday_change_parameter}>0
-        then '▲'  else '▼' end;;
+    sql: (${Last_day_bids}/${previous_day_responses})-1 ;;
+    value_format: "0.00%"
     html:
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
   }
 
-  measure: impression_variable {
-    type: count
+  measure: change_parameter {
+    type: number
+    sql: case when ${revenue_lastday_change_parameter}>0
+      then '▲'  else '▼' end;;
     html:
-    <div style="linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px;"><strong>Impressions</strong>
-        <div style="display: block; line-height: 12px; font-size: 25px;">{{rendered_value}}
-        <div style="display: inline-block;line-height: 12px; font-size: font-size: 15px;"><span class="vis-single-value-comparison-value positive; style= font-sise:15px;"><script type="text/javascript">
-        //<![CDATA] if (revenue_lastday_change_parameter._rendered_value >0){greeting ="▲";} else {greeting = "▼"} document.getElementById("demo").innerHTML = greeting;</script>
-        <span class="drillable-item" data-links="" data-context="" data-add-filter-json=""><span class="drillable-item-content">10%</span></span></span></div></div>
-         last day change</div>
-    </div> ;;
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
   }
+
 
   measure: revenue_variable {
     type: count
@@ -147,14 +147,24 @@ view: fact_ad_daily_agg {
        {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
      </div>
      <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
+        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Requests {{change_parameter._value}}
+        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ request_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
        </div></div>
-       {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
+       {{request_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
-    <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+     <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Bids {{change_parameter._value}}
+        <div style= "display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Bids_parameter._rendered_value }}
+        <div style=" display: inline-block; font-size: 15px;color:#fff">
+        <span class="drillable-item-content">  </span></span></span>
+       </div></div>
+       {{bids_lastday_change_parameter._rendered_value}} from past day </div>
+     </div>
+    </div>
+    <div style = "background:#393838; margin-top: 10px;">
+    <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Net Revenue {{change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Net_Margin_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;color:#fff">
@@ -162,16 +172,7 @@ view: fact_ad_daily_agg {
        </div></div>
        {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
-    </div>
-    <div style = "background:#393838; margin-top: 10px;">
-    <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{change_parameter._value}}
-        <div style= "display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
-        <div style=" display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
-     </div>
+
      <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
@@ -255,7 +256,7 @@ view: fact_ad_daily_agg {
   dimension: a_domain_key {
     type: number
     sql: ${TABLE}.A_Domain_Key ;;
-  hidden: yes
+    hidden: yes
   }
 
   measure:: cogs {
@@ -564,8 +565,10 @@ view: fact_ad_daily_agg {
     label: "Previous day Revenue"
     type: sum
     sql: ${TABLE}.revenue ;;
+    group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [date_key_date: "2 days ago"]
+    hidden: yes
   }
 
   measure:  Previous_day_Requests {
@@ -573,42 +576,51 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.requests ;;
     value_format: "$0.00,,\" M\""
+    group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
+    hidden: yes
   }
   measure:  Previous_day_impressions {
     label: "Previous day Impressions"
     type: sum
     sql: ${TABLE}.impression_pixel ;;
     value_format: "$0.00,,\" M\""
+    group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
+    hidden: yes
   }
   measure:  previous_day_Bid_Rate {
     label: "Bid Rate Previous day"
     type: sum
     sql: ${TABLE}.responses/NULLIF(${TABLE}.requests,0) ;;
     value_format: "0.00\%"
+    group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
+    hidden: yes
   }
-  measure: previous_day_Fill_Rate {
+  measure: previous_day_responses {
     type: sum
-    label: "Fill Rate Previous day"
+    label: "Bids Previous day"
     value_format: "0.00%"
-    group_label: "Daily Measures"
-    sql: ${TABLE}.impression_pixel/NULLIF(${TABLE}.requests,0)  ;;
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.responses  ;;
     filters: [date_key_date: "2 days ago"]
+    hidden: yes
   }
   measure: prev_Day_net_Revenue {
     type: sum
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
-    group_label: "Daily Measures"
+    group_label: "Time Shifted Measures"
     sql: ${TABLE}.revenue - ${TABLE}.cogs  ;;
     filters: [date_key_date: "2 days ago"]
+    hidden: yes
   }
   measure:  Last_day_Revenue {
     label: "Last day Revenue"
     type: sum
     sql: ${TABLE}.revenue ;;
+    group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
@@ -617,38 +629,41 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.impression_pixel ;;
     value_format: "$#,##0.00"
+    group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
   measure: Last_Day_net_Revenue {
     type: sum
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
-    group_label: "Daily Measures"
+    group_label: "Time Shifted Measures"
     sql: ${TABLE}.revenue - ${TABLE}.cogs  ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
-  measure: Last_day_Fill_Rate {
+  measure: Last_day_bids {
     type: sum
-    label: "Fill Rate Last day"
+    label: "Bids Last day"
     value_format: "0.00%"
-    group_label: "Daily Measures"
-    sql: ${TABLE}.impression_pixel/NULLIF(${TABLE}.requests,0) ;;
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.responses ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
   measure:  Last_day_Requests {
-    label: "Last day Revenue"
+    label: "Last day Requests"
     type: sum
     sql: ${TABLE}.requests/NULLIF(${TABLE}.requests,0) ;;
     value_format: "$#,##0.00"
+    group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
   measure:  Last_day_Bid_Rate {
-    label: "Last day Revenue"
+    label: "Last day Bid Rate"
     type: sum
     sql: ${TABLE}.responses/NULLIF(${TABLE}.requests,0) ;;
     value_format: "0.00\%"
+    group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 

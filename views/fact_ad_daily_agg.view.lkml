@@ -36,7 +36,7 @@ view: fact_ad_daily_agg {
   measure: Bids_parameter {
     type: number
     sql: ${Last_day_bids} ;;
-    value_format: "0.00\%"
+    value_format:"0.00,\" M\""
     html:
     <ul>
       <li> value: {{ value }} </li>
@@ -45,7 +45,7 @@ view: fact_ad_daily_agg {
   measure: bidRate_parameter {
     type: number
     sql: ${Last_day_Bid_Rate} ;;
-    value_format: "0.00\%"
+    value_format:  "0.00\%"
     html:
     <ul>
       <li> value: {{ value }} </li>
@@ -56,7 +56,7 @@ view: fact_ad_daily_agg {
   measure: Net_Margin_parameter {
     type: number
     sql: ${Last_Day_net_Revenue} ;;
-    value_format: "$0.00,,\" M\""
+    value_format: "$0.00,\" K\""
     html:
     <ul>
       <li> value: {{ value }} </li>
@@ -165,12 +165,12 @@ view: fact_ad_daily_agg {
     </div>
     <div style = "background:#393838; margin-top: 10px;">
     <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Net Revenue {{change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Net_Margin_parameter._rendered_value }}
+        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Revenue {{change_parameter._value}}
+        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}
         <div style="display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
        </div></div>
-       {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
+       {{revenue_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
 
      <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
@@ -539,7 +539,7 @@ view: fact_ad_daily_agg {
   measure: responses {
     type: sum
     label: "Bids"
-    #value_format: "#,##0.0,,\"\""
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.responses ;;
   }
@@ -575,16 +575,16 @@ view: fact_ad_daily_agg {
     label: "Previous day Requests"
     type: sum
     sql: ${TABLE}.requests ;;
-    value_format: "$0.00,,\" M\""
+    value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
-    hidden: yes
+
   }
   measure:  Previous_day_impressions {
     label: "Previous day Impressions"
     type: sum
     sql: ${TABLE}.impression_pixel ;;
-    value_format: "$0.00,,\" M\""
+    value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
     hidden: yes
@@ -601,7 +601,7 @@ view: fact_ad_daily_agg {
   measure: previous_day_responses {
     type: sum
     label: "Bids Previous day"
-    value_format: "0.00%"
+    value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.responses  ;;
     filters: [date_key_date: "2 days ago"]
@@ -628,7 +628,7 @@ view: fact_ad_daily_agg {
     label: "Previous day Impressions"
     type: sum
     sql: ${TABLE}.impression_pixel ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
@@ -644,7 +644,7 @@ view: fact_ad_daily_agg {
   measure: Last_day_bids {
     type: sum
     label: "Bids Last day"
-    value_format: "0.00%"
+    value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.responses ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
@@ -653,8 +653,8 @@ view: fact_ad_daily_agg {
   measure:  Last_day_Requests {
     label: "Last day Requests"
     type: sum
-    sql: ${TABLE}.requests/NULLIF(${TABLE}.requests,0) ;;
-    value_format: "$#,##0.00"
+    sql: ${TABLE}.requests ;;
+    value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }

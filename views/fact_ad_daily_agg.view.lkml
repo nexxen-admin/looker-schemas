@@ -234,16 +234,21 @@ view: fact_ad_daily_agg {
        {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
     </div>
-    <div style="background:#fff;height: 300px;">
-      <p>
-      We saw in the above measures that we have change in some measure ,
-      What cause this change? specific country,maybe an ssp or maybe we have a tecnival issue,
-      to view more and investigate click here
+    <div style=" font-family:verdana;display:inline-block;background:#fff;height: 150px;line-height: normal; letter-spacing: 0.01em; margin:0px; text-align:left;font-size:18px;">
+        We saw in the above measures that we have change in some measure,<br>
+         What cause this change?<br>
+         country,maybe an ssp or maybe we have a tecnical issue,<br>
+         <strong>to view more and investigate click on the button<strong>
     </div>
+    <div style= "background:#fff;float:right; margin-top; 50px;">
+    <a style=" color: #4285F4 ;border: solid 1px #4285F4; float: left;font-weight: 400;
+      text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;
+     font-size: 1rem; line-height: 1.5; border-radius: 5px;" href="#">View More!</a>
+     </div>
     <div>
     <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img style="width:110%;" src="https://files.fm/thumb_show.php?i=shesqzdxk"></a>
     </div>
-    <div style="text-align:center; border-radius: 0px; padding: 5px 10px; background:#393838; height: 60px; color: red;">
+    <div style="text-align:center; border-radius: 0px;  padding: 5px 10px; background:#393838; height: 60px; color: red;">
 
     <nav style="font-size: 18px;">
       <img style="color: #efefef; padding: 5px 15px; float: left; height: 40px;background:#393838;" src="https://files.fm/thumb_show.php?i=nbde63ga4"/>
@@ -251,7 +256,7 @@ view: fact_ad_daily_agg {
        </a>
       <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#news">News 📜</a>
       <a style="color: #efefef; padding: 5px 15px;line-height: 40px;" href="#contact">Data Dictionary❓</a>
-      <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#about">Contact️ 📒</a>
+      <a style=" color: #efefef; padding: 5px 15px; line-height: 40px;" href="#about">Contact️ 📒</a>
     </nav>
 
     </div>

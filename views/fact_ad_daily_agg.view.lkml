@@ -44,7 +44,9 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
+
   measure: bidRate_parameter {
     type: number
     sql: ${Last_day_Bid_Rate} ;;
@@ -275,49 +277,12 @@ view: fact_ad_daily_agg {
 
     </div>
     ;;
-  }
-
-  measure: revenue_variable_2 {
-    type: count
-    html:
-    <div style = "background:#fff; border-radius: 10px;">
-    <div style="margin-right: 60px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#393838;letter-spacing: 0.01em;">Revenue {{change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#393838">{{ revenue_parameter._rendered_value }}
-        <div style="  margin-Left: -400px ;display: inline-block; font-size: 15px;color:#393838">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{revenue_lastday_change_parameter._rendered_value}} from past day </div>
-    </div>
-     <div style="margin-right: 60px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#393838;letter-spacing: 0.01em;">Impressions {{change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#393838">{{ impression_parameter._rendered_value }}
-        <div style="  margin-Left: -400px ;display: inline-block; font-size: 15px;color:#393838">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
-    </div>
-    <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#393838;letter-spacing: 0.01em">Net Revenue {{change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#393838">{{ Net_Margin_parameter._rendered_value }}
-        <div style="  margin-Left: -400px ;display: inline-block; font-size: 15px;color:#393838">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
-    </div></div>
-    <div style="border-radius: 5px; text-align:center;padding: 5px 10px; background: background:#39383; height: 60px; color: red;">
-    <nav style="font-size: 18px;">
-      <a style="color: #efefef; padding: 5px 15px; float: left; line-height: 40px; font-weight: bold;" href="#home">☰
-     Home</a>
-      <a style="color: #efefef; padding: 5px 15px; float: left; line-height: 40px;" href="#news">News</a>
-      <a style="color: #efefef; padding: 5px 15px; float: left; line-height: 40px;" href="#contact">Contact</a>
-      <a style="color: #efefef; padding: 5px 15px; float: left; line-height: 40px;" href="#about">About</a>
-    </nav>
-    </div>;;
+    group_label: "Admins Metrics"
   }
 
   dimension: rank_limit {
     type: number
+    group_label: "Admins Measures"
     sql: {% parameter max_rank %} ;;
   }
 

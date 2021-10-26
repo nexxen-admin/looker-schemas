@@ -251,7 +251,7 @@ view: fact_ad_daily_agg {
     <div style="text-align:center; border-radius: 0px;  padding: 5px 10px; background:#393838; height: 60px; color: red;">
 
     <nav style="font-size: 18px;">
-      <img style="color: #efefef; padding: 5px 15px; float: left; height: 40px;background:#393838;" src="https://files.fm/thumb_show.php?i=nbde63ga4"/>
+      <img style=" width;100px ;padding: 5px 15px; float: left; height: 40px;" src="https://files.fm/thumb_show.php?i=xexpz8jhv">
       <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊
        </a>
       <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#news">News 📜</a>

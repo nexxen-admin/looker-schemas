@@ -246,12 +246,12 @@ view: fact_ad_daily_agg {
      font-size: 1rem; line-height: 1.5; border-radius: 5px;" href="#">View More!</a>
      </div>
     <div>
-    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img style="width:110%;" src="https://files.fm/thumb_show.php?i=shesqzdxk"></a>
+    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img style="width:110%;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABa4A…r6RcXPhc5PUv/N/FXfP3/ZW/RfjZgVEoAAAAASUVORK5CYII="></a>
     </div>
     <div style="text-align:center; border-radius: 0px;  padding: 5px 10px; background:#393838; height: 60px; color: red;">
 
     <nav style="font-size: 18px;">
-      <img style=" width;100px ;padding: 5px 15px; float: left; height: 40px;" src="https://files.fm/thumb_show.php?i=xexpz8jhv">
+      <img style=" width;100px ;padding: 5px 15px; float: left; height: 40px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAA…prs+779J3Te6590L1/j8HLRpR86ZVlgAAAABJRU5ErkJggg==">
       <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊
        </a>
       <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#news">News 📜</a>

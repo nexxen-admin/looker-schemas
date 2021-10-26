@@ -8,11 +8,12 @@ view: fact_ad_daily_agg {
   measure: impression_parameter {
     type: number
     sql: ${impression_pixel} ;;
-    value_format: "#,##0"
+    value_format: "0.00,,,\" B\""
     html:
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
 
   measure: revenue_parameter {
@@ -23,20 +24,22 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: request_parameter {
     type: number
     sql: ${Last_day_Requests} ;;
-    value_format: "0.00,,\" M\""
+    value_format: "0.00,,,\" B\""
     html:
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: Bids_parameter {
     type: number
     sql: ${Last_day_bids} ;;
-    value_format:"0.00,\" M\""
+    value_format:"0.00,,,\" B\""
     html:
     <ul>
       <li> value: {{ value }} </li>
@@ -71,6 +74,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: impressions_lastday_change_parameter {
     type: number
@@ -80,6 +84,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: request_lastday_change_parameter {
     type: number
@@ -89,6 +94,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: net_revenue_lastday_change_parameter {
     type: number
@@ -98,6 +104,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: bids_lastday_change_parameter {
     type: number
@@ -107,6 +114,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
 
   measure: revenue_change_parameter {
@@ -117,6 +125,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: impression_change_parameter {
     type: number
@@ -126,6 +135,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: requests_change_parameter {
     type: number
@@ -135,6 +145,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: bids_change_parameter {
     type: number
@@ -144,6 +155,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
   measure: net_rev_change_parameter {
     type: number
@@ -153,6 +165,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> value: {{ value }} </li>
     </ul> ;;
+    hidden: yes
   }
 
   measure: negative_change_meaures{
@@ -162,9 +175,10 @@ view: fact_ad_daily_agg {
           end;;
     html:
     <ul>  <li> value: {{ value }} </li>  </ul> ;;
+    hidden: yes
   }
 
-  measure: revenue_variable {
+  measure: HTML_variable {
     type: count
     html:
     <div style="text-align:center; border-radius: 0px; padding: 5px 10px; background:#eeeeee; height: 60px; color: red;">
@@ -632,6 +646,7 @@ view: fact_ad_daily_agg {
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
+    hidden: yes
 
   }
   measure:  Previous_day_impressions {

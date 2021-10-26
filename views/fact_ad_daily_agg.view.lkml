@@ -3,6 +3,7 @@ view: fact_ad_daily_agg {
 
   parameter: max_rank {
     type: number
+    group_label: "Admins dim"
   }
 
   measure: impression_parameter {
@@ -282,7 +283,7 @@ view: fact_ad_daily_agg {
 
   dimension: rank_limit {
     type: number
-    group_label: "Admins Measures"
+    group_label: "Admins dim"
     sql: {% parameter max_rank %} ;;
   }
 

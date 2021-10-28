@@ -598,7 +598,7 @@ view: fact_ad_daily_agg {
 
 
   measure:  Previous_day_Revenue {
-    label: "Previous day Revenue"
+    label: "Revenue Previous day "
     type: sum
     sql: ${TABLE}.revenue ;;
     group_label: "Time Shifted Measures"
@@ -608,7 +608,7 @@ view: fact_ad_daily_agg {
   }
 
   measure:  Previous_day_Requests {
-    label: "Previous day Requests"
+    label: "Requests Previous day "
     type: sum
     sql: ${TABLE}.requests ;;
     value_format: "#,##0.00"

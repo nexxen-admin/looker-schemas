@@ -618,7 +618,7 @@ view: fact_ad_daily_agg {
 
   }
   measure:  Previous_day_impressions {
-    label: "Previous day Impressions"
+    label: "Impressions Previous day "
     type: sum
     sql: ${TABLE}.impression_pixel ;;
     value_format: "#,##0.00"
@@ -662,7 +662,7 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
   measure:  Last_day_impressions {
-    label: "Previous day Impressions"
+    label: "Impressions Previous day "
     type: sum
     sql: ${TABLE}.impression_pixel ;;
     value_format: "#,##0.00"

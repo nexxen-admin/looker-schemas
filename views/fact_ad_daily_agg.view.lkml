@@ -604,7 +604,7 @@ view: fact_ad_daily_agg {
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [date_key_date: "2 days ago"]
-    hidden: yes
+
   }
 
   measure:  Previous_day_Requests {
@@ -614,7 +614,7 @@ view: fact_ad_daily_agg {
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
-    hidden: yes
+
 
   }
   measure:  Previous_day_impressions {
@@ -624,7 +624,7 @@ view: fact_ad_daily_agg {
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
-    hidden: yes
+
   }
   measure:  previous_day_Bid_Rate {
     label: "Bid Rate Previous day"
@@ -633,7 +633,7 @@ view: fact_ad_daily_agg {
     value_format: "0.00\%"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
-    hidden: yes
+
   }
   measure: previous_day_responses {
     type: sum
@@ -642,7 +642,7 @@ view: fact_ad_daily_agg {
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.responses  ;;
     filters: [date_key_date: "2 days ago"]
-    hidden: yes
+
   }
   measure: prev_Day_net_Revenue {
     type: sum
@@ -651,7 +651,7 @@ view: fact_ad_daily_agg {
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.revenue - ${TABLE}.cogs  ;;
     filters: [date_key_date: "2 days ago"]
-    hidden: yes
+
   }
   measure:  Last_day_Revenue {
     label: "Revenue Last day "

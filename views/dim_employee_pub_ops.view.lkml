@@ -21,6 +21,7 @@ view: v_dim_employee_pub_ops {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_employee_pub_ops {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -71,7 +73,6 @@ view: v_dim_employee_pub_ops {
 
   dimension: employee_name {
     label: "PubOps Name"
-    group_label: "Employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
   }

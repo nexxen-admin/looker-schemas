@@ -74,7 +74,6 @@ view: v_dim_employee_biz_dev {
 
   dimension: employee_name {
     label: "BizDev Name"
-    group_label: "Employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
   }

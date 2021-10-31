@@ -135,6 +135,19 @@ join: dim_employee {
   sql_on: ${dim_employee.employee_key}=${dim_publisher.bizdev_owner_key};;
   relationship: many_to_one
 }
+ join: v_dim_employee_biz_dev {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
+    relationship: many_to_one
+  }
+  join: v_dim_employee_pub_ops {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.bizdev_owner_key};;
+    relationship: many_to_one
+  }
+
 join: dim_flight {
   type: inner
   view_label: "Flight"

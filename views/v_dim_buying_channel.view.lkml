@@ -13,6 +13,7 @@ view: v_dim_buying_channel {
   dimension: buying_channel {
     type: string
     sql: ${TABLE}.Buying_Channel ;;
+    hidden: yes
   }
 
   dimension: deal_key {

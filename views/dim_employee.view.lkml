@@ -47,24 +47,28 @@ view: dim_employee {
     label: "Employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
+    hidden: yes
   }
 
   dimension: employee_office {
     label: "Employee Office"
     type: string
     sql: ${TABLE}.Employee_Office ;;
+    hidden: yes
   }
 
   dimension: employee_region {
     label: "Employee Region"
     type: string
     sql: ${TABLE}.Employee_Region ;;
+    hidden: yes
   }
 
   dimension: role_source {
     label: "Employee Role"
     type: string
     sql: ${TABLE}.Role_Source ;;
+    hidden: yes
   }
 
   measure: count {

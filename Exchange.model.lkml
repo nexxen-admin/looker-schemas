@@ -30,6 +30,16 @@ join: dim_country {
   sql_on: ${dim_country.country_key}=${fact_ad_daily_agg.country_key} ;;
   relationship: many_to_one
   }
+  join: v_dim_buying_channel {
+    type:  inner
+    view_label: "Buying Channel"
+    sql_on: ${v_dim_buying_channel.dsp_key}=${fact_ad_daily_agg.dsp_key} and
+    ${v_dim_buying_channel.deal_key}=${fact_ad_daily_agg.deal_key} ;;
+    relationship: many_to_one
+
+
+  }
+
 join: dim_device_type {
   type: inner
   view_label: "Request Attributes"

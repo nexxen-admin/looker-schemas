@@ -144,7 +144,7 @@ join: dim_employee {
   join: v_dim_employee_pub_ops {
     type: inner
     view_label: "Employee"
-    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.bizdev_owner_key};;
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one
   }
 

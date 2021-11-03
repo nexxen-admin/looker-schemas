@@ -575,7 +575,7 @@ view: fact_ad_daily_agg {
   measure: responses {
     type: sum
     label: "Bids"
-    value_format: "$#,##0.00"
+    value_format: "#,##0"
     group_label: "Daily Measures"
     sql: ${TABLE}.responses ;;
   }

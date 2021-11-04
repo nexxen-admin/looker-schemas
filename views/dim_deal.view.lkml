@@ -130,6 +130,7 @@ view: dim_deal {
   dimension: dsp_seat {
     type: string
     sql: ${TABLE}.DSP_Seat ;;
+    hidden:yes
   }
 
   dimension: internal_deal_id {

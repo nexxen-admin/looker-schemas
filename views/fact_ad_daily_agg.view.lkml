@@ -505,7 +505,7 @@ view: fact_ad_daily_agg {
   measure: Margin {
     type: number
     label: "Margin%"
-    value_format: "0.00\%"
+    value_format: "0.00"
     group_label: "Daily Measures"
     sql: (${revenue} - ${cogs})/NULLIF(${revenue},0) ;;
   }

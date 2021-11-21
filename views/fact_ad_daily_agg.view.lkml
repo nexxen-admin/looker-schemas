@@ -197,7 +197,7 @@ view: fact_ad_daily_agg {
 
     </div>
      <div>
-     <img  src="https://tremor.cloud.looker.com/api/internal/homepage_items/5/image">
+     <img style= "width: 100%" src="https://i.ibb.co/nzf8gc7/Frame-4-1.png" alt="Frame-4-1" border="0">
     </div>
     <div style = "background:#393838;">
     <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
@@ -264,7 +264,7 @@ view: fact_ad_daily_agg {
      font-size: 1rem; line-height: 1.5; border-radius: 5px;" href="#">View More!</a>
      </div>
     <div>
-    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img  src="https://tremor.cloud.looker.com/api/internal/homepage_items/4/image"></a>
+    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img  style= "width:100%"  src= "https://i.ibb.co/7WgQTps/Frame-3-1.png" alt="Frame-3-1" border="0">"></a>
     </div>
     <div style="text-align:center; border-radius: 0px;  padding: 5px 10px; background:#393838; height: 60px; color: red;">
 

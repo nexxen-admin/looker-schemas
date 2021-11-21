@@ -197,7 +197,7 @@ view: fact_ad_daily_agg {
 
     </div>
      <div>
-     <img style= "width:100%;" src="https://tremor.cloud.looker.com/api/internal/homepage_items/5/image">
+     <img  src="https://tremor.cloud.looker.com/api/internal/homepage_items/5/image">
     </div>
     <div style = "background:#393838;">
     <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">

@@ -188,11 +188,11 @@ view: fact_ad_daily_agg {
     <div style="text-align:center; border-radius: 0px; padding: 5px 10px; background:#eeeeee; height: 60px; color: red;">
 
     <nav style="font-size: 18px;">
-       <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊
+       <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#home">Reports
        </a>
-      <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#news">News 📜</a>
-      <a style="color: #393838; padding: 5px 15px;line-height: 40px;" href="#contact">Data Dictionary❓</a>
-      <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#about">Contact️ 📒</a>
+      <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#news">News</a>
+      <a style="color: #393838; padding: 5px 15px;line-height: 40px;" href="#contact">Data Dictionary</a>
+      <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#about">Contact️</a>
     </nav>
 
     </div>

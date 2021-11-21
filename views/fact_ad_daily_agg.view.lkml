@@ -264,7 +264,7 @@ view: fact_ad_daily_agg {
      font-size: 1rem; line-height: 1.5; border-radius: 5px;" href="#">View More!</a>
      </div>
     <div>
-    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img style="width:110%;" src="https://tremor.cloud.looker.com/api/internal/homepage_items/4/image"></a>
+    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img  src="https://tremor.cloud.looker.com/api/internal/homepage_items/4/image"></a>
     </div>
     <div style="text-align:center; border-radius: 0px;  padding: 5px 10px; background:#393838; height: 60px; color: red;">
 

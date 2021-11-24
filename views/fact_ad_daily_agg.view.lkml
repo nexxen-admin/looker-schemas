@@ -507,7 +507,7 @@ view: fact_ad_daily_agg {
     label: "Margin%"
     value_format: "0.00"
     group_label: "Daily Measures"
-    sql: (${revenue} - ${cogs})/NULLIF(${revenue},0) ;;
+    sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0))*100 ;;
   }
 
   measure: Pub_eCPM {

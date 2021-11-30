@@ -200,6 +200,7 @@ view: fact_ad_daily_agg {
      <img style= "width: 100%" src="https://i.ibb.co/nzf8gc7/Frame-4-1.png" alt="Frame-4-1" border="0">
     </div>
     <div style = "background:#393838;">
+    <div style ="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Last Day Matric
     <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
          <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{impression_change_parameter._value}}
         <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}

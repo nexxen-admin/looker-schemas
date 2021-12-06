@@ -178,7 +178,7 @@ join: dim_dsp_account {
 }
 join: dim_dsp_seat {
   type: inner
-  view_label: "DSP d"
+  view_label: "DSP"
   sql_on: ${dim_dsp_seat.dsp_seat_key}=${fact_ad_daily_agg.dsp_seat_key};;
   relationship: many_to_one
 

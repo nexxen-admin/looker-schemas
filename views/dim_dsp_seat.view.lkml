@@ -13,6 +13,7 @@ view: dim_dsp_seat {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -27,45 +28,61 @@ view: dim_dsp_seat {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension: dsp_id {
     type: string
     sql: ${TABLE}.DSP_ID ;;
+    hidden: yes
   }
 
   dimension: dsp_key {
     type: number
     sql: ${TABLE}.DSP_Key ;;
+    hidden: yes
   }
 
   dimension: dsp_name {
     type: string
     sql: ${TABLE}.DSP_Name ;;
+    hidden: yes
   }
 
   dimension: dsp_seat_key {
     type: number
     sql: ${TABLE}.DSP_Seat_Key ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
+  }
+
+  dimension: Is_1st_Party_Demand {
+    type: string
+    label: "Is 1st Party Demand"
+    sql: ${TABLE}.Is_1st_Party_Demand ;;
+
   }
 
   dimension: seat_id {
     type: string
     sql: ${TABLE}.Seat_ID ;;
+    hidden: yes
   }
 
   dimension: seat_key {
     type: number
     sql: ${TABLE}.Seat_Key ;;
+    hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: [dsp_name]
+    hidden: yes
   }
 }

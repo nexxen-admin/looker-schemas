@@ -71,12 +71,6 @@ view: dim_dsp {
     sql: ${TABLE}.DSP_Name ;;
   }
 
-  dimension: is_1st_party {
-    description: "Indicate if the dsp connection is 1st party ot 3rd party --> 1 is yes , 0 is no "
-    label: "Is 1st Party Demand"
-    type: yesno
-    sql: ${TABLE}.Is_1st_Party ;;
-  }
 
   dimension: ri_info {
     type: string

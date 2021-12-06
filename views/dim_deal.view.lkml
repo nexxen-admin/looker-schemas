@@ -94,6 +94,7 @@ view: dim_deal {
 
   dimension: deal_office {
     type: string
+    description: "The Office to which the Deal is associated"
     sql: ${TABLE}.Deal_Office ;;
   }
 

@@ -201,8 +201,9 @@ view: fact_ad_daily_agg {
     </div>
     <div style = "background:#393838;">
     <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{impression_change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
+         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions
+        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }} {{impression_change_parameter._value}}
+
         <div style="display: inline-block; font-size: 15px;color:#fff">
         <span class="drillable-item-content">  </span></span></span>
        </div></div>
@@ -252,17 +253,7 @@ view: fact_ad_daily_agg {
        {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
     </div>
     </div>
-    <div style=" font-family:verdana;display:inline-block;background:#fff;height: 150px;line-height: normal; letter-spacing: 0.01em; margin:0px; text-align:left;font-size:18px;">
-        We saw in the above measures that we have change in some measure,<br>
-         What cause this change?<br>
-         country,maybe an ssp or maybe we have a tecnical issue,<br>
-         <strong>to view more and investigate click on the button<strong>
-    </div>
-    <div style= "background:#fff;float:right; margin-top; 50px;">
-    <a style=" color: #4285F4 ;border: solid 1px #4285F4; float: left;font-weight: 400;
-      text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;
-     font-size: 1rem; line-height: 1.5; border-radius: 5px;" href="#">View More!</a>
-     </div>
+
     <div>
     <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img  style= "width:100%"  src= "https://i.ibb.co/7WgQTps/Frame-3-1.png" alt="Frame-3-1" border="0">"></a>
     </div>

@@ -62,7 +62,7 @@ view: dim_dsp_seat {
   }
 
   dimension: Is_1st_Party_Demand {
-    type: string
+    type: yesno
     label: "Is 1st Party Demand"
     sql: ${TABLE}.Is_1st_Party_Demand ;;
 

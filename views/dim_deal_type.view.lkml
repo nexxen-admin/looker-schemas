@@ -45,6 +45,8 @@ view: dim_deal_type {
 
   dimension: deal_type_name {
     label: "Deal Type"
+    description: "Describe the type of the deal ,when a request is not associated to a
+    deal the Type Value will be Unknown "
     type: string
     sql: ${TABLE}.Deal_Type_Name ;;
   }

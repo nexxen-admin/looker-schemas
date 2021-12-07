@@ -72,13 +72,7 @@ view: dim_deal {
     type: time
     description: "Deal contract End date"
     timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
+      date
     ]
     sql: ${TABLE}.Deal_End ;;
   }
@@ -111,13 +105,7 @@ view: dim_deal {
     description: "Deal contract Start date"
     type: time
     timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
+      date
     ]
     sql: ${TABLE}.Deal_Start ;;
   }
@@ -130,6 +118,7 @@ view: dim_deal {
   dimension: deal_type_id {
     type: number
     sql: ${TABLE}.Deal_Type_ID ;;
+    hidden: yes
   }
 
   dimension: deal_type_key {
@@ -145,8 +134,10 @@ view: dim_deal {
   }
 
   dimension: internal_deal_id {
+    description: ""
     type: number
     sql: ${TABLE}.Internal_Deal_ID ;;
+    hidden: yes
   }
 
   dimension: monthly_rev_target {

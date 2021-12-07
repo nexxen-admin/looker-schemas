@@ -3,11 +3,13 @@ view: dim_deal {
 
   dimension: agency_id {
     type: number
+    description: ""
     sql: ${TABLE}.Agency_ID ;;
   }
 
   dimension: daily_rate_target {
     type: number
+    description: ""
     sql: ${TABLE}.Daily_Rate_Target ;;
   }
 
@@ -44,26 +46,31 @@ view: dim_deal {
 
   dimension: deal_auction_type {
     type: string
+    description: ""
     sql: ${TABLE}.Deal_Auction_Type ;;
   }
 
   dimension: deal_bid_floor {
     type: number
+    description: ""
     sql: ${TABLE}.Deal_Bid_Floor ;;
   }
 
   dimension: deal_data_fee {
     type: number
+    description: ""
     sql: ${TABLE}.Deal_Data_Fee ;;
   }
 
   dimension: deal_demand_margin_pct {
     type: number
+    description: ""
     sql: ${TABLE}.Deal_demand_margin_pct ;;
   }
 
   dimension_group: deal_end {
     type: time
+    description: "Deal contract End date"
     timeframes: [
       raw,
       time,
@@ -77,6 +84,7 @@ view: dim_deal {
   }
 
   dimension: deal_id {
+    description: "The Deal Externatal ID , contain 1st & 3rd party deals"
     type: string
     sql: ${TABLE}.Deal_ID ;;
   }
@@ -88,6 +96,7 @@ view: dim_deal {
   }
 
   dimension: deal_name {
+    description: "Deal Description"
     type: string
     sql: ${TABLE}.Deal_Name ;;
   }
@@ -99,6 +108,7 @@ view: dim_deal {
   }
 
   dimension_group: deal_start {
+    description: "Deal contract Start date"
     type: time
     timeframes: [
       raw,
@@ -151,11 +161,13 @@ view: dim_deal {
   }
 
   dimension: vcr_target {
+    description: ""
     type: number
     sql: ${TABLE}.Vcr_Target ;;
   }
 
   dimension: viewability_target {
+    description: "deal viewability target"
     type: number
     sql: ${TABLE}.Viewability_Target ;;
   }

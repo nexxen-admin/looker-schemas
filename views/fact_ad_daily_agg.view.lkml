@@ -554,7 +554,7 @@ view: fact_ad_daily_agg {
     label: "Win Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${impression_pixel}/NULLIF(${responses},0);;
+    sql: ${impression_win}/NULLIF(${responses},0);;
   }
 
   dimension: response_status_key {

@@ -8,6 +8,7 @@ view: dim_country {
 
   dimension: country_code {
     label: "Country Code"
+    description: "Country Short Name - describe the code of the country"
     type: string
     sql: ${TABLE}.Country_Code ;;
   }
@@ -20,6 +21,7 @@ view: dim_country {
 
   dimension: country_name {
     label: "Country"
+    description: "Country Full Name"
     type: string
     sql: ${TABLE}.Country_Name ;;
   }
@@ -56,6 +58,7 @@ view: dim_country {
 
   dimension: region {
     label: "Region"
+    description: "A region is an area of land that has common features, each country belong to specific area"
     type: string
     sql: ${TABLE}.Region ;;
   }

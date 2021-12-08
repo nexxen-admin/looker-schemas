@@ -191,8 +191,8 @@ view: fact_ad_daily_agg {
        <img style="width:12%; padding: 5px 15px; float: left; height: 55px;" src="https://tremor.cloud.looker.com/api/internal/homepage_items/19/image"/>
        <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#home">Reports
        </a>
-      <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#news">News️</a>
-      <a style="color: #393838; padding: 5px 15px;line-height: 40px;" href="#contact">Data Dictionary</a>
+      <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="https://tremor.cloud.looker.com/dashboards-next/29">News️</a>
+      <a style="color: #393838; padding: 5px 15px;line-height: 40px;" href="https://tremor.cloud.looker.com/extensions/marketplace_extension_data_dictionary::data-dictionary/models/Exchange/explores/fact_ad_daily_agg">Data Dictionary</a>
       <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#about">Contact️</a>
     </nav>
 

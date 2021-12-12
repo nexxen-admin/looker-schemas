@@ -1,5 +1,5 @@
 # The name of this view in Looker is "V Dim Buying Channel"
-view: v_dim_buying_channel {
+view: dim_buying_channel {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
   sql_table_name: BI_New.V_Dim_Buying_Channel ;;
@@ -12,13 +12,13 @@ view: v_dim_buying_channel {
 
   dimension: buying_channel {
     type: string
+    label: "Buying Channel"
     sql: ${TABLE}.Buying_Channel ;;
-    hidden: yes
   }
 
-  dimension: deal_key {
+  dimension: buying_channel_key {
     type: number
-    sql: ${TABLE}.Deal_Key ;;
+    sql: ${TABLE}.Buying_Channel_Key ;;
     hidden: yes
   }
 
@@ -26,21 +26,54 @@ view: v_dim_buying_channel {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_deal_key {
+  measure: total_buying_channel_key {
     type: sum
-    sql: ${deal_key} ;;
+    sql: ${buying_channel_key} ;;
     hidden: yes
   }
 
-  measure: average_deal_key {
+  measure: average_buying_channel_key {
     type: average
-    sql: ${deal_key} ;;
+    sql: ${buying_channel_key} ;;
     hidden: yes
   }
 
-  dimension: dsp_key {
-    type: number
-    sql: ${TABLE}.DSP_Key ;;
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
+
+  dimension_group: db_create {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
+  }
+
+  dimension_group: db_update {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
+  }
+
+  dimension: ri_info {
+    type: string
+    sql: ${TABLE}.RI_Info ;;
     hidden: yes
   }
 

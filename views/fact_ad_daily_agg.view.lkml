@@ -302,6 +302,21 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_cost ;;
   }
 
+  measure: click_count {
+    type: sum
+    label: "Clicks"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_click_count ;;
+  }
+
+  measure: deal_count {
+    type: sum
+    label: "Deal Count"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_deal_count ;;
+  }
+
   measure:: ias_ivt_impression {
     type: sum
     label: "IAS IVT Viewable Impressions"
@@ -324,11 +339,86 @@ view: fact_ad_daily_agg {
     sql: ${ias_viewable_impression}/NULLIF(${ias_measurable_impression},0);;
   }
 
+  measure: moat_impressions_ivt {
+    type: sum
+    label: "Moat Impressions IVT"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_moat_impressions_ivt ;;
+  }
+
+  measure: moat_impressions_ivt_measurable {
+    type: sum
+    label: "Moat Measurable Impressions IVT"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable ;;
+  }
+
+  measure: moat_impressions_viewable {
+    type: sum
+    label: "Moat Impressions Viewable"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_moat_impressions_viewable ;;
+  }
+
+  measure: moat_impressions_viewable_measurable {
+    type: sum
+    label: "Moat Impressions Viewable Measurable"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_moat_impressions_viewable_measurable ;;
+  }
+
+  measure:: Moat_viewability {
+    type: number
+    value_format: "0.00\%"
+    label: "Moat Viewability"
+    group_label: "Daily Measures"
+    sql: ${moat_impressions_viewable}/NULLIF(${moat_impressions_viewable_measurable},0);;
+  }
+
+
+  measure: rmp_attempts {
+    type: sum
+    label: "RMP Attempts"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_rmp_attempts ;;
+  }
+  measure: slot_attempts {
+    type: sum
+    label: "Slot Attempts"
+    #value_format: "#,##0.0,,\"\""
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_slot_attempts ;;
+  }
+
+  measure: ias_viewability_score {
+    type: sum
+    label: "IAS Predicted Viewability Score"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_ias_viewability_score ;;
+  }
+
   measure:: ias_total_impression {
     type: sum
     label: "Total IAS Count"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_ias_total_impression ;;
+    hidden: yes
+  }
+
+  measure: ias_ivt_rate {
+    type: average
+    label: "IAS Predicted IVS Rate"
+    value_format: "0.00\%"
+    sql: ${TABLE}.avg_of_ias_ivt_rate/100 ;;
+    hidden: yes
+  }
+
+  measure: sum_of_lda {
+    type: sum
+    label: "LDA"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_lda ;;
   }
 
   measure:: ias_viewable_impression {
@@ -350,6 +440,27 @@ view: fact_ad_daily_agg {
     label: "Video Starts"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_starts ;;
+  }
+
+  measure: slot_requests {
+    type: sum
+    label: "Slot Requests"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_slot_requests ;;
+  }
+
+  measure: video_creative_views {
+    type: sum
+    label: "Video Creative Views"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_video_creative_views ;;
+  }
+
+  measure: video_errors {
+    type: sum
+    label: "Video Errors"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_video_errors ;;
   }
 
 
@@ -415,9 +526,33 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: buying_channel_key {
+    type: number
+    sql: ${TABLE}.Buying_Channel_Key ;;
+    hidden: yes
+  }
+
+  dimension: data_center_key {
+    type: number
+    sql: ${TABLE}.DataCenter_Key ;;
+    hidden: yes
+  }
+
   dimension: imp_type_key {
     type: number
     sql: ${TABLE}.Imp_Type_Key ;;
+    hidden: yes
+  }
+
+  dimension: media_type_key {
+    type: number
+    sql: ${TABLE}.Media_Type_Key ;;
+    hidden: yes
+  }
+
+  dimension: dsp_deal_type_key {
+    type: number
+    sql: ${TABLE}.DSP_Deal_Type_Key ;;
     hidden: yes
   }
 

@@ -24,20 +24,43 @@ join: dim_date {
   sql_on: ${dim_date.date_key_raw}=${fact_ad_daily_agg.date_key_raw} ;;
   relationship: many_to_one
 }
+
 join: dim_country {
   type: inner
   view_label: "Geo"
   sql_on: ${dim_country.country_key}=${fact_ad_daily_agg.country_key} ;;
   relationship: many_to_one
   }
-  join: v_dim_buying_channel {
+
+  join: dim_buying_channel {
     type:  inner
     view_label: "Buying Channel"
-    sql_on: ${v_dim_buying_channel.dsp_key}=${fact_ad_daily_agg.dsp_key} and
-    ${v_dim_buying_channel.deal_key}=${fact_ad_daily_agg.deal_key} ;;
+    sql_on: ${dim_buying_channel.buying_channel_key}=${fact_ad_daily_agg.buying_channel_key};;
     relationship: many_to_one
 
 
+  }
+
+  join: dim_media_type {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_media_type.media_type_key}=${fact_ad_daily_agg.media_type_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_data_center {
+    type:  inner
+    view_label: "Data Center"
+    sql_on: ${dim_data_center.data_center_key}=${fact_ad_daily_agg.data_center_key};;
+    relationship: many_to_one
+
+  }
+
+  join: dim_dsp_deal_type {
+    type: inner
+    view_label: "DSP"
+    sql_on: ${dim_dsp_deal_type.dsp_deal_type_key}=${fact_ad_daily_agg.dsp_deal_type_key};;
+    relationship: many_to_one
   }
 
 join: dim_device_type {

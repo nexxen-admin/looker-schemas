@@ -342,7 +342,7 @@ view: fact_ad_daily_agg {
     type: sum
     label: "Video Completes"
     group_label: "Daily Measures"
-    sql: ${TABLE}.video_completes ;;
+    sql: ${TABLE}.sum_of_video_completes ;;
   }
 
   measure:: video_starts {

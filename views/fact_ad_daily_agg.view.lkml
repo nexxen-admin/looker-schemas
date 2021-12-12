@@ -292,7 +292,7 @@ view: fact_ad_daily_agg {
     type: sum
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${TABLE}.cogs ;;
+    sql: ${TABLE}.sum_of_cogs ;;
   }
 
   measure:: cost {
@@ -300,21 +300,21 @@ view: fact_ad_daily_agg {
     type: sum
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${TABLE}.cost ;;
+    sql: ${TABLE}.sum_of_cost ;;
   }
 
   measure:: ias_ivt_impression {
     type: sum
     label: "IAS IVT Viewable Impressions"
     group_label: "Daily Measures"
-    sql: ${TABLE}.ias_ivt_impression ;;
+    sql: ${TABLE}.sum_of_ias_ivt_impression ;;
   }
 
   measure:: ias_measurable_impression {
     type: sum
     label: "IAS Measurable Impressions"
     group_label: "Daily Measures"
-    sql: ${TABLE}.ias_measurable_impression ;;
+    sql: ${TABLE}.sum_of_ias_measurable_impression ;;
   }
 
   measure:: ias_viewability {
@@ -329,14 +329,14 @@ view: fact_ad_daily_agg {
     type: sum
     label: "Total IAS Count"
     group_label: "Daily Measures"
-    sql: ${TABLE}.ias_total_impression ;;
+    sql: ${TABLE}.sum_of_ias_total_impression ;;
   }
 
   measure:: ias_viewable_impression {
     type: sum
     label: "IAS Viewable Impressions"
     group_label: "Daily Measures"
-    sql: ${TABLE}.ias_viewable_impression ;;
+    sql: ${TABLE}.sum_of_ias_viewable_impression ;;
   }
 
   measure:: video_completes {
@@ -350,7 +350,7 @@ view: fact_ad_daily_agg {
     type: sum
     label: "Video Starts"
     group_label: "Daily Measures"
-    sql: ${TABLE}.video_starts ;;
+    sql: ${TABLE}.sum_of_video_starts ;;
   }
 
 
@@ -427,7 +427,7 @@ view: fact_ad_daily_agg {
     label: "Impressions"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
-    sql: ${TABLE}.impression_pixel ;;
+    sql: ${TABLE}.sum_of_impression_pixel ;;
   }
 
   measure: impression_win {
@@ -435,7 +435,7 @@ view: fact_ad_daily_agg {
     label: "Wins"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
-    sql: ${TABLE}.impression_win ;;
+    sql: ${TABLE}.sum_of_impression_win ;;
   }
 
   dimension: o_domain_key {
@@ -467,7 +467,7 @@ view: fact_ad_daily_agg {
     label: "Inbound Requests"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
-    sql: ${TABLE}.requests ;;
+    sql: ${TABLE}.sum_of_requests ;;
   }
 
   measure: Bid_Rate {
@@ -569,7 +569,7 @@ view: fact_ad_daily_agg {
     label: "Bids"
     value_format: "#,##0"
     group_label: "Daily Measures"
-    sql: ${TABLE}.responses ;;
+    sql: ${TABLE}.sum_of_responses ;;
   }
 
   measure: revenue {
@@ -577,7 +577,7 @@ view: fact_ad_daily_agg {
     label: "Revenue"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${TABLE}.revenue ;;
+    sql: ${TABLE}.sum_of_revenue ;;
   }
 
   measure: Ad_eCPM{
@@ -592,7 +592,7 @@ view: fact_ad_daily_agg {
   measure:  Previous_day_Revenue {
     label: "Revenue Previous day "
     type: sum
-    sql: ${TABLE}.revenue ;;
+    sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [date_key_date: "2 days ago"]
@@ -602,7 +602,7 @@ view: fact_ad_daily_agg {
   measure:  Previous_day_Requests {
     label: "Requests Previous day "
     type: sum
-    sql: ${TABLE}.requests ;;
+    sql: ${TABLE}.sum_of_requests ;;
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
@@ -612,7 +612,7 @@ view: fact_ad_daily_agg {
   measure:  Previous_day_impressions {
     label: "Impressions Previous day "
     type: sum
-    sql: ${TABLE}.impression_pixel ;;
+    sql: ${TABLE}.sum_of_impression_pixel ;;
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
@@ -621,7 +621,7 @@ view: fact_ad_daily_agg {
   measure:  previous_day_Bid_Rate {
     label: "Bid Rate Previous day"
     type: sum
-    sql: ${TABLE}.responses/NULLIF(${TABLE}.requests,0) ;;
+    sql: ${TABLE}.sum_of_responses/NULLIF(${TABLE}.sum_of_requests,0) ;;
     value_format: "0.00\%"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
@@ -632,7 +632,7 @@ view: fact_ad_daily_agg {
     label: "Bids Previous day"
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.responses  ;;
+    sql: ${TABLE}.dim_of_responses  ;;
     filters: [date_key_date: "2 days ago"]
 
   }
@@ -641,14 +641,14 @@ view: fact_ad_daily_agg {
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.revenue - ${TABLE}.cogs  ;;
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.cogs  ;;
     filters: [date_key_date: "2 days ago"]
 
   }
   measure:  Last_day_Revenue {
     label: "Revenue Last day "
     type: sum
-    sql: ${TABLE}.revenue ;;
+    sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [date_key_date: "last 1 day ago for 1 day"]
@@ -656,7 +656,7 @@ view: fact_ad_daily_agg {
   measure:  Last_day_impressions {
     label: "Impressions Previous day "
     type: sum
-    sql: ${TABLE}.impression_pixel ;;
+    sql: ${TABLE}.sum_of_impression_pixel ;;
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
@@ -667,7 +667,7 @@ view: fact_ad_daily_agg {
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.revenue - ${TABLE}.cogs  ;;
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
@@ -676,14 +676,14 @@ view: fact_ad_daily_agg {
     label: "Bids Last day"
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.responses ;;
+    sql: ${TABLE}.sum_of_responses ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
   measure:  Last_day_Requests {
     label: "Requests Last day "
     type: sum
-    sql: ${TABLE}.requests ;;
+    sql: ${TABLE}.sum_of_requests ;;
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
@@ -691,7 +691,7 @@ view: fact_ad_daily_agg {
   measure:  Last_day_Bid_Rate {
     label: " Bid Rate Last day"
     type: sum
-    sql: ${TABLE}.responses/NULLIF(${TABLE}.requests,0) ;;
+    sql: ${TABLE}.sum_of_responses/NULLIF(${TABLE}.sum_of_requests,0) ;;
     value_format: "0.00\%"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
@@ -703,7 +703,7 @@ view: fact_ad_daily_agg {
     label: "Pub Requests"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
-    sql: ${TABLE}.rmp_requests ;;
+    sql: ${TABLE}.sum_of_rmp_requests ;;
   }
 
   measure: rx_bid_floor {

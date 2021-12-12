@@ -188,7 +188,6 @@ view: fact_ad_daily_agg {
     <div style="text-align:center; border-radius: 0px; padding: 5px 10px; background:#eeeeee; height: 60px; color: red;">
 
     <nav style="font-size: 18px;">
-       <img style="width:12%; padding: 5px 15px; float: left; height: 55px;" src="https://tremor.cloud.looker.com/api/internal/homepage_items/19/image"/>
        <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#home">Reports
        </a>
       <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="https://tremor.cloud.looker.com/dashboards-next/29">News️</a>

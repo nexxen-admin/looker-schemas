@@ -307,6 +307,7 @@ view: fact_ad_daily_agg {
     label: "Clicks"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_click_count ;;
+    hidden: yes
   }
 
   measure: deal_count {
@@ -315,6 +316,7 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_deal_count ;;
+    hidden: yes
   }
 
   measure:: ias_ivt_impression {
@@ -322,6 +324,7 @@ view: fact_ad_daily_agg {
     label: "IAS IVT Viewable Impressions"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_ias_ivt_impression ;;
+    hidden: yes
   }
 
   measure:: ias_measurable_impression {
@@ -344,6 +347,7 @@ view: fact_ad_daily_agg {
     label: "Moat Impressions IVT"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt ;;
+    hidden: yes
   }
 
   measure: moat_impressions_ivt_measurable {
@@ -351,6 +355,7 @@ view: fact_ad_daily_agg {
     label: "Moat Measurable Impressions IVT"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable ;;
+    hidden: yes
   }
 
   measure: moat_impressions_viewable {
@@ -358,6 +363,7 @@ view: fact_ad_daily_agg {
     label: "Moat Impressions Viewable"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable ;;
+    hidden: yes
   }
 
   measure: moat_impressions_viewable_measurable {
@@ -365,6 +371,7 @@ view: fact_ad_daily_agg {
     label: "Moat Impressions Viewable Measurable"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable_measurable ;;
+    hidden: yes
   }
 
   measure:: Moat_viewability {
@@ -373,6 +380,7 @@ view: fact_ad_daily_agg {
     label: "Moat Viewability"
     group_label: "Daily Measures"
     sql: ${moat_impressions_viewable}/NULLIF(${moat_impressions_viewable_measurable},0);;
+    hidden: yes
   }
 
 
@@ -382,13 +390,16 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_rmp_attempts ;;
+    hidden: yes
   }
+
   measure: slot_attempts {
     type: sum
     label: "Slot Attempts"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_slot_attempts ;;
+    hidden: yes
   }
 
   measure: ias_viewability_score {
@@ -396,6 +407,7 @@ view: fact_ad_daily_agg {
     label: "IAS Predicted Viewability Score"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_ias_viewability_score ;;
+    hidden: yes
   }
 
   measure:: ias_total_impression {
@@ -419,6 +431,7 @@ view: fact_ad_daily_agg {
     label: "LDA"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_lda ;;
+    hidden: yes
   }
 
   measure:: ias_viewable_impression {
@@ -433,6 +446,7 @@ view: fact_ad_daily_agg {
     label: "Video Completes"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_completes ;;
+    hidden: yes
   }
 
   measure:: video_starts {
@@ -440,6 +454,7 @@ view: fact_ad_daily_agg {
     label: "Video Starts"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_starts ;;
+    hidden: yes
   }
 
   measure: slot_requests {
@@ -447,6 +462,7 @@ view: fact_ad_daily_agg {
     label: "Slot Requests"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_slot_requests ;;
+    hidden: yes
   }
 
   measure: video_creative_views {
@@ -454,6 +470,7 @@ view: fact_ad_daily_agg {
     label: "Video Creative Views"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_creative_views ;;
+    hidden: yes
   }
 
   measure: video_errors {
@@ -461,6 +478,7 @@ view: fact_ad_daily_agg {
     label: "Video Errors"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_errors ;;
+    hidden: yes
   }
 
 
@@ -682,6 +700,7 @@ view: fact_ad_daily_agg {
     value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: ${video_completes}/NULLIF(${video_starts},0);;
+    hidden: yes
   }
 
   measure: Win_Rate {

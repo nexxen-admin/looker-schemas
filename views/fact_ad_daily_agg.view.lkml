@@ -291,7 +291,7 @@ view: fact_ad_daily_agg {
     type: sum
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${TABLE}.cogs ;;
+    sql: ${TABLE}.sum_of_cogs ;;
   }
 
   measure:: cost {
@@ -299,21 +299,21 @@ view: fact_ad_daily_agg {
     type: sum
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${TABLE}.cost ;;
+    sql: ${TABLE}.sum_of_cost ;;
   }
 
   measure:: ias_ivt_impression {
     type: sum
     label: "IAS IVT Viewable Impressions"
     group_label: "Daily Measures"
-    sql: ${TABLE}.ias_ivt_impression ;;
+    sql: ${TABLE}.sum_of_ias_ivt_impression ;;
   }
 
   measure:: ias_measurable_impression {
     type: sum
     label: "IAS Measurable Impressions"
     group_label: "Daily Measures"
-    sql: ${TABLE}.ias_measurable_impression ;;
+    sql: ${TABLE}.sum_of_ias_measurable_impression ;;
   }
 
   measure:: ias_viewability {

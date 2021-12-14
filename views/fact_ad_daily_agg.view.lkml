@@ -725,12 +725,22 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_responses ;;
   }
 
-  measure: revenue {
+  measure: revenue
+  {
     type: sum
     label: "Revenue"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_revenue ;;
+  }
+
+  measure: revenue_test
+  {
+    type: sum
+    label: "Revenue_test"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_revenue/1 ;;
   }
 
   measure: Ad_eCPM{

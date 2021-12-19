@@ -305,7 +305,7 @@ view: fact_ad_daily_agg {
   measure: click_count {
     type: sum
     label: "Clicks"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_click_count ;;
     #hidden: yes
   }
@@ -314,7 +314,7 @@ view: fact_ad_daily_agg {
     type: sum
     label: "Deal Count"
     value_format: "$#,##0.00"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_deal_count ;;
     #hidden: yes
   }
@@ -345,7 +345,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_ivt {
     type: sum
     label: "Moat Impressions IVT"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt ;;
     #hidden: yes
   }
@@ -353,7 +353,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_ivt_measurable {
     type: sum
     label: "Moat Measurable Impressions IVT"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable ;;
     #hidden: yes
   }
@@ -361,7 +361,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_viewable {
     type: sum
     label: "Moat Impressions Viewable"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable ;;
     hidden: yes
   }
@@ -369,7 +369,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_viewable_measurable {
     type: sum
     label: "Moat Impressions Viewable Measurable"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable_measurable ;;
     #hidden: yes
   }
@@ -388,7 +388,7 @@ view: fact_ad_daily_agg {
     type: sum
     label: "RMP Attempts"
     value_format: "$#,##0.00"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_rmp_attempts ;;
    # hidden: yes
   }
@@ -397,7 +397,7 @@ view: fact_ad_daily_agg {
     type: sum
     label: "Slot Attempts"
     #value_format: "#,##0.0,,\"\""
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_slot_attempts ;;
    # hidden: yes
   }
@@ -429,7 +429,7 @@ view: fact_ad_daily_agg {
   measure: sum_of_lda {
     type: sum
     label: "LDA"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_lda ;;
     #hidden: yes
   }
@@ -444,7 +444,7 @@ view: fact_ad_daily_agg {
   measure:: video_completes {
     type: sum
     label: "Video Completes"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_completes ;;
     #hidden: yes
   }
@@ -452,7 +452,7 @@ view: fact_ad_daily_agg {
   measure:: video_starts {
     type: sum
     label: "Video Starts"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_starts ;;
     #hidden: yes
   }
@@ -460,7 +460,7 @@ view: fact_ad_daily_agg {
   measure: slot_requests {
     type: sum
     label: "Slot Requests"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_slot_requests ;;
     hidden: yes
   }
@@ -468,7 +468,7 @@ view: fact_ad_daily_agg {
   measure: video_creative_views {
     type: sum
     label: "Video Creative Views"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_creative_views ;;
     #hidden: yes
   }
@@ -476,7 +476,7 @@ view: fact_ad_daily_agg {
   measure: video_errors {
     type: sum
     label: "Video Errors"
-    group_label: "not for use"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_errors ;;
     #hidden: yes
   }

@@ -431,7 +431,7 @@ view: fact_ad_daily_agg {
     label: "LDA"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_lda ;;
-    #hidden: yes
+    hidden: yes
   }
 
   measure:: ias_viewable_impression {
@@ -874,6 +874,11 @@ view: fact_ad_daily_agg {
     group_label: "Daily Measures"
     sql: ${TABLE}.rx_bid_floor ;;
     hidden: yes
+  }
+  dimension: dsp_bid_price {
+    type: number
+    group_label: "Daily Dim"
+    sql: ${TABLE}.avg_of_dsp_bid_price ;;
   }
 
   measure: count {

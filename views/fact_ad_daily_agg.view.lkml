@@ -426,13 +426,7 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
-  measure: sum_of_lda {
-    type: sum
-    label: "LDA"
-    group_label: "Daily Measures"
-    sql: ${TABLE}.sum_of_lda ;;
-    hidden: yes
-  }
+
 
   measure:: ias_viewable_impression {
     type: sum

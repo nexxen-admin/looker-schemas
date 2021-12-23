@@ -420,16 +420,3 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
   }
   }
-
-explore: v_fact_ad_daily{
-  always_filter: {
-    filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
-  }
-
-  join: dim_date {
-    type: inner
-    view_label: "Time Frame"
-    sql_on: ${dim_date.date_key_raw}=${v_fact_ad_daily.date_key_raw} ;;
-    relationship: many_to_one
-  }
-  }

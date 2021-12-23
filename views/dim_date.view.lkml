@@ -17,6 +17,13 @@ view: dim_date {
     sql: ${TABLE}.Date_Key ;;
   }
 
+  dimension: is_before_mtd {
+
+    type: yesno
+    sql: DATE_PART('DAY', ${date_key_raw}::TIMESTAMP) < DATE_PART('DAY', CURRENT_TIMESTAMP) ;;
+
+  }
+
   dimension: day_number_in_month {
     type: number
     sql: ${TABLE}.Day_Number_In_Month ;;

@@ -42,15 +42,7 @@ view: dim_date_hourly {
     hidden: yes
   }
 
-  dimension: is_before_mtd {
 
-    type: yesno
-    sql:
-           DATE_PART('DAY', ${date_time_key_raw}::TIMESTAMP) = DATE_PART('DAY', CURRENT_TIMESTAMP) AND
-
-        DATE_PART('HOUR', ${date_time_key_raw}) < DATE_PART('HOUR', CURRENT_TIMESTAMP);;
-
-  }
 
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.

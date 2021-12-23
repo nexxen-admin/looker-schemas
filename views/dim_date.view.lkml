@@ -24,6 +24,13 @@ view: dim_date {
 
   }
 
+  dimension: is_before_ytd {
+
+    type: yesno
+    sql: DATE_PART('DAYOFYEAR', ${date_key_raw}::TIMESTAMP) < DATE_PART('DAYOFYEAR', CURRENT_TIMESTAMP) ;;
+
+  }
+
   dimension: day_number_in_month {
     type: number
     sql: ${TABLE}.Day_Number_In_Month ;;

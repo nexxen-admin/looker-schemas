@@ -46,9 +46,9 @@ view: dim_date_hourly {
 
     type: yesno
     sql:
-           DATE_PART('DAY', ${date_time_key_raw}::TIMESTAMP) = DATEPART('DAY', CURRENT_TIMESTAMP) AND
+           DATE_PART('DAY', ${date_time_key_raw}::TIMESTAMP) = DATE_PART('DAY', CURRENT_TIMESTAMP) AND
 
-        DATEPART('HOUR', ${date_time_key_raw}) < DATEPART('HOUR', CURRENT_TIMESTAMP);;
+        DATE_PART('HOUR', ${date_time_key_raw}) < DATE_PART('HOUR', CURRENT_TIMESTAMP);;
 
   }
 

@@ -27,7 +27,7 @@ view: dim_date {
   dimension: is_before_ytd {
 
     type: yesno
-    sql: DATE_PART('DAYOFYEAR', ${date_key_raw}::TIMESTAMP) < DATE_PART('DAYOFYEAR', CURRENT_TIMESTAMP) ;;
+    sql: DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) < DATE_PART('YEAR', CURRENT_TIMESTAMP) ;;
 
   }
 

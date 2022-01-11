@@ -380,7 +380,7 @@ view: fact_ad_daily_agg {
     label: "Moat Viewability"
     group_label: "Daily Measures"
     sql: ${moat_impressions_viewable}/NULLIF(${moat_impressions_viewable_measurable},0);;
-    hidden: yes
+
   }
 
 
@@ -694,7 +694,7 @@ view: fact_ad_daily_agg {
     value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: ${video_completes}/NULLIF(${video_starts},0);;
-    hidden: yes
+
   }
 
   measure: Win_Rate {

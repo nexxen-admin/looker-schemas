@@ -363,7 +363,7 @@ view: fact_ad_daily_agg {
     label: "Moat Impressions Viewable"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable ;;
-    hidden: yes
+
   }
 
   measure: moat_impressions_viewable_measurable {
@@ -685,7 +685,7 @@ view: fact_ad_daily_agg {
     label: "VTR"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${video_completes}/NULLIF(${impression_pixel},0);;
+    sql: ${video_completes}/NULLIF(${impression_pixel},0)*100;;
   }
 
   measure: VCR {
@@ -693,7 +693,7 @@ view: fact_ad_daily_agg {
     label: "VCR"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${video_completes}/NULLIF(${video_starts},0);;
+    sql: ${video_completes}/NULLIF(${video_starts},0)*100;;
 
   }
 

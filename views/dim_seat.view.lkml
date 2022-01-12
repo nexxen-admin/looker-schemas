@@ -37,13 +37,7 @@ view: dim_seat {
     hidden: yes
   }
 
-  dimension: seat_id {
-    label: "Seat"
-    type: string
-    sql: ${TABLE}.Seat_ID ;;
-    hidden: yes
 
-  }
 
   dimension: seat_key {
     type: number

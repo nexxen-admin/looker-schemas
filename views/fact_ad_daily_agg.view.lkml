@@ -498,7 +498,8 @@ view: fact_ad_daily_agg {
   dimension: deal_key {
     type: number
     sql: ${TABLE}.Deal_Key ;;
-    hidden: yes
+    #hidden: yes
+
   }
 
   dimension: device_type_key {
@@ -723,9 +724,10 @@ view: fact_ad_daily_agg {
   {
     type: sum
     label: "Revenue"
+    #sql_distinct_key: ${deal_key} ;;
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${TABLE}.sum_of_revenue ;;
+    sql: ${TABLE}.sum_of_revenue;;
   }
 
   measure: revenue_test

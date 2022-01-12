@@ -103,6 +103,7 @@ join: dim_a_domain  {
 }
 join: dim_o_domain {
   type: inner
+
   view_label: "Domain"
   sql_on: ${dim_o_domain.o_domain_key}=${fact_ad_daily_agg.o_domain_key};;
   relationship: many_to_one
@@ -112,6 +113,16 @@ join: dim_deal {
   view_label: "Deal"
   sql_on: ${dim_deal.deal_key}=${fact_ad_daily_agg.deal_key};;
   relationship: many_to_one
+
+}
+
+join: rx_dim_deal_personnel {
+
+  type: inner
+  view_label: "Deal"
+  sql_on: ${rx_dim_deal_personnel.rx_deal_id}=${dim_deal.internal_deal_id} ;;
+  relationship: many_to_one
+
 }
 join: dim_deal_type {
   type: inner

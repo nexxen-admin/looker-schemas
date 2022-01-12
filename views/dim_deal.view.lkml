@@ -79,8 +79,10 @@ view: dim_deal {
 
   dimension: deal_id {
     description: "The Deal Externatal ID , contain 1st & 3rd party deals"
-    type: string
-    sql: ${TABLE}.Deal_ID ;;
+    primary_key: yes
+    type:string
+    sql: upper(${TABLE}.Deal_ID);;
+    case_sensitive: no
   }
 
   dimension: deal_key {

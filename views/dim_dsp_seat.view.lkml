@@ -69,9 +69,10 @@ view: dim_dsp_seat {
   }
 
   dimension: seat_id {
+    label: "Seat"
     type: string
     sql: ${TABLE}.Seat_ID ;;
-    hidden: yes
+
   }
 
   dimension: seat_key {

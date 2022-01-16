@@ -10,6 +10,15 @@ datagroup: CleanCash_datagroup {
   description: "Triggered when new date is added to ETL"
 }
 
+access_grant: can_view_pub_come_looker {
+user_attribute: admins
+allowed_values: ["Looker_Admins"]
+}
+
+explore: temp_di_pub_com_looker_test {
+
+}
+
 explore: fact_ad_daily_agg{
   always_filter: {
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]

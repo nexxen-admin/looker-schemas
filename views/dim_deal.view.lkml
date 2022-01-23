@@ -3,7 +3,7 @@ view: dim_deal {
 
   dimension: agency_id {
     type: number
-    description: ""
+
     sql: ${TABLE}.Agency_ID ;;
   }
 

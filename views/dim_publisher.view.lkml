@@ -16,13 +16,13 @@ view: dim_publisher {
   dimension: cogs_type {
     type: string
     sql: ${TABLE}.COGS_Type ;;
-    hidden: yes
+
   }
 
   dimension: company {
     type: string
     sql: ${TABLE}.Company ;;
-    hidden: yes
+
   }
 
   dimension_group: db_create {
@@ -38,6 +38,24 @@ view: dim_publisher {
     ]
     sql: ${TABLE}.DB_Create_Date ;;
     hidden: yes
+  }
+  dimension: seller_type {
+    type: string
+    sql: ${TABLE}.seller_type ;;
+  }
+
+  dimension: signup_step {
+    type: string
+    sql: ${TABLE}.signup_step ;;
+  }
+
+  dimension: unruly_seller_id {
+    type: string
+    sql: ${TABLE}.unruly_seller_id ;;
+  }
+  dimension: r1_seller_id {
+    type: string
+    sql: ${TABLE}.r1_seller_id ;;
   }
 
   dimension_group: db_update {

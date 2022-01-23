@@ -44,7 +44,7 @@ view: dim_request_status {
     label: "Request Status"
     type: string
     sql: case
-    when ${TABLE}.Request_Status = 'unknown' then 'Pass'
+    when ${TABLE}.Request_Status = 'unknown' then 'Admissible'
     else ${TABLE}.Request_Status
     end;;
   }

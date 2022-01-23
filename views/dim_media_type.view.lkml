@@ -21,6 +21,7 @@ view: dim_media_type {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: dim_media_type {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -49,6 +51,7 @@ view: dim_media_type {
   dimension: media_type_key {
     type: number
     sql: ${TABLE}.Media_Type_Key ;;
+    hidden: yes
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -58,20 +61,24 @@ view: dim_media_type {
   measure: total_media_type_key {
     type: sum
     sql: ${media_type_key} ;;
+    hidden: yes
   }
 
   measure: average_media_type_key {
     type: average
     sql: ${media_type_key} ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: []
+    hidden: yes
   }
 }

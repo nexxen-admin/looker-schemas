@@ -164,11 +164,6 @@ view: dim_publisher {
     sql: ${TABLE}.Publisher_Account_Type ;;
   }
 
-  dimension: publisher_media_type {
-    label: "Publisher Media Type"
-    type: string
-    sql: ${TABLE}.Publisher_Media_Type ;;
-  }
 
   dimension: ri_info {
     type: string

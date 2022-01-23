@@ -129,11 +129,7 @@ view: dim_deal {
     hidden:yes
   }
 
-  dimension: dsp_seat {
-    type: string
-    sql: ${TABLE}.DSP_Seat ;;
-    hidden:yes
-  }
+
 
   dimension: internal_deal_id {
     description: ""

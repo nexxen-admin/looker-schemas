@@ -16,7 +16,7 @@ allowed_values: ["Looker_Admins"]
 }
 
 explore: temp_di_pub_com_looker_test {
-#hidden: yes
+hidden: yes
 }
 
 explore: fact_ad_daily_agg{

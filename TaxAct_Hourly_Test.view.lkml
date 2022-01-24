@@ -72,7 +72,7 @@ view: TaxAct_Hourly_Test {
     sql: ${TABLE}.Cost ;;
   }
 
-  dimension: e_cpm {
+  measure: e_cpm {
     label: "eCPM"
     type: number
     sql: ${TABLE}.eCPM ;;

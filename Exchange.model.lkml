@@ -19,7 +19,7 @@ explore: temp_di_pub_com_looker_test {
 hidden: yes
 }
 
-explore: sql_runner_query {
+explore: TaxAct_Hourly_Test {
   label: "derek data"
 }
 

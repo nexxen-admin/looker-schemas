@@ -1,4 +1,4 @@
-view: sql_runner_query {
+view: TaxAct_Hourly_Test {
   required_access_grants: [can_view_pub_come_looker]
   derived_table: {
   sql: Select c.advertiser_name as "Advertiser Name",

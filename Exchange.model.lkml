@@ -20,7 +20,11 @@ hidden: yes
 }
 
 explore: TaxAct_Hourly_Test {
-  label: "derek data"
+  label: "Derek's Data"
+}
+
+explore: taxact_daily_report {
+  label: "Derek's Data"
 }
 
 explore: fact_ad_daily_agg{

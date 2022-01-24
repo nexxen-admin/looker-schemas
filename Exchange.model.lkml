@@ -18,8 +18,9 @@ allowed_values: ["Looker_Admins"]
 explore: temp_di_pub_com_looker_test {
 hidden: yes
 }
-explore: sql_runner_query {
 
+explore: sql_runner_query {
+  label: "derek data"
 }
 
 explore: fact_ad_daily_agg{

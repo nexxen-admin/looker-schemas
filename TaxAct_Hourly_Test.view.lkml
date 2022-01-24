@@ -57,18 +57,18 @@ view: TaxAct_Hourly_Test {
     sql: ${TABLE}."Date" ;;
   }
 
-  measure: impressions {
-    type: sum
+  dimension: impressions {
+    type: number
     sql: ${TABLE}.Impressions ;;
   }
 
-  measure: clicks {
-    type: sum
+  dimension: clicks {
+    type: number
     sql: ${TABLE}.Clicks ;;
   }
 
-  measure: cost {
-    type: sum
+  dimension: cost {
+    type: number
     sql: ${TABLE}.Cost ;;
   }
 

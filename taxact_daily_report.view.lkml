@@ -73,6 +73,7 @@ view: taxact_daily_report {
   }
 
   dimension: e_cpm {
+    label: "eCPM"
     type: number
     sql: ${TABLE}.eCPM ;;
   }

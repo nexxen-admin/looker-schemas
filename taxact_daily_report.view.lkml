@@ -1,4 +1,5 @@
 view: taxact_daily_report {
+  required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: Select c.advertiser_name as "Advertiser Name",
         'Tremor Video' as "Partner Name",

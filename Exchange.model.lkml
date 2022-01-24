@@ -18,6 +18,9 @@ allowed_values: ["Looker_Admins"]
 explore: temp_di_pub_com_looker_test {
 hidden: yes
 }
+explore: sql_runner_query {
+
+}
 
 explore: fact_ad_daily_agg{
   always_filter: {

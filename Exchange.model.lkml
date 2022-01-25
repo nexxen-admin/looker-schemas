@@ -16,7 +16,7 @@ allowed_values: ["Looker_Admins"]
 }
 
 explore: temp_di_pub_com_looker_test {
-hidden: yes
+  required_access_grants: [can_view_pub_come_looker]
 }
 
 explore: TaxAct_Hourly_Test {

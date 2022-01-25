@@ -20,10 +20,12 @@ explore: temp_di_pub_com_looker_test {
 }
 
 explore: TaxAct_Hourly_Test {
+  required_access_grants: [can_view_pub_come_looker]
   label: "Derek's Data"
 }
 
 explore: taxact_daily_report {
+  required_access_grants: [can_view_pub_come_looker]
   label: "Derek's Data"
 }
 

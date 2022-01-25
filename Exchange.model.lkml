@@ -133,14 +133,6 @@ join: dim_deal {
 
 }
 
-join: rx_dim_deal_personnel {
-
-  type: inner
-  view_label: "Deal"
-  sql_on: ${rx_dim_deal_personnel.rx_deal_id}=${dim_deal.internal_deal_id} ;;
-  relationship: many_to_one
-
-}
 join: dim_deal_type {
   type: inner
   view_label: "Deal"

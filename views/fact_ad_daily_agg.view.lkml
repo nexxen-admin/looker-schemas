@@ -800,7 +800,7 @@ view: fact_ad_daily_agg {
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue - ${TABLE}.cogs  ;;
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
     filters: [date_key_date: "2 days ago"]
 
   }

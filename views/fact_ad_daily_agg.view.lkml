@@ -112,7 +112,7 @@ view: fact_ad_daily_agg {
   }
   measure: bids_lastday_change_parameter {
     type: number
-    sql: (${Last_day_bids}/${previous_day_responses})-1 ;;
+    sql: (${Last_Day_net_Revenue}/${prev_Day_net_Revenue})-1 ;;
     value_format: "0.00%"
     html:
     <ul>

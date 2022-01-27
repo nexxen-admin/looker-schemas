@@ -652,6 +652,48 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: os_key {
+    type: number
+    sql: ${TABLE}.OS_Key ;;
+    hidden: yes
+  }
+
+  dimension: rg_blocked_key {
+    type: number
+    sql: ${TABLE}.RG_Blocked_Key ;;
+    hidden: yes
+  }
+  dimension: rg_blocked_reason_key {
+    type: number
+    sql: ${TABLE}.RG_Blocked_Reason_key ;;
+    hidden: yes
+  }
+  dimension: user_matched_key {
+    type: number
+    sql: ${TABLE}.user_Matched_Key ;;
+    hidden: yes
+  }
+  dimension: video_Linearity_key {
+    type: number
+    sql: ${TABLE}.video_Linearity_key ;;
+    hidden: yes
+  }
+  dimension: video_simple_size_key {
+    type: number
+    sql: ${TABLE}.video_simple_size_key ;;
+    hidden: yes
+  }
+  dimension: ad_size_height_key {
+    type: number
+    sql: ${TABLE}.Ad_Size_Height_Key ;;
+    hidden: yes
+  }
+  dimension: ad_size_width_key {
+    type: number
+    sql: ${TABLE}.Ad_Size_Width_Key;;
+    hidden: yes
+  }
+
   dimension: media_type_key {
     type: number
     sql: ${TABLE}.Media_Type_Key ;;

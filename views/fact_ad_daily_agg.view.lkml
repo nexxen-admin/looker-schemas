@@ -941,6 +941,14 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "2 days ago"]
 
   }
+  measure: pub_platform_fee {
+    type: sum
+    label: "pub_platform_fee"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_pub_platform_fee ;;
+  }
+
   measure:  Last_day_Revenue {
     label: "Revenue Last day "
     type: sum

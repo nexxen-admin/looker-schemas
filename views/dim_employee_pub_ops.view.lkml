@@ -75,7 +75,7 @@ view: v_dim_employee_pub_ops {
     label: "PubOps Name"
     type: string
     sql: ${TABLE}.Employee_Name ;;
-      bypass_suggest_restrictions: yes
+      full_suggestions: yes
   }
 
   dimension: employee_office {

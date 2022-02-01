@@ -45,13 +45,14 @@ view: ani_view_data {
 
   measure: bid {
     type: sum
-    value_format_name: id
     sql: ${TABLE}.Bid ;;
   }
 
-  measure: bid_rate {
-    type: sum
-    sql: ${TABLE}.BidRate ;;
+
+  measure: bid_rate_1 {
+    type:number
+    value_format: "0.00\%"
+    sql: ${TABLE}.Bid/NULLIF(${TABLE}.Request,0) ;;
   }
 
   dimension: country_iso {
@@ -64,9 +65,10 @@ view: ani_view_data {
     sql: ${TABLE}.Country_Name ;;
   }
 
-  dimension: cpm {
+  measure: cpm {
     type: number
-    sql: ${TABLE}.CPM ;;
+    value_format: "$#,##0.00"
+    sql:(${revenue}/NULLIF(${impression},0))*1000 ;;
   }
 
   dimension_group: db_create {
@@ -100,8 +102,9 @@ view: ani_view_data {
   }
 
   measure: fill_rate {
-    type: sum
-    sql: ${TABLE}.FillRate ;;
+    type: number
+    value_format: "0.00\%"
+    sql: ${impression}/NULLIF(${inventory},0) ;;
   }
 
   dimension: grouped_domain {
@@ -124,8 +127,8 @@ view: ani_view_data {
     sql: ${TABLE}.Os ;;
   }
 
-  dimension: player_loaded {
-    type: number
+  measure: player_loaded {
+    type: sum
     sql: ${TABLE}.PlayerLoaded ;;
   }
 
@@ -142,21 +145,19 @@ view: ani_view_data {
   dimension: request_fill_rate {
     type: number
     sql: ${TABLE}.Request_Fill_Rate ;;
+    hidden: yes
   }
 
   measure: revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.Revenue ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-
-  dimension: rpm {
+  measure: rpm {
     type: number
-    sql: ${TABLE}.RPM ;;
+    value_format: "$#,##0.00"
+    sql: (${revenue}/NULLIF(${inventory},0))*1000 ;;
   }
 
   measure: count {

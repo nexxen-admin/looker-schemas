@@ -49,7 +49,7 @@ view: ani_view_data {
   }
 
 
-  measure: bid_rate_1 {
+  measure: bid_rate {
     type:number
     value_format: "0.00\%"
     sql: ${TABLE}.Bid/NULLIF(${TABLE}.Request,0) ;;

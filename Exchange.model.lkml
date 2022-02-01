@@ -16,7 +16,7 @@ allowed_values: ["Looker_Admins"]
 }
 
 access_grant: can_view_aniview {
-  user_attribute: admins
+  user_attribute: aniview
   allowed_values: ["Aniview"]
 }
 

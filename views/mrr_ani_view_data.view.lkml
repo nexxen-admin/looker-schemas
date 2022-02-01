@@ -52,7 +52,7 @@ view: ani_view_data {
   measure: bid_rate {
     type:number
     value_format: "0.00\%"
-    sql: ${bid}/NULLIF(${request},0) ;;
+    sql: (${bid}/NULLIF(${request},0))*100 ;;
   }
 
   dimension: country_iso {

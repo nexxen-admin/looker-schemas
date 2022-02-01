@@ -199,6 +199,7 @@ view: fact_ad_daily_agg {
      <div>
      <img style= "width: 100%" src="https://i.ibb.co/nzf8gc7/Frame-4-1.png" alt="Frame-4-1" border="0">
     </div>
+     <div style = "background:#ffffff;height: 60px; display: inline-block;text-align:center;width:100%"><h1 style=" font-family: Raleway ,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:700  ">Daily Matrics</h1> </div>
     <div style = "background:#393838;">
     <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
          <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions
@@ -277,79 +278,25 @@ view: fact_ad_daily_agg {
     type: count
     html:
 
-     <div>
-     <img  src="https://www.linkpicture.com/q/למאמית.png"alt="image" border="0" >
-    </div>
-  <div style="text-align:center; border-radius: 0px; padding: 8px 20px; background:#000000; height: 60px; color: red;">
-
-    <nav style="font-size: 18px;">
-       <a style="color: #ffffff; padding: 5px 15px; line-height: 40px;" href="#home">Reports
-       </a>
-      <a style="color: #ffffff; padding: 5px 15px; line-height: 40px;" href="https://tremor.cloud.looker.com/dashboards-next/29">News️</a>
-      <a style="color: #ffffff; padding: 5px 15px;line-height: 40px;" href="https://tremor.cloud.looker.com/extensions/marketplace_extension_data_dictionary::data-dictionary/models/Exchange/explores/fact_ad_daily_agg">Data Dictionary</a>
-      <a style="color: #ffffff; padding: 5px 15px; line-height: 40px;" href="#about">Contact️</a>
-    </nav>
-    </div>
+     <img  src="https://www.linkpicture.com/q/למאמית.png"alt="image" border="0">
      <div>
      <img style= "width: 100%" src="https://www.linkpicture.com/q/Frame-4-1-2.png" >
     </div>
-    <div style = "background:#EDEDED;height: 60px; display: inline-block "><h1 style="text-align:center; font-family: Raleway ,Helvetica Neue,Helvetica,Arial,sans-serif; ">Daily Matrics</h1> </div>
-    <div style = "background:#EDEDED;">
-    <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-         <div style="display: block;  font-size: 20px; color:#000000;letter-spacing: 0.01em;">Impressions
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#000000">{{ impression_parameter._rendered_value }} {{impression_change_parameter._value}}
+  <div style="text-align: center; display: inline-block;">
+  <a style="color: #4285F4;  border: solid 1px #4285F4; float: left; font-weight: 400;
+    text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;font-size: 1rem;
+    line-height: 1.5;  border-radius: 5px" href="#home">Reports</a>
+      <a style="color: #4285F4;  border: solid 1px #4285F4; float: left; font-weight: 400;
+    text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;font-size: 1rem;
+    line-height: 1.5;  border-radius: 5px" href="https://tremor.cloud.looker.com/dashboards-next/29">News️</a>
+      <a style="color: #4285F4;  border: solid 1px #4285F4; float: left; font-weight: 400;
+    text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;font-size: 1rem;
+    line-height: 1.5;  border-radius: 5px" href="https://tremor.cloud.looker.com/extensions/marketplace_extension_data_dictionary::data-dictionary/models/Exchange/explores/fact_ad_daily_agg">Data Dictionary</a>
+      <a style="color: #4285F4;  border: solid 1px #4285F4; float: left; font-weight: 400;
+    text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;font-size: 1rem;
+    line-height: 1.5;  border-radius: 5px" href="#about">Contact️</a>
 
-        <div style="display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
-     </div>
-     <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Requests {{requests_change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ request_parameter._rendered_value }}
-        <div style="display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{request_lastday_change_parameter._rendered_value}} from past day </div>
-    </div>
-     <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Bids {{bids_change_parameter._value}}
-        <div style= "display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Bids_parameter._rendered_value }}
-        <div style=" display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{bids_lastday_change_parameter._rendered_value}} from past day </div>
-     </div>
-    </div>
-    <div style = "background:#393838; margin-top: 10px;">
-    <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Revenue {{revenue_change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}
-        <div style="display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{revenue_lastday_change_parameter._rendered_value}} from past day </div>
-    </div>
-
-     <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{impression_change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
-        <div style="display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
-    </div>
-    <div style=" display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Net Revenue {{net_rev_change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Net_Margin_parameter._rendered_value }}
-        <div style="display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
-    </div>
-    </div>
-
-    <div>
+  <div>
     <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img  style= "width:100%"  src= "https://i.ibb.co/7WgQTps/Frame-3-1.png" alt="Frame-3-1" border="0">"></a>
     </div>
     <div style="text-align:center; border-radius: 0px;  padding: 5px 10px; background:#393838; height: 60px; color: red;">

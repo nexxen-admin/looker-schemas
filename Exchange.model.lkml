@@ -15,6 +15,17 @@ user_attribute: admins
 allowed_values: ["Looker_Admins"]
 }
 
+access_grant: can_view_aniview {
+  user_attribute: admins
+  allowed_values: ["Aniview"]
+}
+
+explore: ani_view_data {
+  label: "Aniview"
+  required_access_grants: [can_view_aniview]
+
+}
+
 explore: temp_di_pub_com_looker_test {
   required_access_grants: [can_view_pub_come_looker]
 }

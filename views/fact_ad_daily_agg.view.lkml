@@ -280,37 +280,13 @@ view: fact_ad_daily_agg {
 
      <img  src="https://www.linkpicture.com/q/למאמית.png"alt="image" border="0">
      <div>
-     <img style= "width: 100%" src="https://www.linkpicture.com/q/Frame-4-1-2.png" >
-    </div>
-  <div style="text-align: center; display: inline-block;">
-  <a style="color: #4285F4;  border: solid 1px #4285F4; float: left; font-weight: 400;
-    text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;font-size: 1rem;
-    line-height: 1.5;  border-radius: 5px" href="#home">Reports</a>
-      <a style="color: #4285F4;  border: solid 1px #4285F4; float: left; font-weight: 400;
-    text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;font-size: 1rem;
-    line-height: 1.5;  border-radius: 5px" href="https://tremor.cloud.looker.com/dashboards-next/29">News️</a>
-      <a style="color: #4285F4;  border: solid 1px #4285F4; float: left; font-weight: 400;
-    text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;font-size: 1rem;
-    line-height: 1.5;  border-radius: 5px" href="https://tremor.cloud.looker.com/extensions/marketplace_extension_data_dictionary::data-dictionary/models/Exchange/explores/fact_ad_daily_agg">Data Dictionary</a>
-      <a style="color: #4285F4;  border: solid 1px #4285F4; float: left; font-weight: 400;
-    text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;font-size: 1rem;
-    line-height: 1.5;  border-radius: 5px" href="#about">Contact️</a>
+     <img style= "width: 100%" src="https://www.linkpicture.com/q/Frame-4-1-2.png" ></div>
+    <div style = "text-align: left;">{{ _user_attributes['name'] }} , <a style = "font-size:25px; color:#000000">What would you like to see today? </a></div>
+  <div style = "text-align: left; font-size:60px;">
+     <a style="color: #4285F4;  border: solid 1px #4285F4; font-weight: 400;
+    text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;font-size:20px;
+    line-height: 50px;  border-radius: 10px" href="#home">Daily Tremor Dashboard</a></div>
 
-  <div>
-    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img  style= "width:100%"  src= "https://i.ibb.co/7WgQTps/Frame-3-1.png" alt="Frame-3-1" border="0">"></a>
-    </div>
-    <div style="text-align:center; border-radius: 0px;  padding: 5px 10px; background:#393838; height: 60px; color: red;">
-
-    <nav style="font-size: 18px;">
-      <img style=" width;100px ;padding: 5px 15px; float: left; height: 40px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAA…prs+779J3Te6590L1/j8HLRpR86ZVlgAAAABJRU5ErkJggg==">
-      <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊
-       </a>
-      <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#news">News 📜</a>
-      <a style="color: #efefef; padding: 5px 15px;line-height: 40px;" href="#contact">Data Dictionary❓</a>
-      <a style=" color: #efefef; padding: 5px 15px; line-height: 40px;" href="#about">Contact️ 📒</a>
-    </nav>
-
-    </div>
     ;;
     group_label: "Admins Metrics"
   }

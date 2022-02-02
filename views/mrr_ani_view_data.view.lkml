@@ -104,7 +104,14 @@ view: ani_view_data {
   measure: fill_rate {
     type: number
     value_format: "0.00\%"
-    sql: ${impression}/NULLIF(${inventory},0) ;;
+    sql: ${impression}/NULLIF(${inventory},0)*100 ;;
+  }
+
+  measure: advertiser_fill_rate {
+    type: number
+    label: "Advertiser Fill Rate"
+    value_format: "0.00\%"
+    sql: ${impression}/NULLIF(${request},0)*100 ;;
   }
 
   dimension: grouped_domain {

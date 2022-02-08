@@ -581,7 +581,7 @@ view: fact_ad_hourly_agg {
     label: "VCR"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
-    sql: ${video_completes}/NULLIF(${video_starts},0);;
+    sql: (${video_completes}/NULLIF(${video_starts},0))*100;;
 
   }
 

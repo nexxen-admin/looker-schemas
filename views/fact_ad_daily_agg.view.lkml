@@ -262,14 +262,12 @@ view: fact_ad_daily_agg {
 
     <nav style="font-size: 18px;">
       <img style=" width;100px ;padding: 5px 15px; float: left; height: 40px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAA…prs+779J3Te6590L1/j8HLRpR86ZVlgAAAABJRU5ErkJggg==">
-      <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊
-       </a>
+      <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊 </a>
       <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#news">News 📜</a>
       <a style="color: #efefef; padding: 5px 15px;line-height: 40px;" href="#contact">Data Dictionary❓</a>
       <a style=" color: #efefef; padding: 5px 15px; line-height: 40px;" href="#about">Contact️ 📒</a>
     </nav>
 
-    </div>
     ;;
     group_label: "Admins Metrics"
   }
@@ -278,18 +276,51 @@ view: fact_ad_daily_agg {
     type: count
     html:
 
-     <img  src="https://www.linkpicture.com/q/למאמית.png"alt="image" border="0">
-     <div>
-     <img style= "width: 100%" src="https://www.linkpicture.com/q/Frame-4-1-2.png" ></div>
-    <div style = "text-align: left;">{{ _user_attributes['name'] }} , <a style = "font-size:25px; color:#000000">What would you like to see today? </a></div>
-  <div style = "text-align: left; font-size:60px;">
-     <a style="color: #4285F4;  border: solid 1px #4285F4; font-weight: 400;
-    text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 10px;margin: 5px;font-size:20px;
-    line-height: 50px;  border-radius: 10px" href="#home">Daily Tremor Dashboard</a></div>
+    <div style=" margin-left:-5px;">
+      <img src="https://www.linkpicture.com/q/למאמית.png" ></div>
+   <div style=" padding: 5px 10px; background: #000000; height: 60px; color:#000000;"></div>
+
+  <img style= "width: 100%" src="https://www.linkpicture.com/q/Frame-4-1-2.png" >
+
+
+    <div style = "margin:72px 72px; text-align:left; line-height: 3">{{ _user_attributes['name'] }} ,<br>
+
+       <div><a style="float:right; color: #FFFFFF; background-color:#000000; border: solid 3px #000000; font-weight: 400;height:70px;
+       text-align: center;text-float: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 120px 30px 120px ;margin-left:900px;font-size:30px;
+       line-height: 0px;  border-radius: 25px;" href="#home">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
+           Choose what would you like to see today?<br style= "line-height:1px">
+           For How to use looker and more toturial for building your own<br>
+           report choose <strong>Looker Academy.</strong></p>
+          </div>
+
+          <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:70px;
+       text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 110px 30px 110px ;margin-left:900px;font-size:30px;
+       line-height: 0px;  border-radius: 25px" href="#home">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
+           Choose what would you like to see today?<br style= "line-height:1px">
+           For How to use looker and more toturial for building your own<br>
+           report choose <strong>Looker Academy.</strong></p></div>
+
+          <div><a style="float:right;  color: #FFFFFF; background-color:#000000;  border: solid 3px #000000;x font-weight: 400;height:70px;
+       text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
+       line-height: 0px;  border-radius: 25px" href="#home">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
+           Choose what would you like to see today?<br style= "line-height:1px">
+           For How to use looker and more toturial for building your own<br>
+           report choose <strong>Looker Academy.</strong></p></div>
+
+    </div>
+
+
+
+
 
     ;;
+
+
     group_label: "Admins Metrics"
   }
+
+
+
 
   dimension: rank_limit {
     type: number
@@ -754,7 +785,7 @@ view: fact_ad_daily_agg {
     label: "VCR"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${video_completes}/NULLIF(${video_starts},0)*100;;
+    sql: (${video_completes}/NULLIF(${video_starts},0))*100;;
 
   }
 

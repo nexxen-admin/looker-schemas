@@ -118,6 +118,48 @@ view: fact_ad_hourly_agg {
     hidden: yes
   }
 
+  dimension: os_key {
+    type: number
+    sql: ${TABLE}.OS_Key ;;
+    hidden: yes
+  }
+
+  dimension: rg_blocked_key {
+    type: number
+    sql: ${TABLE}.RG_Blocked_Key ;;
+    hidden: yes
+  }
+  dimension: rg_blocked_reason_key {
+    type: number
+    sql: ${TABLE}.RG_Blocked_Reason_key ;;
+    hidden: yes
+  }
+  dimension: user_matched_key {
+    type: number
+    sql: ${TABLE}.user_Matched_Key ;;
+    hidden: yes
+  }
+  dimension: video_Linearity_key {
+    type: number
+    sql: ${TABLE}.video_Linearity_key ;;
+    hidden: yes
+  }
+  dimension: video_simple_size_key {
+    type: number
+    sql: ${TABLE}.video_simple_size_key ;;
+    hidden: yes
+  }
+  dimension: ad_size_height_key {
+    type: number
+    sql: ${TABLE}.Ad_Size_Height_Key ;;
+    hidden: yes
+  }
+  dimension: ad_size_width_key {
+    type: number
+    sql: ${TABLE}.Ad_Size_Width_Key;;
+    hidden: yes
+  }
+
   dimension: dsp_deal_type_key {
     type: number
     sql: ${TABLE}.DSP_Deal_Type_Key ;;
@@ -380,7 +422,13 @@ view: fact_ad_hourly_agg {
     sql: ${TABLE}.sum_of_rmp_attempts ;;
     # hidden: yes
   }
-
+  measure: pub_platform_fee {
+    type: sum
+    label: "pub_platform_fee"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_pub_platform_fee ;;
+  }
   measure: rmp_requests {
     type: sum
     label: "Pub Requests"
@@ -533,7 +581,7 @@ view: fact_ad_hourly_agg {
     label: "VCR"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
-    sql: ${video_completes}/NULLIF(${video_starts},0);;
+    sql: (${video_completes}/NULLIF(${video_starts},0))*100;;
 
   }
 

@@ -15,15 +15,28 @@ user_attribute: admins
 allowed_values: ["Looker_Admins"]
 }
 
+access_grant: can_view_aniview {
+  user_attribute: aniview
+  allowed_values: ["Aniview"]
+}
+
+explore: ani_view_data {
+  label: "Aniview"
+  required_access_grants: [can_view_aniview]
+
+}
+
 explore: temp_di_pub_com_looker_test {
-hidden: yes
+  required_access_grants: [can_view_pub_come_looker]
 }
 
 explore: TaxAct_Hourly_Test {
+  required_access_grants: [can_view_pub_come_looker]
   label: "Derek's Data"
 }
 
 explore: taxact_daily_report {
+  required_access_grants: [can_view_pub_come_looker]
   label: "Derek's Data"
 }
 
@@ -66,6 +79,92 @@ join: dim_country {
     type: inner
     view_label: "Request Attributes"
     sql_on: ${dim_media_type.media_type_key}=${fact_ad_daily_agg.media_type_key};;
+    relationship: many_to_one
+  }
+  join: dim_rg_blocked {
+    type: full_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_rg_blocked.rg_blocked_key}=${fact_ad_daily_agg.rg_blocked_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_rg_blocked_reason {
+    type: full_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_rg_blocked_reason.rg_blocked_reason_key}=${fact_ad_daily_agg.rg_blocked_reason_key} ;;
+    relationship: many_to_one
+  }
+
+
+  join: dim_user_matched {
+    type: full_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_user_matched.user_matched_key}=${fact_ad_daily_agg.user_matched_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_video_linearity {
+    type: full_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_video_linearity.video_linearity_key}=${fact_ad_daily_agg.video_Linearity_key} ;;
+    relationship: many_to_one
+  }
+
+
+  join: dim_video_simple_size {
+    type: full_outer
+    view_label: "Ad Size"
+    sql_on: ${dim_video_simple_size.video_simple_size_key}=${fact_ad_daily_agg.video_simple_size_key} ;;
+    relationship: many_to_one
+  }
+  join: dim_ad_size_width {
+    type: full_outer
+    view_label: "Ad Size"
+    sql_on: ${dim_ad_size_width.ad_size_width_key}=${fact_ad_daily_agg.ad_size_width_key} ;;
+    relationship: many_to_one
+  }
+
+
+  join: dim_ad_size_height {
+    type: full_outer
+    view_label: "Ad Size"
+    sql_on: ${dim_ad_size_height.ad_size_height_key}=${fact_ad_daily_agg.ad_size_height_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_data_center {
+    type: full_outer
+    view_label: "DSP"
+    sql_on: ${dim_dsp_data_center.dsp_key}=${fact_ad_daily_agg.dsp_key}
+      AND ${dim_dsp_data_center.data_center_key}=${fact_ad_daily_agg.data_center_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_os {
+    type: full_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_os.os_key}=${fact_ad_daily_agg.os_key} ;;
+    relationship: many_to_one
+
+  }
+  join: dim_deal_brand {
+    type: full_outer
+    view_label: "Deal"
+    sql_on: ${dim_deal_brand.deal_brand_key}=${dim_deal.deal_brand_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_priority {
+    type: full_outer
+    view_label: "Deal"
+    sql_on: ${dim_deal_priority.deal_priority_key}=${dim_deal.deal_priority_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_agency {
+    type: full_outer
+    view_label: "Deal"
+    sql_on: ${dim_deal_agency.deal_agency_key}=${dim_deal.deal_agency_key};;
     relationship: many_to_one
   }
 
@@ -137,14 +236,6 @@ join: dim_deal {
 
 }
 
-join: rx_dim_deal_personnel {
-
-  type: inner
-  view_label: "Deal"
-  sql_on: ${rx_dim_deal_personnel.rx_deal_id}=${dim_deal.internal_deal_id} ;;
-  relationship: many_to_one
-
-}
 join: dim_deal_type {
   type: inner
   view_label: "Deal"
@@ -264,6 +355,94 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
   }
 
+  join: dim_rg_blocked {
+    type: full_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_rg_blocked.rg_blocked_key}=${fact_ad_hourly_agg.rg_blocked_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_rg_blocked_reason {
+    type: full_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_rg_blocked_reason.rg_blocked_reason_key}=${fact_ad_hourly_agg.rg_blocked_reason_key} ;;
+    relationship: many_to_one
+  }
+
+
+  join: dim_user_matched {
+    type: full_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_user_matched.user_matched_key}=${fact_ad_hourly_agg.user_matched_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_video_linearity {
+    type: full_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_video_linearity.video_linearity_key}=${fact_ad_hourly_agg.video_Linearity_key} ;;
+    relationship: many_to_one
+  }
+
+
+  join: dim_video_simple_size {
+    type: full_outer
+    view_label: "Ad Size"
+    sql_on: ${dim_video_simple_size.video_simple_size_key}=${fact_ad_hourly_agg.video_simple_size_key} ;;
+    relationship: many_to_one
+  }
+  join: dim_ad_size_width {
+    type: full_outer
+    view_label: "Ad Size"
+    sql_on: ${dim_ad_size_width.ad_size_width_key}=${fact_ad_hourly_agg.ad_size_width_key} ;;
+    relationship: many_to_one
+  }
+
+
+  join: dim_ad_size_height {
+    type: full_outer
+    view_label: "Ad Size"
+    sql_on: ${dim_ad_size_height.ad_size_height_key}=${fact_ad_hourly_agg.ad_size_height_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_data_center {
+    type: full_outer
+    view_label: "DSP"
+    sql_on: ${dim_dsp_data_center.dsp_key}=${fact_ad_hourly_agg.dsp_key}
+      AND ${dim_dsp_data_center.data_center_key}=${fact_ad_hourly_agg.data_center_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_os {
+    type: full_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_os.os_key}=${fact_ad_hourly_agg.os_key} ;;
+    relationship: many_to_one
+
+  }
+  join: dim_deal_brand {
+    type: full_outer
+    view_label: "Deal"
+    sql_on: ${dim_deal_brand.deal_brand_key}=${dim_deal.deal_brand_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_priority {
+    type: full_outer
+    view_label: "Deal"
+    sql_on: ${dim_deal_priority.deal_priority_key}=${dim_deal.deal_priority_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_agency {
+    type: full_outer
+    view_label: "Deal"
+    sql_on: ${dim_deal_agency.deal_agency_key}=${dim_deal.deal_agency_key};;
+    relationship: many_to_one
+  }
+
+
   join: dim_country {
     type: inner
     view_label: "Geo"
@@ -352,6 +531,8 @@ explore: fact_ad_hourly_agg{
     sql_on: ${dim_deal.deal_key}=${fact_ad_hourly_agg.deal_key};;
     relationship: many_to_one
   }
+
+
   join: dim_deal_type {
     type: inner
     view_label: "Deal"

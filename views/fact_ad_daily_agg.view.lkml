@@ -112,7 +112,7 @@ view: fact_ad_daily_agg {
   }
   measure: bids_lastday_change_parameter {
     type: number
-    sql: (${Last_day_bids}/${previous_day_responses})-1 ;;
+    sql: (${Last_Day_net_Revenue}/${prev_Day_net_Revenue})-1 ;;
     value_format: "0.00%"
     html:
     <ul>
@@ -199,6 +199,7 @@ view: fact_ad_daily_agg {
      <div>
      <img style= "width: 100%" src="https://i.ibb.co/nzf8gc7/Frame-4-1.png" alt="Frame-4-1" border="0">
     </div>
+     <div style = "background:#ffffff;height: 60px; display: inline-block;text-align:center;width:100%"><h1 style=" font-family: Raleway ,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:700  ">Daily Matrics</h1> </div>
     <div style = "background:#393838;">
     <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
          <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions
@@ -261,17 +262,65 @@ view: fact_ad_daily_agg {
 
     <nav style="font-size: 18px;">
       <img style=" width;100px ;padding: 5px 15px; float: left; height: 40px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAA…prs+779J3Te6590L1/j8HLRpR86ZVlgAAAABJRU5ErkJggg==">
-      <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊
-       </a>
+      <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊 </a>
       <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#news">News 📜</a>
       <a style="color: #efefef; padding: 5px 15px;line-height: 40px;" href="#contact">Data Dictionary❓</a>
       <a style=" color: #efefef; padding: 5px 15px; line-height: 40px;" href="#about">Contact️ 📒</a>
     </nav>
 
-    </div>
     ;;
     group_label: "Admins Metrics"
   }
+
+  measure: HTML_variable2 {
+    type: count
+    html:
+
+    <div style=" margin-left:-5px;">
+      <img src="https://www.linkpicture.com/q/למאמית.png" ></div>
+   <div style=" padding: 5px 10px; background: #000000; height: 60px; color:#000000;"></div>
+
+  <img style= "width: 100%" src="https://www.linkpicture.com/q/Frame-4-1-2.png" >
+
+
+    <div style = "margin:72px 72px; text-align:left; line-height: 3">{{ _user_attributes['name'] }} ,<br>
+
+       <div><a style="float:right; color: #FFFFFF; background-color:#000000; border: solid 3px #000000; font-weight: 400;height:70px;
+       text-align: center;text-float: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 120px 30px 120px ;margin-left:900px;font-size:30px;
+       line-height: 0px;  border-radius: 25px;" href="#home">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
+           Choose what would you like to see today?<br style= "line-height:1px">
+           For How to use looker and more toturial for building your own<br>
+           report choose <strong>Looker Academy.</strong></p>
+          </div>
+
+          <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:70px;
+       text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 110px 30px 110px ;margin-left:900px;font-size:30px;
+       line-height: 0px;  border-radius: 25px" href="#home">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
+           Choose what would you like to see today?<br style= "line-height:1px">
+           For How to use looker and more toturial for building your own<br>
+           report choose <strong>Looker Academy.</strong></p></div>
+
+          <div><a style="float:right;  color: #FFFFFF; background-color:#000000;  border: solid 3px #000000;x font-weight: 400;height:70px;
+       text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
+       line-height: 0px;  border-radius: 25px" href="#home">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
+           Choose what would you like to see today?<br style= "line-height:1px">
+           For How to use looker and more toturial for building your own<br>
+           report choose <strong>Looker Academy.</strong></p></div>
+
+    </div>
+
+
+
+
+
+    ;;
+
+
+    group_label: "Admins Metrics"
+  }
+
+
+
 
   dimension: rank_limit {
     type: number
@@ -557,6 +606,48 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: os_key {
+    type: number
+    sql: ${TABLE}.OS_Key ;;
+    hidden: yes
+  }
+
+  dimension: rg_blocked_key {
+    type: number
+    sql: ${TABLE}.RG_Blocked_Key ;;
+    hidden: yes
+  }
+  dimension: rg_blocked_reason_key {
+    type: number
+    sql: ${TABLE}.RG_Blocked_Reason_key ;;
+    hidden: yes
+  }
+  dimension: user_matched_key {
+    type: number
+    sql: ${TABLE}.user_Matched_Key ;;
+    hidden: yes
+  }
+  dimension: video_Linearity_key {
+    type: number
+    sql: ${TABLE}.video_Linearity_key ;;
+    hidden: yes
+  }
+  dimension: video_simple_size_key {
+    type: number
+    sql: ${TABLE}.video_simple_size_key ;;
+    hidden: yes
+  }
+  dimension: ad_size_height_key {
+    type: number
+    sql: ${TABLE}.Ad_Size_Height_Key ;;
+    hidden: yes
+  }
+  dimension: ad_size_width_key {
+    type: number
+    sql: ${TABLE}.Ad_Size_Width_Key;;
+    hidden: yes
+  }
+
   dimension: media_type_key {
     type: number
     sql: ${TABLE}.Media_Type_Key ;;
@@ -694,7 +785,7 @@ view: fact_ad_daily_agg {
     label: "VCR"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${video_completes}/NULLIF(${video_starts},0)*100;;
+    sql: (${video_completes}/NULLIF(${video_starts},0))*100;;
 
   }
 
@@ -800,10 +891,18 @@ view: fact_ad_daily_agg {
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue - ${TABLE}.cogs  ;;
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
     filters: [date_key_date: "2 days ago"]
 
   }
+  measure: pub_platform_fee {
+    type: sum
+    label: "pub_platform_fee"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_pub_platform_fee ;;
+  }
+
   measure:  Last_day_Revenue {
     label: "Revenue Last day "
     type: sum

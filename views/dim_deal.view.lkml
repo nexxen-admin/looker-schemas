@@ -1,17 +1,23 @@
+# The name of this view in Looker is "V Dim Deal"
 view: dim_deal {
+  # The sql_table_name parameter indicates the underlying database table
+  # to be used for all fields in this view.
   sql_table_name: BI_New.V_Dim_Deal ;;
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
 
-  dimension: agency_id {
-    type: number
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Agency ID" in Explore.
 
-    sql: ${TABLE}.Agency_ID ;;
-  }
 
   dimension: daily_rate_target {
     type: number
-    description: ""
     sql: ${TABLE}.Daily_Rate_Target ;;
   }
+
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: db_create {
     type: time
@@ -27,7 +33,6 @@ view: dim_deal {
     sql: ${TABLE}.DB_Create_Date ;;
     hidden: yes
   }
-
 
   dimension_group: db_update {
     type: time
@@ -46,41 +51,56 @@ view: dim_deal {
 
   dimension: deal_auction_type {
     type: string
-    description: ""
     sql: ${TABLE}.Deal_Auction_Type ;;
   }
 
   dimension: deal_bid_floor {
     type: number
-    description: ""
     sql: ${TABLE}.Deal_Bid_Floor ;;
   }
 
   dimension: deal_data_fee {
     type: number
-    description: ""
     sql: ${TABLE}.Deal_Data_Fee ;;
   }
 
   dimension: deal_demand_margin_pct {
     type: number
-    description: ""
     sql: ${TABLE}.Deal_demand_margin_pct ;;
+  }
+
+  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
+  # measures for this dimension, but you can also add measures of many different aggregates.
+  # Click on the type parameter to see all the options in the Quick Help panel on the right.
+
+  measure: total_deal_demand_margin_pct {
+    type: sum
+    sql: ${deal_demand_margin_pct} ;;
+  }
+
+  measure: average_deal_demand_margin_pct {
+    type: average
+    sql: ${deal_demand_margin_pct} ;;
   }
 
   dimension_group: deal_end {
     type: time
     description: "Deal contract End date"
     timeframes: [
-      date
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
     ]
     sql: ${TABLE}.Deal_End ;;
   }
 
   dimension: deal_id {
     description: "The Deal Externatal ID , contain 1st & 3rd party deals"
-    primary_key: yes
-    type:string
+    type: string
     sql: upper(${TABLE}.Deal_ID);;
     case_sensitive: no
   }
@@ -91,6 +111,26 @@ view: dim_deal {
     hidden: yes
   }
 
+  dimension: deal_brand_key {
+    type: number
+    sql: ${TABLE}.deal_brand_key ;;
+    hidden: yes
+  }
+
+
+  dimension: deal_agency_key {
+    type: number
+    sql: ${TABLE}.deal_agency_key ;;
+    hidden: yes
+  }
+
+
+  dimension: deal_priority_key {
+    type: number
+    sql: ${TABLE}.deal_priority_key ;;
+    hidden: yes
+  }
+
   dimension: deal_name {
     description: "Deal Description"
     type: string
@@ -98,16 +138,22 @@ view: dim_deal {
   }
 
   dimension: deal_office {
-    type: string
     description: "The Office to which the Deal is associated"
+    type: string
     sql: ${TABLE}.Deal_Office ;;
   }
 
   dimension_group: deal_start {
-    description: "Deal contract Start date"
     type: time
+    description: "Deal contract Start date"
     timeframes: [
-      date
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
     ]
     sql: ${TABLE}.Deal_Start ;;
   }
@@ -126,16 +172,13 @@ view: dim_deal {
   dimension: deal_type_key {
     type: number
     sql: ${TABLE}.Deal_Type_Key ;;
-    hidden:yes
+    hidden: yes
   }
 
 
-
   dimension: internal_deal_id {
-    description: ""
     type: number
     sql: ${TABLE}.Internal_Deal_ID ;;
-    hidden: yes
   }
 
   dimension: monthly_rev_target {
@@ -150,7 +193,6 @@ view: dim_deal {
   }
 
   dimension: vcr_target {
-    description: ""
     type: number
     sql: ${TABLE}.Vcr_Target ;;
   }

@@ -72,6 +72,7 @@ view: dim_dsp_seat {
     label: "Seat"
     type: string
     sql: ${TABLE}.Seat_ID ;;
+    hidden: yes
 
   }
 

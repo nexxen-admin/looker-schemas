@@ -1,8 +1,8 @@
-# The name of this view in Looker is "V Dim Employee Pub Ops"
-view: v_dim_employee_pub_ops {
+# The name of this view in Looker is "V Dim Deal Agency"
+view: dim_deal_agency {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_New.V_Dim_Employee_PubOps ;;
+  sql_table_name: BI_New.V_Dim_Deal_Agency ;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
 
@@ -41,17 +41,17 @@ view: v_dim_employee_pub_ops {
 
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
-  # This dimension will be called "Employee ID" in Explore.
+  # This dimension will be called "Deal Agency ID" in Explore.
 
-  dimension: employee_id {
+  dimension: deal_agency_id {
     type: number
-    sql: ${TABLE}.Employee_ID ;;
+    sql: ${TABLE}.Deal_Agency_ID ;;
     hidden: yes
   }
 
-  dimension: employee_key {
+  dimension: deal_agency_key {
     type: number
-    sql: ${TABLE}.Employee_Key ;;
+    sql: ${TABLE}.Deal_Agency_Key ;;
     hidden: yes
   }
 
@@ -59,46 +59,33 @@ view: v_dim_employee_pub_ops {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_employee_key {
+  measure: total_deal_agency_key {
     type: sum
-    sql: ${employee_key} ;;
+    sql: ${deal_agency_key} ;;
     hidden: yes
   }
 
-  measure: average_employee_key {
+  measure: average_deal_agency_key {
     type: average
-    sql: ${employee_key} ;;
+    sql: ${deal_agency_key} ;;
     hidden: yes
   }
 
-  dimension: employee_name {
-    label: "PubOps Name"
+  dimension: deal_agency_name {
     type: string
-    sql: ${TABLE}.Employee_Name ;;
-      full_suggestions: yes
+    sql: ${TABLE}.Deal_Agency_Name ;;
+    case_sensitive: no
   }
 
-  dimension: employee_office {
+  dimension: ri_info {
     type: string
-    sql: ${TABLE}.Employee_Office ;;
-    hidden: yes
-  }
-
-  dimension: employee_region {
-    type: string
-    sql: ${TABLE}.Employee_Region ;;
-    hidden: yes
-  }
-
-  dimension: role_source {
-    type: string
-    sql: ${TABLE}.Role_Source ;;
+    sql: ${TABLE}.RI_Info ;;
     hidden: yes
   }
 
   measure: count {
     type: count
-    drill_fields: [employee_name]
+    drill_fields: [deal_agency_name]
     hidden: yes
   }
 }

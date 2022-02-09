@@ -60,6 +60,7 @@ view: pointsbet_february {
   dimension: day {
     type: date
     sql: ${TABLE}."Day" ;;
+    html: {{ rendered_value | date: "%F" }} ;;
   }
 
   dimension: campaign {

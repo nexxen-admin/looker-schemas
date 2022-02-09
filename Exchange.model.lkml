@@ -41,6 +41,7 @@ explore: taxact_daily_report {
 }
 
 explore: pointsbet_february {
+  required_access_grants: [can_view_pub_come_looker]
   label: "Derek's Data"
 }
 

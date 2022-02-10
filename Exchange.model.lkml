@@ -40,6 +40,11 @@ explore: taxact_daily_report {
   label: "Derek's Data"
 }
 
+explore: pointsbet_february {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Derek's Data"
+}
+
 explore: fact_ad_daily_agg{
   always_filter: {
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]

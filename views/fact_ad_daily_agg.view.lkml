@@ -310,16 +310,16 @@ view: fact_ad_daily_agg {
            report choose <strong>Looker Academy.</strong></p></div>
     </div>
       <img style="width:1350px" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/632029_614016/Header-03.jpg">
+
     ;;
 
 
     group_label: "Admins Metrics"
   }
 
-  dimension: video {
-    type: string
-    sql: 'https://www.w3schools.com/html/mov_bbb.mp4' ;;
-    html: <video width="290" height="130" controls preload="none"> <controls> <source src="{{ value }}" type="video/mp4"> </video> ;;
+  measure: video {
+    type: count
+    html: <video width="290" height="130" controls preload="none"> <controls> <source src="https://www.loom.com/embed/fdaf7662dff94565b9ae2e31d9828fa1" type="video/mp4"> </video> ;;
   }
 
 

@@ -276,18 +276,20 @@ view: fact_ad_daily_agg {
     type: count
     html:
 
-    <div style=" margin-left:-5px;">
-      <img src="https://www.linkpicture.com/q/למאמית.png" ></div>
-   <div style=" padding: 5px 10px; background: #000000; height: 60px; color:#000000;"></div>
+  <table>
+  <tr>
+    <th><div style="text-align: left; margin:72px 72px;">
+  <img style="width:400px" src="https://www.tremorinternational.com/wp-content/uploads/2022/01/Ti_logo_black-fitted.svg">
+  </div></th>
+    <th><div style ="vertical-align: bottom;padding-top:50px;text-align:right;">| Business Intelligence Platform</div></th>
+  </tr>
+</table>
 
-  <img style= "width: 100%" src="https://www.linkpicture.com/q/Frame-4-1-2.png" >
-
-
-    <div style = "margin:72px 72px; text-align:left; line-height: 3">{{ _user_attributes['name'] }} ,<br>
+    <div style = "margin:5px 72px 72px 72px; text-align:left; ">Hey {{ _user_attributes['name'] }},<br>
 
        <div><a style="float:right; color: #FFFFFF; background-color:#000000; border: solid 3px #000000; font-weight: 400;height:70px;
        text-align: center;text-float: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 120px 30px 120px ;margin-left:900px;font-size:30px;
-       line-height: 0px;  border-radius: 25px;" href="#home">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
+       line-height: 0px;" href="#home">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
            Choose what would you like to see today?<br style= "line-height:1px">
            For How to use looker and more toturial for building your own<br>
            report choose <strong>Looker Academy.</strong></p>
@@ -306,17 +308,18 @@ view: fact_ad_daily_agg {
            Choose what would you like to see today?<br style= "line-height:1px">
            For How to use looker and more toturial for building your own<br>
            report choose <strong>Looker Academy.</strong></p></div>
-
     </div>
-
-
-
-
-
+      <img style="width:1350px" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/632029_614016/Header-03.jpg">
     ;;
 
 
     group_label: "Admins Metrics"
+  }
+
+  dimension: video {
+    type: string
+    sql: 'https://www.w3schools.com/html/mov_bbb.mp4' ;;
+    html: <video width="290" height="130" controls preload="none"> <controls> <source src="{{ value }}" type="video/mp4"> </video> ;;
   }
 
 

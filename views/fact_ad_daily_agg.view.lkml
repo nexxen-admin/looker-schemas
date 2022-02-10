@@ -317,7 +317,7 @@ view: fact_ad_daily_agg {
     group_label: "Admins Metrics"
   }
 
-  measure: video {
+  measure: video_2 {
     type: count
     html: <video width="290" height="130" controls preload="none"> <controls> <source src="https://www.loom.com/embed/fdaf7662dff94565b9ae2e31d9828fa1" type="video/mp4"> </video> ;;
   }

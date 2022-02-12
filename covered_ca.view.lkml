@@ -31,6 +31,7 @@ view: covered_ca {
 
   dimension: date {
     type: date
+    label: "DATE"
     sql: ${TABLE}."DATE" ;;
     html: {{ rendered_value | date: "%F" }} ;;
   }
@@ -61,6 +62,7 @@ view: covered_ca {
 
   dimension: creative {
     type: string
+    label: "CREATIVE"
     sql: ${TABLE}.CREATIVE ;;
   }
 
@@ -72,11 +74,13 @@ view: covered_ca {
 
   dimension: impressions {
     type: number
+    label: "IMPRESSIONS"
     sql: ${TABLE}.IMPRESSIONS ;;
   }
 
   dimension: clicks {
     type: number
+    label: "CLICKS"
     sql: ${TABLE}.CLICKS ;;
   }
 
@@ -88,6 +92,7 @@ view: covered_ca {
 
   dimension: completions {
     type: number
+    label: "COMPLETIONS"
     sql: ${TABLE}.COMPLETIONS ;;
   }
 

@@ -289,7 +289,7 @@ view: fact_ad_daily_agg {
 
        <div><a style="float:right; color: #FFFFFF; background-color:#000000; border: solid 3px #000000; font-weight: 400;height:70px;
        text-align: center;text-float: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 120px 30px 120px ;margin-left:900px;font-size:30px;
-       line-height: 0px;" href="#home">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
+       line-height: 0px; border-radius: 25px" href="#home">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
            Choose what would you like to see today?<br style= "line-height:1px">
            For How to use looker and more toturial for building your own<br>
            report choose <strong>Looker Academy.</strong></p>
@@ -319,8 +319,54 @@ view: fact_ad_daily_agg {
 
   measure: video_2 {
     type: count
-    html: <video width="290" height="130" controls preload="none"> <controls> <source src="https://www.loom.com/embed/fdaf7662dff94565b9ae2e31d9828fa1" type="video/mp4"> </video> ;;
+    html:
+
+  <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin; font-size:30px;
+       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+      <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+      <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+     <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a></div>
+      <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin; font-size:30px;
+       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+      <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+      <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+     <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a></div>;;
+
+
+
   }
+
+  measure: video_3 {
+    type: count
+    html:
+
+<div>
+  <video width="320" height="240" controls>
+  <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/daily%20report%20-%2010%20February%202022%20(1).mp4" type="video/mp4">
+  Your browser does not support the video tag.
+  </video>
+</div>
+
+
+;;
+
+    }
+
+
 
 
 

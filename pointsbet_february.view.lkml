@@ -41,7 +41,8 @@ view: pointsbet_february {
         dd.Views,
         dd.Completed_Views as "Completed Views",
         (dd.impressions/1000) * cpm.cpm as Cost,
-        dd.Clicks,
+        case when dd.flight_id in ('4223946','4223976') then ''
+          else dd.Clicks::varchar end as Clicks,
         dd.Placeholder1 as "Video Play 100",
         dd.Placeholder2 as ID,
         dd.Creative,

@@ -167,6 +167,14 @@ view: ani_view_data {
     sql: (${revenue}/NULLIF(${inventory},0))*1000 ;;
   }
 
+  measure: sf {
+    type: number
+    value_format: "$#,##0.00"
+    sql: ${impression}*0.2/1000 ;;
+  }
+
+
+
   measure: count {
     type: count
     drill_fields: [country_name, publisher_name, ad_source_name, advertiser_name]

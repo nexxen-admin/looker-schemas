@@ -64,7 +64,7 @@ view: TaxAct_Hourly_Test {
 
   dimension: clicks {
     type: number
-    sql: ${TABLE}.Clicks ;;
+    sql: NULLIF(${TABLE}.Clicks,0) ;;
   }
 
   dimension: cost {

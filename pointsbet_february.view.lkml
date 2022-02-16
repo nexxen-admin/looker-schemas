@@ -42,7 +42,7 @@ view: pointsbet_february {
         dd.Completed_Views as "Completed Views",
         (dd.impressions/1000) * cpm.cpm as Cost,
         case when dd.flight_id in ('4223946','4223976') then ''
-          else dd.Clicks::varchar end as Clicks,
+          else dd.Clicks::VARCHAR end as Clicks,
         dd.Placeholder1 as "Video Play 100",
         dd.Placeholder2 as ID,
         dd.Creative,
@@ -96,8 +96,10 @@ view: pointsbet_february {
   }
 
   dimension: clicks {
-    type: number
-    sql: ${TABLE}.Clicks ;;
+    type: string
+    sql: case when NULLIF(${TABLE}.Clicks,'0') = ''
+    then '0' WHEN NULLIF(${TABLE}.Clicks,'0')='∅' THEN '0'
+    ELSE ${TABLE}.Clicks end;;
   }
 
   dimension: video_play_100 {

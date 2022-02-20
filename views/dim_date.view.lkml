@@ -18,7 +18,11 @@ view: dim_date {
   }
 
   dimension: is_before_mtd {
-
+    description: "should be used when comparing month to month while including the current not complited month -
+                  in this case the - Is Before Mtd,
+                  will filter the other months on exact days of the not complited month.
+                  e.g when compating last 2 monthes January and Fabuarty and the current month is Fab and the day is 16 ,
+                  the - Is Before Mtd will filter Jan to be 1-16 also "
     type: yesno
     sql: DATE_PART('DAY', ${date_key_raw}::TIMESTAMP) < DATE_PART('DAY', CURRENT_TIMESTAMP) ;;
 

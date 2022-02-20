@@ -12,6 +12,10 @@ view: dim_ad_size_height {
 
   dimension: ad_size_exact_height {
     label: "Ad Size Exact Height"
+    description: "Permitted and recommended height size for ad ,
+                  this information is provided with the request
+                  and does not indicate the final size of the ad returned in
+                  the bid."
     type: number
     sql: ${TABLE}.Ad_Size_Exact_Height ;;
   }
@@ -20,17 +24,6 @@ view: dim_ad_size_height {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_ad_size_exact_height {
-    type: sum
-    sql: ${ad_size_exact_height} ;;
-    hidden: yes
-  }
-
-  measure: average_ad_size_exact_height {
-    type: average
-    sql: ${ad_size_exact_height} ;;
-    hidden: yes
-  }
 
   dimension: ad_size_height_key {
     type: number
@@ -40,6 +33,9 @@ view: dim_ad_size_height {
 
   dimension: ad_size_height_range {
     label: "Ad Size Height Range"
+    description: "The high hirarchy of Ad height size.
+                  support you collect all ads between sizes ranges ,
+                  e.g : ads height between 1-100 "
     type: string
     sql: ${TABLE}.Ad_Size_Height_Range ;;
   }
@@ -47,35 +43,6 @@ view: dim_ad_size_height {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: db_create {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.DB_Create_Date ;;
-    hidden: yes
-  }
-
-  dimension_group: db_update {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.DB_Update_Date ;;
-    hidden: yes
-  }
 
   dimension: range_sort_column {
     type: number

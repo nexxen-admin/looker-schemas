@@ -386,6 +386,7 @@ view: fact_ad_daily_agg {
 
   measure:: cogs {
     label: "Cogs"
+    description: "The ssp cost or publisher cost"
     type: sum
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
@@ -712,6 +713,9 @@ view: fact_ad_daily_agg {
   measure: impression_pixel {
     type: sum
     label: "Impressions"
+    description: "Winning the auction does not guarantee that the ad has been successfully delivered to the customer
+                  Or it will meet visible expectations. So when there is an impression you can be sure that the win has reached the customer.
+                  - This field describes the total number of ads that have successfully reached the customer and which have been posted."
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_impression_pixel ;;
@@ -720,6 +724,9 @@ view: fact_ad_daily_agg {
   measure: impression_win {
     type: sum
     label: "Wins"
+    description: "Each incoming ad request is sent to the bidders,
+                  the responses are checked according to the winning tender rules, and the winner is selected.
+                  Wins is the total number of selected winners"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_impression_win ;;
@@ -751,6 +758,11 @@ view: fact_ad_daily_agg {
 
   measure: requests {
     type: sum
+    description: "Requests sent to us from the publisher / ssp to the exchange.
+                 This field can not measure deals or dsp because it does not match the meaning of the request described as inbound.
+                 There are separate fields for this - deals request, outbound request.
+                (These fields are expected to be uploaded to the system in early March)
+                - sampeld data in small resulotions might be lower the data that in CTRL/RX, however the difference should be small"
     label: "Inbound Requests"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
@@ -784,6 +796,7 @@ view: fact_ad_daily_agg {
   measure: Margin {
     type: number
     label: "Margin%"
+    description: "The Ratio of profit to revenue"
     value_format: "0.00"
     group_label: "Daily Measures"
     sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0))*100 ;;
@@ -855,6 +868,8 @@ view: fact_ad_daily_agg {
   measure: responses {
     type: sum
     label: "Bids"
+    description: "The total Bid response returned from the dsp - this data is not sampeled therefore
+                 , in small resulotions might be higher than the requests field  "
     value_format: "#,##0"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_responses ;;

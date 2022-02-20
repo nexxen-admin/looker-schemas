@@ -9,36 +9,7 @@ view: dim_rg_blocked_reason {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: db_create {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.DB_Create_Date ;;
-    hidden: yes
 
-  }
-
-  dimension_group: db_update {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.DB_Update_Date ;;
-    hidden: yes
-  }
 
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
@@ -46,6 +17,7 @@ view: dim_rg_blocked_reason {
 
   dimension: rg_blocked_reason {
     label: "RG Blocked Reason"
+    description: "Describes the reason why the Rhythm guard system decided to block a request - it happens in real time."
     type: string
     sql: ${TABLE}.RG_Blocked_Reason ;;
   }

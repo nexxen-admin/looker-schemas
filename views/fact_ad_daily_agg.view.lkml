@@ -354,12 +354,39 @@ view: fact_ad_daily_agg {
     type: count
     html:
 
+
 <div>
-  <video width="320" height="240" controls>
-  <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/daily%20report%20-%2010%20February%202022%20(1).mp4" type="video/mp4">
-  Your browser does not support the video tag.
-  </video>
+<div style = "display: inline-block">
+
+    <video width="320" height="240" controls>
+    <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/daily%20report%20-%2010%20February%202022%20(1).mp4" type="video/mp4">
+    </video>
+    <p style = "font-size:20px;line-height: 1.6; color:#000000;">
+           How to buid a report in Looker?<br style= "line-height:1px">
 </div>
+<div style = "display: inline-block">
+    <video width="320" height="240" controls>
+    <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/daily%20report%20-%2010%20February%202022%20(1).mp4" type="video/mp4">
+    </video>
+    <p style = "font-size:20px;line-height: 1.6; color:#000000;">
+           How to buid a report in Looker?<br style= "line-height:1px">
+</div>
+<div style = "display: inline-block">
+    <video width="320" height="240" controls>
+    <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/daily%20report%20-%2010%20February%202022%20(1).mp4" type="video/mp4">
+    </video>
+    <p style = "font-size:20px;line-height: 1.6; color:#000000;">
+           How to buid a report in Looker?<br style= "line-height:1px">
+</div>
+<div style = "display: inline-block">
+    <video width="320" height="240" controls>
+    <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/daily%20report%20-%2010%20February%202022%20(1).mp4" type="video/mp4">
+    </video>
+    <p style = "font-size:20px;line-height: 1.6; color:#000000;">
+           How to buid a report in Looker?<br style= "line-height:1px">
+</div>
+</div>
+
 
 
 ;;

@@ -18,7 +18,7 @@ view: publishers_report_monthly_for_finance {
        SUM(ssd.impswins) as impswins,
        SUM(ssd.impressions) as impressions,
        SUM(ssd.clicks) as clicks,
-      SUM(ssd.revenue) as revenue,
+       SUM(ssd.revenue) as revenue,
        SUM(ssd.cost) as cost,
        SUM(ssd.firstparty_revenue) as firstparty_revenue,
        SUM(ssd.thirdparty_revenue) as thirdparty_revenue

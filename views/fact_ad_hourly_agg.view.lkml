@@ -451,7 +451,7 @@ view: fact_ad_hourly_agg {
     label: "Slot Requests"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_slot_requests ;;
-    hidden: yes
+
   }
 
   dimension: sum_of_usermatched {

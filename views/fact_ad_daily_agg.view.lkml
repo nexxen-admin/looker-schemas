@@ -404,18 +404,16 @@ view: fact_ad_daily_agg {
   html:
 
     <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
-        <video controls>
-          <source src="nambia1.mp4" type="video/mp4">
+        <video width="800" height="450" controls>
+          <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep04_Add%20New%20Filters.mp4" type="video/mp4">
         </video>
         <figcaption style = "display: table-cell; vertical-align: top; width: 25%;">
-          <a style = "display: block; opacity: .5; transition: 1s opacity;" href="nambia1.mp4"><img src="nambia1.jpg" alt="Nambia Timelapse 1"></a>
+          <a style = "display: block; opacity: .5; transition: 1s opacity;" href="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4"><img src="nambia1.jpg" alt="Nambia Timelapse 1"></a>
           <a style = "display: block; opacity: .5; transition: 1s opacity;" href="nambia2.mp4"><img src="nambia2.jpg" alt="Nambia Timelapse 2"></a>
           <a style = "display: block; opacity: .5; transition: 1s opacity;" href="nambia3.mp4"><img src="nambia3.jpg" alt="Nambia Timelapse 3"></a>
         </figcaption>
     </figure>
-
-
-
+    ;;
 
  }
 

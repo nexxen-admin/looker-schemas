@@ -20,6 +20,11 @@ access_grant: can_view_aniview {
   allowed_values: ["Aniview"]
 }
 
+explore: publishers_report_monthly_for_finance {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "publishers report monthly for finance"
+}
+
 explore: ani_view_data {
   label: "Aniview"
   required_access_grants: [can_view_aniview]

@@ -136,7 +136,7 @@ view: publishers_report_monthly_for_finance {
   }
 
   measure: thirdparty_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.thirdparty_revenue ;;
   }
 

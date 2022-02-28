@@ -17,7 +17,8 @@ view: publishers_report_monthly_for_finance {
        SUM(ssd.attempts) as attempts,
        SUM(ssd.impswins) as impswins,
        SUM(ssd.impressions) as impressions,
-       SUM(ssd.clicks) as clicks,SUM(ssd.revenue) as revenue,
+       SUM(ssd.clicks) as clicks,
+      SUM(ssd.revenue) as revenue,
        SUM(ssd.cost) as cost,
        SUM(ssd.firstparty_revenue) as firstparty_revenue,
        SUM(ssd.thirdparty_revenue) as thirdparty_revenue
@@ -68,88 +69,89 @@ view: publishers_report_monthly_for_finance {
     sql: ${TABLE}.placement_name ;;
   }
 
-  dimension: pub_requests {
-    type: number
+  measure: pub_requests {
+    type: sum
     sql: ${TABLE}.pub_requests ;;
   }
 
-  dimension: slot_requests {
-    type: number
+  measure: slot_requests {
+    type: sum
     sql: ${TABLE}.slot_requests ;;
   }
 
-  dimension: rx_requests {
-    type: number
+  measure: rx_requests {
+    type: sum
     sql: ${TABLE}.rx_requests ;;
   }
 
-  dimension: opportunities {
-    type: number
+  measure: opportunities {
+    type: sum
     sql: ${TABLE}.opportunities ;;
   }
 
-  dimension: bids {
-    type: number
+  measure: bids {
+    type: sum
     sql: ${TABLE}.bids ;;
   }
 
-  dimension: slot_attempts {
-    type: number
+  measure: slot_attempts {
+    type: sum
     sql: ${TABLE}.slot_attempts ;;
   }
 
-  dimension: attempts {
-    type: number
+  measure: attempts {
+    type: sum
     sql: ${TABLE}.attempts ;;
   }
 
-  dimension: impswins {
-    type: number
+  measure: impswins {
+    label: "Wins"
+    type: sum
     sql: ${TABLE}.impswins ;;
   }
 
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.impressions ;;
   }
 
-  dimension: clicks {
-    type: number
+  measure: clicks {
+    type: sum
     sql: ${TABLE}.clicks ;;
   }
 
-  dimension: revenue {
-    type: number
+  measure: revenue {
+    type: sum
     sql: ${TABLE}.revenue ;;
   }
 
-  dimension: cost {
-    type: number
+  measure: cost {
+    type: sum
     sql: ${TABLE}.cost ;;
   }
 
-  dimension: firstparty_revenue {
-    type: number
+  measure: firstparty_revenue {
+    type: sum
     sql: ${TABLE}.firstparty_revenue ;;
   }
 
-  dimension: thirdparty_revenue {
+  measure: thirdparty_revenue {
     type: number
     sql: ${TABLE}.thirdparty_revenue ;;
   }
 
-  dimension: bid_rate {
-    type: number
+  measure: bid_rate {
+    type: average
     sql: ${TABLE}.bid_rate ;;
   }
 
-  dimension: win_rate {
-    type: number
+  measure: win_rate {
+    type: average
     sql: ${TABLE}.win_rate ;;
   }
 
-  dimension: fill_rate {
-    type: number
+  measure: fill_rate {
+    type: average
     sql: ${TABLE}.fill_rate ;;
   }
 

@@ -346,57 +346,78 @@ view: fact_ad_daily_agg {
        text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
        line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a></div>;;
 
-
-
   }
 
   measure: video_3 {
     type: count
     html:
 
+<table>
+  <tr>
+    <th><div style = "display: inline-block">
 
-<div>
-<div style = "display: inline-block">
+    <video width="800" height="450" controls>
+    <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
+    </video>
+    <p style = "font-size:20px;line-height: 1.6; color:#000000;">Buiding My first Looker Report<style= "line-height:1px">
+</div>
+</th>
+    <th><p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;"> | </p></th>
 
-    <video width="320" height="240" controls>
-    <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/daily%20report%20-%2010%20February%202022%20(1).mp4" type="video/mp4">
-    </video>
-    <p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           How to buid a report in Looker?<br style= "line-height:1px">
-</div>
-<div style = "display: inline-block">
-    <video width="320" height="240" controls>
-    <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/daily%20report%20-%2010%20February%202022%20(1).mp4" type="video/mp4">
-    </video>
-    <p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           How to buid a report in Looker?<br style= "line-height:1px">
-</div>
-<div style = "display: inline-block">
-    <video width="320" height="240" controls>
-    <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/daily%20report%20-%2010%20February%202022%20(1).mp4" type="video/mp4">
-    </video>
-    <p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           How to buid a report in Looker?<br style= "line-height:1px">
-</div>
-<div style = "display: inline-block">
-    <video width="320" height="240" controls>
-    <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/daily%20report%20-%2010%20February%202022%20(1).mp4" type="video/mp4">
-    </video>
-    <p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           How to buid a report in Looker?<br style= "line-height:1px">
-</div>
-</div>
+    <th><div style = "display: inline-block">
 
+    <video width="800" height="450" controls>
+    <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep02_Save%20Report%20to%20Personal%20Folder.mp4" type="video/mp4">
+    </video>
+    <p style = "font-size:20px;line-height: 1.6; color:#000000;">Saving a Report to my Personal Folder<style= "line-height:1px">
+</div>
+</th>
+  </tr>
+  <tr>
+    <th><div style = "display: inline-block">
 
+    <video width="800" height="450" controls>
+    <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep03_Save%20Report%20to%20Existing%20Dashboard.mp4" type="video/mp4">
+    </video>
+    <p style = "font-size:20px;line-height: 1.6; color:#000000;">Saving a Report to an Existing Dashboard<style= "line-height:1px">
+</div>
+</th>
+    <th><div style = "display: inline-block"> </th>
+    <th><div style = "display: inline-block">
+
+    <video width="800" height="450" controls>
+    <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep04_Add%20New%20Filters.mp4" type="video/mp4">
+    </video>
+    <p style = "font-size:20px;line-height: 1.6; color:#000000;">Applying Filters<style= "line-height:1px">
+</div>
+</th>
+  </tr>
+</table>
 
 ;;
 
     }
 
+ measure: video_4 {
+
+  type: count
+  html:
+
+    <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
+        <video controls>
+          <source src="nambia1.mp4" type="video/mp4">
+        </video>
+        <figcaption style = "display: table-cell; vertical-align: top; width: 25%;">
+          <a style = "display: block; opacity: .5; transition: 1s opacity;" href="nambia1.mp4"><img src="nambia1.jpg" alt="Nambia Timelapse 1"></a>
+          <a style = "display: block; opacity: .5; transition: 1s opacity;" href="nambia2.mp4"><img src="nambia2.jpg" alt="Nambia Timelapse 2"></a>
+          <a style = "display: block; opacity: .5; transition: 1s opacity;" href="nambia3.mp4"><img src="nambia3.jpg" alt="Nambia Timelapse 3"></a>
+        </figcaption>
+    </figure>
 
 
 
 
+ }
 
   dimension: rank_limit {
     type: number

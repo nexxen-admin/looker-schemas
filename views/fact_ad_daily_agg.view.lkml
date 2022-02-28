@@ -582,7 +582,7 @@ view: fact_ad_daily_agg {
     label: "Slot Requests"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_slot_requests ;;
-    hidden: yes
+
   }
 
   measure: video_creative_views {

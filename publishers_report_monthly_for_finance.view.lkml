@@ -28,7 +28,7 @@ view: publishers_report_monthly_for_finance {
        FROM Andromeda.supply_stat_summary_daily as ssd
        left join andromeda.rx_dim_supply_publisher_r as pub on ssd.publisher_id=pub.publisher_id
        WHERE MONTH(ssd.event_time) =month(current_date)-1
-       GROUP BY DATE_PART('MONTH', ssd.event_time)
+       GROUP BY DATE_PART('MONTH', ssd.event_time) and year(ssd.event_time) = year(current_date)
        ,ssd.publisher_id,ssd.publisher_name,pub.ACCOUNTING_ID , ssd.placement_id, ssd.placement_name
       ORDER BY SUM(ssd.revenue) DESC
        ;;

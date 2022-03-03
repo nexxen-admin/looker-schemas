@@ -289,27 +289,28 @@ view: fact_ad_daily_agg {
 
        <div><a style="float:right; color: #FFFFFF; background-color:#000000; border: solid 3px #000000; font-weight: 400;height:70px;
        text-align: center;text-float: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 120px 30px 120px ;margin-left:900px;font-size:30px;
-       line-height: 0px; border-radius: 25px" href="#home">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
+       line-height: 0px; border-radius: 25px" href="https://tremor.cloud.looker.com/extensions/marketplace_extension_data_dictionary::data-dictionary/models/Exchange/explores/fact_ad_daily_agg">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
            Browse through the data dictionary to find definitions, restrictions<br style= "line-height:1px">
-           and general information about the dimensions and measures you're using in your reports. <br>
-           All missing descriptions will be added shortly. <strong> GO TO Data Dictionary.</strong></p>
+           and general information about the dimensions and measures you're using  <br>
+           in your reports.
+           All missing descriptions will be added shortly. <strong></strong></p>
           </div>
 
           <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:70px;
        text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 110px 30px 110px ;margin-left:900px;font-size:30px;
-       line-height: 0px;  border-radius: 25px" href="#home">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
+       line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/162">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
            Visit the new site to find learning journeys <br style= "line-height:1px">
            with self-paced learning and hands-on practice <br>
-           designed to get you up to speed quickly. <strong> GO TO Looker Academy.</strong></p></div>
+           designed to get you up to speed quickly. <strong></strong></p></div>
 
 
           <div><a style="float:right;  color: #FFFFFF; background-color:#000000;  border: solid 3px #000000;x font-weight: 400;height:70px;
        text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
        line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/29">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
            Stay up to date on what's new in the looker!<br style= "line-height:1px">
-           New additions, updates and important information will be updated on the news page,<br>
+           New additions and important BI information will be added to news page,<br>
            You will receive an update to the slack group channel with a link <br>
-           to the news page.<strong>GO TO News Page.</strong></p></div>
+           to the news page.<strong></strong></p></div>
     </div>
       <img style="width:1350px" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/632029_614016/Header-03.jpg">
 
@@ -406,93 +407,59 @@ view: fact_ad_daily_agg {
   html:
 
 
-<table border="0" bordercolor="black" style = "padding: 15px">
+<table>
         <tr>
+            <td style = "padding: 2px">
+              <video controls width="480" poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_01_static.png">
+              <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
+              </video>
+            </td>
+
             <td>
-            <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
-        <video controls width="500" height="300"  poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_01_static.png">
-          <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
-        </video>
-        </td>
+                <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;"> | </p>
+            </td>
+
+            <td style = "padding: 2px">
+              <video controls width="480" poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_02_static.png">
+              <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/EP_02_Mar3.mp4" type="video/mp4">
+              </video>
+            </td>
+
             <td>
-                <p>ep01</p>
+                <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;"> | </p>
+            </td>
+
+            <td style = "padding: 2px">
+              <video controls width="480" poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_03_static.png">
+              <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/EP_03_Mar3.mp4" type="video/mp4">
+              </video>
             </td>
         </tr>
+
         <tr>
-            <td>
-            <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
-        <video controls width="500" height="300"  poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_02_static.png">
-          <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep02_Save%20Report%20to%20Personal%20Folder.mp4" type="video/mp4">
-        </video>
-        </td>
-            <td>
-                some text content ep02
+            <td >
+              <h1 style = "font-size:18px;line-height: 1.6; color:#000000;text-align: left;">Building My First Report</h1>
+              <p style = "font-size:16px;line-height: 1.2; color:#71767A;text-align: left;">Learn how to add dimetions and measures and how to filter your report</p>
             </td>
-        </tr>
-        <tr>
             <td>
-            <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
-        <video controls width="500" height="300"  poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_03_static.png">
-          <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep03_Save%20Report%20to%20Existing%20Dashboard.mp4" type="video/mp4">
-        </video>
-        </td>
-            <td>
-                some text content ep03
+                <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;text-align: left;"> | </p>
             </td>
-        </tr>
-        <tr>
+
             <td>
-            <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
-        <video controls width="800" height="450"  poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_04_static.png">
-          <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep04_Add%20New%20Filters.mp4" type="video/mp4">
-        </video>
-        </td>
-            <td>
-                some text content ep04
+              <h1 style = "font-size:18px;line-height: 1.6; color:#000000;text-align: left;">Saving a Report to my Personal Folder</h1>
+              <p style = "font-size:16px;line-height: 1.2; color:#71767A;text-align: left;">Learn how to save your report into your own personal folder</p>
             </td>
+            <td>
+                <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;text-align: left;"> | </p>
+            </td>
+            <td>
+              <h1 style = "font-size:18px;line-height: 1.6; color:#000000;text-align: left;">Saving a Report to an Existing Dashboard</h1>
+              <p style = "font-size:16px;line-height: 1.2; color:#71767A;text-align: left;">Learn how to add a new look to an existing dashboard</p>
+            </td>
+
         </tr>
     </table>
 
-
-
-
-<!--
-  <table>
-  <tr>
-    <th>
-        <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
-        <video width="800" height="450" controls>
-          <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
-        </video>
-  </th>
-  <th>
-  <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;"> | </p>
-  </th>
-
-  <th>
-    <figcaption style = "display: table-cell; vertical-align: top; width: 10%">
-          <a style = "display: opacity: .5; transition: 1s opacity;" href="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep02_Save%20Report%20to%20Personal%20Folder.mp4"><img src="https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_02_static.png" alt="ep_02_Title"></a>
-          <a style = "display: opacity: .5; transition: 1s opacity;" href="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep03_Save%20Report%20to%20Existing%20Dashboard.mp4"><img src="https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_03_static.png" alt="ep_03_Title"></a>
-          <a style = "display: opacity: .5; transition: 1s opacity;" href="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep04_Add%20New%20Filters.mp4"><img src="https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_04_static.png" alt="ep_04_Title"></a>
-    </figcaption>
-  </th>
-  </tr>
-  </table>
-
-        <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
-
-        <video  style = "display: table;" controls>
-          <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
-        </video>
-
-        <figcaption style = "display: table-cell; vertical-align: top; width: 25%;">
-          <a style = "display: height:350px; width: 350px; opacity: .5; transition: 1s opacity;" href="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep02_Save%20Report%20to%20Personal%20Folder.mp4"><img src="https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_02_static.png" alt="ep_02_Title"></a>
-          <a style = "display: height:350px; width: 350px; opacity: .5; transition: 1s opacity;" href="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep03_Save%20Report%20to%20Existing%20Dashboard.mp4"><img src="https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_03_static.png" alt="ep_03_Title"></a>
-          <a style = "height:350px; width: 350px; opacity: .5; transition: 1s opacity;" href="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep04_Add%20New%20Filters.mp4"><img src="https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_04_static.png" alt="ep_04_Title"></a>
-        </figcaption>
-
-    </figure>
-    -->
     ;;
 
 

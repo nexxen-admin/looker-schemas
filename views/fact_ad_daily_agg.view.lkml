@@ -299,8 +299,8 @@ view: fact_ad_daily_agg {
           <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:70px;
        text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 110px 30px 110px ;margin-left:900px;font-size:30px;
        line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/162">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           Visit the new site to find learning experience <br style= "line-height:1px">
-           s with self-paced education and hands-on practice <br>
+           Visit the new site to find learning experiences <br style= "line-height:1px">
+            with self-paced education and hands-on practice <br>
            designed to get you up to speed quickly. <strong></strong></p></div>
 
 

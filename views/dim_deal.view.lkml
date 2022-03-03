@@ -83,8 +83,8 @@ view: dim_deal {
     sql: ${deal_demand_margin_pct} ;;
   }
 
-  dimension_group: deal_end {
-    type: time
+  dimension: deal_end {
+    type: date
     description: "Deal contract End date"
     sql: ${TABLE}.Deal_End ;;
   }
@@ -134,8 +134,8 @@ view: dim_deal {
     sql: ${TABLE}.Deal_Office ;;
   }
 
-  dimension_group: deal_start {
-    type: time
+  dimension: deal_start {
+    type: date
     description: "Deal contract Start date"
     sql: ${TABLE}.Deal_Start ;;
   }

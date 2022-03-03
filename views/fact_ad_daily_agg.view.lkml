@@ -299,16 +299,16 @@ view: fact_ad_daily_agg {
           <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:70px;
        text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 110px 30px 110px ;margin-left:900px;font-size:30px;
        line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/162">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           Visit the new site to find learning journeys <br style= "line-height:1px">
-           with self-paced learning and hands-on practice <br>
+           Visit the new site to find learning experience <br style= "line-height:1px">
+           s with self-paced education and hands-on practice <br>
            designed to get you up to speed quickly. <strong></strong></p></div>
 
 
           <div><a style="float:right;  color: #FFFFFF; background-color:#000000;  border: solid 3px #000000;x font-weight: 400;height:70px;
        text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
        line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/29">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           Stay up to date on what's new in the looker!<br style= "line-height:1px">
-           New additions and important BI information will be added to news page,<br>
+           Stay up to date on what's new in Looker!<br style= "line-height:1px">
+           New additions and important BI information will be added to news page.<br>
            You will receive an update to the slack group channel with a link <br>
            to the news page.<strong></strong></p></div>
     </div>

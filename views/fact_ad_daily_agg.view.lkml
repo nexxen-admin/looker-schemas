@@ -308,7 +308,7 @@ view: fact_ad_daily_agg {
        text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
        line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/29">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
            Stay up to date on what's new in Looker!<br style= "line-height:1px">
-           New additions and important BI information will be added to news page.<br>
+           New additions and important BI information will be added to the news page.<br>
            You will receive an update to the slack group channel with a link <br>
            to the news page.<strong></strong></p></div>
     </div>

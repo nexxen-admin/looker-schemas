@@ -16,8 +16,8 @@ view: dim_rg_blocked_reason {
   # This dimension will be called "Rg Blocked Reason" in Explore.
 
   dimension: rg_blocked_reason {
-    label: "RG Blocked Reason"
-    description: "Describes the reason why the Rhythm guard system decided to block a request - it happens in real time."
+    label: "Fraud Block Reason"
+    description: "The reason our anti-fraud system blocked and Impression Event."
     type: string
     sql: ${TABLE}.RG_Blocked_Reason ;;
   }

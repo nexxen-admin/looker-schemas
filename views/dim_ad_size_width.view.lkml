@@ -12,9 +12,7 @@ view: dim_ad_size_width {
 
   dimension: ad_size_exact_width {
     label: "Ad Size Exact Width"
-    description: "Permitted and recommended width size for ad ,
-                  this information is provided with the request
-                  and does not indicate the final size of the ad returned in the bid."
+    description: "Exact ad width indicated in the bid request.  ."
     type: number
     sql: ${TABLE}.Ad_Size_Exact_Width ;;
   }

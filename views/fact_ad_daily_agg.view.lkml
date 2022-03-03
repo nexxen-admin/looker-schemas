@@ -290,24 +290,26 @@ view: fact_ad_daily_agg {
        <div><a style="float:right; color: #FFFFFF; background-color:#000000; border: solid 3px #000000; font-weight: 400;height:70px;
        text-align: center;text-float: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 120px 30px 120px ;margin-left:900px;font-size:30px;
        line-height: 0px; border-radius: 25px" href="#home">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
-           Choose what would you like to see today?<br style= "line-height:1px">
-           For How to use looker and more toturial for building your own<br>
-           report choose <strong>Looker Academy.</strong></p>
+           Browse through the data dictionary to find definitions, restrictions<br style= "line-height:1px">
+           and general information about the dimensions and measures you're using in your reports. <br>
+           All missing descriptions will be added shortly. <strong> GO TO Data Dictionary.</strong></p>
           </div>
 
           <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:70px;
        text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 110px 30px 110px ;margin-left:900px;font-size:30px;
        line-height: 0px;  border-radius: 25px" href="#home">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           Choose what would you like to see today?<br style= "line-height:1px">
-           For How to use looker and more toturial for building your own<br>
-           report choose <strong>Looker Academy.</strong></p></div>
+           Visit the new site to find learning journeys <br style= "line-height:1px">
+           with self-paced learning and hands-on practice <br>
+           designed to get you up to speed quickly. <strong> GO TO Looker Academy.</strong></p></div>
+
 
           <div><a style="float:right;  color: #FFFFFF; background-color:#000000;  border: solid 3px #000000;x font-weight: 400;height:70px;
        text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
-       line-height: 0px;  border-radius: 25px" href="#home">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           Choose what would you like to see today?<br style= "line-height:1px">
-           For How to use looker and more toturial for building your own<br>
-           report choose <strong>Looker Academy.</strong></p></div>
+       line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/29">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
+           Stay up to date on what's new in the looker!<br style= "line-height:1px">
+           New additions, updates and important information will be updated on the news page,<br>
+           You will receive an update to the slack group channel with a link <br>
+           to the news page.<strong>GO TO News Page.</strong></p></div>
     </div>
       <img style="width:1350px" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/632029_614016/Header-03.jpg">
 
@@ -404,11 +406,11 @@ view: fact_ad_daily_agg {
   html:
 
 
-<table border="1" bordercolor="black">
+<table border="0" bordercolor="black" style = "padding: 15px">
         <tr>
             <td>
             <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
-        <video controls width="800" height="450"  poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_01_static.png">
+        <video controls width="500" height="300"  poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_01_static.png">
           <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
         </video>
         </td>
@@ -419,7 +421,7 @@ view: fact_ad_daily_agg {
         <tr>
             <td>
             <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
-        <video controls width="800" height="450"  poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_02_static.png">
+        <video controls width="500" height="300"  poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_02_static.png">
           <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep02_Save%20Report%20to%20Personal%20Folder.mp4" type="video/mp4">
         </video>
         </td>
@@ -430,7 +432,7 @@ view: fact_ad_daily_agg {
         <tr>
             <td>
             <figure style = "display: table;  line-height: 0; font-size: 0; background: #000;">
-        <video controls width="800" height="450"  poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_03_static.png">
+        <video controls width="500" height="300"  poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_03_static.png">
           <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep03_Save%20Report%20to%20Existing%20Dashboard.mp4" type="video/mp4">
         </video>
         </td>
@@ -511,7 +513,7 @@ view: fact_ad_daily_agg {
 
   measure:: cogs {
     label: "Cogs"
-    description: "The ssp cost or publisher cost"
+    description: "Media Cost  (3rd Party SSP or Publisher Cost)"
     type: sum
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
@@ -838,9 +840,7 @@ view: fact_ad_daily_agg {
   measure: impression_pixel {
     type: sum
     label: "Impressions"
-    description: "Winning the auction does not guarantee that the ad has been successfully delivered to the customer
-                  Or it will meet visible expectations. So when there is an impression you can be sure that the win has reached the customer.
-                  - This field describes the total number of ads that have successfully reached the customer and which have been posted."
+    description: "Successfully delivered ad impression.   Billable event. ."
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_impression_pixel ;;
@@ -849,9 +849,7 @@ view: fact_ad_daily_agg {
   measure: impression_win {
     type: sum
     label: "Wins"
-    description: "Each incoming ad request is sent to the bidders,
-                  the responses are checked according to the winning tender rules, and the winner is selected.
-                  Wins is the total number of selected winners"
+    description: "The win event is post our bid response back to the publisher/ssp, indicating that we have won the bid in their auction.   "
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_impression_win ;;
@@ -883,11 +881,7 @@ view: fact_ad_daily_agg {
 
   measure: requests {
     type: sum
-    description: "Requests sent to us from the publisher / ssp to the exchange.
-                 This field can not measure deals or dsp because it does not match the meaning of the request described as inbound.
-                 There are separate fields for this - deals request, outbound request.
-                (These fields are expected to be uploaded to the system in early March)
-                - sampeld data in small resulotions might be lower the data that in CTRL/RX, however the difference should be small"
+    description: "Requests sent to us from the publisher / ssp to the exchange. This count is prior to any filtering and determination of which DSPs the requests are sent to and which Deals are attached to the request."
     label: "Inbound Requests"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
@@ -921,7 +915,7 @@ view: fact_ad_daily_agg {
   measure: Margin {
     type: number
     label: "Margin%"
-    description: "The Ratio of profit to revenue"
+    description: "Profit/Revenue"
     value_format: "0.00"
     group_label: "Daily Measures"
     sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0))*100 ;;
@@ -993,8 +987,7 @@ view: fact_ad_daily_agg {
   measure: responses {
     type: sum
     label: "Bids"
-    description: "The total Bid response returned from the dsp - this data is not sampeled therefore
-                 , in small resulotions might be higher than the requests field  "
+    description: "Bid responses returned from dsps.   There may be more than one bid response per bid request.   "
     value_format: "#,##0"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_responses ;;

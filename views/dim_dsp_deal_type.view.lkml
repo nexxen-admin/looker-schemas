@@ -17,9 +17,7 @@ view: dim_dsp_deal_type {
 
   dimension: dsp_deal_type {
     type: string
-    description: "Indicates the source of the deal where the value rx describes deals established in the rx system,
-                  the pub value describes deals on the part of the publisher, established in the ctrl system,
-                  and the passthrough value describes the deals on the part of the ssp."
+    description: "Indicates the source of the deal.    Possible values:  rx - Unruly Exchange Deal, pub - Unruly CTRL Publisher Deal, and  passthrough - 3rd Party SSP Passthrough Deal ."
     sql: ${TABLE}.DSP_Deal_Type ;;
   }
 

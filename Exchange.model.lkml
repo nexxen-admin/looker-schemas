@@ -31,6 +31,8 @@ explore: ani_view_data {
 
 }
 
+
+
 explore: temp_di_pub_com_looker_test {
   required_access_grants: [can_view_pub_come_looker]
 }
@@ -53,6 +55,11 @@ explore: pointsbet_february {
 explore: covered_ca {
   required_access_grants: [can_view_pub_come_looker]
   label: "Derek's Data"
+}
+
+explore: query_kill_test{
+  persist_for: "0 seconds"
+
 }
 
 explore: fact_ad_daily_agg{

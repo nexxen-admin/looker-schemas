@@ -52,7 +52,7 @@ view: dim_dsp {
   }
 
   dimension: dsp_id {
-    description: "The uniqe ID that recevied from the DSP in order to identified him  "
+    description: "The uniqe ID recevied from the DSP in order to identified him  "
     label: "DSP ID"
     type: string
     sql: ${TABLE}.DSP_ID ;;
@@ -65,7 +65,7 @@ view: dim_dsp {
   }
 
   dimension: dsp_name {
-    description: "Describe the DSP Name"
+    description: "DSP Name"
     label: "DSP"
     type: string
     sql: ${TABLE}.DSP_Name ;;

@@ -12,10 +12,7 @@ view: dim_ad_size_height {
 
   dimension: ad_size_exact_height {
     label: "Ad Size Exact Height"
-    description: "Permitted and recommended height size for ad ,
-                  this information is provided with the request
-                  and does not indicate the final size of the ad returned in
-                  the bid."
+    description: "Exact ad height indicated in the bid request.  ."
     type: number
     sql: ${TABLE}.Ad_Size_Exact_Height ;;
   }

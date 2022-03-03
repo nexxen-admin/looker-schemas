@@ -86,15 +86,6 @@ view: dim_deal {
   dimension_group: deal_end {
     type: time
     description: "Deal contract End date"
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
     sql: ${TABLE}.Deal_End ;;
   }
 
@@ -138,9 +129,7 @@ view: dim_deal {
   }
 
   dimension: deal_office {
-    description: "Indicates the office to which the deal is associated.
-                  Clarification - does not indicate the source of the country from which the deal sends traffic.
-                  For example: for a deal associated with a UK office can send traffic from the United States."
+    description: "Indicates the office to which the deal sales is associated with.   This is not the geo targeting of a deals."
     type: string
     sql: ${TABLE}.Deal_Office ;;
   }
@@ -148,15 +137,6 @@ view: dim_deal {
   dimension_group: deal_start {
     type: time
     description: "Deal contract Start date"
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
     sql: ${TABLE}.Deal_Start ;;
   }
 

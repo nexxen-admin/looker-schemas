@@ -16,8 +16,8 @@ view: dim_rg_blocked {
   # This dimension will be called "Rg Blocked" in Explore.
 
   dimension: rg_blocked {
-    label: "RG Blocked"
-    description: "Describes the possible criteria for blocking a request by  Rhytem gured  system"
+    label: "Fraud Block"
+    description: "Indicates that an Impression Event was blocked by the our anti-fraud system"
     type: string
     sql: ${TABLE}.RG_Blocked ;;
   }

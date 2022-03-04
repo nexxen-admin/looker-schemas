@@ -16,7 +16,8 @@ view: pointsbet_february {
         'Tremor Video' as Channel,
         '' as Placeholder1,
         '0' as Placeholder2,
-        'TPB-Hockey' as Creative,
+        Case when ad.creative_id in ('8465396','8465406','8465416','8465436') then 'TPB-Hockey'
+          Else 'TPB-Curler' End as Creative,
         concat(cr.duration,'s') as Creative_Duration,
         sum(impressions) as Impressions,
         sum(impressions) as Views,

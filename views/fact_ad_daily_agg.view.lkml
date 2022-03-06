@@ -410,8 +410,8 @@ view: fact_ad_daily_agg {
 <table>
         <tr>
             <td style = "padding: 2px">
-              <video controls width="480" poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_01_static.png">
-              <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
+              <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_01_static.png">
+              <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
               </video>
             </td>
 
@@ -420,8 +420,8 @@ view: fact_ad_daily_agg {
             </td>
 
             <td style = "padding: 2px">
-              <video controls width="480" poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_02_static.png">
-              <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/EP_02_Mar3.mp4" type="video/mp4">
+              <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_02_static.png">
+              <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/EP_02_Mar3.mp4" type="video/mp4">
               </video>
             </td>
 
@@ -430,8 +430,8 @@ view: fact_ad_daily_agg {
             </td>
 
             <td style = "padding: 2px">
-              <video controls width="480" poster = "https://tremorinternational-my.sharepoint.com/:i:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_03_static.png">
-              <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/EP_03_Mar3.mp4" type="video/mp4">
+              <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_03_static.png">
+              <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/EP_03_Mar3.mp4" type="video/mp4">
               </video>
             </td>
         </tr>

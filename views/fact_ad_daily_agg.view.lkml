@@ -998,6 +998,26 @@ view: fact_ad_daily_agg {
 
   }
 
+  measure:  Previous_week_Revenue {
+    label: "Revenue Previous week "
+    type: sum
+    sql: ${TABLE}.sum_of_revenue ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "2 weeks ago"]
+
+  }
+
+  measure:  last_week_Revenue {
+    label: "Revenue last week "
+    type: sum
+    sql: ${TABLE}.sum_of_revenue ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "1 weeks ago"]
+
+  }
+
   measure:  Previous_day_Requests {
     label: "Requests Previous day "
     type: sum

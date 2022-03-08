@@ -161,6 +161,52 @@ view: ani_view_data {
     sql: ${TABLE}.Revenue ;;
   }
 
+  measure:  Previous_week_Revenue {
+    label: "Revenue Previous week "
+    type: sum
+    sql: ${TABLE}.revenue ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [activity_date: "2 weeks ago"]
+
+  }
+
+  measure:  last_week_Revenue {
+    label: "Revenue last week "
+    type: sum
+    sql: ${TABLE}.revenue ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [activity_date: "1 weeks ago"]
+
+  }
+
+  measure: change_per{
+    label: "last week change"
+    sql: (${last_week_Revenue}-${Previous_week_Revenue})/${Previous_week_Revenue}
+    group_label: "Time Shifted Measures";;
+  }
+
+  measure:  Previous_week_inventory {
+    label: "inventory Previous week "
+    type: sum
+    sql: ${TABLE}.Inventory ;;
+    group_label: "Time Shifted Measures"
+    #value_format: "$#,##0.00"
+    filters: [activity_date: "2 weeks ago"]
+
+  }
+
+  measure:  last_week_inventory {
+    label: "inventory last week "
+    type: sum
+    sql: ${TABLE}.Inventory ;;
+    group_label: "Time Shifted Measures"
+   # value_format: "$#,##0.00"
+    filters: [activity_date: "1 weeks ago"]
+
+  }
+
   measure: rpm {
     type: number
     value_format: "$#,##0.00"

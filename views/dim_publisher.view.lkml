@@ -123,19 +123,11 @@ view: dim_publisher {
       hidden: yes
     }
 
-    dimension_group: pub_craeted {
-      type: time
-      timeframes: [
-        raw,
-        time,
-        date,
-        week,
-        month,
-        quarter,
-        year
-      ]
+    dimension: pub_craeted {
+      type: date
+      label: "Create Date"
       sql: ${TABLE}.PUB_Craeted_ON ;;
-      hidden: yes
+
     }
 
     dimension: pub_id {

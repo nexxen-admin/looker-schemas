@@ -1018,6 +1018,8 @@ view: fact_ad_daily_agg {
 
   }
 
+
+
   measure:  Previous_day_Requests {
     label: "Requests Previous day "
     type: sum

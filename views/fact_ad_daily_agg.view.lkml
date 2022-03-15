@@ -860,7 +860,7 @@ view: fact_ad_daily_agg {
     label: "Bid Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${responses}/NULLIF(${requests},0) ;;
+    sql: (${responses}/NULLIF(${requests},0))*100 ;;
   }
 
   measure: Fill_Rate {

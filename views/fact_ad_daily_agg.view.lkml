@@ -901,7 +901,7 @@ view: fact_ad_daily_agg {
     label: "Render Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${impression_pixel}/NULLIF(${impression_win},0)*100 ;;
+    sql: (${impression_pixel}/NULLIF(${impression_win},0))*100 ;;
   }
 
   measure: Response_Rate {
@@ -925,7 +925,7 @@ view: fact_ad_daily_agg {
     label: "VTR"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${video_completes}/NULLIF(${impression_pixel},0)*100;;
+    sql: (${video_completes}/NULLIF(${impression_pixel},0))*100;;
   }
 
   measure: VCR {
@@ -977,6 +977,7 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_revenue/1 ;;
+    hidden: yes
   }
 
   measure: Ad_eCPM{

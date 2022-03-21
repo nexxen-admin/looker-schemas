@@ -901,7 +901,7 @@ view: fact_ad_daily_agg {
     label: "Render Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${impression_pixel}/NULLIF(${impression_win},0) ;;
+    sql: ${impression_pixel}/NULLIF(${impression_win},0)*100 ;;
   }
 
   measure: Response_Rate {

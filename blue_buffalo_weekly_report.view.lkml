@@ -5,10 +5,6 @@ view: blue_buffalo_weekly_report {
         'Tremor Video' as Partner,
         'True Solutions' as Product_Line,
         c2.flight_id,
-        SUM(impressions) as Impressions,
-        SUM(completions) as Completions,
-        SUM(clicks) as Clicks,
-        (SUM(impressions)/1000)*30 as Cost_CAD,
         NULL as Cost_USD,
         CASE
         WHEN c2.flight_id = 4188816 THEN 'P1W5C1F_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Premium CTV Sitelist Dog English_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
@@ -19,7 +15,11 @@ view: blue_buffalo_weekly_report {
         WHEN c2.flight_id = 4188786 THEN 'P1W5C2Q_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Blue Buffalo TrueSolutions CTV Custom Sitelist Canada English Cat_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
         WHEN c2.flight_id = 4188866 THEN 'P1W5C2R_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Blue Buffalo TrueSolutions CTV Custom Sitelist Canada French Dog_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
         ELSE 'P1W5C2S_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Blue Buffalo TrueSolutions CTV Custom Sitelist Canada French Cat_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
-        END as dcm_name
+        END as dcm_name,
+        SUM(impressions) as Impressions,
+        SUM(completions) as Completions,
+        SUM(clicks) as Clicks,
+        (SUM(impressions)/1000)*30 as Cost_CAD
       from dwh.ad_data_daily add2
         inner join dwh.campaign c2 on add2.flight_id = c2.flight_id
       WHERE date BETWEEN CURRENT_DATE()-7 and CURRENT_DATE()-1
@@ -32,7 +32,7 @@ view: blue_buffalo_weekly_report {
                   4188866,
                   4188806)
         AND data_type = 'AD_DATA'
-      group by 1,2,3,4
+      group by 1,2,3,4, 5, 6
       ORDER BY date ASC
        ;;
   }

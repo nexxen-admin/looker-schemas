@@ -868,7 +868,7 @@ view: fact_ad_daily_agg {
     label: "Fill Rate"
     value_format: "0.00%"
     group_label: "Daily Measures"
-    sql: ${impression_pixel}/NULLIF(${requests},0) ;;
+    sql: (${impression_pixel}/NULLIF(${requests},0))*100 ;;
   }
 
   measure: Net_Revenue {
@@ -909,7 +909,7 @@ view: fact_ad_daily_agg {
     label: "Response Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${responses}/NULLIF(${requests},0) ;;
+    sql: (${responses}/NULLIF(${requests},0))*100 ;;
   }
 
   measure: RPM {
@@ -942,7 +942,7 @@ view: fact_ad_daily_agg {
     label: "Win Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: ${impression_win}/NULLIF(${responses},0);;
+    sql: (${impression_win}/NULLIF(${responses},0))*100;;
   }
 
   dimension: response_status_key {

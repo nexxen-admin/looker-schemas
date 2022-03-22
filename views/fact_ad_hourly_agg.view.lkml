@@ -509,7 +509,7 @@ view: fact_ad_hourly_agg {
     label: "Bid Rate"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
-    sql: ${responses}/NULLIF(${requests},0) ;;
+    sql: (${responses}/NULLIF(${requests},0))*100 ;;
   }
 
   measure: Fill_Rate {
@@ -517,7 +517,7 @@ view: fact_ad_hourly_agg {
     label: "Fill Rate"
     value_format: "0.00%"
     group_label: "Hourly Measures"
-    sql: ${impression_pixel}/NULLIF(${requests},0) ;;
+    sql: (${impression_pixel}/NULLIF(${requests},0))*100 ;;
   }
 
   measure: Net_Revenue {
@@ -549,7 +549,7 @@ view: fact_ad_hourly_agg {
     label: "Render Rate"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
-    sql: ${impression_pixel}/NULLIF(${impression_win},0) ;;
+    sql: (${impression_pixel}/NULLIF(${impression_win},0))*100 ;;
   }
 
   measure: Response_Rate {
@@ -557,7 +557,7 @@ view: fact_ad_hourly_agg {
     label: "Response Rate"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
-    sql: ${responses}/NULLIF(${requests},0) ;;
+    sql: (${responses}/NULLIF(${requests},0))*100 ;;
   }
 
   measure: RPM {
@@ -573,7 +573,7 @@ view: fact_ad_hourly_agg {
     label: "VTR"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
-    sql: ${video_completes}/NULLIF(${impression_pixel},0);;
+    sql: (${video_completes}/NULLIF(${impression_pixel},0))*100;;
   }
 
   measure: VCR {

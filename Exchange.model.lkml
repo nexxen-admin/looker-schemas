@@ -57,6 +57,11 @@ explore: covered_ca {
   label: "Derek's Data"
 }
 
+explore: blue_buffalo_weekly_report {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Derek's Data"
+}
+
 explore: query_kill_test{
   persist_for: "0 seconds"
 

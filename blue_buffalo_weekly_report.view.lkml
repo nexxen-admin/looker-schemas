@@ -33,7 +33,7 @@ view: blue_buffalo_weekly_report {
                   4188806)
         AND data_type = 'AD_DATA'
       group by 1,2,3,4, 5, 6
-      ORDER BY date ASC
+      ORDER BY date::date ASC
        ;;
   }
 

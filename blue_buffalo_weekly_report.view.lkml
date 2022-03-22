@@ -1,15 +1,15 @@
 view: blue_buffalo_weekly_report {
   required_access_grants: [can_view_pub_come_looker]
   derived_table: {
-    sql: SELECT date::date as date,
+    sql: SELECT date::date as Day,
         'Tremor Video' as Partner,
         'True Solutions' as Product_Line,
         c2.flight_id,
-        SUM(impressions) as impressions_total,
-        SUM(completions) as completions_total,
-        SUM(clicks) as clicks_total,
-        (SUM(impressions)/1000)*30 as cost_CAD,
-        NULL as cost_USD,
+        SUM(impressions) as Impressions,
+        SUM(completions) as Completions,
+        SUM(clicks) as Clicks,
+        (SUM(impressions)/1000)*30 as 'Cost (CAD)',
+        NULL as 'Cost (USD)',
         CASE
         WHEN c2.flight_id = 4188816 THEN 'P1W5C1F_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Premium CTV Sitelist Dog English_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
         WHEN c2.flight_id = 4188826 THEN 'P1W5C2B_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Premium CTV Sitelist Cat English_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
@@ -19,7 +19,7 @@ view: blue_buffalo_weekly_report {
         WHEN c2.flight_id = 4188786 THEN 'P1W5C2Q_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Blue Buffalo TrueSolutions CTV Custom Sitelist Canada English Cat_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
         WHEN c2.flight_id = 4188866 THEN 'P1W5C2R_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Blue Buffalo TrueSolutions CTV Custom Sitelist Canada French Dog_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
         ELSE 'P1W5C2S_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Blue Buffalo TrueSolutions CTV Custom Sitelist Canada French Cat_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
-        END as DCM_Name
+        END as 'Placement Name (DCM)'
       from dwh.ad_data_daily add2
         inner join dwh.campaign c2 on add2.flight_id = c2.flight_id
       WHERE date BETWEEN CURRENT_DATE()-7 and CURRENT_DATE()-1

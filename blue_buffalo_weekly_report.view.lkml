@@ -8,8 +8,8 @@ view: blue_buffalo_weekly_report {
         SUM(impressions) as Impressions,
         SUM(completions) as Completions,
         SUM(clicks) as Clicks,
-        (SUM(impressions)/1000)*30 as 'Cost (CAD)',
-        NULL as 'Cost (USD)',
+        (SUM(impressions)/1000)*30 as Cost_CAD,
+        NULL as Cost_USD,
         CASE
         WHEN c2.flight_id = 4188816 THEN 'P1W5C1F_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Premium CTV Sitelist Dog English_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
         WHEN c2.flight_id = 4188826 THEN 'P1W5C2B_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Premium CTV Sitelist Cat English_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
@@ -19,7 +19,7 @@ view: blue_buffalo_weekly_report {
         WHEN c2.flight_id = 4188786 THEN 'P1W5C2Q_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Blue Buffalo TrueSolutions CTV Custom Sitelist Canada English Cat_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
         WHEN c2.flight_id = 4188866 THEN 'P1W5C2R_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Blue Buffalo TrueSolutions CTV Custom Sitelist Canada French Dog_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
         ELSE 'P1W5C2S_DBOLVNS_CPM_SS_BHV_A25-44_Behavioral Targeting + Blue Buffalo TrueSolutions CTV Custom Sitelist Canada French Cat_:15_VER_NA_N_TREMOR_HMICAL_COT_2022-01-01_2022-05-31_No_NAD_NA_1x1CC'
-        END as 'Placement Name (DCM)'
+        END as dcm_name
       from dwh.ad_data_daily add2
         inner join dwh.campaign c2 on add2.flight_id = c2.flight_id
       WHERE date BETWEEN CURRENT_DATE()-7 and CURRENT_DATE()-1
@@ -42,18 +42,21 @@ view: blue_buffalo_weekly_report {
     drill_fields: [detail*]
   }
 
-  dimension: date {
+  dimension: Day {
     type: date
-    sql: ${TABLE}."date" ;;
+    label: "Day"
+    sql: ${TABLE}."Day" ;;
   }
 
-  dimension: partner {
+  dimension: Partner {
     type: string
+    label: "Partner"
     sql: ${TABLE}.Partner ;;
   }
 
   dimension: product_line {
     type: string
+    label: "Product Line"
     sql: ${TABLE}.Product_Line ;;
   }
 
@@ -62,47 +65,53 @@ view: blue_buffalo_weekly_report {
     sql: ${TABLE}.flight_id ;;
   }
 
-  dimension: impressions_total {
+  dimension: Impressions {
     type: number
-    sql: ${TABLE}.impressions_total ;;
+    label: "Impressions"
+    sql: ${TABLE}.Impressions ;;
   }
 
-  dimension: completions_total {
+  dimension: Completions {
     type: number
-    sql: ${TABLE}.completions_total ;;
+    label: "Completions"
+    sql: ${TABLE}.Completions ;;
   }
 
-  dimension: clicks_total {
+  dimension: Clicks {
     type: number
-    sql: ${TABLE}.clicks_total ;;
+    label: "Clicks"
+    sql: ${TABLE}.Clicks ;;
   }
 
-  dimension: cost_cad {
+  dimension: Cost_CAD {
     type: number
-    sql: ${TABLE}.cost_CAD ;;
+    label: "Cost (CAD)"
+    sql: ${TABLE}.Cost_CAD ;;
   }
 
-  dimension: cost_usd {
+  dimension: Cost_USD {
     type: number
-    sql: ${TABLE}.cost_USD ;;
+    label: "Cost (USD)"
+    sql: ${TABLE}.Cost_USD ;;
   }
 
   dimension: dcm_name {
     type: string
-    sql: ${TABLE}.DCM_Name ;;
+    label: "Placement Name (DCM)"
+    sql: ${TABLE}.dcm_name ;;
   }
 
   set: detail {
     fields: [
-      date,
-      partner,
+      Day,
+      Partner,
       product_line,
       flight_id,
-      impressions_total,
-      completions_total,
-      clicks_total,
-      cost_cad,
-      cost_usd,
+      Impressions,
+      Completions,
+      Clicks,
+      Cost_CAD,
+      Cost_USD,
       dcm_name
     ]
   }

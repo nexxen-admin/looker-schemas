@@ -1,4 +1,5 @@
 view: blue_buffalo_weekly_report {
+  required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: SELECT date::date as date,
         'Tremor Video' as Partner,
@@ -82,7 +83,7 @@ view: blue_buffalo_weekly_report {
   }
 
   dimension: cost_usd {
-    type: string
+    type: number
     sql: ${TABLE}.cost_USD ;;
   }
 

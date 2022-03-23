@@ -644,6 +644,14 @@ view: fact_ad_daily_agg {
     #hidden: yes
   }
 
+  measure: video_creative_views {
+    type: sum
+    label: "Video Creative Views"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_video_creative_views ;;
+    #hidden: yes
+  }
+
   measure: slot_requests {
     type: sum
     label: "Slot Requests"
@@ -652,13 +660,7 @@ view: fact_ad_daily_agg {
 
   }
 
-  measure: video_creative_views {
-    type: sum
-    label: "Video Creative Views"
-    group_label: "Daily Measures"
-    sql: ${TABLE}.sum_of_video_creative_views ;;
-    #hidden: yes
-  }
+
 
   measure: video_errors {
     type: sum
@@ -795,6 +797,12 @@ view: fact_ad_daily_agg {
   dimension: media_type_key {
     type: number
     sql: ${TABLE}.Media_Type_Key ;;
+    hidden: yes
+  }
+
+  dimension: media_name_key {
+    type: number
+    sql: ${TABLE}.Media_Name_Key ;;
     hidden: yes
   }
 

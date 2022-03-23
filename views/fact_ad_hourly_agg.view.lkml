@@ -106,6 +106,12 @@ view: fact_ad_hourly_agg {
     hidden: yes
   }
 
+  dimension: media_name_key {
+    type: number
+    sql: ${TABLE}.Media_Name_Key ;;
+    hidden: yes
+  }
+
   dimension: deal_key {
     type: number
     sql: ${TABLE}.Deal_Key ;;

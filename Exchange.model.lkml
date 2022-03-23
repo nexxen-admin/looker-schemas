@@ -10,20 +10,20 @@ datagroup: CleanCash_datagroup {
   description: "Triggered when new date is added to ETL"
 }
 
-access_grant: can_view_pub_come_looker {
-user_attribute: admins
-allowed_values: ["Looker_Admins"]
-}
+#access_grant: can_view_pub_come_looker {
+#user_attribute: admins
+#allowed_values: ["Looker_Admins"]
+#}
 
 access_grant: can_view_aniview {
   user_attribute: aniview
-  allowed_values: ["Aniview"]
+ allowed_values: ["Aniview"]
 }
 
-explore: publishers_report_monthly_for_finance {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "publishers report monthly for finance"
-}
+#explore: publishers_report_monthly_for_finance {
+#  required_access_grants: [can_view_pub_come_looker]
+#  label: "publishers report monthly for finance"
+#}
 
 explore: ani_view_data {
   label: "Aniview"
@@ -31,43 +31,38 @@ explore: ani_view_data {
 
 }
 
+#explore: temp_di_pub_com_looker_test {
+#  required_access_grants: [can_view_pub_come_looker]
+#}
+
+#explore: TaxAct_Hourly_Test {
+#  required_access_grants: [can_view_pub_come_looker]
+#  label: "Derek's Data"
+#}
+
+#explore: taxact_daily_report {
+#  required_access_grants: [can_view_pub_come_looker]
+#  label: "Derek's Data"
+#}
+
+#explore: pointsbet_february {
+#  required_access_grants: [can_view_pub_come_looker]
+#  label: "Derek's Data"
+#}
+
+#explore: covered_ca {
+ # required_access_grants: [can_view_pub_come_looker]
+ # label: "Derek's Data"
+#}
 
 
-explore: temp_di_pub_com_looker_test {
-  required_access_grants: [can_view_pub_come_looker]
-}
-
-explore: TaxAct_Hourly_Test {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: taxact_daily_report {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: pointsbet_february {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: covered_ca {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: query_kill_test{
-  persist_for: "0 seconds"
-
-}
 
 explore: fact_ad_daily_agg{
   always_filter: {
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
   }
   persist_with: CleanCash_datagroup
-  label: "Exchange"
+  label: "Inbound Requests"
   view_label: "Measures"
 
 join: dim_date {
@@ -251,8 +246,14 @@ join: dim_deal {
   view_label: "Deal"
   sql_on: ${dim_deal.deal_key}=${fact_ad_daily_agg.deal_key};;
   relationship: many_to_one
-
 }
+
+  join: dim_media_name {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_media_name.media_name_key}=${fact_ad_daily_agg.media_name_key};;
+    relationship: many_to_one
+  }
 
 join: dim_deal_type {
   type: inner
@@ -304,19 +305,19 @@ join: dim_dsp_flight {
   fields: []
 }
 join: dim_employee {
-  type: inner
+  type: full_outer
   view_label: "Employee"
   sql_on: ${dim_employee.employee_key}=${dim_publisher.bizdev_owner_key};;
   relationship: many_to_one
 }
  join: v_dim_employee_biz_dev {
-    type: inner
+    type: full_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: full_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one
@@ -363,7 +364,7 @@ explore: fact_ad_hourly_agg{
   }
 
   persist_with: CleanCash_datagroup
-  label: "Exchange Hourly"
+  label: "Inbound Req Hourly"
   view_label: "Measures"
 
   join: dim_date_hourly {
@@ -395,6 +396,7 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
   }
 
+
   join: dim_video_linearity {
     type: full_outer
     view_label: "Request Attributes"
@@ -402,6 +404,12 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
   }
 
+  join: dim_media_name {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_media_name.media_name_key}=${fact_ad_hourly_agg.media_name_key};;
+    relationship: many_to_one
+  }
 
   join: dim_video_simple_size {
     type: full_outer
@@ -651,3 +659,235 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
   }
   }
+
+
+
+
+
+
+explore: fact_ad_bid_request_daily_agg{
+  always_filter: {
+    filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
+  }
+  persist_with: CleanCash_datagroup
+  label: "Outbound Requests"
+  view_label: "Measures"
+
+  join: dim_dsp_data_center {
+    type: inner
+    view_label: "DSP"
+    sql_on: ${dim_dsp_data_center.dsp_key}=${fact_ad_bid_request_daily_agg.dsp_key}
+      AND ${dim_dsp_data_center.data_center_key}=${fact_ad_bid_request_daily_agg.data_center_key};;
+    relationship: many_to_one
+  }
+  join: dim_date {
+    type: inner
+    view_label: "Time Frame"
+    sql_on: ${dim_date.date_key_raw}=${fact_ad_bid_request_daily_agg.date_key_raw};;
+    relationship: many_to_one
+  }
+  join: dim_country {
+    type: inner
+    view_label: "Geo"
+    sql_on: ${dim_country.country_key}=${fact_ad_bid_request_daily_agg.country_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_user_matched {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_user_matched.user_matched_key}=${fact_ad_bid_request_daily_agg.user_matched_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_ad_size_width {
+    type: inner
+    view_label: "Ad Size"
+    sql_on: ${dim_ad_size_width.ad_size_width_key}=${fact_ad_bid_request_daily_agg.ad_size_width_key} ;;
+    relationship: many_to_one
+  }
+
+
+  join: dim_ad_size_height {
+    type: inner
+    view_label: "Ad Size"
+    sql_on: ${dim_ad_size_height.ad_size_height_key}=${fact_ad_bid_request_daily_agg.ad_size_height_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_data_center {
+    type:  inner
+    view_label: "Data Center"
+    sql_on: ${dim_data_center.data_center_key}=${fact_ad_bid_request_daily_agg.data_center_key};;
+    relationship: many_to_one
+
+  }
+
+  join: dim_device_type {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_device_type.device_type_key}= ${fact_ad_bid_request_daily_agg.device_type_key};;
+    relationship: many_to_one
+  }
+  join: dim_imp_type {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_imp_type.imp_type_key}=${fact_ad_bid_request_daily_agg.imp_type_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_os {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_os.os_key}=${fact_ad_bid_request_daily_agg.os_key} ;;
+    relationship: many_to_one
+
+  }
+
+  join: dim_request_status {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_request_status.request_status_key}= ${fact_ad_bid_request_daily_agg.request_status_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_imp_sub_type {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_imp_sub_type.imp_sub_type_key}=${fact_ad_bid_request_daily_agg.imp_sub_type_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_o_domain {
+    type: inner
+    view_label: "Domain"
+    sql_on: ${dim_o_domain.o_domain_key}= ${fact_ad_bid_request_daily_agg.o_domain_key};;
+    relationship: many_to_one
+  }
+  join: dim_deal {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_key}=${fact_ad_bid_request_daily_agg.deal_key};;
+    relationship: many_to_one
+  }
+  join: dim_deal_brand {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal_brand.deal_brand_key}=${dim_deal.deal_brand_key};;
+    relationship: many_to_one
+  }
+
+
+  join: dim_media_name {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_media_name.media_name_key}=${fact_ad_bid_request_daily_agg.media_name_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_priority {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal_priority.deal_priority_key}=${dim_deal.deal_priority_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_agency {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal_agency.deal_agency_key}=${dim_deal.deal_agency_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_type {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal_type.deal_type_key}=${dim_deal.deal_type_key} ;;
+    relationship: many_to_one
+  }
+  join: dim_placement {
+    type: inner
+    view_label: "Placement"
+    sql_on: ${dim_placement.placement_key}=${fact_ad_bid_request_daily_agg.placement_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_media_type {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_media_type.media_type_key}=${fact_ad_bid_request_daily_agg.media_type_key};;
+    relationship: many_to_one
+  }
+  join: dim_publisher_traffic_source {
+    type: inner
+    view_label: "Traffic Source"
+    sql_on: ${dim_publisher_traffic_source.pub_ts_key}=${dim_placement.pub_ts_key};;
+    relationship: many_to_one
+  }
+  join: dim_traffic_source {
+    type: inner
+    view_label: "Traffic Source"
+    sql_on: ${dim_traffic_source.ts_key}=${dim_publisher_traffic_source.ts_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_publisher_ssp {
+    type: inner
+    sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_bid_request_daily_agg.pub_ssp_key};;
+    relationship: many_to_one
+    fields: []
+  }
+  join: dim_publisher {
+    type: inner
+    view_label: "Publishers"
+    sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
+    relationship: many_to_one
+  }
+  join: dim_ssp {
+    type: inner
+    view_label: "SSP"
+    sql_on: ${dim_ssp.ssp_key}=${dim_publisher_ssp.ssp_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_employee {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${dim_employee.employee_key}=${dim_publisher.bizdev_owner_key};;
+    relationship: many_to_one
+  }
+  join: v_dim_employee_biz_dev {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
+    relationship: many_to_one
+  }
+  join: v_dim_employee_pub_ops {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
+    relationship: many_to_one
+  }
+
+
+  join: dim_dsp {
+    type: inner
+    view_label: "DSP"
+    sql_on: ${dim_dsp.dsp_key}=${fact_ad_bid_request_daily_agg.dsp_key};;
+    relationship: many_to_one
+  }
+  join: dim_dsp_account {
+    type: inner
+    view_label: "DSP"
+    sql_on: ${dim_dsp_account.dsp_account_key}=${dim_dsp.dsp_account_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_deal_type {
+    type: inner
+    view_label: "DSP"
+    sql_on: ${dim_dsp_deal_type.dsp_deal_type_key}=${fact_ad_bid_request_daily_agg.dsp_deal_type_key};;
+    relationship: many_to_one
+  }
+
+}

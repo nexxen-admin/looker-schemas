@@ -10,88 +10,17 @@ datagroup: CleanCash_datagroup {
   description: "Triggered when new date is added to ETL"
 }
 
-#access_grant: can_view_pub_come_looker {
-#user_attribute: admins
-#allowed_values: ["Looker_Admins"]
-#}
 
 access_grant: can_view_aniview {
   user_attribute: aniview
  allowed_values: ["Aniview"]
 }
 
-#explore: publishers_report_monthly_for_finance {
-#  required_access_grants: [can_view_pub_come_looker]
-#  label: "publishers report monthly for finance"
-#}
-
 explore: ani_view_data {
   label: "Aniview"
   required_access_grants: [can_view_aniview]
-
 }
 
-#explore: temp_di_pub_com_looker_test {
-#  required_access_grants: [can_view_pub_come_looker]
-#}
-
-#explore: TaxAct_Hourly_Test {
-#  required_access_grants: [can_view_pub_come_looker]
-#  label: "Derek's Data"
-#}
-
-#explore: taxact_daily_report {
-#  required_access_grants: [can_view_pub_come_looker]
-#  label: "Derek's Data"
-#}
-
-#explore: pointsbet_february {
-#  required_access_grants: [can_view_pub_come_looker]
-#  label: "Derek's Data"
-#}
-
-#explore: covered_ca {
- # required_access_grants: [can_view_pub_come_looker]
- # label: "Derek's Data"
-#}
-
-
-<<<<<<< HEAD
-=======
-explore: temp_di_pub_com_looker_test {
-  required_access_grants: [can_view_pub_come_looker]
-}
-
-explore: TaxAct_Hourly_Test {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: taxact_daily_report {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: pointsbet_february {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: covered_ca {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: blue_buffalo_weekly_report {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: query_kill_test{
-  persist_for: "0 seconds"
-
-}
->>>>>>> branch 'master' of git@github.com:tremor-admin/looker-schemas.git
 
 explore: fact_ad_daily_agg{
   always_filter: {

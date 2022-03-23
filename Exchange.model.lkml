@@ -269,12 +269,7 @@ join: dim_dsp_flight {
   relationship: many_to_one
   fields: []
 }
-join: dim_employee {
-  type: full_outer
-  view_label: "Employee"
-  sql_on: ${dim_employee.employee_key}=${dim_publisher.bizdev_owner_key};;
-  relationship: many_to_one
-}
+
  join: v_dim_employee_biz_dev {
     type: full_outer
     view_label: "Employee"
@@ -550,13 +545,13 @@ explore: fact_ad_hourly_agg{
   }
 
   join: dim_publisher_ssp {
-    type: inner
+    type: full_outer
     sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_hourly_agg.pub_ssp_key};;
     relationship: many_to_one
     fields: []
   }
   join: dim_publisher {
-    type: inner
+    type:full_outer
     view_label: "Publishers"
     sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
     relationship: many_to_one

@@ -26,6 +26,36 @@ explore: ani_view_data {
   required_access_grants: [can_view_aniview]
 }
 
+explore: publishers_report_monthly_for_finance {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "publishers report monthly for finance"
+}
+
+explore: temp_di_pub_com_looker_test {
+  required_access_grants: [can_view_pub_come_looker]
+}
+
+explore: TaxAct_Hourly_Test {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Derek's Data"
+}
+
+explore: taxact_daily_report {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Derek's Data"
+}
+
+explore: pointsbet_february {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Derek's Data"
+}
+
+explore: covered_ca {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Derek's Data"
+}
+
+
 
 explore: fact_ad_daily_agg{
   always_filter: {

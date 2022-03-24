@@ -66,14 +66,14 @@ join: dim_country {
   }
   join: dim_rg_blocked {
     type: full_outer
-    view_label: "Request Attributes"
+    view_label: "Impressions Attributes"
     sql_on: ${dim_rg_blocked.rg_blocked_key}=${fact_ad_daily_agg.rg_blocked_key} ;;
     relationship: many_to_one
   }
 
   join: dim_rg_blocked_reason {
     type: full_outer
-    view_label: "Request Attributes"
+    view_label: "Impressions Attributes"
     sql_on: ${dim_rg_blocked_reason.rg_blocked_reason_key}=${fact_ad_daily_agg.rg_blocked_reason_key} ;;
     relationship: many_to_one
   }
@@ -720,12 +720,6 @@ explore: fact_ad_bid_request_daily_agg{
 
   }
 
-  join: dim_request_status {
-    type: inner
-    view_label: "Request Attributes"
-    sql_on: ${dim_request_status.request_status_key}= ${fact_ad_bid_request_daily_agg.request_status_key};;
-    relationship: many_to_one
-  }
 
   join: dim_imp_sub_type {
     type: inner

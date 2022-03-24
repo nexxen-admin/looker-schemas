@@ -49,6 +49,15 @@ view: v_dim_dsp_filter_reason {
     sql: ${TABLE}.DSP_Filter_Reason ;;
   }
 
+  dimension: is_valid_request {
+    type: yesno
+    label: "Is Valid Requests"
+    sql: case when ${TABLE}.DSP_Filter_Reason = 'not-filtered'
+     then 'True' else 'False' End ;;
+
+
+  }
+
   dimension: dsp_filter_reason_key {
     type: number
     sql: ${TABLE}.DSP_Filter_Reason_Key ;;

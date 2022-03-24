@@ -669,6 +669,13 @@ explore: fact_ad_bid_request_daily_agg{
     relationship: many_to_one
   }
 
+  join: v_dim_dsp_filter_reason {
+    type: inner
+    view_label: "Filter Reason"
+    sql_on: ${v_dim_dsp_filter_reason.dsp_filter_reason_key}=${fact_ad_bid_request_daily_agg.dsp_filter_reason_key} ;;
+    relationship: many_to_one
+  }
+
   join: dim_ad_size_width {
     type: inner
     view_label: "Ad Size"

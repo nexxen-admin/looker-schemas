@@ -27,7 +27,7 @@ explore: fact_ad_daily_agg{
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
   }
   persist_with: CleanCash_datagroup
-  label: "Inbound Requests"
+  label: "Exchange"
   view_label: "Measures"
 
 join: dim_date {
@@ -246,13 +246,13 @@ join: dim_traffic_source {
 }
 
 join: dim_publisher_ssp {
-  type: inner
+  type: full_outer
   sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_daily_agg.pub_ssp_key};;
   relationship: many_to_one
   fields: []
 }
 join: dim_publisher {
-  type: inner
+  type: full_outer
   view_label: "Publishers"
   sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
   relationship: many_to_one
@@ -324,7 +324,7 @@ explore: fact_ad_hourly_agg{
   }
 
   persist_with: CleanCash_datagroup
-  label: "Inbound Req Hourly"
+  label: "Exchange Hourly"
   view_label: "Measures"
 
   join: dim_date_hourly {
@@ -630,7 +630,7 @@ explore: fact_ad_bid_request_daily_agg{
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
   }
   persist_with: CleanCash_datagroup
-  label: "Outbound Requests"
+  label: "Outbound Exchange"
   view_label: "Measures"
 
   join: dim_dsp_data_center {

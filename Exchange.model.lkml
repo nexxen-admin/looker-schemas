@@ -10,6 +10,11 @@ datagroup: CleanCash_datagroup {
   description: "Triggered when new date is added to ETL"
 }
 
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
 
 access_grant: can_view_aniview {
   user_attribute: aniview
@@ -629,6 +634,10 @@ explore: fact_ad_bid_request_daily_agg{
   always_filter: {
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
   }
+
+  required_access_grants: [can_view_pub_come_looker]
+
+
   persist_with: CleanCash_datagroup
   label: "Outbound Exchange"
   view_label: "Measures"

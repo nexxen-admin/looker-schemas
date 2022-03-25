@@ -60,6 +60,10 @@ explore: blue_buffalo_weekly_report {
   label: "Derek's Data"
 }
 
+explore: pilgrim_s_pride_report {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Pilgrim's Pride Report"
+}
 
 explore: fact_ad_daily_agg{
   always_filter: {

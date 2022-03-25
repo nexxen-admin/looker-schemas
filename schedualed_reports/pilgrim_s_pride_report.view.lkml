@@ -43,9 +43,9 @@ ORDER BY 1
 
   dimension: date2 {
     type: date
-    sql: ${TABLE}.Date2
-    label: "Date";;
-    html: {{ rendered_value | date: "%m-%d-%y" }} ;;
+    label: "Date"
+    sql: ${TABLE}.Date2;;
+    html: {{ rendered_value | date: "%m-%d-%Y" }} ;;
   }
 
   dimension: dma {

@@ -37,14 +37,15 @@ ORDER BY 1
 
   dimension: date {
     type: string
-    label: "Date"
+    label: "DateChar"
     sql: ${TABLE}."date" ;;
   }
 
   dimension: date2 {
     type: date
     sql: ${TABLE}.Date2
-    label: "Date2";;
+    label: "Date";;
+    html: {{ rendered_value | date: "%m-%d-%y" }} ;;
   }
 
   dimension: dma {

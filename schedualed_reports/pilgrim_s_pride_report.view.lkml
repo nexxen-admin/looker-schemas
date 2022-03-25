@@ -2,7 +2,7 @@ view: pilgrim_s_pride_report {
 required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: SELECT  date::date as Date2,
-               dma.dma_name as DMA,
+               TRIM(BOTH '''' FROM dma.dma_name) as DMA,
                flight_id,
                CASE WHEN flight_id = 4250306 THEN 'CTV + BT + Zip'
                          WHEN flight_id = 4250316 THEN 'All Screen OTT + BT + Zip'

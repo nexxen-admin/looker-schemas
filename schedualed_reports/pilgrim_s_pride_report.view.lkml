@@ -1,8 +1,7 @@
 view: pilgrim_s_pride_report {
 required_access_grants: [can_view_pub_come_looker]
   derived_table: {
-    sql: SELECT  to_char("date", 'MM-DD-YYYY') as date,
-        date::date as Date2,
+    sql: SELECT  date::date as Date2,
                dma.dma_name as DMA,
                flight_id,
                CASE WHEN flight_id = 4250306 THEN 'CTV + BT + Zip'
@@ -35,11 +34,6 @@ ORDER BY 1
     drill_fields: [detail*]
   }
 
-  dimension: date {
-    type: string
-    label: "DateChar"
-    sql: ${TABLE}."date" ;;
-  }
 
   dimension: date2 {
     type: date
@@ -104,7 +98,6 @@ ORDER BY 1
 
   set: detail {
     fields: [
-      date,
       date2,
       dma,
       flight_id,

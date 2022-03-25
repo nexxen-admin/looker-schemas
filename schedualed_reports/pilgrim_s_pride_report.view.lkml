@@ -1,4 +1,5 @@
 view: pilgrim_s_pride_report {
+required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: SELECT  to_char("date", 'MM-DD-YYYY') as date,
         date::date as Date2,

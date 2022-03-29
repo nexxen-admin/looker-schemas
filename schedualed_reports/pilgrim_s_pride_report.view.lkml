@@ -93,7 +93,6 @@ ORDER BY 1
   dimension: spend {
     type: number
     label: "Spend"
-    value_format: "$#,##0.00"
     sql: ${TABLE}.spend ;;
   }
 

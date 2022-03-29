@@ -50,7 +50,6 @@ view: v_dim_dsp_filter_reason {
   }
 
   dimension: is_valid_request {
-    type: yesno
     label: "Is Valid Requests"
     sql: case when ${TABLE}.DSP_Filter_Reason = 'not-filtered'
      then 'True' else 'False' End ;;

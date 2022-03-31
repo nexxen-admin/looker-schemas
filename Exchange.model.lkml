@@ -667,7 +667,7 @@ explore: fact_ad_bid_request_daily_agg{
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
   }
 
-  required_access_grants: [can_view_pub_come_looker]
+
 
 
   persist_with: CleanCash_datagroup

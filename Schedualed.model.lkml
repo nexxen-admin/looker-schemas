@@ -34,20 +34,34 @@ explore: temp_di_pub_com_looker_test {
 
 explore: TaxAct_Hourly_Test {
   required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
+  label: "TaxAct_Hourly_Test"
 }
 
 explore: taxact_daily_report {
   required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
+  label: "taxact_daily_report"
 }
 
 explore: pointsbet_february {
   required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
+  label: "pointsbet_february"
 }
 
 explore: covered_ca {
   required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
+  label: "covered_ca "
+}
+explore: blue_buffalo_weekly_report {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "blue buffalo weekly report"
+}
+
+explore: pilgrim_s_pride_report {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Pilgrim's Pride Report"
+}
+
+explore: QPSxRPM {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "QPSxRPM Supply"
 }

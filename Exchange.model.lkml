@@ -76,7 +76,7 @@ explore: fact_ad_daily_agg{
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
   }
   persist_with: CleanCash_datagroup
-  label: "Exchange"
+  label: "Inbound Exchange"
   view_label: "Measures"
 
 join: dim_date {
@@ -262,12 +262,6 @@ join: dim_deal {
   relationship: many_to_one
 }
 
-  join: dim_media_name {
-    type: inner
-    view_label: "Request Attributes"
-    sql_on: ${dim_media_name.media_name_key}=${fact_ad_daily_agg.media_name_key};;
-    relationship: many_to_one
-  }
 
 join: dim_deal_type {
   type: inner
@@ -373,7 +367,7 @@ explore: fact_ad_hourly_agg{
   }
 
   persist_with: CleanCash_datagroup
-  label: "Exchange Hourly"
+  label: "Inbound Exchange Hourly"
   view_label: "Measures"
 
   join: dim_date_hourly {
@@ -413,12 +407,6 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
   }
 
-  join: dim_media_name {
-    type: inner
-    view_label: "Request Attributes"
-    sql_on: ${dim_media_name.media_name_key}=${fact_ad_hourly_agg.media_name_key};;
-    relationship: many_to_one
-  }
 
   join: dim_video_simple_size {
     type: full_outer
@@ -594,7 +582,7 @@ explore: fact_ad_hourly_agg{
   }
 
   join: dim_publisher_ssp {
-    type: full_outer
+    type: inner
     sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_hourly_agg.pub_ssp_key};;
     relationship: many_to_one
     fields: []
@@ -679,7 +667,7 @@ explore: fact_ad_bid_request_daily_agg{
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
   }
 
-  required_access_grants: [can_view_pub_come_looker]
+
 
 
   persist_with: CleanCash_datagroup
@@ -788,14 +776,6 @@ explore: fact_ad_bid_request_daily_agg{
     type: inner
     view_label: "Deal"
     sql_on: ${dim_deal_brand.deal_brand_key}=${dim_deal.deal_brand_key};;
-    relationship: many_to_one
-  }
-
-
-  join: dim_media_name {
-    type: inner
-    view_label: "Request Attributes"
-    sql_on: ${dim_media_name.media_name_key}=${fact_ad_bid_request_daily_agg.media_name_key};;
     relationship: many_to_one
   }
 

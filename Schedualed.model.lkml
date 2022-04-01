@@ -42,6 +42,11 @@ explore: taxact_daily_report {
   label: "taxact_daily_report"
 }
 
+explore: mazda_fy157_ntl_as_video {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Mazda FY157_NTL_AS_Video"
+}
+
 explore: pointsbet_february {
   required_access_grants: [can_view_pub_come_looker]
   label: "pointsbet_february"

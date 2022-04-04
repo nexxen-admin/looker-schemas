@@ -694,6 +694,13 @@ explore: fact_ad_bid_request_daily_agg{
     relationship: many_to_one
   }
 
+  join: dim_request_status {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_request_status.request_status_key}= ${fact_ad_bid_request_daily_agg.request_status_key};;
+    relationship: many_to_one
+  }
+
   join: dim_user_matched {
     type: inner
     view_label: "Request Attributes"

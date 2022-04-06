@@ -10,7 +10,8 @@ view: mazda_fy157_ntl_as_video {
           else bi.DCM_Desktop_PI end as DCM_Placement_ID,
         Case when ad.screen_type in ('2','3','-1') then bi.DCM_Mobile_Placement_Name
           else bi.DCM_Desktop_Placement_Name end as DCM_Placement_Name,
-        '' as Ad_Group,
+        DCM_Package_ID,
+        DCM_Package_Name,
         case when cr.name ilike '%AA-70618%' then 'MAZDA CX-50 DGM 2 FEATURE BUILD & PRICE'
           when cr.name ilike '%AA-70620%' then 'MAZDA CX-50 DGM 1 FEATURE BUILD & PRICE'
           when cr.name ilike '%AA-70621%' then 'MAZDA CX-50 DGM 2 FEATURE DISCOVER MORE'
@@ -42,7 +43,7 @@ view: mazda_fy157_ntl_as_video {
         and data_type = 'AD_DATA'
         and c.campaign_id = '4272906'
         and ad.impressions > 0
-      Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+      Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
        ;;
   }
 
@@ -88,6 +89,18 @@ view: mazda_fy157_ntl_as_video {
     type: string
     label: "DCM Placement Name"
     sql: ${TABLE}.DCM_Placement_Name ;;
+  }
+
+  dimension: dcm_package_id {
+    type: number
+    label: "DCM Package ID"
+    sql: ${TABLE}.DCM_Package_ID ;;
+  }
+
+  dimension: dcm_package_name {
+    type: string
+    label: "DCM Package Name"
+    sql: ${TABLE}.DCM_Package_Name ;;
   }
 
   dimension: ad_group {

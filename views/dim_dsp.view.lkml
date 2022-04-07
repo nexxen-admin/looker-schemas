@@ -45,10 +45,9 @@ view: dim_dsp {
   }
 
   dimension: dsp_display_name {
-    label: "DSP Display Name"
+    label: "DSP"
     type: string
     sql: ${TABLE}.DSP_DISPLAY_NAME ;;
-    hidden: yes
   }
 
   dimension: dsp_id {
@@ -69,6 +68,7 @@ view: dim_dsp {
     label: "DSP"
     type: string
     sql: ${TABLE}.DSP_Name ;;
+    hidden: yes
   }
 
 

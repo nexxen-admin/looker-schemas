@@ -88,7 +88,7 @@ view: dim_ssp {
   dimension: ssp_name_display {
     type: string
     sql: ${TABLE}.SSP_Name_Display ;;
-    hidden: yes
+
   }
 
   measure: count {

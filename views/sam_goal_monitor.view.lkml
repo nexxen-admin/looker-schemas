@@ -2,63 +2,41 @@ view: sam_goal_monitor {
   required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: With ad_data as (
-      Select date_trunc('quarter',event_time)::date as Quarter_Start,
-        pi.operations_owner_id,
-        oo.name as operations_owner,
-        sum(revenue) as revenue
-      From andromeda.ad_data_daily ad
-        inner join andromeda.rx_dim_publisher_info pi on pi.publisher_id::varchar = ad.pub_id
-          and pi.operations_owner_id in ('64','45','37','63','60','11')
-        left outer join andromeda.rx_dim_publisher_operations_owner oo on oo.user_id = pi.operations_owner_id
-        left outer join bi.svc_days_in_quarter q on q.event_date = date_trunc('quarter',ad.event_time)::date
-      Where event_time >= '2022-01-01'
-        and event_time < date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York')::date
-        and ad.rx_ssp_name ilike 'rmp%'
-        and ad.revenue > 0
-      Group by 1, 2, 3
-      ),
+Select date_trunc('quarter',event_time)::date as Quarter_Start,
+  pi.operations_owner_id,
+  oo.name as operations_owner,
+  sum(revenue) as revenue
+From andromeda.ad_data_daily ad
+  inner join andromeda.rx_dim_publisher_info pi on pi.publisher_id::varchar = ad.pub_id
+    and pi.operations_owner_id in ('64','45','37','63','60','11')
+  left outer join andromeda.rx_dim_publisher_operations_owner oo on oo.user_id = pi.operations_owner_id
+  left outer join bi.svc_days_in_quarter q on q.event_date = date_trunc('quarter',ad.event_time)::date
+Where event_time >= '2022-01-01'
+  and event_time < date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York')::date
+  and ad.rx_ssp_name ilike 'rmp%'
+  and ad.revenue > 0
+Group by 1, 2, 3
+),
 
-      baseline as (
-      Select sam.operations_owner_id,
-      sam.operations_owner,
-      sam.Mgr_operations_owner_id,
-      sam.Mgr_operations_owner,
-      value_type,
-      revenue,
-      sam.quarter_start,
-      q.days_in_quarter,
-      case when sam.quarter_start < date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then q.days_in_quarter
-      When sam.quarter_start > date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then 0
-      else timestampdiff(day,date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date,current_date()) end as active_quarter_days,
-      (revenue / q.days_in_quarter) *
-      case when sam.quarter_start < date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then q.days_in_quarter
-      When sam.quarter_start > date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then 0
-      else timestampdiff(day,date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date,current_date()) end as QTD_Revenue
-      From bi.svc_SAM_Quarterly_Goals sam
-      left outer join bi.svc_days_in_quarter q on q.event_date = sam.quarter_start
-      Where value_type = 'Baseline'
-      ),
-
-      Goal as (
-      Select sam.operations_owner_id,
-      sam.operations_owner,
-      sam.Mgr_operations_owner_id,
-      sam.Mgr_operations_owner,
-      value_type,
-      revenue,
-      sam.quarter_start,
-      q.days_in_quarter,
-      case when sam.quarter_start < date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then q.days_in_quarter
-      When sam.quarter_start > date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then 0
-      else timestampdiff(day,date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date,current_date()) end as active_quarter_days,
-      (revenue / q.days_in_quarter) *
-      case when sam.quarter_start < date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then q.days_in_quarter
-      When sam.quarter_start > date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then 0
-      else timestampdiff(day,date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date,current_date()) end as QTD_Revenue
-      From bi.svc_SAM_Quarterly_Goals sam
-      left outer join bi.svc_days_in_quarter q on q.event_date = sam.quarter_start
-      Where value_type = 'Goal'
-      )
+Targets as (
+Select sam.operations_owner_id,
+  sam.operations_owner,
+  sam.Mgr_operations_owner_id,
+  sam.Mgr_operations_owner,
+  value_type,
+  revenue,
+  sam.quarter_start,
+  q.days_in_quarter,
+  case when sam.quarter_start < date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then q.days_in_quarter
+    When sam.quarter_start > date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then 0
+    else timestampdiff(day,date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date,current_date()) end as active_quarter_days,
+  (revenue / q.days_in_quarter) *
+    case when sam.quarter_start < date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then q.days_in_quarter
+    When sam.quarter_start > date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date then 0
+    else timestampdiff(day,date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date,current_date()) end as QTD_Revenue
+From bi.svc_SAM_Quarterly_Goals sam
+  left outer join bi.svc_days_in_quarter q on q.event_date = sam.quarter_start
+)
 
 Select ad.Quarter_Start as "Quarter Start Date",
   ad.operations_owner_id as "SAM ID",
@@ -73,10 +51,12 @@ Select ad.Quarter_Start as "Quarter Start Date",
   sum(g.revenue) as "Goal Target",
   sum(g.qtd_revenue) as "QTD Goal Target"
 From ad_data ad
-  left outer join baseline b on b.operations_owner_id = ad.operations_owner_id
+  left outer join Targets b on b.operations_owner_id = ad.operations_owner_id
                 and b.quarter_start = ad.quarter_start
-  left outer join goal g on g.operations_owner_id = ad.operations_owner_id
+                and b.value_type = 'Baseline'
+  left outer join Targets g on g.operations_owner_id = ad.operations_owner_id
                 and g.quarter_start = ad.quarter_start
+                and g.value_type = 'Goal'
 Group by 1, 2, 3, 4, 5, 6, 7
 Order by 3, 1
       ;;

@@ -79,6 +79,7 @@ view: v_dim_employee_biz_dev {
   }
 
   dimension: employee_office {
+    label: "BiaDev Office"
     type: string
     sql: ${TABLE}.Employee_Office ;;
     hidden: yes
@@ -86,6 +87,7 @@ view: v_dim_employee_biz_dev {
 
   dimension: employee_region {
     type: string
+    label: "BizDev Region"
     sql: ${TABLE}.Employee_Region ;;
     hidden: yes
   }

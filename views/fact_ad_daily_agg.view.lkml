@@ -1138,6 +1138,7 @@ view: fact_ad_daily_agg {
 
   measure: rmp_requests {
     type: sum
+    description: "Requests sent to us from the publisher only to the exchange. This count is prior to any filtering and determination of which DSPs the requests are sent to and which Deals are attached to the request."
     label: "Pub Requests"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"

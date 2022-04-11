@@ -151,13 +151,8 @@ Order by 3, 1
       sam,
       sam_manager_id,
       sam_manager,
-      revenue_to_date,
       active_days_in_quarter,
-      days_in_quarter,
-      baseline_target,
-      qtd_baseline_target,
-      goal_target,
-      qtd_goal_target
+      days_in_quarter
     ]
   }
 }

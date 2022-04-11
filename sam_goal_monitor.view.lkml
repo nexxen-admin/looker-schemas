@@ -1,4 +1,5 @@
 view: sam_goal_monitor {
+  required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: With ad_data as (
       Select date_trunc('quarter',event_time)::date as Quarter_Start,

@@ -116,7 +116,7 @@ view: sam_goal_monitor {
     sql: ${TABLE}."SAM Manager" ;;
   }
 
-  dimension: revenue_to_date {
+  measure: revenue_to_date {
     type: number
     label: "Revenue to Date"
     value_format: "$#,##0.00"
@@ -135,28 +135,28 @@ view: sam_goal_monitor {
     sql: ${TABLE}."Days in Quarter" ;;
   }
 
-  dimension: baseline_target {
+  measure: baseline_target {
     type: number
     label: "Baseline Target"
     value_format: "$#,##0"
     sql: ${TABLE}."Baseline Target" ;;
   }
 
-  dimension: qtd_baseline_target {
+  measure: qtd_baseline_target {
     type: number
     label: "QTD Baseline Target"
     value_format: "$#,##0"
     sql: ${TABLE}."QTD Baseline Target" ;;
   }
 
-  dimension: goal_target {
+  measure: goal_target {
     type: number
     label: "Goal Target"
     value_format: "$#,##0"
     sql: ${TABLE}."Goal Target" ;;
   }
 
-  dimension: qtd_goal_target {
+  measure: qtd_goal_target {
     type: number
     label: "QTD Goal Target"
     value_format: "$#,##0"

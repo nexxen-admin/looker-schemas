@@ -138,28 +138,28 @@ view: sam_goal_monitor {
   dimension: baseline_target {
     type: number
     label: "Baseline Target"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: ${TABLE}."Baseline Target" ;;
   }
 
   dimension: qtd_baseline_target {
     type: number
     label: "QTD Baseline Target"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: ${TABLE}."QTD Baseline Target" ;;
   }
 
   dimension: goal_target {
     type: number
     label: "Goal Target"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: ${TABLE}."Goal Target" ;;
   }
 
   dimension: qtd_goal_target {
     type: number
     label: "QTD Goal Target"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: ${TABLE}."QTD Goal Target" ;;
   }
 

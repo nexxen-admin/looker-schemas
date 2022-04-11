@@ -60,24 +60,25 @@ view: sam_goal_monitor {
       Where value_type = 'Goal'
       )
 
-      Select ad.Quarter_Start as "Quarter Start Date",
-      ad.operations_owner_id as "SAM ID",
-      ad.operations_owner as "SAM",
-      b.Mgr_operations_owner_id as "SAM Manager ID",
-      b.Mgr_operations_owner as "SAM Manager",
-      ad.revenue as "Revenue to Date",
-      b.active_quarter_days as "Active Days In Quarter",
-      b.days_in_quarter as "Days in Quarter",
-      b.revenue as "Baseline Target",
-      b.qtd_revenue as "QTD Baseline Target",
-      g.revenue as "Goal Target",
-      g.qtd_revenue as "QTD Goal Target"
-      From ad_data ad
-      left outer join baseline b on b.operations_owner_id = ad.operations_owner_id
-      and b.quarter_start = ad.quarter_start
-      left outer join goal g on g.operations_owner_id = ad.operations_owner_id
-      and g.quarter_start = ad.quarter_start
-      Order by 3, 1
+Select ad.Quarter_Start as "Quarter Start Date",
+  ad.operations_owner_id as "SAM ID",
+  ad.operations_owner as "SAM",
+  b.Mgr_operations_owner_id as "SAM Manager ID",
+  b.Mgr_operations_owner as "SAM Manager",
+  b.active_quarter_days as "Active Days In Quarter",
+  b.days_in_quarter as "Days in Quarter",
+  sum(ad.revenue) as "Revenue to Date",
+  sum(b.revenue) as "Baseline Target",
+  sum(b.qtd_revenue) as "QTD Baseline Target",
+  sum(g.revenue) as "Goal Target",
+  sum(g.qtd_revenue) as "QTD Goal Target"
+From ad_data ad
+  left outer join baseline b on b.operations_owner_id = ad.operations_owner_id
+                and b.quarter_start = ad.quarter_start
+  left outer join goal g on g.operations_owner_id = ad.operations_owner_id
+                and g.quarter_start = ad.quarter_start
+Group by 1, 2, 3, 4, 5, 6, 7
+Order by 3, 1
       ;;
   }
 

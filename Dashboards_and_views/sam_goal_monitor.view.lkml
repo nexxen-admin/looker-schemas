@@ -4,7 +4,9 @@ view: sam_goal_monitor {
 Select date_trunc('quarter',event_time)::date as Quarter_Start,
   pi.operations_owner_id,
   oo.name as operations_owner,
-  sum(revenue) as revenue
+  sum(revenue) as gross_revenue,
+  sum(cogs) as Cogs,
+  sum(revenue) - sum(cogs) as Net_Revenue
 From andromeda.ad_data_daily ad
   inner join andromeda.rx_dim_publisher_info pi on pi.publisher_id::varchar = ad.pub_id
     and pi.operations_owner_id in ('64','45','37','63','60','11')
@@ -44,11 +46,14 @@ Select ad.Quarter_Start as "Quarter Start Date",
   b.Mgr_operations_owner as "SAM Manager",
   b.active_quarter_days as "Active Days In Quarter",
   b.days_in_quarter as "Days in Quarter",
-  sum(ad.revenue) as "Revenue to Date",
+  sum(ad.gross_revenue) as "Gross Revenue to Date",
+  sum(ad.net_revenue) as "Net Revenue to Date",
   sum(b.revenue) as "Baseline Target",
   sum(b.qtd_revenue) as "QTD Baseline Target",
   sum(g.revenue) as "Goal Target",
-  sum(g.qtd_revenue) as "QTD Goal Target"
+  sum(g.qtd_revenue) as "QTD Goal Target",
+  sum(gr.revenue) as "Growth Target",
+  sum(gr.qtd_revenue) as "QTD Growth Target"
 From ad_data ad
   left outer join Targets b on b.operations_owner_id = ad.operations_owner_id
                 and b.quarter_start = ad.quarter_start
@@ -56,6 +61,9 @@ From ad_data ad
   left outer join Targets g on g.operations_owner_id = ad.operations_owner_id
                 and g.quarter_start = ad.quarter_start
                 and g.value_type = 'Goal'
+  left outer join Targets gr on gr.operations_owner_id = ad.operations_owner_id
+                and gr.quarter_start = ad.quarter_start
+                and gr.value_type = 'Growth'
 Group by 1, 2, 3, 4, 5, 6, 7
 Order by 3, 1
       ;;
@@ -96,11 +104,18 @@ Order by 3, 1
     sql: ${TABLE}."SAM Manager" ;;
   }
 
-  measure: revenue_to_date {
+  measure: gross_revenue_to_date {
     type: sum
-    label: "Revenue to Date"
+    label: "Gross Revenue to Date"
     value_format: "$#,##0.00"
-    sql: ${TABLE}."Revenue to Date" ;;
+    sql: ${TABLE}."Gross Revenue to Date" ;;
+  }
+
+  measure: net_revenue_to_date {
+    type: sum
+    label: "Net Revenue to Date"
+    value_format: "$#,##0.00"
+    sql: ${TABLE}."Net Revenue to Date" ;;
   }
 
   measure: active_days_in_quarter {
@@ -136,12 +151,25 @@ Order by 3, 1
     sql: ${TABLE}."Goal Target" ;;
   }
 
-
   measure: qtd_goal_target {
     type: sum
     label: "QTD Goal Target"
     value_format: "$#,##0"
     sql: ${TABLE}."QTD Goal Target" ;;
+  }
+
+  measure: growth_target {
+    type: sum
+    label: "Growth Target"
+    value_format: "$#,##0"
+    sql: ${TABLE}."Growth Target" ;;
+  }
+
+  measure: qtd_growth_target {
+    type: sum
+    label: "QTD Growth Target"
+    value_format: "$#,##0"
+    sql: ${TABLE}."QTD Growth Target" ;;
   }
 
   set: detail {

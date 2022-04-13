@@ -77,6 +77,11 @@ explore: jbs_adaptable_4_13_2022 {
   label: "JBS Adaptable"
 }
 
+explore: planterra_4_13_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Planterra"
+}
+
 explore: covered_ca {
   required_access_grants: [can_view_pub_come_looker]
   label: "covered_ca "

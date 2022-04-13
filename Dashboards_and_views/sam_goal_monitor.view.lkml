@@ -98,7 +98,7 @@ Order by 3, 1
   }
 
   measure: revenue_to_date {
-    type: number
+    type: sum
     label: "Revenue to Date"
     value_format: "$#,##0.00"
     sql: ${TABLE}."Revenue to Date" ;;

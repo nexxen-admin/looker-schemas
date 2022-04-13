@@ -57,6 +57,11 @@ explore: swift_meats_4_13_22 {
   label: "Swift Meats"
 }
 
+explore: mattress_firm_4_13_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Mattress Firm"
+}
+
 explore: covered_ca {
   required_access_grants: [can_view_pub_come_looker]
   label: "covered_ca "

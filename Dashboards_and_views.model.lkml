@@ -26,6 +26,5 @@ access_grant: can_view_pub_come_looker {
 
 
 explore: sam_goal_monitor {
-  required_access_grants: [can_view_pub_come_looker]
   label: "SAM Performance Monitor"
 }

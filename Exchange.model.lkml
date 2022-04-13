@@ -31,49 +31,7 @@ explore: publishers_report_monthly_for_finance {
   label: "publishers report monthly for finance"
 }
 
-explore: temp_di_pub_com_looker_test {
-  required_access_grants: [can_view_pub_come_looker]
-}
 
-explore: TaxAct_Hourly_Test {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: taxact_daily_report {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: pointsbet_february {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: covered_ca {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: blue_buffalo_weekly_report {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Derek's Data"
-}
-
-explore: pilgrim_s_pride_report {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "Pilgrim's Pride Report"
-}
-
-explore: QPSxRPM {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "QPSxRPM Supply"
-}
-
-explore: sam_goal_monitor {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "SAM Performance Monitor"
-}
 
 explore: fact_ad_daily_agg{
   always_filter: {

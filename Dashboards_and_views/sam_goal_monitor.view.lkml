@@ -117,28 +117,29 @@ Order by 3, 1
   }
 
   measure: baseline_target {
-    type: number
+    type: sum
     label: "Baseline Target"
     value_format: "$#,##0"
     sql: ${TABLE}."Baseline Target" ;;
   }
 
   measure: qtd_baseline_target {
-    type: number
+    type: sum
     label: "QTD Baseline Target"
     value_format: "$#,##0"
     sql: ${TABLE}."QTD Baseline Target" ;;
   }
 
   measure: goal_target {
-    type: number
+    type: sum
     label: "Goal Target"
     value_format: "$#,##0"
     sql: ${TABLE}."Goal Target" ;;
   }
 
+
   measure: qtd_goal_target {
-    type: number
+    type: sum
     label: "QTD Goal Target"
     value_format: "$#,##0"
     sql: ${TABLE}."QTD Goal Target" ;;

@@ -67,6 +67,11 @@ explore: moe_s_southwest_grill_4_13_22 {
   label: "Moe's Southwest Grill"
 }
 
+explore: kiolbassa_4_13_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Kiolbassa"
+}
+
 explore: covered_ca {
   required_access_grants: [can_view_pub_come_looker]
   label: "covered_ca "

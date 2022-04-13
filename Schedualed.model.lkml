@@ -82,6 +82,12 @@ explore: planterra_4_13_22 {
   label: "Planterra"
 }
 
+explore: purple_mattress_4_13_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Purple Mattress"
+}
+
+
 explore: covered_ca {
   required_access_grants: [can_view_pub_come_looker]
   label: "covered_ca "

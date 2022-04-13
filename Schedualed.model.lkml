@@ -52,6 +52,11 @@ explore: pointsbet_february {
   label: "pointsbet_february"
 }
 
+explore: swift_meats_4_13_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Swift Meats"
+}
+
 explore: covered_ca {
   required_access_grants: [can_view_pub_come_looker]
   label: "covered_ca "

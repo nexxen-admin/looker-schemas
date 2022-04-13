@@ -72,6 +72,11 @@ explore: kiolbassa_4_13_22 {
   label: "Kiolbassa"
 }
 
+explore: jbs_adaptable_4_13_2022 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "JBS Adaptable"
+}
+
 explore: covered_ca {
   required_access_grants: [can_view_pub_come_looker]
   label: "covered_ca "

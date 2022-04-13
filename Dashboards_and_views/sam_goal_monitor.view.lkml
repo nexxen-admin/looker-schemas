@@ -98,20 +98,20 @@ Order by 3, 1
   }
 
   measure: revenue_to_date {
-    type: number
+    type: sum
     label: "Revenue to Date"
     value_format: "$#,##0.00"
     sql: ${TABLE}."Revenue to Date" ;;
   }
 
-  dimension: active_days_in_quarter {
-    type: number
+  measure: active_days_in_quarter {
+    type: sum
     label: "Active Days In Quarter"
     sql: ${TABLE}."Active Days In Quarter" ;;
   }
 
-  dimension: days_in_quarter {
-    type: number
+  measure: days_in_quarter {
+    type: sum
     label: "Days in Quarter"
     sql: ${TABLE}."Days in Quarter" ;;
   }

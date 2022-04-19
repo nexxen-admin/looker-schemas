@@ -38,6 +38,35 @@ view: fact_ad_daily_agg {
     </ul> ;;
     hidden: yes
   }
+ measure: tempfoAdi{
+    type: number
+    group_label: "Daily Measures"
+
+    sql: ${request_lastday_change_parameter} ;;
+
+    html:
+
+      {% if value > 0 %}
+
+               <p><img src="http://findicons.com/files/icons/573/must_have/48/check.png" height=20 width=20>{{ rendered_value }}</p>
+
+      {% elsif value < 0 %}
+
+      <p><img src="http://findicons.com/files/icons/719/crystal_clear_actions/64/cancel.png" height=20 width=20>{{ rendered_value }}</p>
+
+      {% else %}
+
+      <p><img src="http://findicons.com/files/icons/1681/siena/128/clock_blue.png" height=20 width=20>{{ rendered_value }}</p>
+
+      {% endif %}
+
+      ;;
+  }
+
+
+
+
+
   measure: Bids_parameter {
     type: number
     sql: ${Last_day_bids} ;;
@@ -92,7 +121,7 @@ view: fact_ad_daily_agg {
   }
   measure: request_lastday_change_parameter {
     type: number
-    sql: (${Last_day_Requests}/${Previous_day_Requests})-1 ;;
+    sql: (${Last_day_Requests}/NULLIF(${Previous_day_Requests} ,0))-1 ;;
     value_format: "0.00%"
     html:
     <ul>
@@ -147,9 +176,9 @@ view: fact_ad_daily_agg {
       then '▲'  else '▼' end;;
     html:
     <ul>
-      <li> value: {{ value }} </li>
+      <li> {{value}} {{request_lastday_change_parameter._value}} </li>
     </ul> ;;
-    hidden: yes
+
   }
   measure: bids_change_parameter {
     type: number

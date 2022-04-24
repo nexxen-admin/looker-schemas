@@ -34,6 +34,7 @@ explore: publishers_report_monthly_for_finance {
 
 
 explore: fact_ad_daily_agg{
+
   always_filter: {
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
   }

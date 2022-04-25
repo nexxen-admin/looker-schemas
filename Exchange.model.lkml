@@ -32,6 +32,16 @@ explore: publishers_report_monthly_for_finance {
 }
 
 
+#explore: extend_Inbound_Exchange {
+#  extends: [fact_ad_daily_agg]
+ # from: fact_ad_daily_agg
+ # access_filter: {
+ #   field: v_dim_employee_pub_ops.employee_name
+ #   user_attribute: allowed_users
+#  }
+
+  #The normal contents of the Explore follow
+#}
 
 explore: fact_ad_daily_agg{
 

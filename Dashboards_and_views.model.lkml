@@ -19,16 +19,16 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 #   }
 # }
 
-access_grant: can_view_pub_come_looker {
-  user_attribute: admins
-  allowed_values: ["Looker_Admins"]
-}
+#access_grant: can_view_pub_come_looker {
+  #user_attribute: admins
+  #allowed_values: ["Looker_Admins"]
+#}
 
 
 explore: sam_goal_monitor {
- #  access_filter: {
-  #   field: sam_goal_monitor.sam
-  #   user_attribute: allowed_users
-   #}
+ access_filter: {
+     field: sam_goal_monitor.sam
+     user_attribute: allowed_users
+   }
   label: "SAM Performance Monitor"
 }

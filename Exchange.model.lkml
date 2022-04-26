@@ -43,7 +43,7 @@ explore: extend_Inbound_Exchange {
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
   }
   persist_with: CleanCash_datagroup
-  label: "Inbound Exchange"
+  label: "Inbound Exchange Extend"
   view_label: "Measures"
 
   join: dim_date {

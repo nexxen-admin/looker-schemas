@@ -163,15 +163,6 @@ view: fact_ad_bid_request_daily_agg {
     sql: ${TABLE}.sum_of_cost ;;
   }
 
-  measure: deal_count {
-    type: sum
-    label: "Deal Count"
-    value_format: "$#,##0.00"
-    group_label: "Daily Measures"
-    sql: ${TABLE}.sum_of_deal_count_from_ad_data ;;
-    #hidden: yes
-  }
-
   measure: sum_of_deal_requests_from_bidrequest {
     type: sum
     label: "Deal Requests"

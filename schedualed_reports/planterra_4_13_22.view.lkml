@@ -7,20 +7,26 @@ view: planterra_4_13_22 {
         CASE WHEN flight_id = 4275656 THEN 'CTV + BT + Zip Targeting'
            WHEN flight_id = 4275676 THEN 'All Screen Video OTT + BT + Zip Targeting'
            WHEN flight_id = 4245456 THEN 'CTV Added Value'
-             ELSE 'All Screen Video Added Value' END AS "Placement Name",
+           WHEN flight_id = 4245446 THEN 'All Screen Video Added Value'
+           WHEN flight_id IN (4298766, 4306486) THEN 'CTV + Exclusion List + BT + ZIP Targeting (Suburban Sam & Suzy)'
+           WHEN flight_id IN (4298726, 4307346) THEN 'All Screen Video + FEP + BT + Zip Targeting (Suburban Sam & Suzy)'
+           WHEN flight_id = 4298786 THEN ' CTV Exclusion List + BT + Zip Targeting (All in Alicia)'
+             ELSE 'All Screen Video + FEP + BT + Zip Targeting (All In Alicia)' END AS "Placement Name",
         'Ozo_Chicken_3009_16x9' as "Creative Name",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
-        CASE WHEN flight_id IN (4275656, 4275676) THEN (SUM(impressions)/1000) * 21.50
+        CASE WHEN flight_id IN (4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346) THEN (SUM(impressions)/1000) * 21.50
              ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
 WHERE date >= '2022-03-01'
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
-  and flight_id IN (4275656, 4275676, 4245446, 4245456)
+  and flight_id IN (4275656, 4275676, 4245446, 4245456,
+            4298766, 4298726, 4298786, 4298806,
+            4306486, 4307346)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5
 ORDER BY 1

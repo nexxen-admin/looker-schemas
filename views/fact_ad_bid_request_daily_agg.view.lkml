@@ -2,7 +2,7 @@
 view: fact_ad_bid_request_daily_agg {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_New.V_Fact_Ad_BidRequest_Daily_Agg ;;
+  sql_table_name: BI_New.Fact_Ad_BidRequest_Daily_Agg ;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
 
@@ -163,15 +163,6 @@ view: fact_ad_bid_request_daily_agg {
     sql: ${TABLE}.sum_of_cost ;;
   }
 
-  measure: deal_count {
-    type: sum
-    label: "Deal Count"
-    value_format: "$#,##0.00"
-    group_label: "Daily Measures"
-    sql: ${TABLE}.sum_of_deal_count_from_ad_data ;;
-    #hidden: yes
-  }
-
   measure: sum_of_deal_requests_from_bidrequest {
     type: sum
     label: "Deal Requests"
@@ -179,11 +170,6 @@ view: fact_ad_bid_request_daily_agg {
     sql: ${TABLE}.sum_of_deal_requests_from_bidrequest ;;
   }
 
-  dimension: sum_of_dsp_count_from_ad_data {
-    type: number
-    sql: ${TABLE}.sum_of_dsp_count_from_ad_data ;;
-    hidden: yes
-  }
 
   dimension: sum_of_dsp_deals_count_from_bidrequest {
     type: number

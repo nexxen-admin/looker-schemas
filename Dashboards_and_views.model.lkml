@@ -19,10 +19,10 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 #   }
 # }
 
-#access_grant: can_view_pub_come_looker {
-  #user_attribute: admins
-  #allowed_values: ["Looker_Admins"]
-#}
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
 #access_grant: can_view_pub_come_looker {
  # user_attribute: allowed_users
   #allowed_values: ["Looker_Admins"]

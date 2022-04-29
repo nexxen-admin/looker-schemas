@@ -1,6 +1,7 @@
 view: sam_goal_monitor {
   derived_table: {
-    sql: With ad_data as (
+    sql: With Global_Data As
+(
 Select date_trunc('quarter',event_time)::date as Quarter_Start,
   pi.operations_owner_id,
   oo.name as operations_owner,
@@ -15,9 +16,45 @@ From andromeda.ad_data_daily ad
 Where event_time >= '2022-01-01'
   and event_time < date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York')::date
   and ad.rx_ssp_name ilike 'rmp%'
+  and ad.pub_id in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519')
   and ad.revenue > 0
 Group by 1, 2, 3
 ),
+
+US_Data As
+(
+Select date_trunc('quarter',event_time)::date as Quarter_Start,
+  pi.operations_owner_id,
+  oo.name as operations_owner,
+  sum(revenue) as gross_revenue,
+  sum(cogs) as Cogs,
+  sum(revenue) - sum(cogs) as Net_Revenue
+From andromeda.ad_data_daily ad
+  inner join andromeda.rx_dim_publisher_info pi on pi.publisher_id::varchar = ad.pub_id
+    and pi.operations_owner_id in ('64','45','37','63','60','11')
+  left outer join andromeda.rx_dim_publisher_operations_owner oo on oo.user_id = pi.operations_owner_id
+  left outer join bi.svc_days_in_quarter q on q.event_date = date_trunc('quarter',ad.event_time)::date
+Where event_time >= '2022-01-01'
+  and event_time < date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York')::date
+  and ad.rx_ssp_name ilike 'rmp%'
+  and ad.country_code = 'US'
+  and ad.pub_id Not in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519')
+  and ad.revenue > 0
+Group by 1, 2, 3
+),
+
+ad_data as (
+Select coalesce(us.Quarter_Start,g.Quarter_Start) as Quarter_Start,
+  coalesce(us.operations_owner_id,g.operations_owner_id) as operations_owner_id,
+  coalesce(us.operations_owner,g.operations_owner) as operations_owner,
+  sum(coalesce(us.gross_revenue,0)) + sum(coalesce(g.gross_revenue,0)) as gross_revenue,
+  sum(coalesce(us.Cogs,0)) + sum(coalesce(g.Cogs,0)) as Cogs,
+  sum(coalesce(us.Net_Revenue,0)) + sum(coalesce(g.Net_Revenue,0)) as Net_Revenue
+From US_Data us
+  full join Global_Data g on g.Quarter_Start = us.Quarter_Start
+            and g.operations_owner_id = us.operations_owner_id
+            and g.operations_owner = us.operations_owner
+Group by 1, 2, 3),
 
 Targets as (
 Select sam.operations_owner_id,

@@ -179,11 +179,6 @@ view: fact_ad_bid_request_daily_agg {
     sql: ${TABLE}.sum_of_deal_requests_from_bidrequest ;;
   }
 
-  dimension: sum_of_dsp_count_from_ad_data {
-    type: number
-    sql: ${TABLE}.sum_of_dsp_count_from_ad_data ;;
-    hidden: yes
-  }
 
   dimension: sum_of_dsp_deals_count_from_bidrequest {
     type: number

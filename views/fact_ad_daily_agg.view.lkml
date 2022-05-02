@@ -628,14 +628,14 @@ view: fact_ad_daily_agg {
 
   measure:: ias_total_impression {
     type: sum
-    label: "Total IAS Count"
+    label: "IAS Total Impression"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_ias_total_impression ;;
 
   }
   measure:: ias_ivt_impression {
     type: sum
-    label: "IAS IVT Viewable Impressions"
+    label: "IAS IVT Impressions"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_ias_ivt_impression ;;
 

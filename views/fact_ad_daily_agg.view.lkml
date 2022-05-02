@@ -541,13 +541,7 @@ view: fact_ad_daily_agg {
     #hidden: yes
   }
 
-  measure:: ias_ivt_impression {
-    type: sum
-    label: "IAS IVT Viewable Impressions"
-    group_label: "Daily Measures"
-    sql: ${TABLE}.sum_of_ias_ivt_impression ;;
-    hidden: yes
-  }
+
 
   measure:: ias_measurable_impression {
     type: sum
@@ -637,7 +631,22 @@ view: fact_ad_daily_agg {
     label: "Total IAS Count"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_ias_total_impression ;;
-    hidden: yes
+
+  }
+  measure:: ias_ivt_impression {
+    type: sum
+    label: "IAS IVT Viewable Impressions"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_ias_ivt_impression ;;
+
+  }
+  measure:  ias_ivt_rate_calc{
+    type: number
+    label: "IAS IVT Rate"
+    group_label: "Daily Measures"
+    value_format: "0.00\%"
+    sql: (${ias_ivt_impression}/NULLIF(${ias_total_impression},0))*100 ;;
+
   }
 
   measure: ias_ivt_rate {

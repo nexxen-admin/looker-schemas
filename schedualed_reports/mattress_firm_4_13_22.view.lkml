@@ -5,12 +5,10 @@ view: mattress_firm_4_13_22 {
         TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
         flight_id as "Flight ID",
         creative_id as "Creative ID",
-        CASE WHEN creative_id IN (8469956, 8449186, 8453386, 8470686) THEN 'CTV + BT + GT'
-           WHEN creative_id IN (8481696,8481716,8495996) THEN 'CTV + BT + GT'
-           WHEN creative_id IN (8481696,8481716,8495996) THEN 'CTV + BT + GT'
-           WHEN creative_id IN (8469956,8449186,8453386, 8470686) THEN 'CTV Added Value'
-           WHEN creative_id IN (8481696,8481716, 8495996) THEN 'CTV Added Value'
-           ELSE 'CTV Added Value' END AS "Placement Name",
+        CASE WHEN creative_id IN (8469956, 8449186, 8453386, 8470686,
+                      8481696,8481716,8495996, 8481696,
+                      8481716,8495996, 8481696, 8481716) THEN 'CTV + BT + GT'
+              ELSE 'CTV Added Value' END AS "Placement Name",
         CASE WHEN creative_id = 8469956 THEN 'Presidents Day TempurPedic Save $500'
            WHEN creative_id = 8449186 THEN 'Year End Closeout Sale (WK01SAE15YECLS22)'
            WHEN creative_id = 8453386 THEN 'New Bed New You Sale (MFWK02NBY2022)'
@@ -30,21 +28,16 @@ view: mattress_firm_4_13_22 {
            WHEN creative_id = 8495996 THEN 'Spring Savings Sale'
            WHEN creative_id = 8481696 THEN 'Shop Local for 25 Years'
            WHEN creative_id = 8481716 THEN 'TempurPedcSmartBase'
+           WHEN creative_id = 8481696 THEN 'Shop Local for 25 Years'
+           WHEN creative_id = 8481716 THEN 'TempurPedcSmartBase'
+           WHEN creative_id = 8481696 THEN 'Shop Local for 25 Years'
+           WHEN creative_id = 8481716 THEN 'TempurPedcSmartBase'
            ELSE 'Spring Savings Sale' END AS "Creative Name",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
-        CASE WHEN creative_id IN (8469956,
-                  8449186,
-                    8453386,
-                  8470686,
-                  8481696,
-                  8481716,
-                     8495996,
-                    8481696,
-                  8481716,
-                  8495996) THEN (SUM(impressions)/1000) * 22.50
+        CASE WHEN flight_id IN (4186096, 4244776, 4272956, 4306516) THEN (SUM(impressions)/1000) * 22.50
                          ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
@@ -56,7 +49,9 @@ WHERE date >= '2021-12-27'
             4272956,
             4186106,
             4244786,
-            4272966)
+            4272966,
+            4306516,
+            4306526)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6
 ORDER BY 1

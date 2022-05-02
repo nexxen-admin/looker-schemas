@@ -43,7 +43,7 @@ FROM dwh.ad_data_daily add2
 WHERE date >= '2022-03-25'
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
-  and flight_id IN (4266866, 4277686)
+  and flight_id IN (4266866, 4277686, 4296406, 4296416, 4295736)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6
 ORDER BY 1

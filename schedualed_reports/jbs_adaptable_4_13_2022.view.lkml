@@ -4,10 +4,10 @@ view: jbs_adaptable_4_13_2022 {
     sql: SELECT  date::date as "Date",
         TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
         flight_id as "Flight ID",
-        CASE WHEN flight_id IN(4206406, 42222036, 4244826, 4267946) THEN 'CTV + BT + DMA Targeting'
-           WHEN flight_id IN(4206676, 4222046, 4244836, 4268006) THEN 'CTV + BT + Zip Targeting'
-           WHEN flight_id IN(4206726, 4222056, 4244846, 4268016) THEN 'All Screen Video OTT + BT + DMA Targeting'
-           WHEN flight_id  IN(4206736, 4222066, 4244856, 4268026) THEN ' ALL Screen Video OTT + BT + Zip Code Targeting'
+        CASE WHEN flight_id IN(4206406, 42222036, 4244826, 4267946, 4301536) THEN 'CTV + BT + DMA Targeting'
+           WHEN flight_id IN(4206676, 4222046, 4244836, 4268006, 4301546) THEN 'CTV + BT + Zip Targeting'
+           WHEN flight_id IN(4206726, 4222056, 4244846, 4268016, 4301556) THEN 'All Screen Video OTT + BT + DMA Targeting'
+           WHEN flight_id  IN(4206736, 4222066, 4244856, 4268026, 4301566) THEN ' ALL Screen Video OTT + BT + Zip Code Targeting'
              ELSE 'CTV Added Value' END AS "Placement Name",
         'ADAPT-T-1902_Retreat_30_Unslated' as "Creative Name",
         SUM(impressions) as "Impressions",
@@ -29,7 +29,11 @@ view: jbs_adaptable_4_13_2022 {
                     4206736,
                     4222066,
                     4244856,
-                    4268026) THEN (SUM(impressions)/1000) * 21.50
+                    4268026,
+                    4301536,
+                    4301546,
+                    4301556,
+                    4301566) THEN (SUM(impressions)/1000) * 21.50
              ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma

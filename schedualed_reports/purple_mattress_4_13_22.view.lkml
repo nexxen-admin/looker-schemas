@@ -5,11 +5,10 @@ view: purple_mattress_4_13_22 {
         TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
         flight_id as "Flight ID",
         creative_id as "Creative ID",
-        CASE WHEN creative_id = 8498866 THEN 'CTV + BT + Zip Targeting (CA)'
-           WHEN creative_id  = 8498876 THEN 'CTV + BT + Zip Targeting (CA)'
-           WHEN creative_id  = 8498886 THEN 'CTV + BT + Zip Targeting (CA)'
-           WHEN creative_id  = 8598896 THEN 'CTV + BT + Zip Targeting (CA)'
-             ELSE 'CTV + BT + Zip Targeting (MN)' END AS "Placement Name",
+        CASE WHEN creative_id IN(8498866, 8498876, 8498886, 8598896, 8523226, 8523256, 8523266, 8523276) THEN 'CTV + BT + Zip Targeting (CA)'
+             WHEN creative_id IN(8506186, 8506196, 8506206, 8506216) THEN 'CTV + BT + Zip Targeting (MN)'
+             WHEN creative_id IN(8523656, 8523666, 8523676, 8523686) THEN 'CTV + BT + Zip Targeting (Chicago)'
+             ELSE 'CTV + BT + Zip Targeting (Baltimore)' END AS "Placement Name",
         CASE WHEN creative_id  = 8498866 THEN 'CorteMaderaSleepsCool'
            WHEN creative_id  = 8498876 THEN 'CorteMaderaFeelsLike'
            WHEN creative_id  = 8498886 THEN 'CorteMadera_S_S'
@@ -17,19 +16,34 @@ view: purple_mattress_4_13_22 {
            WHEN creative_id  = 8506186 THEN '20210916_Sandwich_16x9_HelloPurpleRetail_15s_MallofAmerica_All3'
            WHEN creative_id  = 8506196 THEN '20210916_Sandwich_16x9_HelloPurpleRetail_15s_MallofAmerica_FeelsLike'
            WHEN creative_id  = 8506206 THEN '20210916_Sandwich_16x9_HelloPurpleRetail_15s_MallofAmerica_SleepsCool'
+           WHEN creative_id = 8523656 THEN '20220411_Sandwich_16x9_HelloPurpleRetail_15s_WoodfieldMall_All3'
+           When creative_id = 8523666 THEN '20220411_Sandwich_16x9_HelloPurpleRetail_15s_WoodfieldMall_FeelsLike'
+           WHEN creative_id = 8523676 THEN '20220411_Sandwich_16x9_HelloPurpleRetail_15s_WoodfieldMall_S_S'
+           WHEN creative_id = 8523686 THEN '20220411_Sandwich_16x9_HelloPurpleRetail_15s_WoodfieldMall_SleepsCool'
+           WHEN creative_id = 8523696 THEN '20210916_Sandwich_16x9_HelloPurpleRetail_15s_MallinColumbia_All3'
+           WHEN creative_id = 8523706 THEN '20210916_Sandwich_16x9_HelloPurpleRetail_15s_MallinColumbia_S_S'
+           WHEN creative_id = 8523716 THEN '20210916_Sandwich_16x9_HelloPurpleRetail_15s_MallinColumbia_FeelsLike'
+           WHEN creative_id = 8523726 THEN '20210916_Sandwich_16x9_HelloPurpleRetail_15s_MallinColumbia_SleepsCool'
+           WHEN creative_id = 8523226 THEN 'CorteMaderaSleepsCool'
+           WHEN creative_id = 8523256 THEN 'CorteMaderaFeelsLike'
+           WHEN creative_id = 8523266 THEN 'CorteMadera_S_S'
+           WHEN creative_id = 8523276 THEN 'CorteMadera_All3'
            ELSE '20210916_Sandwich_16x9_HelloPurpleRetail_15s_MallofAmerica_S_S' END AS "Creative Name",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
-        CASE WHEN creative_id  IN (8498866, 8498876, 8498886, 8598896) THEN (SUM(impressions)/1000) * 21.50
+        CASE WHEN creative_id  IN (8498866, 8498876, 8498886, 8598896,
+                      8523656, 8523666, 8523676, 8523686,
+                  8523696, 8523706, 8523716, 8523726,
+                  8523226, 8523256, 8523266, 8523276) THEN (SUM(impressions)/1000) * 21.50
              ELSE (SUM(impressions)/1000) * 23.25 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
 WHERE date >= '2022-03-25'
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
-  and flight_id IN (4266866, 4277686)
+  and flight_id IN (4266866, 4277686, 4296406, 4296416, 4295736)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6
 ORDER BY 1

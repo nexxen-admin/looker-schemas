@@ -1,59 +1,105 @@
 view: sam_goal_monitor {
   derived_table: {
-    sql: With Global_Data As
-(
-Select date_trunc('quarter',event_time)::date as Quarter_Start,
-  pi.operations_owner_id,
-  oo.name as operations_owner,
-  sum(revenue) as gross_revenue,
-  sum(cogs) as Cogs,
-  sum(revenue) - sum(cogs) as Net_Revenue
-From andromeda.ad_data_daily ad
-  inner join andromeda.rx_dim_publisher_info pi on pi.publisher_id::varchar = ad.pub_id
-    and pi.operations_owner_id in ('64','45','37','63','60','11')
-  left outer join andromeda.rx_dim_publisher_operations_owner oo on oo.user_id = pi.operations_owner_id
-  left outer join bi.svc_days_in_quarter q on q.event_date = date_trunc('quarter',ad.event_time)::date
-Where event_time >= '2022-01-01'
-  and event_time < date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York')::date
-  and ad.rx_ssp_name ilike 'rmp%'
-  and ad.pub_id in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519')
-  and ad.revenue > 0
-Group by 1, 2, 3
-),
+    sql:   with barter_fees as (
+  Select deal_id_external as rx_deal_id,
+  case when deal_description ilike '%Involved_%' then 'Involved'
+    when deal_description ilike '%ICON_%' then 'Icon'
+    when deal_description ilike '%Orion_%' then 'Orion'
+    when deal_description ilike '%Agyle_%' then 'Agyle'
+    else 'other' end as Barter_Agency,
+  case when deal_description ilike '%Involved_%' then 0.20
+    when deal_description ilike '%ICON_%' then 0.20
+    when deal_description ilike '%Orion_%' then 0.15
+    when deal_description ilike '%Agyle_%' then 0
+    else 0 end as Rebate_Percent
+  From andromeda.rx_dim_deal
+  where (deal_description ilike '%Involved_%'
+      or deal_description ilike '%ICON_%'
+      or deal_description ilike '%Orion_%'
+      or deal_description ilike '%Agyle_%')
+    and lower(right(deal_description,6)) = 'incent'),
 
-US_Data As
-(
+Base_Data as (
 Select date_trunc('quarter',event_time)::date as Quarter_Start,
-  pi.operations_owner_id,
-  oo.name as operations_owner,
-  sum(revenue) as gross_revenue,
-  sum(cogs) as Cogs,
-  sum(revenue) - sum(cogs) as Net_Revenue
+  coalesce(pi.operations_owner_id,'1') as operations_owner_id,
+  coalesce(oo.name,'Unassigned') as operations_owner,
+  Case when pi.operations_owner_id in ('64','45','37','63','60','11')
+    then 'SAM' else 'Long-Tail' end as Commission_Group,
+  Case when (pi.operations_owner_id in ('64','45','37','63','60','11')
+        and ad.pub_id not in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519'))
+      Then 'US-Only' else 'Intl' end as Revenue_Group,
+  ad.pub_id,
+  sp.publisher_name,
+  b.Rebate_Percent,
+  sum(case when country_code = 'US' then revenue else 0 end) as gross_revenue_US,
+    sum(case when country_code != 'US' then revenue else 0 end) as gross_revenue_ROW,
+  sum(case when country_code = 'US' then cogs else 0 end) as Cogs_US,
+    sum(case when country_code != 'US' then cogs else 0 end) as Cogs_ROW,
+  sum(case when country_code = 'US' then pub_platform_fee else 0 end) as pub_platform_fee_US,
+  sum(case when country_code != 'US' then pub_platform_fee else 0 end) as pub_platform_fee_ROW,
+
+
+  (sum(case when country_code = 'US' then revenue else 0 end) * b.Rebate_Percent) * -1 as Barter_Rebate_US,
+  (sum(case when country_code != 'US' then revenue else 0 end) * b.Rebate_Percent) * -1 as Barter_Rebate_ROW,
+
+  sum(case when country_code = 'US' then revenue else 0 end) - sum(case when country_code = 'US' then cogs else 0 end) as Net_Revenue_US,
+  sum(case when country_code != 'US' then revenue else 0 end) - sum(case when country_code != 'US' then cogs else 0 end) as Net_Revenue_ROW
 From andromeda.ad_data_daily ad
   inner join andromeda.rx_dim_publisher_info pi on pi.publisher_id::varchar = ad.pub_id
-    and pi.operations_owner_id in ('64','45','37','63','60','11')
   left outer join andromeda.rx_dim_publisher_operations_owner oo on oo.user_id = pi.operations_owner_id
-  left outer join bi.svc_days_in_quarter q on q.event_date = date_trunc('quarter',ad.event_time)::date
+  left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id::varchar = ad.pub_id
+  Left outer join barter_fees b on b.rx_deal_id = ad.rx_deal_id
 Where event_time >= '2022-01-01'
   and event_time < date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York')::date
   and ad.rx_ssp_name ilike 'rmp%'
-  and ad.country_code = 'US'
-  and ad.pub_id Not in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519')
-  and ad.revenue > 0
-Group by 1, 2, 3
-),
+  and (ad.revenue > 0 or ad.cogs > 0)
+  and pi.operations_owner_id in ('64','45','37','63','60','11')
+Group by 1, 2, 3, 4, 5, 6, 7, 8),
+
+agg_data as (
+Select quarter_start,
+  operations_owner_id,
+  operations_owner,
+  commission_group,
+  revenue_group,
+  pub_id,
+  publisher_name,
+  sum(coalesce(gross_revenue_US,0)) as gross_revenue_US,
+  sum(coalesce(gross_revenue_ROW,0)) as gross_revenue_ROW,
+  sum(coalesce(Cogs_US,0)) as Cogs_US,
+  sum(coalesce(Cogs_ROW,0)) as Cogs_ROW,
+  sum(coalesce(pub_platform_fee_US,0)) as pub_platform_fee_US,
+  sum(coalesce(pub_platform_fee_ROW,0)) as pub_platform_fee_ROW,
+  sum(coalesce(Barter_Rebate_US,0)) as Barter_Rebate_US,
+  sum(coalesce(Barter_Rebate_ROW,0)) as Barter_Rebate_ROW,
+
+  case when revenue_group = 'Intl' then sum(coalesce(gross_revenue_US,0)) + sum(coalesce(gross_revenue_ROW,0))
+    else sum(coalesce(gross_revenue_US,0)) end as Final_Gross_revenue,
+
+  case when revenue_group = 'Intl' then sum(coalesce(Cogs_US,0)) + sum(coalesce(Cogs_ROW,0))
+    else sum(coalesce(Cogs_US,0)) end as Final_Cogs,
+
+  case when revenue_group = 'Intl' then sum(coalesce(pub_platform_fee_US,0)) + sum(coalesce(pub_platform_fee_ROW,0))
+    else sum(coalesce(pub_platform_fee_US,0)) end as Final_Pub_Platform_Fee,
+
+  case when revenue_group = 'Intl' then sum(coalesce(Barter_Rebate_US,0)) + sum(coalesce(Barter_Rebate_ROW,0))
+    else sum(coalesce(Barter_Rebate_US,0)) end as Final_Barter_Rebate,
+
+  case when revenue_group = 'Intl' then (sum(coalesce(gross_revenue_US,0)) + sum(coalesce(gross_revenue_ROW,0)) + sum(coalesce(pub_platform_fee_US,0)) + sum(coalesce(pub_platform_fee_ROW,0)) + sum(coalesce(Barter_Rebate_US,0)) + sum(coalesce(Barter_Rebate_ROW,0)))  - (sum(coalesce(Cogs_US,0)) + sum(coalesce(Cogs_ROW,0)))
+    Else (sum(coalesce(gross_revenue_US,0)) + sum(coalesce(pub_platform_fee_US,0)) + sum(coalesce(Barter_Rebate_US,0)) - sum(coalesce(Cogs_US,0))) end as Final_Net_Revenue
+From Base_Data
+Group by 1, 2, 3, 4, 5, 6, 7),
 
 ad_data as (
-Select coalesce(us.Quarter_Start,g.Quarter_Start) as Quarter_Start,
-  coalesce(us.operations_owner_id,g.operations_owner_id) as operations_owner_id,
-  coalesce(us.operations_owner,g.operations_owner) as operations_owner,
-  sum(coalesce(us.gross_revenue,0)) + sum(coalesce(g.gross_revenue,0)) as gross_revenue,
-  sum(coalesce(us.Cogs,0)) + sum(coalesce(g.Cogs,0)) as Cogs,
-  sum(coalesce(us.Net_Revenue,0)) + sum(coalesce(g.Net_Revenue,0)) as Net_Revenue
-From US_Data us
-  full join Global_Data g on g.Quarter_Start = us.Quarter_Start
-            and g.operations_owner_id = us.operations_owner_id
-            and g.operations_owner = us.operations_owner
+Select Quarter_Start as Quarter_Start,
+  operations_owner_id as operations_owner_id,
+  operations_owner as operations_owner,
+  sum(Final_Gross_revenue) as gross_revenue,
+  sum(Final_Cogs) as Cogs,
+  sum(Final_Pub_Platform_Fee) as Pub_Platform_Fee,
+  sum(Final_Barter_Rebate) as Barter_Rebate,
+  sum(Final_Net_Revenue) as Net_Revenue
+From agg_data
 Group by 1, 2, 3),
 
 Targets as (

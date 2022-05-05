@@ -1,94 +1,206 @@
 view: sam_goal_monitor {
   derived_table: {
-    sql:   with barter_fees as (
-  Select deal_id_external as rx_deal_id,
-  case when deal_description ilike '%Involved_%' then 'Involved'
-    when deal_description ilike '%ICON_%' then 'Icon'
-    when deal_description ilike '%Orion_%' then 'Orion'
-    when deal_description ilike '%Agyle_%' then 'Agyle'
-    else 'other' end as Barter_Agency,
-  case when deal_description ilike '%Involved_%' then 0.20
-    when deal_description ilike '%ICON_%' then 0.20
-    when deal_description ilike '%Orion_%' then 0.15
-    when deal_description ilike '%Agyle_%' then 0
-    else 0 end as Rebate_Percent
-  From andromeda.rx_dim_deal
-  where (deal_description ilike '%Involved_%'
-      or deal_description ilike '%ICON_%'
-      or deal_description ilike '%Orion_%'
-      or deal_description ilike '%Agyle_%')
-    and lower(right(deal_description,6)) = 'incent'),
+    sql:
+with barter_fees as (
+       Select deal_id_external as rx_deal_id,
+       case when deal_description ilike '%Involved_%' then 'Involved'
+              when deal_description ilike '%ICON_%' then 'Icon'
+              when deal_description ilike '%Orion_%' then 'Orion'
+              when deal_description ilike '%Agyle_%' then 'Agyle'
+              else 'other' end as Barter_Agency,
+       case when deal_description ilike '%Involved_%' then 0.20
+              when deal_description ilike '%ICON_%' then 0.20
+              when deal_description ilike '%Orion_%' then 0.15
+              when deal_description ilike '%Agyle_%' then 0
+              else 0 end as Rebate_Percent
+       From andromeda.rx_dim_deal
+       where (deal_description ilike '%Involved_%'
+                     or deal_description ilike '%ICON_%'
+                     or deal_description ilike '%Orion_%'
+                     or deal_description ilike '%Agyle_%')
+              and lower(right(deal_description,6)) = 'incent'),
+
+MM_Rebate_Percents as (
+Select date_trunc('quarter',event_time)::date as Quarter_Start,
+       sum(revenue) as MM_Total_Revenue,
+       (sum(revenue) - 1000000) * 0.05 as rebate_value, --5% rebate because it's over 3M in total Q1 Spend
+       ((sum(revenue) - 1000000) * 0.05) / sum(revenue) as eMM_Rebate_Percent,
+       0.1 as NC_MM_Rebate_Percent
+From andromeda.ad_data_daily ad
+       inner join andromeda.rx_dim_dsp dsp on dsp.rx_dsp_name = ad.rx_dsp_name
+       inner join andromeda.rx_dim_dsp_account da on da.rx_dsp_account_id = dsp.rx_dsp_account_id
+                                                                           and da.rx_dsp_account_name ilike '%mediamath%'
+Where event_time >= '2022-01-01'
+       and event_time < '2022-04-01'
+       and revenue > 0
+Group by 1
+),
+
+DSP_Platform_Fee_percent as (
+Select date_trunc('quarter',event_time)::date as Quarter_Start,
+       925000,  --Value from Ken as Q1 Invoiced Rebate
+       sum(revenue) as Pubmatic_Revenue,
+       925000 / sum(revenue) as Pubmatic_Rebate_Percent
+From andromeda.ad_data_daily ad
+       inner join andromeda.rx_dim_dsp dsp on dsp.rx_dsp_name = ad.rx_dsp_name
+                                                       and dsp.rx_dsp_account_id in ('5135','5172')
+where event_time >= '2022-01-01'
+       and event_time < '2022-04-01'
+Group by 1, 2),
+
 
 Base_Data as (
 Select date_trunc('quarter',event_time)::date as Quarter_Start,
   coalesce(pi.operations_owner_id,'1') as operations_owner_id,
   coalesce(oo.name,'Unassigned') as operations_owner,
   Case when pi.operations_owner_id in ('64','45','37','63','60','11')
-    then 'SAM' else 'Long-Tail' end as Commission_Group,
+       then 'SAM' else 'Long-Tail' end as Commission_Group,
   Case when (pi.operations_owner_id in ('64','45','37','63','60','11')
-        and ad.pub_id not in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519'))
-      Then 'US-Only' else 'Intl' end as Revenue_Group,
+                    and ad.pub_id in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519'))
+              Then 'Intl' else 'US-Only' end as Revenue_Group,
   ad.pub_id,
   sp.publisher_name,
   b.Rebate_Percent,
+  mm.eMM_Rebate_Percent,
+  mm.NC_MM_Rebate_Percent,
+  pm.Pubmatic_Rebate_Percent,
   sum(case when country_code = 'US' then revenue else 0 end) as gross_revenue_US,
-    sum(case when country_code != 'US' then revenue else 0 end) as gross_revenue_ROW,
+    sum(case when (country_code != 'US' or country_code is NULL) then revenue else 0 end) as gross_revenue_ROW,
   sum(case when country_code = 'US' then cogs else 0 end) as Cogs_US,
-    sum(case when country_code != 'US' then cogs else 0 end) as Cogs_ROW,
+    sum(case when (country_code != 'US' or country_code is NULL) then cogs else 0 end) as Cogs_ROW,
+
+
   sum(case when country_code = 'US' then pub_platform_fee else 0 end) as pub_platform_fee_US,
-  sum(case when country_code != 'US' then pub_platform_fee else 0 end) as pub_platform_fee_ROW,
+  sum(case when (country_code != 'US' or country_code is NULL) then pub_platform_fee else 0 end) as pub_platform_fee_ROW,
+
+  sum(case when (country_code = 'US'
+                                  and dsp.rx_dsp_account_id = '5129'  -- Bidswitch UnrulyX Account
+                            and ad.dsp_seat IN ('200','306'))
+                    Then revenue else 0 end) * 0.04 * -1 as Platform_Cost_US,
+    sum(case when ((country_code != 'US' or country_code is NULL)
+                                  and dsp.rx_dsp_account_id = '5129'  -- Bidswitch UnrulyX Account
+                            and ad.dsp_seat IN ('200','306'))
+                    Then revenue else 0 end) * 0.04 * -1 as Platform_Cost_ROW,
+
+
+         Sum(Case when country_code = 'US'
+                    and da.rx_dsp_account_name ilike '%mediamath%'
+                    and  (case when ((ad.rx_ssp_name ilike 'rmp%' and ad.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
+                         or (ad.rx_ssp_name ilike 'rmp%' and ad.pub_id = '100607' and ad.rx_site_id = '205973')) then 1 else 0 end) = 1
+                then revenue else 0 end) * NC_MM_Rebate_Percent * -1 as MM_US_NC_Rebate,
+
+        Sum(Case when (country_code != 'US' or country_code is NULL)
+                    and da.rx_dsp_account_name ilike '%mediamath%'
+                    and  (case when ((ad.rx_ssp_name ilike 'rmp%' and ad.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
+                         or (ad.rx_ssp_name ilike 'rmp%' and ad.pub_id = '100607' and ad.rx_site_id = '205973')) then 1 else 0 end) = 1
+              then revenue else 0 end) * NC_MM_Rebate_Percent * -1 as MM_ROW_NC_Rebate,
+
+       Sum(Case when country_code = 'US'
+                    and da.rx_dsp_account_name ilike '%mediamath%'
+                    and  (case when ((ad.rx_ssp_name ilike 'rmp%' and ad.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
+                         or (ad.rx_ssp_name ilike 'rmp%' and ad.pub_id = '100607' and ad.rx_site_id = '205973')) then 1 else 0 end) = 0
+                then revenue else 0 end) * eMM_Rebate_Percent * -1 as MM_US_Rebate,
+
+        Sum(Case when (country_code != 'US' or country_code is NULL)
+                    and da.rx_dsp_account_name ilike '%mediamath%'
+                    and  (case when ((ad.rx_ssp_name ilike 'rmp%' and ad.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
+                         or (ad.rx_ssp_name ilike 'rmp%' and ad.pub_id = '100607' and ad.rx_site_id = '205973')) then 1 else 0 end) = 0
+              then revenue else 0 end) * eMM_Rebate_Percent * -1 as MM_ROW_Rebate,
+
+
+       sum(case when country_code = 'US' and dsp.rx_dsp_account_id in ('5135','5172')
+              then revenue else 0 end) * pm.Pubmatic_Rebate_Percent * -1 as DSP_Platform_Fee_US,
+
+              sum(case when (country_code != 'US' or country_code is NULL) and dsp.rx_dsp_account_id in ('5135','5172')
+              then revenue else 0 end) * pm.Pubmatic_Rebate_Percent * -1 as DSP_Platform_Fee_ROW,
+
 
 
   (sum(case when country_code = 'US' then revenue else 0 end) * b.Rebate_Percent) * -1 as Barter_Rebate_US,
-  (sum(case when country_code != 'US' then revenue else 0 end) * b.Rebate_Percent) * -1 as Barter_Rebate_ROW,
+  (sum(case when (country_code != 'US' or country_code is NULL) then revenue else 0 end) * b.Rebate_Percent) * -1 as Barter_Rebate_ROW,
 
   sum(case when country_code = 'US' then revenue else 0 end) - sum(case when country_code = 'US' then cogs else 0 end) as Net_Revenue_US,
-  sum(case when country_code != 'US' then revenue else 0 end) - sum(case when country_code != 'US' then cogs else 0 end) as Net_Revenue_ROW
+  sum(case when (country_code != 'US' or country_code is NULL) then revenue else 0 end) - sum(case when (country_code != 'US' or country_code is NULL) then cogs else 0 end) as Net_Revenue_ROW
+
 From andromeda.ad_data_daily ad
   inner join andromeda.rx_dim_publisher_info pi on pi.publisher_id::varchar = ad.pub_id
   left outer join andromeda.rx_dim_publisher_operations_owner oo on oo.user_id = pi.operations_owner_id
   left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id::varchar = ad.pub_id
   Left outer join barter_fees b on b.rx_deal_id = ad.rx_deal_id
+  left outer join andromeda.rx_dim_dsp dsp on dsp.rx_dsp_name = ad.rx_dsp_name
+  left outer join andromeda.rx_dim_dsp_account da on da.rx_dsp_account_id = dsp.rx_dsp_account_id
+  left outer join MM_Rebate_Percents mm on mm.quarter_start = date_trunc('quarter',ad.event_time)::date
+  left outer join DSP_Platform_Fee_percent pm on pm.quarter_start = date_trunc('quarter',ad.event_time)::date
 Where event_time >= '2022-01-01'
-  and event_time < date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York')::date
+  and event_time < '2022-04-01'
   and ad.rx_ssp_name ilike 'rmp%'
   and (ad.revenue > 0 or ad.cogs > 0)
   and pi.operations_owner_id in ('64','45','37','63','60','11')
-Group by 1, 2, 3, 4, 5, 6, 7, 8),
+Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
 
 agg_data as (
 Select quarter_start,
-  operations_owner_id,
-  operations_owner,
-  commission_group,
-  revenue_group,
-  pub_id,
-  publisher_name,
-  sum(coalesce(gross_revenue_US,0)) as gross_revenue_US,
-  sum(coalesce(gross_revenue_ROW,0)) as gross_revenue_ROW,
-  sum(coalesce(Cogs_US,0)) as Cogs_US,
-  sum(coalesce(Cogs_ROW,0)) as Cogs_ROW,
-  sum(coalesce(pub_platform_fee_US,0)) as pub_platform_fee_US,
-  sum(coalesce(pub_platform_fee_ROW,0)) as pub_platform_fee_ROW,
-  sum(coalesce(Barter_Rebate_US,0)) as Barter_Rebate_US,
-  sum(coalesce(Barter_Rebate_ROW,0)) as Barter_Rebate_ROW,
+       operations_owner_id,
+       operations_owner,
+       commission_group,
+       revenue_group,
+       pub_id,
+       publisher_name,
+       sum(coalesce(gross_revenue_US,0)) as gross_revenue_US,
+       sum(coalesce(gross_revenue_ROW,0)) as gross_revenue_ROW,
+       sum(coalesce(Cogs_US,0)) as Cogs_US,
+       sum(coalesce(Cogs_ROW,0)) as Cogs_ROW,
+       sum(coalesce(pub_platform_fee_US,0)) as pub_platform_fee_US,
+       sum(coalesce(pub_platform_fee_ROW,0)) as pub_platform_fee_ROW,
+       sum(coalesce(Barter_Rebate_US,0)) as Barter_Rebate_US,
+       sum(coalesce(Barter_Rebate_ROW,0)) as Barter_Rebate_ROW,
+       sum(coalesce(Platform_Cost_US,0)) as Platform_Cost_US,
+       sum(coalesce(Platform_Cost_ROW,0)) as Platform_Cost_ROW,
+       sum(coalesce(MM_US_NC_Rebate,0)) + sum(coalesce(MM_US_Rebate,0)) as MM_Rebate_US,
+       sum(coalesce(MM_ROW_NC_Rebate,0)) + sum(coalesce(MM_ROW_Rebate,0)) as MM_Rebate_ROW,
+       sum(coalesce(DSP_Platform_Fee_US,0)) as DSP_Platform_Fee_US,
+       sum(coalesce(DSP_Platform_Fee_ROW,0)) as DSP_Platform_Fee_ROW,
 
-  case when revenue_group = 'Intl' then sum(coalesce(gross_revenue_US,0)) + sum(coalesce(gross_revenue_ROW,0))
-    else sum(coalesce(gross_revenue_US,0)) end as Final_Gross_revenue,
 
-  case when revenue_group = 'Intl' then sum(coalesce(Cogs_US,0)) + sum(coalesce(Cogs_ROW,0))
-    else sum(coalesce(Cogs_US,0)) end as Final_Cogs,
 
-  case when revenue_group = 'Intl' then sum(coalesce(pub_platform_fee_US,0)) + sum(coalesce(pub_platform_fee_ROW,0))
-    else sum(coalesce(pub_platform_fee_US,0)) end as Final_Pub_Platform_Fee,
+       case when revenue_group = 'Intl' then sum(coalesce(gross_revenue_US,0)) + sum(coalesce(gross_revenue_ROW,0))
+              else sum(coalesce(gross_revenue_US,0)) end as Final_Gross_revenue,
 
-  case when revenue_group = 'Intl' then sum(coalesce(Barter_Rebate_US,0)) + sum(coalesce(Barter_Rebate_ROW,0))
-    else sum(coalesce(Barter_Rebate_US,0)) end as Final_Barter_Rebate,
+       case when revenue_group = 'Intl' then sum(coalesce(Cogs_US,0)) + sum(coalesce(Cogs_ROW,0))
+              else sum(coalesce(Cogs_US,0)) end as Final_Cogs,
 
-  case when revenue_group = 'Intl' then (sum(coalesce(gross_revenue_US,0)) + sum(coalesce(gross_revenue_ROW,0)) + sum(coalesce(pub_platform_fee_US,0)) + sum(coalesce(pub_platform_fee_ROW,0)) + sum(coalesce(Barter_Rebate_US,0)) + sum(coalesce(Barter_Rebate_ROW,0)))  - (sum(coalesce(Cogs_US,0)) + sum(coalesce(Cogs_ROW,0)))
-    Else (sum(coalesce(gross_revenue_US,0)) + sum(coalesce(pub_platform_fee_US,0)) + sum(coalesce(Barter_Rebate_US,0)) - sum(coalesce(Cogs_US,0))) end as Final_Net_Revenue
+       case when revenue_group = 'Intl' then sum(coalesce(pub_platform_fee_US,0)) + sum(coalesce(pub_platform_fee_ROW,0))
+              else sum(coalesce(pub_platform_fee_US,0)) end as Final_Pub_Platform_Fee,
+
+       case when revenue_group = 'Intl' then sum(coalesce(Barter_Rebate_US,0)) + sum(coalesce(Barter_Rebate_ROW,0))
+              else sum(coalesce(Barter_Rebate_US,0)) end as Final_Barter_Rebate,
+
+       case when revenue_group = 'Intl' then sum(coalesce(Platform_Cost_US,0)) + sum(coalesce(Platform_Cost_ROW,0))
+              else sum(coalesce(Platform_Cost_US,0)) end as Final_Platform_Cost,
+
+       case when revenue_group = 'Intl' then sum(coalesce(MM_US_NC_Rebate,0)) + sum(coalesce(MM_US_Rebate,0)) + sum(coalesce(MM_ROW_NC_Rebate,0)) + sum(coalesce(MM_ROW_Rebate,0))
+              else sum(coalesce(MM_US_NC_Rebate,0)) + sum(coalesce(MM_US_Rebate,0)) end as Final_MM_Rebate,
+
+       case when revenue_group = 'Intl' then sum(coalesce(DSP_Platform_Fee_US,0)) + sum(coalesce(DSP_Platform_Fee_ROW,0))
+              else sum(coalesce(DSP_Platform_Fee_US,0)) end as Final_DSP_Platform_Fee,
+
+       case when revenue_group = 'Intl' then (sum(coalesce(gross_revenue_US,0)) + sum(coalesce(gross_revenue_ROW,0))
+                                                                           + sum(coalesce(pub_platform_fee_US,0)) + sum(coalesce(pub_platform_fee_ROW,0))
+                                                                           + sum(coalesce(Barter_Rebate_US,0)) + sum(coalesce(Barter_Rebate_ROW,0))
+                                                                           + sum(coalesce(Platform_Cost_US,0)) + sum(coalesce(Platform_Cost_ROW,0))
+                                                                           + sum(coalesce(MM_US_NC_Rebate,0)) + sum(coalesce(MM_US_Rebate,0)) + sum(coalesce(MM_ROW_NC_Rebate,0)) + sum(coalesce(MM_ROW_Rebate,0))
+                                                                           + sum(coalesce(DSP_Platform_Fee_US,0)) + sum(coalesce(DSP_Platform_Fee_ROW,0))
+                                                                           )      - (sum(coalesce(Cogs_US,0)) + sum(coalesce(Cogs_ROW,0)))
+              Else (sum(coalesce(gross_revenue_US,0))
+                           + sum(coalesce(pub_platform_fee_US,0))
+                           + sum(coalesce(Barter_Rebate_US,0))
+                           + sum(coalesce(Platform_Cost_US,0))
+                           + sum(coalesce(MM_US_NC_Rebate,0)) + sum(coalesce(MM_US_Rebate,0))
+                           + sum(coalesce(DSP_Platform_Fee_US,0))
+                           ) - sum(coalesce(Cogs_US,0)) end as Final_Net_Revenue
 From Base_Data
 Group by 1, 2, 3, 4, 5, 6, 7),
+
 
 ad_data as (
 Select Quarter_Start as Quarter_Start,
@@ -98,6 +210,9 @@ Select Quarter_Start as Quarter_Start,
   sum(Final_Cogs) as Cogs,
   sum(Final_Pub_Platform_Fee) as Pub_Platform_Fee,
   sum(Final_Barter_Rebate) as Barter_Rebate,
+  sum(Final_Platform_Cost) as Platform_Cost,
+  sum(Final_MM_Rebate) as MM_Rebate,
+  sum(Final_DSP_Platform_Fee) as DSP_Platform_Cost,
   sum(Final_Net_Revenue) as Net_Revenue
 From agg_data
 Group by 1, 2, 3),

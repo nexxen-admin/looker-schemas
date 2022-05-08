@@ -3,6 +3,7 @@ view: phase_2_ak {
     sql: Select event_month::date as "Event Month",
         dsp_ID as "DSP ID",
         ssp_id as "SSP ID",
+        Pub_ID as "Pub ID",
         buyer_id as "Agency ID",
         advertiser_id as "Brand ID",
         buying_channel as "Demand Type",
@@ -41,6 +42,12 @@ view: phase_2_ak {
     type: string
     label: "SSP ID"
     sql: ${TABLE}."SSP ID" ;;
+  }
+
+  dimension: pub_id {
+    type: string
+    label: "Pub ID"
+    sql: ${TABLE}."Pub ID" ;;
   }
 
   dimension: agency_id {

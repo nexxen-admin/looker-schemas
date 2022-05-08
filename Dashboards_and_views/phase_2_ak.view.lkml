@@ -134,6 +134,7 @@ view: phase_2_ak {
       event_month,
       dsp_id,
       ssp_id,
+      pub_id,
       agency_id,
       brand_id,
       demand_type,

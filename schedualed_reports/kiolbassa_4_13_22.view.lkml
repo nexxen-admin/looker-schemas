@@ -121,10 +121,12 @@ ORDER BY 1
       creative_id,
       placement_name,
       creative_name,
+      device_type,
       impressions,
       video_starts,
       clicks,
       completions,
+      conversions,
       spend
     ]
   }

@@ -9,19 +9,22 @@ view: moe_s_southwest_grill_4_13_22 {
         CASE WHEN creative_id = 8506326 THEN 'Moes_15_SpicyChicken'
            WHEN creative_id = 8506336 THEN ' Moes_30_Brand'
            ELSE 'Catering_30_Approved_' END AS "Creative Name",
+        st.screen_type_name as "Device Type",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
+        SUM(conversions) as "Conversions",
         (SUM(impressions)/1000) * 22.50 as "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
+  left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
 WHERE date >= '2022-04-04'
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
   and flight_id = 4277936
     AND (impressions > 0 or completions > 0 or clicks > 0)
-GROUP BY 1,2,3,4,5,6
+GROUP BY 1,2,3,4,5,6,7
 ORDER BY 1
  ;;
   }
@@ -68,6 +71,12 @@ ORDER BY 1
     sql: ${TABLE}."Creative Name" ;;
   }
 
+  dimension: device_type {
+    type: string
+    label: "Device Type"
+    sql: ${TABLE}."Device Type" ;;
+  }
+
   dimension: impressions {
     type: number
     label: "Impressions"
@@ -92,6 +101,12 @@ ORDER BY 1
     sql: ${TABLE}.Completions ;;
   }
 
+  dimension: conversions {
+    type: number
+    label: "Conversions"
+    sql: ${TABLE}.Conversions ;;
+  }
+
   dimension: spend {
     type: number
     value_format: "#,##0.00"
@@ -107,10 +122,12 @@ ORDER BY 1
       creative_id,
       placement_name,
       creative_name,
+      device_type,
       impressions,
       video_starts,
       clicks,
       completions,
+      conversions,
       spend
     ]
   }

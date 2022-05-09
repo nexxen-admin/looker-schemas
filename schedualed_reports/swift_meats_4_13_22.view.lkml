@@ -5,19 +5,9 @@ view: swift_meats_4_13_22 {
         TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
         add2.flight_id as "Flight ID",
         creative_id as "Creative ID",
-        CASE WHEN creative_id IN (8455436,
-                  8455446,
-                  8470706,
-                  8455436,
-                  8455446,
-                  8470706,
-                  8481136,
-                  8455446,
-                  8487136,
-                  8487146,
-                  8487166,
-                  8487136,
-                  8487146) THEN 'CTV + BT'
+        CASE WHEN creative_id IN (8455436,8455446,8470706,8455436,
+                            8455446,8470706,8481136,8455446,
+                            8487136,8487146,8487166, 8487136,8487146) THEN 'CTV + BT'
                             ELSE 'All Screen Video Added Value' END AS "Placement Name",
         CASE WHEN creative_id = 8455436 THEN 'SWIFT_Anthem2021_15s_1080p'
            WHEN creative_id = 8455446 THEN '22-SWIFT-0008_Anthem-Resized_30s_1080p'
@@ -45,10 +35,12 @@ view: swift_meats_4_13_22 {
            WHEN creative_id = 8487206 THEN '22-SWIFT-0008_Anthem-Resized_30s_1080p'
            WHEN creative_id = 8487186 THEN 'SWIFT_Family Future2101_30s_1080p'
            ELSE 'Swift More' END AS "Creative Name",
+        st.screen_type_name as "Device Type",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
+        SUM(conversions) as "Conversions",
         CASE WHEN creative_id IN (8455436,
                     8455446,
                   8470706,
@@ -65,6 +57,7 @@ view: swift_meats_4_13_22 {
                          ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
+  left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
 WHERE date >= '2021-12-27'
   AND  date < current_date()
   AND data_type = 'AD_DATA'
@@ -77,7 +70,7 @@ WHERE date >= '2021-12-27'
               4243846,
               4279706)
     AND (impressions > 0 or completions > 0 or clicks > 0)
-GROUP BY 1,2,3,4,5,6
+GROUP BY 1,2,3,4,5,6,7
 ORDER BY 1
  ;;
   }
@@ -124,6 +117,12 @@ ORDER BY 1
     sql: ${TABLE}."Creative Name" ;;
   }
 
+  dimension: device_type {
+    type: string
+    label: "Device Type"
+    sql: ${TABLE}."Device Type" ;;
+  }
+
   dimension: impressions {
     type: number
     label: "Impressions"
@@ -148,6 +147,12 @@ ORDER BY 1
     sql: ${TABLE}.Completions ;;
   }
 
+  dimension: conversions {
+    type: number
+    label: "Conversions"
+    sql: ${TABLE}.Conversions ;;
+  }
+
   dimension: spend {
     type: number
     value_format: "#,##0.00"
@@ -163,10 +168,12 @@ ORDER BY 1
       creative_id,
       placement_name,
       creative_name,
+      device_type,
       impressions,
       video_starts,
       clicks,
       completions,
+      conversions,
       spend
     ]
   }

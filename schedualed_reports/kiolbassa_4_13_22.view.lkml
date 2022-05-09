@@ -8,19 +8,22 @@ view: kiolbassa_4_13_22 {
         'CTV + BT + GT' as "Placement Name",
         CASE WHEN creative_id = 8501336 THEN 'Kiolbassa_Brand_30_Legacy_1280x720'
            ELSE 'Kiolbassa_Brand_30_KeepItSimple_1280x720' END AS "Creative Name",
+        st.screen_type_name as "Device Type",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
+        SUM(conversions) as "Conversions",
         (SUM(impressions)/1000) * 21.50 as "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
+  left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
 WHERE date >= '2022-03-31'
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
   and flight_id = 4272266
     AND (impressions > 0 or completions > 0 or clicks > 0)
-GROUP BY 1,2,3,4,5,6
+GROUP BY 1,2,3,4,5,6,7
 ORDER BY 1
  ;;
   }
@@ -67,6 +70,12 @@ ORDER BY 1
     sql: ${TABLE}."Creative Name" ;;
   }
 
+  dimension: device_type {
+    type: string
+    label: "Device Type"
+    sql: ${TABLE}."Device Type" ;;
+  }
+
   dimension: impressions {
     type: number
     label: "Impressions"
@@ -89,6 +98,12 @@ ORDER BY 1
     type: number
     label: "Completions"
     sql: ${TABLE}.Completions ;;
+  }
+
+  dimension: conversions {
+    type: number
+    label: "Conversions"
+    sql: ${TABLE}.Conversions ;;
   }
 
   dimension: spend {

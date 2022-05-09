@@ -35,3 +35,7 @@ explore: sam_goal_monitor {
    }
   label: "SAM Performance Monitor"
 }
+
+explore: phase_2_ak {
+  label: "Phase 2 - AK"
+}

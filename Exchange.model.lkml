@@ -256,7 +256,7 @@ explore: extend_Inbound_Exchange {
   }
 
   join: dim_publisher_ssp {
-    type: full_outer
+    type: inner
     sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_daily_agg.pub_ssp_key};;
     relationship: many_to_one
     fields: []
@@ -559,7 +559,7 @@ join: dim_traffic_source {
 }
 
 join: dim_publisher_ssp {
-  type: full_outer
+  type: inner
   sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_daily_agg.pub_ssp_key};;
   relationship: many_to_one
   fields: []

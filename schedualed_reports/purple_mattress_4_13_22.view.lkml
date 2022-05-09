@@ -29,10 +29,12 @@ view: purple_mattress_4_13_22 {
            WHEN creative_id = 8523266 THEN 'CorteMadera_S_S'
            WHEN creative_id = 8523276 THEN 'CorteMadera_All3'
            ELSE '20210916_Sandwich_16x9_HelloPurpleRetail_15s_MallofAmerica_S_S' END AS "Creative Name",
+        st.screen_type_name as "Device Type",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
+        SUM(conversions) as "Conversions",
         CASE WHEN creative_id  IN (8498866, 8498876, 8498886, 8598896,
                       8523656, 8523666, 8523676, 8523686,
                   8523696, 8523706, 8523716, 8523726,
@@ -40,12 +42,13 @@ view: purple_mattress_4_13_22 {
              ELSE (SUM(impressions)/1000) * 23.25 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
+  left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
 WHERE date >= '2022-03-25'
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
   and flight_id IN (4266866, 4277686, 4296406, 4296416, 4295736)
     AND (impressions > 0 or completions > 0 or clicks > 0)
-GROUP BY 1,2,3,4,5,6
+GROUP BY 1,2,3,4,5,6,7
 ORDER BY 1
  ;;
   }
@@ -92,6 +95,12 @@ ORDER BY 1
     sql: ${TABLE}."Creative Name" ;;
   }
 
+  dimension: device_type {
+    type: string
+    label: "Device Type"
+    sql: ${TABLE}."Device Type" ;;
+  }
+
   dimension: impressions {
     type: number
     label: "Impressions"
@@ -116,6 +125,12 @@ ORDER BY 1
     sql: ${TABLE}.Completions ;;
   }
 
+  dimension: conversions {
+    type: number
+    label: "Conversions"
+    sql: ${TABLE}.Conversions ;;
+  }
+
   dimension: spend {
     type: number
     value_format: "#,##0.00"
@@ -131,10 +146,12 @@ ORDER BY 1
       creative_id,
       placement_name,
       creative_name,
+      device_type,
       impressions,
       video_starts,
       clicks,
       completions,
+      conversions,
       spend
     ]
   }

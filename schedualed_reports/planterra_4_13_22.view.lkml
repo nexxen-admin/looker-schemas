@@ -4,31 +4,32 @@ view: planterra_4_13_22 {
     sql: SELECT  date::date as "Date",
         TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
         flight_id as "Flight ID",
-        CASE WHEN flight_id = 4275656 THEN 'CTV + BT + Zip Targeting'
-           WHEN flight_id = 4275676 THEN 'All Screen Video OTT + BT + Zip Targeting'
+        CASE WHEN flight_id IN (4245316, 4275656) THEN 'CTV + BT + Zip Targeting'
+           WHEN flight_id IN (4245436, 4275676) THEN 'All Screen Video OTT + BT + Zip Targeting'
            WHEN flight_id = 4245456 THEN 'CTV Added Value'
            WHEN flight_id = 4245446 THEN 'All Screen Video Added Value'
-           WHEN flight_id IN (4298766, 4306486) THEN 'CTV + Exclusion List + BT + ZIP Targeting (Suburban Sam & Suzy)'
+           WHEN flight_id IN (4298766, 4306486) THEN 'CTV + Exclusion List + BT + Zip Targeting (Suburban Sam & Suzy)'
            WHEN flight_id IN (4298726, 4307346) THEN 'All Screen Video + FEP + BT + Zip Targeting (Suburban Sam & Suzy)'
-           WHEN flight_id = 4298786 THEN ' CTV Exclusion List + BT + Zip Targeting (All in Alicia)'
+           WHEN flight_id = 4298786 THEN 'CTV + Exclusion List + BT + Zip Targeting (All In Alicia)'
              ELSE 'All Screen Video + FEP + BT + Zip Targeting (All In Alicia)' END AS "Placement Name",
         'Ozo_Chicken_3009_16x9' as "Creative Name",
+        st.screen_type_name as "Device Type",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
-        CASE WHEN flight_id IN (4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346) THEN (SUM(impressions)/1000) * 21.50
+        SUM(conversions) as "Conversions",
+        CASE WHEN flight_id IN (4245316, 4245436, 4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346) THEN (SUM(impressions)/1000) * 21.50
              ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
+  left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
 WHERE date >= '2022-03-01'
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
-  and flight_id IN (4275656, 4275676, 4245446, 4245456,
-            4298766, 4298726, 4298786, 4298806,
-            4306486, 4307346)
+  and flight_id IN (4245316, 4245436, 4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346, 4245456, 4245446)
     AND (impressions > 0 or completions > 0 or clicks > 0)
-GROUP BY 1,2,3,4,5
+GROUP BY 1,2,3,4,5,6
 ORDER BY 1
  ;;
   }
@@ -69,6 +70,12 @@ ORDER BY 1
     sql: ${TABLE}."Creative Name" ;;
   }
 
+  dimension: device_type {
+    type: string
+    label: "Device Type"
+    sql: ${TABLE}."Device Type" ;;
+  }
+
   dimension: impressions {
     type: number
     label: "Impressions"
@@ -93,6 +100,12 @@ ORDER BY 1
     sql: ${TABLE}.Completions ;;
   }
 
+  dimension: conversions {
+    type: number
+    label: "Conversions"
+    sql: ${TABLE}.Conversions ;;
+  }
+
   dimension: spend {
     type: number
     value_format: "#,##0.00"
@@ -107,10 +120,12 @@ ORDER BY 1
       flight_id,
       placement_name,
       creative_name,
+      device_type,
       impressions,
       video_starts,
       clicks,
       completions,
+      conversions,
       spend
     ]
   }

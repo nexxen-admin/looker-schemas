@@ -10,10 +10,12 @@ view: jbs_adaptable_4_13_2022 {
            WHEN flight_id  IN(4206736, 4222066, 4244856, 4268026, 4301566) THEN ' ALL Screen Video OTT + BT + Zip Code Targeting'
              ELSE 'CTV Added Value' END AS "Placement Name",
         'ADAPT-T-1902_Retreat_30_Unslated' as "Creative Name",
+        st.screen_type_name as "Device Type",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
+        SUM(conversions) as "Conversions",
         CASE WHEN flight_id IN (4206406,
                     42222036,
                     4244826,
@@ -37,6 +39,7 @@ view: jbs_adaptable_4_13_2022 {
              ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
+  left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
 WHERE date >= '2022-01-07'
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
@@ -61,7 +64,7 @@ WHERE date >= '2022-01-07'
                     4244866,
                     4268036)
     AND (impressions > 0 or completions > 0 or clicks > 0)
-GROUP BY 1,2,3,4,5
+GROUP BY 1,2,3,4,5,6
 ORDER BY 1
  ;;
   }
@@ -102,6 +105,12 @@ ORDER BY 1
     sql: ${TABLE}."Creative Name" ;;
   }
 
+  dimension: device_type {
+    type: string
+    label: "Device Type"
+    sql: ${TABLE}."Device Type" ;;
+  }
+
   dimension: impressions {
     type: number
     label: "Impressions"
@@ -126,6 +135,14 @@ ORDER BY 1
     sql: ${TABLE}.Completions ;;
   }
 
+
+  dimension: conversions {
+    type: number
+    label: "Conversions"
+    sql: ${TABLE}.Conversions ;;
+  }
+
+
   dimension: spend {
     type: number
     value_format: "#,##0.00"
@@ -140,10 +157,12 @@ ORDER BY 1
       flight_id,
       placement_name,
       creative_name,
+      device_type,
       impressions,
       video_starts,
       clicks,
       completions,
+      conversions,
       spend
     ]
   }

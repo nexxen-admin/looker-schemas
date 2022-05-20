@@ -1,6 +1,6 @@
 view: sam_performance_monitor_v2 {
   derived_table: {
-    sql: with barter_fees as (
+    sql:   with barter_fees as (
        Select deal_id_external as rx_deal_id,
        case when deal_description ilike '%Involved_%' then 'Involved'
               when deal_description ilike '%ICON_%' then 'Icon'
@@ -69,63 +69,63 @@ view: sam_performance_monitor_v2 {
       mm.eMM_Rebate_Percent,
       mm.NC_MM_Rebate_Percent,
       pm.Pubmatic_Rebate_Percent,
-      sum(case when country_code = 'US' then revenue else 0 end) as gross_revenue_US,
-      sum(case when (country_code != 'US' or country_code is NULL) then revenue else 0 end) as gross_revenue_ROW,
-      sum(case when country_code = 'US' then cogs else 0 end) as Cogs_US,
-      sum(case when (country_code != 'US' or country_code is NULL) then cogs else 0 end) as Cogs_ROW,
+      sum(case when di.sales_region = 'AMER' then revenue else 0 end) as gross_revenue_US,
+      sum(case when (di.sales_region != 'AMER' or ad.country_code is NULL) then revenue else 0 end) as gross_revenue_ROW,
+      sum(case when di.sales_region = 'AMER' then cogs else 0 end) as Cogs_US,
+      sum(case when (di.sales_region != 'AMER' or ad.country_code is NULL) then cogs else 0 end) as Cogs_ROW,
 
 
-      sum(case when country_code = 'US' then pub_platform_fee else 0 end) as pub_platform_fee_US,
-      sum(case when (country_code != 'US' or country_code is NULL) then pub_platform_fee else 0 end) as pub_platform_fee_ROW,
+      sum(case when di.sales_region = 'AMER' then pub_platform_fee else 0 end) as pub_platform_fee_US,
+      sum(case when (di.sales_region != 'AMER' or ad.country_code is NULL) then pub_platform_fee else 0 end) as pub_platform_fee_ROW,
 
-      sum(case when (country_code = 'US'
+      sum(case when (di.sales_region = 'AMER'
       and dsp.rx_dsp_account_id = '5129'  -- Bidswitch UnrulyX Account
       and ad.dsp_seat IN ('200','306'))
       Then revenue else 0 end) * 0.04 * -1 as Platform_Cost_US,
-      sum(case when ((country_code != 'US' or country_code is NULL)
+      sum(case when ((di.sales_region != 'AMER' or ad.country_code is NULL)
       and dsp.rx_dsp_account_id = '5129'  -- Bidswitch UnrulyX Account
       and ad.dsp_seat IN ('200','306'))
       Then revenue else 0 end) * 0.04 * -1 as Platform_Cost_ROW,
 
 
-      Sum(Case when country_code = 'US'
+      Sum(Case when di.sales_region = 'AMER'
       and da.rx_dsp_account_name ilike '%mediamath%'
       and  (case when ((ad.rx_ssp_name ilike 'rmp%' and ad.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
       or (ad.rx_ssp_name ilike 'rmp%' and ad.pub_id = '100607' and ad.rx_site_id = '205973')) then 1 else 0 end) = 1
       then revenue else 0 end) * NC_MM_Rebate_Percent * -1 as MM_US_NC_Rebate,
 
-      Sum(Case when (country_code != 'US' or country_code is NULL)
+      Sum(Case when (di.sales_region != 'AMER' or ad.country_code is NULL)
       and da.rx_dsp_account_name ilike '%mediamath%'
       and  (case when ((ad.rx_ssp_name ilike 'rmp%' and ad.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
       or (ad.rx_ssp_name ilike 'rmp%' and ad.pub_id = '100607' and ad.rx_site_id = '205973')) then 1 else 0 end) = 1
       then revenue else 0 end) * NC_MM_Rebate_Percent * -1 as MM_ROW_NC_Rebate,
 
-      Sum(Case when country_code = 'US'
+      Sum(Case when di.sales_region = 'AMER'
       and da.rx_dsp_account_name ilike '%mediamath%'
       and  (case when ((ad.rx_ssp_name ilike 'rmp%' and ad.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
       or (ad.rx_ssp_name ilike 'rmp%' and ad.pub_id = '100607' and ad.rx_site_id = '205973')) then 1 else 0 end) = 0
       then revenue else 0 end) * eMM_Rebate_Percent * -1 as MM_US_Rebate,
 
-      Sum(Case when (country_code != 'US' or country_code is NULL)
+      Sum(Case when (di.sales_region != 'AMER' or ad.country_code is NULL)
       and da.rx_dsp_account_name ilike '%mediamath%'
       and  (case when ((ad.rx_ssp_name ilike 'rmp%' and ad.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
       or (ad.rx_ssp_name ilike 'rmp%' and ad.pub_id = '100607' and ad.rx_site_id = '205973')) then 1 else 0 end) = 0
       then revenue else 0 end) * eMM_Rebate_Percent * -1 as MM_ROW_Rebate,
 
 
-      sum(case when country_code = 'US' and dsp.rx_dsp_account_id in ('5135','5172')
+      sum(case when di.sales_region = 'AMER' and dsp.rx_dsp_account_id in ('5135','5172')
       then revenue else 0 end) * pm.Pubmatic_Rebate_Percent * -1 as DSP_Platform_Fee_US,
 
-      sum(case when (country_code != 'US' or country_code is NULL) and dsp.rx_dsp_account_id in ('5135','5172')
+      sum(case when (di.sales_region != 'AMER' or ad.country_code is NULL) and dsp.rx_dsp_account_id in ('5135','5172')
       then revenue else 0 end) * pm.Pubmatic_Rebate_Percent * -1 as DSP_Platform_Fee_ROW,
 
 
 
-      (sum(case when country_code = 'US' then revenue else 0 end) * b.Rebate_Percent) * -1 as Barter_Rebate_US,
-      (sum(case when (country_code != 'US' or country_code is NULL) then revenue else 0 end) * b.Rebate_Percent) * -1 as Barter_Rebate_ROW,
+      (sum(case when di.sales_region = 'AMER' then revenue else 0 end) * b.Rebate_Percent) * -1 as Barter_Rebate_US,
+      (sum(case when (di.sales_region != 'AMER' or ad.country_code is NULL) then revenue else 0 end) * b.Rebate_Percent) * -1 as Barter_Rebate_ROW,
 
-      sum(case when country_code = 'US' then revenue else 0 end) - sum(case when country_code = 'US' then cogs else 0 end) as Net_Revenue_US,
-      sum(case when (country_code != 'US' or country_code is NULL) then revenue else 0 end) - sum(case when (country_code != 'US' or country_code is NULL) then cogs else 0 end) as Net_Revenue_ROW
+      sum(case when di.sales_region = 'AMER' then revenue else 0 end) - sum(case when di.sales_region = 'AMER' then cogs else 0 end) as Net_Revenue_US,
+      sum(case when (di.sales_region != 'AMER' or ad.country_code is NULL) then revenue else 0 end) - sum(case when (di.sales_region != 'AMER' or ad.country_code is NULL) then cogs else 0 end) as Net_Revenue_ROW
 
       From andromeda.ad_data_daily ad
       inner join andromeda.rx_dim_publisher_info pi on pi.publisher_id::varchar = ad.pub_id
@@ -136,7 +136,8 @@ view: sam_performance_monitor_v2 {
       left outer join andromeda.rx_dim_dsp_account da on da.rx_dsp_account_id = dsp.rx_dsp_account_id
       left outer join MM_Rebate_Percents mm on mm.quarter_start = date_trunc('quarter',ad.event_time)::date
       left outer join DSP_Platform_Fee_percent pm on pm.quarter_start = date_trunc('quarter',ad.event_time)::date
-      and ad.event_time < '2022-04-27'  --Final date of Pubmatic Agreement
+      left outer join bi.svc_di_geo_classification di on di.country_code = ad.country_code
+                          and ad.event_time < '2022-04-27'  --Final date of Pubmatic Agreement
       Where event_time >= '2022-01-01'
       and event_time < current_date()
       and ad.rx_ssp_name ilike 'rmp%'

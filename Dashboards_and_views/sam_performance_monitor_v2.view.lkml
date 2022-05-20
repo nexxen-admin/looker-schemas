@@ -56,19 +56,20 @@ view: sam_performance_monitor_v2 {
 
       Base_Data as (
       Select date_trunc('quarter',event_time)::date as Quarter_Start,
-      coalesce(pi.operations_owner_id,'1') as operations_owner_id,
-      coalesce(oo.name,'Unassigned') as operations_owner,
-      Case when pi.operations_owner_id in ('64','45','37','63','60','11')
-      then 'SAM' else 'Long-Tail' end as Commission_Group,
-      Case when (pi.operations_owner_id in ('64','45','37','63','60','11')
-      and ad.pub_id in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519'))
-      Then 'Intl' else 'US-Only' end as Revenue_Group,
+        coalesce(pi.operations_owner_id,'1') as operations_owner_id,
+        coalesce(oo.name,'Unassigned') as operations_owner,
+        Case when pi.operations_owner_id in ('64','45','37','63','60','11')
+         then 'SAM' else 'Long-Tail' end as Commission_Group,
+        Case when (pi.operations_owner_id in ('64','45','37','63','60','11')
+          and ad.pub_id in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519'))
+          Then 'Intl' else 'US-Only' end as Revenue_Group,
       ad.pub_id,
       sp.publisher_name,
       b.Rebate_Percent,
       mm.eMM_Rebate_Percent,
       mm.NC_MM_Rebate_Percent,
       pm.Pubmatic_Rebate_Percent,
+
       sum(case when di.sales_region = 'AMER' then revenue else 0 end) as gross_revenue_US,
       sum(case when (di.sales_region != 'AMER' or ad.country_code is NULL) then revenue else 0 end) as gross_revenue_ROW,
       sum(case when di.sales_region = 'AMER' then cogs else 0 end) as Cogs_US,
@@ -79,13 +80,13 @@ view: sam_performance_monitor_v2 {
       sum(case when (di.sales_region != 'AMER' or ad.country_code is NULL) then pub_platform_fee else 0 end) as pub_platform_fee_ROW,
 
       sum(case when (di.sales_region = 'AMER'
-      and dsp.rx_dsp_account_id = '5129'  -- Bidswitch UnrulyX Account
-      and ad.dsp_seat IN ('200','306'))
-      Then revenue else 0 end) * 0.04 * -1 as Platform_Cost_US,
+          and dsp.rx_dsp_account_id = '5129'  -- Bidswitch UnrulyX Account
+          and ad.dsp_seat IN ('200','306'))
+        Then revenue else 0 end) * 0.04 * -1 as Platform_Cost_US,
       sum(case when ((di.sales_region != 'AMER' or ad.country_code is NULL)
-      and dsp.rx_dsp_account_id = '5129'  -- Bidswitch UnrulyX Account
-      and ad.dsp_seat IN ('200','306'))
-      Then revenue else 0 end) * 0.04 * -1 as Platform_Cost_ROW,
+          and dsp.rx_dsp_account_id = '5129'  -- Bidswitch UnrulyX Account
+          and ad.dsp_seat IN ('200','306'))
+        Then revenue else 0 end) * 0.04 * -1 as Platform_Cost_ROW,
 
 
       Sum(Case when di.sales_region = 'AMER'
@@ -136,8 +137,9 @@ view: sam_performance_monitor_v2 {
       left outer join andromeda.rx_dim_dsp_account da on da.rx_dsp_account_id = dsp.rx_dsp_account_id
       left outer join MM_Rebate_Percents mm on mm.quarter_start = date_trunc('quarter',ad.event_time)::date
       left outer join DSP_Platform_Fee_percent pm on pm.quarter_start = date_trunc('quarter',ad.event_time)::date
+                and ad.event_time < '2022-04-27'  --Final date of Pubmatic Agreement
       left outer join bi.svc_di_geo_classification di on di.country_code = ad.country_code
-                          and ad.event_time < '2022-04-27'  --Final date of Pubmatic Agreement
+
       Where event_time >= '2022-01-01'
       and event_time < current_date()
       and ad.rx_ssp_name ilike 'rmp%'

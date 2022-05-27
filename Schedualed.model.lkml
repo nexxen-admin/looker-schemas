@@ -57,6 +57,11 @@ explore: swift_meats_4_13_22 {
   label: "Swift Meats"
 }
 
+explore: just_bare_chicken_5_27_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Just Bare Chicken"
+}
+
 explore: mattress_firm_4_13_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Mattress Firm"

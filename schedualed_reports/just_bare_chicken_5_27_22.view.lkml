@@ -23,7 +23,8 @@ WHERE date >= '2022-05-12'
   and flight_id IN (4320336, 4320346)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6
-ORDER BY 1
+ORDER BY 1 DESC
+
  ;;
   }
 

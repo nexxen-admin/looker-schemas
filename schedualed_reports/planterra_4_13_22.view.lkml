@@ -8,8 +8,8 @@ view: planterra_4_13_22 {
            WHEN flight_id IN (4245436, 4275676) THEN 'All Screen Video OTT + BT + Zip Targeting'
            WHEN flight_id = 4245456 THEN 'CTV Added Value'
            WHEN flight_id = 4245446 THEN 'All Screen Video Added Value'
-           WHEN flight_id IN (4298766, 4306486) THEN 'CTV + Exclusion List + BT + Zip Targeting (Suburban Sam & Suzy)'
-           WHEN flight_id IN (4298726, 4307346) THEN 'All Screen Video + FEP + BT + Zip Targeting (Suburban Sam & Suzy)'
+           WHEN flight_id IN (4298766, 4306486, 4334336) THEN 'CTV + Exclusion List + BT + Zip Targeting (Suburban Sam & Suzy)'
+           WHEN flight_id IN (4298726, 4307346, 4334346) THEN 'All Screen Video + FEP + BT + Zip Targeting (Suburban Sam & Suzy)'
            WHEN flight_id = 4298786 THEN 'CTV + Exclusion List + BT + Zip Targeting (All In Alicia)'
              ELSE 'All Screen Video + FEP + BT + Zip Targeting (All In Alicia)' END AS "Placement Name",
         'Ozo_Chicken_3009_16x9' as "Creative Name",
@@ -19,7 +19,7 @@ view: planterra_4_13_22 {
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
         SUM(conversions) as "Conversions",
-        CASE WHEN flight_id IN (4245316, 4245436, 4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346) THEN (SUM(impressions)/1000) * 21.50
+        CASE WHEN flight_id IN (4245316, 4245436, 4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346, 4334336, 4334346) THEN (SUM(impressions)/1000) * 21.50
              ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
@@ -27,7 +27,7 @@ FROM dwh.ad_data_daily add2
 WHERE date >= '2022-03-01'
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
-  and flight_id IN (4245316, 4245436, 4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346, 4245456, 4245446)
+  and flight_id IN (4245316, 4245436, 4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346, 4245456, 4245446, 4334336, 4334346)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6
 ORDER BY 1

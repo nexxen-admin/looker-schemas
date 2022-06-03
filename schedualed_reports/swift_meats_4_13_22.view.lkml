@@ -9,6 +9,7 @@ view: swift_meats_4_13_22 {
                             ELSE 'All Screen Video Added Value' END AS "Placement Name",
         CASE WHEN creative_id IN (8455446, 8487166, 8455476, 8487206) THEN '22-SWIFT-0008_Anthem-Resized_30s_1080p'
            WHEN creative_id IN (8481136, 8487146, 8481146, 8487196) THEN 'Swift More'
+           WHEN creative_id IN (8552536, 8552546) THEN 'SWIF2204H'
            WHEN creative_id IN (8455436, 8455456) THEN 'SWIFT_Anthem2021_15s_1080p'
              ELSE 'SWIFT_Family Future2101_30s_1080p' END AS "Creative Name",
         st.screen_type_name as "Device Type",
@@ -25,10 +26,19 @@ FROM dwh.ad_data_daily add2
 WHERE date >= '2021-12-27'
   AND  date < current_date()
   AND data_type = 'AD_DATA'
-  and add2.flight_id IN (4205796, 4226106, 4243836, 4279686, 4316636, 4205826, 4226126, 4243846, 4279706, 4316646)
+  and add2.flight_id IN (4205796,
+              4226106,
+              4243836,
+              4279686,
+              4205826,
+              4226126,
+              4243846,
+              4279706,
+              4316636,
+              4316646)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6,7
-ORDER BY 1
+ORDER BY 1 DESC
  ;;
   }
 

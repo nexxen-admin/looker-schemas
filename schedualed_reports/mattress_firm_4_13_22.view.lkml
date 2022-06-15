@@ -5,7 +5,7 @@ view: mattress_firm_4_13_22 {
         TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
         flight_id as "Flight ID",
         creative_id as "Creative ID",
-        CASE WHEN creative_id IN (8469956, 8449186, 8453386, 8470686, 8481696, 8481716, 8495996, 8541916, 8540636, 8541906, 8551316) THEN 'CTV + BT + GT' ELSE 'CTV Added Value' END AS "Placement Name",
+        CASE WHEN flight_id IN (4335006, 4306516, 4272956, 4244776, 4186096) THEN 'CTV + BT + GT' ELSE 'CTV Added Value' END AS "Placement Name",
         CASE WHEN creative_id IN (8541916, 8540636) THEN 'Memorial Day Tempurpedic'
            WHEN creative_id = 8453386 THEN 'New Bed New You Sale (MFWK02NBY2022)'
            WHEN creative_id = 8470686 THEN 'Presidents Day Sale'
@@ -13,8 +13,9 @@ view: mattress_firm_4_13_22 {
            WHEN creative_id = 8481696 THEN 'Shop Local for 25 Years'
            WHEN creative_id = 8495996 THEN 'Spring Savings Sale'
            WHEN creative_id = 8481716 THEN 'TempurPedcSmartBase'
-           WHEN creative_id = 8541906 THEN 'Week 20 Memorial Day Sale'
+           WHEN creative_id IN(8541906, 8541906) THEN 'Week 20 Memorial Day Sale'
            WHEN creative_id = 8551316 THEN 'Week 22 Memorial Day Doorbusters'
+           When creative_id = 8553226 THEN 'Week 23 Memorial Day Last Days to Save'
              ELSE 'Year End Closeout Sale (WK01SAE15YECLS22)' END AS "Creative Name",
         st.screen_type_name as "Device Type",
         SUM(impressions) as "Impressions",
@@ -22,15 +23,15 @@ view: mattress_firm_4_13_22 {
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
         SUM(conversions) as "Conversions",
-        CASE WHEN flight_id IN (4186096, 4244776, 4272956, 4306516) THEN (SUM(impressions)/1000) * 22.50 ELSE 0 END AS "Spend"
+        CASE WHEN flight_id IN (4186096, 4244776, 4272956, 4306516, 4335006) THEN (SUM(impressions)/1000) * 22.50 ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
   left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
-WHERE date >= '2021-12-27'
+WHERE date >= CURRENT_DATE()-7
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
   and flight_id IN (4186096, 4244776, 4272956, 4306516,
-          4186106, 4244786, 4272966, 4306526)
+          4186106, 4244786, 4272966, 4306526, 4335006, 4335046)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6,7
 ORDER BY 1

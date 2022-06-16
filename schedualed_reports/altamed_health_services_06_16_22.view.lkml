@@ -58,7 +58,7 @@ view: altamed_health_services_06_16_22 {
 
   dimension: date {
     type: date
-    label: "Date"
+    label: "Day"
     sql: ${TABLE}."Date" ;;
     html: {{ rendered_value | date: "%m-%d-%Y" }} ;;
   }

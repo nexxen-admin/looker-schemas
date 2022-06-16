@@ -44,6 +44,14 @@ explore: sam_performance_monitor_v2 {
   label: "SAM Performance Monitor V2"
 }
 
+explore: sam_lt_pub_metrics {
+  access_filter: {
+    field: sam_lt_pub_metrics.operations_owner
+    user_attribute: allowed_users
+  }
+  label: "SAM + LT Publisher Metrics"
+}
+
 explore: phase_2_ak {
   label: "Phase 2 - AK"
 }

@@ -32,7 +32,7 @@ view: altamed_health_services_06_16_22 {
       (SUM(impressions)/1000) * 4 as "Spend"
       FROM dwh.tp_amobee_daily_report tadr
       WHERE amobee_flight_no IN ('F-280037', 'F-280038', 'F-280039', 'F-280040', 'F-280041', 'F-280042', 'F-280043', 'F-280069')
-      --AND event_time >= '2022-04-18'
+      AND event_time >= '2022-04-18'
       AND event_time < CURRENT_DATE()
       AND impressions > 0
       GROUP BY 1,2,3

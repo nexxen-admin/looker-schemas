@@ -101,7 +101,7 @@ view: altamed_health_services_06_16_22 {
 
   dimension: spend {
     type: number
-    value_format: "#,##0.00"
+    value_format: "$#.00;($#.00)"
     label: "Spend"
     sql: ${TABLE}.Spend ;;
   }

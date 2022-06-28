@@ -45,7 +45,7 @@ view: woman_thou_art_loosed_06_28_22 {
 
   dimension: campaign_name {
     type: string
-    label: "Campaign Name"
+    label: "Placement Name"
     sql: ${TABLE}."Campaign Name" ;;
   }
 

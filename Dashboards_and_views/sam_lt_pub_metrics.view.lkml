@@ -90,19 +90,19 @@ Select date_trunc('quarter',date_key)::date as Quarter_Start,
      sum((ssp.platform_fee_spend / 100) * agg.sum_of_cogs) as SSP_Platform_Fee_US
 
       From bi_new.fact_ad_daily_agg agg
-        left outer join bi_new.dim_publisher_ssp pssp on pssp.pub_ssp_key = agg.PUB_SSP_Key
-        left outer join bi_new.dim_publisher p on p.pub_key = pssp.PUB_Key
-        left outer join bi_new.dim_ssp ssp on ssp.ssp_key = pssp.SSP_Key
-        left outer join bi_new.dim_employee e on e.employee_key = p.ops_owner_key
-        left outer join bi_new.dim_country c on c.Country_Key = agg.Country_Key
-        left outer join bi_new.adm_svc_DI_Geo_Regions d on lower(d.country_code) = c.Country_Code
-        Left outer join barter_fees b on b.deal_key= agg.Deal_Key
-        left outer join DSP_Platform_Fee_percent pm on pm.quarter_start = date_trunc('quarter',agg.Date_Key)::date
-        left outer join MM_Rebate_Percents mm on mm.quarter_start = date_trunc('quarter',agg.Date_Key)::date
-        left outer join bi_new.Dim_DSP_Seat dds on dds.DSP_Seat_Key = agg.DSP_Seat_Key
-        left outer join bi_new.dim_dsp dsp on dsp.DSP_Key = dds.DSP_Key
-        left outer join bi_new.dim_dsp_account da on da.DSP_Account_Key = dsp.DSP_Account_Key
-        left outer join bi_new.dim_placement pl on pl.Placement_Key = agg.Placement_Key
+         join bi_new.dim_publisher_ssp pssp on pssp.pub_ssp_key = agg.PUB_SSP_Key
+         join bi_new.dim_publisher p on p.pub_key = pssp.PUB_Key
+         join bi_new.dim_ssp ssp on ssp.ssp_key = pssp.SSP_Key
+         join bi_new.dim_employee e on e.employee_key = p.ops_owner_key
+         join bi_new.dim_country c on c.Country_Key = agg.Country_Key
+         join bi_new.adm_svc_DI_Geo_Regions d on lower(d.country_code) = c.Country_Code
+         join barter_fees b on b.deal_key= agg.Deal_Key
+         join DSP_Platform_Fee_percent pm on pm.quarter_start = date_trunc('quarter',agg.Date_Key)::date
+         join MM_Rebate_Percents mm on mm.quarter_start = date_trunc('quarter',agg.Date_Key)::date
+         join bi_new.Dim_DSP_Seat dds on dds.DSP_Seat_Key = agg.DSP_Seat_Key
+         join bi_new.dim_dsp dsp on dsp.DSP_Key = dds.DSP_Key
+         join bi_new.dim_dsp_account da on da.DSP_Account_Key = dsp.DSP_Account_Key
+         join bi_new.dim_placement pl on pl.Placement_Key = agg.Placement_Key
       where agg.date_key >= '2022-01-01'
         and agg.date_key < current_date()
         and d.sales_region = 'AMER'

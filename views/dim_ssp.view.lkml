@@ -49,6 +49,14 @@ view: dim_ssp {
     sql: ${TABLE}.Is_1st_Party ;;
   }
 
+  dimension: Supply_source {
+    label: "Supply Source"
+    type: string
+    sql: case when ${is_1st_party} = 'YES' THEN '1P'
+        ELSE '3P' END;;
+
+  }
+
   dimension: platform_fee_cpm {
     label: "Platform Fee CPM"
     type: number

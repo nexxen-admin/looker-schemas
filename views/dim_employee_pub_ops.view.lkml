@@ -44,9 +44,17 @@ view: v_dim_employee_pub_ops {
   # This dimension will be called "Employee ID" in Explore.
 
   dimension: employee_id {
-    type: number
+  label: "PubOps ID"
+   type: number
     sql: ${TABLE}.Employee_ID ;;
-    hidden: yes
+
+  }
+  dimension: pub_group {
+    label: "Pub Group"
+    type: string
+    sql: case when ${employee_id} in ('64','45','37','63','60','11') then 'SAM'
+          else 'LT' end;;
+
   }
 
   dimension: employee_key {

@@ -1016,6 +1016,16 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_revenue;;
   }
 
+  measure: MediaMath_Revenue {
+    type: sum
+    label: "MediaMath Revenue"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: case when ${deal_key} in ('3900006','4600005') then ${TABLE}.sum_of_revenue
+           else '0' end;;
+
+  }
+
   measure: revenue_test
   {
     type: sum

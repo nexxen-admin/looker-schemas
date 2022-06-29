@@ -48,7 +48,7 @@ view: sam_lt_pub_metrics {
       inner join bi_new.dim_dsp dsp on dsp.dsp_key = ad.DSP_Key
       and dsp.dsp_account_id in ('5135','5172')
       where ad.date_key >= '2022-01-01'
-      and ad.date_key < '2022-04-27'  --Final date of Pubmatic Rebate Agreement
+      and ad.date_key < '2022-07-01'  --Periods in Q2 had 25% fee (see base data line below)
       Group by 1, 2),
 
 Base_Data as (
@@ -104,7 +104,7 @@ Select date_trunc('quarter',date_key)::date as Quarter_Start,
         left outer join bi_new.dim_dsp_account da on da.DSP_Account_Key = dsp.DSP_Account_Key
         left outer join bi_new.dim_placement pl on pl.Placement_Key = agg.Placement_Key
       where agg.date_key >= '2022-01-01'
-        and agg.date_key < '2022-06-28'
+        and agg.date_key < current_date()
         and d.sales_region = 'AMER'
         and (agg.sum_of_revenue > 0 or agg.sum_of_cogs > 0)
       Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12

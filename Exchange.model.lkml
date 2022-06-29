@@ -308,7 +308,7 @@ explore: extend_Inbound_Exchange {
   join: dim_dsp {
     type: inner
     view_label: "DSP"
-    sql_on: ${dim_dsp.dsp_key}=${dim_dsp_flight.dsp_key};;
+    sql_on: ${dim_dsp.dsp_key}=${fact_ad_daily_agg.dsp_key};;
     relationship: many_to_one
   }
   join: dim_dsp_account {

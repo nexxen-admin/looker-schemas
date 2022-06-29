@@ -751,7 +751,7 @@ view: fact_ad_daily_agg {
   dimension: dsp_key {
     type: number
     sql: ${TABLE}.DSP_Key ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: dsp_seat_key {

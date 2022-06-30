@@ -1036,7 +1036,7 @@ view: fact_ad_daily_agg {
 
   measure: MediaMath_Rebate_Percent {
     type: sum
-    label: "MediaMath Revenue"
+    label: "MediaMath_Rebate_Percent"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: case when ${dsp_key} in ('3900006','4600005') then ((${TABLE}.sum_of_revenue-1000000)*0.5)/${TABLE}.sum_of_revenue

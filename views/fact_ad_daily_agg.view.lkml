@@ -1048,7 +1048,7 @@ view: fact_ad_daily_agg {
     label: "NC_MM_Rebate_Percent"
     value_format:"0.00\%"
     group_label: "Daily Measures"
-    sql: case when ${dsp_key} in ('3900006','4600005') then '0.1'
+    sql: case when ${dsp_key} in ('3900006','4600005') then 10/100
       else '0' end;;
   }
 

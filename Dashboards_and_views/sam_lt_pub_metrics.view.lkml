@@ -92,6 +92,7 @@ Select date_trunc('quarter',date_key)::date as Quarter_Start,
       From bi_new.fact_ad_daily_agg agg
          join bi_new.dim_publisher_ssp pssp on pssp.pub_ssp_key = agg.PUB_SSP_Key
          join bi_new.dim_publisher p on p.pub_key = pssp.PUB_Key
+                          and pssp.ssp_name ilike 'rmp%'
          join bi_new.dim_ssp ssp on ssp.ssp_key = pssp.SSP_Key
          join bi_new.dim_employee e on e.employee_key = p.ops_owner_key
          join bi_new.dim_country c on c.Country_Key = agg.Country_Key

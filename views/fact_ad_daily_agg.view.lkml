@@ -1039,14 +1039,14 @@ view: fact_ad_daily_agg {
     label: "MediaMath_Rebate_Percent"
     value_format:"0.00\%"
     group_label: "Daily Measures"
-    sql: case when ${dsp_key} in ('3900006','4600005') then ((${revenue}-1000000)*0.5)/${revenue}
+    sql: case when ${dsp_key} in ('3900006','4600005') then ((${MediaMath_Revenue}-1000000)*0.5)/${MediaMath_Revenue}
       else '0' end;;
   }
 
   measure: NC_MM_Rebate_Percent {
     type: number
-    label: "NC_MM_Rebate_Percent"
-    value_format:"0.00\%"
+    label: "NC MM Rebate Percent"
+    value_format: "#,##0.0"
     group_label: "Daily Measures"
     sql: case when ${dsp_key} in ('3900006','4600005') then 10/100
       else '0' end;;

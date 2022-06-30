@@ -1026,20 +1026,29 @@ view: fact_ad_daily_agg {
   }
 
   measure: MediaMath_Rebate_value {
-    type: sum
+    type: number
     label: "MediaMath Rebate Value"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: case when ${dsp_key} in ('3900006','4600005') then (${TABLE}.sum_of_revenue-1000000)*0.5
+    sql: case when ${dsp_key} in ('3900006','4600005') then ((${revenue})-1000000)*0.5
       else '0' end;;
   }
 
   measure: MediaMath_Rebate_Percent {
-    type: sum
+    type: number
     label: "MediaMath_Rebate_Percent"
-    value_format: "$#,##0.00"
+    value_format:"0.00\%"
     group_label: "Daily Measures"
-    sql: case when ${dsp_key} in ('3900006','4600005') then ((${TABLE}.sum_of_revenue-1000000)*0.5)/${TABLE}.sum_of_revenue
+    sql: case when ${dsp_key} in ('3900006','4600005') then ((${revenue}-1000000)*0.5)/${revenue}
+      else '0' end;;
+  }
+
+  measure: NC_MM_Rebate_Percent {
+    type: number
+    label: "NC_MM_Rebate_Percent"
+    value_format:"0.00\%"
+    group_label: "Daily Measures"
+    sql: case when ${dsp_key} in ('3900006','4600005') then '0.1'
       else '0' end;;
   }
 

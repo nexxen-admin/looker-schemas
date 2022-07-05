@@ -26,6 +26,12 @@ explore: ani_view_data {
   required_access_grants: [can_view_aniview]
 }
 
+explore: v_fact_ad_daily  {
+
+  label: "Ad data daily"
+  required_access_grants: [can_view_pub_come_looker]
+}
+
 explore: publishers_report_monthly_for_finance {
   required_access_grants: [can_view_pub_come_looker]
   label: "publishers report monthly for finance"
@@ -367,6 +373,13 @@ join: dim_country {
     type:  inner
     view_label: "Buying Channel"
     sql_on: ${dim_buying_channel.buying_channel_key}=${fact_ad_daily_agg.buying_channel_key};;
+    relationship: many_to_one
+  }
+
+  join: mm_rebate_percent{
+    type: inner
+    view_label: "MM Reabte Percent"
+    sql_on: ${mm_rebate_percent.date_key}=${dim_date.quarter_number} ;;
     relationship: many_to_one
 
 

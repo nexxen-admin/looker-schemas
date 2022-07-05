@@ -25,10 +25,8 @@ explore: ani_view_data {
   label: "Aniview"
   required_access_grants: [can_view_aniview]
 }
-
-explore: v_fact_ad_daily  {
-
-  label: "Ad data daily"
+explore: impression_r {
+  label: "Impression Raw Data"
   required_access_grants: [can_view_pub_come_looker]
 }
 

@@ -686,32 +686,32 @@ view: impression_r {
 
   }
   measure: weigted_profit  {
-    type: number
+    type: sum
     label: "Impbeacon BidFloor Weighted Profit"
-    sql: case when ${source} = 'impbeacon' then ((${winprice}-${publishercost})/${bidfloorconfig_weight})/10 end;;
+    sql: case when ${source} = 'impbeacon' then ((${TABLE}.winprice-${TABLE}.publishercost)/${TABLE}.bidfloorconfig_weight)/10 end;;
 
   }
 
 
   measure: weigted_profit_comm  {
-    type: number
+    type: sum
     label: "Impbeacon Comm Weighted Profit"
-    sql: case when ${source} = 'impbeacon' then ((${winprice}-${publishercost})/${commissionconfig_weight})/10 end;;
+    sql: case when ${source} = 'impbeacon' then ((${TABLE}.winprice-${TABLE}.publishercost)/${TABLE}.commissionconfig_weight)/10 end;;
 
   }
 
   measure: weigted_revenue  {
-    type: number
+    type: sum
     label: "Impbeacon BidFloor Weighted Revenue"
-    sql: case when ${source} = 'impbeacon' then ((${publishercost})/${bidfloorconfig_weight})/10 end;;
+    sql: case when ${source} = 'impbeacon' then ((${TABLE}.publishercost)/${TABLE}.bidfloorconfig_weight)/10 end;;
 
   }
 
 
   measure: weigted_revenue_comm  {
-    type: number
+    type: sum
     label: "Impbeacon Comm Weighted Revenue"
-    sql: case when ${source} = 'impbeacon' then ((${publishercost})/${commissionconfig_weight})/10 end;;
+    sql: case when ${source} = 'impbeacon' then ((${TABLE}.publishercost)/${TABLE}.commissionconfig_weight)/10 end;;
 
   }
 

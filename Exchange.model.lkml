@@ -30,6 +30,11 @@ explore: impression_r {
   required_access_grants: [can_view_pub_come_looker]
 }
 
+explore: app_temp1{
+  label: "TAPTICA"
+  required_access_grants: [can_view_pub_come_looker]
+}
+
 explore: publishers_report_monthly_for_finance {
   required_access_grants: [can_view_pub_come_looker]
   label: "publishers report monthly for finance"

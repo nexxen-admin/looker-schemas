@@ -36,6 +36,14 @@ explore: sam_goal_monitor {
   label: "SAM Performance Monitor"
 }
 
+explore: sam {
+  access_filter: {
+    field: sam.sam
+    user_attribute: allowed_users
+  }
+  label: "SAM Performance Monitor new"
+}
+
 explore: sam_performance_monitor_v2 {
   access_filter: {
     field: sam_performance_monitor_v2.sam

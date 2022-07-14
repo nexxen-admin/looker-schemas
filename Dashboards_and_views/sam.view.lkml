@@ -12,9 +12,10 @@ view: sam {
     drill_fields: [detail*]
   }
 
+
   dimension: sam_id {
-    primary_key: yes
     type: string
+    label: "SAM ID"
     sql: ${TABLE}.SAM_ID ;;
   }
 
@@ -24,31 +25,41 @@ view: sam {
 
   dimension: active_days_in_quarter {
     type: number
+    label: "Active Days In Quarter"
     sql: ${TABLE}.Active_Days_In_Quarter ;;
   }
 
   dimension: barter_rebate_to_date {
     type: number
+    label: "Barter Rebate to Date"
+    value_format: "$#,##0"
     sql: ${TABLE}.Barter_Rebate_to_Date ;;
   }
 
   dimension: baseline_target {
     type: number
+    label: "Baseline Target"
+    value_format: "$#,##0"
     sql: ${TABLE}.Baseline_Target ;;
   }
 
   dimension: cogs_to_date {
     type: number
+    label: "COGS to Date"
+    value_format: "$#,##0"
     sql: ${TABLE}.COGS_to_Date ;;
   }
 
   dimension: days_in_quarter {
     type: number
+    label: "Days in Quarter"
     sql: ${TABLE}.Days_in_Quarter ;;
   }
 
   dimension: dsp_platform_cost_to_date {
     type: number
+    label: "DSP Platform Cost to Date"
+    value_format: "$#,##0"
     sql: ${TABLE}.DSP_Platform_Cost_to_Date ;;
   }
 
@@ -59,11 +70,15 @@ view: sam {
 
   measure: goal_target {
     type: sum
+    label: "Goal Target"
+    value_format: "$#,##0"
     sql: ${TABLE}.Goal_Target ;;
   }
 
   measure: gross_revenue_to_date {
     type: sum
+    label: "Gross Revenue to Date"
+    value_format: "$#,##0"
     sql: ${TABLE}.Gross_Revenue_to_Date ;;
   }
 
@@ -74,45 +89,61 @@ view: sam {
 
   measure: mm_rebate_to_date {
     type: sum
+    label: "MM Rebate to Date"
+    value_format: "$#,##0"
     sql: ${TABLE}.MM_Rebate_to_Date ;;
   }
 
   measure: net_revenue_to_date {
     type: sum
+    label: "Net Revenue to Date"
+    value_format: "$#,##0"
     sql: ${TABLE}.Net_Revenue_to_Date ;;
   }
 
   measure: platform_cost_to_date {
     type: sum
+    label: "Platform Cost to Date"
+    value_format: "$#,##0"
     sql: ${TABLE}.Platform_Cost_to_Date ;;
   }
 
   measure: pub_platform_fee_to_date {
     type: sum
+    label: "Pub Platform Fee to Date"
+    value_format: "$#,##0"
     sql: ${TABLE}.Pub_Platform_Fee_to_Date ;;
   }
 
   measure: qtd_baseline_target {
     type: sum
+    label: "QTD Baseline Target"
+    value_format: "$#,##0"
     sql: ${TABLE}.QTD_Baseline_Target ;;
   }
 
   measure: qtd_goal_target {
     type: sum
+    label: "QTD Goal Target"
+    value_format: "$#,##0"
     sql: ${TABLE}.QTD_Goal_Target ;;
   }
 
   dimension: qtd_growth_target {
     type: number
+    label: "QTD Growth Target"
+    value_format: "$#,##0"
     sql: ${TABLE}.QTD_Growth_Target ;;
   }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
+
   dimension: quarter_start_date {
     type: date
-    sql: ${TABLE}.Quarter_Start_Date ;;
+    label: "Quarter Start Date"
+    sql:  ${TABLE}.Quarter_Start_Date ;;
   }
 
   dimension: sam {
@@ -122,11 +153,13 @@ view: sam {
 
   dimension: sam_manager {
     type: string
+    label: "SAM Manager"
     sql: ${TABLE}.SAM_Manager ;;
   }
 
   dimension: sam_manager_id {
     type: string
+    label: "SAM Manager ID"
     sql: ${TABLE}.SAM_Manager_ID ;;
   }
 

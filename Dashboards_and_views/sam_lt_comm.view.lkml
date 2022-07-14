@@ -37,7 +37,6 @@ view: sam_lt_comm {
 
   dimension: event_month {
     type: date
-    datatype: date
     sql: ${TABLE}.Event_Month ;;
   }
 

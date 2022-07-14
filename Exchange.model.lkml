@@ -32,7 +32,7 @@ explore: ani_view_data {
 }
 explore: impression_r {
   label: "Impression Raw Data"
-  required_access_grants: [can_view_imp_r]
+ # required_access_grants: [can_view_imp_r]
 }
 
 explore: app_temp1{

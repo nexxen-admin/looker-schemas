@@ -93,7 +93,7 @@ view: impression_r {
 
   dimension: bidfloorconfig_name {
     type: string
-    label: "Bid FloorConfig Method"
+    label: "Bid FloorConfig Name"
     sql: ${TABLE}.bidfloorconfig_name ;;
   }
 

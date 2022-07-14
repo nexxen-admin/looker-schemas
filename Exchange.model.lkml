@@ -15,6 +15,11 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
+access_grant: can_view_imp_r {
+  user_attribute: ds
+  allowed_values: ["Data Scientist"]
+}
+
 
 access_grant: can_view_aniview {
   user_attribute: aniview
@@ -27,7 +32,7 @@ explore: ani_view_data {
 }
 explore: impression_r {
   label: "Impression Raw Data"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_imp_r]
 }
 
 explore: app_temp1{

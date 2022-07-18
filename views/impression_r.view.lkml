@@ -353,17 +353,9 @@ view: impression_r {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: event {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: event {
+    type: date_time
+    label: "Date"
     sql: ${TABLE}.event_time ;;
   }
 
@@ -837,9 +829,18 @@ view: impression_r {
 
   dimension: winprice {
     type: number
+    label: "Win Price"
     sql: ${TABLE}.winprice ;;
-    hidden: yes
+
   }
+
+  dimension: hour {
+    type: number
+    label: "Hour"
+    sql: hour(${TABLE}.event_time) ;;
+
+  }
+
 
   measure: count {
     type: count

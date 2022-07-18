@@ -384,15 +384,6 @@ join: dim_country {
     relationship: many_to_one
   }
 
-  join: mm_rebate_percent{
-    type: inner
-    view_label: "MM Reabte Percent"
-    sql_on: ${mm_rebate_percent.date_key}=${dim_date.quarter_number} ;;
-    relationship: many_to_one
-
-
-  }
-
   join: dim_media_type {
     type: inner
     view_label: "Request Attributes"

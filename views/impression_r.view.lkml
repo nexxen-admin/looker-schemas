@@ -827,8 +827,8 @@ view: impression_r {
     hidden: yes
   }
 
-  dimension: winprice {
-    type: number
+  measure: winprice {
+    type: sum
     label: "Win Price"
     sql: ${TABLE}.winprice ;;
 

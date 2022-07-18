@@ -751,7 +751,7 @@ view: fact_ad_daily_agg {
   dimension: dsp_key {
     type: number
     sql: ${TABLE}.DSP_Key ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: dsp_seat_key {
@@ -1014,6 +1014,46 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_revenue;;
+  }
+
+  measure: MediaMath_Revenue {
+    type: sum
+    label: "MediaMath Revenue"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: case when ${dsp_key} in ('3900006','4600005') then ${TABLE}.sum_of_revenue
+           else '0' end;;
+  }
+
+  measure: MediaMath_Rebate_value {
+    type: number
+    label: "MediaMath Rebate Value"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: case when ${dsp_key} in ('3900006','4600005') then ((${MediaMath_Revenue})-1000000)*0.5
+      else '0' end;;
+  }
+
+  measure: MediaMath_Rebate_Percent {
+    type: number
+    label: "MediaMath_Rebate_Percent"
+    value_format:"0.00\%"
+    group_label: "Daily Measures"
+    sql:  ((${MediaMath_Revenue}-1000000)*0.5)/${MediaMath_Revenue}
+      ;;
+  }
+
+  measure: MM_NC_Rebate {
+    type: number
+    label: "MM NC Rebate"
+    value_format: "#,##0.0"
+    group_label: "Daily Measures"
+    sql: case when dsp_key in ('4900006','4600005','4400008','4900006','4800007','5100008','3900006','5000005') and
+     (case WHEN ((pub_key in ('5200026','5300019','3500026','5100027','3300025','3300025','3000031','4700048') and
+               ssp_key in ('3000003','3400010','3500005','3600004','3800001','3800002','4000002','4000003','4100003','4100004','4500005','5000003','5600006','5600008','434400001'))
+               or (ssp_key in ('3000003','3400010','3500005','3600004','3800001','3800002','4000002','4000003','4100003','4100004','4500005','5000003','5600006','5600008','434400001') and ${TABLE}.Placement_Key
+                 in ('8980315','13780125','16881034','3000164','29381285','42581092','16881035','16881036'))
+                   then 1 else 0 end) =1 then ${revenue} else 0 end) * 0.0335259539604279 * -1;;
   }
 
   measure: revenue_test

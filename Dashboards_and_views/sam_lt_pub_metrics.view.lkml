@@ -1,119 +1,115 @@
 view: sam_lt_pub_metrics {
   derived_table: {
-    sql: With barter_fees as (
-       Select deal_id_external as rx_deal_id,
-       case when deal_description ilike '%Involved_%' then 'Involved'
-              when deal_description ilike '%ICON_%' then 'Icon'
-              when deal_description ilike '%Orion_%' then 'Orion'
-              when deal_description ilike '%Agyle_%' then 'Agyle'
+    sql:       With barter_fees as (
+       Select deal_key as deal_key,
+       case when deal_name ilike '%Involved_%' then 'Involved'
+              when deal_name ilike '%ICON_%' then 'Icon'
+              when deal_name ilike '%Orion_%' then 'Orion'
+              when deal_name ilike '%Agyle_%' then 'Agyle'
               else 'other' end as Barter_Agency,
-       case when deal_description ilike '%Involved_%' then 0.20
-              when deal_description ilike '%ICON_%' then 0.20
-              when deal_description ilike '%Orion_%' then 0.15
-              when deal_description ilike '%Agyle_%' then 0
+       case when deal_name ilike '%Involved_%' then 0.20
+              when deal_name ilike '%ICON_%' then 0.20
+              when deal_name ilike '%Orion_%' then 0.15
+              when deal_name ilike '%Agyle_%' then 0
               else 0 end as Rebate_Percent
-       From andromeda.rx_dim_deal
-       where (deal_description ilike '%Involved_%'
-                     or deal_description ilike '%ICON_%'
-                     or deal_description ilike '%Orion_%'
-                     or deal_description ilike '%Agyle_%')
-              and lower(right(deal_description,6)) = 'incent'),
+       From bi_new.Dim_Deal
+       where (deal_name ilike '%Involved_%'
+                     or deal_name ilike '%ICON_%'
+                     or deal_name ilike '%Orion_%'
+                     or deal_name ilike '%Agyle_%')
+              and lower(right(deal_name,6)) = 'incent'),
 
-      MM_Rebate_Percents as (
+   MM_Rebate_Percents as (
       /* only applies to Q1 2022 */
-      Select date_trunc('quarter',event_time)::date as Quarter_Start,
-      sum(revenue) as MM_Total_Revenue,
-      (sum(revenue) - 1000000) * 0.05 as rebate_value, --5% rebate because it's over 3M in total Q1 Spend
-      ((sum(revenue) - 1000000) * 0.05) / sum(revenue) as eMM_Rebate_Percent,
+      Select date_trunc('quarter',ad.date_key)::date as Quarter_Start,
+      sum(ad.sum_of_revenue) as MM_Total_Revenue,
+      (sum(ad.sum_of_revenue) - 1000000) * 0.05 as rebate_value, --5% rebate because it's over 3M in total Q1 Spend
+      ((sum(ad.sum_of_revenue) - 1000000) * 0.05) / sum(ad.sum_of_revenue) as eMM_Rebate_Percent,
       0.1 as NC_MM_Rebate_Percent
-      From andromeda.ad_data_daily ad
-      inner join andromeda.rx_dim_dsp dsp on dsp.rx_dsp_name = ad.rx_dsp_name
-      inner join andromeda.rx_dim_dsp_account da on da.rx_dsp_account_id = dsp.rx_dsp_account_id
-      and da.rx_dsp_account_name ilike '%mediamath%'
-      Where event_time >= '2022-01-01'
-      and event_time < '2022-04-01'  --Stopped after Q1
-      and revenue > 0
-      Group by 1
-      ),
+      From bi_new.fact_ad_daily_agg ad
+      inner join bi_new.dim_dsp dsp on dsp.dsp_key = ad.DSP_Key
+      inner join bi_new.dim_dsp_account da on da.dsp_account_key = dsp.dsp_account_key
+      and da.dsp_account_name ilike '%mediamath%'
+      Where ad.date_key >= '2022-01-01'
+      and ad.date_key < '2022-04-01'  --Stopped after Q1
+      and ad.sum_of_revenue > 0
+      Group by 1),
 
-      DSP_Platform_Fee_percent as (
-      Select date_trunc('quarter',event_time)::date as Quarter_Start,
+   DSP_Platform_Fee_Percent as (
+      Select date_trunc('quarter',ad.date_key)::date as Quarter_Start,
       925000,  --Value from Ken as Q1 Invoiced Rebate
-      sum(revenue) as Pubmatic_Revenue,
-      case when date_trunc('quarter',event_time)::date < '2022-04-01'
-      then 925000 / sum(revenue)
-      when date_trunc('quarter',event_time)::date < '2022-04-27'
+      sum(ad.sum_of_revenue) as Pubmatic_Revenue,
+      case when date_trunc('quarter',ad.date_key)::date < '2022-04-01'
+      then 925000 / sum(ad.sum_of_revenue)
+      when date_trunc('quarter',ad.date_key)::date < '2022-04-27'
       then '0.25'
       Else 0 end as Pubmatic_Rebate_Percent
-      From andromeda.ad_data_daily ad
-      inner join andromeda.rx_dim_dsp dsp on dsp.rx_dsp_name = ad.rx_dsp_name
-      and dsp.rx_dsp_account_id in ('5135','5172')
-      where event_time >= '2022-01-01'
-      and event_time < '2022-04-27'  --Final date of Pubmatic Rebate Agreement
+      From bi_new.fact_ad_daily_agg ad
+      inner join bi_new.dim_dsp dsp on dsp.dsp_key = ad.DSP_Key
+      and dsp.dsp_account_id in ('5135','5172')
+      where ad.date_key >= '2022-01-01'
+      and ad.date_key < '2022-07-01'  --Periods in Q2 had 25% fee (see base data line below)
       Group by 1, 2),
 
-      Base_Data as (
-      Select date_trunc('quarter',event_time)::date as Quarter_Start,
-      coalesce(pi.operations_owner_id,'1') as operations_owner_id,
-      coalesce(oo.name,'Unassigned') as operations_owner,
-      'Americas-Only' as Revenue_Group,
-      case when pi.operations_owner_id in ('64','45','37','63','60','11') then 'SAM' else 'LT' end as Pub_Group,
-      case when ad.rx_ssp_name ilike 'rmp%' then '1P' else '3P' end as supply_source,
-      Case when ad.rx_ssp_name ilike 'rmp%' then ad.pub_id
-      else ssp.rx_ssp_id end as Supply_ID,
-      Case when ad.rx_ssp_name ilike 'rmp%' then sp.publisher_name
-      else ssp.rx_ssp_name_display end as supply_name,
+Base_Data as (
+Select date_trunc('quarter',date_key)::date as Quarter_Start,
+        coalesce(p.ops_owner_id,'1') as Operations_Owner_ID,
+        coalesce(e.employee_name,'Unassigned') as Operations_Owner,
+        'Americas-Only' as Revenue_Group,
+        case when p.ops_owner_id in ('64','45','37','63','60','11') then 'SAM' else 'LT' end as Pub_Group,
+        case when ssp.ssp_name ilike 'rmp%'then '1P' else '3P' end as supply_source,
+      Case when ssp.ssp_name ilike 'rmp%' then p.pub_id
+        else ssp.ssp_id end as Supply_ID,
+      Case when ssp.ssp_name ilike 'rmp%' then p.pub_name
+        else ssp.ssp_name_display end as supply_name,
       coalesce(b.Rebate_Percent,0) as rebate_percent,
       pm.Pubmatic_Rebate_Percent,
-      NC_MM_Rebate_Percent,
-      eMM_Rebate_Percent,
-      sum(revenue) as gross_revenue_US,
-      sum(cogs) as Cogs_US,
+      mm.NC_MM_Rebate_Percent,
+      mm.eMM_Rebate_Percent,
+      sum(agg.sum_of_revenue) as gross_revenue_US,
+      sum(agg.sum_of_cogs) as Cogs_US,
+      sum(agg.sum_of_pub_platform_fee) as pub_platform_fee_US ,
+      sum(case when (dsp.dsp_account_id = '5129'  -- Bidswitch UnrulyX Account
+          and dds.seat_id IN ('200','306'))
+        Then agg.sum_of_revenue else 0 end) * 0.04 * -1 as Platform_Cost_US,
+    sum(case when (dsp.dsp_account_id in ('5135','5172') and agg.date_key < '2022-04-27') then agg.sum_of_revenue
+          When dsp.dsp_account_id = '5172' and (agg.date_key >= '2022-06-08' and agg.date_key < '2022-07-01') Then agg.sum_of_revenue
+          else 0 end) * pm.Pubmatic_Rebate_Percent * -1 as Pubmatic_Platform_Fee,
+     (sum(agg.sum_of_revenue) * coalesce(b.Rebate_Percent,0)) * -1 as Barter_Rebate_US,
 
-      sum(pub_platform_fee) as pub_platform_fee_US,
+     Sum(Case when da.dsp_account_name ilike '%mediamath%'
+        and (case when ((ssp.ssp_name ilike 'rmp%' and p.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
+                  or (ssp.ssp_name ilike 'rmp%' and p.pub_id = '100607' and pl.placement_id = '205973')) then 1 else 0 end) = 1
+        then agg.sum_of_revenue else 0 end) * NC_MM_Rebate_Percent * -1 as MM_NC_Rebate,
 
-      sum(case when (dsp.rx_dsp_account_id = '5129'  -- Bidswitch UnrulyX Account
-      and ad.dsp_seat IN ('200','306'))
-      Then revenue else 0 end) * 0.04 * -1 as Platform_Cost_US,
+     Sum(Case when da.dsp_account_name ilike '%mediamath%'
+        and  (case when ((ssp.ssp_name ilike 'rmp%' and p.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
+                  or (ssp.ssp_name ilike 'rmp%' and p.pub_id = '100607' and pl.placement_id = '205973')) then 1 else 0 end) = 0
+      then agg.sum_of_revenue else 0 end) * eMM_Rebate_Percent * -1 as MM_Rebate,
 
-      sum(case when (dsp.rx_dsp_account_id in ('5135','5172') and event_time < '2022-04-27') then revenue else 0 end) * pm.Pubmatic_Rebate_Percent * -1 as Pubmatic_Platform_Fee,
+     sum((ssp.platform_fee_spend / 100) * agg.sum_of_cogs) as SSP_Platform_Fee_US
 
-      (sum(revenue) * coalesce(b.Rebate_Percent,0)) * -1 as Barter_Rebate_US,
-
-
-      Sum(Case when da.rx_dsp_account_name ilike '%mediamath%'
-      and (case when ((ad.rx_ssp_name ilike 'rmp%' and ad.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
-      or (ad.rx_ssp_name ilike 'rmp%' and ad.pub_id = '100607' and ad.rx_site_id = '205973')) then 1 else 0 end) = 1
-      then revenue else 0 end) * NC_MM_Rebate_Percent * -1 as MM_NC_Rebate,
-
-      Sum(Case when da.rx_dsp_account_name ilike '%mediamath%'
-      and  (case when ((ad.rx_ssp_name ilike 'rmp%' and ad.pub_id in ('100635','100648','100650','100653','100654','100941','102331'))
-      or (ad.rx_ssp_name ilike 'rmp%' and ad.pub_id = '100607' and ad.rx_site_id = '205973')) then 1 else 0 end) = 0
-      then revenue else 0 end) * eMM_Rebate_Percent * -1 as MM_Rebate,
-
-
-      sum((ssp.platform_fee_spend / 100) * ad.cogs) as SSP_Platform_Fee_US
-
-      From andromeda.ad_data_daily ad
-      inner join bi.svc_di_geo_classification di on di.country_code = ad.country_code
-      left outer join andromeda.rx_dim_publisher_info pi on pi.publisher_id::varchar = ad.pub_id
-      and ad.rx_ssp_name ilike 'rmp%'
-      left outer join andromeda.rx_dim_publisher_operations_owner oo on oo.user_id = pi.operations_owner_id
-      left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id::varchar = ad.pub_id
-      and ad.rx_ssp_name ilike 'rmp%'
-      left outer join andromeda.rx_dim_ssp ssp on ssp.rx_ssp_name = ad.rx_ssp_name
-      Left outer join barter_fees b on b.rx_deal_id = ad.rx_deal_id
-      left outer join andromeda.rx_dim_dsp dsp on dsp.rx_dsp_name = ad.rx_dsp_name
-      left outer join andromeda.rx_dim_dsp_account da on da.rx_dsp_account_id = dsp.rx_dsp_account_id
-      left outer join MM_Rebate_Percents mm on mm.quarter_start = date_trunc('quarter',ad.event_time)::date
-      left outer join DSP_Platform_Fee_percent pm on pm.quarter_start = date_trunc('quarter',ad.event_time)::date
-      and ad.event_time < '2022-04-27'  --Final date of Pubmatic Agreement
-      Where event_time >= '2022-01-01'
-      and event_time < current_date()
-      and di.sales_region = 'AMER'
-      and (ad.revenue > 0 or ad.cogs > 0)
+      From bi_new.fact_ad_daily_agg agg
+         join bi_new.dim_publisher_ssp pssp on pssp.pub_ssp_key = agg.PUB_SSP_Key
+         join bi_new.dim_publisher p on p.pub_key = pssp.PUB_Key
+                          and pssp.ssp_name ilike 'rmp%'
+         join bi_new.dim_ssp ssp on ssp.ssp_key = pssp.SSP_Key
+         join bi_new.dim_employee e on e.employee_key = p.ops_owner_key
+         join bi_new.dim_country c on c.Country_Key = agg.Country_Key
+         join bi_new.adm_svc_DI_Geo_Regions d on lower(d.country_code) = c.Country_Code
+         join barter_fees b on b.deal_key= agg.Deal_Key
+         join DSP_Platform_Fee_percent pm on pm.quarter_start = date_trunc('quarter',agg.Date_Key)::date
+         join MM_Rebate_Percents mm on mm.quarter_start = date_trunc('quarter',agg.Date_Key)::date
+         join bi_new.Dim_DSP_Seat dds on dds.DSP_Seat_Key = agg.DSP_Seat_Key
+         join bi_new.dim_dsp dsp on dsp.DSP_Key = dds.DSP_Key
+         join bi_new.dim_dsp_account da on da.DSP_Account_Key = dsp.DSP_Account_Key
+         join bi_new.dim_placement pl on pl.Placement_Key = agg.Placement_Key
+      where agg.date_key >= '2022-01-01'
+        and agg.date_key < current_date()
+        and d.sales_region = 'AMER'
+        and (agg.sum_of_revenue > 0 or agg.sum_of_cogs > 0)
       Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
-      )
+ )
 
       Select quarter_start,
       operations_owner_id,

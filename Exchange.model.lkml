@@ -15,6 +15,11 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
+access_grant: can_view_imp_r {
+  user_attribute: ds
+  allowed_values: ["Data Scientist"]
+}
+
 
 access_grant: can_view_aniview {
   user_attribute: aniview
@@ -24,6 +29,15 @@ access_grant: can_view_aniview {
 explore: ani_view_data {
   label: "Aniview"
   required_access_grants: [can_view_aniview]
+}
+explore: impression_r {
+  label: "Impression Raw Data"
+ # required_access_grants: [can_view_imp_r]
+}
+
+explore: app_temp1{
+  label: "TAPTICA"
+  required_access_grants: [can_view_pub_come_looker]
 }
 
 explore: publishers_report_monthly_for_finance {
@@ -77,14 +91,14 @@ explore: extend_Inbound_Exchange {
   }
   join: dim_rg_blocked {
     type: full_outer
-    view_label: "Impressions Attributes"
+    view_label: "Impression Attributes"
     sql_on: ${dim_rg_blocked.rg_blocked_key}=${fact_ad_daily_agg.rg_blocked_key} ;;
     relationship: many_to_one
   }
 
   join: dim_rg_blocked_reason {
     type: full_outer
-    view_label: "Impressions Attributes"
+    view_label: "Impression Attributes"
     sql_on: ${dim_rg_blocked_reason.rg_blocked_reason_key}=${fact_ad_daily_agg.rg_blocked_reason_key} ;;
     relationship: many_to_one
   }
@@ -308,7 +322,7 @@ explore: extend_Inbound_Exchange {
   join: dim_dsp {
     type: inner
     view_label: "DSP"
-    sql_on: ${dim_dsp.dsp_key}=${dim_dsp_flight.dsp_key};;
+    sql_on: ${dim_dsp.dsp_key}=${fact_ad_daily_agg.dsp_key};;
     relationship: many_to_one
   }
   join: dim_dsp_account {
@@ -368,8 +382,6 @@ join: dim_country {
     view_label: "Buying Channel"
     sql_on: ${dim_buying_channel.buying_channel_key}=${fact_ad_daily_agg.buying_channel_key};;
     relationship: many_to_one
-
-
   }
 
   join: dim_media_type {
@@ -380,14 +392,14 @@ join: dim_country {
   }
   join: dim_rg_blocked {
     type: full_outer
-    view_label: "Impressions Attributes"
+    view_label: "Impression Attributes"
     sql_on: ${dim_rg_blocked.rg_blocked_key}=${fact_ad_daily_agg.rg_blocked_key} ;;
     relationship: many_to_one
   }
 
   join: dim_rg_blocked_reason {
     type: full_outer
-    view_label: "Impressions Attributes"
+    view_label: "Impression Attributes"
     sql_on: ${dim_rg_blocked_reason.rg_blocked_reason_key}=${fact_ad_daily_agg.rg_blocked_reason_key} ;;
     relationship: many_to_one
   }
@@ -611,7 +623,7 @@ join: dim_flight {
 join: dim_dsp {
   type: inner
   view_label: "DSP"
-  sql_on: ${dim_dsp.dsp_key}=${dim_dsp_flight.dsp_key};;
+  sql_on: ${dim_dsp.dsp_key}=${fact_ad_daily_agg.dsp_key};;
   relationship: many_to_one
 }
 join: dim_dsp_account {
@@ -909,7 +921,7 @@ explore: fact_ad_hourly_agg{
   join: dim_dsp {
     type: inner
     view_label: "DSP"
-    sql_on: ${dim_dsp.dsp_key}=${dim_dsp_flight.dsp_key};;
+    sql_on: ${dim_dsp.dsp_key}=${fact_ad_hourly_agg.dsp_key};;
     relationship: many_to_one
   }
   join: dim_dsp_account {

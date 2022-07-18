@@ -36,6 +36,22 @@ explore: sam_goal_monitor {
   label: "SAM Performance Monitor"
 }
 
+explore: sam {
+  access_filter: {
+    field: sam.sam
+    user_attribute: allowed_users
+  }
+  label: "SAM Performance Monitor new"
+}
+
+explore: sam_lt_comm {
+  access_filter: {
+    field: sam_lt_comm.operations_owner
+    user_attribute: allowed_users
+  }
+  label: "SAM LT Commision"
+}
+
 explore: sam_performance_monitor_v2 {
   access_filter: {
     field: sam_performance_monitor_v2.sam

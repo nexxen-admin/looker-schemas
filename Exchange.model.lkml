@@ -91,14 +91,14 @@ explore: extend_Inbound_Exchange {
   }
   join: dim_rg_blocked {
     type: full_outer
-    view_label: "Impressions Attributes"
+    view_label: "Impression Attributes"
     sql_on: ${dim_rg_blocked.rg_blocked_key}=${fact_ad_daily_agg.rg_blocked_key} ;;
     relationship: many_to_one
   }
 
   join: dim_rg_blocked_reason {
     type: full_outer
-    view_label: "Impressions Attributes"
+    view_label: "Impression Attributes"
     sql_on: ${dim_rg_blocked_reason.rg_blocked_reason_key}=${fact_ad_daily_agg.rg_blocked_reason_key} ;;
     relationship: many_to_one
   }
@@ -392,14 +392,14 @@ join: dim_country {
   }
   join: dim_rg_blocked {
     type: full_outer
-    view_label: "Impressions Attributes"
+    view_label: "Impression Attributes"
     sql_on: ${dim_rg_blocked.rg_blocked_key}=${fact_ad_daily_agg.rg_blocked_key} ;;
     relationship: many_to_one
   }
 
   join: dim_rg_blocked_reason {
     type: full_outer
-    view_label: "Impressions Attributes"
+    view_label: "Impression Attributes"
     sql_on: ${dim_rg_blocked_reason.rg_blocked_reason_key}=${fact_ad_daily_agg.rg_blocked_reason_key} ;;
     relationship: many_to_one
   }

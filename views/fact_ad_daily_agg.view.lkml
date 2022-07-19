@@ -178,6 +178,7 @@ view: fact_ad_daily_agg {
     <ul>
       <li> {{value}} {{request_lastday_change_parameter._value}} </li>
     </ul> ;;
+    hidden: yes
 
   }
   measure: bids_change_parameter {
@@ -731,7 +732,7 @@ view: fact_ad_daily_agg {
   dimension: deal_key {
     type: number
     sql: ${TABLE}.Deal_Key ;;
-    #hidden: yes
+    hidden: yes
 
   }
 
@@ -751,7 +752,7 @@ view: fact_ad_daily_agg {
   dimension: dsp_key {
     type: number
     sql: ${TABLE}.DSP_Key ;;
-    #hidden: yes
+    hidden: yes
   }
 
   dimension: dsp_seat_key {
@@ -1085,6 +1086,13 @@ view: fact_ad_daily_agg {
 
   }
 
+  measure: revenue_lastday_change {
+    type: number
+    value_format: "0.00%"
+    sql: (${Last_day_Revenue}/${Previous_day_Revenue})-1 ;;
+
+  }
+
   measure:  Previous_week_Revenue {
     label: "Revenue Previous week "
     type: sum
@@ -1231,8 +1239,8 @@ view: fact_ad_daily_agg {
   }
   dimension: dsp_bid_price {
     type: number
-    group_label: "Daily Dim"
     sql: ${TABLE}.avg_of_dsp_bid_price ;;
+    hidden: yes
   }
 
   measure: count {

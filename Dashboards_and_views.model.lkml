@@ -37,10 +37,10 @@ explore: sam_goal_monitor {
 }
 
 explore: sam {
-  access_filter: {
-    field: sam.sam
-    user_attribute: allowed_users
-  }
+ # access_filter: {
+  #  field: sam.sam
+  #  user_attribute: allowed_users
+  #}
   label: "SAM Performance Monitor new"
 }
 

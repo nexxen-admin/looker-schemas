@@ -45,12 +45,13 @@ explore: sam {
 }
 
 explore: sam_lt_comm {
-  access_filter: {
-    field: sam_lt_comm.operations_owner
-    user_attribute: allowed_users
-  }
+   access_filter: {
+     field: sam_lt_comm.operations_owner
+     user_attribute: allowed_users
+   }
   label: "SAM LT Commision"
 }
+
 
 explore: sam_performance_monitor_v2 {
   access_filter: {

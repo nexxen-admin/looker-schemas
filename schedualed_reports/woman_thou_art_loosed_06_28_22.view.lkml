@@ -3,6 +3,7 @@ view: woman_thou_art_loosed_06_28_22 {
   derived_table: {
     sql: SELECT date::date as "Date",
            '[c14632] WTAL - OTT' AS "Custom Campaign Name",
+           TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
            c.campaign_name AS "Campaign Name",
            add2.flight_id AS "Placement ID",
            c.flight_number AS "Flight Number",
@@ -17,10 +18,11 @@ view: woman_thou_art_loosed_06_28_22 {
            SUM(impressions)/SUM(placement_reach) AS "Frequency"
       FROM dwh.ad_data_daily add2
         LEFT JOIN dwh.campaign c on add2.flight_id = c.flight_id
+        left outer join dwh.dma dma on dma.dma_code = add2.dma
       WHERE date >= '2022-06-15'
         AND date < CURRENT_DATE()
         AND add2.flight_id IN (4351966, 4351986, 4351996, 4352006, 4352016, 4352056, 4352086, 4352096)
-      GROUP BY 1,2,3,4,5
+      GROUP BY 1,2,3,4,5,6
       ORDER BY 1
        ;;
   }

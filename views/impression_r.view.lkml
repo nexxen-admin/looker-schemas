@@ -363,7 +363,6 @@ view: impression_r {
       quarter,
       year
     ]
-    label: "Date"
     sql: ${TABLE}.event_time ;;
   }
 

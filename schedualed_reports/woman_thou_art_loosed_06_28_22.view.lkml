@@ -39,6 +39,12 @@ view: woman_thou_art_loosed_06_28_22 {
     html: {{ rendered_value | date: "%m-%d-%Y" }} ;;
   }
 
+  dimension: DMA {
+    type: string
+    label: "DMA"
+    sql: ${TABLE}."DMA" ;;
+  }
+
   dimension: custom_campaign_name {
     type: string
     label: "Custom Campaign Name"
@@ -115,6 +121,7 @@ view: woman_thou_art_loosed_06_28_22 {
   set: detail {
     fields: [
       date,
+      DMA,
       custom_campaign_name,
       campaign_name,
       placement_id,

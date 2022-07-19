@@ -1089,6 +1089,7 @@ view: fact_ad_daily_agg {
   measure: revenue_lastday_change {
     type: number
     value_format: "0.00%"
+    group_label: "Time Shifted Measures"
     sql: (${Last_day_Revenue}/${Previous_day_Revenue})-1 ;;
 
   }

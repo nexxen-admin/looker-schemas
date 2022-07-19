@@ -46,6 +46,16 @@ view: app_temp1 {
     sql: ${TABLE}.Blockes ;;
   }
 
+  measure: cpe_revenue {
+    type: sum
+    sql: ${TABLE}.CPE_Revenue ;;
+  }
+
+  measure: cpe_payout {
+    type: sum
+    sql: ${TABLE}.CPE_Payout ;;
+  }
+
   dimension: campaign {
     type: string
     sql: ${TABLE}.campaign ;;

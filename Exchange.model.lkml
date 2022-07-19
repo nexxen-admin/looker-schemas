@@ -19,13 +19,7 @@ access_grant: can_view_imp_r {
   user_attribute: ds
   allowed_values: ["Data Scientist"]
 }
-explore: sam_lt_comm {
-  # access_filter: {
-  #   field: sam_lt_comm.operations_owner
-  #   user_attribute: allowed_users
-  # }
-  label: "SAM LT Commision"
-}
+
 
 
 

@@ -37,11 +37,19 @@ explore: sam_goal_monitor {
 }
 
 explore: sam {
- # access_filter: {
-  #  field: sam.sam
-  #  user_attribute: allowed_users
-  #}
+  access_filter: {
+    field: sam.sam
+    user_attribute: allowed_users
+  }
   label: "SAM Performance Monitor new"
+}
+
+explore: sam_lt_comm {
+   access_filter: {
+     field: sam_lt_comm.operations_owner
+     user_attribute: allowed_users
+   }
+  label: "SAM LT Commision"
 }
 
 

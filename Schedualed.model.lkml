@@ -118,10 +118,7 @@ explore: covered_ca {
   required_access_grants: [can_view_pub_come_looker]
   label: "covered_ca "
 }
-explore: blue_buffalo_weekly_report {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "blue buffalo weekly report"
-}
+
 
 explore: pilgrim_s_pride_report {
   required_access_grants: [can_view_pub_come_looker]

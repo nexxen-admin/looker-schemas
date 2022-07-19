@@ -19,8 +19,16 @@ view: planterra_4_13_22 {
            WHEN flight_id = 4343056 THEN 'All Screen Video + FEP + BT (AIA) + Zip Targeting - BACON'
            WHEN flight_id = 4343096 THEN 'All Screen Video 1% Added Value - BACON'
            WHEN flight_id = 4344706 THEN 'All Screen Video + FEP + BT (AIA) + Zip Targeting'
+           WHEN flight_id = 4361906 THEN 'CTV + Exclusion List + BT + Zip Targeting (All in Alicia)'
+           WHEN flight_id = 4361946 THEN 'All Screen Video + FEP + BT + Zip Targeting (All in Alicia)'
+           WHEN flight_id = 4361896 THEN 'CTV + Exclusion List + BT + Zip Targeting (Suburban Sam & Suzy)'
+           WHEN flight_id = 4361936 THEN 'All Screen Video + FEP + BT + Zip Targeting (Suburban Sam & Suzy)'
+           WHEN flight_id = 4361916 THEN 'CTV + Exclusion List + BT (AIA) + Zip Targeting - BACON'
+           WHEN flight_id = 4361926 THEN 'CTV + Exclusion List + BT (S&S) + Zip Targeting - BACON'
+           WHEN flight_id = 4361966 THEN 'All Screen Video + FEP + BT (S&S) + Zip Targeting - BACON'
+           WHEN flight_id = 4361956 THEN 'All Screen Video + FEP + BT (AIA) + Zip Targeting - BACON'
              ELSE 'All Screen Video + FEP + BT + Zip Targeting (All In Alicia)' END AS "Placement Name",
-        CASE WHEN flight_id IN (4343046, 4343066, 4343086, 4344686, 4343076, 4343056, 4343096, 4344706) THEN 'Ozo_Bacon_3015_16x9'
+        CASE WHEN flight_id IN (4343046, 4343066, 4343086, 4344686, 4343076, 4343056, 4343096, 4344706, 4361916, 4361926, 4361966, 4361956) THEN 'Ozo_Bacon_3015_16x9'
           ELSE 'Ozo_Chicken_3009_16x9' END as "Creative Name",
         st.screen_type_name as "Device Type",
         SUM(impressions) as "Impressions",
@@ -28,7 +36,7 @@ view: planterra_4_13_22 {
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
         SUM(conversions) as "Conversions",
-        CASE WHEN flight_id IN (4245316, 4245436, 4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346, 4334336, 4334346, 4343046, 4343066, 4344686, 4343076, 4343056, 4344706) THEN (SUM(impressions)/1000) * 21.50
+        CASE WHEN flight_id IN (4245316, 4245436, 4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346, 4334336, 4334346, 4343046, 4343066, 4344686, 4343076, 4343056, 4344706, 4361906, 4361946,4361896,4361936,4361916,4361926,4361966,4361956) THEN (SUM(impressions)/1000) * 21.50
              ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
@@ -36,7 +44,7 @@ FROM dwh.ad_data_daily add2
 WHERE date >= CURRENT_DATE()-7
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
-  and flight_id IN (4245316, 4245436, 4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346, 4245456, 4245446, 4334336, 4334346, 4343046, 4343066, 4343086, 4344686, 4343076, 4343056, 4343096, 4344706)
+  and flight_id IN (4245316, 4245436, 4275656, 4275676, 4298766, 4298726, 4298786, 4298806, 4306486, 4307346, 4245456, 4245446, 4334336, 4334346, 4343046, 4343066, 4343086, 4344686, 4343076, 4343056, 4343096, 4344706, 4361906, 4361946,4361896,4361936,4361916,4361926,4361966,4361956)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6
 ORDER BY 1

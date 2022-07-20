@@ -41,7 +41,22 @@ view: mazda_fy157_ntl_as_video {
       Where ad.date >= current_date()-30
         and ad.date < current_date()
         and data_type = 'AD_DATA'
-        and c.campaign_id = '4272906'
+        --and c.campaign_id = '4272906'
+        and c.campaign_id in ('4363916',
+                              '4363946',
+                              '4363986',
+                              '4364046',
+                              '4364096',
+                              '4364186',
+                              '4364296',
+                              '4364426',
+                              '4365596',
+                              '4365676',
+                              '4367356',
+                              '4368726',
+                              '4368966',
+                              '4370636',
+                              '4372146')
         and ad.impressions > 0
       Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
        ;;

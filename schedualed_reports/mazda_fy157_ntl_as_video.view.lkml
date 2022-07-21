@@ -12,11 +12,7 @@ view: mazda_fy157_ntl_as_video {
           else bi.DCM_Desktop_Placement_Name end as DCM_Placement_Name,
         DCM_Package_ID,
         DCM_Package_Name,
-        case when cr.name ilike '%AA-70618%' then 'MAZDA CX-50 DGM 2 FEATURE BUILD & PRICE'
-          when cr.name ilike '%AA-70620%' then 'MAZDA CX-50 DGM 1 FEATURE BUILD & PRICE'
-          when cr.name ilike '%AA-70621%' then 'MAZDA CX-50 DGM 2 FEATURE DISCOVER MORE'
-          when cr.name ilike '%AA-70622%' then 'MAZDA CX-50 DGM 1 FEATURE DISCOVER MORE'
-          else '-' end as creative_name,
+        bi.Creative_Name as creative_name,
         case when line_number = 'L00142933' then 25.50
           when line_number = 'L00142934' then 19
           when line_number = 'L00143242' then 18
@@ -38,7 +34,7 @@ view: mazda_fy157_ntl_as_video {
         left outer join dwh.creative cr on cr.id = ad.creative_id
         left outer join bi.SVC_Mazda_FY157_Mapping bi on bi.flight_id = ad.flight_id
                               and bi.creative_id = ad.creative_id
-      Where ad.date >= current_date()-30
+      Where ad.date >= current_date()-3
         and ad.date < current_date()
         and data_type = 'AD_DATA'
         --and c.campaign_id = '4272906'

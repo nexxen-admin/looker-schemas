@@ -56,6 +56,19 @@ view: app_temp1 {
     sql: ${TABLE}.CPE_Payout ;;
   }
 
+  measure: cpe_events {
+    type: sum
+    sql: ${TABLE}.CPE_Events ;;
+  }
+  measure: cpi_payout {
+    type: sum
+    sql: ${TABLE}.CPI_Payout ;;
+  }
+  measure: cpi_revenue {
+    type: sum
+    sql: ${TABLE}.CPI_Revenue ;;
+  }
+
   dimension: campaign {
     type: string
     sql: ${TABLE}.campaign ;;

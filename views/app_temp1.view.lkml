@@ -62,6 +62,7 @@ view: app_temp1 {
   }
   measure: cpi_payout {
     type: sum
+    value_format: ""
     sql: ${TABLE}.CPI_Payout ;;
   }
   measure: cpi_revenue {

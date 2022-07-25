@@ -41,6 +41,41 @@ view: app_temp1 {
     sql: ${TABLE}.blocked_reason ;;
   }
 
+
+  dimension: offer_name {
+    type: string
+    sql: ${TABLE}.Offer_Name ;;
+  }
+
+  dimension: pub_id {
+    type: string
+    sql: ${TABLE}.Pub_ID ;;
+  }
+
+  dimension: sub_aff {
+    type: string
+    sql: ${TABLE}.Sub_Aff ;;
+  }
+
+  dimension: media_manager_name {
+    type: string
+    sql: ${TABLE}.Media_Manager_Name ;;
+  }
+
+  dimension: adv_name {
+    type: string
+    sql: ${TABLE}.adv_name ;;
+  }
+
+  dimension: CSM_name {
+    type: string
+    sql: ${TABLE}.CSM_name ;;
+  }
+  dimension: Office {
+    type: string
+    sql: ${TABLE}.Office ;;
+  }
+
   measure: blockes {
     type: sum
     sql: ${TABLE}.Blockes ;;
@@ -128,9 +163,9 @@ view: app_temp1 {
     sql: ${TABLE}.install_time ;;
   }
 
-  dimension: media_source {
+  dimension: publisher {
     type: string
-    sql: ${TABLE}.media_source ;;
+    sql: ${TABLE}.publisher ;;
   }
 
   measure: post_attribution {

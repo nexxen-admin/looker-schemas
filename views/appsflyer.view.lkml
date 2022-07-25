@@ -1,8 +1,8 @@
 # The name of this view in Looker is "App Temp1"
-view: app_temp1 {
+view: appsflyer {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_New.app_temp1 ;;
+  sql_table_name: BI_New.appsflyer ;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
 

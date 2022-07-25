@@ -37,7 +37,7 @@ explore: impression_r {
  # required_access_grants: [can_view_imp_r]
 }
 
-explore: app_temp1{
+explore: appsflyer{
   label: "TAPTICA"
   required_access_grants: [can_view_pub_come_looker]
 }

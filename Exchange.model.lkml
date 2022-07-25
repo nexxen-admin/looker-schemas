@@ -372,6 +372,13 @@ join: dim_date {
   relationship: many_to_one
 }
 
+ join: time_shiffted {
+   type: inner
+  view_label: "Measures"
+  sql_on: ${time_shiffted.date_key} = ${fact_ad_daily_agg.date_key_raw} ;;
+  relationship: many_to_one
+ }
+
 join: dim_country {
   type: inner
   view_label: "Geo"

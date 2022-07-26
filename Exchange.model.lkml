@@ -37,7 +37,7 @@ explore: impression_r {
  # required_access_grants: [can_view_imp_r]
 }
 
-explore: app_temp1{
+explore: appsflyer{
   label: "TAPTICA"
   required_access_grants: [can_view_pub_come_looker]
 }
@@ -371,6 +371,13 @@ join: dim_date {
   sql_on: ${dim_date.date_key_raw}=${fact_ad_daily_agg.date_key_raw} ;;
   relationship: many_to_one
 }
+
+ join: time_shiffted {
+   type: inner
+  view_label: "Measures"
+  sql_on: ${time_shiffted.date_key} = ${fact_ad_daily_agg.date_key_raw} ;;
+  relationship: many_to_one
+ }
 
 join: dim_country {
   type: inner

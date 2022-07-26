@@ -1,8 +1,8 @@
 # The name of this view in Looker is "App Temp1"
-view: app_temp1 {
+view: appsflyer {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_New.app_temp1 ;;
+  sql_table_name: BI_New.appsflyer ;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
 
@@ -41,6 +41,41 @@ view: app_temp1 {
     sql: ${TABLE}.blocked_reason ;;
   }
 
+
+  dimension: offer_name {
+    type: string
+    sql: ${TABLE}.Offer_Name ;;
+  }
+
+  dimension: pub_id {
+    type: string
+    sql: ${TABLE}.Pub_ID ;;
+  }
+
+  dimension: sub_aff {
+    type: string
+    sql: ${TABLE}.Sub_Aff ;;
+  }
+
+  dimension: media_manager_name {
+    type: string
+    sql: ${TABLE}.Media_Manager_Name ;;
+  }
+
+  dimension: adv_name {
+    type: string
+    sql: ${TABLE}.adv_name ;;
+  }
+
+  dimension: CSM_name {
+    type: string
+    sql: ${TABLE}.CSM_name ;;
+  }
+  dimension: Office {
+    type: string
+    sql: ${TABLE}.Office ;;
+  }
+
   measure: blockes {
     type: sum
     sql: ${TABLE}.Blockes ;;
@@ -54,6 +89,20 @@ view: app_temp1 {
   measure: cpe_payout {
     type: sum
     sql: ${TABLE}.CPE_Payout ;;
+  }
+
+  measure: cpe_events {
+    type: sum
+    sql: ${TABLE}.CPE_Events ;;
+  }
+  measure: cpi_payout {
+    type: sum
+    value_format: ""
+    sql: ${TABLE}.CPI_Payout ;;
+  }
+  measure: cpi_revenue {
+    type: sum
+    sql: ${TABLE}.CPI_Revenue ;;
   }
 
   dimension: campaign {
@@ -114,9 +163,9 @@ view: app_temp1 {
     sql: ${TABLE}.install_time ;;
   }
 
-  dimension: media_source {
+  dimension: publisher {
     type: string
-    sql: ${TABLE}.media_source ;;
+    sql: ${TABLE}.publisher ;;
   }
 
   measure: post_attribution {

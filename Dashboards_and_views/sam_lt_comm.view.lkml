@@ -101,7 +101,7 @@ view: sam_lt_comm {
 
   measure: pubmatic_platform_fee {
     type: sum
-    label: "Pubmatic Platform Fee QTD"
+    label: "Pubmatic Platform Fee"
     value_format: "$#,##0"
     sql: ${TABLE}.Pubmatic_Platform_Fee ;;
   }

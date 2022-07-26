@@ -10,13 +10,17 @@ view: sam_lt_comm {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Barter Rebate" in Explore.
 
-  dimension: barter_rebate {
-    type: number
+  measure: barter_rebate {
+    type: sum
+    label: "Barter Rebate"
+    value_format: "$#,##0"
     sql: ${TABLE}.Barter_Rebate ;;
   }
 
-  dimension: bidswitch_platform_cost {
-    type: number
+  measure: bidswitch_platform_cost {
+    type: sum
+    label: "Bidswitch Platform Cost"
+    value_format: "$#,##0"
     sql: ${TABLE}.Bidswitch_Platform_Cost ;;
   }
 
@@ -24,18 +28,10 @@ view: sam_lt_comm {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_bidswitch_platform_cost {
+  measure: cogs_amer {
     type: sum
-    sql: ${bidswitch_platform_cost} ;;
-  }
-
-  measure: average_bidswitch_platform_cost {
-    type: average
-    sql: ${bidswitch_platform_cost} ;;
-  }
-
-  dimension: cogs_amer {
-    type: number
+    label: "COGS"
+    value_format: "$#,##0"
     sql: ${TABLE}.cogs_AMER ;;
   }
 
@@ -57,68 +53,87 @@ view: sam_lt_comm {
     sql: ${TABLE}.Event_Month ;;
   }
 
-  dimension: gross_revenue_amer {
-    type: number
+  measure: gross_revenue_amer {
+    type: sum
+    label: "Gross Revenue"
+    value_format: "$#,##0"
     sql: ${TABLE}.gross_revenue_AMER ;;
   }
 
-  dimension: media_math_rebate {
-    type: number
+  measure: media_math_rebate {
+    type: sum
+    label: "MediaMath Rebate"
+    value_format: "$#,##0"
     sql: ${TABLE}.MediaMath_Rebate ;;
   }
 
-  dimension: net_revenue {
-    type: number
+  measure: net_revenue {
+    type: sum
+    label: "Net Revenue"
+    value_format: "$#,##0"
     sql: ${TABLE}.Net_Revenue ;;
   }
 
   dimension: operations_owner {
     type: string
+    label: "Ops Owner"
     sql: ${TABLE}.operations_owner ;;
   }
 
   dimension: operations_owner_id {
     type: string
+    label: "Ops Owner ID"
     sql: ${TABLE}.operations_owner_id ;;
   }
 
   dimension: pub_group {
     type: string
+    label: "Pub Group"
     sql: ${TABLE}.pub_group ;;
   }
 
-  dimension: pub_platform_fee {
-    type: number
+  measure: pub_platform_fee {
+    type: sum
+    label: "Pub Platform Fee"
+    value_format: "$#,##0"
     sql: ${TABLE}.Pub_Platform_Fee ;;
   }
 
-  dimension: pubmatic_platform_fee {
-    type: number
+  measure: pubmatic_platform_fee {
+    type: sum
+    label: "Pubmatic Platform Fee QTD"
+    value_format: "$#,##0"
     sql: ${TABLE}.Pubmatic_Platform_Fee ;;
   }
 
   dimension: revenue_group {
     type: string
+    label: "Revenue Group"
     sql: ${TABLE}.revenue_group ;;
   }
 
-  dimension: ssp_platform_fee {
-    type: number
+  measure: ssp_platform_fee {
+    type: sum
+    label: "SSP Platform Fee"
+    value_format: "$#,##0"
     sql: ${TABLE}.SSP_Platform_Fee ;;
   }
 
   dimension: supply_id {
-    type: string
+    type: number
+    label: "Supply ID"
     sql: ${TABLE}.supply_id ;;
   }
 
   dimension: supply_name {
     type: string
+    label: "Supply Name"
     sql: ${TABLE}.supply_name ;;
   }
 
   dimension: supply_source {
     type: string
+    label: "Supply Source"
     sql: ${TABLE}.supply_source ;;
   }
 

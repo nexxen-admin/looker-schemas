@@ -61,6 +61,7 @@ view: woman_thou_art_loosed_06_28_22 {
     type: number
     label: "Placement ID"
     sql: ${TABLE}."Placement ID" ;;
+    value_format: "0"
   }
 
   dimension: flight_number {
@@ -73,12 +74,14 @@ view: woman_thou_art_loosed_06_28_22 {
     type: number
     label: "Impressions"
     sql: ${TABLE}.Impressions ;;
+    value_format: "0"
   }
 
   dimension: completions {
     type: number
     label: "Completions"
     sql: ${TABLE}.Completions ;;
+    value_format: "0"
   }
 
   dimension: completions_rate {
@@ -110,6 +113,7 @@ view: woman_thou_art_loosed_06_28_22 {
     type: number
     label: "Reach"
     sql: ${TABLE}.Reach ;;
+    value_format: "0"
   }
 
   dimension: frequency {

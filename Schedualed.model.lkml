@@ -79,6 +79,21 @@ explore: just_bare_chicken_5_27_22 {
   label: "Just Bare Chicken"
 }
 
+explore: habush_daily_report_07_26_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Habush"
+}
+
+explore: wisconsin_tourism_board_chicago_07_26_25 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Wisconsin Tourism Board Chicago"
+}
+
+explore: wisconsin_tourism_board_non_chicago_07_26_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Wisconsin Tourism Board Non-Chicago"
+}
+
 explore: mattress_firm_4_13_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Mattress Firm"

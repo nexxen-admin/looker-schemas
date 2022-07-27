@@ -124,10 +124,6 @@ explore: purple_mattress_4_13_22 {
   label: "Purple Mattress"
 }
 
-explore: aep_ohio_weekly_04_22_22 {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "AEP Ohio"
-}
 
 explore: covered_ca {
   required_access_grants: [can_view_pub_come_looker]

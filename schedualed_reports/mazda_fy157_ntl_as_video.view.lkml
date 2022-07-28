@@ -35,7 +35,7 @@ view: mazda_fy157_ntl_as_video {
         left outer join dwh.creative cr on cr.id = ad.creative_id
         left outer join bi.SVC_Mazda_FY157_Mapping bi on bi.flight_id = ad.flight_id
                               and bi.creative_id = ad.creative_id
-      Where ad.date >= '2022-07-01'--current_date()-3
+      Where ad.date >= current_date()-3
         and ad.date < current_date()
         and data_type = 'AD_DATA'
         --and c.campaign_id = '4272906'

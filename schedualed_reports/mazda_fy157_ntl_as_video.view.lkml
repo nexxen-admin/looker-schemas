@@ -20,6 +20,7 @@ view: mazda_fy157_ntl_as_video {
         sum(ad.impressions) as Impressions,
         sum(ad.completions) as Completions,
         sum(clicks) as Clicks,
+        sum(ad.progress0) as "Starts",
         sum(ad.progress25) as "25% Video Finish",
         sum(ad.progress50) as "50% Video Finish",
         sum(ad.progress75) as "75% Video Finish",
@@ -150,6 +151,12 @@ view: mazda_fy157_ntl_as_video {
     sql: ${TABLE}.Clicks ;;
   }
 
+  dimension: starts {
+    type: number
+    label: "Starts"
+    sql: ${TABLE}."Starts" ;;
+  }
+
   dimension: 25_video_finish {
     type: number
     label: "25% Video Finish"
@@ -195,6 +202,7 @@ view: mazda_fy157_ntl_as_video {
       impressions,
       completions,
       clicks,
+      starts,
       25_video_finish,
       50_video_finish,
       75_video_finish,

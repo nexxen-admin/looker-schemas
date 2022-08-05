@@ -45,19 +45,19 @@ view: biltmore_daily_08_05_22 {
 
   dimension: advertiser_name {
     type: string
-    label: "Advertiser Name"
+    label: "Advertiser"
     sql: ${TABLE}."Advertiser Name" ;;
   }
 
   dimension: partner_name {
     type: string
-    label: "Partner Name"
+    label: "Partner"
     sql: ${TABLE}."Partner Name" ;;
   }
 
   dimension: campaign_name {
     type: string
-    label: "Campaign Name"
+    label: "Campaign"
     sql: ${TABLE}."Campaign Name" ;;
   }
 

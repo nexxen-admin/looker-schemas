@@ -62,6 +62,12 @@ explore: woman_thou_art_loosed_06_28_22 {
   label: "Woman Thou Art Loosed"
 }
 
+explore: biltmore_daily_report_08_05_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Biltmore"
+}
+
+
 
 explore: altamed_health_services_06_16_22 {
   required_access_grants: [can_view_pub_come_looker]

@@ -39,7 +39,7 @@ view: oerb_daily_08_05_22 {
 
   dimension: flight_id {
     type: number
-    label: "Flight ID"
+    label: "Placement ID"
     sql: ${TABLE}."Flight ID" ;;
   }
 

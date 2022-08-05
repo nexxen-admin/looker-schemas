@@ -79,6 +79,11 @@ explore: just_bare_chicken_5_27_22 {
   label: "Just Bare Chicken"
 }
 
+explore: biltmore_daily_08_05_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Biltmore"
+}
+
 explore: habush_daily_report_07_26_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Habush"

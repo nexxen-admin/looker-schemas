@@ -37,7 +37,7 @@ view: biltmore_daily_report_08_05_22 {
 
   dimension: flight_id {
     type: number
-    label: "Flight ID"
+    label: "Campaign ID"
     sql: ${TABLE}."Flight ID" ;;
   }
 

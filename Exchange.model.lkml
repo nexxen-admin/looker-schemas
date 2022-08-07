@@ -42,6 +42,13 @@ explore: appsflyer{
   required_access_grants: [can_view_pub_come_looker]
 }
 
+explore: appsflyer_agg{
+  label: "TAPTICA_agg"
+  required_access_grants: [can_view_pub_come_looker]
+}
+
+
+
 explore: publishers_report_monthly_for_finance {
   required_access_grants: [can_view_pub_come_looker]
   label: "publishers report monthly for finance"
@@ -372,12 +379,6 @@ join: dim_date {
   relationship: many_to_one
 }
 
- join: time_shiffted {
-   type: inner
-  view_label: "Measures"
-  sql_on: ${time_shiffted.date_key} = ${fact_ad_daily_agg.date_key_raw} ;;
-  relationship: many_to_one
- }
 
 join: dim_country {
   type: inner

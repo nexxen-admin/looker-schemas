@@ -1,4 +1,5 @@
 view: california_tobacco_control_program_06_01_22 {
+  required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: WITH svc_california_tobacco_control_program_mapping AS (
 SELECT id as tvdsp_creative_id,

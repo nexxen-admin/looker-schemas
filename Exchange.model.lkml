@@ -48,7 +48,7 @@ explore: appsflyer{
 
 explore: appsflyer_agg{
   label: "Appsflyer Daily"
-  required_access_grants: [can_view_Taptica, can_view_pub_come_looker]
+  required_access_grants: [can_view_Taptica]
 }
 
 

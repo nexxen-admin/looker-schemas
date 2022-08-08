@@ -17,7 +17,11 @@ access_grant: can_view_pub_come_looker {
 
 access_grant: can_view_imp_r {
   user_attribute: ds
-  allowed_values: ["Data Scientist"]
+  allowed_values: ["DS"]
+}
+access_grant: can_view_Taptica {
+  user_attribute: taptica
+  allowed_values: ["Taptica"]
 }
 
 
@@ -39,12 +43,12 @@ explore: impression_r {
 
 explore: appsflyer{
   label: "Appsflyer"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_Taptica]
 }
 
 explore: appsflyer_agg{
   label: "Appsflyer Daily"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_Taptica, can_view_pub_come_looker]
 }
 
 
@@ -53,6 +57,8 @@ explore: publishers_report_monthly_for_finance {
   required_access_grants: [can_view_pub_come_looker]
   label: "publishers report monthly for finance"
 }
+
+
 explore: extend_Inbound_Exchange {
   extends: [fact_ad_daily_agg]
   from: fact_ad_daily_agg

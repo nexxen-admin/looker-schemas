@@ -24,9 +24,6 @@ access_grant: can_view_Taptica {
   allowed_values: ["Taptica"]
 }
 
-
-
-
 access_grant: can_view_aniview {
   user_attribute: aniview
  allowed_values: ["Aniview"]

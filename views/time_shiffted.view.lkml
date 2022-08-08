@@ -1,17 +1,18 @@
 view: time_shiffted {
   derived_table: {
     sql: SELECT
-      d.date_key,
-      lag(sum(sum_of_revenue),7,0) OVER (order by d.date_key) sevenDay_Before_Revenue,
-      lag(sum(sum_of_revenue),1,0) OVER (order by d.date_key) Day_Before_Revenue
-      FROM bi_new.dim_date d  join bi_new.fact_ad_daily_agg  dd on d.date_key = dd.date_key
-      group by 1 ORDER by d.date_key
+      date_key,
+      sum(sum_of_revenue) as revenue,
+      lag(sum(sum_of_revenue),7,0) OVER (order by date_key) sevenDay_Before_Revenue,
+      lag(sum(sum_of_revenue),1,0) OVER (order by date_key) Day_Before_Revenue
+      FROM bi_new.fact_ad_daily_agg
+      group by 1 ORDER by date_key
        ;;
   }
 
 
   dimension: date_key {
-    label: " "
+    label: " date"
     type: date
     sql: ${TABLE}.Date_Key ;;
   }
@@ -19,6 +20,11 @@ view: time_shiffted {
   measure: seven_day_before_revenue {
     type: sum
     sql: ${TABLE}.sevenDay_Before_Revenue ;;
+  }
+
+  measure: revenue {
+    type: sum
+    sql: ${TABLE}.revenue ;;
   }
 
   measure: day_before_revenue {

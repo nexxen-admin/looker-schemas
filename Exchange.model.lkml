@@ -38,12 +38,12 @@ explore: impression_r {
 }
 
 explore: appsflyer{
-  label: "TAPTICA"
+  label: "Appsflyer"
   required_access_grants: [can_view_pub_come_looker]
 }
 
 explore: appsflyer_agg{
-  label: "TAPTICA_agg"
+  label: "Appsflyer Daily"
   required_access_grants: [can_view_pub_come_looker]
 }
 

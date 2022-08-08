@@ -15,13 +15,13 @@ view: appsflyer_agg {
     sql: ${TABLE}.app_id ;;
   }
 
-  dimension: blocked_conversions {
-    type: number
+  measure: blocked_conversions {
+    type: sum
     sql: ${TABLE}.Blocked_Conversions ;;
   }
 
-  dimension: blocked_events {
-    type: number
+  measure: blocked_events {
+    type: sum
     sql: ${TABLE}.Blocked_Events ;;
   }
 
@@ -29,18 +29,10 @@ view: appsflyer_agg {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_blocked_events {
+
+
+  measure: blockes {
     type: sum
-    sql: ${blocked_events} ;;
-  }
-
-  measure: average_blocked_events {
-    type: average
-    sql: ${blocked_events} ;;
-  }
-
-  dimension: blockes {
-    type: number
     sql: ${TABLE}.Blockes ;;
   }
 
@@ -49,13 +41,13 @@ view: appsflyer_agg {
     sql: ${TABLE}.campaign ;;
   }
 
-  dimension: clicks {
-    type: number
+  measure: clicks {
+    type: sum
     sql: ${TABLE}.Clicks ;;
   }
 
-  dimension: conversions {
-    type: number
+  measure: conversions {
+    type: sum
     sql: ${TABLE}.Conversions ;;
   }
 
@@ -63,6 +55,7 @@ view: appsflyer_agg {
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: event {
+    label: "Event Date"
     type: time
     timeframes: [
       raw,
@@ -76,28 +69,28 @@ view: appsflyer_agg {
     sql: ${TABLE}.event_time ;;
   }
 
-  dimension: events {
-    type: number
+  measure: events {
+    type: sum
     sql: ${TABLE}."Events" ;;
   }
 
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.Impressions ;;
   }
 
-  dimension: post_attribution {
-    type: number
+  measure: post_attribution {
+    type: sum
     sql: ${TABLE}.Post_attribution ;;
   }
 
-  dimension: post_attribution_conversions {
-    type: number
+  measure: post_attribution_conversions {
+    type: sum
     sql: ${TABLE}.Post_attribution_Conversions ;;
   }
 
-  dimension: post_attribution_events {
-    type: number
+  measure: post_attribution_events {
+    type: sum
     sql: ${TABLE}.Post_attribution_Events ;;
   }
 
@@ -109,5 +102,6 @@ view: appsflyer_agg {
   measure: count {
     type: count
     drill_fields: []
+    hidden: yes
   }
 }

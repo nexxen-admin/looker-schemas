@@ -314,6 +314,30 @@ view: fact_ad_bid_request_daily_agg {
     sql: ${TABLE}.sum_of_video_completes_from_ad_data ;;
     #hidden: yes
   }
+  measure:CTR {
+    type: number
+    label: "VTR"
+    value_format: "0.00\%"
+    group_label: "Daily Measures"
+    sql: (${click_count}/NULLIF(${impression_pixel},0))*100;;
+  }
+
+  measure: VTR {
+    type: number
+    label: "VTR"
+    value_format: "0.00\%"
+    group_label: "Daily Measures"
+    sql: (${video_completes}/NULLIF(${impression_pixel},0))*100;;
+  }
+
+  measure: VCR {
+    type: number
+    label: "VCR"
+    value_format: "0.00\%"
+    group_label: "Daily Measures"
+    sql: (${video_completes}/NULLIF(${video_starts},0))*100;;
+
+  }
 
   measure:: video_starts {
     type: sum

@@ -984,6 +984,14 @@ view: fact_ad_daily_agg {
 
   }
 
+  measure:CTR {
+    type: number
+    label: "CTR"
+    value_format: "0.00\%"
+    group_label: "Daily Measures"
+    sql: (${click_count}/NULLIF(${impression_pixel},0))*100;;
+  }
+
   measure: Win_Rate {
     type: number
     label: "Win Rate"

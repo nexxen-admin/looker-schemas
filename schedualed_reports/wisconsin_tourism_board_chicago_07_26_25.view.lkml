@@ -4,7 +4,7 @@ view: wisconsin_tourism_board_chicago_07_26_25 {
     sql: SELECT add2.date::date as date,
            c.advertiser_name,
            c.flight_number,
-           'WI Tourism (Hiebing, Wisconsin): 2022 Summer Awareness Campaign - CHICAGO DMA' AS Campaign_Name,
+           c.campaign_name,
            CASE WHEN c.flight_number = 'F-278719' AND cr.duration = 30 THEN '1077843496'
                WHEN c.flight_number = 'F-278719' AND cr.duration = 15 THEN '1077843497'
                WHEN c.flight_number = 'F-278720' AND cr.duration = 30 THEN '1077990840'
@@ -66,10 +66,10 @@ view: wisconsin_tourism_board_chicago_07_26_25 {
     sql: ${TABLE}.flight_number ;;
   }
 
-  dimension: Campaign_Name{
+  dimension: campaign_name{
     type: string
     label: "Campaign Name"
-    sql: ${TABLE}."Campaign Name" ;;
+    sql: ${TABLE}.campaign_name ;;
   }
 
   dimension: sizmek_placement_ids {
@@ -114,7 +114,7 @@ view: wisconsin_tourism_board_chicago_07_26_25 {
       date,
       advertiser_name,
       flight_number,
-      Campaign_Name,
+      campaign_name,
       sizmek_placement_ids,
       impressions,
       clicks,

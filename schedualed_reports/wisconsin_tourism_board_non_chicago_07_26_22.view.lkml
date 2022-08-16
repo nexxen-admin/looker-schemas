@@ -3,8 +3,8 @@ view: wisconsin_tourism_board_non_chicago_07_26_22 {
   derived_table: {
     sql: SELECT add2.date::date as date,
            c.advertiser_name,
+           'AS0097273 - WI Tourism (Hiebing, Wisconsin): 2022 Summer Awareness Campaign - OTHER/NON-CHICAGO DMAs' AS "campaign_name",
            c.flight_number,
-           c.campaign_name,
            CASE WHEN flight_number = 'F-279853' AND cr.duration = 30 THEN '1077837589'
                WHEN flight_number = 'F-279853' AND cr.duration = 15 THEN '1077837590'
                  WHEN flight_number = 'F-279861' AND cr.duration = 30 THEN '1077990593'

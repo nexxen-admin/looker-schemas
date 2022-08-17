@@ -38,25 +38,25 @@ view: fact_ad_daily_agg {
     </ul> ;;
     hidden: yes
   }
- measure: tempfoAdi{
+ measure: Change_PubReq{
     type: number
     group_label: "Daily Measures"
-
+    label: "Change PubReq With Icon"
     sql: ${pub_request_lastday_change_parameter};;
     value_format: "0.00%"
     html:
 
       {% if value > 0 %}
 
-       <p><img src="https://findicons.com/files/icons/1688/web_blog/48/arrow_up.png" height=25 width=25>  {{ rendered_value }} </p>
+       <p><img src="https://as2.ftcdn.net/v2/jpg/03/58/31/69/1000_F_358316963_Uvg073N0LrlU5A0AbO81z7oAGl371ztM.jpg" height=20 width=20 transform: rotate(180deg)>  {{ rendered_value }} </p>
 
       {% elsif value < 0 %}
 
-      <p><img src="https://findicons.com/files/icons/1951/iconza/32/down_arrow.png" height=20 width=20>    {{ rendered_value }}</p>
+      <p><img src="https://t3.ftcdn.net/jpg/00/93/85/06/240_F_93850673_OxkKHQcNXGTNCTMROJSx4Gn7B0EsyQ6C.jpg" height=20 width=20>    {{ rendered_value }}</p>
 
       {% else %}
 
-      <p><img src="https://findicons.com/files/icons/1951/iconza/32/down_arrow.png" height=25 width=25>    {{ rendered_value }}</p>
+      <p>   {{ rendered_value }}</p>
 
       {% endif %}
 
@@ -64,6 +64,40 @@ view: fact_ad_daily_agg {
       ;;
      # <img src="https://findicons.com/files/icons/1688/web_blog/48/arrow_up.png" height=20 width=20>
     #{% assign indicator = "green,▲" | split: ',' %}
+  }
+
+  measure: Change_PubReq_OPT2{
+    type: number
+    group_label: "Daily Measures"
+    label: "Change PubReq With ARROW"
+    sql: ${pub_request_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+        {% if value == 99999.12345 %} &infin
+
+        {% else %}{{indicator[1]}}
+
+        {% endif %}
+
+        </font>
+        {{rendered_value}}
+
+
+      ;;
   }
 
 

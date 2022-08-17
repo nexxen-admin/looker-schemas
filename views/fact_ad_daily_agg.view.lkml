@@ -48,11 +48,11 @@ view: fact_ad_daily_agg {
 
       {% if value > 0 %}
 
-       <p> {% assign indicator = "green,▲" | split: ',' %}</p>
+       <p><img src="https://findicons.com/files/icons/1688/web_blog/48/arrow_up.png" height=25 width=25>  {{ rendered_value }} </p>
 
       {% elsif value < 0 %}
 
-      <p><img src="http://findicons.com/files/icons/719/crystal_clear_actions/64/cancel.png" height=20 width=20>    {{ rendered_value }}</p>
+      <p><img src="https://findicons.com/files/icons/1951/iconza/32/down_arrow.png" height=20 width=20>    {{ rendered_value }}</p>
 
       {% else %}
 
@@ -63,6 +63,7 @@ view: fact_ad_daily_agg {
 
       ;;
      # <img src="https://findicons.com/files/icons/1688/web_blog/48/arrow_up.png" height=20 width=20>
+    #{% assign indicator = "green,▲" | split: ',' %}
   }
 
 

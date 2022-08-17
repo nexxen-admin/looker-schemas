@@ -42,8 +42,8 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Daily Measures"
 
-    sql: ${request_lastday_change_parameter} ;;
-
+    sql: ${pub_request_lastday_change_parameter};;
+    value_format: "0.00%"
     html:
 
       {% if value > 0 %}
@@ -129,6 +129,18 @@ view: fact_ad_daily_agg {
     </ul> ;;
     hidden: yes
   }
+  measure: pub_request_lastday_change_parameter {
+    type: number
+    sql: ((${Last_day_PubRequests}-${Previous_day_PubRequests})/NULLIF(${Previous_day_PubRequests} ,0)) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+
   measure: net_revenue_lastday_change_parameter {
     type: number
     sql: (${Last_Day_net_Revenue}/${prev_Day_net_Revenue})-1 ;;
@@ -1131,9 +1143,35 @@ view: fact_ad_daily_agg {
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
-
-
   }
+
+  measure:  Previous_day_PubRequests {
+    label: "Pub Requests Previous day "
+    type: sum
+    sql: ${TABLE}.sum_of_rmp_requests ;;
+    value_format: "#,##0.00"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "2 days ago"]
+  }
+
+  measure:  Seven_day_PubRequests {
+    label: "Pub Requests 7 days ago "
+    type: sum
+    sql: ${TABLE}.sum_of_rmp_requests ;;
+    value_format: "#,##0.00"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "7 days ago"]
+  }
+
+  measure:  MonthAgo_PubRequests {
+    label: "Pub Requests 28 days ago "
+    type: sum
+    sql: ${TABLE}.sum_of_rmp_requests ;;
+    value_format: "#,##0.00"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "28 days ago"]
+  }
+
   measure:  Previous_day_impressions {
     label: "Impressions Previous day "
     type: sum
@@ -1221,6 +1259,15 @@ view: fact_ad_daily_agg {
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
+  measure:  Last_day_PubRequests {
+    label: "Pub Requests Last day "
+    type: sum
+    sql: ${TABLE}.sum_of_rmp_requests ;;
+    value_format: "#,##0.00"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
   measure:  Last_day_Bid_Rate {
     label: " Bid Rate Last day"
     type: sum

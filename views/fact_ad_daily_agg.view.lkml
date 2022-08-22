@@ -168,7 +168,7 @@ view: fact_ad_daily_agg {
   }
   measure: pub_request_lastday_change_parameter {
     type: number
-    sql: ((${Last_day_PubRequests}-${Previous_day_PubRequests})/NULLIF(${Previous_day_PubRequests} ,0)) ;;
+    sql: coalesce((${Last_day_PubRequests}-${Previous_day_PubRequests})/NULLIF(${Previous_day_PubRequests} ,0),0) ;;
     value_format: "0.00%"
     html:
     <ul>

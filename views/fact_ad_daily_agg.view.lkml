@@ -38,38 +38,12 @@ view: fact_ad_daily_agg {
     </ul> ;;
     hidden: yes
   }
- measure: Change_PubReq{
+
+
+  measure: Change_PubReq{
     type: number
-    group_label: "Daily Measures"
-    label: "Change PubReq With Icon"
-    sql: ${pub_request_lastday_change_parameter};;
-    value_format: "0.00%"
-    html:
-
-      {% if value > 0 %}
-
-       <p><img src="https://as2.ftcdn.net/v2/jpg/03/58/31/69/1000_F_358316963_Uvg073N0LrlU5A0AbO81z7oAGl371ztM.jpg" height=20 width=20 transform: rotate(180deg)>  {{ rendered_value }} </p>
-
-      {% elsif value < 0 %}
-
-      <p><img src="https://t3.ftcdn.net/jpg/00/93/85/06/240_F_93850673_OxkKHQcNXGTNCTMROJSx4Gn7B0EsyQ6C.jpg" height=20 width=20>    {{ rendered_value }}</p>
-
-      {% else %}
-
-      <p>   {{ rendered_value }}</p>
-
-      {% endif %}
-
-
-      ;;
-     # <img src="https://findicons.com/files/icons/1688/web_blog/48/arrow_up.png" height=20 width=20>
-    #{% assign indicator = "green,▲" | split: ',' %}
-  }
-
-  measure: Change_PubReq_OPT2{
-    type: number
-    group_label: "Daily Measures"
-    label: "Change PubReq With ARROW"
+    group_label: "Time Shifted Measures"
+    label: "Pub Request Change Last Day"
     sql: ${pub_request_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -95,6 +69,139 @@ view: fact_ad_daily_agg {
 
         </font>
         {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: Change_Revenue{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Revenue Change Last Day"
+    sql: ${revenue_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+  measure: Change_imp{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Impressions Change Last Day"
+    sql: ${impressions_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+  measure: Change_BIDS{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Bids Change Last Day"
+    sql: ${bids_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+  measure: Change_InboundReq{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Inbound Requests Change Last Day"
+    sql: ${request_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
 
 
       ;;
@@ -138,7 +245,7 @@ view: fact_ad_daily_agg {
   }
   measure: revenue_lastday_change_parameter {
     type: number
-    sql: (${Last_day_Revenue}/${Previous_day_Revenue})-1 ;;
+    sql: coalesce((${Last_day_Revenue}-${Previous_day_Revenue})/ NULLIF(${Previous_day_Revenue},0),0) ;;
     value_format: "0.00%"
     html:
     <ul>
@@ -148,7 +255,7 @@ view: fact_ad_daily_agg {
   }
   measure: impressions_lastday_change_parameter {
     type: number
-    sql: (${Last_day_impressions}/${Previous_day_impressions})-1 ;;
+    sql: COALESCE((${Last_day_impressions}-${Previous_day_impressions})/NULLIF(${Previous_day_impressions},0),0) ;;
     value_format: "0.00%"
     html:
     <ul>
@@ -158,7 +265,7 @@ view: fact_ad_daily_agg {
   }
   measure: request_lastday_change_parameter {
     type: number
-    sql: (${Last_day_Requests}/NULLIF(${Previous_day_Requests} ,0))-1 ;;
+    sql: COALESCE((${Last_day_Requests}-${Previous_day_Requests})/NULLIF(${Previous_day_Requests} ,0),0) ;;
     value_format: "0.00%"
     html:
     <ul>
@@ -180,7 +287,7 @@ view: fact_ad_daily_agg {
 
   measure: net_revenue_lastday_change_parameter {
     type: number
-    sql: (${Last_Day_net_Revenue}/${prev_Day_net_Revenue})-1 ;;
+    sql: COALESCE((${Last_Day_net_Revenue}-${prev_Day_net_Revenue})/NULLIF(${prev_Day_net_Revenue},0),0) ;;
     value_format: "0.00%"
     html:
     <ul>
@@ -190,7 +297,7 @@ view: fact_ad_daily_agg {
   }
   measure: bids_lastday_change_parameter {
     type: number
-    sql: (${Last_Day_net_Revenue}/${prev_Day_net_Revenue})-1 ;;
+    sql: COALESCE((${Last_Day_net_Revenue}-${prev_Day_net_Revenue})/NULLIF(${prev_Day_net_Revenue},0),0) ;;
     value_format: "0.00%"
     html:
     <ul>

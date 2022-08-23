@@ -35,7 +35,7 @@ ORDER BY 1
   dimension: date {
     type: date
     label: "Date"
-    sql: ${TABLE}.Date2;;
+    sql: ${TABLE}.Date;;
     html: {{ rendered_value | date: "%m-%d-%Y" }} ;;
   }
 

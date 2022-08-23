@@ -672,6 +672,13 @@ view: impression_r {
     hidden: yes
   }
 
+  dimension: placement_id {
+    type: string
+    sql: coalesce(${TABLE}.siteid ,${TABLE}.appid);;
+   # hidden: yes
+  }
+
+
   dimension: sitename {
     type: string
     sql: ${TABLE}.sitename ;;
@@ -752,8 +759,9 @@ view: impression_r {
 
   dimension: sspid {
     type: string
+    label: "ssp id"
     sql: ${TABLE}.sspid ;;
-    hidden: yes
+
   }
 
   dimension: ssprevshare {

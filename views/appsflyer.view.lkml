@@ -188,10 +188,7 @@ view: appsflyer {
     sql: ${TABLE}.region ;;
   }
 
-  dimension: site_id {
-    type: string
-    sql: ${TABLE}.site_id ;;
-  }
+
 
   dimension: source {
     type: string

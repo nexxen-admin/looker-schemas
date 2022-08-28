@@ -144,6 +144,7 @@ view: appsflyer {
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension: event {
+    label: "Event Date"
     type: date
     sql: ${TABLE}.event_time ;;
   }
@@ -159,6 +160,7 @@ view: appsflyer {
   }
 
   dimension: install {
+    label: "Install Time"
     type: date
     sql: ${TABLE}.install_time ;;
   }

@@ -4,15 +4,15 @@ view: woman_thou_art_loosed_06_28_22 {
     sql: SELECT date::date as "Date",
            '[c14632] WTAL - OTT' AS "Custom Campaign Name",
            TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
-           c.campaign_name AS "Campaign Name",
+           c.campaign_name AS "Campaign_Name",
            add2.flight_id AS "Placement ID",
-           c.flight_number AS "Flight Number",
+           c.flight_number AS "Flight_Number",
            SUM(impressions) AS "Impressions",
            SUM(completions) AS "Completions",
            SUM(completions)/SUM(impressions) AS "Completions Rate",
            SUM(clicks) AS "Clicks",
            SUM(clicks)/SUM(impressions) AS "CTR",
-           CASE WHEN c.flight_number IN ('F-288123', 'F-288404', 'F-288405', 'F-288406') THEN (SUM(impressions)/1000)*25
+           CASE WHEN c.flight_number IN ('F-288405', 'F-288123', 'F-288404') THEN (SUM(impressions)/1000)*25
                ELSE (SUM(impressions)/1000)*32.50 END AS "Spend",
            SUM(placement_reach) AS "Reach",
            SUM(impressions)/SUM(placement_reach) AS "Frequency"
@@ -21,9 +21,11 @@ view: woman_thou_art_loosed_06_28_22 {
         left outer join dwh.dma dma on dma.dma_code = add2.dma
       WHERE date >= '2022-06-15'
         AND date < CURRENT_DATE()
-        AND add2.flight_id IN (4351966, 4351986, 4351996, 4352006, 4352016, 4352056, 4352086, 4352096)
+        AND data_type = 'AD_DATA'
+        AND c.buy_type NOT IN ('Direct', 'Programmatic_Guaranteed')
+        AND add2.flight_id IN (4351986, 4351996, 4352006, 4352016, 4352026, 4352056)
       GROUP BY 1,2,3,4,5,6
-      ORDER BY 1
+      ORDER BY 1 ASC
        ;;
   }
 

@@ -20,7 +20,7 @@ access_grant: can_view_imp_r {
   allowed_values: ["DS"]
 }
 access_grant: can_view_candidates {
-  user_attribute: ds
+  user_attribute: candidates
   allowed_values: ["candidates"]
 }
 

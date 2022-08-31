@@ -23,6 +23,10 @@ access_grant: can_view_pub_come_looker {
   user_attribute: admins
   allowed_values: ["Looker_Admins"]
 }
+access_grant: can_view_all_tremor {
+  user_attribute: all_tremor
+  allowed_values: ["all_tremor"]
+}
 
 access_grant: can_view_candidates {
   user_attribute: candidates
@@ -44,6 +48,7 @@ explore: sam_goal_monitor {
      user_attribute: allowed_users
    }
   label: "SAM Performance Monitor"
+  required_access_grants: [can_view_all_tremor]
 }
 
 explore: sam {
@@ -52,6 +57,7 @@ explore: sam {
     user_attribute: allowed_users
   }
   label: "SAM Performance Monitor new"
+  required_access_grants: [can_view_all_tremor]
 }
 
 explore: sam_lt_comm {
@@ -60,6 +66,7 @@ explore: sam_lt_comm {
      user_attribute: allowed_users
    }
   label: "SAM LT Commision"
+  required_access_grants: [can_view_all_tremor]
 }
 
 
@@ -69,6 +76,7 @@ explore: sam_performance_monitor_v2 {
     user_attribute: allowed_users
   }
   label: "SAM Performance Monitor V2"
+  required_access_grants: [can_view_all_tremor]
 }
 
 explore: sam_lt_pub_metrics {
@@ -77,8 +85,10 @@ explore: sam_lt_pub_metrics {
     user_attribute: allowed_users
   }
   label: "SAM + LT Publisher Metrics"
+  required_access_grants: [can_view_all_tremor]
 }
 
 explore: phase_2_ak {
   label: "Phase 2 - AK"
+  required_access_grants: [can_view_all_tremor]
 }

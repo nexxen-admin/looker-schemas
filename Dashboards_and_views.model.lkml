@@ -23,6 +23,11 @@ access_grant: can_view_pub_come_looker {
   user_attribute: admins
   allowed_values: ["Looker_Admins"]
 }
+
+access_grant: can_view_candidates {
+  user_attribute: ds
+  allowed_values: ["candidates"]
+}
 #access_grant: can_view_pub_come_looker {
  # user_attribute: allowed_users
   #allowed_values: ["Looker_Admins"]
@@ -30,7 +35,7 @@ access_grant: can_view_pub_come_looker {
 explore:  daily_kpi_s_data{
 
   label: "Daily KPI's Data"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_candidates]
 
 }
 explore: sam_goal_monitor {

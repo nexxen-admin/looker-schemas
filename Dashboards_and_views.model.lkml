@@ -31,6 +31,7 @@ explore:  daily_kpi_s_data{
 
   label: "Daily KPI's Data"
   required_access_grants: [can_view_pub_come_looker]
+
 }
 explore: sam_goal_monitor {
  access_filter: {

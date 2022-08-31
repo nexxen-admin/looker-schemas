@@ -19,6 +19,11 @@ access_grant: can_view_imp_r {
   user_attribute: ds
   allowed_values: ["DS"]
 }
+access_grant: can_view_candidates {
+  user_attribute: ds
+  allowed_values: ["candidates"]
+}
+
 access_grant: can_view_Taptica {
   user_attribute: taptica
   allowed_values: ["Taptica"]

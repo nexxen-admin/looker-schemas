@@ -15,6 +15,11 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
+access_grant: can_view_all_tremor {
+  user_attribute: all_tremor
+  allowed_values: ["all_tremor"]
+}
+
 access_grant: can_view_imp_r {
   user_attribute: ds
   allowed_values: ["DS"]
@@ -69,7 +74,7 @@ explore: extend_Inbound_Exchange {
     field: v_dim_employee_pub_ops.employee_name
     user_attribute: allowed_users
   }
- # required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_all_tremor]
 
   always_filter: {
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]

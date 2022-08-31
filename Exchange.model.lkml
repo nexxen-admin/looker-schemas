@@ -15,10 +15,20 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
+access_grant: can_view_all_tremor {
+  user_attribute: all_tremor
+  allowed_values: ["all_tremor"]
+}
+
 access_grant: can_view_imp_r {
   user_attribute: ds
   allowed_values: ["DS"]
 }
+access_grant: can_view_candidates {
+  user_attribute: candidates
+  allowed_values: ["candidates"]
+}
+
 access_grant: can_view_Taptica {
   user_attribute: taptica
   allowed_values: ["Taptica"]
@@ -64,7 +74,7 @@ explore: extend_Inbound_Exchange {
     field: v_dim_employee_pub_ops.employee_name
     user_attribute: allowed_users
   }
- # required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_all_tremor]
 
   always_filter: {
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
@@ -375,6 +385,7 @@ explore: fact_ad_daily_agg{
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange"
   view_label: "Measures"
+  required_access_grants: [can_view_all_tremor]
 
 join: dim_date {
   type: inner
@@ -671,6 +682,7 @@ explore: fact_ad_hourly_agg{
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange Hourly"
   view_label: "Measures"
+  required_access_grants: [can_view_all_tremor]
 
   join: dim_date_hourly {
     type: inner
@@ -975,6 +987,7 @@ explore: fact_ad_bid_request_daily_agg{
   persist_with: CleanCash_datagroup
   label: "Outbound Exchange"
   view_label: "Measures"
+  required_access_grants: [can_view_all_tremor]
 
   join: dim_dsp_data_center {
     type: inner

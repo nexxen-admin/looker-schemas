@@ -25,7 +25,7 @@ access_grant: can_view_pub_come_looker {
 }
 
 access_grant: can_view_candidates {
-  user_attribute: ds
+  user_attribute: candidates
   allowed_values: ["candidates"]
 }
 #access_grant: can_view_pub_come_looker {

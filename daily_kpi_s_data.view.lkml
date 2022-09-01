@@ -24,8 +24,8 @@ view: daily_kpi_s_data {
     type: time
     sql: ${TABLE}.event_time ;;
   }
-  dimension_group: country_code {
-    type: time
+  dimension: country_code {
+    type: string
     sql: ${TABLE}.country_code ;;
   }
 

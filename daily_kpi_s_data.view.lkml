@@ -2,14 +2,15 @@ view: daily_kpi_s_data {
   derived_table: {
     sql: SELECT
       event_time,
-      sum(revenue)/457 as revenue,
-      sum(responses)/457 as responses ,
-      sum(requests)/457 as bid_requests,
-      sum(impression_pixel)/457 as impressions ,
-      sum(impression_win)/457 as wins
+      country_code,
+      cast(sum(revenue)/4.5 as number) as revenue,
+      cast(sum(responses)/4.5 as  number) responses ,
+      cast(sum(requests)/4.5 as number) as bid_requests,
+      cast(sum(impression_pixel)/4.5 as number) as impressions ,
+      cast(sum(impression_win)/4.5 as number) as wins
       from andromeda.ad_data_daily
       where event_time >= CURRENT_DATE-7
-      group by 1
+      group by 1,2
        ;;
   }
 
@@ -22,6 +23,10 @@ view: daily_kpi_s_data {
   dimension_group: event_time {
     type: time
     sql: ${TABLE}.event_time ;;
+  }
+  dimension_group: country_code {
+    type: time
+    sql: ${TABLE}.country_code ;;
   }
 
   measure: revenue {

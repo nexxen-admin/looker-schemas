@@ -10,7 +10,7 @@ view: daily_kpi_s_data {
       cast(sum(impression_pixel)/4.5 as number) as impressions ,
       cast(sum(impression_win)/4.5 as number) as wins
       from andromeda.ad_data_daily
-      where event_time >= CURRENT_DATE-7
+      where event_time >= CURRENT_DATE-7 and rx_ssp_name ilike 'rmp%'
       group by 1,2,3
        ;;
   }

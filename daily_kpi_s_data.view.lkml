@@ -3,6 +3,7 @@ view: daily_kpi_s_data {
     sql: SELECT
       event_time,
       country_code,
+      pub_id,
       cast(sum(revenue)/4.5 as number) as revenue,
       cast(sum(responses)/4.5 as  number) responses ,
       cast(sum(requests)/4.5 as number) as bid_requests,
@@ -10,7 +11,7 @@ view: daily_kpi_s_data {
       cast(sum(impression_win)/4.5 as number) as wins
       from andromeda.ad_data_daily
       where event_time >= CURRENT_DATE-7
-      group by 1,2
+      group by 1,2,3
        ;;
   }
 
@@ -29,6 +30,10 @@ view: daily_kpi_s_data {
     sql: ${TABLE}.country_code ;;
   }
 
+  dimension: publisher_id {
+    type: string
+    sql: ${TABLE}.pub_id ;;
+  }
   measure: revenue {
     type: sum
     sql: ${TABLE}.revenue ;;

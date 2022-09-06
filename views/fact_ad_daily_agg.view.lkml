@@ -666,7 +666,7 @@ view: fact_ad_daily_agg {
 
   measure:: cogs {
     label: "Cogs"
-    description: "Media Cost  (3rd Party SSP or Publisher Cost)"
+    description: "Media Cost  (3rd Party SSP or Publisher Cost) - align to cost in CTRL platform"
     type: sum
     value_format: "$#,##0.00"
     group_label: "Daily Measures"

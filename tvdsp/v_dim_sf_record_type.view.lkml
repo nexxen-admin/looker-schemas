@@ -21,6 +21,7 @@ view: v_dim_sf_record_type {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_sf_record_type {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension_group: loaded {
@@ -49,6 +51,7 @@ view: v_dim_sf_record_type {
       year
     ]
     sql: ${TABLE}.Loaded ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -58,6 +61,7 @@ view: v_dim_sf_record_type {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: sf_record_type_id {
@@ -68,20 +72,7 @@ view: v_dim_sf_record_type {
   dimension: sf_record_type_key {
     type: number
     sql: ${TABLE}.SF_Record_Type_Key ;;
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_sf_record_type_key {
-    type: sum
-    sql: ${sf_record_type_key} ;;
-  }
-
-  measure: average_sf_record_type_key {
-    type: average
-    sql: ${sf_record_type_key} ;;
+    hidden: yes
   }
 
   dimension: sf_record_type_name {
@@ -92,5 +83,6 @@ view: v_dim_sf_record_type {
   measure: count {
     type: count
     drill_fields: [sf_record_type_name]
+    hidden: yes
   }
 }

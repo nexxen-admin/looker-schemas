@@ -21,6 +21,7 @@ view: v_dim_session_type {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_session_type {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -49,24 +51,13 @@ view: v_dim_session_type {
   dimension: session_type_key {
     type: number
     sql: ${TABLE}.Session_Type_Key ;;
+    hidden: yes
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_session_type_key {
-    type: sum
-    sql: ${session_type_key} ;;
-  }
-
-  measure: average_session_type_key {
-    type: average
-    sql: ${session_type_key} ;;
-  }
 
   measure: count {
     type: count
     drill_fields: []
+    hidden: yes
   }
 }

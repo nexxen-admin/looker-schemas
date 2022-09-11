@@ -21,6 +21,7 @@ view: v_dim_placement_group {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_placement_group {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -49,6 +51,7 @@ view: v_dim_placement_group {
   dimension: placement_group_key {
     type: number
     sql: ${TABLE}.Placement_Group_Key ;;
+    hidden: yes
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -58,11 +61,13 @@ view: v_dim_placement_group {
   measure: total_placement_group_key {
     type: sum
     sql: ${placement_group_key} ;;
+    hidden: yes
   }
 
   measure: average_placement_group_key {
     type: average
     sql: ${placement_group_key} ;;
+    hidden: yes
   }
 
   dimension: placement_group_name {
@@ -73,10 +78,12 @@ view: v_dim_placement_group {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: [placement_group_name]
+    hidden: yes
   }
 }

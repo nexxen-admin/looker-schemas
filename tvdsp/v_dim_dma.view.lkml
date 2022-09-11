@@ -21,6 +21,7 @@ view: v_dim_dma {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_dma {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -46,23 +48,10 @@ view: v_dim_dma {
     sql: ${TABLE}.DMA_Code ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_dma_code {
-    type: sum
-    sql: ${dma_code} ;;
-  }
-
-  measure: average_dma_code {
-    type: average
-    sql: ${dma_code} ;;
-  }
-
   dimension: dma_key {
     type: number
     sql: ${TABLE}.DMA_Key ;;
+    hidden: yes
   }
 
   dimension: dma_name {
@@ -73,10 +62,12 @@ view: v_dim_dma {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: [dma_name]
+    hidden: yes
   }
 }

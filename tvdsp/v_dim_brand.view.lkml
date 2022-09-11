@@ -18,25 +18,17 @@ view: v_dim_brand {
   dimension: brand_key {
     type: number
     sql: ${TABLE}.Brand_Key ;;
+    hidden: yes
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_brand_key {
-    type: sum
-    sql: ${brand_key} ;;
-  }
-
-  measure: average_brand_key {
-    type: average
-    sql: ${brand_key} ;;
-  }
-
   dimension: brand_name {
     type: string
     sql: ${TABLE}.Brand_Name ;;
+    hidden: yes
   }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
@@ -54,6 +46,7 @@ view: v_dim_brand {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -68,15 +61,18 @@ view: v_dim_brand {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: [brand_name]
+    hidden: yes
   }
 }

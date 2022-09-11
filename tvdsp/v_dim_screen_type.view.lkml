@@ -21,6 +21,7 @@ view: v_dim_screen_type {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_screen_type {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -44,6 +46,7 @@ view: v_dim_screen_type {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: screen_type_code {
@@ -51,23 +54,12 @@ view: v_dim_screen_type {
     sql: ${TABLE}.Screen_Type_Code ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_screen_type_code {
-    type: sum
-    sql: ${screen_type_code} ;;
-  }
-
-  measure: average_screen_type_code {
-    type: average
-    sql: ${screen_type_code} ;;
-  }
 
   dimension: screen_type_key {
     type: number
     sql: ${TABLE}.Screen_Type_Key ;;
+    hidden: yes
   }
 
   dimension: screen_type_name {
@@ -78,5 +70,6 @@ view: v_dim_screen_type {
   measure: count {
     type: count
     drill_fields: [screen_type_name]
+    hidden: yes
   }
 }

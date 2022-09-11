@@ -21,6 +21,7 @@ view: v_dim_player_width_passed {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_player_width_passed {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -46,23 +48,11 @@ view: v_dim_player_width_passed {
     sql: ${TABLE}.Player_Width_Passed_Exact_Width ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_player_width_passed_exact_width {
-    type: sum
-    sql: ${player_width_passed_exact_width} ;;
-  }
-
-  measure: average_player_width_passed_exact_width {
-    type: average
-    sql: ${player_width_passed_exact_width} ;;
-  }
 
   dimension: player_width_passed_key {
     type: number
     sql: ${TABLE}.Player_Width_Passed_Key ;;
+    hidden: yes
   }
 
   dimension: player_width_passed_range {
@@ -78,5 +68,6 @@ view: v_dim_player_width_passed {
   measure: count {
     type: count
     drill_fields: []
+    hidden: yes
   }
 }

@@ -6,11 +6,17 @@ include: "/**/*.view.lkml"                 # include all views in this project
 
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
-#
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
+
 explore: v_fact_ad_events_hourly_agg {
   always_filter: {
     filters: [v_fact_ad_events_hourly_agg.date_time_key: "last 14 days ago for 14 days"]
   }
+  required_access_grants: [can_view_pub_come_looker]
   #persist_with: CleanCash_datagroup
   label: "TVDSP"
   view_label: "Measures"
@@ -110,10 +116,10 @@ explore: v_fact_ad_events_hourly_agg {
     sql_on: ${v_dim_dma.dma_key}y}=${v_fact_ad_events_hourly_agg.dma_key} ;;
     relationship: many_to_one
   }
-  join: v_dim_deal {
+  join: v_dim_deal_tv {
     view_label: "Deal"
     type: inner
-    sql_on: ${v_dim_deal.deal_key}=${v_fact_ad_events_hourly_agg.deal_key} ;;
+    sql_on: ${v_dim_deal_tv.deal_key}=${v_fact_ad_events_hourly_agg.deal_key} ;;
     relationship: many_to_one
   }
   join: v_dim_domain {
@@ -139,10 +145,10 @@ explore: v_fact_ad_events_hourly_agg {
     relationship: many_to_one
   }
 
-  join: v_dim_os {
+  join: v_dim_os_tv {
     view_label: "OS"
     type: inner
-    sql_on: ${v_dim_os.os_key}=${v_fact_ad_events_hourly_agg.os_key} ;;
+    sql_on: ${v_dim_os_tv.os_key}=${v_fact_ad_events_hourly_agg.os_key} ;;
     relationship: many_to_one
   }
 

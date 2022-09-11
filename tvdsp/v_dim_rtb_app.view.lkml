@@ -21,6 +21,7 @@ view: v_dim_rtb_app {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_rtb_app {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -44,6 +46,7 @@ view: v_dim_rtb_app {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: rtb_app_id {
@@ -54,24 +57,12 @@ view: v_dim_rtb_app {
   dimension: rtb_app_key {
     type: number
     sql: ${TABLE}.RTB_App_Key ;;
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_rtb_app_key {
-    type: sum
-    sql: ${rtb_app_key} ;;
-  }
-
-  measure: average_rtb_app_key {
-    type: average
-    sql: ${rtb_app_key} ;;
+    hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: []
+    hidden: yes
   }
 }

@@ -18,20 +18,7 @@ view: v_dim_buy_sub_type {
   dimension: buy_sub_type_key {
     type: number
     sql: ${TABLE}.Buy_Sub_Type_Key ;;
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_buy_sub_type_key {
-    type: sum
-    sql: ${buy_sub_type_key} ;;
-  }
-
-  measure: average_buy_sub_type_key {
-    type: average
-    sql: ${buy_sub_type_key} ;;
+    hidden: yes
   }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
@@ -49,6 +36,7 @@ view: v_dim_buy_sub_type {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -63,15 +51,18 @@ view: v_dim_buy_sub_type {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: []
+    hidden: yes
   }
 }

@@ -21,6 +21,7 @@ view: v_dim_sf_opportunity {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_sf_opportunity {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -44,6 +46,7 @@ view: v_dim_sf_opportunity {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: sf_account_id {
@@ -280,6 +283,6 @@ view: v_dim_sf_opportunity {
 
   measure: count {
     type: count
-    drill_fields: [sf_opportunity_name, sf_stage_name, sf_campaign_name]
+    drill_fields: [sf_campaign_name, sf_opportunity_name, sf_stage_name]
   }
 }

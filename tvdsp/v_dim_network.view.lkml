@@ -9,17 +9,8 @@ view: v_dim_network {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: creation {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: creation {
+    type: date
     sql: ${TABLE}.Creation_Date ;;
   }
 
@@ -44,6 +35,7 @@ view: v_dim_network {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -58,25 +50,12 @@ view: v_dim_network {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension: deleted {
     type: number
     sql: ${TABLE}.Deleted ;;
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_deleted {
-    type: sum
-    sql: ${deleted} ;;
-  }
-
-  measure: average_deleted {
-    type: average
-    sql: ${deleted} ;;
   }
 
   dimension_group: loaded {
@@ -91,6 +70,7 @@ view: v_dim_network {
       year
     ]
     sql: ${TABLE}.Loaded ;;
+    hidden: yes
   }
 
   dimension: name {
@@ -101,16 +81,19 @@ view: v_dim_network {
   dimension: network_id {
     type: number
     sql: ${TABLE}.Network_ID ;;
+    hidden: yes
   }
 
   dimension: network_key {
     type: number
     sql: ${TABLE}.Network_Key ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: status {
@@ -126,5 +109,6 @@ view: v_dim_network {
   measure: count {
     type: count
     drill_fields: [name]
+    hidden: yes
   }
 }

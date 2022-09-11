@@ -30,21 +30,25 @@ view: v_dim_flight_tv {
   dimension: ad_format {
     type: string
     sql: ${TABLE}.Ad_Format ;;
+    hidden: yes
   }
 
   dimension: ad_format_key {
     type: number
     sql: ${TABLE}.Ad_Format_Key ;;
+    hidden: yes
   }
 
   dimension: advertiser_id {
     type: number
     sql: ${TABLE}.Advertiser_ID ;;
+    hidden: yes
   }
 
   dimension: advertiser_key {
     type: number
     sql: ${TABLE}.Advertiser_Key ;;
+    hidden: yes
   }
 
   dimension: agency_fee_pct {
@@ -70,11 +74,13 @@ view: v_dim_flight_tv {
   dimension: bid_strategy_type {
     type: string
     sql: ${TABLE}.Bid_Strategy_Type ;;
+    hidden: yes
   }
 
   dimension: bid_strategy_type_key {
     type: number
     sql: ${TABLE}.Bid_Strategy_Type_Key ;;
+    hidden: yes
   }
 
   dimension: billing_ad_server {
@@ -85,11 +91,13 @@ view: v_dim_flight_tv {
   dimension: brand_id {
     type: number
     sql: ${TABLE}.Brand_ID ;;
+    hidden: yes
   }
 
   dimension: brand_key {
     type: number
     sql: ${TABLE}.Brand_Key ;;
+    hidden: yes
   }
 
   dimension: brand_metric {
@@ -110,31 +118,37 @@ view: v_dim_flight_tv {
   dimension: buy_sub_type {
     type: string
     sql: ${TABLE}.Buy_Sub_Type ;;
+    hidden: yes
   }
 
   dimension: buy_sub_type_key {
     type: number
     sql: ${TABLE}.Buy_Sub_Type_Key ;;
+    hidden: yes
   }
 
   dimension: buy_type {
     type: string
     sql: ${TABLE}.Buy_Type ;;
+    hidden: yes
   }
 
   dimension: buy_type_key {
     type: number
     sql: ${TABLE}.Buy_Type_Key ;;
+    hidden: yes
   }
 
   dimension: campaign_id {
     type: number
     sql: ${TABLE}.Campaign_ID ;;
+    hidden: yes
   }
 
   dimension: campaign_key {
     type: number
     sql: ${TABLE}.Campaign_Key ;;
+    hidden: yes
   }
 
   dimension: comscore_target_demo_ages {
@@ -164,6 +178,7 @@ view: v_dim_flight_tv {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -178,6 +193,7 @@ view: v_dim_flight_tv {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension: deleted {
@@ -205,17 +221,8 @@ view: v_dim_flight_tv {
     sql: ${TABLE}.Enabled_30s_Completion ;;
   }
 
-  dimension_group: end {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: end {
+    type: date
     sql: ${TABLE}.End_Date ;;
   }
 
@@ -228,6 +235,7 @@ view: v_dim_flight_tv {
     type: number
     value_format_name: id
     sql: ${TABLE}.External_ID_Key ;;
+    hidden: yes
   }
 
   dimension: flight_id {
@@ -238,6 +246,7 @@ view: v_dim_flight_tv {
   dimension: flight_key {
     type: number
     sql: ${TABLE}.Flight_Key ;;
+    hidden: yes
   }
 
   dimension: flight_name {
@@ -253,11 +262,13 @@ view: v_dim_flight_tv {
   dimension: flight_type {
     type: string
     sql: ${TABLE}.Flight_Type ;;
+    hidden: yes
   }
 
   dimension: flight_type_key {
     type: number
     sql: ${TABLE}.Flight_Type_Key ;;
+    hidden: yes
   }
 
   dimension: goal_kpi_value {
@@ -303,20 +314,6 @@ view: v_dim_flight_tv {
   dimension: impressions_cap {
     type: number
     sql: ${TABLE}.Impressions_Cap ;;
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_impressions_cap {
-    type: sum
-    sql: ${impressions_cap} ;;
-  }
-
-  measure: average_impressions_cap {
-    type: average
-    sql: ${impressions_cap} ;;
   }
 
   dimension: is_behavioral_targeted {
@@ -413,6 +410,7 @@ view: v_dim_flight_tv {
   dimension: network_key {
     type: number
     sql: ${TABLE}.Network_Key ;;
+    hidden: yes
   }
 
   dimension: nielsen_fee {
@@ -428,11 +426,13 @@ view: v_dim_flight_tv {
   dimension: placement_group_id {
     type: number
     sql: ${TABLE}.Placement_Group_ID ;;
+    hidden: yes
   }
 
   dimension: placement_group_key {
     type: number
     sql: ${TABLE}.Placement_Group_Key ;;
+    hidden: yes
   }
 
   dimension: predictive_viewability_cpm {
@@ -453,21 +453,25 @@ view: v_dim_flight_tv {
   dimension: product_type_key {
     type: number
     sql: ${TABLE}.Product_Type_Key ;;
+    hidden: yes
   }
 
   dimension: rate_type {
     type: string
     sql: ${TABLE}.Rate_Type ;;
+    hidden: yes
   }
 
   dimension: rate_type_key {
     type: number
     sql: ${TABLE}.Rate_Type_Key ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: secondary_goal_kpi_value {
@@ -483,6 +487,7 @@ view: v_dim_flight_tv {
   dimension: sf_flight_key {
     type: number
     sql: ${TABLE}.SF_Flight_Key ;;
+    hidden: yes
   }
 
   dimension: site_fraud_brand_safety_double_verify_fee_cpm {
@@ -495,17 +500,8 @@ view: v_dim_flight_tv {
     sql: ${TABLE}.Site_Fraud_CPM ;;
   }
 
-  dimension_group: start_date {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: start_date {
+    type: date
     sql: ${TABLE}.Start_Date ;;
   }
 
@@ -547,11 +543,13 @@ view: v_dim_flight_tv {
   dimension: tremor_video_dsp_fee_base_type {
     type: string
     sql: ${TABLE}.Tremor_Video_DSP_Fee_Base_Type ;;
+    hidden: yes
   }
 
   dimension: tremor_video_dsp_fee_base_type_key {
     type: number
     sql: ${TABLE}.Tremor_Video_DSP_Fee_Base_Type_Key ;;
+    hidden: yes
   }
 
   dimension: tremor_video_dsp_fee_pct {
@@ -572,5 +570,6 @@ view: v_dim_flight_tv {
   measure: count {
     type: count
     drill_fields: [flight_name]
+    hidden: yes
   }
 }

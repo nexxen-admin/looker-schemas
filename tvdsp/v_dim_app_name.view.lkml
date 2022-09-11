@@ -11,6 +11,7 @@ view: v_dim_app_name {
   # This dimension will be called "App Name" in Explore.
 
   dimension: app_name {
+    label: "App Name"
     type: string
     sql: ${TABLE}.App_Name ;;
   }
@@ -18,23 +19,11 @@ view: v_dim_app_name {
   dimension: app_name_key {
     type: number
     sql: ${TABLE}.App_Name_Key ;;
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_app_name_key {
-    type: sum
-    sql: ${app_name_key} ;;
-  }
-
-  measure: average_app_name_key {
-    type: average
-    sql: ${app_name_key} ;;
+    hidden: yes
   }
 
   dimension: bid_stream_name {
+    label: "Bid Stream Name"
     type: string
     sql: ${TABLE}.BidStream_Name ;;
   }
@@ -54,6 +43,7 @@ view: v_dim_app_name {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -68,9 +58,11 @@ view: v_dim_app_name {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension: manual_name {
+    label: "Manual Name"
     type: string
     sql: ${TABLE}.Manual_Name ;;
   }
@@ -78,9 +70,11 @@ view: v_dim_app_name {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: tp_source_name {
+    label: "Tp Source Name"
     type: string
     sql: ${TABLE}.TP_Source_Name ;;
   }
@@ -88,5 +82,6 @@ view: v_dim_app_name {
   measure: count {
     type: count
     drill_fields: [app_name, tp_source_name, manual_name, bid_stream_name]
+    hidden: yes
   }
 }

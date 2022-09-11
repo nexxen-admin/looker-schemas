@@ -23,17 +23,8 @@ view: v_dim_campaign {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: campaign_end {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: campaign_end {
+    type: date
     sql: ${TABLE}.Campaign_End_Date ;;
   }
 
@@ -50,34 +41,19 @@ view: v_dim_campaign {
   dimension: campaign_key {
     type: number
     sql: ${TABLE}.Campaign_Key ;;
+    hidden: yes
   }
 
-  dimension_group: campaign_max_placement_end {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: campaign_max_placement_end {
+    type: date
     sql: ${TABLE}.Campaign_Max_Placement_End_Date ;;
+    hidden: yes
   }
 
-  dimension_group: campaign_min_placement_start {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: campaign_min_placement_start {
+    type: date
     sql: ${TABLE}.Campaign_Min_Placement_Start_Date ;;
+    hidden: yes
   }
 
   dimension: campaign_name {
@@ -85,37 +61,14 @@ view: v_dim_campaign {
     sql: ${TABLE}.Campaign_Name ;;
   }
 
-  dimension_group: campaign_start {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: campaign_start {
+    type: date
     sql: ${TABLE}.Campaign_Start_Date ;;
   }
 
   dimension: campaign_sum_flight_booked_amount {
     type: number
     sql: ${TABLE}.Campaign_Sum_Flight_Booked_Amount ;;
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_campaign_sum_flight_booked_amount {
-    type: sum
-    sql: ${campaign_sum_flight_booked_amount} ;;
-  }
-
-  measure: average_campaign_sum_flight_booked_amount {
-    type: average
-    sql: ${campaign_sum_flight_booked_amount} ;;
   }
 
   dimension: campaign_sum_flight_gross_budget {
@@ -135,6 +88,7 @@ view: v_dim_campaign {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -149,6 +103,7 @@ view: v_dim_campaign {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension_group: loaded {
@@ -163,11 +118,13 @@ view: v_dim_campaign {
       year
     ]
     sql: ${TABLE}.Loaded ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: total_population {
@@ -178,5 +135,6 @@ view: v_dim_campaign {
   measure: count {
     type: count
     drill_fields: [campaign_name]
+    hidden: yes
   }
 }

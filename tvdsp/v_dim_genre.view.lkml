@@ -21,6 +21,7 @@ view: v_dim_genre {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_genre {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -44,21 +46,9 @@ view: v_dim_genre {
   dimension: genre_key {
     type: number
     sql: ${TABLE}.Genre_Key ;;
+    hidden: yes
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_genre_key {
-    type: sum
-    sql: ${genre_key} ;;
-  }
-
-  measure: average_genre_key {
-    type: average
-    sql: ${genre_key} ;;
-  }
 
   dimension: genre_name {
     type: string
@@ -68,10 +58,12 @@ view: v_dim_genre {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: [genre_name]
+    hidden: yes
   }
 }

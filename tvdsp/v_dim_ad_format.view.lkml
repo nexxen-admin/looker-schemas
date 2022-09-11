@@ -11,6 +11,7 @@ view: v_dim_ad_format {
   # This dimension will be called "Ad Format" in Explore.
 
   dimension: ad_format {
+    label: "Ad Format"
     type: string
     sql: ${TABLE}.Ad_Format ;;
   }
@@ -18,21 +19,9 @@ view: v_dim_ad_format {
   dimension: ad_format_key {
     type: number
     sql: ${TABLE}.Ad_Format_Key ;;
+    hidden: yes
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_ad_format_key {
-    type: sum
-    sql: ${ad_format_key} ;;
-  }
-
-  measure: average_ad_format_key {
-    type: average
-    sql: ${ad_format_key} ;;
-  }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
@@ -49,6 +38,7 @@ view: v_dim_ad_format {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -63,15 +53,18 @@ view: v_dim_ad_format {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: []
+    hidden: yes
   }
 }

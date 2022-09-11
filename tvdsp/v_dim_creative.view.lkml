@@ -13,31 +13,37 @@ view: v_dim_creative {
   dimension: ad_format {
     type: string
     sql: ${TABLE}.Ad_Format ;;
+    hidden: yes
   }
 
   dimension: ad_format_key {
     type: number
     sql: ${TABLE}.Ad_Format_Key ;;
+    hidden: yes
   }
 
   dimension: advertiser_id {
     type: number
     sql: ${TABLE}.Advertiser_ID ;;
+    hidden: yes
   }
 
   dimension: advertiser_key {
     type: number
     sql: ${TABLE}.Advertiser_Key ;;
+    hidden: yes
   }
 
   dimension: agency_id {
     type: number
     sql: ${TABLE}.Agency_ID ;;
+    hidden: yes
   }
 
   dimension: agency_key {
     type: number
     sql: ${TABLE}.Agency_Key ;;
+    hidden: yes
   }
 
   dimension: creative_id {
@@ -48,6 +54,7 @@ view: v_dim_creative {
   dimension: creative_key {
     type: number
     sql: ${TABLE}.Creative_Key ;;
+    hidden: yes
   }
 
   dimension: creative_name {
@@ -58,11 +65,13 @@ view: v_dim_creative {
   dimension: creative_type {
     type: string
     sql: ${TABLE}.Creative_Type ;;
+    hidden: yes
   }
 
   dimension: creative_type_key {
     type: number
     sql: ${TABLE}.Creative_Type_Key ;;
+    hidden: yes
   }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
@@ -80,6 +89,7 @@ view: v_dim_creative {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -94,25 +104,12 @@ view: v_dim_creative {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension: duration {
     type: number
     sql: ${TABLE}.Duration ;;
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_duration {
-    type: sum
-    sql: ${duration} ;;
-  }
-
-  measure: average_duration {
-    type: average
-    sql: ${duration} ;;
   }
 
   dimension: external_id {
@@ -132,21 +129,25 @@ view: v_dim_creative {
       year
     ]
     sql: ${TABLE}.Loaded ;;
+    hidden: yes
   }
 
   dimension: network_id {
     type: number
     sql: ${TABLE}.Network_ID ;;
+    hidden: yes
   }
 
   dimension: network_key {
     type: number
     sql: ${TABLE}.Network_Key ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: status {
@@ -157,5 +158,6 @@ view: v_dim_creative {
   measure: count {
     type: count
     drill_fields: [creative_name]
+    hidden: yes
   }
 }

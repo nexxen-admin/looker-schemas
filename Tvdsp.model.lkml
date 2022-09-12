@@ -45,14 +45,14 @@ explore: v_fact_ad_events_hourly_agg {
 
   join: v_dim_app_name {
     type: inner
-    view_label: "App Name"
+    view_label: "App/Domain Attributes"
     sql_on: ${v_dim_app_name.app_name_key}= ${v_fact_ad_events_hourly_agg.app_name_key};;
     relationship: many_to_one
   }
 
   join: v_dim_app_bundle {
     type: inner
-    view_label: "App Bundle"
+    view_label: "App/Domain Attributes"
     sql_on: ${v_dim_app_bundle.app_bundle_key}=${v_fact_ad_events_hourly_agg.app_bundle_key};;
     relationship: many_to_one
   }
@@ -98,7 +98,7 @@ explore: v_fact_ad_events_hourly_agg {
   join: v_dim_creative_type {
 
     type: inner
-    view_label: "Creative Type"
+    view_label: "Creative"
     sql_on: ${v_dim_creative.creative_type_key}=${v_fact_ad_events_hourly_agg.creative_type_key} ;;
     relationship: many_to_one
   }
@@ -123,7 +123,7 @@ explore: v_fact_ad_events_hourly_agg {
     relationship: many_to_one
   }
   join: v_dim_domain {
-    view_label: "Domain"
+    view_label: "App/Domain Attributes"
     type: inner
     sql_on: ${v_dim_domain.domain_key}=${v_fact_ad_events_hourly_agg.domain_key} ;;
     relationship: many_to_one
@@ -160,7 +160,7 @@ explore: v_fact_ad_events_hourly_agg {
   }
 
   join: v_dim_rtb_app {
-    view_label: "RTB App"
+    view_label: "RTB Attributes"
     type: inner
     sql_on: ${v_dim_rtb_app.rtb_app_key}=${v_fact_ad_events_hourly_agg.rtb_app_key} ;;
     relationship: many_to_one
@@ -168,14 +168,14 @@ explore: v_fact_ad_events_hourly_agg {
 
 
   join: v_dim_rtb_media {
-    view_label: "RTB Media"
+    view_label: "RTB Attributes"
     type: inner
     sql_on: ${v_dim_rtb_media.rtb_media_key}=${v_fact_ad_events_hourly_agg.rtb_media_key} ;;
     relationship: many_to_one
   }
 
   join: v_dim_rtb_publisher {
-    view_label: "RTB Publisher"
+    view_label: "RTB Attributes"
     type: inner
     sql_on: ${v_dim_rtb_publisher.rtb_publisher_key}=${v_fact_ad_events_hourly_agg.rtb_publisher_key} ;;
     relationship: many_to_one
@@ -183,7 +183,7 @@ explore: v_fact_ad_events_hourly_agg {
 
 
   join: v_dim_rtb_site_name {
-    view_label: "RTB Site Name"
+    view_label: "RTB Attributes"
     type: inner
     sql_on: ${v_dim_rtb_site_name.rtb_site_name_key}=${v_fact_ad_events_hourly_agg.rtb_site_name_key} ;;
     relationship: many_to_one

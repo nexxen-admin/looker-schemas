@@ -23,7 +23,7 @@ explore: v_fact_ad_events_hourly_agg {
 
   join: v_dim_ad_orientation {
     type: inner
-    view_label: "Ad Oriantation"
+    view_label: "Ad Attributes"
     sql_on: ${v_dim_ad_orientation.ad_orientation_key}=${v_fact_ad_events_hourly_agg.ad_orientation_key};;
     relationship: many_to_one
   }

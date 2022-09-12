@@ -38,7 +38,7 @@ explore: v_fact_ad_events_hourly_agg {
 
   join: v_dim_ad_position {
     type: inner
-    view_label: "Ad Position"
+    view_label: "Ad Attributes"
     sql_on: ${v_dim_ad_position.ad_position_key}=${v_fact_ad_events_hourly_agg.ad_position_key} ;;
     relationship: many_to_one
   }
@@ -59,7 +59,7 @@ explore: v_fact_ad_events_hourly_agg {
 
   join: v_dim_browser_type {
     type: inner
-    view_label: "Browser Type"
+    view_label: "App/Domain Attributes"
     sql_on: ${v_dim_browser_type.browser_type_key}=${v_fact_ad_events_hourly_agg.browser_type_key} ;;
     relationship: many_to_one
   }

@@ -59,7 +59,7 @@ explore: v_fact_ad_events_hourly_agg {
 
   join: v_dim_browser_type {
     type: inner
-    view_label: "App/Domain Attributes"
+    view_label: "Device Attributes"
     sql_on: ${v_dim_browser_type.browser_type_key}=${v_fact_ad_events_hourly_agg.browser_type_key} ;;
     relationship: many_to_one
   }
@@ -146,14 +146,14 @@ explore: v_fact_ad_events_hourly_agg {
   }
 
   join: v_dim_os_tv {
-    view_label: "OS"
+    view_label: "Device Attributes"
     type: inner
     sql_on: ${v_dim_os_tv.os_key}=${v_fact_ad_events_hourly_agg.os_key} ;;
     relationship: many_to_one
   }
 
   join: v_dim_product_type {
-    view_label: "Product Type"
+    view_label: "Device Attributes"
     type: inner
     sql_on: ${v_dim_product_type.product_type_key}=${v_fact_ad_events_hourly_agg.product_type_key} ;;
     relationship: many_to_one
@@ -189,7 +189,7 @@ explore: v_fact_ad_events_hourly_agg {
     relationship: many_to_one
   }
   join: v_dim_screen_type {
-    view_label: "Screen Type"
+    view_label: "Device Attributes"
     type: inner
     sql_on: ${v_dim_screen_type.screen_type_key}=${v_fact_ad_events_hourly_agg.screen_type_key} ;;
     relationship: many_to_one
@@ -201,7 +201,7 @@ explore: v_fact_ad_events_hourly_agg {
     relationship: many_to_one
   }
   join: v_dim_video_type {
-    view_label: "Video Type"
+    view_label: "Ad Attributes"
     type: inner
     sql_on: ${v_dim_video_type.video_type_key}=${v_fact_ad_events_hourly_agg.video_type_key} ;;
     relationship: many_to_one

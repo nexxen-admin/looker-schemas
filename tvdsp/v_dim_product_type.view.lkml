@@ -46,6 +46,7 @@ view: v_dim_product_type {
   dimension: product_type_code {
     type: number
     sql: ${TABLE}.Product_Type_Code ;;
+    hidden: yes
   }
 
   dimension: product_type_key {

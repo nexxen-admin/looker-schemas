@@ -15,20 +15,6 @@ view: v_dim_ssp_tv {
     sql: ${TABLE}.Active ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_active {
-    type: sum
-    sql: ${active} ;;
-  }
-
-  measure: average_active {
-    type: average
-    sql: ${active} ;;
-  }
-
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
@@ -44,6 +30,7 @@ view: v_dim_ssp_tv {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -58,6 +45,7 @@ view: v_dim_ssp_tv {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension_group: loaded {
@@ -72,11 +60,13 @@ view: v_dim_ssp_tv {
       year
     ]
     sql: ${TABLE}.Loaded ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: ssp_exchange_name {
@@ -97,6 +87,7 @@ view: v_dim_ssp_tv {
   dimension: ssp_key {
     type: number
     sql: ${TABLE}.SSP_Key ;;
+    hidden: yes
   }
 
   dimension: ssp_name {
@@ -112,5 +103,6 @@ view: v_dim_ssp_tv {
   measure: count {
     type: count
     drill_fields: [ssp_ui_name, ssp_name, ssp_exchange_name, ssp_external_name]
+    hidden: yes
   }
 }

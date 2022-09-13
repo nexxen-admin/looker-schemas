@@ -87,7 +87,7 @@ view: v_fact_ad_events_hourly_agg {
   dimension: date_time_key {
     type: date
     sql: ${TABLE}.DateTime_Key ;;
-    hidden: yes
+   # hidden: yes
   }
 
   dimension: deal_key {

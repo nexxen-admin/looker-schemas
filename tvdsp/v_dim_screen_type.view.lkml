@@ -52,6 +52,7 @@ view: v_dim_screen_type {
   dimension: screen_type_code {
     type: number
     sql: ${TABLE}.Screen_Type_Code ;;
+    hidden: yes
   }
 
 

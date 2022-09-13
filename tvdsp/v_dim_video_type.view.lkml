@@ -21,6 +21,7 @@ view: v_dim_video_type {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -35,6 +36,7 @@ view: v_dim_video_type {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -44,26 +46,16 @@ view: v_dim_video_type {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: video_type_key {
     type: number
     sql: ${TABLE}.Video_Type_Key ;;
+    hidden: yes
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_video_type_key {
-    type: sum
-    sql: ${video_type_key} ;;
-  }
-
-  measure: average_video_type_key {
-    type: average
-    sql: ${video_type_key} ;;
-  }
 
   dimension: video_type_name {
     type: string
@@ -73,5 +65,6 @@ view: v_dim_video_type {
   measure: count {
     type: count
     drill_fields: [video_type_name]
+    hidden: yes
   }
 }

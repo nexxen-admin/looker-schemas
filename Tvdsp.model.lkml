@@ -75,7 +75,7 @@ explore: v_fact_ad_events_hourly_agg {
   join: v_dim_country_tv {
 
     type: inner
-    view_label: "Country"
+    view_label: "GEO"
     sql_on: ${v_dim_country_tv.country_key}=${v_fact_ad_events_hourly_agg.country_key} ;;
     relationship: many_to_one
   }
@@ -111,7 +111,7 @@ explore: v_fact_ad_events_hourly_agg {
   }
 
   join: v_dim_dma {
-    view_label: "DMA"
+    view_label: "GEO"
     type: inner
     sql_on: ${v_dim_dma.dma_key}=${v_fact_ad_events_hourly_agg.dma_key} ;;
     relationship: many_to_one

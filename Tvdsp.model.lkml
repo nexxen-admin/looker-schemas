@@ -113,7 +113,7 @@ explore: v_fact_ad_events_hourly_agg {
   join: v_dim_dma {
     view_label: "DMA"
     type: inner
-    sql_on: ${v_dim_dma.dma_key}y}=${v_fact_ad_events_hourly_agg.dma_key} ;;
+    sql_on: ${v_dim_dma.dma_key}=${v_fact_ad_events_hourly_agg.dma_key} ;;
     relationship: many_to_one
   }
   join: v_dim_deal_tv {

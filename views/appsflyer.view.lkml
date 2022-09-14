@@ -30,6 +30,41 @@ view: appsflyer {
     sql: ${TABLE}.Blocked_Events ;;
   }
 
+  measure: Revenue {
+    type: number
+    sql: ${cpi_revenue}+${cpe_revenue} ;;
+  }
+  measure: Payout {
+    type: number
+    sql: ${cpi_payout}+${cpe_payout} ;;
+  }
+
+  measure: Profit {
+    type: number
+    sql: (${cpi_revenue}+${cpe_revenue})-(${cpi_payout}+${cpe_payout}) ;;
+  }
+
+
+  measure: Margin {
+    type: number
+    label: "Margin%"
+    value_format: "0.00%"
+    sql: ((${cpi_revenue}+${cpe_revenue})-(${cpi_payout}+${cpe_payout}))/NULLIF((${cpi_revenue}+${cpe_revenue}),0);;
+  }
+
+  measure: Post_Attribution{
+    type: number
+    label: "Post_Attribution%"
+    value_format: "0.00%"
+    sql: ${post_attribution_conversions}/NULLIF(${conversions},0);;
+  }
+  measure: Blocked_Attribution{
+    type: number
+    label: "Blocked_Attribution%"
+    value_format: "0.00%"
+    sql: ${blocked_conversions}/NULLIF((${conversions}+${blocked_conversions}),0);;
+  }
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
@@ -149,6 +184,13 @@ view: appsflyer {
     sql: ${TABLE}.event_time ;;
   }
 
+
+
+  dimension: app_event_time {
+    label: "New Time Date"
+    type: date
+    sql: ${TABLE}.app_event_time ;;
+  }
   dimension: fraud_reason {
     type: string
     sql: ${TABLE}.fraud_reason ;;

@@ -9,6 +9,13 @@ datagroup: CleanCash_datagroup {
   label: "Clean Cash Trigger"
   description: "Triggered when new date is added to ETL"
 }
+datagroup: TapticaCleanCash_datagroup {
+  sql_trigger: SELECT max(app_event_time) FROM bi_new.appsflyer ;;
+  max_cache_age: "15 hours"
+  label: "Clean Cash Trigger"
+  description: "Triggered when new date is added to ETL"
+}
+
 
 access_grant: can_view_pub_come_looker {
   user_attribute: admins
@@ -51,6 +58,7 @@ explore: impression_r {
 
 explore: appsflyer{
   label: "Appsflyer"
+  persist_with:TapticaCleanCash_datagroup
   required_access_grants: [can_view_Taptica]
 }
 

@@ -49,20 +49,20 @@ view: appsflyer {
     type: number
     label: "Margin%"
     value_format: "0.00%"
-    sql: ((${cpi_revenue}+${cpe_revenue})-(${cpi_payout}+${cpe_payout}))/(${cpi_revenue}+${cpe_revenue});;
+    sql: ((${cpi_revenue}+${cpe_revenue})-(${cpi_payout}+${cpe_payout}))/NULLIF((${cpi_revenue}+${cpe_revenue}),0);;
   }
 
   measure: Post_Attribution{
     type: number
     label: "Post_Attribution%"
     value_format: "0.00%"
-    sql: ${post_attribution_conversions}/${conversions};;
+    sql: ${post_attribution_conversions}/NULLIF(${conversions},0);;
   }
   measure: Blocked_Attribution{
     type: number
     label: "Blocked_Attribution%"
     value_format: "0.00%"
-    sql: ${blocked_conversions}/(${conversions}+${blocked_conversions});;
+    sql: ${blocked_conversions}/NULLIF((${conversions}+${blocked_conversions}),0);;
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average

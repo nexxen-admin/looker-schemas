@@ -154,7 +154,7 @@ view: appsflyer {
   dimension: app_event_time {
     label: "New Time Date"
     type: date
-    sql: ${TABLE}.event_time ;;
+    sql: ${TABLE}.app_event_time ;;
   }
   dimension: fraud_reason {
     type: string

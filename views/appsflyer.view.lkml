@@ -30,6 +30,41 @@ view: appsflyer {
     sql: ${TABLE}.Blocked_Events ;;
   }
 
+  measure: Revenue {
+    type: number
+    sql: ${cpi_revenue}+${cpe_revenue} ;;
+  }
+  measure: Payout {
+    type: number
+    sql: ${cpi_payout}+${cpe_payout} ;;
+  }
+
+  measure: Profit {
+    type: number
+    sql: (${cpi_revenue}+${cpe_revenue})-(${cpi_payout}+${cpe_payout}) ;;
+  }
+
+
+  measure: Margin {
+    type: number
+    label: "Margin%"
+    value_format: "0.00%"
+    sql: ((${cpi_revenue}+${cpe_revenue})-(${cpi_payout}+${cpe_payout}))/(${cpi_revenue}+${cpe_revenue});;
+  }
+
+  measure: Post_Attribution{
+    type: number
+    label: "Post_Attribution%"
+    value_format: "0.00%"
+    sql: ${post_attribution_conversions}/${conversions};;
+  }
+  measure: Blocked_Attribution{
+    type: number
+    label: "Blocked_Attribution%"
+    value_format: "0.00%"
+    sql: ${blocked_conversions}/(${conversions}+${blocked_conversions});;
+  }
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.

@@ -149,6 +149,13 @@ view: appsflyer {
     sql: ${TABLE}.event_time ;;
   }
 
+
+
+  dimension: app_event_time {
+    label: "New Time Date"
+    type: date
+    sql: ${TABLE}.event_time ;;
+  }
   dimension: fraud_reason {
     type: string
     sql: ${TABLE}.fraud_reason ;;

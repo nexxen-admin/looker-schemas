@@ -3,9 +3,9 @@ view: just_bare_chicken_5_27_22 {
     sql: SELECT  date::date as "Date",
         TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
         flight_id as "Flight ID",
-        CASE WHEN flight_id IN(4320336, 4408076)  THEN 'CTV + BT + Zip Targeting'
-           WHEN flight_id = 4408246 THEN 'CTV 1% Added Value'
-           WHEN flight_id = 4408216 THEN 'All Screen 1% AV'
+        CASE WHEN flight_id IN(4320336, 4408076, 4408086)  THEN 'CTV + BT + Zip Targeting'
+           WHEN flight_id IN (4408246,4408256) THEN 'CTV 1% Added Value'
+           WHEN flight_id IN (4408216, 4408226) THEN 'All Screen 1% AV'
              ELSE 'All Screen OTT + BT + Zip Targeting' END AS "Placement Name",
         CASE WHEN creative_id IN (8542426, 8542436) THEN 'SPIL000I009H_FRESH_CB'
            ELSE 'BARE2202_TheQuestion_30' END as "Creative Name",
@@ -15,7 +15,7 @@ view: just_bare_chicken_5_27_22 {
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
         SUM(conversions) as "Conversions",
-        CASE WHEN flight_id IN(4320336, 4320346, 4408076, 4408146) THEN (SUM(impressions)/1000) * 21.75
+        CASE WHEN flight_id IN(4320336, 4320346, 4408076, 4408146, 4408086, 4408166) THEN (SUM(impressions)/1000) * 21.75
           ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
@@ -23,10 +23,11 @@ FROM dwh.ad_data_daily add2
 WHERE date >= CURRENT_DATE()-7
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
-  and flight_id IN (4320336, 4320346, 4408076, 4408146, 4408246, 4408216)
+  and flight_id IN (4320336, 4320346, 4408076, 4408146, 4408246, 4408216, 4408086, 4408166, 4408256, 4408226)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6
 ORDER BY 1 DESC
+
 
  ;;
   }

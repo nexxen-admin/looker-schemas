@@ -18,6 +18,12 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 #     sql_on: ${users.id} = ${orders.user_id} ;;
 #   }
 # }
+datagroup: ChangeCleanCash_datagroup {
+  sql_trigger: SELECT max(hour) FROM tremor_to_unruly ;;
+  max_cache_age: "15 hours"
+  label: "Clean Cash Trigger"
+  description: "Triggered when new date is added to ETL"
+}
 
 access_grant: can_view_pub_come_looker {
   user_attribute: admins
@@ -94,4 +100,6 @@ explore: phase_2_ak {
 }
 
 explore: tremor_to_unruly {
+  persist_with:ChangeCleanCash_datagroup
+
 }

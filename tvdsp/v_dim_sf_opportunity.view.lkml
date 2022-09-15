@@ -62,6 +62,7 @@ view: v_dim_sf_opportunity {
   dimension: sf_billing_ad_server {
     type: string
     sql: ${TABLE}.SF_Billing_Ad_Server ;;
+    hidden: yes
   }
 
   dimension: sf_billing_agency {

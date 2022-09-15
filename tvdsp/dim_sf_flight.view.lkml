@@ -13,6 +13,7 @@ view: dim_sf_flight {
   dimension: ad_server {
     type: string
     sql: ${TABLE}.Ad_Server ;;
+    hidden: yes
   }
 
   dimension: ad_unit_type {

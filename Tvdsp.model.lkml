@@ -200,5 +200,72 @@ explore: v_fact_ad_events_hourly_agg {
     sql_on: ${v_dim_ssp_tv.ssp_key}=${v_fact_ad_events_hourly_agg.ssp_key} ;;
     relationship: many_to_one
   }
+  join: v_dim_buy_sub_type {
+    view_label: "Sub Type"
+    type: inner
+    sql_on: ${v_dim_buy_sub_type.buy_sub_type_key}=${v_dim_flight_tv.buy_sub_type_key} ;;
+    relationship: many_to_one
+  }
+  join: v_dim_buy_type {
+    view_label: "Buy Type"
+    type: inner
+    sql_on: ${v_dim_buy_type.buy_type_key}=${v_dim_flight_tv.buy_type_key} ;;
+    relationship: many_to_one
+  }
+  join: v_dim_brand {
+    view_label: "Brand"
+    type: inner
+    sql_on: ${v_dim_brand.brand_key} = ${v_dim_flight_tv.brand_key} ;;
+    relationship: many_to_one
+  }
+  join: v_dim_ad_format {
+    view_label: "Ad Attributes"
+    type: inner
+    sql_on: ${v_dim_ad_format.ad_format_key} = ${v_dim_flight_tv.ad_format_key} ;;
+    relationship: many_to_one
+  }
+  join: v_dim_advertiser {
+    view_label: "Brand"
+    type: inner
+    sql_on: ${v_dim_advertiser.advertiser_key} = ${v_dim_flight_tv.brand_key} ;;
+    relationship: many_to_one
+  }
+  join: v_dim_agency {
+    view_label: "Brand"
+    type: inner
+    sql_on: ${v_dim_agency.agency_key} = ${v_dim_advertiser.agency_key} ;;
+    relationship: many_to_one
+  }
+  join: v_dim_placement_group {
+    view_label: "Flight"
+    type: inner
+    sql_on: ${v_dim_placement_group.placement_group_key} = ${v_dim_flight_tv.placement_group_key} ;;
+    relationship: many_to_one
+  }
+  join: v_dim_rate_type{
+    view_label: "Flight"
+    type: inner
+    sql_on: ${v_dim_rate_type.rate_type_key} = ${v_dim_flight_tv.rate_type_key} ;;
+    relationship: many_to_one
+  }
+  join: v_dim_bid_strategy_type {
+    view_label: "Flight"
+    type: inner
+    sql_on: ${v_dim_bid_strategy_type.bid_strategy_type_key} = ${v_dim_flight_tv.bid_strategy_type_key} ;;
+    relationship: many_to_one
+  }
+  join: dim_sf_flight{
+    view_label: "Salseforce Data"
+    type: inner
+    sql_on: ${dim_sf_flight.sf_flight_key} = ${v_dim_flight_tv.sf_flight_key} ;;
+    relationship: many_to_one
+ }
+
+  join: v_dim_sf_opportunity{
+    view_label: "Salseforce Data"
+    type: inner
+    sql_on: ${v_dim_sf_opportunity.sf_opportunity_key} = ${dim_sf_flight.sf_opportunity_key} ;;
+    relationship: many_to_one
+  }
 
 }

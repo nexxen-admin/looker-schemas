@@ -200,10 +200,5 @@ explore: v_fact_ad_events_hourly_agg {
     sql_on: ${v_dim_ssp_tv.ssp_key}=${v_fact_ad_events_hourly_agg.ssp_key} ;;
     relationship: many_to_one
   }
-  join: v_dim_video_type {
-    view_label: "Ad Attributes"
-    type: inner
-    sql_on: ${v_dim_video_type.video_type_key}=${v_fact_ad_events_hourly_agg.video_type_key} ;;
-    relationship: many_to_one
-  }
+
 }

@@ -1,0 +1,140 @@
+view: priority_health_daily_09_19_11 {
+  required_access_grants: [can_view_pub_come_looker]
+  derived_table: {
+    sql: SELECT date::date as "Date",
+      c.flight_number AS "Flight Number",
+      cr.id AS "Creative ID",
+      'Priority Health' AS "Brand Name",
+      CASE WHEN c.flight_number IN('F-300482', 'F-300497', 'F-300494', 'F-300498') THEN 'CTV Plus, BT Targeting, DMA'
+           WHEN c.flight_number IN('F-300490', 'F-300568') THEN 'OLV Plus RTG'
+           ELSE 'OLV Plus, Contextual Targeting, DMA' END AS "Placement Name",
+      CASE WHEN c.flight_number = 'F-300482' THEN 'PH_Tremor_CTV_Behavioral_Detroit_:30'
+           WHEN c.flight_number = 'F-300486' THEN 'PH_Tremor_AllScreen_KeywordList_Detroit_:15 (Line 2)'
+           WHEN c.flight_number = 'F-300490' THEN 'PH_Tremor_AllScreen_Retargeting_AllMarkets_:15'
+           WHEN c.flight_number = 'F-300497' THEN 'PH_Tremor_CTV_Behavioral_GrandRapids_:30'
+           WHEN c.flight_number = 'F-300504' THEN 'PH_Tremor_AllScreen_KeywordList_Detroit_:15 (Line 3)'
+           WHEN c.flight_number = 'F-300508' THEN 'PH_Tremor_AllScreen_KeywordList_Detroit_:15 (Line 4)'
+           WHEN c.flight_number = 'F-300512' THEN 'PH_Tremor_AllScreen_KeywordList_Detroit_:15 (Line 5)'
+           WHEN c.flight_number = 'F-300516' THEN 'PH_Tremor_AllScreen_KeywordList_GrandRapids_:15 (Line 7)'
+           WHEN c.flight_number = 'F-300520' THEN 'PH_Tremor_AllScreen_KeywordList_GrandRapids_:15 (Line 8)'
+           WHEN c.flight_number = 'F-300524' THEN 'PH_Tremor_AllScreen_KeywordList_GrandRapids_:15 (Line 9)'
+           WHEN c.flight_number = 'F-300528' THEN 'PH_Tremor_AllScreen_KeywordList_GrandRapids_:15 (Line 10)'
+           WHEN c.flight_number = 'F-300494' THEN 'PH_Tremor_CTV_Behavioral_Detroit_:30'
+           WHEN c.flight_number = 'F-300498' THEN 'PH_Tremor_CTV_Behavioral_GrandRapids_:30'
+           WHEN c.flight_number = 'F-300501' THEN 'PH_Tremor_AllScreen_KeywordList_Detroit_:15 (Line 2)'
+           WHEN c.flight_number = 'F-300505' THEN 'PH_Tremor_AllScreen_KeywordList_Detroit_:15 (Line 3)'
+           WHEN c.flight_number = 'F-300509' THEN 'PH_Tremor_AllScreen_KeywordList_Detroit_:15 (Line 4)'
+           WHEN c.flight_number = 'F-300513' THEN 'PH_Tremor_AllScreen_KeywordList_Detroit_:15 (Line 5)'
+           WHEN c.flight_number = 'F-300517' THEN 'PH_Tremor_AllScreen_KeywordList_GrandRapids_:15 (Line 7)'
+           WHEN c.flight_number = 'F-300521' THEN 'PH_Tremor_AllScreen_KeywordList_GrandRapids_:15 (Line 8)'
+           WHEN c.flight_number = 'F-300525' THEN 'PH_Tremor_AllScreen_KeywordList_GrandRapids_:15 (Line 9)'
+           WHEN c.flight_number = 'F-300529' THEN 'PH_Tremor_AllScreen_KeywordList_GrandRapids_:15 (Line 10)'
+           ELSE 'PH_Tremor_AllScreen_Retargeting_AllMarkets_:15' END AS "Creative Name",
+    SUM(impressions) AS "Impressions",
+      SUM(completions) AS "Completions",
+      SUM(clicks) AS "Clicks",
+      SUM(completions) / SUM(impressions) AS "VCR",
+      SUM(revenue) as "Spend"
+FROM dwh.ad_data_daily add2
+  left outer join dwh.campaign c on add2.flight_id = c.flight_id
+  left outer join dwh.creative cr on add2.creative_id = cr.id
+WHERE c.flight_number IN ('F-300482','F-300486','F-300490','F-300497','F-300504','F-300508','F-300512',
+              'F-300516','F-300520','F-300524','F-300528','F-300494','F-300498','F-300501',
+                'F-300505','F-300509','F-300513','F-300517','F-300521','F-300525','F-300529','F-300568')
+  AND date >= '2022-09-15'
+  AND date < CURRENT_DATE()
+  AND data_type = 'AD_DATA'
+  AND (impressions > 0 or completions > 0 or clicks > 0)
+GROUP BY 1,2,3,4,5,6
+ORDER BY 1
+ ;;
+  }
+
+  measure: count {
+    type: count
+    drill_fields: [detail*]
+  }
+
+  dimension: date {
+    type: date
+    label: "Date"
+    sql: ${TABLE}."Date" ;;
+    html: {{ rendered_value | date: "%m-%d-%Y" }} ;;
+  }
+
+  dimension: flight_number {
+    type: string
+    label: "Flight Number"
+    sql: ${TABLE}."Flight Number" ;;
+  }
+
+  dimension: creative_id {
+    type: number
+    label: "Creative ID"
+    sql: ${TABLE}."Creative ID" ;;
+  }
+
+  dimension: brand_name {
+    type: string
+    label: "Brand Name"
+    sql: ${TABLE}."Brand Name" ;;
+  }
+
+  dimension: placement_name {
+    type: string
+    label: "Placement Name"
+    sql: ${TABLE}."Placement Name" ;;
+  }
+
+  dimension: creative_name {
+    type: string
+    label: "Creative Name"
+    sql: ${TABLE}."Creative Name" ;;
+  }
+
+  dimension: impressions {
+    type: number
+    sql: ${TABLE}.Impressions ;;
+  }
+
+  dimension: completions {
+    type: number
+    label: "Completions"
+    sql: ${TABLE}.Completions ;;
+  }
+
+  dimension: clicks {
+    type: number
+    label: "Clicks"
+    sql: ${TABLE}.Clicks ;;
+  }
+
+  dimension: vcr {
+    type: number
+    label: "VCR"
+    sql: ${TABLE}.VCR ;;
+  }
+
+  dimension: spend {
+    type: number
+    value_format: "#,##0.00"
+    label: "Spend"
+    sql: ${TABLE}.Spend ;;
+  }
+
+  set: detail {
+    fields: [
+      date,
+      flight_number,
+      creative_id,
+      brand_name,
+      placement_name,
+      creative_name,
+      impressions,
+      completions,
+      clicks,
+      vcr,
+      spend
+    ]
+  }
+}

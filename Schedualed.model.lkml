@@ -72,6 +72,11 @@ explore: msu_admissions_daily_09_19_22 {
   label: "MSU Admissions"
 }
 
+explore: msu_brands_daily_09_19_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "MSU Brands"
+}
+
 explore: woman_thou_art_loosed_06_28_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Woman Thou Art Loosed"

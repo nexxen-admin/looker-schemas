@@ -201,7 +201,7 @@ explore: v_fact_ad_events_hourly_agg {
     relationship: many_to_one
   }
   join: v_dim_buy_sub_type {
-    view_label: "Sub Type"
+    view_label: "Buy Type"
     type: inner
     sql_on: ${v_dim_buy_sub_type.buy_sub_type_key}=${v_dim_flight_tv.buy_sub_type_key} ;;
     relationship: many_to_one

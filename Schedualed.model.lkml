@@ -57,6 +57,11 @@ explore: swift_meats_4_13_22 {
   label: "Swift Meats"
 }
 
+explore: priority_health_daily_09_19_11 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Priority Health"
+}
+
 explore: woman_thou_art_loosed_06_28_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Woman Thou Art Loosed"

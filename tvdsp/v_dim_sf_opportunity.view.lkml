@@ -62,6 +62,7 @@ view: v_dim_sf_opportunity {
   dimension: sf_billing_ad_server {
     type: string
     sql: ${TABLE}.SF_Billing_Ad_Server ;;
+    hidden: yes
   }
 
   dimension: sf_billing_agency {
@@ -94,35 +95,14 @@ view: v_dim_sf_opportunity {
     sql: ${TABLE}.SF_Booked_Revenue ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_sf_booked_revenue {
-    type: sum
-    sql: ${sf_booked_revenue} ;;
-  }
-
-  measure: average_sf_booked_revenue {
-    type: average
-    sql: ${sf_booked_revenue} ;;
-  }
 
   dimension: sf_booked_revenue_usd {
     type: number
     sql: ${TABLE}.SF_Booked_Revenue_USD ;;
   }
 
-  dimension_group: sf_campaign_end {
-    type: time
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: sf_campaign_end {
+    type: date
     convert_tz: no
     datatype: date
     sql: ${TABLE}.SF_Campaign_End_Date ;;
@@ -138,16 +118,8 @@ view: v_dim_sf_opportunity {
     sql: ${TABLE}.SF_Campaign_Purchase_Order_Number ;;
   }
 
-  dimension_group: sf_campaign_start {
-    type: time
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
+  dimension: sf_campaign_start {
+    type: date
     convert_tz: no
     datatype: date
     sql: ${TABLE}.SF_Campaign_Start_Date ;;
@@ -163,18 +135,9 @@ view: v_dim_sf_opportunity {
     sql: ${TABLE}.SF_Client_Services_Manager_ID ;;
   }
 
-  dimension_group: sf_close {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.SF_Close_Date ;;
+  dimension: sf_close {
+    type: date
+     sql: ${TABLE}.SF_Close_Date ;;
   }
 
   dimension: sf_currency_code_iso {
@@ -204,6 +167,7 @@ view: v_dim_sf_opportunity {
       year
     ]
     sql: ${TABLE}.SF_Loaded ;;
+    hidden: yes
   }
 
   dimension: sf_opportunity_auto_number {
@@ -219,6 +183,7 @@ view: v_dim_sf_opportunity {
   dimension: sf_opportunity_key {
     type: number
     sql: ${TABLE}.SF_Opportunity_Key ;;
+    hidden: yes
   }
 
   dimension: sf_opportunity_name {
@@ -284,5 +249,6 @@ view: v_dim_sf_opportunity {
   measure: count {
     type: count
     drill_fields: [sf_campaign_name, sf_opportunity_name, sf_stage_name]
+    hidden: yes
   }
 }

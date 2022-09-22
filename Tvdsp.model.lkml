@@ -13,8 +13,8 @@ access_grant: can_view_pub_come_looker {
 
 
 explore: v_fact_ad_events_hourly_agg {
-  always_filter: {
-    filters: [v_fact_ad_events_hourly_agg.date_time_key: "last 14 days ago for 14 days"]
+ always_filter: {
+    filters: [v_dim_date_hourly.date_key_date: "last 10 days "]
   }
   required_access_grants: [can_view_pub_come_looker]
   #persist_with: CleanCash_datagroup
@@ -25,6 +25,13 @@ explore: v_fact_ad_events_hourly_agg {
     type: inner
     view_label: "Ad Attributes"
     sql_on: ${v_dim_ad_orientation.ad_orientation_key}=${v_fact_ad_events_hourly_agg.ad_orientation_key};;
+    relationship: many_to_one
+  }
+
+  join: v_dim_date_hourly {
+    type: inner
+    view_label: "Time Frame"
+    sql_on: ${v_dim_date_hourly.date_key_date}=${v_fact_ad_events_hourly_agg.date_time_key_date} ;;
     relationship: many_to_one
   }
 

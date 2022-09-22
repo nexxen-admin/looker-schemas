@@ -35,7 +35,7 @@ view: mazda_fy157_ntl_as_video {
         left outer join dwh.creative cr on cr.id = ad.creative_id
         left outer join bi.SVC_Mazda_FY157_Mapping bi on bi.flight_id = ad.flight_id
                               and bi.creative_id = ad.creative_id
-      Where ad.date >= current_date()-3
+      Where ad.date >= TIMESTAMPADD('Month', 0, date_trunc('MONTH',current_timestamp AT TIME ZONE 'America/New_York'))::date
         and ad.date < current_date()
         and data_type = 'AD_DATA'
         --and c.campaign_id = '4272906'
@@ -53,7 +53,13 @@ view: mazda_fy157_ntl_as_video {
                               '4368726',
                               '4368966',
                               '4370636',
-                              '4372146')
+                              '4372146',
+                              '4368966',
+                              '4387656',
+                              '4387656',
+                              '4387656',
+                              '4387656',
+                              '4387656')
         and ad.impressions > 0
       Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
        ;;

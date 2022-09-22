@@ -73,7 +73,7 @@ view: v_fact_ad_events_daily_agg {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: date_time_key {
+  dimension_group: date_key {
     type: time
     timeframes: [
       raw,
@@ -84,7 +84,7 @@ view: v_fact_ad_events_daily_agg {
       quarter,
       year
     ]
-    sql: ${TABLE}.DateTime_Key ;;
+    sql: ${TABLE}.Date_Key ;;
   }
 
   dimension: deal_key {

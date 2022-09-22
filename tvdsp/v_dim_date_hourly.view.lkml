@@ -19,10 +19,11 @@ view: v_dim_date_hourly {
       quarter,
       year
     ]
+    label: "Date"
     convert_tz: no
     datatype: date
     sql: ${TABLE}.Date_Key ;;
-    hidden: yes
+
   }
 
   dimension_group: date_time_key {

@@ -31,7 +31,7 @@ explore: v_fact_ad_events_hourly_agg {
   join: v_dim_date_hourly {
     type: inner
     view_label: "Time Frame"
-    sql_on: ${v_dim_date_hourly.date_key_raw}=${v_fact_ad_events_hourly_agg.date_time_key_raw} ;;
+    sql_on: ${v_dim_date_hourly.date_time_key_raw}=${v_fact_ad_events_hourly_agg.date_time_key_raw} ;;
     relationship: many_to_one
   }
 

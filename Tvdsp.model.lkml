@@ -6,17 +6,13 @@ include: "/**/*.view.lkml"                 # include all views in this project
 
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
-access_grant: can_view_pub_come_looker {
-  user_attribute: admins
-  allowed_values: ["Looker_Admins"]
-}
 
 
 explore: v_fact_ad_events_hourly_agg {
  always_filter: {
     filters: [v_dim_date_hourly.date_key_date: "last 10 days "]
   }
-  required_access_grants: [can_view_pub_come_looker]
+
   #persist_with: CleanCash_datagroup
   label: "TVDSP Hourly"
   view_label: "Measures"
@@ -281,7 +277,7 @@ explore: v_fact_ad_events_daily_agg {
   always_filter: {
     filters: [v_fact_ad_events_daily_agg.date_key_date : "last 14 days ago for 14 days"]
   }
-  required_access_grants: [can_view_pub_come_looker]
+
   #persist_with: CleanCash_datagroup
   label: "TVDSP Daily"
   view_label: "Measures"

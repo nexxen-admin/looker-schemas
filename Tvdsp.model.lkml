@@ -272,7 +272,7 @@ explore: v_fact_ad_events_hourly_agg {
 
 explore: v_fact_ad_events_daily_agg {
   always_filter: {
-    filters: [v_fact_ad_events_daily_agg.date_key_date: "last 14 days ago for 14 days"]
+    filters: [v_fact_ad_events_daily_agg.date_key_date : "last 14 days ago for 14 days"]
   }
   required_access_grants: [can_view_pub_come_looker]
   #persist_with: CleanCash_datagroup

@@ -18,7 +18,7 @@ explore: v_fact_ad_events_hourly_agg {
   }
   required_access_grants: [can_view_pub_come_looker]
   #persist_with: CleanCash_datagroup
-  label: "TVDSP"
+  label: "TVDSP Hourly"
   view_label: "Measures"
 
   join: v_dim_ad_orientation {
@@ -276,7 +276,7 @@ explore: v_fact_ad_events_daily_agg {
   }
   required_access_grants: [can_view_pub_come_looker]
   #persist_with: CleanCash_datagroup
-  label: "TVDSP"
+  label: "TVDSP Daily"
   view_label: "Measures"
 
   join: v_dim_ad_orientation {

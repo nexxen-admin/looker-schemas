@@ -19,10 +19,11 @@ view: v_dim_date_hourly {
       quarter,
       year
     ]
-    label: "Date"
+
     convert_tz: no
     datatype: date
     sql: ${TABLE}.Date_Key ;;
+    hidden: yes
 
   }
 
@@ -38,7 +39,7 @@ view: v_dim_date_hourly {
       year
     ]
     sql: ${TABLE}.DateTime_Key ;;
-    hidden: yes
+
   }
 
   # Here's what a typical dimension looks like in LookML.

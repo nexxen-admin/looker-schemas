@@ -360,6 +360,13 @@ explore: v_fact_ad_events_daily_agg {
     sql_on: ${v_dim_creative.creative_type_key}=${v_fact_ad_events_daily_agg.creative_type_key} ;;
     relationship: many_to_one
   }
+  join: v_dim_date {
+
+    type: inner
+    view_label: "Date"
+    sql_on: ${v_dim_date.date_key_date} =  ${v_fact_ad_events_daily_agg.date_key_date};;
+    relationship: many_to_one
+  }
 
   join: v_dim_custom_action {
     view_label: "Custom Action"

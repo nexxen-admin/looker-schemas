@@ -22,6 +22,7 @@ view: v_dim_date {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.Date_Key ;;
+    hidden: yes
   }
 
   # Here's what a typical dimension looks like in LookML.
@@ -31,20 +32,6 @@ view: v_dim_date {
   dimension: day_number_in_month {
     type: number
     sql: ${TABLE}.Day_Number_In_Month ;;
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_day_number_in_month {
-    type: sum
-    sql: ${day_number_in_month} ;;
-  }
-
-  measure: average_day_number_in_month {
-    type: average
-    sql: ${day_number_in_month} ;;
   }
 
   dimension: day_number_in_week {
@@ -75,31 +62,37 @@ view: v_dim_date {
   dimension: last_120_days_flag {
     type: number
     sql: ${TABLE}.Last_120_Days_Flag ;;
+    hidden: yes
   }
 
   dimension: last_14_days_flag {
     type: number
     sql: ${TABLE}.Last_14_Days_Flag ;;
+    hidden: yes
   }
 
   dimension: last_180_days_flag {
     type: number
     sql: ${TABLE}.Last_180_Days_Flag ;;
+    hidden: yes
   }
 
   dimension: last_30_days_flag {
     type: number
     sql: ${TABLE}.Last_30_Days_Flag ;;
+    hidden: yes
   }
 
   dimension: last_7_days_flag {
     type: number
     sql: ${TABLE}.Last_7_Days_Flag ;;
+    hidden: yes
   }
 
   dimension: last_90_days_flag {
     type: number
     sql: ${TABLE}.Last_90_Days_Flag ;;
+    hidden: yes
   }
 
   dimension: month_name {
@@ -155,5 +148,6 @@ view: v_dim_date {
   measure: count {
     type: count
     drill_fields: [quarter_name, month_name, day_of_week_name]
+    hidden: yes
   }
 }

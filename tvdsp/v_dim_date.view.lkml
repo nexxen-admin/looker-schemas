@@ -10,7 +10,7 @@ view: v_dim_date {
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: date_key {
-    label: "Date"
+    label: ""
     type: time
     timeframes: [
       raw,

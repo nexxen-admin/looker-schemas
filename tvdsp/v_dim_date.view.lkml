@@ -10,6 +10,7 @@ view: v_dim_date {
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: date_key {
+    label: "Date"
     type: time
     timeframes: [
       raw,
@@ -22,7 +23,7 @@ view: v_dim_date {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.Date_Key ;;
-    hidden: yes
+
   }
 
   # Here's what a typical dimension looks like in LookML.

@@ -37,6 +37,11 @@ explore: TaxAct_Hourly_Test {
   label: "TaxAct_Hourly_Test"
 }
 
+explore: audigent_kroger_deal_data {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Audigent Kroger Data - UTC"
+}
+
 explore: taxact_daily_report {
   required_access_grants: [can_view_pub_come_looker]
   label: "taxact_daily_report"

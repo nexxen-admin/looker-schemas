@@ -22,7 +22,7 @@ FROM dwh.ad_data_daily add2
 WHERE date >= CURRENT_DATE()-7
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
-  and flight_id = 4277936
+  and flight_id IN(4277936, 4431226)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6,7
 ORDER BY 1

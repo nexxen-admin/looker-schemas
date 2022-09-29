@@ -18,7 +18,7 @@ view: dim_date {
   }
 
   dimension_group: date_utc_key {
-    label: " "
+    label: "UTC"
     type: time
     timeframes: [
       raw,

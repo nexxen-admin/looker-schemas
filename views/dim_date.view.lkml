@@ -17,6 +17,22 @@ view: dim_date {
     sql: ${TABLE}.Date_Key ;;
   }
 
+  dimension_group: date_utc_key {
+    label: " "
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: new(${TABLE}.Date_Key, 'EST','UTC') ;;
+  }
+
   dimension: is_before_mtd {
     description: "should be used when comparing month to month while including the current not complited month -
                   in this case the - Is Before Mtd,

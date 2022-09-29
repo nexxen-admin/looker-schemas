@@ -28,9 +28,9 @@ view: dim_date {
       quarter,
       year
     ]
-    convert_tz: no
+    convert_tz: yes
     datatype: date
-    sql: new(${TABLE}.Date_Key, 'EST','UTC') ;;
+    sql: new_time(${TABLE}.Date_Key, 'EST','UTC') ;;
   }
 
   dimension: is_before_mtd {

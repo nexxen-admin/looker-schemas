@@ -22,6 +22,7 @@ view: appsflyer {
 
   measure: blocked_conversions {
     type: sum
+    label: "Blocked Installs"
     sql: ${TABLE}.Blocked_Conversions ;;
   }
 
@@ -32,16 +33,40 @@ view: appsflyer {
 
   measure: Revenue {
     type: number
+    value_format: "$#,##0.00"
     sql: ${cpi_revenue}+${cpe_revenue} ;;
+  }
+
+  measure: Net_Revenue {
+    type: number
+    value_format: "$#,##0.00"
+    sql: ${cpi_net_revenue}+${cpe_Net_revenue} ;;
   }
   measure: Payout {
     type: number
+    label: "Cost"
+    value_format: "$#,##0.00"
     sql: ${cpi_payout}+${cpe_payout} ;;
+  }
+
+
+  measure: Net_Payout {
+    type: number
+    label: "Net_Cost"
+    value_format: "$#,##0.00"
+    sql: ${cpi_net_payout}+${cpe_Net_payout} ;;
   }
 
   measure: Profit {
     type: number
+    value_format: "$#,##0.00"
     sql: (${cpi_revenue}+${cpe_revenue})-(${cpi_payout}+${cpe_payout}) ;;
+  }
+
+  measure: Net_Profit {
+    type: number
+    value_format: "$#,##0.00"
+    sql: (${cpi_net_revenue}+${cpe_Net_revenue})-(${cpi_net_payout}+${cpe_Net_payout}) ;;
   }
 
 
@@ -84,6 +109,7 @@ view: appsflyer {
 
   dimension: pub_id {
     type: string
+    label: "Publisher Name"
     sql: ${TABLE}.Pub_ID ;;
   }
 
@@ -118,12 +144,26 @@ view: appsflyer {
 
   measure: cpe_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.CPE_Revenue ;;
+  }
+  measure: cpe_Net_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.CPE_Net_Revenue ;;
   }
 
   measure: cpe_payout {
     type: sum
+    label: "CPE Cost"
+    value_format: "$#,##0.00"
     sql: ${TABLE}.CPE_Payout ;;
+  }
+  measure: cpe_Net_payout {
+    type: sum
+    label: "CPE Net Cost"
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.CPE_Net_Payout ;;
   }
 
   measure: cpe_events {
@@ -132,16 +172,32 @@ view: appsflyer {
   }
   measure: cpi_payout {
     type: sum
-    value_format: ""
+    value_format: "$#,##0.00"
     sql: ${TABLE}.CPI_Payout ;;
   }
+
+  measure: cpi_net_payout {
+    type: sum
+    value_format: "$#,##0.00"
+    label: "CPE Net Cost"
+    sql: ${TABLE}.CPI_Net_Payout ;;
+  }
+
   measure: cpi_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.CPI_Revenue ;;
+  }
+
+  measure: cpi_net_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.CPI_Net_Revenue ;;
   }
 
   dimension: campaign {
     type: string
+    label: "Campaign Name"
     sql: ${TABLE}.campaign ;;
   }
 
@@ -209,6 +265,7 @@ view: appsflyer {
 
   dimension: publisher {
     type: string
+    label: "Publisher Name"
     sql: ${TABLE}.publisher ;;
   }
 
@@ -219,6 +276,7 @@ view: appsflyer {
 
   measure: post_attribution_conversions {
     type: sum
+    label: "Post Attribution Installs"
     sql: ${TABLE}.Post_attribution_Conversions ;;
   }
 

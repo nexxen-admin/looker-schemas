@@ -20,7 +20,7 @@ view: dim_date_hourly {
       quarter,
       year
     ]
-    convert_tz: no
+    convert_tz: yes
     datatype: date
     sql: ${TABLE}.Date_Key ;;
   }
@@ -36,10 +36,26 @@ view: dim_date_hourly {
       quarter,
       year
     ]
-    convert_tz: no
+    convert_tz: yes
     datatype: date
     sql: ${TABLE}.DateTime_Key ;;
     hidden: yes
+  }
+
+  dimension_group: date_utc_key {
+    label: "UTC"
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: yes
+    datatype: date
+    sql: new_time(${TABLE}.DateTime_Key, 'America/New_York','UTC') ;;
   }
 
 

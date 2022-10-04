@@ -17,6 +17,8 @@ view: dim_date {
     sql: ${TABLE}.Date_Key ;;
   }
 
+
+
   dimension: is_before_mtd {
     description: "should be used when comparing month to month while including the current not complited month -
                   in this case the - Is Before Mtd,

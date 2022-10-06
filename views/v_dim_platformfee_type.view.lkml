@@ -51,6 +51,7 @@ view: v_dim_platformfee_type {
   dimension: platformfee_type_key {
     type: number
     sql: ${TABLE}.Platformfee_Type_Key ;;
+    hidden: yes
   }
 
   dimension: ri_info {

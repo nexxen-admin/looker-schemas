@@ -53,7 +53,7 @@ view: dim_publisher {
       {% if insert_publisher._parameter_value == "'insert'" %}
           ${pub_id}
       {% else %}
-        '78614'
+        1
       {% endif %};;
   }
   dimension: publisher_to_exclude {
@@ -62,7 +62,7 @@ view: dim_publisher {
       {% if insert_publisher._parameter_value == "'exclude'" %}
           ${pub_id}
       {% else %}
-        '78614'
+      1
       {% endif %};;
   }
 

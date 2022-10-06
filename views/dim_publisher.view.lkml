@@ -38,6 +38,35 @@ view: dim_publisher {
 
     }
 
+    parameter: insert_publisher {
+        type: string
+        allowed_value: {value: "insert"}
+    }
+  parameter: exclude_publisher {
+    type: string
+    allowed_value: {value: "exclude"}
+  }
+
+  dimension: publisher_to_insert {
+     label_from_parameter: insert_publisher
+    sql:
+      {% if insert_publisher._parameter_value == "'insert'" %}
+          ${pub_id}
+      {% else %}
+        '78614'
+      {% endif %};;
+  }
+  dimension: publisher_to_exclude {
+    label_from_parameter: insert_publisher
+    sql:
+      {% if insert_publisher._parameter_value == "'exclude'" %}
+          ${pub_id}
+      {% else %}
+        '78614'
+      {% endif %};;
+  }
+
+
     dimension_group: db_create {
       type: time
       timeframes: [

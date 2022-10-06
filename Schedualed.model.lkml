@@ -87,6 +87,11 @@ explore: woman_thou_art_loosed_06_28_22 {
   label: "Woman Thou Art Loosed"
 }
 
+explore: rust_oleum_fy23_walmart_video_10_04_16 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Rust Oleum FY23 Walmart Video"
+}
+
 
 explore: altamed_health_services_06_16_22 {
   required_access_grants: [can_view_pub_come_looker]

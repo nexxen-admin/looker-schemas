@@ -186,6 +186,7 @@ explore: extend_Inbound_Exchange {
     relationship: many_to_one
 
   }
+
   join: dim_deal_brand {
     type: full_outer
     view_label: "Deal"
@@ -415,6 +416,14 @@ join: dim_country {
     view_label: "Buying Channel"
     sql_on: ${dim_buying_channel.buying_channel_key}=${fact_ad_daily_agg.buying_channel_key};;
     relationship: many_to_one
+  }
+
+  join: v_dim_platformfee_type {
+    type: inner
+    view_label: "Platform Fee Type"
+    sql_on: ${v_dim_platformfee_type.platformfee_type_key}=${fact_ad_daily_agg.platformfee_type_key} ;;
+    relationship: many_to_one
+
   }
 
   join: dim_media_type {

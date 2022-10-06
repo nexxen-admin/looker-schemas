@@ -872,6 +872,12 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: platformfee_type_key {
+    type: number
+    sql: ${TABLE}.Platformfee_Type_Key ;;
+    hidden: yes
+  }
+
   dimension_group: date_key {
     type: time
     timeframes:

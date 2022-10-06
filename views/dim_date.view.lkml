@@ -38,9 +38,8 @@ view: dim_date {
   }
   dimension: is_before_qtd {
 
-    type: yesno
-    sql: ${month_number_in_quarter}
-    filters: [date_key_date: "last 1 day ago for 1 day"];;
+    type: number
+    sql: case when ${date_key_raw} = current_date-1 then ${month_number_in_quarter} end;;
 
   }
 

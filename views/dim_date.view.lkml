@@ -37,9 +37,17 @@ view: dim_date {
 
   }
   dimension: is_before_qtd {
+ # current_month_number_in_quarter{
 
     type: number
-    sql: case when ${date_key_raw} = current_date-1 then ${month_number_in_quarter} end;;
+    sql: case when month(${date_key_raw}) = month(current_date-1) then ${month_number_in_quarter} end;;
+   hidden: yes
+  }
+
+  dimension: current_month_number_in_quarter{
+
+    type: number
+    sql: case when ${month_number_in_quarter} = ${is_before_qtd} then ${month_number_in_quarter} end;;
 
   }
 
@@ -52,7 +60,7 @@ view: dim_date {
     type: number
     sql: case when ${month_number} in ('1','4','7','10') then 1
          when ${month_number} in ('2','5','8','11') then 2
-        when ${month_number} in ('3','6','9','12') then 3 end ;;
+        when ${month_number} in ('3','6','9','12') then 3 end;;
   }
 
 

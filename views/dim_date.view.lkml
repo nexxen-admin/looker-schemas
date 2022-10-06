@@ -39,7 +39,7 @@ view: dim_date {
   dimension: is_before_qtd {
 
     type: yesno
-    sql: DATE_PART('Quarter', ${date_key_raw}::TIMESTAMP) < DATE_PART('Quarter', CURRENT_TIMESTAMP) ;;
+    sql: DATE_PART('month', ${date_key_raw}::TIMESTAMP) < DATE_PART('month', CURRENT_TIMESTAMP) ;;
 
   }
 

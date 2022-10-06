@@ -36,6 +36,12 @@ view: dim_date {
     sql: DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) < DATE_PART('YEAR', CURRENT_TIMESTAMP) ;;
 
   }
+  dimension: is_before_qtd {
+
+    type: yesno
+    sql: DATE_PART('Quarter', ${date_key_raw}::TIMESTAMP) < DATE_PART('Quarter', CURRENT_TIMESTAMP) ;;
+
+  }
 
   dimension: day_number_in_month {
     type: number

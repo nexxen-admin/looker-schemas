@@ -135,7 +135,7 @@ Where event_time >= '2022-01-01'
   and event_time < '2022-04-01'
   and ad.rx_ssp_name ilike 'rmp%'
   and (ad.revenue > 0 or ad.cogs > 0)
-  and pi.operations_owner_id in ('64','45','37','63','60','11')
+  and pi.operations_owner_id in ('64','45','37','63','60','11','74','75')
 Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
 
 agg_data as (

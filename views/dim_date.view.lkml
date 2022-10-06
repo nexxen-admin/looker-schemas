@@ -39,13 +39,20 @@ view: dim_date {
   dimension: is_before_qtd {
 
     type: yesno
-    sql: DATE_PART('month', ${date_key_raw}::TIMESTAMP) < DATE_PART('month', CURRENT_TIMESTAMP) ;;
+    sql: DATE_PART('month', ${date_key_raw}::TIMESTAMP) < DATE_PART('month', CURRENT_TIMESTAMP)-DATE_PART('month', min(${date_key_raw})::TIMESTAMP) ;;
 
   }
 
   dimension: day_number_in_month {
     type: number
     sql: ${TABLE}.Day_Number_In_Month ;;
+  }
+
+  dimension: month_number_in_quarter {
+    type: number
+    sql: case when ${month_number} in ('1','4','7','10') then 1
+         when ${month_number} in ('2','5','8','11') then 2
+        when ${month_number} in ('3','6','9','12') then 3 end ;;
   }
 
   dimension: day_number_in_week {

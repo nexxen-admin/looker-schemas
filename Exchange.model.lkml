@@ -303,9 +303,10 @@ explore: extend_Inbound_Exchange {
 
   join: dim_publisher_ssp {
     type: inner
+    view_label: "SSP"
     sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_daily_agg.pub_ssp_key};;
     relationship: many_to_one
-    fields: []
+    #fields: []
   }
   join: dim_publisher {
     type: inner

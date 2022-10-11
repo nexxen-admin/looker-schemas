@@ -13,6 +13,7 @@ view: dim_publisher_ssp {
       year
     ]
     sql: ${TABLE}.DB_Create_Date ;;
+    hidden: yes
   }
 
   dimension_group: db_update {
@@ -27,16 +28,19 @@ view: dim_publisher_ssp {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
   }
 
   dimension: pub_id {
     type: string
     sql: ${TABLE}.PUB_ID ;;
+    hidden: yes
   }
 
   dimension: pub_key {
     type: number
     sql: ${TABLE}.PUB_Key ;;
+    hidden: yes
   }
 
   dimension: pub_ssp_key {
@@ -47,6 +51,7 @@ view: dim_publisher_ssp {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
 
   dimension: ssp_key {
@@ -57,10 +62,12 @@ view: dim_publisher_ssp {
   dimension: ssp_name {
     type: string
     sql: ${TABLE}.SSP_name ;;
+    hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: [ssp_name]
+    hidden: yes
   }
 }

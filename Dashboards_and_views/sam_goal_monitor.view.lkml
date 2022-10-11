@@ -131,11 +131,11 @@ From andromeda.ad_data_daily ad
   left outer join andromeda.rx_dim_dsp_account da on da.rx_dsp_account_id = dsp.rx_dsp_account_id
   left outer join MM_Rebate_Percents mm on mm.quarter_start = date_trunc('quarter',ad.event_time)::date
   left outer join DSP_Platform_Fee_percent pm on pm.quarter_start = date_trunc('quarter',ad.event_time)::date
-Where event_time >= '2022-01-01'
-  and event_time < '2022-04-01'
+Where event_time >= TIMESTAMPADD('quarter', -1, date_trunc('quarter',current_timestamp AT TIME ZONE 'America/New_York'))::date
+  and event_time < date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date
   and ad.rx_ssp_name ilike 'rmp%'
   and (ad.revenue > 0 or ad.cogs > 0)
-  and pi.operations_owner_id in ('64','45','37','63','60','11')
+  and pi.operations_owner_id in ('64','45','37','63','60','11','74','75')
 Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
 
 agg_data as (

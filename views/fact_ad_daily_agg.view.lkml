@@ -1088,6 +1088,23 @@ view: fact_ad_daily_agg {
     sql: ${revenue} - ${cogs} ;;
   }
 
+  filter: publisher_filter {
+    type: string
+    suggest_dimension: pub_ssp_key
+  }
+
+  dimension: publisher_filter_filter {
+    type: yesno
+    hidden: yes
+    sql: {% condition publisher_filter %} ${pub_ssp_key} {% endcondition %} ;;
+  }
+
+  measure: sum_dynamic_pub {
+    type: sum
+    sql: ${TABLE}.sum_of_revenue ;;
+    filters: [publisher_filter_filter: "yes"]
+  }
+
   measure: Margin {
     type: number
     label: "Margin%"

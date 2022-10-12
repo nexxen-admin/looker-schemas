@@ -53,9 +53,9 @@ Base_Data as (
 Select date_trunc('quarter',event_time)::date as Quarter_Start,
   coalesce(pi.operations_owner_id,'1') as operations_owner_id,
   coalesce(oo.name,'Unassigned') as operations_owner,
-  Case when pi.operations_owner_id in ('64','45','37','63','60','11')
+  Case when pi.operations_owner_id in ('64','45','37','63','60','11','74','75')
        then 'SAM' else 'Long-Tail' end as Commission_Group,
-  Case when (pi.operations_owner_id in ('64','45','37','63','60','11')
+  Case when (pi.operations_owner_id in ('64','45','37','63','60','11','74','75')
                     and ad.pub_id in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519'))
               Then 'Intl' else 'US-Only' end as Revenue_Group,
   ad.pub_id,
@@ -131,11 +131,11 @@ From andromeda.ad_data_daily ad
   left outer join andromeda.rx_dim_dsp_account da on da.rx_dsp_account_id = dsp.rx_dsp_account_id
   left outer join MM_Rebate_Percents mm on mm.quarter_start = date_trunc('quarter',ad.event_time)::date
   left outer join DSP_Platform_Fee_percent pm on pm.quarter_start = date_trunc('quarter',ad.event_time)::date
-Where event_time >= '2022-01-01'
-  and event_time < '2022-04-01'
+Where event_time >= TIMESTAMPADD('quarter', -1, date_trunc('quarter',current_timestamp AT TIME ZONE 'America/New_York'))::date
+  and event_time < date_trunc('quarter',TIMESTAMPADD('DAY', -1, date_trunc('DAY',current_timestamp AT TIME ZONE 'America/New_York'))::date)::date
   and ad.rx_ssp_name ilike 'rmp%'
   and (ad.revenue > 0 or ad.cogs > 0)
-  and pi.operations_owner_id in ('64','45','37','63','60','11')
+  and pi.operations_owner_id in ('64','45','37','63','60','11','74','75')
 Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
 
 agg_data as (

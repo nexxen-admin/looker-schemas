@@ -36,11 +36,34 @@ view: dim_date {
     sql: DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) < DATE_PART('YEAR', CURRENT_TIMESTAMP) ;;
 
   }
+  dimension: is_before_qtd {
+ # current_month_number_in_quarter{
+
+    type: number
+    sql: case when month(${date_key_raw}) = month(current_date-1) then ${month_number_in_quarter} end;;
+   hidden: yes
+  }
+
+  dimension: current_month_number_in_quarter{
+
+    type: number
+    sql: case when ${month_number_in_quarter} = ${is_before_qtd} then ${month_number_in_quarter} end;;
+
+  }
 
   dimension: day_number_in_month {
     type: number
     sql: ${TABLE}.Day_Number_In_Month ;;
   }
+
+  dimension: month_number_in_quarter {
+    type: number
+    sql: case when ${month_number} in ('1','4','7','10') then 1
+         when ${month_number} in ('2','5','8','11') then 2
+        when ${month_number} in ('3','6','9','12') then 3 end;;
+  }
+
+
 
   dimension: day_number_in_week {
     type: number

@@ -872,6 +872,12 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: platformfee_type_key {
+    type: number
+    sql: ${TABLE}.Platformfee_Type_Key ;;
+    hidden: yes
+  }
+
   dimension_group: date_key {
     type: time
     timeframes:
@@ -1080,6 +1086,23 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue} - ${cogs} ;;
+  }
+
+  filter: publisher_filter {
+    type: string
+    suggest_dimension: pub_ssp_key
+  }
+
+  dimension: publisher_filter_filter {
+    type: yesno
+    hidden: yes
+    sql: {% condition publisher_filter %} ${pub_ssp_key} {% endcondition %} ;;
+  }
+
+  measure: sum_dynamic_pub {
+    type: sum
+    sql: ${TABLE}.sum_of_revenue ;;
+    filters: [publisher_filter_filter: "yes"]
   }
 
   measure: Margin {

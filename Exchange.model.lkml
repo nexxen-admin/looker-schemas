@@ -82,7 +82,7 @@ explore: extend_Inbound_Exchange {
     field: v_dim_employee_pub_ops.employee_name
     user_attribute: allowed_users
   }
-  required_access_grants: [can_view_all_tremor]
+
 
   always_filter: {
     filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
@@ -186,6 +186,7 @@ explore: extend_Inbound_Exchange {
     relationship: many_to_one
 
   }
+
   join: dim_deal_brand {
     type: full_outer
     view_label: "Deal"
@@ -302,9 +303,10 @@ explore: extend_Inbound_Exchange {
 
   join: dim_publisher_ssp {
     type: inner
+    view_label: "SSP"
     sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_daily_agg.pub_ssp_key};;
     relationship: many_to_one
-    fields: []
+    #fields: []
   }
   join: dim_publisher {
     type: inner
@@ -393,7 +395,7 @@ explore: fact_ad_daily_agg{
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange"
   view_label: "Measures"
-  required_access_grants: [can_view_all_tremor]
+
 
 join: dim_date {
   type: inner
@@ -415,6 +417,14 @@ join: dim_country {
     view_label: "Buying Channel"
     sql_on: ${dim_buying_channel.buying_channel_key}=${fact_ad_daily_agg.buying_channel_key};;
     relationship: many_to_one
+  }
+
+  join: v_dim_platformfee_type {
+    type: inner
+    view_label: "Platform Fee Type"
+    sql_on: ${v_dim_platformfee_type.platformfee_type_key}=${fact_ad_daily_agg.platformfee_type_key} ;;
+    relationship: many_to_one
+
   }
 
   join: dim_media_type {
@@ -690,7 +700,7 @@ explore: fact_ad_hourly_agg{
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange Hourly"
   view_label: "Measures"
-  required_access_grants: [can_view_all_tremor]
+
 
   join: dim_date_hourly {
     type: inner
@@ -995,7 +1005,7 @@ explore: fact_ad_bid_request_daily_agg{
   persist_with: CleanCash_datagroup
   label: "Outbound Exchange"
   view_label: "Measures"
-  required_access_grants: [can_view_all_tremor]
+
 
   join: dim_dsp_data_center {
     type: inner

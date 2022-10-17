@@ -72,6 +72,11 @@ explore: uchealth_campaignid__4452586_daily_10_17_22 {
   label: "UC Health Campaign ID: 4452586 Daily"
 }
 
+explore: uchealth_campaignid_4459456_10_17_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "UC Health Campaign ID: 4459456 Daily"
+}
+
 explore: amherst_daily_09_19_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Amherst"

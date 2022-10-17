@@ -21,7 +21,8 @@ view: choctaw_casinos___resorts_10_17_22 {
       WHERE add2.flight_id IN (4454276,4454286,4454346,4454376,4454396,4454426,4455616,4459136,
                  4459146,4460086,4460096,4460106,4460136,4453536,4453566,4453596,4453616,4455496,
                  4459096,4454476,4454486,4454496,4454506,4455566,4455606,4459406, 4459416, 4459436)
-          AND date > '2022-10-04'
+          AND date >= '2022-10-04'
+          AND date < CURRENT_DATE()
           AND impressions > 0
           AND data_type = 'AD_DATA'
           AND buy_type NOT IN ('Direct', 'Programmatic_Guaranteed')

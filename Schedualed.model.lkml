@@ -67,6 +67,11 @@ explore: priority_health_daily_09_19_11 {
   label: "Priority Health"
 }
 
+explore: uchealth_campaignid__4452586_daily_10_17_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "UC Health Campaign ID: 4452586 Daily"
+}
+
 explore: amherst_daily_09_19_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Amherst"

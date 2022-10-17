@@ -19,7 +19,8 @@ view: uchealth_campaignid__4452586_daily_10_17_22 {
         left join dwh.campaign c on add2.flight_id = c.flight_id
         left join dwh.screen_type st on add2.screen_type = st.screen_type_code
       WHERE add2.flight_id IN (4452646, 4452666, 4452686)
-          AND date > '2022-10-03'
+          AND date >= '2022-10-03'
+          AND date < CURRENT_DATE()
           AND impressions > 0
           AND data_type = 'AD_DATA'
           AND buy_type NOT IN ('Direct', 'Programmatic_Guaranteed')

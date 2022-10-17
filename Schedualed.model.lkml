@@ -92,6 +92,11 @@ explore: rust_oleum_fy23_walmart_video_10_04_16 {
   label: "Rust Oleum FY23 Walmart Video"
 }
 
+explore: choctaw_casinos___resorts_10_17_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Choctaw Casinos & Resorts"
+}
+
 
 explore: altamed_health_services_06_16_22 {
   required_access_grants: [can_view_pub_come_looker]

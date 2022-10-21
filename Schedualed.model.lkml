@@ -67,6 +67,11 @@ explore: ctv_frequency_by_month {
   label: "CTV Frequency by Week"
 }
 
+explore: best_western_daily_reporting_10_21_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Best Western"
+}
+
 explore: priority_health_daily_09_19_11 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Priority Health"

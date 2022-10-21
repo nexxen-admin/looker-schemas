@@ -62,6 +62,11 @@ explore: swift_meats_4_13_22 {
   label: "Swift Meats"
 }
 
+explore: ctv_frequency_by_month {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "CTV Frequency by Week"
+}
+
 explore: priority_health_daily_09_19_11 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Priority Health"

@@ -67,6 +67,11 @@ explore: ctv_frequency_by_month {
   label: "CTV Frequency by Week"
 }
 
+explore: the_north_face_phase_1_bi_weekly_11_04_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "The North Face bi-weekly Phase 1"
+}
+
 explore: best_western_daily_reporting_10_21_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Best Western"

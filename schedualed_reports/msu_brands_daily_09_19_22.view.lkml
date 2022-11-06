@@ -5,6 +5,11 @@ view: msu_brands_daily_09_19_22 {
       c.flight_number AS "Flight Number",
       cr.id AS "Creative ID",
       'MSU Brand' AS "Brand Name",
+      CASE WHEN c.flight_number = 'F-295999' THEN '344628064'
+           WHEN c.flight_number = 'F-296007' THEN '344612208'
+           WHEN c.flight_number = 'F-296015' THEN '344612223'
+           WHEN c.flight_number = 'F-296016' THEN '344612220'
+           ELSE '344613603' END AS "Placement ID",
       CASE WHEN c.flight_number = 'F-295999' THEN 'CTV w/ Branded Frame + QR & 1P BT (Alumni & National)'
            WHEN c.flight_number = 'F-296007' THEN 'CTV w/ Branded Frame + QR & 3P BT (Informed Public)'
            WHEN c.flight_number = 'F-296015' THEN 'CTV w/ Branded Frame +  & QR & 1P BT (Internal)'
@@ -63,6 +68,12 @@ ORDER BY 1
     sql: ${TABLE}."Brand Name" ;;
   }
 
+  dimension: placement_id {
+    type: string
+    label: "Placement ID"
+    sql: ${TABLE}."Placement ID" ;;
+  }
+
   dimension: placement_name {
     type: string
     label: "Placement Name"
@@ -112,6 +123,7 @@ ORDER BY 1
       flight_number,
       creative_id,
       brand_name,
+      placement_id,
       placement_name,
       creative_name,
       impressions,

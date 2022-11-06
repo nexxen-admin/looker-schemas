@@ -1,10 +1,25 @@
 view: amherst_daily_09_19_22 {
   required_access_grants: [can_view_pub_come_looker]
   derived_table: {
-    sql: SELECT date::date as "Date",
+    sql:SELECT date::date as "Date",
       c.flight_number AS "Flight Number",
       cr.id AS "Creative ID",
       'Amherst' AS "Brand Name",
+      CASE WHEN c.flight_number = 'F-297135' THEN '345010585'
+           WHEN c.flight_number = 'F-297143' THEN '345010882'
+           WHEN c.flight_number = 'F-297151' THEN '345134581'
+           WHEN c.flight_number = 'F-297159' THEN '345134578'
+           WHEN c.flight_number = 'F-297167' THEN '345114360'
+           WHEN c.flight_number = 'F-297175' THEN '344878736'
+           WHEN c.flight_number = 'F-297191' THEN '345125130'
+           WHEN c.flight_number = 'F-297192' THEN '345125178'
+           WHEN c.flight_number = 'F-297193' THEN '345132097'
+           WHEN c.flight_number = 'F-297194' THEN '345132088'
+           WHEN c.flight_number = 'F-297195' THEN '345128331'
+           WHEN c.flight_number = 'F-297196' THEN '345125133'
+           WHEN c.flight_number = 'F-297197' THEN '345128328'
+           WHEN c.flight_number = 'F-297198' THEN '345128064'
+           ELSE '345125772' END AS "Placement ID",
       CASE WHEN c.flight_number = 'F-297135' THEN 'CTV Plus w/ Branded Frame + QR, 1P, DMA (Traditional Students)'
            WHEN c.flight_number = 'F-297143' THEN 'OLV Plus w/ Custom CTA, 1P, DMA (Traditional Prospective Students)'
            WHEN c.flight_number = 'F-297151' THEN 'CTV Plus w/ Branded Frame + QR, 1P, Zip (Traditional Prospective Students)'
@@ -36,7 +51,8 @@ WHERE c.flight_number IN ('F-297135','F-297143','F-297151','F-297159','F-297167'
   AND data_type = 'AD_DATA'
   AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6
-ORDER BY 1
+ORDER BY 1 ASC
+
  ;;
   }
 
@@ -68,6 +84,12 @@ ORDER BY 1
     type: string
     label: "Brand Name"
     sql: ${TABLE}."Brand Name" ;;
+  }
+
+  dimension: placement_id {
+    type: string
+    label: "Placement ID"
+    sql: ${TABLE}."Placement ID" ;;
   }
 
   dimension: placement_name {
@@ -118,6 +140,7 @@ ORDER BY 1
       flight_number,
       creative_id,
       brand_name,
+      placement_id,
       placement_name,
       creative_name,
       impressions,

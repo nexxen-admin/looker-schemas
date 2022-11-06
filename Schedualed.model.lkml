@@ -62,9 +62,34 @@ explore: swift_meats_4_13_22 {
   label: "Swift Meats"
 }
 
+explore: ctv_frequency_by_month {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "CTV Frequency by Week"
+}
+
+explore: the_north_face_phase_1_bi_weekly_11_04_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "The North Face bi-weekly Phase 1"
+}
+
+explore: best_western_daily_reporting_10_21_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Best Western"
+}
+
 explore: priority_health_daily_09_19_11 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Priority Health"
+}
+
+explore: uchealth_campaignid__4452586_daily_10_17_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "UC Health Campaign ID: 4452586 Daily"
+}
+
+explore: uchealth_campaignid_4459456_10_17_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "UC Health Campaign ID: 4459456 Daily"
 }
 
 explore: amherst_daily_09_19_22 {
@@ -90,6 +115,11 @@ explore: woman_thou_art_loosed_06_28_22 {
 explore: rust_oleum_fy23_walmart_video_10_04_16 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Rust Oleum FY23 Walmart Video"
+}
+
+explore: choctaw_casinos___resorts_10_17_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Choctaw Casinos & Resorts"
 }
 
 

@@ -1,10 +1,20 @@
 view: msu_admissions_daily_09_19_22 {
   required_access_grants: [can_view_pub_come_looker]
   derived_table: {
-    sql: SELECT date::date as "Date",
+    sql:SELECT date::date as "Date",
       c.flight_number AS "Flight Number",
       cr.id AS "Creative ID",
       'MSU Admission' AS "Brand Name",
+      CASE WHEN c.flight_number = 'F-295945' AND cr.id = 8625986 THEN '344745957'
+           WHEN c.flight_number = 'F-295945' AND cr.id = 8626006 THEN '344745936'
+           WHEN c.flight_number = 'F-295945' AND cr.id = 8626016 THEN '345372381'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8625986 THEN '345377703'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8626006 THEN '344745966'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8626016 THEN '345376221'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8626206 THEN '344754421'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8626216 THEN '344745657'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8626226 THEN '345372336'
+           ELSE '344745921' END AS "Placement ID",
       CASE WHEN c.flight_number = 'F-295945' THEN 'CTV Plus w/ Branded Frame + QR & 1P BT (Prospective Students)'
            WHEN c.flight_number = 'F-295961' THEN 'CTV Plus w/ Branded Frame + QR & 3P BT (Proespective Parents)'
            WHEN c.flight_number = 'F-295953' THEN 'OLV Plus w/ Endcard + CTA & 1P BT (Prospective Students)'
@@ -67,6 +77,12 @@ ORDER BY 1
     sql: ${TABLE}."Brand Name" ;;
   }
 
+  dimension: placement_id {
+    type: string
+    label: "Placement ID"
+    sql: ${TABLE}."Placement ID" ;;
+  }
+
   dimension: placement_name {
     type: string
     label: "Placement Name"
@@ -115,6 +131,7 @@ ORDER BY 1
       flight_number,
       creative_id,
       brand_name,
+      placement_id,
       placement_name,
       creative_name,
       impressions,

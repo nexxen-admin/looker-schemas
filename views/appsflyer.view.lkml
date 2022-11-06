@@ -36,6 +36,11 @@ view: appsflyer {
     label: "CPI Post Revenue"
     sql: ${TABLE}.CPI_Post_Revenue ;;
   }
+  measure: CPE_Post_att {
+    type: sum
+    label: "CPE Post att"
+    sql: ${TABLE}.CPE_Post_att ;;
+  }
 
   measure: blocked_events {
     type: sum

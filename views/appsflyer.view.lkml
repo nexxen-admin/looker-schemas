@@ -26,6 +26,12 @@ view: appsflyer {
     sql: ${TABLE}.Blocked_Conversions ;;
   }
 
+  measure: CPE_Post_Revenue {
+    type: sum
+    label: "CPE Post Revenue"
+    sql: ${TABLE}.CPE_Post_Revenue ;;
+  }
+
   measure: blocked_events {
     type: sum
     sql: ${TABLE}.Blocked_Events ;;

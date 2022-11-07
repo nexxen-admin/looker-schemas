@@ -192,6 +192,12 @@ view: appsflyer {
     sql: ${TABLE}.CPI_Payout ;;
   }
 
+  measure: Net_Revenue_NewCalc {
+    type: number
+    value_format: "$#,##0.00"
+    sql: (${cpi_revenue}+${cpe_revenue})-(${CPI_Post_Revenue}+${CPE_Post_Revenue}) ;;
+  }
+
   measure: cpi_net_payout {
     type: sum
     value_format: "$#,##0.00"

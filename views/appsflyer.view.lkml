@@ -26,6 +26,22 @@ view: appsflyer {
     sql: ${TABLE}.Blocked_Conversions ;;
   }
 
+  measure: CPE_Post_Revenue {
+    type: sum
+    label: "CPE Post Revenue"
+    sql: ${TABLE}.CPE_Post_Revenue ;;
+  }
+  measure: CPI_Post_Revenue {
+    type: sum
+    label: "CPI Post Revenue"
+    sql: ${TABLE}.CPI_Post_Revenue ;;
+  }
+  measure: CPE_Post_att {
+    type: sum
+    label: "CPE Post att"
+    sql: ${TABLE}.CPE_Post_att ;;
+  }
+
   measure: blocked_events {
     type: sum
     sql: ${TABLE}.Blocked_Events ;;
@@ -174,6 +190,12 @@ view: appsflyer {
     type: sum
     value_format: "$#,##0.00"
     sql: ${TABLE}.CPI_Payout ;;
+  }
+
+  measure: Net_Revenue_NewCalc {
+    type: number
+    value_format: "$#,##0.00"
+    sql: (${cpi_revenue}+${cpe_revenue})-(${CPI_Post_Revenue}+${CPE_Post_Revenue}) ;;
   }
 
   measure: cpi_net_payout {

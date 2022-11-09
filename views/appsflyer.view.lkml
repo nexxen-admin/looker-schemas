@@ -256,13 +256,21 @@ view: appsflyer {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension: event {
+  dimension_group: event {
     label: "Event Date"
-    type: date
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
     sql: ${TABLE}.event_time ;;
   }
-
-
 
   dimension: app_event_time {
     label: "New Time Date"

@@ -1122,6 +1122,15 @@ view: fact_ad_daily_agg {
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
   }
 
+  measure: Pub_RPM {
+    type: number
+    label: "Pub eCPM"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: (${revenue}/NULLIF(${impression_pixel},0))*1000 ;;
+  }
+
+
   measure: Render_Rate {
     type: number
     label: "Render Rate"

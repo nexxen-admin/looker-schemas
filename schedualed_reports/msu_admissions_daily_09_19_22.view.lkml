@@ -8,27 +8,45 @@ view: msu_admissions_daily_09_19_22 {
       CASE WHEN c.flight_number = 'F-295945' AND cr.id = 8625986 THEN '344745957'
            WHEN c.flight_number = 'F-295945' AND cr.id = 8626006 THEN '344745936'
            WHEN c.flight_number = 'F-295945' AND cr.id = 8626016 THEN '345372381'
+           WHEN c.flight_number = 'F-295945' AND cr.id = 8673456 THEN '350601430'
+           WHEN c.flight_number = 'F-295945' AND cr.id = 8673466 THEN '350601433'
+           WHEN c.flight_number = 'F-295945' AND cr.id = 8673476 THEN '350601436'
            WHEN c.flight_number = 'F-295961' AND cr.id = 8625986 THEN '345377703'
            WHEN c.flight_number = 'F-295961' AND cr.id = 8626006 THEN '344745966'
            WHEN c.flight_number = 'F-295961' AND cr.id = 8626016 THEN '345376221'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8673456 THEN '350601418'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8673466 THEN '350601424'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8673476 THEN '350601427'
            WHEN c.flight_number = 'F-295953' AND cr.id = 8626206 THEN '344754421'
            WHEN c.flight_number = 'F-295953' AND cr.id = 8626216 THEN '344745657'
            WHEN c.flight_number = 'F-295953' AND cr.id = 8626226 THEN '345372336'
-           ELSE '344745921' END AS "Placement ID",
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8673256 THEN '350273954'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8673346 THEN '350273963'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8673256 THEN '350273966'
+           ELSE '344745621' END AS "Placement ID",
       CASE WHEN c.flight_number = 'F-295945' THEN 'CTV Plus w/ Branded Frame + QR & 1P BT (Prospective Students)'
-           WHEN c.flight_number = 'F-295961' THEN 'CTV Plus w/ Branded Frame + QR & 3P BT (Proespective Parents)'
+           WHEN c.flight_number = 'F-295961' THEN 'CTV Plus w/ Branded Frame + QR & 3P BT (Prospective Parents)'
            WHEN c.flight_number = 'F-295953' THEN 'OLV Plus w/ Endcard + CTA & 1P BT (Prospective Students)'
            ELSE 'CTV Plus w/ Branded frame + QR & RTG + National' END AS "Placement Name",
-      CASE WHEN cr.id = 8625986 AND c.flight_number = 'F-295945' THEN 'MSU Spartans Custom'
-           WHEN cr.id = 8626006 AND c.flight_number = 'F-295945' THEN 'MSU Experience Custom'
-           WHEN cr.id = 8626016 AND c.flight_number = 'F-295945' THEN 'MSU Career Custom'
-           WHEN cr.id = 8625986 AND c.flight_number = 'F-295961' THEN 'MSU Spartans Custom'
-           WHEN cr.id = 8626006 AND c.flight_number = 'F-295961' THEN 'MSU Experience Custom'
-           WHEN cr.id = 8626016 AND c.flight_number = 'F-295961' THEN 'MSU Career Custom'
-           WHEN cr.id = 8626206 AND c.flight_number = 'F-295953' THEN 'MSU Spartans Custom OLV'
-           WHEN cr.id = 8626216 AND c.flight_number = 'F-295953' THEN 'MSU Experience Custom OLV'
-           WHEN cr.id = 8626226 AND c.flight_number = 'F-295953' THEN 'MSU Career Custom OLV'
-           ELSE 'MSU_Tremor_CTVOverlay_ProspectiveParents_National_:30 (1x1) Experience' END AS "Creative Name",
+      CASE WHEN c.flight_number = 'F-295945' AND cr.id = 8625986 THEN 'MSU_Tremor_CTVOverlay_ProspectiveStudents_National_:30 (1x1)_Spartans/MakeADifference Video'
+           WHEN c.flight_number = 'F-295945' AND cr.id = 8626006 THEN 'MSU_Tremor_CTVOverlay_ProspectiveStudents_National_:30 (1x1)_Experience/MakeADifference Video'
+           WHEN c.flight_number = 'F-295945' AND cr.id = 8626016 THEN 'MSU_Tremor_CTVOverlay_ProspectiveStudents_National_:30 (1x1)_Career/MakeADifference Video'
+           WHEN c.flight_number = 'F-295945' AND cr.id = 8673456 THEN 'MSU_Tremor_CTVOverlay_ProspectiveStudents_National_:30 (1x1)_Career/GenerationWill Video'
+           WHEN c.flight_number = 'F-295945' AND cr.id = 8673466 THEN 'MSU_Tremor_CTVOverlay_ProspectiveStudents_National_:30 (1x1)_Experience/GenerationWill Video'
+           WHEN c.flight_number = 'F-295945' AND cr.id = 8673476 THEN 'MSU_Tremor_CTVOverlay_ProspectiveStudents_National_:30 (1x1)_Spartans/GenerationWill Video'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8625986 THEN 'MSU_Tremor_CTVOverlay_ProspectiveParents_National_:30 (1x1)_Spartans/MakeADifference Video'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8626006 THEN 'MSU_Tremor_CTVOverlay_ProspectiveParents_National_:30 (1x1)_Experience/MakeADifference Video'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8626016 THEN 'MSU_Tremor_CTVOverlay_ProspectiveParents_National_:30 (1x1)_Career/MakeADifference Video'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8673456 THEN 'MSU_Tremor_CTVOverlay_ProspectiveParents_National_:30 (1x1)_Career/GenerationWill Video'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8673466 THEN 'MSU_Tremor_CTVOverlay_ProspectiveParents_National_:30 (1x1)_Experience/GenerationWill Video'
+           WHEN c.flight_number = 'F-295961' AND cr.id = 8673476 THEN 'MSU_Tremor_CTVOverlay_ProspectiveParents_National_:30 (1x1)_Spartans/GenerationWill Video'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8626206 THEN 'MSU_Tremor_OLVEndCard_ProspectiveStudents_National_:15 (1x1)_Spartans/GenerationWill Video'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8626216 THEN 'MSU_Tremor_OLVEndCard_ProspectiveStudents_National_:15 (1x1)_Experience/GenerationWill Video'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8626226 THEN 'MSU_Tremor_OLVEndCard_ProspectiveStudents_National_:15 (1x1) _Career/GenerationWill Video'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8673256 THEN 'MSU_Tremor_OLVEndCard_ProspectiveStudents_National_:15 (1x1) _Career/MakeADifference Video'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8673346 THEN 'MSU_Tremor_OLVEndCard_ProspectiveStudents_National_:15 (1x1)_Experience/MakeADifference Video'
+           WHEN c.flight_number = 'F-295953' AND cr.id = 8673256 THEN 'MSU_Tremor_OLVEndCard_ProspectiveStudents_National_:15 (1x1)_Spartans/MakeADifference Video'
+           ELSE 'MSU_Tremor_CTV_Retargeting_National_:30' END AS "Creative Name",
     SUM(impressions) AS "Impressions",
       SUM(completions) AS "Completions",
       SUM(clicks) AS "Clicks",
@@ -37,9 +55,10 @@ view: msu_admissions_daily_09_19_22 {
 FROM dwh.ad_data_daily add2
   left outer join dwh.campaign c on add2.flight_id = c.flight_id
   left outer join dwh.creative cr on add2.creative_id = cr.id
-WHERE c.flight_number IN ('F-295945','F-295961','F-295953', 'F-295969')
+WHERE c.flight_number IN ('F-295945','F-295961','F-295953','F-295969')
   AND date >= '2022-09-01'
   AND date < CURRENT_DATE()
+  AND c.buy_type NOT IN ('Direct', 'Programmatic_Guaranteed')
   AND data_type = 'AD_DATA'
   AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6

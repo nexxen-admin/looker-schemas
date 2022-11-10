@@ -36,6 +36,18 @@ view: appsflyer {
     label: "CPI Post Revenue"
     sql: ${TABLE}.CPI_Post_Revenue ;;
   }
+
+  measure: CPE_Post_Payout {
+    type: sum
+    label: "CPE Post Payout"
+    sql: ${TABLE}.CPE_Post_Payout ;;
+  }
+  measure: CPI_Post_Payout {
+    type: sum
+    label: "CPI Post Payout"
+    sql: ${TABLE}.CPI_Post_Payout ;;
+  }
+
   measure: CPE_Post_att {
     type: sum
     label: "CPE Post att"

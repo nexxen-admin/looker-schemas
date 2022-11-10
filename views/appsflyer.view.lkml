@@ -28,14 +28,26 @@ view: appsflyer {
 
   measure: CPE_Post_Revenue {
     type: sum
-    label: "CPE Post Revenue"
+    label: "CPE PA Revenue"
     sql: ${TABLE}.CPE_Post_Revenue ;;
   }
   measure: CPI_Post_Revenue {
     type: sum
-    label: "CPI Post Revenue"
+    label: "CPI PA Revenue"
     sql: ${TABLE}.CPI_Post_Revenue ;;
   }
+
+  measure: CPE_Post_Payout {
+    type: sum
+    label: "CPE PA Cost"
+    sql: ${TABLE}.CPE_Post_Payout ;;
+  }
+  measure: CPI_Post_Payout {
+    type: sum
+    label: "CPI PA Cost"
+    sql: ${TABLE}.CPI_Post_Payout ;;
+  }
+
   measure: CPE_Post_att {
     type: sum
     label: "CPE Post att"
@@ -188,6 +200,7 @@ view: appsflyer {
   }
   measure: cpi_payout {
     type: sum
+    label: "CPI Cost"
     value_format: "$#,##0.00"
     sql: ${TABLE}.CPI_Payout ;;
   }
@@ -196,6 +209,11 @@ view: appsflyer {
     type: number
     value_format: "$#,##0.00"
     sql: (${cpi_revenue}+${cpe_revenue})-(${CPI_Post_Revenue}+${CPE_Post_Revenue}) ;;
+  }
+  measure: Net_profit_NewCalc {
+    type: number
+    value_format: "$#,##0.00"
+    sql: ((${cpi_revenue}+${cpe_revenue})-(${CPI_Post_Revenue}+${CPE_Post_Revenue}))-((${cpi_payout}+${cpe_payout})-(${CPI_Post_Payout}+${CPE_Post_Payout})) ;;
   }
 
   measure: cpi_net_payout {
@@ -256,13 +274,21 @@ view: appsflyer {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension: event {
+  dimension_group: event {
     label: "Event Date"
-    type: date
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
     sql: ${TABLE}.event_time ;;
   }
-
-
 
   dimension: app_event_time {
     label: "New Time Date"

@@ -28,23 +28,23 @@ view: appsflyer {
 
   measure: CPE_Post_Revenue {
     type: sum
-    label: "CPE Post Revenue"
+    label: "CPE PA Revenue"
     sql: ${TABLE}.CPE_Post_Revenue ;;
   }
   measure: CPI_Post_Revenue {
     type: sum
-    label: "CPI Post Revenue"
+    label: "CPI PA Revenue"
     sql: ${TABLE}.CPI_Post_Revenue ;;
   }
 
   measure: CPE_Post_Payout {
     type: sum
-    label: "CPE Post Payout"
+    label: "CPE PA Cost"
     sql: ${TABLE}.CPE_Post_Payout ;;
   }
   measure: CPI_Post_Payout {
     type: sum
-    label: "CPI Post Payout"
+    label: "CPI PA Cost"
     sql: ${TABLE}.CPI_Post_Payout ;;
   }
 
@@ -200,6 +200,7 @@ view: appsflyer {
   }
   measure: cpi_payout {
     type: sum
+    label: "CPI Cost"
     value_format: "$#,##0.00"
     sql: ${TABLE}.CPI_Payout ;;
   }

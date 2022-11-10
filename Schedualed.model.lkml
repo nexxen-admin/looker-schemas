@@ -64,7 +64,7 @@ explore: swift_meats_4_13_22 {
 
 explore: duncan_channon_covered_ca_oe23_daily_11_10_22 {
   required_access_grants: [can_view_pub_come_looker]
-  label: "Swift Meats"
+  label: "Duncan Channon Covered CA OE23"
 }
 
 explore: ctv_frequency_by_month {

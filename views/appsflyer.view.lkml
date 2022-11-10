@@ -209,6 +209,11 @@ view: appsflyer {
     value_format: "$#,##0.00"
     sql: (${cpi_revenue}+${cpe_revenue})-(${CPI_Post_Revenue}+${CPE_Post_Revenue}) ;;
   }
+  measure: Net_profit_NewCalc {
+    type: number
+    value_format: "$#,##0.00"
+    sql: ((${cpi_revenue}+${cpe_revenue})-(${CPI_Post_Revenue}+${CPE_Post_Revenue}))-((${cpi_payout}+${cpe_payout})-(${CPI_Post_Payout}+${CPE_Post_Payout})) ;;
+  }
 
   measure: cpi_net_payout {
     type: sum

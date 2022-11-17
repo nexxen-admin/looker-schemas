@@ -54,7 +54,7 @@ view: 14848__international_leadership_summit_ott_11_17_22 {
 
   dimension: campaign_name {
     type: string
-    label: "Campaign Name"
+    label: "Placement Name"
     sql: ${TABLE}."Campaign Name" ;;
   }
 

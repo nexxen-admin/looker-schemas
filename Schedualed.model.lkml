@@ -61,6 +61,10 @@ explore: swift_meats_4_13_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Swift Meats"
 }
+explore: 14848__international_leadership_summit_ott_11_17_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "[14849] - International Leadership Summit - OTT"
+}
 
 explore: duncan_channon_covered_ca_oe23_daily_11_10_22 {
   required_access_grants: [can_view_pub_come_looker]

@@ -27,7 +27,7 @@ view: just_bare_chicken_5_27_22 {
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
   left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
-WHERE date >= '2022-05-12'--CURRENT_DATE()-7
+WHERE date >= CURRENT_DATE()-7
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
   and flight_id IN (4408076,4408146,4408246,4408216,4408086,4408166,4408256,4408226,4408096,4408186,4408266,4408236,4454156,4455066,4455176,4455096,

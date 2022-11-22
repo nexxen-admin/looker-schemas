@@ -54,6 +54,25 @@ view: appsflyer {
     sql: ${TABLE}.CPE_Post_att ;;
   }
 
+  measure: CPI_Post_att {
+    type: sum
+    label: "CPI Post att"
+    sql: ${TABLE}.CPI_Post_att ;;
+  }
+
+  measure: CPI_Conv_Crypto {
+    type: sum
+    label: "CPI Conv Crypto"
+    sql: ${TABLE}.CPI_Conv_Crypto ;;
+  }
+
+
+  measure: CPI_Conv_att {
+    type: sum
+    label: "CPI Conversions"
+    sql: ${TABLE}.CPI_Conv_att ;;
+  }
+
   measure: blocked_events {
     type: sum
     sql: ${TABLE}.Blocked_Events ;;

@@ -8,6 +8,8 @@ view: rust_oleum_fy23_walmart_video_10_04_16 {
        c.flight_number AS "Placement ID",
        creative_id AS "Creative ID",
        CASE WHEN creative_id = 8643216 THEN 'RO Studio Color Walmart 15 sec'
+            WHEN creative_id = 8662286 THEN ' All Screen Custom Creative'
+            WHEN creative_id = 8661626 THEN 'CTV Custom Creative'
            ELSE 'RO Studio Color Walmart 6 sec' END AS "Creative Name",
        CASE WHEN c.flight_number = 'F-302557' THEN (SUM(impressions)/1000)*20
             WHEN c.flight_number = 'F-302559' THEN (SUM(impressions)/1000)*21
@@ -15,6 +17,9 @@ view: rust_oleum_fy23_walmart_video_10_04_16 {
             WHEN c.flight_number = 'F-302563' THEN (SUM(impressions)/1000)*21
             WHEN c.flight_number = 'F-302565' THEN (SUM(impressions)/1000)*21
             WHEN c.flight_number = 'F-302567' THEN (SUM(impressions)/1000)*31
+            WHEN c.flight_number = 'F-306018' THEN (SUM(impressions)/1000)*20
+            WHEN c.flight_number = 'F-306019' THEN (SUM(impressions)/1000)*21
+            WHEN c.flight_number = 'F-306020' THEN (SUM(impressions)/1000)*18
             ELSE (SUM(impressions)/1000)*31 END AS "Spend",
        SUM(impressions) AS "Impressions",
        SUM(clicks) AS "Clicks",
@@ -28,7 +33,8 @@ FROM dwh.ad_data_daily add2
 WHERE date >= '2022-10-01'
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
-  and c.flight_number IN ('F-302557', 'F-302559', 'F-302561', 'F-302563', 'F-302565', 'F-302567', 'F-302569')
+  AND c.buy_type NOT IN ('Direct', 'Programmatic_Guaranteed')
+  and c.flight_number IN ('F-302557', 'F-302559', 'F-302561', 'F-302563', 'F-302565', 'F-302567', 'F-302569', 'F-306018 ', 'F-306019', 'F-306020')
   AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6,7
 ORDER BY 1

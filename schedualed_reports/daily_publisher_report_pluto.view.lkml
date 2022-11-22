@@ -178,6 +178,11 @@ view: daily_publisher_report_pluto {
     sql: ${TABLE}.deal_id ;;
   }
 
+  dimension: pub_id {
+    type: string
+    sql: ${TABLE}.pub_id ;;
+  }
+
   dimension: deal_name {
     type: string
     sql: ${TABLE}.deal_name ;;
@@ -221,6 +226,7 @@ view: daily_publisher_report_pluto {
   set: detail {
     fields: [
       event_time_time,
+      pub_id,
       buying_channel,
       deal_type,
       deal_id,

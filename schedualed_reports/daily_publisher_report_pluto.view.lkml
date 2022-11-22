@@ -1,6 +1,6 @@
 view: daily_publisher_report_pluto {
   derived_table: {
-    sql: select add2.event_time,
+    sql: select add2.event_time,pub_id,
       CASE WHEN ((add2.dsp_deal_type = 'rx') AND (add2.revenue_type = 'thirdparty' or add2.dsp_display_name = 'Amobee')) THEN 'Unruly Curated PMPs'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
@@ -28,7 +28,7 @@ view: daily_publisher_report_pluto {
       where-- add3.event_time >= :start_date
       --and add3.event_time < :end_date
       --and
-      pub_id = '78614'
+      pub_id in ('78614','104062')
       and add3.rx_deal_id is not null
       and impression_pixel >0
       group by 1,2) as adv_cnt on add2.rx_deal_id = adv_cnt.rx_deal_id and add2.event_time = adv_cnt.event_time
@@ -38,16 +38,16 @@ view: daily_publisher_report_pluto {
       where --add2.event_time >=:start_date
       --and add2.event_time < :end_date
       --and
-      pub_id = '78614'
+      pub_id in ('78614','104062')
       and add2.impression_pixel >0
       and add2.dsp_display_name <>'Tremor'
-      group by 1,2,3,4,5,6,7,8
+      group by 1,2,3,4,5,6,7,8,9
 
 
       UNION
 
 
-      select add2.event_time,
+      select add2.event_time, pub_id,
       CASE WHEN ((add2.dsp_deal_type = 'rx') AND (add2.revenue_type = 'thirdparty' or add2.dsp_display_name = 'Amobee')) THEN 'Unruly Curated PMPs'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
@@ -67,17 +67,17 @@ view: daily_publisher_report_pluto {
       where --add2.event_time >=:start_date
       --and add2.event_time < :end_date
       --and
-      pub_id = '78614'
+      pub_id in ('78614','104062')
       and add2.impression_pixel >0
       and add2.rx_deal_id is null
       and add2.dsp_display_name <> 'Tremor'
-      group by 1,2,3,4,5,6,7,8
+      group by 1,2,3,4,5,6,7,8,9
 
 
       union
 
 
-      select add2.event_time,
+      select add2.event_time, pub_id,
       CASE WHEN ((add2.dsp_deal_type = 'rx') AND (add2.revenue_type = 'thirdparty' or add2.dsp_display_name = 'Amobee')) THEN 'Unruly Curated PMPs'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
@@ -97,17 +97,17 @@ view: daily_publisher_report_pluto {
       where --add2.event_time >=:start_date
       --and add2.event_time < :end_date
       --and
-      pub_id = '78614'
+      pub_id in ('78614','104062')
       and add2.impression_pixel >0
       and add2.dsp_display_name = 'Tremor'
       and (add2.dsp_deal_type <>'pub' or add2.dsp_deal_type is null)
-      group by 1,2,3,4,5,6,7,8
+      group by 1,2,3,4,5,6,7,8,9
 
 
       union
 
 
-      select add2.event_time,
+      select add2.event_time, pub_id,
       CASE WHEN ((add2.dsp_deal_type = 'rx') AND (add2.revenue_type = 'thirdparty' or add2.dsp_display_name = 'Amobee')) THEN 'Unruly Curated PMPs'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
@@ -134,7 +134,7 @@ view: daily_publisher_report_pluto {
       where --add3.event_time >=:start_date
       --and add3.event_time < :end_date
       --and
-      pub_id = '78614'
+      pub_id in ('78614','104062')
       and add3.rx_deal_id is not null
       and impression_pixel >0
       group by 1,2) as adv_cnt on add2.rx_deal_id = adv_cnt.rx_deal_id and add2.event_time = adv_cnt.event_time
@@ -144,11 +144,11 @@ view: daily_publisher_report_pluto {
       where --add2.event_time >=:start_date
       --and add2.event_time < :end_date
       --and
-      pub_id = '78614'
+      pub_id in ('78614','104062')
       and add2.impression_pixel >0
       and add2.dsp_display_name = 'Tremor'
       and add2.dsp_deal_type ='pub'
-      group by 1,2,3,4,5,6,7,8
+      group by 1,2,3,4,5,6,7,8,9
       order by 1,2,6,4,8
       ;;
   }
@@ -198,23 +198,23 @@ view: daily_publisher_report_pluto {
     sql: ${TABLE}.advertiser ;;
   }
 
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.impressions ;;
   }
 
-  dimension: revenue {
-    type: number
+  measure: revenue {
+    type: sum
     sql: ${TABLE}.revenue ;;
   }
 
-  dimension: e_cpm {
-    type: number
+  measure: e_cpm {
+    type: sum
     sql: ${TABLE}.eCPM ;;
   }
 
-  dimension: bid_cpm {
-    type: number
+  measure: bid_cpm {
+    type: sum
     sql: ${TABLE}.Bid_CPM ;;
   }
 
@@ -233,5 +233,6 @@ view: daily_publisher_report_pluto {
       e_cpm,
       bid_cpm
     ]
+
   }
 }

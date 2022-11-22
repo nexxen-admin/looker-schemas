@@ -3,7 +3,7 @@ view: 14848__international_leadership_summit_ott_11_17_22 {
   derived_table: {
     sql: SELECT date::date as "Date",
            TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
-           '[14849] International Leadership Summit – OTT' AS "Custom Campaign Name",
+           '[c14849] International Leadership Summit – OTT' AS "Custom Campaign Name",
            c.campaign_name AS "Campaign Name",
            add2.flight_id AS "Placement ID",
            c.flight_number AS "Flight Number",

@@ -18,6 +18,7 @@ view: daily_publisher_report_pluto {
       add2.dsp_display_name as DSP,
       adv_cnt.adv_count as advertiser_count,
       adomain as advertiser,
+      sum(requests) as requests,
       sum(impression_pixel) as impressions,
       sum(cogs) as revenue,
       (sum(cogs)/sum(impression_pixel))*1000 as eCPM,
@@ -59,6 +60,7 @@ view: daily_publisher_report_pluto {
       add2.dsp_display_name as DSP,
       null as advertiser_count,
       adomain as advertiser,
+      sum(requests) as requests,
       sum(impression_pixel) as impressions,
       sum(cogs) as revenue,
       (sum(cogs)/sum(impression_pixel))*1000 as eCPM,
@@ -89,6 +91,7 @@ view: daily_publisher_report_pluto {
       add2.dsp_display_name as DSP,
       null as advertiser_count,
       adomain as advertiser,
+      sum(requests) as requests,
       sum(impression_pixel) as impressions,
       sum(cogs) as revenue,
       (sum(cogs)/sum(impression_pixel))*1000 as eCPM,
@@ -125,6 +128,7 @@ view: daily_publisher_report_pluto {
       add2.dsp_display_name as DSP,
       adv_cnt.adv_count as advertiser_count,
       adomain as advertiser,
+      sum(requests) as requests,
       sum(impression_pixel) as impressions,
       sum(cogs) as revenue,
       (sum(cogs)/sum(impression_pixel))*1000 as eCPM,
@@ -203,6 +207,11 @@ view: daily_publisher_report_pluto {
     sql: ${TABLE}.advertiser ;;
   }
 
+  measure: requests {
+    type: sum
+    sql: ${TABLE}.requests ;;
+  }
+
   measure: impressions {
     type: sum
     sql: ${TABLE}.impressions ;;
@@ -234,6 +243,7 @@ view: daily_publisher_report_pluto {
       dsp,
       advertiser_count,
       advertiser,
+      requests,
       impressions,
       revenue,
       e_cpm,

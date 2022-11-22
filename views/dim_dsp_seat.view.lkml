@@ -70,7 +70,7 @@ view: dim_dsp_seat {
 
   dimension: 1st_Party_Demand_Desc {
     type: string
-    label: "Is 1st Party Demand"
+    label: "1st Party Demand Desc"
     sql: case when  ${TABLE}.Is_1st_Party_Demand=true then "Yes" else "No" end;;
 
   }

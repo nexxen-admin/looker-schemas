@@ -1464,7 +1464,7 @@ view: fact_ad_daily_agg {
   }
 
   measure: rx_bid_floor {
-    type: number
+    type: average
     label: "Bid Floor"
     group_label: "Daily Measures"
     sql: ${TABLE}.avg_of_ssp_bid_floor ;;

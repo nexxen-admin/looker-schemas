@@ -28,6 +28,11 @@ explore: publishers_report_monthly_for_finance {
   label: "publishers report monthly for finance"
 }
 
+explore: daily_publisher_report_pluto {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Pluto report"
+}
+
 explore: temp_di_pub_com_looker_test {
   required_access_grants: [can_view_pub_come_looker]
 }

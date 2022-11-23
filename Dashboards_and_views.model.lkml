@@ -42,10 +42,9 @@ access_grant: can_view_candidates {
  # user_attribute: allowed_users
   #allowed_values: ["Looker_Admins"]
 #}
-explore:  daily_kpi_s_data{
+explore: datorama_forcast_poc {
 
-  label: "Daily KPI's Data"
-  required_access_grants: [can_view_candidates]
+  required_access_grants: [can_view_all_tremor]
 
 }
 explore: sam_goal_monitor {
@@ -69,7 +68,7 @@ explore: sam {
 explore: sam_lt_comm {
    access_filter: {
      field: sam_lt_comm.operations_owner
-     user_attribute: allowed_users
+     user_attribute: allowed_users_expend
    }
   label: "SAM LT Commision"
   required_access_grants: [can_view_all_tremor]
@@ -99,7 +98,7 @@ explore: phase_2_ak {
   required_access_grants: [can_view_all_tremor]
 }
 
-explore: tremor_to_unruly {
-  persist_with:ChangeCleanCash_datagroup
-
+explore: spearad_fifa_view {
+  label: "FIFA-SpearAd View"
+  required_access_grants: [can_view_all_tremor]
 }

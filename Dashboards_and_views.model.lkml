@@ -42,10 +42,9 @@ access_grant: can_view_candidates {
  # user_attribute: allowed_users
   #allowed_values: ["Looker_Admins"]
 #}
-explore:  daily_kpi_s_data{
+explore: datorama_forcast_poc {
 
-  label: "Daily KPI's Data"
-  required_access_grants: [can_view_candidates]
+  required_access_grants: [can_view_all_tremor]
 
 }
 explore: sam_goal_monitor {

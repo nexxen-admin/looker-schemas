@@ -73,12 +73,12 @@ view: datorama_forcast_poc {
   }
 
   measure: pct_of_target_nr_booked {
-    type: percentile
+    type: average
     sql: ${TABLE}.pct_of_Target_NR_Booked ;;
   }
 
   measure: pct_of_target_nr_forecast_new {
-    type: percentile
+    type: average
     sql: ${TABLE}.pct_of_Target_NR_Forecast_NEW ;;
   }
 

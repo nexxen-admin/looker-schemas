@@ -28,9 +28,19 @@ view: datorama_forcast_poc {
     sql: ${TABLE}.Day1 ;;
     hidden: yes
   }
-  dimension: date {
-    type: date
+  dimension_group: date {
     label: "Day"
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
     sql: ${TABLE}.Date ;;
   }
 

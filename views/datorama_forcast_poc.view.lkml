@@ -17,6 +17,8 @@ view: datorama_forcast_poc {
 
   measure: booked_access_credit {
     type: sum
+    value_format: ""
+    label: "TL Booked"
     sql: ${TABLE}.Booked_ACCESS_Credit ;;
   }
 
@@ -39,11 +41,15 @@ view: datorama_forcast_poc {
 
   measure: delta_nr_booked {
     type: sum
+    label: "Delta (NR Booked)"
+    value_format: "$#,##0.00"
     sql: ${TABLE}.Delta_NR_Booked ;;
   }
 
   measure: delta_nr_forecast_new {
     type: sum
+    label:"Delta (NR Forecast) (NEW)"
+    value_format: "$#,##0.00"
     sql: ${TABLE}.Delta_NR_Forecast_NEW ;;
   }
 
@@ -70,12 +76,15 @@ view: datorama_forcast_poc {
 
   measure: new_forecast_test_v3 {
     type: sum
+    label:"TL Forecast"
     sql: ${TABLE}.New_Forecast_Test_v3 ;;
   }
 
   measure: new_net_revenue_forecast_test_v3 {
     type: sum
-    sql: ${TABLE}.New_Net_Revenue_Forecast_Test_v3 ;;
+    label: "NR Forecast"
+    value_format: "$0.00,,\" M\""
+   sql: ${TABLE}.New_Net_Revenue_Forecast_Test_v3 ;;
   }
 
   measure: pct_of_target_nr_booked {
@@ -105,6 +114,8 @@ view: datorama_forcast_poc {
 
   measure: sales_rep_target_usd_nr {
     type: sum
+    label: "NR Target"
+    value_format: "$0.00,,\" M\""
     sql: ${TABLE}.Sales_Rep_Target_USD_NR ;;
   }
 

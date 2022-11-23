@@ -91,7 +91,7 @@ ORDER BY 1 DESC
   dimension: clicks {
     type: number
     label: "Clicks"
-    sql: ${TABLE};;
+    sql: ${TABLE}.clicks;;
   }
 
   dimension: completions {

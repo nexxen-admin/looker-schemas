@@ -81,6 +81,11 @@ explore: just_bare_chicken_case_ready_11_23_22 {
   label: "Just Bare Chicken Case Ready"
 }
 
+explore: just_bare_chicken_prepared_foods_11_23_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Just Bare Chicken Prepared Foods"
+}
+
 explore: ctv_frequency_by_month {
   required_access_grants: [can_view_pub_come_looker]
   label: "CTV Frequency by Week"

@@ -434,14 +434,14 @@ join: dim_country {
     relationship: many_to_one
   }
   join: dim_rg_blocked {
-    type: full_outer
+    type: inner
     view_label: "Impression Attributes"
     sql_on: ${dim_rg_blocked.rg_blocked_key}=${fact_ad_daily_agg.rg_blocked_key} ;;
     relationship: many_to_one
   }
 
   join: dim_rg_blocked_reason {
-    type: full_outer
+    type: inner
     view_label: "Impression Attributes"
     sql_on: ${dim_rg_blocked_reason.rg_blocked_reason_key}=${fact_ad_daily_agg.rg_blocked_reason_key} ;;
     relationship: many_to_one
@@ -449,14 +449,14 @@ join: dim_country {
 
 
   join: dim_user_matched {
-    type: full_outer
+    type: inner
     view_label: "Request Attributes"
     sql_on: ${dim_user_matched.user_matched_key}=${fact_ad_daily_agg.user_matched_key} ;;
     relationship: many_to_one
   }
 
   join: dim_video_linearity {
-    type: full_outer
+    type: inner
     view_label: "Request Attributes"
     sql_on: ${dim_video_linearity.video_linearity_key}=${fact_ad_daily_agg.video_Linearity_key} ;;
     relationship: many_to_one
@@ -464,13 +464,13 @@ join: dim_country {
 
 
   join: dim_video_simple_size {
-    type: full_outer
+    type: inner
     view_label: "Ad Size"
     sql_on: ${dim_video_simple_size.video_simple_size_key}=${fact_ad_daily_agg.video_simple_size_key} ;;
     relationship: many_to_one
   }
   join: dim_ad_size_width {
-    type: full_outer
+    type: inner
     view_label: "Ad Size"
     sql_on: ${dim_ad_size_width.ad_size_width_key}=${fact_ad_daily_agg.ad_size_width_key} ;;
     relationship: many_to_one
@@ -478,14 +478,14 @@ join: dim_country {
 
 
   join: dim_ad_size_height {
-    type: full_outer
+    type: inner
     view_label: "Ad Size"
     sql_on: ${dim_ad_size_height.ad_size_height_key}=${fact_ad_daily_agg.ad_size_height_key} ;;
     relationship: many_to_one
   }
 
   join: dim_dsp_data_center {
-    type: full_outer
+    type: inner
     view_label: "DSP"
     sql_on: ${dim_dsp_data_center.dsp_key}=${fact_ad_daily_agg.dsp_key}
       AND ${dim_dsp_data_center.data_center_key}=${fact_ad_daily_agg.data_center_key};;
@@ -493,28 +493,28 @@ join: dim_country {
   }
 
   join: dim_os {
-    type: full_outer
+    type: inner
     view_label: "Request Attributes"
     sql_on: ${dim_os.os_key}=${fact_ad_daily_agg.os_key} ;;
     relationship: many_to_one
 
   }
   join: dim_deal_brand {
-    type: full_outer
+    type: inner
     view_label: "Deal"
     sql_on: ${dim_deal_brand.deal_brand_key}=${dim_deal.deal_brand_key};;
     relationship: many_to_one
   }
 
   join: dim_deal_priority {
-    type: full_outer
+    type: inner
     view_label: "Deal"
     sql_on: ${dim_deal_priority.deal_priority_key}=${dim_deal.deal_priority_key};;
     relationship: many_to_one
   }
 
   join: dim_deal_agency {
-    type: full_outer
+    type: inner
     view_label: "Deal"
     sql_on: ${dim_deal_agency.deal_agency_key}=${dim_deal.deal_agency_key};;
     relationship: many_to_one
@@ -615,9 +615,10 @@ join: dim_traffic_source {
 
 join: dim_publisher_ssp {
   type: inner
+  view_label: "SSP"
   sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_daily_agg.pub_ssp_key};;
   relationship: many_to_one
-  fields: []
+  #fields: []
 }
 join: dim_publisher {
   type: inner

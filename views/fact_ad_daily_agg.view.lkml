@@ -606,8 +606,8 @@ view: fact_ad_daily_agg {
             </td>
 
             <td style = "padding: 2px">
-              <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_02_static.png">
-              <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/EP_02_Mar3.mp4" type="video/mp4">
+              <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound/ep_02_static.png?csf=1&web=1&e=MBdDCb">
+              <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound/EP_02_Mar3.mp4?csf=1&web=1&e=EvFlDG" type="video/mp4">
               </video>
             </td>
 
@@ -1122,6 +1122,15 @@ view: fact_ad_daily_agg {
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
   }
 
+  measure: Pub_RPM {
+    type: number
+    label: "Pub RPM"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: (${revenue}/NULLIF(${impression_pixel},0))*1000 ;;
+  }
+
+
   measure: Render_Rate {
     type: number
     label: "Render Rate"
@@ -1455,20 +1464,22 @@ view: fact_ad_daily_agg {
   }
 
   measure: rx_bid_floor {
-    type: number
+    type: average
+    label: "Bid Floor"
     group_label: "Daily Measures"
-    sql: ${TABLE}.rx_bid_floor ;;
-    hidden: yes
+    sql: ${TABLE}.avg_of_ssp_bid_floor ;;
+   # hidden: yes
   }
   dimension: dsp_bid_price {
     type: number
+    label: "Bid Price"
     sql: ${TABLE}.avg_of_dsp_bid_price ;;
-    hidden: yes
+   # hidden: yes
   }
 
   measure: count {
     type: count
     drill_fields: []
-    hidden: yes
+    #hidden: yes
   }
 }

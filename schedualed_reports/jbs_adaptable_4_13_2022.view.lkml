@@ -4,10 +4,10 @@ view: jbs_adaptable_4_13_2022 {
     sql: SELECT  date::date as "Date",
         TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
         flight_id as "Flight ID",
-        CASE WHEN flight_id IN(4206406, 42222036, 4244826, 4267946, 4301536, 4339246, 4371406, 4396786, 4431676) THEN 'CTV + BT + DMA Targeting'
-           WHEN flight_id IN(4206676, 4222046, 4244836, 4268006, 4301546, 4339256, 4371416, 4396796, 4431736) THEN 'CTV + BT + Zip Targeting'
-           WHEN flight_id IN(4206726, 4222056, 4244846, 4268016, 4301556, 4339266, 4371426, 4396806,4431766) THEN 'All Screen Video OTT + BT + DMA Targeting'
-           WHEN flight_id  IN(4206736, 4222066, 4244856, 4268026, 4301566, 4339296, 4371436, 4396816, 4431786) THEN ' ALL Screen Video OTT + BT + Zip Code Targeting'
+        CASE WHEN flight_id IN(4206406, 42222036, 4244826, 4267946, 4301536, 4339246, 4371406, 4396786, 4431676, 4457026, 4486216) THEN 'CTV + BT + DMA Targeting'
+           WHEN flight_id IN(4206676, 4222046, 4244836, 4268006, 4301546, 4339256, 4371416, 4396796, 4431736, 4457036, 4486426) THEN 'CTV + BT + Zip Targeting'
+           WHEN flight_id IN(4206726, 4222056, 4244846, 4268016, 4301556, 4339266, 4371426, 4396806,4431766, 4457046, 4486436) THEN 'All Screen Video OTT + BT + DMA Targeting'
+           WHEN flight_id  IN(4206736, 4222066, 4244856, 4268026, 4301566, 4339296, 4371436, 4396816, 4431786, 4457056, 4486456) THEN ' ALL Screen Video OTT + BT + Zip Code Targeting'
              ELSE 'CTV Added Value' END AS "Placement Name",
         'ADAPT-T-1902_Retreat_30_Unslated' as "Creative Name",
         st.screen_type_name as "Device Type",
@@ -51,7 +51,15 @@ view: jbs_adaptable_4_13_2022 {
                     4431786,
                     4431766,
                     4431736,
-                    4431676) THEN (SUM(impressions)/1000) * 21.50
+                    4431676,
+                    4457056,
+                    4486456,
+                    4457046,
+                    4486436,
+                    4457036,
+                    4486426,
+                    4457026,
+                    4486216) THEN (SUM(impressions)/1000) * 21.50
              ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
@@ -98,7 +106,17 @@ WHERE date >= CURRENT_DATE()-7
                     4431736,
                     4431766,
                     4431786,
-                    4431806)
+                    4431806,
+                    4457026,
+                    4486216,
+                    4457036,
+                    4486426,
+                    4457046,
+                    4486436,
+                    4457056,
+                    4486456,
+                    4457066,
+                    4486466)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6
 ORDER BY 1

@@ -69,7 +69,7 @@ explore: sam {
 explore: sam_lt_comm {
    access_filter: {
      field: sam_lt_comm.operations_owner
-     user_attribute: allowed_users
+     user_attribute: allowed_users_expend
    }
   label: "SAM LT Commision"
   required_access_grants: [can_view_all_tremor]
@@ -97,9 +97,4 @@ explore: sam_lt_pub_metrics {
 explore: phase_2_ak {
   label: "Phase 2 - AK"
   required_access_grants: [can_view_all_tremor]
-}
-
-explore: tremor_to_unruly {
-  persist_with:ChangeCleanCash_datagroup
-
 }

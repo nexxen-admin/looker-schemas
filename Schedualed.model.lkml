@@ -28,6 +28,11 @@ explore: publishers_report_monthly_for_finance {
   label: "publishers report monthly for finance"
 }
 
+explore: daily_publisher_report_pluto {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Pluto report"
+}
+
 explore: temp_di_pub_com_looker_test {
   required_access_grants: [can_view_pub_come_looker]
 }
@@ -61,10 +66,24 @@ explore: swift_meats_4_13_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Swift Meats"
 }
+explore: 14848__international_leadership_summit_ott_11_17_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "[14849] - International Leadership Summit - OTT"
+}
+
+explore: duncan_channon_covered_ca_oe23_daily_11_10_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Duncan Channon Covered CA OE23"
+}
 
 explore: ctv_frequency_by_month {
   required_access_grants: [can_view_pub_come_looker]
   label: "CTV Frequency by Week"
+}
+
+explore: the_north_face_phase_1_bi_weekly_11_04_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "The North Face bi-weekly Phase 1"
 }
 
 explore: best_western_daily_reporting_10_21_22 {

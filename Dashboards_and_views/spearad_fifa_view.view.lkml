@@ -119,7 +119,7 @@ Spearad_Final as (
         u.placement_name,
         u.placement_id,
         u.device_type,
-        u.imp_type,
+        coalesce(u.imp_type,'video') as imp_type,
         coalesce(u.country_name,sa.country_name) as Country,
         coalesce(u.geo_region,sa.geo_region) as Geo_Region,
         coalesce(sa.requests_y,u.requests_y) as requests_y,

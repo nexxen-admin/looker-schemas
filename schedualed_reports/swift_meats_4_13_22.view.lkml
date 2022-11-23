@@ -24,8 +24,8 @@ view: swift_meats_4_13_22 {
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
   left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
-WHERE date >= CURRENT_DATE()-7
-  AND  date < current_date()
+WHERE date >= '2022-11-14'
+  AND  date < '2022-11-21'
   AND data_type = 'AD_DATA'
   and add2.flight_id IN (4205796,4226106,4243836,4279686,
                      4205826,4226126,4243846,4279706,

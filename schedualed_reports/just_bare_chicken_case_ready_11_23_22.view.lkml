@@ -23,8 +23,8 @@ FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
   left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
   left outer join dwh.creative cr on add2.creative_id = cr.id
-WHERE date >= '2022-05-12'
-  AND date < '2022-11-14'
+WHERE date >= CURRENT_DATE()-7
+  AND date < CURRENT_DATE
   AND data_type = 'AD_DATA'
   and flight_id IN (4320336, 4320346, 4408076, 4408146, 4408246, 4408216, 4408086, 4408166, 4408256, 4408226,
              4408096, 4408186, 4408266, 4408236, 4494706, 4489096, 4489116, 4489106, 4489126)
@@ -91,7 +91,7 @@ ORDER BY 1 DESC
   dimension: clicks {
     type: number
     label: "Clicks"
-    sql: ${TABLE};;
+    sql: ${TABLE}.clicks;;
   }
 
   dimension: completions {

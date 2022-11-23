@@ -20,8 +20,8 @@ view: just_bare_chicken_prepared_foods_11_23_22 {
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
   left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
-WHERE date >= '2022-10-04'
-  AND date < '2022-11-14'
+WHERE date >= '2022-11-14'
+  AND date < '2022-11-21'
   AND data_type = 'AD_DATA'
   and flight_id IN (4454156, 4455066, 4455176, 4455096, 4454226, 4455076, 4455356, 4455126)
     AND (impressions > 0 or completions > 0 or clicks > 0)

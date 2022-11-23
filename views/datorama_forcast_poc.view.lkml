@@ -24,6 +24,7 @@ view: datorama_forcast_poc {
     type: date
     label: "Day"
     sql: ${TABLE}.Day1 ;;
+    hidden: yes
   }
   dimension: date {
     type: date

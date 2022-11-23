@@ -21,7 +21,7 @@ view: datorama_forcast_poc {
   }
 
   dimension: day1 {
-    type: string
+    type: date
     label: "Day"
     sql: ${TABLE}.Day1 ;;
   }
@@ -52,7 +52,7 @@ view: datorama_forcast_poc {
   }
 
   dimension: month1 {
-    type: string
+    type: date
     label: "Month"
     sql: ${TABLE}.Month1 ;;
   }

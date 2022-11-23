@@ -81,6 +81,7 @@ view: datorama_forcast_poc {
 
   measure: net_revenue_booked {
     type: sum
+    label: "# Net Revenue Booked"
     sql: ${TABLE}.Net_Revenue_Booked ;;
   }
 

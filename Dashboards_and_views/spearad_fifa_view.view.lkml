@@ -1,31 +1,37 @@
 view: spearad_fifa_view {
   derived_table: {
     sql: With Base_SpearAD_Data as (
-      Select --delivery_date::date as event_date,
-        bdv.Channel,
-        bdv.bid_cfg_id,
+  Select
+        sa.Channel,
+        sa.bidder,
         bm.bidder_name,
         bm.bidder_group,
-        sum(case when bdv.delivery_date = current_date()-1 then bdv.bids else 0 end) as Requests_Y,
-        sum(case when bdv.delivery_date = current_date()-2 then bdv.bids else 0 end) as Requests_YM1,
-        sum(case when bdv.delivery_date = current_date()-1 and nbr=1001 then bids else 0 end) + sum(case when bdv.delivery_date = current_date()-1 and nbr=1002 then bids else 0 end) as bids_Y,
-        sum(case when bdv.delivery_date = current_date()-2 and nbr=1001 then bids else 0 end) + sum(case when bdv.delivery_date = current_date()-2 and nbr=1002 then bids else 0 end) as bids_YM1,
-        sum(case when bdv.delivery_date = current_date()-1 then bdv.impressions else 0 end) as Impressions_Y,
-        sum(case when bdv.delivery_date = current_date()-2 then bdv.impressions else 0 end) as Impressions_YM1,
-        sum(case when bdv.delivery_date = current_date()-1 then bdv.impression_revenue else 0 end) as Revenue_Y,
-        sum(case when bdv.delivery_date = current_date()-2 then bdv.impression_revenue else 0 end) as Revenue_YM1
-      From spearad.bidblock_daily_view bdv
-        left outer join bi.svc_di_Spearad_Bidder_Mapping bm on bm.bidder_id = bdv.bid_cfg_id
-      Where bdv.delivery_date >= current_date()-2
-        and bdv.delivery_date < current_date()
-        and bdv.channel_id in ('844','845','846','750')
-        and bdv.buyer_account_id = 56
-        and bdv.bid_cfg_id != 0
-      Group by 1, 2, 3, 4),
+        sgm.country_code,
+        dig.country_name,
+        dig.sales_region as geo_region,
+        sum(case when sa.event_date = current_date()-1 then sa.bidrequests else 0 end) as Requests_Y,
+        sum(case when sa.event_date = current_date()-2 then sa.bidrequests else 0 end) as Requests_YM1,
+        sum(case when sa.event_date = current_date()-1 then sa.bidresponses else 0 end) as bids_Y,
+        sum(case when sa.event_date = current_date()-2 then sa.bidresponses else 0 end) as bids_YM1,
+        sum(case when sa.event_date = current_date()-1 then sa.impressions else 0 end) as Impressions_Y,
+        sum(case when sa.event_date = current_date()-2 then sa.impressions else 0 end) as Impressions_YM1,
+        sum(case when sa.event_date = current_date()-1 then sa.revenue else 0 end) as Revenue_Y,
+        sum(case when sa.event_date = current_date()-2 then sa.revenue else 0 end) as Revenue_YM1
+  From bi.svc_di_spearad_FIFA sa
+    left outer join bi.svc_di_Spearad_Bidder_Mapping bm on bm.bidder_name = sa.bidder
+    left outer join bi.svc_di_spearad_geo_mapping sgm on sgm.country = sa.country
+    left outer join bi.svc_di_geo_classification dig on dig.country_code = sgm.country_code
+  Where sa.event_date >= current_date()-2
+    and sa.event_date < current_date()
+ Group  by  1, 2, 3, 4, 5, 6, 7
+ ),
 
-Agg_data as (
+ Agg_data as (
       Select ad.channel,
         ad.bidder_group,
+        ad.country_code,
+        ad.country_name,
+        ad.geo_region,
         bm.placement_id,
         max(ad.Requests_Y) as Requests_Y,
         max(ad.Requests_YM1) as Requests_YM1,
@@ -33,18 +39,21 @@ Agg_data as (
         sum(ad.bids_YM1) as bids_YM1,
         sum(ad.Impressions_Y) as Impressions_Y,
         sum(ad.Impressions_YM1) as Impressions_YM1,
-        sum(ad.Revenue_Y)/1000000 as Revenue_Y,
-        sum(ad.Revenue_YM1)/1000000 as Revenue_YM1
+        sum(ad.Revenue_Y) as Revenue_Y,
+        sum(ad.Revenue_YM1) as Revenue_YM1
       From Base_SpearAD_Data ad
       left outer join (select bidder_Group, placement_id
                 From bi.svc_di_Spearad_Bidder_Mapping
                 Group by 1, 2) BM on bm.bidder_group = ad.bidder_group
-      Group by 1, 2, 3
+      Group by 1, 2, 3, 4, 5, 6
       ),
 
 Spearad_Final as (
       Select bidder_group as placement,
         placement_id,
+        country_code,
+        country_name,
+        geo_region,
         sum(Requests_Y) as Requests_Y,
         sum(Requests_YM1) as Requests_YM1,
         sum(bids_Y) as Bids_Y,
@@ -54,14 +63,17 @@ Spearad_Final as (
         sum(Revenue_Y) as SpearAd_Revenue_Y,
         sum(Revenue_YM1) as SpearAd_Revenue_YM1
       From Agg_data
-      Group by 1, 2
-      ),
+      Group by 1, 2, 3, 4, 5
+),
 
  Unruly_Final as (
       Select   sp.publisher_id,
         sp.publisher_name,
         spl.placement_name,
         spl.placement_id,
+        ad.country_code,
+        dig.country_name,
+        dig.sales_region as geo_region,
         Case when ad.media_id in ('253822','253646','253821','253645') then NULL else ad.rx_device_type end as Device_Type,
         Case when ad.media_id in ('253822','253646','253821','253645') then NULL else ad.rx_imp_type end as Imp_Type,
         sum(case when NEW_TIME(ad.event_time, 'America/New_York', 'UTC') >= current_date()-1
@@ -92,13 +104,14 @@ Spearad_Final as (
         left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id = ad.media_id
         left outer join andromeda.rx_dim_supply_publisher_traffic_source spts on spts.pub_ts_id = spl.pub_ts_id
         left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
+        left outer join bi.svc_di_geo_classification dig on dig.country_code = ad.country_code
       Where NEW_TIME(ad.event_time, 'America/New_York', 'UTC') >= current_date()-2
         and NEW_TIME(ad.event_time, 'America/New_York', 'UTC') < current_date()
        and ad.rx_ssp_name ilike 'rmp%'
        and ad.pub_id in ('105254','105362')
        and (ad.rx_request_status in ('nodsp','nodspbids','bidresponse')
          or ad.rx_request_status is NULL)
-      Group by 1, 2, 3, 4, 5, 6
+      Group by 1, 2, 3, 4, 5, 6, 7, 8, 9
       )
 
       Select u.publisher_id,
@@ -106,7 +119,9 @@ Spearad_Final as (
         u.placement_name,
         u.placement_id,
         u.device_type,
-        u.imp_type,
+        coalesce(u.imp_type,'video') as imp_type,
+        coalesce(u.country_name,sa.country_name) as Country,
+        coalesce(u.geo_region,sa.geo_region) as Geo_Region,
         coalesce(sa.requests_y,u.requests_y) as requests_y,
         coalesce(sa.requests_ym1,u.requests_ym1) as requests_ym1,
         coalesce(sa.Bids_Y,u.Bids_Y) as Bids_Y,
@@ -117,6 +132,7 @@ Spearad_Final as (
         u.revenue_YM1
       From Unruly_Final U
         full join spearad_final sa on sa.placement_id::varchar = u.placement_id::varchar
+                    and sa.country_code = u.country_code
       Where u.placement_id is not NULL
        and (sa.requests_y > 0 or u.requests_y > 0)
       ;;
@@ -163,6 +179,17 @@ Spearad_Final as (
     sql: ${TABLE}.imp_type ;;
   }
 
+  dimension: Country {
+    type: string
+    label: "Country"
+    sql: ${TABLE}.Country ;;
+  }
+
+  dimension: Geo_Region {
+    type: string
+    label: "Geo Region"
+    sql: ${TABLE}.Geo_Region ;;
+  }
   measure: requests_y {
     type: sum
     label: "Requests Yesterday"
@@ -226,7 +253,9 @@ Spearad_Final as (
       placement_name,
       placement_id,
       device_type,
-      imp_type
+      imp_type,
+      Country,
+      Geo_Region
     ]
   }
 }

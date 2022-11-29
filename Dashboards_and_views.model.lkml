@@ -42,10 +42,9 @@ access_grant: can_view_candidates {
  # user_attribute: allowed_users
   #allowed_values: ["Looker_Admins"]
 #}
-explore:  daily_kpi_s_data{
+explore: datorama_forcast_poc {
 
-  label: "Daily KPI's Data"
-  required_access_grants: [can_view_candidates]
+  required_access_grants: [can_view_all_tremor]
 
 }
 explore: sam_goal_monitor {
@@ -96,5 +95,15 @@ explore: sam_lt_pub_metrics {
 
 explore: phase_2_ak {
   label: "Phase 2 - AK"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: spearad_fifa_view {
+  label: "FIFA-SpearAd View"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: fifa_dsp_metrics {
+  label: "FIFA-DSP View"
   required_access_grants: [can_view_all_tremor]
 }

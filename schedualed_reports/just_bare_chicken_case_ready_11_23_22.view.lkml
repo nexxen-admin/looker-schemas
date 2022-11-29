@@ -1,38 +1,36 @@
-view: swift_meats_4_13_22 {
+view: just_bare_chicken_case_ready_11_23_22 {
   required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: SELECT  date::date as "Date",
         TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
-        add2.flight_id as "Flight ID",
-        creative_id as "Creative ID",
-        CASE WHEN flight_id IN (4205796, 4226106, 4243836, 4279686, 4316636, 4431846, 4485696) THEN 'CTV + BT'
-                            ELSE 'All Screen Video Added Value' END AS "Placement Name",
-        CASE WHEN creative_id IN (8455446, 8487166, 8455476, 8487206) THEN '22-SWIFT-0008_Anthem-Resized_30s_1080p'
-           WHEN creative_id IN (8481136, 8487146, 8481146, 8487196) THEN 'Swift More'
-           WHEN creative_id IN (8552536, 8552546,8638516,8552546) THEN 'SWIF2204H'
-           WHEN creative_id IN(8487136, 8638526) THEN 'Gamer'
-           WHEN creative_id IN (8455436, 8455456) THEN 'SWIFT_Anthem2021_15s_1080p'
-             ELSE 'SWIFT_Family Future2101_30s_1080p' END AS "Creative Name",
+        flight_id as "Flight ID",
+        CASE WHEN flight_id IN (4408216, 4408226, 4408236, 4489126) THEN 'All Screen 1% AV (Case Ready)'
+           WHEN flight_id IN (4320346, 4408146, 4408166, 4408186, 4489116) THEN 'All Screen OTT + BT + Zip Targeting (Case Ready)'
+           WHEN flight_id = 4494706 THEN 'All Screen Video Added Value Impressions (Case Ready)'
+           WHEN flight_id IN (4320336, 4408076, 4408086, 4408096, 4489096) THEN 'CTV + BT + Zip Targeting (Case Ready)'
+             ELSE 'CTV 1% Added Value (Case Ready)' END AS "Placement Name",
+        CASE WHEN flight_id IN (4320336, 4320346) AND cr.id IN (8542426, 8542436) THEN 'SPIL000I009H_FRESH_CB'
+           ELSE 'BARE2203_RealityCheck_30_HD_Streaming' END as "Creative Name",
         st.screen_type_name as "Device Type",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
         SUM(conversions) as "Conversions",
-        CASE WHEN flight_id IN (4205796, 4226106, 4243836, 4279686, 4316636,4431846, 4485696) THEN (SUM(impressions)/1000) * 21.75
-                         ELSE 0 END AS "Spend"
+        CASE WHEN flight_id IN (4320336, 4320346, 4408076, 4408146, 4408086, 4408166, 4408096, 4408186, 4489096, 4489116) THEN (SUM(impressions)/1000) * 21.75
+          ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
   left outer join dwh.screen_type st on add2.screen_type = st.screen_type_code
+  left outer join dwh.creative cr on add2.creative_id = cr.id
 WHERE date >= CURRENT_DATE()-7
-  AND  date < CURRENT_DATE()
+  AND date < CURRENT_DATE
   AND data_type = 'AD_DATA'
-  and add2.flight_id IN (4205796,4226106,4243836,4279686,
-                     4205826,4226126,4243846,4279706,
-                     4316636,4316646,4431846,4431856, 4485696, 4485716)
+  and flight_id IN (4320336, 4320346, 4408076, 4408146, 4408246, 4408216, 4408086, 4408166, 4408256, 4408226,
+             4408096, 4408186, 4408266, 4408236, 4494706, 4489096, 4489116, 4489106, 4489126)
     AND (impressions > 0 or completions > 0 or clicks > 0)
-GROUP BY 1,2,3,4,5,6,7
-ORDER BY 1
+GROUP BY 1,2,3,4,5,6
+ORDER BY 1 DESC
  ;;
   }
 
@@ -45,7 +43,7 @@ ORDER BY 1
     type: date
     label: "Date"
     sql: ${TABLE}."Date" ;;
-    html: {{ rendered_value | date: "%m-%d-%Y" }} ;;
+    html: {{ rendered_value | date: "%m-%d-%Y" }};;
   }
 
   dimension: dma {
@@ -58,12 +56,6 @@ ORDER BY 1
     type: number
     label: "Flight ID"
     sql: ${TABLE}."Flight ID" ;;
-  }
-
-  dimension: creative_id {
-    type: number
-    label: "Creative ID"
-    sql: ${TABLE}."Creative ID" ;;
   }
 
   dimension: placement_name {
@@ -99,13 +91,14 @@ ORDER BY 1
   dimension: clicks {
     type: number
     label: "Clicks"
-    sql: ${TABLE}.Clicks ;;
+    sql: ${TABLE}.clicks;;
   }
 
   dimension: completions {
     type: number
     label: "Completions"
     sql: ${TABLE}.Completions ;;
+
   }
 
   dimension: conversions {
@@ -126,7 +119,6 @@ ORDER BY 1
       date,
       dma,
       flight_id,
-      creative_id,
       placement_name,
       creative_name,
       device_type,

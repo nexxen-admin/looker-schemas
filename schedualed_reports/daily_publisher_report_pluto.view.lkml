@@ -13,6 +13,7 @@ view: daily_publisher_report_pluto {
       when add2.dsp_deal_type ='pub' and adv_cnt.adv_count >1 then 'Many to 1'
       else 'Unknown' end as deal_type,
       add2.rx_deal_id as deal_id,
+      add2.rx_device_type as device_type,
       coalesce(case when instr(rdd.deal_description,'$')>10 then left(rdd.deal_description ,instr(rdd.deal_description,'$')-1 ) else rdd.deal_description end,
       case when instr(rdspd.description ,'$')>1 then left(rdspd.description ,instr(rdspd.description,'$')-1 ) else rdspd.description end) as deal_name,
       add2.dsp_display_name as DSP,
@@ -42,7 +43,7 @@ view: daily_publisher_report_pluto {
       pub_id in ('78614','104062')
       and add2.impression_pixel >0
       and add2.dsp_display_name <>'Tremor'
-      group by 1,2,3,4,5,6,7,8,9
+      group by 1,2,3,4,5,6,7,8,9,10
 
 
       UNION
@@ -57,6 +58,7 @@ view: daily_publisher_report_pluto {
       null as deal_type,
       null as deal_id,
       null as deal_name,
+      add2.rx_device_type as device_type,
       add2.dsp_display_name as DSP,
       null as advertiser_count,
       adomain as advertiser,
@@ -73,7 +75,7 @@ view: daily_publisher_report_pluto {
       and add2.impression_pixel >0
       and add2.rx_deal_id is null
       and add2.dsp_display_name <> 'Tremor'
-      group by 1,2,3,4,5,6,7,8,9
+      group by 1,2,3,4,5,6,7,8,9,10
 
 
       union
@@ -88,6 +90,7 @@ view: daily_publisher_report_pluto {
       null as deal_type,
       null as deal_id,
       null as deal_name,
+      add2.rx_device_type as device_type,
       add2.dsp_display_name as DSP,
       null as advertiser_count,
       adomain as advertiser,
@@ -104,7 +107,7 @@ view: daily_publisher_report_pluto {
       and add2.impression_pixel >0
       and add2.dsp_display_name = 'Tremor'
       and (add2.dsp_deal_type <>'pub' or add2.dsp_deal_type is null)
-      group by 1,2,3,4,5,6,7,8,9
+      group by 1,2,3,4,5,6,7,8,9,10
 
 
       union
@@ -123,6 +126,7 @@ view: daily_publisher_report_pluto {
       when add2.dsp_deal_type ='pub' and adv_cnt.adv_count >1 then 'Many to 1'
       else 'Unknown' end as deal_type,
       add2.rx_deal_id as deal_id,
+      add2.rx_device_type as device_type,
       coalesce(case when instr(rdd.deal_description,'$')>10 then left(rdd.deal_description ,instr(rdd.deal_description,'$')-1 ) else rdd.deal_description end,
       case when instr(rdspd.description ,'$')>1 then left(rdspd.description ,instr(rdspd.description,'$')-1 ) else rdspd.description end) as deal_name,
       add2.dsp_display_name as DSP,
@@ -152,7 +156,7 @@ view: daily_publisher_report_pluto {
       and add2.impression_pixel >0
       and add2.dsp_display_name = 'Tremor'
       and add2.dsp_deal_type ='pub'
-      group by 1,2,3,4,5,6,7,8,9
+      group by 1,2,3,4,5,6,7,8,9,10
       order by 1,2,6,4,8
       ;;
   }
@@ -175,6 +179,11 @@ view: daily_publisher_report_pluto {
   dimension: deal_type {
     type: string
     sql: ${TABLE}.deal_type ;;
+  }
+
+  dimension: device_type {
+    type: string
+    sql: ${TABLE}.device_type ;;
   }
 
   dimension: deal_id {
@@ -239,6 +248,7 @@ view: daily_publisher_report_pluto {
       buying_channel,
       deal_type,
       deal_id,
+      device_type,
       deal_name,
       dsp,
       advertiser_count,

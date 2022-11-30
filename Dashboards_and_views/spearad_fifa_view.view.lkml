@@ -66,16 +66,23 @@ Spearad_Final as (
       Group by 1, 2, 3, 4, 5
 ),
 
- Unruly_Final as (
+ Unruly_Base as (
       Select   sp.publisher_id,
         sp.publisher_name,
-        spl.placement_name,
-        spl.placement_id,
+        spl.placement_name as Placement_Name_OG,
+        spl.placement_id as Placement_ID_OG,
+        case when spl.placement_id = '251457' then 'FIFA SpearAds App'
+          when spl.placement_id = '253414' then 'FIFA SpearAds Site'
+          else spl.placement_name end as placement_name,  --Changing Vast placement so that it can align with SpearAd
+        Case when ad.media_id = '251457' then '253646'
+          when ad.media_id = '253414' then '253646'
+          else spl.placement_id end as placement_id,      --Changing Vast placement so that it can align with SpearAd
         ad.country_code,
         dig.country_name,
         dig.sales_region as geo_region,
-        Case when ad.media_id in ('253822','253646','253821','253645') then NULL else ad.rx_device_type end as Device_Type,
-        Case when ad.media_id in ('253822','253646','253821','253645') then NULL else ad.rx_imp_type end as Imp_Type,
+        Case when ad.pub_id = '105362' then ad.rx_device_type
+          when ad.media_id in ('253821','253822') then 'ctv' else 'non-ctv' end as Device_Type,
+        Case when ad.pub_id = '105362' then ad.rx_imp_type else 'video' end as Imp_Type,
         sum(case when NEW_TIME(ad.event_time, 'America/New_York', 'UTC') >= current_date()-1
             and NEW_TIME(ad.event_time, 'America/New_York', 'UTC') < current_date()
             THEN ad.requests else 0 end) as Requests_Y,
@@ -111,30 +118,54 @@ Spearad_Final as (
        and ad.pub_id in ('105254','105362')
        and (ad.rx_request_status in ('nodsp','nodspbids','bidresponse')
          or ad.rx_request_status is NULL)
-      Group by 1, 2, 3, 4, 5, 6, 7, 8, 9
-      )
+      Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+      ),
+
+Unruly_Final as (
+      Select publisher_id,
+        publisher_name,
+        placement_name,
+        placement_id,
+        country_code,
+        country_name,
+        geo_region,
+        device_type,
+        imp_type,
+        sum(case when publisher_id = '105362' Then Requests_Y else 0 end) as Requests_Y,
+        sum(case when publisher_id = '105362' Then Requests_YM1 else 0 end) as Requests_YM1,
+        sum(case when publisher_id = '105362' or placement_id_og in ('251457','253414') Then Bids_Y else 0 end) as Bids_Y,
+        sum(case when publisher_id = '105362' or placement_id_og in ('251457','253414') Then Bids_YM1 else 0 end) as Bids_YM1,
+        sum(case when publisher_id = '105362' or placement_id_og in ('251457','253414') Then Impressions_Y else 0 end) as Impressions_Y,
+        sum(case when publisher_id = '105362' or placement_id_og in ('251457','253414') Then Impressions_YM1 else 0 end) as Impressions_YM1,
+        sum(revenue_Y) as revenue_Y,
+        sum(revenue_YM1) as revenue_YM1
+From Unruly_Base
+  Group by 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+)
 
       Select u.publisher_id,
         u.publisher_name,
         u.placement_name,
         u.placement_id,
         u.device_type,
-        coalesce(u.imp_type,'video') as imp_type,
+        u.imp_type,
         coalesce(u.country_name,sa.country_name) as Country,
         coalesce(u.geo_region,sa.geo_region) as Geo_Region,
-        coalesce(sa.requests_y,u.requests_y) as requests_y,
-        coalesce(sa.requests_ym1,u.requests_ym1) as requests_ym1,
-        coalesce(sa.Bids_Y,u.Bids_Y) as Bids_Y,
-        coalesce(sa.Bids_YM1,u.Bids_YM1) as Bids_YM1,
-        coalesce(sa.Impressions_Y,u.Impressions_Y) as Impressions_Y,
-        coalesce(sa.Impressions_YM1,u.Impressions_YM1) as Impressions_YM1,
-        u.revenue_Y,
-        u.revenue_YM1
+        sum(coalesce(sa.requests_y,0)) + sum(coalesce(u.requests_y,0)) as requests_y,
+        sum(coalesce(sa.requests_ym1,0)) + sum(coalesce(u.requests_ym1,0)) as requests_ym1,
+        sum(coalesce(sa.Bids_Y,0)) + sum(coalesce(u.Bids_Y,0)) as Bids_Y,
+        sum(coalesce(sa.Bids_YM1,0)) + sum(coalesce(u.Bids_YM1,0)) as Bids_YM1,
+        sum(coalesce(sa.Impressions_Y,0)) + sum(coalesce(u.Impressions_Y,0)) as Impressions_Y,
+        sum(coalesce(sa.Impressions_YM1,0)) + sum(coalesce(u.Impressions_YM1,0)) as Impressions_YM1,
+       sum(u.revenue_Y) as revenue_Y,
+       sum(u.revenue_YM1) as revenue_YM1
       From Unruly_Final U
         full join spearad_final sa on sa.placement_id::varchar = u.placement_id::varchar
                     and sa.country_code = u.country_code
       Where u.placement_id is not NULL
        and (sa.requests_y > 0 or u.requests_y > 0)
+      Group by 1, 2, 3, 4, 5, 6, 7, 8
       ;;
   }
 

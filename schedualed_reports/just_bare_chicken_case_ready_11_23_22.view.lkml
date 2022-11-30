@@ -10,7 +10,7 @@ view: just_bare_chicken_case_ready_11_23_22 {
            WHEN flight_id IN (4320336, 4408076, 4408086, 4408096, 4489096) THEN 'CTV + BT + Zip Targeting (Case Ready)'
              ELSE 'CTV 1% Added Value (Case Ready)' END AS "Placement Name",
         CASE WHEN flight_id IN (4320336, 4320346) AND cr.id IN (8542426, 8542436) THEN 'SPIL000I009H_FRESH_CB'
-           ELSE 'BARE2203_RealityCheck_30_HD_Streaming' END as "Creative Name",
+           ELSE 'BARE2202_TheQuestion_30' END as "Creative Name",
         st.screen_type_name as "Device Type",
         SUM(impressions) as "Impressions",
         SUM(impressions) as "Video Starts",

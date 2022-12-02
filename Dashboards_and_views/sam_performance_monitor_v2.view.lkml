@@ -141,7 +141,7 @@ view: sam_performance_monitor_v2 {
                 and ad.event_time < '2022-04-27'  --Final date of Pubmatic Agreement
       left outer join bi.svc_di_geo_classification di on di.country_code = ad.country_code
 
-      Where event_time >= '2022-01-01'
+      Where event_time >= timestampadd('quarter',-1,date_trunc('quarter',current_date()))::date    --'2022-01-01' reducing for performance
       and event_time < current_date()
       and ad.rx_ssp_name ilike 'rmp%'
       and (ad.revenue > 0 or ad.cogs > 0)

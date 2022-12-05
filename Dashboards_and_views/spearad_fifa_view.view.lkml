@@ -81,7 +81,7 @@ Spearad_Final as (
         dig.country_name,
         dig.sales_region as geo_region,
         Case when ad.pub_id = '105362' then ad.rx_device_type
-          when ad.media_id in ('253821','253822') then 'ctv' else 'non-ctv' end as Device_Type,
+          when ad.media_id in ('253821','253822','254367','254368') then 'ctv' else 'non-ctv' end as Device_Type,
         Case when ad.pub_id = '105362' then ad.rx_imp_type else 'video' end as Imp_Type,
         sum(case when NEW_TIME(ad.event_time, 'America/New_York', 'UTC') >= current_date()-1
             and NEW_TIME(ad.event_time, 'America/New_York', 'UTC') < current_date()

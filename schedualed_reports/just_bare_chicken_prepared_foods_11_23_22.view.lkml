@@ -4,9 +4,9 @@ view: just_bare_chicken_prepared_foods_11_23_22 {
     sql: SELECT  date::date as "Date",
         TRIM(BOTH '''' FROM dma.dma_name) as "DMA",
         flight_id as "Flight ID",
-        CASE WHEN flight_id IN (4455096, 4455126) THEN 'All Screen 1% AV (Prepared Foods)'
-           WHEN flight_id IN (4455066, 4455076) THEN 'All Screen OTT + BT + Zip Targeting (Prepared Foods)'
-           WHEN flight_id IN (4454156, 4454226) THEN 'CTV + BT + Zip Targeting (Prepared Foods)'
+        CASE WHEN flight_id IN (4455096, 4455126, 4455146) THEN 'All Screen 1% AV (Prepared Foods)'
+           WHEN flight_id IN (4455066, 4455076, 4455086) THEN 'All Screen OTT + BT + Zip Targeting (Prepared Foods)'
+           WHEN flight_id IN (4454156, 4454226, 4454246) THEN 'CTV + BT + Zip Targeting (Prepared Foods)'
              ELSE 'CTV 1% Added Value (Prepared Foods)' END AS "Placement Name",
         'BARE2203_RealityCheck_30_HD_Streaming' as "Creative Name",
         st.screen_type_name as "Device Type",
@@ -15,7 +15,7 @@ view: just_bare_chicken_prepared_foods_11_23_22 {
         SUM(clicks) as "Clicks",
         SUM(completions) as "Completions",
         SUM(conversions) as "Conversions",
-        CASE WHEN flight_id IN (4454156, 4455066, 4454226, 4455076) THEN (SUM(impressions)/1000) * 21.75
+        CASE WHEN flight_id IN (4454156, 4455066, 4454226, 4455076, 4454246, 4455086) THEN (SUM(impressions)/1000) * 21.75
           ELSE 0 END AS "Spend"
 FROM dwh.ad_data_daily add2
   left outer join dwh.dma dma on dma.dma_code = add2.dma
@@ -23,7 +23,7 @@ FROM dwh.ad_data_daily add2
 WHERE date >= CURRENT_DATE()-7
   AND date < CURRENT_DATE()
   AND data_type = 'AD_DATA'
-  and flight_id IN (4454156, 4455066, 4455176, 4455096, 4454226, 4455076, 4455356, 4455126)
+  and flight_id IN (4454156, 4455066, 4455176, 4455096, 4454226, 4455076, 4455356, 4455126, 4454246, 4455086, 4455396, 4455146)
     AND (impressions > 0 or completions > 0 or clicks > 0)
 GROUP BY 1,2,3,4,5,6
 ORDER BY 1

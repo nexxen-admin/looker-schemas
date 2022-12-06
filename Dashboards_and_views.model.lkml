@@ -68,7 +68,7 @@ explore: sam {
 explore: sam_lt_comm {
    access_filter: {
      field: sam_lt_comm.operations_owner
-     user_attribute: allowed_users_expend
+     user_attribute: allowed_users_sam_lt
    }
   label: "SAM LT Commision"
   required_access_grants: [can_view_all_tremor]
@@ -87,7 +87,7 @@ explore: sam_performance_monitor_v2 {
 explore: sam_lt_pub_metrics {
   access_filter: {
     field: sam_lt_pub_metrics.operations_owner
-    user_attribute: allowed_users
+    user_attribute: allowed_users_sam_lt
   }
   label: "SAM + LT Publisher Metrics"
   required_access_grants: [can_view_all_tremor]

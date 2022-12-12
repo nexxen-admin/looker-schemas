@@ -57,6 +57,7 @@ view: daily_activity_fact {
   dimension: count_sub_id {
     type: number
     sql: ${TABLE}.CountSubID ;;
+    hidden: yes
   }
 
   dimension: country_code {
@@ -180,7 +181,7 @@ view: daily_activity_fact {
   dimension: sub_idpaused {
     type: number
     sql: ${TABLE}.SubIDPaused ;;
-    #hidden: yes
+    hidden: yes
   }
 
   dimension: suspicious {

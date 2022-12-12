@@ -30,8 +30,4 @@ view: publishers_dim {
     sql: ${TABLE}.PublisherName ;;
   }
 
-  measure: count {
-    type: count
-    drill_fields: [publisher_name]
-  }
 }

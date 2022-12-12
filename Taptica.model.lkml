@@ -8,13 +8,29 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 # # and define the joins that connect them together.
 #
  explore: daily_activity_fact {
-#   join: orders {
-#     relationship: many_to_one
-#     sql_on: ${orders.id} = ${order_items.order_id} ;;
+  join: advertiser_dim {
+    type: left_outer
+     relationship: many_to_one
+     sql_on: ${advertiser_dim.advertiser_name} = ${daily_activity_fact.adv_id} ;;
    }
-#
-#   join: users {
-#     relationship: many_to_one
-#     sql_on: ${users.id} = ${orders.user_id} ;;
-#   }
-# }
+
+  join: offers_dim {
+    type: left_outer
+    relationship: many_to_one
+     sql_on: ${offers_dim.offer_id} = ${daily_activity_fact.offer_id} ;;
+   }
+
+  join: pub_offers_dim {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${pub_offers_dim.offer_id} = ${daily_activity_fact.offer_id}
+    and ${pub_offers_dim.pub_id} = ${daily_activity_fact.publisher_id};;
+  }
+
+  join: publishers_dim {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${publishers_dim.pub_id} = ${daily_activity_fact.publisher_id}
+      ;;
+  }
+}

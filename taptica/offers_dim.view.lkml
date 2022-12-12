@@ -28,5 +28,6 @@ view: offers_dim {
   measure: count {
     type: count
     drill_fields: [offer_name]
+    hidden: yes
   }
 }

@@ -38,5 +38,6 @@ view: advertiser_dim {
   measure: count {
     type: count
     drill_fields: [managing_office_name, advertiser_name]
+    hidden: yes
   }
 }

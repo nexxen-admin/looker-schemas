@@ -1404,9 +1404,9 @@ view: fact_ad_daily_agg {
   measure:  Last_day_Margin {
     label: "%Margin Last day "
     type: sum
-    sql: ${TABLE}.sum_of_margin ;;
+    sql: (${TABLE}.sum_of_revenue-${TABLE}.sum_of_cogs)/${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "0.00%"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 

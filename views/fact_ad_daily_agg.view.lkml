@@ -1400,6 +1400,17 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0.00"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
+
+  measure:  Last_day_Margin {
+    label: "%Margin Last day "
+    type: sum
+    sql: ${TABLE}.sum_of_margin ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+
   measure:  Last_day_impressions {
     label: "Impressions Previous day "
     type: sum

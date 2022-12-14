@@ -1397,7 +1397,7 @@ view: fact_ad_daily_agg {
 
   measure: prev_Day_net_Revenue {
     type: sum
-    label: "Net Revenue Last Day"
+    label: "Net Revenue prev Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;

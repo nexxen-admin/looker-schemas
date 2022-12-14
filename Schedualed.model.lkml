@@ -76,6 +76,11 @@ explore: duncan_channon_covered_ca_oe23_daily_11_10_22 {
   label: "Duncan Channon Covered CA OE23"
 }
 
+explore: duncan_channon_ctcp_cessation_daily_12_13_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Duncan Channon - CTCP Cessation"
+}
+
 explore: just_bare_chicken_case_ready_11_23_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Just Bare Chicken Case Ready"

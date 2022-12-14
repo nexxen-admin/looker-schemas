@@ -1401,15 +1401,22 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
-  measure:  Last_day_Margin {
-    label: "%Margin Last day "
+  measure:  Last_day_cogs {
+    label: "Cogs Last day "
     type: sum
-    sql: (${TABLE}.sum_of_revenue-${TABLE}.sum_of_cogs)/${TABLE}.sum_of_revenue ;;
+    sql: ${TABLE}.sum_of_cogs ;;
     group_label: "Time Shifted Measures"
-    value_format: "0.00%"
+    value_format: "$#,##0.00"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
+  measure:  Last_day_Margin {
+    label: "%Margin Last day new"
+    type: number
+    sql:  (${Last_day_Revenue}-${Last_day_cogs})/${Last_day_Revenue};;
+    group_label: "Time Shifted Measures"
+    value_format: "0.00%"
+  }
 
   measure:  Last_day_impressions {
     label: "Impressions Previous day "

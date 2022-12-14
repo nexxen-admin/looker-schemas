@@ -1492,7 +1492,7 @@ view: fact_ad_daily_agg {
   }
 
   measure:  Last_day_impressions {
-    label: "Impressions Previous day "
+    label: "Impressions Last day "
     type: sum
     sql: ${TABLE}.sum_of_impression_pixel ;;
     value_format: "#,##0.00"

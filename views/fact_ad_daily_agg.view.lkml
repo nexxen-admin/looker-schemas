@@ -1310,6 +1310,25 @@ view: fact_ad_daily_agg {
 
   }
 
+  measure:  last_week_Impressions {
+    label: "Impressions Revenue last week "
+    type: sum
+    sql: ${TABLE}.sum_of_impression_pixel ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "8 days ago"]
+
+  }
+
+  measure:  last_Month_Impressions {
+    label: "Impressions Revenue last week "
+    type: sum
+    sql: ${TABLE}.sum_of_impression_pixel ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "32 days ago"]
+
+  }
 
 
   measure:  Previous_day_Requests {
@@ -1375,6 +1394,7 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "2 days ago"]
 
   }
+
   measure: prev_Day_net_Revenue {
     type: sum
     label: "Net Revenue Last Day"
@@ -1384,6 +1404,67 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "2 days ago"]
 
   }
+
+  measure: last_week_net_Revenue {
+    type: sum
+    label: "Net Revenue Last Week"
+    value_format: "$#,##0.00"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
+    filters: [date_key_date: "8 days ago"]
+
+  }
+
+  measure: last_month_net_Revenue {
+    type: sum
+    label: "Net Revenue Last Month"
+    value_format: "$#,##0.00"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
+    filters: [date_key_date: "32 days ago"]
+
+  }
+
+  measure:  last_week_Requests {
+    label: "Requests last week "
+    type: sum
+    sql: ${TABLE}.sum_of_requests ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "8 days ago"]
+
+  }
+
+  measure:  last_month_Requests {
+    label: "Requests last month "
+    type: sum
+    sql: ${TABLE}.sum_of_requests ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "32 days ago"]
+
+  }
+
+  measure:  last_week_attempts {
+    label: "Attempts last week "
+    type: sum
+    sql: ${TABLE}.sum_of_slot_attempts ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "8 days ago"]
+
+  }
+
+  measure:  last_month_attempts {
+    label: "Attempts last month "
+    type: sum
+    sql: ${TABLE}.sum_of_slot_attempts ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "32 days ago"]
+
+  }
+
   measure: pub_platform_fee {
     type: sum
     label: "pub_platform_fee"
@@ -1408,14 +1489,6 @@ view: fact_ad_daily_agg {
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [date_key_date: "last 1 day ago for 1 day"]
-  }
-
-  measure:  Last_day_Margin {
-    label: "%Margin Last day new"
-    type: number
-    sql:  (${Last_day_Revenue}-${Last_day_cogs})/${Last_day_Revenue};;
-    group_label: "Time Shifted Measures"
-    value_format: "0.00%"
   }
 
   measure:  Last_day_impressions {

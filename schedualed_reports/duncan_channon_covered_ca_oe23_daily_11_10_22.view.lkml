@@ -120,74 +120,74 @@ Order by 1 ASC
 
   dimension: date {
     type: date
-    label: "Date"
+    label: "DATE"
     sql: ${TABLE}."Date" ;;
     html: {{ rendered_value | date: "%m-%d-%Y" }} ;;
   }
 
   dimension: campaign_name {
     type: string
-    label: "Campaign Name"
+    label: "CAMPAIGN NAME"
     sql: ${TABLE}."Campaign Name" ;;
   }
 
   dimension: campaign_id {
     type: string
-    label: "Campaign ID"
+    label: "CAMPAIGN ID"
     sql: ${TABLE}."Campaign ID" ;;
   }
 
   dimension: flight_id {
     type: number
-    label: "Flight ID"
+    label: "FLIGHT ID"
     sql: ${TABLE}."Flight ID" ;;
   }
 
   dimension: flight_number {
     type: string
-    label: "Flight Number"
+    label: "FLIGHT NUMBER"
     sql: ${TABLE}.Flight_Number ;;
   }
 
   dimension: placement_name {
     type: string
-    label: "Placement Name"
+    label: "PLACEMENT NAME"
     sql: ${TABLE}."Placement Name" ;;
   }
 
   dimension: placement_id {
     type: string
-    label: "Placement ID"
+    label: "PLACEMENT ID"
     sql: ${TABLE}."Placement ID" ;;
   }
 
   dimension: creative_name {
     type: string
-    label: "Creative Name"
+    label: "CREATIVE NAME"
     sql: ${TABLE}."Creative Name" ;;
   }
 
   dimension: impressions {
     type: number
-    label: "Impressions"
+    label: "IMPRESSIONS"
     sql: ${TABLE}.Impressions ;;
   }
 
   dimension: clicks {
     type: number
-    label: "Clicks"
+    label: "CLICKS"
     sql: ${TABLE}.Clicks ;;
   }
 
   dimension: quartile_0 {
     type: number
-    label: "Quartile 0"
+    label: "QUARTILE 0"
     sql: ${TABLE}."Quartile 0" ;;
   }
 
   dimension: completions {
     type: number
-    label: "Completions"
+    label: "COMPLETIONS"
     sql: ${TABLE}.Completions ;;
   }
 

@@ -101,6 +101,11 @@ explore: the_north_face_phase_1_bi_weekly_11_04_22 {
   label: "The North Face bi-weekly Phase 1"
 }
 
+explore: progops_tvdsp_pacing_file {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "ProgOps TVDSP Pacing File"
+}
+
 explore: best_western_daily_reporting_10_21_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Best Western"

@@ -3,7 +3,7 @@ view: duncan_channon_ctcp_cessation_daily_12_13_22 {
   derived_table: {
     sql: SELECT Date_Key::date as "date",
 Flight_ID,
-     '"DC_CTCP_2022_Q4_CESSATION_MC' AS "DCM Campaign Name",
+     'DC_CTCP_2022_Q4_CESSATION_MC' AS "DCM Campaign Name",
      '2880559' AS "DCM Campaign ID",
      CASE WHEN Flight_ID = 4518266 AND Creative_ID = 8695486 THEN 'DC_CTCP_2022_Q4_CESSATION_MC_EN_TREMOR_STATEWIDE_VIDEO_CTV_INCITE_CPM_1x1_PREDICTIVE_SMOKERS-21+_30S__STEVEN_'
           WHEN Flight_ID = 4518266 AND Creative_ID = 8695476 THEN 'DC_CTCP_2022_Q4_CESSATION_MC_EN_TREMOR_STATEWIDE_VIDEO_CTV_INCITE_CPM_1x1_PREDICTIVE_SMOKERS-21+_30S__GEORGE_'
@@ -39,68 +39,68 @@ ORDER BY 1 ASC
 
   dimension: date {
     type: date
-    label: "Date"
+    label: "DATE"
     sql: ${TABLE}."date" ;;
     html: {{ rendered_value | date: "%m-%d-%Y" }} ;;
   }
 
   dimension: dcm_campaign_name {
     type: string
-    label: "DCM Campaign Name"
+    label: "DCM CAMPAIGN NAME"
     sql: ${TABLE}."DCM Campaign Name" ;;
   }
 
   dimension: dcm_campaign_id {
     type: string
-    label: "DCM Campaign ID"
+    label: "DCM CAMPAIGN ID"
     sql: ${TABLE}."DCM Campaign ID" ;;
   }
 
   dimension: dcm_placement_name {
     type: string
-    label: "DCM Placement Name"
+    label: "DCM PLACEMENT NAME"
     sql: ${TABLE}."DCM Placement Name" ;;
   }
 
   dimension: dcm_placement_id {
     type: string
-    label: "DCM Placement ID"
+    label: "DCM PLACEMENT ID"
     sql: ${TABLE}."DCM Placement ID" ;;
   }
 
   dimension: creative_name {
     type: string
-    label: "Creative Name"
+    label: "CREATIVE NAME"
     sql: ${TABLE}."Creative Name" ;;
   }
 
   dimension: spend {
     type: number
-    label: "Spend"
+    label: "SPEND"
     sql: ${TABLE}.Spend ;;
   }
 
   dimension: impressions {
     type: number
-    label: "Impressions"
+    label: "IMPRESSIONS"
     sql: ${TABLE}.Impressions ;;
   }
 
   dimension: clicks {
     type: number
-    label: "Clicks"
+    label: "CLICKS"
     sql: ${TABLE}.Clicks ;;
   }
 
   dimension: views {
     type: number
-    label: "Views"
+    label: "VIEWS"
     sql: ${TABLE}.Views ;;
   }
 
   dimension: completed_views {
     type: number
-    label: "Completed Views"
+    label: "COMPLETED VIEWS"
     sql: ${TABLE}."Completed Views" ;;
   }
 

@@ -30,7 +30,7 @@ explore: publishers_report_monthly_for_finance {
 
 explore: daily_publisher_report_pluto {
   required_access_grants: [can_view_pub_come_looker]
-  label: "Pluto report"
+  label: "Daily_Publisher_Reports"
 }
 
 explore: temp_di_pub_com_looker_test {
@@ -76,6 +76,11 @@ explore: duncan_channon_covered_ca_oe23_daily_11_10_22 {
   label: "Duncan Channon Covered CA OE23"
 }
 
+explore: duncan_channon_ctcp_cessation_daily_12_13_22 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Duncan Channon - CTCP Cessation"
+}
+
 explore: just_bare_chicken_case_ready_11_23_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Just Bare Chicken Case Ready"
@@ -94,6 +99,11 @@ explore: ctv_frequency_by_month {
 explore: the_north_face_phase_1_bi_weekly_11_04_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "The North Face bi-weekly Phase 1"
+}
+
+explore: progops_tvdsp_pacing_file {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "ProgOps TVDSP Pacing File"
 }
 
 explore: best_western_daily_reporting_10_21_22 {

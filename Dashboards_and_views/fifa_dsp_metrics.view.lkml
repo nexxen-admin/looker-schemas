@@ -1,6 +1,6 @@
 view: fifa_dsp_metrics {
   derived_table: {
-    sql: Select   sp.publisher_id,
+    sql:       Select   sp.publisher_id,
         sp.publisher_name,
         spl.placement_name,
         spl.placement_id,
@@ -8,8 +8,13 @@ view: fifa_dsp_metrics {
         dig.country_name,
         dig.sales_region as geo_region,
         da.rx_dsp_account_name as DSP_Account,
-        Case when ad.media_id in ('253822','253646','253821','253645') then NULL else ad.rx_device_type end as Device_Type,
-        Case when ad.media_id in ('253822','253646','253821','253645') then NULL else ad.rx_imp_type end as Imp_Type,
+       -- Case when ad.media_id in ('253822','253646','253821','253645') then NULL else ad.rx_device_type end as Device_Type,
+        --Case when ad.media_id in ('253822','253646','253821','253645') then NULL else ad.rx_imp_type end as Imp_Type,
+
+        Case when ad.pub_id = '105362' then ad.rx_device_type
+          when ad.media_id in ('253821','253822') then 'ctv' else 'non-ctv' end as Device_Type,
+        Case when ad.pub_id = '105362' then ad.rx_imp_type else 'video' end as Imp_Type,
+
         sum(case when NEW_TIME(ad.event_time, 'America/New_York', 'UTC') >= current_date()-1
             and NEW_TIME(ad.event_time, 'America/New_York', 'UTC') < current_date()
             THEN ad.responses else 0 end) as Bids_Y,

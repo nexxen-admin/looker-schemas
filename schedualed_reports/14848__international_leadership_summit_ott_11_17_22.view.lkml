@@ -12,7 +12,7 @@ view: 14848__international_leadership_summit_ott_11_17_22 {
            SUM(completions)/SUM(impressions) AS "Completions Rate",
            SUM(clicks) AS "Clicks",
            SUM(clicks)/SUM(impressions) AS "CTR",
-           (SUM(impressions)/1000)*25 AS "Spend",
+           (SUM(impressions)/1000)*54.50 AS "Spend",
            SUM(placement_reach) AS "Reach",
            SUM(impressions)/SUM(placement_reach) AS "Frequency"
       FROM dwh.ad_data_daily add2

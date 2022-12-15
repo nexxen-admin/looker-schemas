@@ -280,97 +280,97 @@ view: progops_tvdsp_pacing_file {
   }
 
   dimension: ctd_revenue {
-    type: number
+    type: string
     label: "CTD Revenue"
     sql: ${TABLE}."CTD Revenue" ;;
   }
 
   dimension: ctd_inventory_cost {
-    type: number
+    type: string
     label: "CTD Inventory Cost"
     sql: ${TABLE}."CTD Inventory Cost" ;;
   }
 
   dimension: ctd_e_cpm {
-    type: number
+    type: string
     label: "CTD eCPM"
     sql: ${TABLE}."CTD eCPM" ;;
   }
 
   dimension: pd_margin {
-    type: number
+    type: string
     label: "PD Margin"
     sql: ${TABLE}."PD Margin" ;;
   }
 
   dimension: ctd_margin {
-    type: number
+    type: string
     label: "CTD Margin"
     sql: ${TABLE}."CTD Margin" ;;
   }
 
   dimension: pd_vcr {
-    type: number
+    type: string
     label: "PD VCR"
     sql: ${TABLE}."PD VCR" ;;
   }
 
   dimension: ctd_vcr {
-    type: number
+    type: string
     label: "CTD VCR"
     sql: ${TABLE}."CTD VCR" ;;
   }
 
   dimension: pd_ctr {
-    type: number
+    type: string
     label: "PD CTR"
     sql: ${TABLE}."PD CTR" ;;
   }
 
   dimension: ctd_ctr {
-    type: number
+    type: string
     label: "CTD CTR"
     sql: ${TABLE}."CTD CTR" ;;
   }
 
   dimension: pd_delivered_quantity {
-    type: number
+    type: string
     label: "PD Delivered Quantity"
     sql: ${TABLE}."PD Delivered Quantity" ;;
   }
 
   dimension: ctd_delivered_quantity {
-    type: number
+    type: string
     label: "CTD Delivered Quantity"
     sql: ${TABLE}."CTD Delivered Quantity" ;;
   }
 
   dimension: pd_pacing_quantity {
-    type: number
+    type: string
     label: "PD Pacing (Quantity)"
     sql: ${TABLE}."PD Pacing (Quantity)" ;;
   }
 
   dimension: ctd_pacing_quantity {
-    type: number
+    type: string
     label: "CTD Pacing (Quantity)"
     sql: ${TABLE}."CTD Pacing (Quantity)" ;;
   }
 
   dimension: pd_pacing_revenue {
-    type: number
+    type: string
     label: "PD Pacing (Revenue)"
     sql: ${TABLE}."PD Pacing (Revenue)" ;;
   }
 
   dimension: ctd_pacing_revenue {
-    type: number
+    type: string
     label: "CTD Pacing (Revenue)"
     sql: ${TABLE}."CTD Pacing (Revenue)" ;;
   }
 
   dimension: revenue_risk {
-    type: number
+    type: string
     label: "Revenue Risk"
     sql: ${TABLE}."Revenue Risk" ;;
   }

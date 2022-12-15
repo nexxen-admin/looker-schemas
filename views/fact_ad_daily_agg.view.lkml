@@ -1322,7 +1322,7 @@ view: fact_ad_daily_agg {
   }
 
   measure:  last_week_Impressions {
-    label: "Impressions Revenue last week "
+    label: "Impressions last week "
     type: sum
     sql: ${TABLE}.sum_of_impression_pixel ;;
     group_label: "Time Shifted Measures"
@@ -1332,7 +1332,7 @@ view: fact_ad_daily_agg {
   }
 
   measure:  last_Month_Impressions {
-    label: "Impressions Revenue last week "
+    label: "Impressions last week "
     type: sum
     sql: ${TABLE}.sum_of_impression_pixel ;;
     group_label: "Time Shifted Measures"

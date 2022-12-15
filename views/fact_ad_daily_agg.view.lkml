@@ -1498,8 +1498,8 @@ view: fact_ad_daily_agg {
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
-    hidden: yes
   }
+
   measure: Last_Day_net_Revenue {
     type: sum
     label: "Net Revenue Last Day"

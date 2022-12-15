@@ -10,7 +10,8 @@ view: dim_date {
       week,
       month,
       quarter,
-      year
+      year,
+      hour
     ]
     convert_tz: no
     datatype: date

@@ -1306,12 +1306,23 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
-    filters: [date_key_date: "1 weeks ago"]
+    filters: [date_key_date: "8 days ago"]
+
+  }
+
+
+  measure:  last_month_Revenue {
+    label: "Revenue last month "
+    type: sum
+    sql: ${TABLE}.sum_of_revenue ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "32 days ago"]
 
   }
 
   measure:  last_week_Impressions {
-    label: "Impressions Revenue last week "
+    label: "Impressions last week "
     type: sum
     sql: ${TABLE}.sum_of_impression_pixel ;;
     group_label: "Time Shifted Measures"
@@ -1321,7 +1332,7 @@ view: fact_ad_daily_agg {
   }
 
   measure:  last_Month_Impressions {
-    label: "Impressions Revenue last week "
+    label: "Impressions last month "
     type: sum
     sql: ${TABLE}.sum_of_impression_pixel ;;
     group_label: "Time Shifted Measures"
@@ -1492,14 +1503,14 @@ view: fact_ad_daily_agg {
   }
 
   measure:  Last_day_impressions {
-    label: "Impressions Previous day "
+    label: "Impressions Last day "
     type: sum
     sql: ${TABLE}.sum_of_impression_pixel ;;
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
-    hidden: yes
   }
+
   measure: Last_Day_net_Revenue {
     type: sum
     label: "Net Revenue Last Day"

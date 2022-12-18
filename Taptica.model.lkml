@@ -10,18 +10,21 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
  explore: daily_activity_fact {
   join: advertiser_dim {
     type: left_outer
+    view_label: "Advertisers"
      relationship: many_to_one
-     sql_on: ${advertiser_dim.advertiser_name} = ${daily_activity_fact.adv_id} ;;
+     sql_on: ${advertiser_dim.adv_id} = ${daily_activity_fact.adv_id} ;;
    }
 
   join: offers_dim {
     type: left_outer
+    view_label: "Offers"
     relationship: many_to_one
      sql_on: ${offers_dim.offer_id} = ${daily_activity_fact.offer_id} ;;
    }
 
   join: pub_offers_dim {
     type: left_outer
+    view_label: "Publishers Offers"
     relationship: many_to_one
     sql_on: ${pub_offers_dim.offer_id} = ${daily_activity_fact.offer_id}
     and ${pub_offers_dim.pub_id} = ${daily_activity_fact.publisher_id};;
@@ -29,8 +32,17 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 
   join: publishers_dim {
     type: left_outer
+    view_label: "Publishers"
     relationship: many_to_one
     sql_on: ${publishers_dim.pub_id} = ${daily_activity_fact.publisher_id}
+      ;;
+  }
+
+  join: advertisers_lk {
+    type: left_outer
+    view_label: "Advertisers"
+    relationship: one_to_one
+    sql_on: ${advertisers_lk.id} = ${advertiser_dim.adv_id}
       ;;
   }
 }

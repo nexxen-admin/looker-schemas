@@ -1502,7 +1502,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_revenue;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
-    filters: [date_key_date: "last 7 days"]
+    filters: [date_key_date: "7 days ago for 7 days"]
   }
 
   measure: Prior_Week_Revenue{

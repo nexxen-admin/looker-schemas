@@ -12,7 +12,7 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
     type: left_outer
     view_label: "Advertisers"
      relationship: many_to_one
-     sql_on: ${advertiser_dim.advertiser_name} = ${daily_activity_fact.adv_id} ;;
+     sql_on: ${advertiser_dim.adv_id} = ${daily_activity_fact.adv_id} ;;
    }
 
   join: offers_dim {

@@ -107,9 +107,3 @@ explore: fifa_dsp_metrics {
   label: "FIFA-DSP View"
   required_access_grants: [can_view_all_tremor]
 }
-
-explore: ONE_OFF {
-
-  required_access_grants: [can_view_pub_come_looker]
-
-}

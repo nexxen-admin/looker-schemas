@@ -33,4 +33,11 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
     sql_on: ${publishers_dim.pub_id} = ${daily_activity_fact.publisher_id}
       ;;
   }
+
+  join: advertisers_lk {
+    type: left_outer
+    relationship: one_to_one
+    sql_on: ${advertisers_lk.id} = ${advertiser_dim.adv_id}
+      ;;
+  }
 }

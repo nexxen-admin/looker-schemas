@@ -300,7 +300,7 @@ view: progops_tvdsp_pacing_file {
   dimension: pd_margin {
     type: string
     label: "PD Margin"
-    sql: REGEXP_REPLACE(${TABLE}."PD Margin", '&');;
+    sql: (${TABLE}."PD Margin";;
   }
 
   dimension: ctd_margin {

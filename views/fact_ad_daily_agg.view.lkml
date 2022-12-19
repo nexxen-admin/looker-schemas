@@ -1523,6 +1523,33 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "28 days ago for 7 days"]
   }
 
+  measure: Last_7_Days_Cogs{
+    label: "Cogs Last 7 Days"
+    type: sum
+    sql: ${TABLE}.sum_of_cogs;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "7 days ago for 7 days"]
+  }
+
+  measure: Prior_Week_Cogs{
+    label: "Cogs Prior Week"
+    type: sum
+    sql: ${TABLE}.sum_of_cogs;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "14 days ago for 7 days"]
+  }
+
+  measure: Last_Month_Cogs{
+    label: "Cogs Prior Month"
+    type: sum
+    sql: ${TABLE}.sum_of_cogs;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "28 days ago for 7 days"]
+  }
+
   measure:  Last_day_cogs {
     label: "Cogs Last day "
     type: sum

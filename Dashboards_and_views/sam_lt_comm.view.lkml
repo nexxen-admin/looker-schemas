@@ -80,6 +80,12 @@ view: sam_lt_comm {
     sql: ${TABLE}.operations_owner ;;
   }
 
+  dimension: country {
+    type: string
+    label: "Country"
+    sql: ${TABLE}.country ;;
+  }
+
   dimension: operations_owner_id {
     type: string
     label: "Ops Owner ID"

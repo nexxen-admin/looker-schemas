@@ -1457,6 +1457,25 @@ view: fact_ad_daily_agg {
 
   }
 
+  measure:  prev_day_attempts {
+    label: "Attempts previous day "
+    type: sum
+    sql: ${TABLE}.sum_of_slot_attempts ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+  measure:  last_day_attempts {
+    label: "Attempts last day "
+    type: sum
+    sql: ${TABLE}.sum_of_slot_attempts ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "1 days ago"]
+
+  }
 
   measure:  last_week_attempts {
     label: "Attempts last week "
@@ -1464,7 +1483,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_slot_attempts ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
-    filters: [date_key_date: "14 days ago for 7 days"]
+    filters: [date_key_date: "8 days ago"]
 
   }
 
@@ -1636,11 +1655,6 @@ view: fact_ad_daily_agg {
    # hidden: yes
   }
 
-  measure: Domain_Rank {
-    type:  sum
-    label: "Domain Rank"
-    sql: rank() over (partition by RX_SSP_Name order by sum(case when(${date_key_date}>=now()-1 and ${date_key_date}<now() then ${revenue} else 0 end) desc);;
-  }
 
   measure: count {
     type: count

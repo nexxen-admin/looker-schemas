@@ -1636,6 +1636,12 @@ view: fact_ad_daily_agg {
    # hidden: yes
   }
 
+  measure: Domain_Rank {
+    type:  sum
+    label: "Domain Rank"
+    sql: rank() over (partition by RX_SSP_Name order by sum(case when(${date_key_date}>=now()-1 and ${date_key_date}<now() then ${revenue} else 0 end) desc);;
+  }
+
   measure: count {
     type: count
     drill_fields: []

@@ -1306,12 +1306,23 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
-    filters: [date_key_date: "1 weeks ago"]
+    filters: [date_key_date: "8 days ago"]
+
+  }
+
+
+  measure:  last_month_Revenue {
+    label: "Revenue last month "
+    type: sum
+    sql: ${TABLE}.sum_of_revenue ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "32 days ago"]
 
   }
 
   measure:  last_week_Impressions {
-    label: "Impressions Revenue last week "
+    label: "Impressions last week "
     type: sum
     sql: ${TABLE}.sum_of_impression_pixel ;;
     group_label: "Time Shifted Measures"
@@ -1321,7 +1332,7 @@ view: fact_ad_daily_agg {
   }
 
   measure:  last_Month_Impressions {
-    label: "Impressions Revenue last week "
+    label: "Impressions last month "
     type: sum
     sql: ${TABLE}.sum_of_impression_pixel ;;
     group_label: "Time Shifted Measures"
@@ -1376,6 +1387,7 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "2 days ago"]
 
   }
+
   measure:  previous_day_Bid_Rate {
     label: "Bid Rate Previous day"
     type: sum
@@ -1445,6 +1457,26 @@ view: fact_ad_daily_agg {
 
   }
 
+  measure:  prev_day_attempts {
+    label: "Attempts previous day "
+    type: sum
+    sql: ${TABLE}.sum_of_slot_attempts ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+  measure:  last_day_attempts {
+    label: "Attempts last day "
+    type: sum
+    sql: ${TABLE}.sum_of_slot_attempts ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "1 days ago"]
+
+  }
+
   measure:  last_week_attempts {
     label: "Attempts last week "
     type: sum
@@ -1454,6 +1486,7 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "8 days ago"]
 
   }
+
 
   measure:  last_month_attempts {
     label: "Attempts last month "
@@ -1482,6 +1515,60 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
+  measure: Last_7_Days_Revenue{
+    label: "Revenue Last 7 Days"
+    type: sum
+    sql: ${TABLE}.sum_of_revenue;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "7 days ago for 7 days"]
+  }
+
+  measure: Prior_Week_Revenue{
+    label: "Revenue Prior Week"
+    type: sum
+    sql: ${TABLE}.sum_of_revenue;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "14 days ago for 7 days"]
+  }
+
+  measure: Last_Month_Revenue{
+    label: "Revenue Prior Month"
+    type: sum
+    sql: ${TABLE}.sum_of_revenue;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "28 days ago for 7 days"]
+  }
+
+  measure: Last_7_Days_Cogs{
+    label: "Cogs Last 7 Days"
+    type: sum
+    sql: ${TABLE}.sum_of_cogs;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "7 days ago for 7 days"]
+  }
+
+  measure: Prior_Week_Cogs{
+    label: "Cogs Prior Week"
+    type: sum
+    sql: ${TABLE}.sum_of_cogs;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "14 days ago for 7 days"]
+  }
+
+  measure: Last_Month_Cogs{
+    label: "Cogs Prior Month"
+    type: sum
+    sql: ${TABLE}.sum_of_cogs;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "28 days ago for 7 days"]
+  }
+
   measure:  Last_day_cogs {
     label: "Cogs Last day "
     type: sum
@@ -1492,14 +1579,14 @@ view: fact_ad_daily_agg {
   }
 
   measure:  Last_day_impressions {
-    label: "Impressions Previous day "
+    label: "Impressions Last day "
     type: sum
     sql: ${TABLE}.sum_of_impression_pixel ;;
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
-    hidden: yes
   }
+
   measure: Last_Day_net_Revenue {
     type: sum
     label: "Net Revenue Last Day"
@@ -1567,6 +1654,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.avg_of_dsp_bid_price ;;
    # hidden: yes
   }
+
 
   measure: count {
     type: count

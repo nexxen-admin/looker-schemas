@@ -166,7 +166,7 @@ view: dim_date {
   }
 
 
-  measure:  Week_Frame {
+  dimension:  Week_Frame {
     label: "Week_Frame"
     type: string
     sql: (select CASE WHEN d.date_key >= current_date()-28 and d.date_key < current_date()-21 THEN '4 Weeks Ago'

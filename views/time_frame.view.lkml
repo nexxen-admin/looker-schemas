@@ -18,12 +18,13 @@ view: time_frame {
     drill_fields: [detail*]
   }
 
-  dimension: time_frame {
+
+  dimension: week_frame {
     type: string
-    sql: ${TABLE}.TIME_FRAME ;;
+    sql: ${TABLE}.WEEK_FRAME ;;
   }
 
   set: detail {
-    fields: [time_frame]
+    fields: [week_frame]
   }
 }

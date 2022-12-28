@@ -160,21 +160,6 @@ view: dim_date {
     sql: ${TABLE}.Year_Number ;;
   }
 
-  dimension: Last_Week {
-    type: number
-    sql: ${TABLE}.Last_week ;;
-  }
-
-  dimension: 2_Weeks_Ago {
-    type: number
-    sql: ${TABLE}.Two_Weeks_Ago ;;
-  }
-
-  dimension: 4_Weeks_Ago {
-    type: number
-    sql: ${TABLE}.Four_Weeks_Ago ;;
-  }
-
   measure: count {
     type: count
     drill_fields: [quarter_name, month_name, day_of_week_name]

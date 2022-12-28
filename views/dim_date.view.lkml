@@ -169,10 +169,9 @@ view: dim_date {
   dimension:  Week_Frame {
     label: "Week_Frame"
     type: string
-    sql: (select CASE WHEN d.date_key >= current_date()-28 and d.date_key < current_date()-21 THEN '4 Weeks Ago'
-           WHEN d.date_key >= current_date()-14 and d.date_key < current_date()-7 THEN '2 Weeks Ago'
-           WHEN d.date_key >= current_date()-7 and d.date_key < current_date() THEN 'Last Week'
-           ELSE 'Other' END as Week_Frame
-          from bi_new.fact_ad_daily_agg d);;
+    sql:  CASE WHEN ${TABLE}.Date_Key >= current_date()-28 and${TABLE}.Date_Key < current_date()-21 THEN '4 Weeks Ago'
+           WHEN ${TABLE}.Date_Key >= current_date()-14 and ${TABLE}.Date_Key < current_date()-7 THEN '2 Weeks Ago'
+           WHEN ${TABLE}.Date_Key >= current_date()-7 and ${TABLE}.Date_Key < current_date() THEN 'Last Week'
+           ELSE 'Other' END ;;
 }
 }

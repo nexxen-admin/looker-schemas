@@ -1022,6 +1022,15 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_impression_pixel ;;
   }
 
+  dimension: impression_pixel2 {
+    type: number
+    label: "Impressions DIM"
+    description: "Successfully delivered ad impression.   Billable event. ."
+    #value_format: "#,##0.0,,\"\""
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_impression_pixel ;;
+  }
+
   measure: impression_win {
     type: sum
     label: "Wins"

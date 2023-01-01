@@ -888,8 +888,19 @@ view: fact_ad_daily_agg {
     label: "Date"
     group_label: "Time Frame"
     sql: ${TABLE}.Date_Key ;;
-    hidden: yes
+    #hidden: yes
   }
+
+    dimension: min_date_key {
+    type: yesno
+      label: "min Date"
+    group_label: "Time Frame"
+    sql: case when ${TABLE}.sum_of_revenue >0 and ${TABLE}.Date_Key > TIMESTAMPADD('Quarter', -8, date_trunc('Quarter',(CURRENT_TIMESTAMP)))
+           then 1 else 0 end;;
+
+    #hidden: yes
+  }
+
 
   dimension: deal_key {
     type: number

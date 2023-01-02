@@ -1232,6 +1232,15 @@ view: fact_ad_daily_agg {
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_revenue;;
   }
+  dimension: revenue_d
+  {
+    type: number
+    label: "Revenue_d"
+    #sql_distinct_key: ${deal_key} ;;
+    value_format: "$#,##0.00"
+    #group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_revenue;;
+  }
 
   measure: MediaMath_Revenue {
     type: sum
@@ -1679,6 +1688,6 @@ view: fact_ad_daily_agg {
   measure: count {
     type: count
     drill_fields: []
-    #hidden: yes
+    hidden: yes
   }
 }

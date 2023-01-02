@@ -213,7 +213,8 @@ view: dim_publisher {
 
     measure: count {
       type: count
-      drill_fields: [pub_name]
-      hidden: yes
+      label: "count of pub"
+      drill_fields: [pub_id]
+      #hidden: yes
     }
   }

@@ -21,7 +21,7 @@ view: bd_comm {
   }
 
   dimension: bd_user_id {
-    type: string
+    type: number
     sql: ${TABLE}.bd_user_id ;;
   }
 
@@ -30,8 +30,8 @@ view: bd_comm {
     sql: ${TABLE}.bizdev_owner ;;
   }
 
-  dimension: cogs {
-    type: number
+  measure: cogs {
+    type: sum
     sql: ${TABLE}.COGS ;;
   }
 
@@ -53,8 +53,8 @@ view: bd_comm {
     sql: ${TABLE}.Event_Month ;;
   }
 
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.Impressions ;;
   }
 
@@ -62,23 +62,23 @@ view: bd_comm {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_impressions {
+ # measure: total_impressions {
+  #  type: sum
+   # sql: ${impressions} ;;
+  #}
+
+  #measure: average_impressions {
+   # type: average
+    #sql: ${impressions} ;;
+  #}
+
+  measure: profit {
     type: sum
-    sql: ${impressions} ;;
-  }
-
-  measure: average_impressions {
-    type: average
-    sql: ${impressions} ;;
-  }
-
-  dimension: profit {
-    type: number
     sql: ${TABLE}.profit ;;
   }
 
   dimension: pub_id {
-    type: string
+    type: number
     sql: ${TABLE}.pub_id ;;
   }
 
@@ -87,8 +87,8 @@ view: bd_comm {
     sql: ${TABLE}.publisher_name ;;
   }
 
-  dimension: revenue {
-    type: number
+  measure: revenue {
+    type: sum
     sql: ${TABLE}.revenue ;;
   }
 

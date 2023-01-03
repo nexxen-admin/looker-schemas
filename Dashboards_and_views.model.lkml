@@ -117,3 +117,8 @@ explore: bd_comm_intl {
   label: "BD Comm Intl"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: exchange_daily_report_component {
+  label: "Exchange Daily Report Component"
+  required_access_grants: [can_view_all_tremor]
+}

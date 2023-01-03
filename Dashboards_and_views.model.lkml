@@ -107,7 +107,13 @@ explore: fifa_dsp_metrics {
   label: "FIFA-DSP View"
   required_access_grants: [can_view_all_tremor]
 }
+
 explore: bd_comm {
   label: "BD Comm US"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bd_comm_intl {
+  label: "BD Comm Intl"
   required_access_grants: [can_view_all_tremor]
 }

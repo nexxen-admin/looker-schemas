@@ -132,3 +132,8 @@ explore: tremor_concentration_report_w_out_demand_w_out_amobee {
   label: "tremor_concentration_report_w_out_demand_w_out_amobee"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: net_revenue_demand_ss_fees {
+  label: "net revenue demand ss fees"
+  required_access_grants: [can_view_all_tremor]
+}

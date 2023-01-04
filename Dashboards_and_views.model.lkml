@@ -122,3 +122,8 @@ explore: exchange_daily_report_component {
   label: "Exchange Daily Report Component"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: tremor_concentration_report_with_demand_w_out_amobee {
+  label: "tremor_concentration_report_with_demand_w_out_amobee"
+  required_access_grants: [can_view_all_tremor]
+}

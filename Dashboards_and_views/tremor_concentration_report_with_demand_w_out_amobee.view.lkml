@@ -1,4 +1,4 @@
-view: tremor_concentration_report_with_demand_w/out_amobee{
+view: tremor_concentration_report_with_demand_w_out_amobee{
   derived_table: {
     sql: Select date_trunc('quarter',c.event_month)::date as event_quarter,
         bc.Cohort,

@@ -136,16 +136,6 @@ explore: exchange_daily_report_component {
   required_access_grants: [can_view_all_tremor]
 }
 
-explore: tremor_concentration_report_with_demand_w_out_amobee {
-  label: "tremor_concentration_report_with_demand_w_out_amobee"
-  required_access_grants: [can_view_all_tremor]
-}
-
-explore: tremor_concentration_report_w_out_demand_w_out_amobee {
-  label: "tremor_concentration_report_w_out_demand_w_out_amobee"
-  required_access_grants: [can_view_all_tremor]
-}
-
 explore: net_revenue_demand_ss_fees {
   label: "net revenue demand ss fees"
   required_access_grants: [can_view_all_tremor]
@@ -153,6 +143,16 @@ explore: net_revenue_demand_ss_fees {
 
 explore: base_data_demand {
   label: "Base Data Demand"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: net_revenue_without_demand_ss_fees {
+  label: "net revenue without demand ss fees"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: base_data_without_demand {
+  label: "Base Data Without Demand"
   required_access_grants: [can_view_all_tremor]
 }
 

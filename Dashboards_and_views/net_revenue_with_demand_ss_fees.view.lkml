@@ -153,6 +153,11 @@ view: net_revenue_with_demand_ss_fees {
     sql: ${TABLE}.P2_E2E_Net ;;
   }
 
+  measure: New_Gross_E2E {
+    type: sum
+    sql: case(when(${TABLE}.net_revenue_without_demand_ss_fees.p1_e2_e_revenue}!=0 AND ${TABLE}.net_revenue_without_demand_ss_fees.p2_e2_e_revenue}=0 then ${TABLE}.net_revenue_without_demand_ss_fees.p1_e2_e_revenue} else 0)) ;;
+  }
+
   set: detail {
     fields: [
       event_month,

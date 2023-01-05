@@ -153,10 +153,46 @@ view: net_revenue_with_demand_ss_fees {
     sql: ${TABLE}.P2_E2E_Net ;;
   }
 
-  measure: New_Gross_E2E {
+    measure: New_Gross_E2E {
+      type: sum
+      sql: case when (${TABLE}.P1_E2E_Revenue!=0
+             AND ${TABLE}.P2_E2E_Revenue =0)
+           then ${TABLE}.P1_E2E_Revenue else 0 end ;;
+    }
+
+    measure: Retained_Gross_E2E {
+      type: sum
+      sql: case when (${TABLE}.P1_E2E_Revenue!=0
+             AND ${TABLE}.P2_E2E_Revenue=!0)
+           then ${TABLE}.P1_E2E_Revenue else 0 end ;;
+    }
+
+  measure: Retention_Rate_E2E {
     type: sum
-    sql: case(when(${TABLE}.net_revenue_without_demand_ss_fees.p1_e2_e_revenue}!=0 AND ${TABLE}.net_revenue_without_demand_ss_fees.p2_e2_e_revenue}=0 then ${TABLE}.net_revenue_without_demand_ss_fees.p1_e2_e_revenue} else 0)) ;;
+    sql: ${TABLE}.Retained_Gross_E2E/${TABLE}.Total_Gross_E2E ;;
   }
+
+  measure: Total_Gross_E2E {
+    type: sum
+    sql: ${TABLE}.New_Gross_E2E+${TABLE}.Lost_Gross_P1_E2E+${TABLE}.Retained_Gross_E2E ;;
+  }
+
+    measure: Lost_Gross_P1_E2E {
+      type: sum
+      sql: 0 ;;
+    }
+
+    measure: Churn_Gross_P1_E2E {
+      type: sum
+      sql: 0 ;;
+    }
+
+    measure: Lost_Gross_P2_E2E {
+      type: sum
+      sql: case when (${TABLE}.P1_E2E_Revenue=0
+             AND ${TABLE}.P2_E2E_Revenue=!0)
+           then ${TABLE}.P2_E2E_Revenue else 0 end ;;
+    }
 
   set: detail {
     fields: [

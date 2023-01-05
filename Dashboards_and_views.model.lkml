@@ -142,3 +142,8 @@ explore: base_data_demand {
   label: "Base Data Demand"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: ads_txt_domain_publisher {
+  label: "ads_txt_domain_publisher"
+  required_access_grants: [can_view_all_tremor]
+}

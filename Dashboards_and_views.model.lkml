@@ -161,3 +161,8 @@ explore: ads_txt_domain_publisher {
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
+explore: deal_splits_owner_report {
+  label: "Deal Splits Owner"
+  required_access_grants: [can_view_all_tremor]
+}

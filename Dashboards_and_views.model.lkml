@@ -136,8 +136,8 @@ explore: exchange_daily_report_component {
   required_access_grants: [can_view_all_tremor]
 }
 
-explore: net_revenue_demand_ss_fees {
-  label: "net revenue demand ss fees"
+explore: net_revenue_with_demand_ss_fees {
+  label: "net revenue with demand ss fees"
   required_access_grants: [can_view_all_tremor]
 }
 

@@ -29,15 +29,15 @@ view: deal_splits_owner_report {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_amsplit_net_revenue {
-    type: sum
-    sql: ${amsplit_net_revenue} ;;
-  }
+  #measure: total_amsplit_net_revenue {
+    #type: sum
+   # sql: ${amsplit_net_revenue} ;;
+  #}
 
-  measure: average_amsplit_net_revenue {
-    type: average
-    sql: ${amsplit_net_revenue} ;;
-  }
+  #measure: average_amsplit_net_revenue {
+   # type: average
+    #sql: ${amsplit_net_revenue} ;;
+  #}
 
   measure: amsplit_revenue {
     type: sum

@@ -35,7 +35,7 @@ view: deal_splits_owner_report {
   #}
 
   #measure: average_amsplit_net_revenue {
-   # type: average
+   #type: average
     #sql: ${amsplit_net_revenue} ;;
   #}
 

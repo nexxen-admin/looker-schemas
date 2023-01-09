@@ -163,7 +163,7 @@ explore: ads_txt_domain_publisher {
 }
 
 explore: deal_splits_owner_report {
-  label: "Deal Splits Owner"
+  label: "Deal_splits_owner_report"
   required_access_grants: [can_view_all_tremor]
 }
 

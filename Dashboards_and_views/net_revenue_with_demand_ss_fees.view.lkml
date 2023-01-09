@@ -103,18 +103,18 @@ view: net_revenue_with_demand_ss_fees {
     sql: ${TABLE}.P1_DMND_Cost ;;
   }
 
-  dimension: p1_dmnd_net {
-    type: number
+  measure: p1_dmnd_net {
+    type: sum
     sql: ${TABLE}.P1_DMND_Net ;;
   }
 
-  dimension: p2_dmnd_revenue {
-    type: number
+  measure: p2_dmnd_revenue {
+    type: sum
     sql: ${TABLE}.P2_DMND_Revenue ;;
   }
 
-  dimension: p2_dmnd_cost {
-    type: number
+  measure: p2_dmnd_cost {
+    type: sum
     sql: ${TABLE}.P2_DMND_cost ;;
   }
 

@@ -166,3 +166,8 @@ explore: deal_splits_owner_report {
   label: "Deal Splits Owner"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: active_inactive_publishers {
+  label: "Active Inactive Publishers"
+  required_access_grants: [can_view_all_tremor]
+}

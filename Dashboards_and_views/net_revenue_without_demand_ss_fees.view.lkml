@@ -174,7 +174,7 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: Total_Gross_E2E {
     type: sum
-    sql: ${TABLE}.New_Gross_E2E+${TABLE}.Lost_Gross_P1_E2E+${TABLE}.Retained_Gross_E2E ;;
+    sql: ${TABLE}.New_Gross_E2E + ${TABLE}.Lost_Gross_P1_E2E + ${TABLE}.Retained_Gross_E2E ;;
   }
 
   measure: Lost_Gross_P1_E2E {

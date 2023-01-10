@@ -155,6 +155,7 @@ view: net_revenue_with_demand_ss_fees {
 
   measure: New_Gross_E2E {
     type: sum
+    value_format: "0.00"
     sql: case when (${TABLE}.P1_E2E_Revenue!=0
              AND ${TABLE}.P2_E2E_Revenue =0)
            then ${TABLE}.P1_E2E_Revenue else 0 end ;;
@@ -162,6 +163,7 @@ view: net_revenue_with_demand_ss_fees {
 
   measure: New_Net_E2E {
     type: sum
+    value_format: "0.00"
     sql: case when (${TABLE}.P1_E2E_Net!=0
              AND ${TABLE}.P2_E2E_Net =0)
            then ${TABLE}.P1_E2E_Net else 0 end ;;
@@ -169,6 +171,7 @@ view: net_revenue_with_demand_ss_fees {
 
   measure: Retained_Gross_E2E {
     type: sum
+    value_format: "0.00"
     sql: case when (${TABLE}.P1_E2E_Revenue!=0
              AND ${TABLE}.P2_E2E_Revenue !=0)
            then ${TABLE}.P1_E2E_Revenue else 0 end ;;
@@ -176,6 +179,7 @@ view: net_revenue_with_demand_ss_fees {
 
   measure: Retained_Net_E2E {
     type: sum
+    value_format: "0.00"
     sql: case when (${TABLE}.P1_E2E_Net!=0
              AND ${TABLE}.P2_E2E_Net !=0)
            then ${TABLE}.P1_E2E_Net else 0 end ;;

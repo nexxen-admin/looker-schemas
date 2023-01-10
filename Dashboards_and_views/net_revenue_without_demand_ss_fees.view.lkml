@@ -162,8 +162,8 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: Retained_Gross_E2E {
     type: sum
-    sql: case when (${TABLE}.P1_E2E_Revenue!= 0
-             AND ${TABLE}.P2_E2E_Revenue=!0)
+    sql: case when (${TABLE}.P1_E2E_Revenue!=0
+             AND ${TABLE}.P2_E2E_Revenue =!0)
            then ${TABLE}.P1_E2E_Revenue else 0 end ;;
   }
 

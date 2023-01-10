@@ -51,11 +51,13 @@ view: deal_splits_owner_report {
 
   dimension: brand {
     type: string
+    drill_fields: [agency]
     sql: ${TABLE}.brand ;;
   }
 
   dimension: buy_type {
     type: string
+    drill_fields: [brand, agency]
     sql: ${TABLE}.Buy_Type ;;
   }
 
@@ -99,11 +101,13 @@ view: deal_splits_owner_report {
 
   measure: gross_revenue {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.Gross_Revenue ;;
   }
 
   measure: net_revenue {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.net_revenue ;;
   }
 
@@ -114,16 +118,19 @@ view: deal_splits_owner_report {
 
   measure: ops_split_cogs {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.OpsSplitCogs ;;
   }
 
   measure: ops_split_net_revenue {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.OpsSplitNetRevenue ;;
   }
 
   measure: ops_split_revenue {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.OpsSplitRevenue ;;
   }
 
@@ -139,31 +146,37 @@ view: deal_splits_owner_report {
 
   measure: sales_split_barter_rebate {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.SalesSplitBarterRebate ;;
   }
 
   measure: sales_split_cogs {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.SalesSplitCogs ;;
   }
 
   measure: sales_split_net_revenue {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.SalesSplitNetRevenue ;;
   }
 
   measure: sales_split_net_revenue_no_rebate {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.SalesSplitNetRevenue_No_Rebate ;;
   }
 
   measure: sales_split_revenue {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.SalesSplitRevenue ;;
   }
 
   measure: sales_split_revenue_no_rebate {
     type: sum
+    value_format: "0.00"
     sql: ${TABLE}.SalesSplitRevenue_No_Rebate ;;
   }
 

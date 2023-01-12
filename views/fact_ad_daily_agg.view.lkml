@@ -888,8 +888,19 @@ view: fact_ad_daily_agg {
     label: "Date"
     group_label: "Time Frame"
     sql: ${TABLE}.Date_Key ;;
-    hidden: yes
+    #hidden: yes
   }
+
+    dimension: min_date_key {
+    type: yesno
+      label: "min Date"
+    group_label: "Time Frame"
+    sql: case when ${TABLE}.sum_of_revenue >0 and ${TABLE}.Date_Key > TIMESTAMPADD('Quarter', -8, date_trunc('Quarter',(CURRENT_TIMESTAMP)))
+           then 1 else 0 end;;
+
+    #hidden: yes
+  }
+
 
   dimension: deal_key {
     type: number
@@ -1016,6 +1027,15 @@ view: fact_ad_daily_agg {
   measure: impression_pixel {
     type: sum
     label: "Impressions"
+    description: "Successfully delivered ad impression.   Billable event. ."
+    #value_format: "#,##0.0,,\"\""
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_impression_pixel ;;
+  }
+
+  dimension: impression_pixel2 {
+    type: number
+    label: "Impressions DIM"
     description: "Successfully delivered ad impression.   Billable event. ."
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
@@ -1210,6 +1230,15 @@ view: fact_ad_daily_agg {
     #sql_distinct_key: ${deal_key} ;;
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_revenue;;
+  }
+  dimension: revenue_d
+  {
+    type: number
+    label: "Revenue_d"
+    #sql_distinct_key: ${deal_key} ;;
+    value_format: "$#,##0.00"
+    #group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_revenue;;
   }
 
@@ -1457,6 +1486,25 @@ view: fact_ad_daily_agg {
 
   }
 
+  measure:  prev_day_attempts {
+    label: "Attempts previous day "
+    type: sum
+    sql: ${TABLE}.sum_of_slot_attempts ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+  measure:  last_day_attempts {
+    label: "Attempts last day "
+    type: sum
+    sql: ${TABLE}.sum_of_slot_attempts ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "1 days ago"]
+
+  }
 
   measure:  last_week_attempts {
     label: "Attempts last week "
@@ -1464,7 +1512,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_slot_attempts ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
-    filters: [date_key_date: "14 days ago for 7 days"]
+    filters: [date_key_date: "8 days ago"]
 
   }
 
@@ -1636,9 +1684,10 @@ view: fact_ad_daily_agg {
    # hidden: yes
   }
 
+
   measure: count {
     type: count
     drill_fields: []
-    #hidden: yes
+    hidden: yes
   }
 }

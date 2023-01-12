@@ -1,50 +1,34 @@
-# The name of this view in Looker is "Exchange Daily Report Component"
 view: exchange_daily_report_component {
-  # The sql_table_name parameter indicates the underlying database table
-  # to be used for all fields in this view.
-  sql_table_name: BI_New.Exchange_daily_report_component ;;
-  # No primary key is defined for this view. In order to join this view in an Explore,
-  # define primary_key: yes on a dimension that has no repeated values.
+  derived_table: {
+    sql: select month(event_date),file_record,sum(Revenue) as rev
+      from(
 
-  # Here's what a typical dimension looks like in LookML.
-  # A dimension is a groupable field that can be used to filter query results.
-  # This dimension will be called "Cost" in Explore.
-
-  measure: cost {
-    type: sum
-    sql: ${TABLE}.Cost ;;
+      Select event_date::date as event_date,
+      region,
+      subcategory,
+      record_type,
+      file_record,
+      sum(revenue) as Revenue,
+      sum(cost) as Cost
+      From BI.SVC_DRR_Daily_Revenue_Report
+      where event_date >= date_trunc('quarter',timestampadd('month',-2,date_trunc('month',current_date())))
+      and event_date < date_trunc('month',current_date())
+      and category = 'Exchange'
+      Group by 1, 2, 3, 4, 5
+      Order by 1, 2, 3, 4, 5) tmp
+      where event_date>='2022-10-01' and event_date<='2022-12-31'
+      group by 1,2
+      ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
+  measure: count {
+    type: count
+    drill_fields: [detail*]
+  }
 
-  #measure: total_cost {
-   # type: sum
-    #sql: ${cost} ;;
-  #}
-
-  #measure: average_cost {
-   # type: average
-    #sql: ${cost} ;;
-  #}
-
-  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
-  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
-
-  dimension_group: event {
-    type: time
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    convert_tz: no
-    datatype: date
-    sql: ${TABLE}.event_date ;;
+  dimension: month {
+    type: number
+    sql: ${TABLE}."month" ;;
   }
 
   dimension: file_record {
@@ -52,28 +36,12 @@ view: exchange_daily_report_component {
     sql: ${TABLE}.file_record ;;
   }
 
-  dimension: record_type {
-    type: string
-    sql: ${TABLE}.record_type ;;
-  }
-
-  dimension: region {
-    type: string
-    sql: ${TABLE}.region ;;
-  }
-
-  measure: revenue {
+  measure: rev {
     type: sum
-    sql: ${TABLE}.Revenue ;;
+    sql: ${TABLE}.rev ;;
   }
 
-  dimension: subcategory {
-    type: string
-    sql: ${TABLE}.subcategory ;;
-  }
-
-  measure: count {
-    type: count
-    drill_fields: []
+  set: detail {
+    fields: [month, file_record, rev]
   }
 }

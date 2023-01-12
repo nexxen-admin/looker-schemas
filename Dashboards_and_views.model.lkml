@@ -171,3 +171,9 @@ explore: active_inactive_publishers {
   label: "Active Inactive Publishers"
   required_access_grants: [can_view_all_tremor]
 }
+
+
+explore: ip_per_day_try {
+  label: "ip per day try"
+  required_access_grants: [can_view_all_tremor]
+}

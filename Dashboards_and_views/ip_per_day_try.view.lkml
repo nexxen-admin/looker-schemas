@@ -14,7 +14,7 @@ ORDER BY 1
   }
 
   measure: count {
-    type: count
+    type: count_distinct
     sql: ${TABLE}.COUNT ;;
   }
 

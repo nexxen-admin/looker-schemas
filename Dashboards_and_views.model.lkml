@@ -131,11 +131,6 @@ explore: bd_comm_intl {
   hidden: yes
 }
 
-explore: exchange_daily_report_component {
-  label: "Exchange Daily Report Component"
-  required_access_grants: [can_view_all_tremor]
-}
-
 explore: net_revenue_with_demand_ss_fees {
   label: "net revenue with demand ss fees"
   required_access_grants: [can_view_all_tremor]
@@ -175,5 +170,10 @@ explore: active_inactive_publishers {
 
 explore: ip_per_day_try {
   label: "ip per day try"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore:  exchange_daily_report_component{
+  label: "Exchange Daily Report Component"
   required_access_grants: [can_view_all_tremor]
 }

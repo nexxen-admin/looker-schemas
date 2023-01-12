@@ -49,6 +49,7 @@ view: exchange_daily_report_component {
 
   measure: Revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.Revenue ;;
   }
 

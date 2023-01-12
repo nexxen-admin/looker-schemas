@@ -32,9 +32,29 @@ view: exchange_daily_report_component {
     sql: ${TABLE}.file_record ;;
   }
 
-  measure: rev {
+  dimension: region {
+    type: string
+    sql: ${TABLE}.region ;;
+  }
+
+  dimension: subcategory {
+    type: string
+    sql: ${TABLE}.subcategory ;;
+  }
+
+  dimension: record_type {
+    type: string
+    sql: ${TABLE}.record_type ;;
+  }
+
+  measure: Revenue {
     type: sum
-    sql: ${TABLE}.rev ;;
+    sql: ${TABLE}.Revenue ;;
+  }
+
+  measure: Cost {
+    type: sum
+    sql: ${TABLE}.Cost ;;
   }
 
   dimension_group: event {
@@ -54,6 +74,6 @@ view: exchange_daily_report_component {
 
 
   set: detail {
-    fields: [file_record, rev]
+    fields: [file_record, Revenue]
   }
 }

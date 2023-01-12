@@ -58,7 +58,7 @@ view: sam_performance_monitor_v2 {
       Select date_trunc('quarter',event_time)::date as Quarter_Start,
         coalesce(pi.operations_owner_id,'1') as operations_owner_id,
         coalesce(oo.name,'Unassigned') as operations_owner,
-        Case when pi.operations_owner_id in ('64','45','37','63','60','11','74','75')
+        Case when pi.operations_owner_id in ('64','45','37','63','60','11','74','75','80')
          then 'SAM' else 'Long-Tail' end as Commission_Group,
        /* Case when (pi.operations_owner_id in ('64','45','37','63','60','11')
           and ad.pub_id in ('102484','102838','101350','103309','83040','103037','76146','100158','71916','57782','73160','100525','47371','102530','102868','65885','102519'))
@@ -145,7 +145,7 @@ view: sam_performance_monitor_v2 {
       and event_time < current_date()
       and ad.rx_ssp_name ilike 'rmp%'
       and (ad.revenue > 0 or ad.cogs > 0)
-      and pi.operations_owner_id in ('64','45','37','63','60','11','74','75')
+      and pi.operations_owner_id in ('64','45','37','63','60','11','74','75','80')
       Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11),
 
       agg_data as (

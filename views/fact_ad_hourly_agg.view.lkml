@@ -166,7 +166,7 @@ view: fact_ad_hourly_agg {
     hidden: yes
   }
 
-  dimension: Gemre_Norm_Key {
+  dimension: Genre_Norm_Key {
     type: number
     sql: ${TABLE}.Genre_Norm_Key;;
     hidden: yes

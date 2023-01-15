@@ -689,6 +689,8 @@ join: dim_seat {
   sql_on: ${dim_seat.seat_key}=${dim_dsp_seat.seat_key};;
   relationship: many_to_one
 }
+
+
  }
 
 

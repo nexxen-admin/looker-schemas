@@ -690,12 +690,12 @@ join: dim_seat {
   relationship: many_to_one
 }
 
-  join: dim_genre_norm {
-    type: inner
-    view_label: "Genre"
-    sql_on: ${dim_genre_norm.Genre_Norm_key}=${fact_ad_daily_agg.Genre_Norm_Key};;
-    relationship: many_to_one
-  }
+join: dim_genre_norm {
+   type: inner
+   view_label: "Genre"
+   sql_on: ${dim_genre_norm.Genre_Norm_key}=${fact_ad_daily_agg.Genre_Norm_Key};;
+   relationship: many_to_one
+}
 
  }
 

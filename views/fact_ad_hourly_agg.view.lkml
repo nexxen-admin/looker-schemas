@@ -166,12 +166,6 @@ view: fact_ad_hourly_agg {
     hidden: yes
   }
 
-  dimension: Genre_Norm_Key {
-    type: number
-    sql: ${TABLE}.Genre_Norm_Key;;
-    hidden: yes
-  }
-
   dimension: dsp_deal_type_key {
     type: number
     sql: ${TABLE}.DSP_Deal_Type_Key ;;

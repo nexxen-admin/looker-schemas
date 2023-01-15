@@ -211,9 +211,16 @@ view: dim_publisher {
       hidden: yes
     }
 
+  measure: count_pub {
+    type: count
+    sql: ${TABLE}.PUB_ID;;
+    hidden: no
+  }
+
     measure: count {
       type: count
-      drill_fields: [pub_name]
-      hidden: yes
+      label: "count of pub"
+      drill_fields: [pub_id]
+      hidden: no
     }
   }

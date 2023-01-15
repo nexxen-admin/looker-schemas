@@ -28,6 +28,7 @@ datagroup: ChangeCleanCash_datagroup {
 access_grant: can_view_pub_come_looker {
   user_attribute: admins
   allowed_values: ["Looker_Admins"]
+
 }
 access_grant: can_view_all_tremor {
   user_attribute: all_tremor
@@ -45,6 +46,7 @@ access_grant: can_view_candidates {
 explore: datorama_forcast_poc {
 
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 
 }
 explore: sam_goal_monitor {
@@ -54,15 +56,18 @@ explore: sam_goal_monitor {
    }
   label: "SAM Performance Monitor"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: sam {
   access_filter: {
     field: sam.sam
     user_attribute: allowed_users
+
   }
   label: "SAM Performance Monitor new"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: sam_lt_comm {
@@ -72,6 +77,7 @@ explore: sam_lt_comm {
    }
   label: "SAM LT Commision"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 
@@ -82,6 +88,7 @@ explore: sam_performance_monitor_v2 {
   }
   label: "SAM Performance Monitor V2"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: sam_lt_pub_metrics {
@@ -91,19 +98,87 @@ explore: sam_lt_pub_metrics {
   }
   label: "SAM + LT Publisher Metrics"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: phase_2_ak {
   label: "Phase 2 - AK"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: spearad_fifa_view {
   label: "FIFA-SpearAd View"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: fifa_dsp_metrics {
   label: "FIFA-DSP View"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: bd_comm {
+  label: "BD Comm US"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: bd_comm_intl {
+  label: "BD Comm Intl"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: net_revenue_with_demand_ss_fees {
+  label: "net revenue with demand ss fees"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: base_data_demand {
+  label: "Base Data Demand"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: net_revenue_without_demand_ss_fees {
+  label: "net revenue without demand ss fees"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: base_data_without_demand {
+  label: "Base Data Without Demand"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: ads_txt_domain_publisher {
+  label: "ads_txt_domain_publisher"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: deal_splits_owner_report {
+  label: "Deal_splits_owner_report"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: active_inactive_publishers {
+  label: "Active Inactive Publishers"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
+explore: ip_per_day_try {
+  label: "ip per day try"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: daily_metric_ip_count_v2 {
+  label: "daily metric ip count v2"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore:  exchange_daily_report_component{
+  label: "Exchange Daily Report Component"
   required_access_grants: [can_view_all_tremor]
 }

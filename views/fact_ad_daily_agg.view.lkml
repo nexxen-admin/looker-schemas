@@ -1677,6 +1677,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.avg_of_ssp_bid_floor ;;
    # hidden: yes
   }
+
   dimension: dsp_bid_price {
     type: number
     label: "Bid Price"
@@ -1684,6 +1685,11 @@ view: fact_ad_daily_agg {
    # hidden: yes
   }
 
+  dimension: Genre_Norm_Key {
+    type: number
+    sql: ${TABLE}.Genre_Norm_Key;;
+    hidden: yes
+  }
 
   measure: count {
     type: count

@@ -74,7 +74,7 @@ view: dim_publisher_traffic_source {
   dimension: pub_ts_key {
     type: number
     sql: ${TABLE}.PUB_TS_Key ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension_group: pub_ts_update {

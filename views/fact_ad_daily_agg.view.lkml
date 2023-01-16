@@ -1687,6 +1687,7 @@ view: fact_ad_daily_agg {
 
   dimension: Genre_Norm_Key {
     type: number
+    label: "Genre Norm Key"
     sql: ${TABLE}.Genre_Norm_Key;;
     hidden: yes
   }

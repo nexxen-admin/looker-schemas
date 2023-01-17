@@ -223,4 +223,13 @@ view: dim_publisher {
       drill_fields: [pub_id]
       hidden: no
     }
+
+  parameter: max_rank {
+    type: number
+  }
+
+  dimension: rank_limit {
+    type: number
+    sql: {% parameter max_rank %} ;;
+  }
   }

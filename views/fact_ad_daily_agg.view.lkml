@@ -883,6 +883,9 @@ view: fact_ad_daily_agg {
     timeframes:
     [ date,
       month,
+      week,
+      year,
+      quarter,
       raw
     ]
     label: "Date"
@@ -1729,8 +1732,31 @@ view: fact_ad_daily_agg {
     default_value: "Period"
   }
 
-## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##
+  parameter: choose_breakdown {
+    label: "Choose Grouping (Rows)"
+    view_label: "PoP"
+    type: unquoted
+    default_value: "month"
+    allowed_value: {value:"month"}
+    allowed_value: {value: "week"}
+    allowed_value: {value: "year"}
+    allowed_value: {value: "quarter"}
+    allowed_value: {value: "date"}
+  }
 
+## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##
+    dimension: pop_row  {
+      view_label: "PoP"
+      label_from_parameter: choose_breakdown
+      type: string
+      #order_by_field: sort_hack1 # Important
+      sql:
+        {% if choose_breakdown._parameter_value == 'month' %} ${date_in_period_month}
+        {% elsif choose_breakdown._parameter_value == 'date' %} ${date_in_period_date}
+        {% elsif choose_breakdown._parameter_value == 'year' %} ${date_in_period_year}
+        {% elsif choose_breakdown._parameter_value == 'quarter' %} ${date_in_period_quarter}
+        {% else %}'2022-01-01'{% endif %} ;;
+    }
 
   dimension: days_in_period {
     hidden:  yes
@@ -1825,9 +1851,11 @@ view: fact_ad_daily_agg {
       day_of_year,
       week_of_year,
       month,
+      quarter,
       month_name,
       month_num,
       year]
+
   }
 
 
@@ -1946,28 +1974,55 @@ view: fact_ad_daily_agg {
   }
 
 
-  measure: current_period_FILL_RATE {
+  measure: current_period_impressions {
   view_label: "PoP"
   type: sum
-  sql:  (${TABLE}.sum_of_impression_pixel)/(NULLIF(${TABLE}.sum_of_requests,0)) ;;
-  value_format: "0.00%"
+  sql:  ${TABLE}.sum_of_impression_pixel ;;
+  value_format: "$#,##0"
   filters: [period_filtered_measures: "this"]
 }
-measure: previous_period_fill_rate{
+  measure: current_period_requests {
+    view_label: "PoP"
+    type: sum
+    sql:  ${TABLE}.sum_of_requests ;;
+    value_format: "$#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+  measure: current_period_fill_rate {
+    view_label: "PoP"
+    type: number
+    sql:  (${current_period_impressions}/${current_period_requests})*100 ;;
+    value_format: "0.0%"
+    #filters: [period_filtered_measures: "this"]
+  }
+
+measure: previous_period_requests{
   view_label: "PoP"
   type: sum
-  sql: (${TABLE}.sum_of_impression_pixel/NULLIF(${TABLE}.sum_of_requests,0))*100 ;;
-  value_format: "0.00%"
+  sql: ${TABLE}.sum_of_requests ;;
+  value_format: "$#,##0"
   filters: [period_filtered_measures: "last"]
 }
+  measure: previous_period_impressions{
+    view_label: "PoP"
+    type: sum
+    sql: ${TABLE}.sum_of_impression_pixel ;;
+    value_format: "$#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+  measure: previous_period_fill_rate {
+    view_label: "PoP"
+    type: number
+    sql:  (${previous_period_impressions}/${previous_period_requests})*100 ;;
+    value_format: "0.0%"
+    #filters: [period_filtered_measures: "this"]
+  }
 
 measure: fill_rate__pop_change {
   view_label: "PoP"
-  label: "Total profit period-over-period % change"
+  label: "Total flll rate period-over-period % change"
   type: number
-  sql: CASE WHEN ${current_period_FILL_RATE} = 0
-                THEN NULL
-                ELSE (1.0 * ${current_period_FILL_RATE} / NULLIF(${previous_period_fill_rate} ,0)) - 1 END ;;
+  sql: ${current_period_fill_rate} - ${previous_period_fill_rate} ;;
   value_format_name: percent_2
 }
 

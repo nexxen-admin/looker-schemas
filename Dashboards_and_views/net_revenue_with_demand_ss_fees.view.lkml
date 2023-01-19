@@ -185,6 +185,70 @@ view: net_revenue_with_demand_ss_fees {
            then ${TABLE}.P1_E2E_Net else 0 end ;;
   }
 
+  measure: New_Gross_Demand {
+    type: sum
+    value_format: "0.00"
+    sql: case when (${TABLE}.P1_DMND_Revenue!=0
+             AND ${TABLE}.P2_DMND_Revenue =0)
+           then ${TABLE}.P1_DMND_Revenue else 0 end ;;
+  }
+
+  measure: New_Net_Demand {
+    type: sum
+    value_format: "0.00"
+    sql: case when (${TABLE}.P1_DMND_Net!=0
+             AND ${TABLE}.P2_DMND_Net =0)
+           then ${TABLE}.P1_DMND_Net else 0 end ;;
+  }
+
+  measure: Retained_Gross_Demand {
+    type: sum
+    value_format: "0.00"
+    sql: case when (${TABLE}.P1_DMND_Revenue!=0
+             AND ${TABLE}.P2_DMND_Revenue !=0)
+           then ${TABLE}.P1_DMND_Revenue else 0 end ;;
+  }
+
+  measure: Retained_Net_Demand {
+    type: sum
+    value_format: "0.00"
+    sql: case when (${TABLE}.P1_DMND_Net!=0
+             AND ${TABLE}.P2_DMND_Net !=0)
+           then ${TABLE}.P1_DMND_Net else 0 end ;;
+  }
+
+  measure: New_Gross_Exch {
+    type: sum
+    value_format: "0.00"
+    sql: case when (${TABLE}.P1_Exch_Revenue!=0
+             AND ${TABLE}.P2_Exch_Revenue =0)
+           then ${TABLE}.P1_Exch_Revenue else 0 end ;;
+  }
+
+  measure: New_Net_Exch {
+    type: sum
+    value_format: "0.00"
+    sql: case when (${TABLE}.P1_Exch_Net!=0
+             AND ${TABLE}.P2_Exch_Net =0)
+           then ${TABLE}.P1_Exch_Net else 0 end ;;
+  }
+
+  measure: Retained_Gross_Exch {
+    type: sum
+    value_format: "0.00"
+    sql: case when (${TABLE}.P1_Exch_Revenue!=0
+             AND ${TABLE}.P2_Exch_Revenue !=0)
+           then ${TABLE}.P1_Exch_Revenue else 0 end ;;
+  }
+
+  measure: Retained_Net_Exch {
+    type: sum
+    value_format: "0.00"
+    sql: case when (${TABLE}.P1_Exch_Net!=0
+             AND ${TABLE}.P2_Exch_Net !=0)
+           then ${TABLE}.P1_Exch_Net else 0 end ;;
+  }
+
   #measure: Retention_Rate_E2E {
   # type: sum
   #sql: ${TABLE}.Retained_Gross_E2E/${TABLE}.Total_Gross_E2E ;;
@@ -212,6 +276,34 @@ view: net_revenue_with_demand_ss_fees {
     sql: case when (${TABLE}.P1_E2E_Net=0
              AND ${TABLE}.P2_E2E_Net !=0)
            then ${TABLE}.P2_E2E_Net else 0 end ;;
+  }
+
+  measure: Lost_Gross_P2_Demand {
+    type: sum
+    sql: case when (${TABLE}.P1_DMND_Revenue=0
+             AND ${TABLE}.P2_DMND_Revenue !=0)
+           then ${TABLE}.P2_DMND_Revenue else 0 end ;;
+  }
+
+  measure: Lost_Net_P2_Demand {
+    type: sum
+    sql: case when (${TABLE}.P1_DMND_Net=0
+             AND ${TABLE}.P2_DMND_Net !=0)
+           then ${TABLE}.P2_DMND_Net else 0 end ;;
+  }
+
+  measure: Lost_Gross_P2_Exch {
+    type: sum
+    sql: case when (${TABLE}.P1_Exch_Revenue=0
+             AND ${TABLE}.P2_Exch_Revenue !=0)
+           then ${TABLE}.P2_Exch_Revenue else 0 end ;;
+  }
+
+  measure: Lost_Net_P2_Exch {
+    type: sum
+    sql: case when (${TABLE}.P1_Exch_Net=0
+             AND ${TABLE}.P2_Exch_Net !=0)
+           then ${TABLE}.P2_Exch_Net else 0 end ;;
   }
 
   #measure: Total_Gross_E2E {

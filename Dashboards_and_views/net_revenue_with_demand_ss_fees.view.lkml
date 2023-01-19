@@ -254,12 +254,12 @@ view: net_revenue_with_demand_ss_fees {
   #sql: ${TABLE}.Retained_Gross_E2E/${TABLE}.Total_Gross_E2E ;;
   #}
 
-  measure: Lost_Gross_P1_E2E {
+  measure: Lost_Gross_P1 {
     type: sum
     sql: 0 ;;
   }
 
-  measure: Churn_Gross_P1_E2E {
+  measure: Churn_Gross_P1 {
     type: sum
     sql: 0 ;;
   }

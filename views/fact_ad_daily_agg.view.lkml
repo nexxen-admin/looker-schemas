@@ -1,5 +1,5 @@
 view: fact_ad_daily_agg {
-  sql_table_name: BI_New.Fact_Ad_Daily_Agg ;;
+  sql_table_name: BI_New.V_Fact_Ad_Daily_Agg ;;
 
   parameter: max_rank {
     type: number

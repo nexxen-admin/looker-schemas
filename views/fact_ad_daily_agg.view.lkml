@@ -1873,7 +1873,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: sum
     sql: ${TABLE}.sum_of_revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
   }
 
@@ -1881,7 +1881,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: sum
     sql: ${TABLE}.sum_of_revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
   }
 
@@ -1899,7 +1899,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: sum
     sql: ${TABLE}.sum_of_cogs ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
   }
 
@@ -1907,13 +1907,13 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: sum
     sql: ${TABLE}.sum_of_cogs ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
   }
 
   measure: cost_pop_change {
     view_label: "PoP"
-    label: "Total revenue period-over-period % change"
+    label: "Total cost period-over-period % change"
     type: number
     sql: CASE WHEN ${current_period_revenue} = 0
                 THEN NULL
@@ -1924,26 +1924,53 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: sum
     sql: (${TABLE}.sum_of_revenue-${TABLE}.sum_of_cogs) ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
   }
   measure: previous_period_profit{
     view_label: "PoP"
     type: sum
     sql: (${TABLE}.sum_of_revenue-${TABLE}.sum_of_cogs) ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
   }
 
   measure: profit_pop_change {
     view_label: "PoP"
-    label: "Total revenue period-over-period % change"
+    label: "Total profit period-over-period % change"
     type: number
     sql: CASE WHEN ${current_period_profit} = 0
                 THEN NULL
                 ELSE (1.0 * ${current_period_profit} / NULLIF(${previous_period_profit} ,0)) - 1 END ;;
     value_format_name: percent_2
   }
+
+
+  measure: current_period_FILL_RATE {
+  view_label: "PoP"
+  type: sum
+  sql:  (${TABLE}.sum_of_impression_pixel)/(NULLIF(${TABLE}.sum_of_requests,0)) ;;
+  value_format: "0.00%"
+  filters: [period_filtered_measures: "this"]
+}
+measure: previous_period_fill_rate{
+  view_label: "PoP"
+  type: sum
+  sql: (${TABLE}.sum_of_impression_pixel/NULLIF(${TABLE}.sum_of_requests,0))*100 ;;
+  value_format: "0.00%"
+  filters: [period_filtered_measures: "last"]
+}
+
+measure: fill_rate__pop_change {
+  view_label: "PoP"
+  label: "Total profit period-over-period % change"
+  type: number
+  sql: CASE WHEN ${current_period_FILL_RATE} = 0
+                THEN NULL
+                ELSE (1.0 * ${current_period_FILL_RATE} / NULLIF(${previous_period_fill_rate} ,0)) - 1 END ;;
+  value_format_name: percent_2
+}
+
   measure: count {
     type: count
     drill_fields: []

@@ -1736,25 +1736,58 @@ view: fact_ad_daily_agg {
     label: "Choose Grouping (Rows)"
     view_label: "PoP"
     type: unquoted
-    default_value: "month"
-    allowed_value: {value:"month"}
-    allowed_value: {value: "week"}
-    allowed_value: {value: "year"}
-    allowed_value: {value: "quarter"}
-    allowed_value: {value: "date"}
+    default_value: "day_of_month"
+    allowed_value: {value:"day_of_month"}
+    allowed_value: {value: "month_name"}
   }
 
 ## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##
-    dimension: pop_row  {
+  dimension: sort_by1 {
+    hidden: yes
+    type: number
+    sql:
+        {% if choose_breakdown._parameter_value == 'month' %} ${date_in_period_month}
+        {% elsif choose_breakdown._parameter_value == 'date' %} ${date_in_period_date}
+        {% elsif choose_breakdown._parameter_value == 'year' %} ${date_in_period_year}h}
+        {% elsif choose_breakdown._parameter_value == 'quarter' %} ${date_in_period_quarter}
+        {% else %}NULL{% endif %} ;;
+  }
+  dimension: sort_by2 {
+    hidden: yes
+    type: string
+    sql:
+        {% if choose_comparison._parameter_value == 'year' %} ${date_in_period_year}
+        {% elsif choose_comparison._parameter_value =='month' %} ${date_in_period_month}
+        {% else %}NULL{% endif %} ;;
+  }
+  parameter: choose_comparison {
+    label: "Choose Comparison (Pivot)"
+    view_label: "PoP"
+    type: unquoted
+    default_value: "month"
+    allowed_value: {value: "year" }
+    allowed_value: {value: "month"}
+
+  }
+  dimension: pop_pivot {
+    view_label: "PoP"
+    label_from_parameter: choose_comparison
+    type: string
+    order_by_field: sort_by2 # Important
+    sql:
+        {% if choose_comparison._parameter_value == 'year' %} ${date_in_period_year}
+        {% elsif choose_comparison._parameter_value =='month' %} ${date_in_period_month}
+        {% else %}NULL{% endif %} ;;
+  }
+
+   dimension: pop_row  {
       view_label: "PoP"
       label_from_parameter: choose_breakdown
       type: string
-      #order_by_field: sort_hack1 # Important
+      order_by_field: sort_by1 # Important
       sql:
-        {% if choose_breakdown._parameter_value == 'month' %} ${date_in_period_month}
-        {% elsif choose_breakdown._parameter_value == 'date' %} ${date_in_period_date}
-        {% elsif choose_breakdown._parameter_value == 'year' %} ${date_in_period_year}
-        {% elsif choose_breakdown._parameter_value == 'quarter' %} ${date_in_period_quarter}
+        {% if choose_breakdown._parameter_value == 'day_of_month' %} ${date_in_period_day_of_month}
+        {% elsif choose_breakdown._parameter_value == 'month_name' %} ${date_in_period_month_name}
         {% else %}'2022-01-01'{% endif %} ;;
     }
 

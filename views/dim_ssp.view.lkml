@@ -88,10 +88,9 @@ view: dim_ssp {
   }
 
   dimension: ssp_name {
-    label: "SSP"
+    label: "RX SSP Name"
     type: string
     sql: ${TABLE}.SSP_Name ;;
-    hidden: yes
   }
 
   dimension: ssp_name_display {

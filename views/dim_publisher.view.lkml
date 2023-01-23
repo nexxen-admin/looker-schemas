@@ -177,10 +177,16 @@ view: dim_publisher {
       #hidden: yes
     }
 
+    dimension: bid_price {
+      type: number
+      sql: ${TABLE}.bid_price ;;
+    }
+
     dimension: pub_name {
       label: "Publisher Name"
       type: string
       sql: ${TABLE}.PUB_Name ;;
+      drill_fields: [bid_price]
     }
 
     dimension_group: pub_updated {
@@ -211,9 +217,25 @@ view: dim_publisher {
       hidden: yes
     }
 
+  measure: count_pub {
+    type: count
+    sql: ${TABLE}.PUB_ID;;
+    hidden: no
+  }
+
     measure: count {
       type: count
-      drill_fields: [pub_name]
-      hidden: yes
+      label: "count of pub"
+      drill_fields: [pub_id]
+      hidden: no
     }
+
+  parameter: max_rank {
+    type: number
+  }
+
+  dimension: rank_limit {
+    type: number
+    sql: {% parameter max_rank %} ;;
+  }
   }

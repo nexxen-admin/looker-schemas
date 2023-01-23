@@ -67,8 +67,10 @@ view: dim_publisher_traffic_source {
 
   dimension: pub_ts_id {
     type: number
+    label: "Publisher Traffic Source ID."
+
     sql: ${TABLE}.PUB_TS_ID ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: pub_ts_key {

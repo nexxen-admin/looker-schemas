@@ -377,7 +377,7 @@ explore: extend_Inbound_Exchange {
     sql_on: ${dim_seat.seat_key}=${dim_dsp_seat.seat_key};;
     relationship: many_to_one
   }
-
+  hidden: yes
 }
 
 #The normal contents of the Explore follow
@@ -389,9 +389,9 @@ explore: extend_Inbound_Exchange {
 explore: fact_ad_daily_agg{
   view_name: fact_ad_daily_agg
 
-  always_filter: {
-    filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
-  }
+  #always_filter: {
+   # filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
+  #}
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange"
   view_label: "Measures"
@@ -690,7 +690,14 @@ join: dim_seat {
   relationship: many_to_one
 }
 
+join: dim_genre_norm {
+   type: inner
+   view_label: "Genre"
+   sql_on: ${dim_genre_norm.Genre_Norm_key}=${fact_ad_daily_agg.Genre_Norm_Key};;
+   relationship: many_to_one
 }
+
+ }
 
 
 explore: fact_ad_hourly_agg{

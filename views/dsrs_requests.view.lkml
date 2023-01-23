@@ -1,5 +1,5 @@
 view: dsrs_requests {
-  sql_table_name: dsrs_request.main_request ;;
+  sql_table_name: BI_New.dsrs_main_request ;;
 
   dimension: request_id {
     type: string

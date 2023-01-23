@@ -111,6 +111,11 @@ explore: best_western_daily_reporting_10_21_22 {
   label: "Best Western"
 }
 
+explore: international_leadership_summit_01_23_23 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "International Leadership Summit (AI Media Group, New York): ILS P2 Campaign :: 1.19.23-4.20.23"
+}
+
 explore: priority_health_daily_09_19_11 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Priority Health"

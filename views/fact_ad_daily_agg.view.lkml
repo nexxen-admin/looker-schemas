@@ -1746,9 +1746,9 @@ view: fact_ad_daily_agg {
     hidden: yes
     type: number
     sql:
-        {% if choose_breakdown._parameter_value == 'month' %} ${date_in_period_month}
-        {% elsif choose_breakdown._parameter_value == 'date' %} ${date_in_period_date}
-        {% elsif choose_breakdown._parameter_value == 'year' %} ${date_in_period_year}h}
+        {% if choose_breakdown._parameter_value == 'month_name' %} ${date_in_period_month_num}
+        {% elsif choose_breakdown._parameter_value == 'day_of_month' %} ${date_in_period_day_of_month}
+        {% elsif choose_breakdown._parameter_value == 'year' %} ${date_in_period_year}}
         {% elsif choose_breakdown._parameter_value == 'quarter' %} ${date_in_period_quarter}
         {% else %}NULL{% endif %} ;;
   }
@@ -1757,7 +1757,7 @@ view: fact_ad_daily_agg {
     type: string
     sql:
         {% if choose_comparison._parameter_value == 'year' %} ${date_in_period_year}
-        {% elsif choose_comparison._parameter_value =='month' %} ${date_in_period_month}
+        {% elsif choose_comparison._parameter_value =='month' %} ${date_in_period_month_num}
         {% else %}NULL{% endif %} ;;
   }
   parameter: choose_comparison {
@@ -1842,6 +1842,35 @@ view: fact_ad_daily_agg {
         ;;
   }
 
+  dimension: mtd_only {
+    group_label: "To-Date Filters"
+    label: "MTD"
+    view_label: "PoP"
+    type: yesno
+    sql:  (EXTRACT(DAY FROM ${date_in_period_date}) < EXTRACT(DAY FROM GETDATE())
+                    OR
+                (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
+                EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
+                    OR
+                (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
+                EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
+                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
+  }
+  dimension: ytd_only {
+    group_label: "To-Date Filters"
+    label: "YTD"
+    view_label: "PoP"
+    type: yesno
+    sql:  (EXTRACT(DOY FROM ${date_in_period_date}) < EXTRACT(DOY FROM GETDATE())
+                    OR
+                (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
+                EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
+                    OR
+                (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
+                EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
+                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
+  }
+
   dimension: order_for_period {
     hidden: yes
     type: number
@@ -1861,9 +1890,7 @@ view: fact_ad_daily_agg {
 
   ## ------- HIDING FIELDS  FROM ORIGINAL VIEW FILE  -------- ##
 
-  dimension_group: created {hidden: yes}
-  dimension: ytd_only {hidden:yes}
-  dimension: mtd_only {hidden:yes}
+
   dimension: wtd_only {hidden:yes}
 
 

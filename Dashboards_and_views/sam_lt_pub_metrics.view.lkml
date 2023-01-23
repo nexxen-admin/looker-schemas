@@ -56,7 +56,7 @@ Select date_trunc('quarter',date_key)::date as Quarter_Start,
         coalesce(p.ops_owner_id,'1') as Operations_Owner_ID,
         coalesce(e.employee_name,'Unassigned') as Operations_Owner,
         'Americas-Only' as Revenue_Group,
-        case when p.ops_owner_id in ('64','45','37','63','60','11') then 'SAM' else 'LT' end as Pub_Group,
+        case when p.ops_owner_id in ('64','45','37','63','60','11','74','75','80','81') then 'SAM' else 'LT' end as Pub_Group,
         case when ssp.ssp_name ilike 'rmp%'then '1P' else '3P' end as supply_source,
       Case when ssp.ssp_name ilike 'rmp%' then p.pub_id
         else ssp.ssp_id end as Supply_ID,

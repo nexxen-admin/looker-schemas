@@ -177,16 +177,11 @@ view: dim_publisher {
       #hidden: yes
     }
 
-    dimension: bid_price {
-      type: number
-      sql: ${TABLE}.bid_price ;;
-    }
-
     dimension: pub_name {
       label: "Publisher Name"
       type: string
       sql: ${TABLE}.PUB_Name ;;
-      drill_fields: [bid_price]
+      drill_fields: [fact_ad_daily_agg.dsp_bid_price]
     }
 
     dimension_group: pub_updated {

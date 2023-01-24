@@ -374,7 +374,7 @@ view: tremor_forecasting_data_daily {
 
   dimension: total_margin {
     type: number
-    value_format: "0\%"
+    value_format: "0%"
     label: "Total Margin"
     sql: ${TABLE}.Total_Margin ;;
   }

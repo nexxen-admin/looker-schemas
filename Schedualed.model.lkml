@@ -81,6 +81,11 @@ explore: duncan_channon_ctcp_cessation_daily_12_13_22 {
   label: "Duncan Channon - CTCP Cessation"
 }
 
+explore: tremor_forecasting_data_daily {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Tremor Current Quarter Forecasting Report"
+}
+
 explore: just_bare_chicken_case_ready_11_23_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Just Bare Chicken Case Ready"

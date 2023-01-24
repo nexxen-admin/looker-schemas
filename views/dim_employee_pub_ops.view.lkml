@@ -86,6 +86,15 @@ view: v_dim_employee_pub_ops {
       full_suggestions: yes
   }
 
+  dimension: publisher_account_type_ctrl {
+    label: "publisher account type ctrl"
+    description: "pub with no pub ops owner is self serve"
+    type: string
+    sql: case when${v_dim_employee_pub_ops.employee_name}="unknown"
+    OR ${v_dim_employee_pub_ops.employee_name}= "Self Service"
+    OR ${v_dim_employee_pub_ops.employee_name}= "Unassigned" then "self serve" else "managed" end ;;
+  }
+
   dimension: employee_office {
     type: string
     sql: ${TABLE}.Employee_Office ;;

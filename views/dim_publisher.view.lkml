@@ -182,6 +182,10 @@ view: dim_publisher {
       type: string
       sql: ${TABLE}.PUB_Name ;;
       drill_fields: [fact_ad_daily_agg.dsp_bid_price]
+      link: {
+        label: "Top 25% Bids Look"
+        url: "{{ link }}"
+      }
     }
 
     dimension_group: pub_updated {

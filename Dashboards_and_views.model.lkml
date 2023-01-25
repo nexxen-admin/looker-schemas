@@ -157,6 +157,12 @@ explore: ads_txt_domain_publisher {
   hidden: yes
 }
 
+explore: unruly_pmp {
+  label: "Unruly PMP"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
 explore: deal_splits_owner_report {
   label: "Deal_splits_owner_report"
   required_access_grants: [can_view_all_tremor]

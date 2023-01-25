@@ -160,7 +160,7 @@ explore: ads_txt_domain_publisher {
 explore: unruly_pmp {
   label: "Unruly PMP"
   required_access_grants: [can_view_all_tremor]
-  hidden: yes
+  hidden: no
 }
 
 explore: deal_splits_owner_report {

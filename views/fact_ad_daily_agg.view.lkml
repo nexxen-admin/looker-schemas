@@ -1701,7 +1701,9 @@ view: fact_ad_daily_agg {
     label: "Current Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
     sql: ${period} IS NOT NULL ;;
+
   }
+
 
 
   parameter: compare_to {
@@ -1711,7 +1713,7 @@ view: fact_ad_daily_agg {
     type: unquoted
     allowed_value: {
       label: "Previous Period"
-      value: "Period"
+     value: "Period"
     }
     allowed_value: {
       label: "Previous Week"
@@ -1737,8 +1739,8 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: unquoted
     default_value: "day_of_month"
-    allowed_value: {value:"day_of_month"}
-    allowed_value: {value: "month_name"}
+    allowed_value: {label:"daily" value:"day_of_month"}
+    allowed_value: {label:"monthly" value: "month_name"}
   }
 
 ## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##
@@ -1806,6 +1808,7 @@ view: fact_ad_daily_agg {
     type: date
     sql:
             {% if compare_to._parameter_value == "Period" %}
+           -- TIMESTAMPADD({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
             TIMESTAMPADD(DAY, -${days_in_period}, CAST({% date_start current_date_range %} AS TIMESTAMP))
             {% else %}
             TIMESTAMPADD({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
@@ -1959,6 +1962,7 @@ view: fact_ad_daily_agg {
 
   measure: current_period_revenue {
     view_label: "PoP"
+    label: " {{_filters['current_date_range']}} "
     type: sum
     sql: ${TABLE}.sum_of_revenue ;;
     value_format: "$#,##0"
@@ -1967,6 +1971,7 @@ view: fact_ad_daily_agg {
 
   measure: previous_period_revenue{
     view_label: "PoP"
+    label: "  {{_filters['current_date_range']}} "
     type: sum
     sql: ${TABLE}.sum_of_revenue ;;
     value_format: "$#,##0"

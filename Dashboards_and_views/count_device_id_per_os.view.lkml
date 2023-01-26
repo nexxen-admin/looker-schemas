@@ -26,7 +26,7 @@ ORDER BY 1 DESC
     sql: ${TABLE}.os ;;
   }
 
-  dimension: device_count_per_os {
+  measure: device_count_per_os {
     type: number
     sql: ${TABLE}.device_count_per_os ;;
   }

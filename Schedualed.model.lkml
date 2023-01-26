@@ -81,6 +81,11 @@ explore: duncan_channon_ctcp_cessation_daily_12_13_22 {
   label: "Duncan Channon - CTCP Cessation"
 }
 
+explore: tremor_forecasting_data_daily {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Tremor Current Quarter Forecasting Report"
+}
+
 explore: just_bare_chicken_case_ready_11_23_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Just Bare Chicken Case Ready"
@@ -109,6 +114,11 @@ explore: progops_tvdsp_pacing_file {
 explore: best_western_daily_reporting_10_21_22 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Best Western"
+}
+
+explore: international_leadership_summit_01_23_23 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "International Leadership Summit (AI Media Group, New York): ILS P2 Campaign :: 1.19.23-4.20.23"
 }
 
 explore: priority_health_daily_09_19_11 {

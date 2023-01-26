@@ -1132,9 +1132,9 @@ view: fact_ad_daily_agg {
     type: number
     label: "Margin%"
     description: "Profit/Revenue"
-    value_format: "0.00"
+    value_format: "0.00%"
     group_label: "Daily Measures"
-    sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0))*100 ;;
+    sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0)) ;;
   }
 
   measure: Pub_eCPM {
@@ -1967,6 +1967,34 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_revenue ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
+  }
+
+  measure: current_period_margin {
+    view_label: "PoP"
+    #label: " {{_filters['current_date_range']}} "
+    type: sum
+    sql: ((${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs)/NULLIF(${TABLE}.sum_of_revenue,0)) ;;
+    value_format: "0.00%"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_margin {
+    view_label: "PoP"
+    #label: " {{_filters['current_date_range']}} "
+    type: sum
+    sql: ((${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs)/NULLIF(${TABLE}.sum_of_revenue,0)) ;;
+    value_format: "0.00%"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: margin_pop_change {
+    view_label: "PoP"
+    #label: "Total profit period-over-period % change"
+    type: number
+    sql: CASE WHEN ${current_period_margin} = 0
+                THEN NULL
+                ELSE  (${current_period_margin} - ${previous_period_margin}) END ;;
+    value_format_name: percent_2
   }
 
   measure: previous_period_revenue{

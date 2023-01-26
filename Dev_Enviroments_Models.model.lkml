@@ -32,7 +32,7 @@ access_grant: can_view_pub_come_looker {
 }
 access_grant: can_view_acr_group {
   user_attribute: acr_group
-  allowed_values: ["ACR_Group"]
+  allowed_values: ["acr_group"]
 }
 
 explore: ip_per_day_try {

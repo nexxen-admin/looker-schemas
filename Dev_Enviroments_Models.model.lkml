@@ -25,7 +25,13 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+
+}
+
 explore: ip_per_day_try {
   label: "ip per day try"
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [can_view_pub_come_looker]
 }

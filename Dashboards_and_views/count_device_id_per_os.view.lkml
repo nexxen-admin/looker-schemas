@@ -1,8 +1,8 @@
 view: count_device_id_per_os {
   derived_table: {
-    sql: SELECT date(AA.viewing_start_utc),
-       BB.os,
-       A.device_id
+    sql: SELECT date(AA.viewing_start_utc) as date,
+       BB.os as os,
+       A.device_id as device_id
 FROM dragon.viewership_content_sessions_combined AA
 LEFT JOIN dragon.device_info_r BB
 ON AA.device_id = BB.device_id
@@ -21,15 +21,16 @@ ON AA.device_id = BB.device_id
 
   dimension: os {
     type: string
-    sql: ${TABLE}.os ;;
+    sql: ${TABLE}."os" ;;
   }
 
-  measure: device_count_per_os {
-    type: number
-    sql: ${TABLE}.device_count_per_os ;;
+  dimension: device_id {
+    type: string
+    sql: ${TABLE}."device_id" ;;
   }
+
 
   set: detail {
-    fields: [date, os, device_count_per_os]
+    fields: [date, os,device_id]
   }
 }

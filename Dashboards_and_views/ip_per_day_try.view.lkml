@@ -11,7 +11,7 @@ FROM dragon.viewership_content_sessions_combined
     sql: ${TABLE}."date" ;;
   }
 
-  measure: device_id {
+  dimension: device_id {
     type: string
     sql: ${TABLE}.device_id ;;
   }

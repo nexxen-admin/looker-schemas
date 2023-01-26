@@ -2,12 +2,10 @@ view: count_device_id_per_os {
   derived_table: {
     sql: SELECT date(AA.viewing_start_utc),
        BB.os,
-       COUNT(DISTINCT AA.device_id) as device_count_per_os
+       A.device_id
 FROM dragon.viewership_content_sessions_combined AA
 LEFT JOIN dragon.device_info_r BB
 ON AA.device_id = BB.device_id
-GROUP BY 1,2
-ORDER BY 1 DESC
  ;;
   }
 

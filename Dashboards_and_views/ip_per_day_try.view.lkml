@@ -13,7 +13,7 @@ FROM dragon.viewership_content_sessions_combined
 
   dimension: device_id {
     type: string
-    sql: ${TABLE}.device_id ;;
+    sql: ${TABLE}."device_id" ;;
   }
 
   set: detail {

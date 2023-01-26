@@ -11,12 +11,12 @@ FROM dragon.viewership_content_sessions_combined
     sql: ${TABLE}."date" ;;
   }
 
-  measure: count {
-    type: count_distinct
-    sql: ${TABLE}.COUNT ;;
+  measure: device_id {
+    type: string
+    sql: ${TABLE}.device_id ;;
   }
 
   set: detail {
-    fields: [date, count]
+    fields: [date, device_id]
   }
 }

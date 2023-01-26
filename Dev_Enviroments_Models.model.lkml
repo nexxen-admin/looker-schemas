@@ -30,8 +30,12 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 
 }
+access_grant: can_view_acr_group {
+  user_attribute: acr_group
+  allowed_values: ["ACR_Group"]
+}
 
 explore: ip_per_day_try {
   label: "ip per day try"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_acr_group]
 }

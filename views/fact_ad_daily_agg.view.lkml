@@ -2086,9 +2086,29 @@ measure: fill_rate__pop_change {
   value_format_name: percent_2
 }
 
+measure: bid_price_top_25_perc {
+  label: "bid price top 25%"
+  type: number
+  sql: case when ${TABLE}.avg_of_dsp_bid_price>${TABLE}.avg_of_ssp_bid_floor*0.75,${TABLE}.avg_of_dsp_bid_price else null end ;;
+}
+
+measure: diff_bid_floor_bid_price{
+  label: "diff bid floor bid price"
+  type: number
+  sql: case when ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc>0 then ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc else null end) ;;
+}
+
+  measure: Bucket {
+    label: "Bucket"
+    type: count_distinct
+    sql: SELECT CASE WHEN ${TABLE}.diff_bid_floor_bid_price>0 AND ${TABLE}.diff_bid_floor_bid_price<1 THEN 'under 1'
+    WHEN ${TABLE}.diff_bid_floor_bid_price>=1 AND ${TABLE}.diff_bid_floor_bid_price<2 THEN '1 to 2'
+    WHEN ${TABLE}.diff_bid_floor_bid_price>=2 THEN 'over 2';;
+  }
+
   measure: count {
     type: count
     drill_fields: []
-    hidden: yes
+   ## hidden: yes
   }
 }

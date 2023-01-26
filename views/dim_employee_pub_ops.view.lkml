@@ -90,9 +90,10 @@ view: v_dim_employee_pub_ops {
     label: "publisher account type ctrl"
     description: "pub with no pub ops owner is self serve"
     type: string
-    sql: case when${v_dim_employee_pub_ops.employee_name}="unknown"
-    OR ${v_dim_employee_pub_ops.employee_name}= "Self Service"
-    OR ${v_dim_employee_pub_ops.employee_name}= "Unassigned" then "self serve" else "managed" end ;;
+    sql: case when ${TABLE}.Employee_Name= 'unknown'
+          OR ${TABLE}.Employee_Name= 'Self Service'
+          OR ${TABLE}.Employee_Name= 'Unassigned'
+          OR ${TABLE}.Employee_Name= 'Revops' then 'self serve' else 'managed' end ;;
   }
 
   dimension: employee_office {

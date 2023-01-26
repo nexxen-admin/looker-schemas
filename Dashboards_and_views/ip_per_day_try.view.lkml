@@ -3,8 +3,6 @@ view: ip_per_day_try {
     sql: SELECT date(viewership_content_sessions_combined.viewing_start_utc),
                 viewership_content_sessions_combined.device_id
 FROM dragon.viewership_content_sessions_combined
-GROUP BY 1
-ORDER BY 1
  ;;
   }
 

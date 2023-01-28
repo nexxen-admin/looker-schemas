@@ -35,8 +35,8 @@ access_grant: can_view_acr_group {
   allowed_values: ["ACR_Group"]
 }
 
-explore: ip_per_day_try {
-  label: "ip per day try"
+explore: ACR_daily_ip_per_day_try {
+  label: "ACR daily ip per day try"
   required_access_grants: [can_view_acr_group]
 }
 

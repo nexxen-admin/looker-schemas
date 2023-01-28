@@ -174,16 +174,6 @@ explore: active_inactive_publishers {
 }
 
 
-explore: ip_per_day_try {
-  label: "ip per day try"
-  required_access_grants: [can_view_all_tremor]
-}
-
-explore: daily_metric_ip_count_v2 {
-  label: "daily metric ip count v2"
-  required_access_grants: [can_view_all_tremor]
-}
-
 explore:  exchange_daily_report_component{
   label: "Exchange Daily Report Component"
   required_access_grants: [can_view_all_tremor]

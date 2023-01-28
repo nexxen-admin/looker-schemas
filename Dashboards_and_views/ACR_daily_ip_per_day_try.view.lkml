@@ -1,4 +1,4 @@
-view: ip_per_day_try {
+view: ACR_daily_ip_per_day_try {
   derived_table: {
     sql: SELECT date(viewership_content_sessions_combined.viewing_start_utc),
                 viewership_content_sessions_combined.device_id

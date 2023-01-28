@@ -49,3 +49,8 @@ explore: count_unique_ip {
   label: "count unique ip"
   required_access_grants: [can_view_acr_group]
 }
+
+explore: daily_null_count_all_col {
+  label: "daily null count all col"
+  required_access_grants: [can_view_acr_group]
+}

@@ -1132,9 +1132,9 @@ view: fact_ad_daily_agg {
     type: number
     label: "Margin%"
     description: "Profit/Revenue"
-    value_format: "0.00"
+    value_format: "0.00%"
     group_label: "Daily Measures"
-    sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0))*100 ;;
+    sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0)) ;;
   }
 
   measure: Pub_eCPM {
@@ -1969,6 +1969,34 @@ view: fact_ad_daily_agg {
     filters: [period_filtered_measures: "this"]
   }
 
+  measure: current_period_margin {
+    view_label: "PoP"
+    #label: " {{_filters['current_date_range']}} "
+    type: sum
+    sql: ((${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs)/NULLIF(${TABLE}.sum_of_revenue,0)) ;;
+    value_format: "0.00%"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_margin {
+    view_label: "PoP"
+    #label: " {{_filters['current_date_range']}} "
+    type: sum
+    sql: ((${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs)/NULLIF(${TABLE}.sum_of_revenue,0)) ;;
+    value_format: "0.00%"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: margin_pop_change {
+    view_label: "PoP"
+    #label: "Total profit period-over-period % change"
+    type: number
+    sql: CASE WHEN ${current_period_margin} = 0
+                THEN NULL
+                ELSE  (${current_period_margin} - ${previous_period_margin}) END ;;
+    value_format_name: percent_2
+  }
+
   measure: previous_period_revenue{
     view_label: "PoP"
     label: "  {{_filters['current_date_range']}} "
@@ -2091,9 +2119,29 @@ measure: fill_rate__pop_change {
   value_format_name: percent_2
 }
 
+measure: bid_price_top_25_perc {
+  label: "bid price top 25%"
+  type: number
+  sql: case when ${TABLE}.avg_of_dsp_bid_price>${TABLE}.avg_of_ssp_bid_floor*0.75,${TABLE}.avg_of_dsp_bid_price else null end ;;
+}
+
+measure: diff_bid_floor_bid_price{
+  label: "diff bid floor bid price"
+  type: number
+  sql: case when ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc>0 then ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc else null end) ;;
+}
+
+  measure: Bucket {
+    label: "Bucket"
+    type: count_distinct
+    sql: SELECT CASE WHEN ${TABLE}.diff_bid_floor_bid_price>0 AND ${TABLE}.diff_bid_floor_bid_price<1 THEN 'under 1'
+    WHEN ${TABLE}.diff_bid_floor_bid_price>=1 AND ${TABLE}.diff_bid_floor_bid_price<2 THEN '1 to 2'
+    WHEN ${TABLE}.diff_bid_floor_bid_price>=2 THEN 'over 2';;
+  }
+
   measure: count {
     type: count
     drill_fields: []
-    hidden: yes
+   ## hidden: yes
   }
 }

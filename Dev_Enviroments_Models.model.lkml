@@ -45,8 +45,8 @@ explore: count_device_id_per_os {
   required_access_grants: [can_view_acr_group]
 }
 
-explore: count_unique_ip {
-  label: "count unique ip"
+explore: ACR_daily_count_unique_ip {
+  label: "ACR daily count unique_ip"
   required_access_grants: [can_view_acr_group]
 }
 

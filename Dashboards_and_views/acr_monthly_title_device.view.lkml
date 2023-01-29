@@ -1,7 +1,6 @@
 view: acr_monthly_title_device {
   derived_table: {
     sql: SELECT concat(concat(year(AA.viewing_start_utc),'-'),week(AA.viewing_start_utc)) as year_week,
-       AA.tv_program_tremor_id,
        PP.title,
        COUNT(DISTINCT device_id) as count_devices
 FROM dragon.viewership_content_sessions_combined AA
@@ -34,7 +33,7 @@ ORDER BY 1 DESC
   }
 
   measure: count_devices {
-    type: sum
+    type: average
     sql: ${TABLE}.count_devices ;;
   }
 

@@ -1,4 +1,4 @@
-view: count_unique_ip {
+view: ACR_daily_count_unique_ip {
   derived_table: {
     sql: SELECT date(AA.viewing_start_utc) as date,
        AA.ip as ip

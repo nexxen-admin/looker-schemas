@@ -1,4 +1,4 @@
-view: device_app_os_count {
+view: acr_monthly_device_app_os_count {
   derived_table: {
     sql: SELECT concat(concat(year(AA.viewing_start_utc),'-'),week(AA.viewing_start_utc)) as week_year,
        BB.os,
@@ -32,8 +32,8 @@ ORDER BY 1,2
     sql: ${TABLE}.tv_app_name ;;
   }
 
-  dimension: distinct_ip_count {
-    type: number
+  measure: distinct_ip_count {
+    type: average
     sql: ${TABLE}.distinct_ip_count ;;
   }
 

@@ -19,7 +19,7 @@ ORDER BY 1,2
     sql: ${TABLE}.week_year ;;
   }
 
-  measure: tv_app_name {
+  dimension: tv_app_name {
     type: string
     sql: ${TABLE}.tv_app_name ;;
   }

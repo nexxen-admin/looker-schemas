@@ -4,6 +4,7 @@ view: unique_tremor_programs_id_app {
        viewership_content_sessions_combined.tv_app_name,
        COUNT(DISTINCT tv_program_tremor_id) AS distinct_program_count
 FROM dragon.viewership_content_sessions_combined
+where source='vod'
 GROUP BY 1,2
 ORDER BY 1,2 DESC
  ;;

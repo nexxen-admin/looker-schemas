@@ -6,8 +6,7 @@ view: acr_monthly_title_device {
 FROM dragon.viewership_content_sessions_combined AA
 LEFT JOIN dragon.program PP
 ON AA.tv_program_tremor_id=PP.tv_program_tremor_id
-GROUP BY 1,2,3
-HAVING count_devices>50
+GROUP BY 1,2
 ORDER BY 1 DESC
  ;;
   }

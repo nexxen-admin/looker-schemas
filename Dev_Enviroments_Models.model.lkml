@@ -74,3 +74,8 @@ explore: acr_monthly_title_device {
   label: "acr monthly title device"
   required_access_grants: [can_view_acr_group]
 }
+
+explore: unique_tremor_programs_id_app {
+  label: "unique tremor programs id app"
+  required_access_grants: [can_view_acr_group]
+}

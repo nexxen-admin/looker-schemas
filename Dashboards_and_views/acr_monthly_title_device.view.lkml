@@ -22,10 +22,6 @@ ORDER BY 1 DESC
     sql: ${TABLE}.year_week ;;
   }
 
-  dimension: tv_program_tremor_id {
-    type: number
-    sql: ${TABLE}.tv_program_tremor_id ;;
-  }
 
   dimension: title {
     type: string
@@ -38,6 +34,6 @@ ORDER BY 1 DESC
   }
 
   set: detail {
-    fields: [year_week, tv_program_tremor_id, title, count_devices]
+    fields: [year_week, title, count_devices]
   }
 }

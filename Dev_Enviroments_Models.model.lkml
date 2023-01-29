@@ -84,3 +84,8 @@ explore: acr_weekly_unique_program_over_networks_linear {
   label: "acr weekly unique program over networks linear"
   required_access_grants: [can_view_acr_group]
 }
+
+explore: monthly_ip_stability {
+  label: "monthly ip stability"
+  required_access_grants: [can_view_acr_group]
+}

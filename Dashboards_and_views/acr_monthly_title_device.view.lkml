@@ -34,7 +34,7 @@ ORDER BY 1 DESC
   }
 
   measure: count_devices {
-    type: average
+    type: sum
     sql: ${TABLE}.count_devices ;;
   }
 

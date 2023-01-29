@@ -904,13 +904,6 @@ view: fact_ad_daily_agg {
   }
 
 
-  measure: revenue_no_0{
-    type:date
-    label: "positive revenue indicator"
-    group_label: "Time Frame"
-    sql:  case when ${TABLE}.sum_of_revenue>0 then yes else no end  ;;
-
-}
   dimension: deal_key {
     type: number
     sql: ${TABLE}.Deal_Key ;;

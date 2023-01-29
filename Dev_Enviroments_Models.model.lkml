@@ -69,3 +69,8 @@ explore: acr_monthly_device_app_os_count {
   label: "acr monthly device app os count"
   required_access_grants: [can_view_acr_group]
 }
+
+explore: acr_monthly_title_device {
+  label: "acr monthly title device"
+  required_access_grants: [can_view_acr_group]
+}

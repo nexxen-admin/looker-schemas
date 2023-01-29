@@ -25,7 +25,7 @@ ORDER BY 1,2
   }
 
   measure: distinct_ip_count {
-    type: number
+    type: average
     sql: ${TABLE}.distinct_ip_count ;;
   }
 

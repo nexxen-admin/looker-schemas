@@ -2,8 +2,10 @@ view: unique_tremor_programs_id_app {
   derived_table: {
     sql: SELECT concat(concat(year(viewership_content_sessions_combined.viewing_start_utc),'-'),week(viewership_content_sessions_combined.viewing_start_utc)) as year_week,
        viewership_content_sessions_combined.tv_app_name,
-       COUNT(DISTINCT tv_program_tremor_id) AS distinct_program_count
+       COUNT(DISTINCT pp.title) AS distinct_program_count
 FROM dragon.viewership_content_sessions_combined
+LEFT JOIN dragon.program PP
+ON AA.tv_program_tremor_id=PP.tv_program_tremor_id
 where source='vod'
 GROUP BY 1,2
 ORDER BY 1,2 DESC

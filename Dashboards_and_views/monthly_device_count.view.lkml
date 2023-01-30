@@ -4,7 +4,7 @@ view: monthly_device_count {
        COUNT(DISTINCT AA.device_id) as count_devices
 FROM dragon.viewership_content_sessions_combined AA
 GROUP BY 1
-ORDER BY 1
+ORDER BY 1 DESC
  ;;
   }
 

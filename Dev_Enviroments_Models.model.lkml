@@ -89,3 +89,8 @@ explore: monthly_ip_stability {
   label: "monthly ip stability"
   required_access_grants: [can_view_acr_group]
 }
+
+explore: monthly_device_count {
+  label: "monthly device count"
+  required_access_grants: [can_view_acr_group]
+}

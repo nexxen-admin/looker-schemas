@@ -84,6 +84,22 @@ view: v_dim_employee_pub_ops {
     type: string
     sql: ${TABLE}.Employee_Name ;;
       full_suggestions: yes
+    drill_fields: [v_dim_employee_pub_ops.employee_name]
+    link: {
+      label: "Drill To"
+      url: "https://tremor.cloud.looker.com/dashboards/560?PubOps+Name={{ value }}"
+    }
+  }
+
+  dimension: pub_name {
+    label: "Publisher Name"
+    type: string
+    sql: ${TABLE}.PUB_Name ;;
+    drill_fields: [new_revenue.publisher_name]
+    link: {
+      label: "Drill To"
+      url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"
+    }
   }
 
   dimension: publisher_account_type_ctrl {

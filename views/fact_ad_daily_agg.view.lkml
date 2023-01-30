@@ -368,6 +368,20 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  measure: html_for_kpi{
+    type: count
+    html:  <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+         <div style="display: block;  font-size: 20px;letter-spacing: 0.01em;">Impressions
+        <div style="display: block; line-height: 10px; font-size: 25px;">{{ current_period_revenue._rendered_value }} {{impression_change_parameter._value}}
+        <div style="display: block;  font-size: 10px;letter-spacing: 0.01em;"> {{ date_for_html._value }}
+        <div style="display: inline-block; font-size: 15px;">
+        <span class="drillable-item-content">  </span></span></span>
+       </div></div>
+       {{revenue_pop_change._rendered_value}} from  </div>
+     </div> ;;
+    group_label: "Admins Metrics"
+  }
+
   measure: HTML_variable {
     type: count
     html:
@@ -1700,6 +1714,17 @@ view: fact_ad_daily_agg {
     label: "Current Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
     sql: ${period} IS NOT NULL ;;
+
+
+  }
+  dimension:  date_for_html {
+    type: date
+    view_label: "PoP"
+    sql: ${current_date_range} ;;
+    html:
+    <ul>
+         <li> value: {{ rendered_value }} </li>
+    </ul> ;;
 
   }
 

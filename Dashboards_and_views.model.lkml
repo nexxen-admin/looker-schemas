@@ -184,8 +184,20 @@ explore:  exchange_daily_report_component{
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
-explore:  new_revenue{
+explore: new_revenue {
   label: "New Revenue"
   required_access_grants: [can_view_pub_come_looker]
+
+  join: dim_publisher  {
+  type:inner
+   sql_on:  ${dim_publisher.pub_id} = ${new_revenue.pub_id};;
+  relationship: many_to_one
+  }
+  join: v_dim_employee_pub_ops {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
+    relationship: many_to_one
+  }
 
 }

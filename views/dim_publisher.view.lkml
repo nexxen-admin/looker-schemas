@@ -67,6 +67,7 @@ view: dim_publisher {
   }
 
 
+
     dimension_group: db_create {
       type: time
       timeframes: [
@@ -181,11 +182,11 @@ view: dim_publisher {
       label: "Publisher Name"
       type: string
       sql: ${TABLE}.PUB_Name ;;
-      #drill_fields: [fact_ad_daily_agg.dsp_bid_price]
-      #link: {
-       # label: "Top 25% Bids Look"
-        #url: "{{ link }}"
-      #}
+      drill_fields: [new_revenue.publisher_name]
+      link: {
+        label: "Drill To"
+        url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"
+      }
     }
 
     dimension_group: pub_updated {
@@ -216,18 +217,8 @@ view: dim_publisher {
       hidden: yes
     }
 
-  measure: count_pub {
-    type: count
-    sql: ${TABLE}.PUB_ID;;
-    hidden: no
-  }
 
-    measure: count {
-      type: count
-      label: "count of pub"
-      drill_fields: [pub_id]
-      hidden: no
-    }
+
 
   parameter: max_rank {
     type: number

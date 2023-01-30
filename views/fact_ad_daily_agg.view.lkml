@@ -368,6 +368,20 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  measure: html_for_kpi{
+    type: count
+    html:  <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+         <div style="display: block;  font-size: 20px;letter-spacing: 0.01em;">Impressions
+        <div style="display: block; line-height: 10px; font-size: 25px;">{{ current_period_revenue._rendered_value }} {{impression_change_parameter._value}}
+        <div style="display: block;  font-size: 10px;letter-spacing: 0.01em;"> {{ date_for_html._value }}
+        <div style="display: inline-block; font-size: 15px;">
+        <span class="drillable-item-content">  </span></span></span>
+       </div></div>
+       {{revenue_pop_change._rendered_value}} from  </div>
+     </div> ;;
+    group_label: "Admins Metrics"
+  }
+
   measure: HTML_variable {
     type: count
     html:
@@ -894,12 +908,11 @@ view: fact_ad_daily_agg {
     #hidden: yes
   }
 
-    dimension: min_date_key {
-    type: yesno
+    measure: min_date_key {
+    type:date
       label: "min Date"
     group_label: "Time Frame"
-    sql: case when ${TABLE}.sum_of_revenue >0 and ${TABLE}.Date_Key > TIMESTAMPADD('Quarter', -8, date_trunc('Quarter',(CURRENT_TIMESTAMP)))
-           then 1 else 0 end;;
+    sql:  min(${TABLE}.Date_Key) ;;
 
     #hidden: yes
   }
@@ -1702,6 +1715,17 @@ view: fact_ad_daily_agg {
     description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
     sql: ${period} IS NOT NULL ;;
 
+
+  }
+  dimension:  date_for_html {
+    type: date
+    view_label: "PoP"
+    sql: ${current_date_range} ;;
+    html:
+    <ul>
+         <li> value: {{ rendered_value }} </li>
+    </ul> ;;
+
   }
 
 
@@ -1962,7 +1986,7 @@ view: fact_ad_daily_agg {
 
   measure: current_period_revenue {
     view_label: "PoP"
-    label: " {{_filters['current_date_range']}} "
+    label: "Revenue  {{_filters['current_date_range']}} "
     type: sum
     sql: ${TABLE}.sum_of_revenue ;;
     value_format: "$#,##0"
@@ -1971,25 +1995,25 @@ view: fact_ad_daily_agg {
 
   measure: current_period_margin {
     view_label: "PoP"
-    #label: " {{_filters['current_date_range']}} "
-    type: sum
-    sql: ((${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs)/NULLIF(${TABLE}.sum_of_revenue,0)) ;;
+    label: "Margin  {{_filters['current_date_range']}} "
+    type: number
+    sql: (${current_period_revenue}-${current_period_cost})/${current_period_revenue} ;;
     value_format: "0.00%"
-    filters: [period_filtered_measures: "this"]
-  }
 
+  }
   measure: previous_period_margin {
     view_label: "PoP"
     #label: " {{_filters['current_date_range']}} "
-    type: sum
-    sql: ((${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs)/NULLIF(${TABLE}.sum_of_revenue,0)) ;;
+    type: number
+    sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
     value_format: "0.00%"
-    filters: [period_filtered_measures: "last"]
-  }
+
+}
+
 
   measure: margin_pop_change {
     view_label: "PoP"
-    #label: "Total profit period-over-period % change"
+    label: " Margin Previous{{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_margin} = 0
                 THEN NULL
@@ -1999,7 +2023,7 @@ view: fact_ad_daily_agg {
 
   measure: previous_period_revenue{
     view_label: "PoP"
-    label: "  {{_filters['current_date_range']}} "
+
     type: sum
     sql: ${TABLE}.sum_of_revenue ;;
     value_format: "$#,##0"
@@ -2008,7 +2032,7 @@ view: fact_ad_daily_agg {
 
   measure: revenue_pop_change {
     view_label: "PoP"
-    label: "Total revenue period-over-period % change"
+    label: " Revenue Previous{{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_revenue} = 0
                 THEN NULL

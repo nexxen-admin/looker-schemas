@@ -314,6 +314,13 @@ explore: extend_Inbound_Exchange {
     sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
     relationship: many_to_one
   }
+
+  join: new_revenue {
+    type: inner
+    view_label: "Publishers"
+    sql_on: ${dim_publisher.pub_id}=${new_revenue.pub_id} ;;
+    relationship: many_to_one
+  }
   join: dim_ssp {
     type: inner
     view_label: "SSP"
@@ -626,6 +633,13 @@ join: dim_publisher {
   sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
   relationship: many_to_one
 }
+  join: new_revenue {
+    type: inner
+    view_label: "Publishers"
+    sql_on: ${dim_publisher.pub_id}=${new_revenue.pub_id} ;;
+    relationship: many_to_one
+  }
+
 join: dim_ssp {
   type: inner
   view_label: "SSP"
@@ -654,7 +668,8 @@ join: dim_dsp_flight {
   join: dim_employee {
     type: inner
     view_label: "Employee"
-    sql_on: ${dim_employee.employee_key}=${dim_publisher.ops_owner_key};;
+    sql_on:  ${dim_employee.employee_key}=${dim_publisher.bizdev_owner_key}
+      and ${dim_employee.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one
   }
 

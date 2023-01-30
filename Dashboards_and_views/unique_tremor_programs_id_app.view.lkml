@@ -1,9 +1,9 @@
 view: unique_tremor_programs_id_app {
   derived_table: {
-    sql: SELECT concat(concat(year(viewership_content_sessions_combined.viewing_start_utc),'-'),week(viewership_content_sessions_combined.viewing_start_utc)) as year_week,
-       viewership_content_sessions_combined.tv_app_name,
+    sql: SELECT concat(concat(year(AA.viewing_start_utc),'-'),week(AA.viewing_start_utc)) as year_week,
+       AA.tv_app_name,
        COUNT(DISTINCT pp.title) AS distinct_program_count
-FROM dragon.viewership_content_sessions_combined
+FROM dragon.viewership_content_sessions_combined AA
 LEFT JOIN dragon.program PP
 ON AA.tv_program_tremor_id=PP.tv_program_tremor_id
 where source='vod'
@@ -27,12 +27,12 @@ ORDER BY 1,2 DESC
     sql: ${TABLE}.tv_app_name ;;
   }
 
-  measure: distinct_program_count {
+  measure: distinct_title_count {
     type: average
     sql: ${TABLE}.distinct_program_count ;;
   }
 
   set: detail {
-    fields: [year_week, tv_app_name, distinct_program_count]
+    fields: [year_week, tv_app_name, distinct_title_count]
   }
 }

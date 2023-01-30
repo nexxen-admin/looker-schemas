@@ -184,6 +184,7 @@ explore:  exchange_daily_report_component{
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
 explore: new_revenue {
   label: "New Revenue"
   required_access_grants: [can_view_pub_come_looker]

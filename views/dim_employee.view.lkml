@@ -57,6 +57,7 @@ view: dim_employee {
 
   }
 
+
   dimension: employee_region {
     label: "Employee Region"
     type: string

@@ -134,11 +134,13 @@ explore: bd_comm_intl {
 explore: net_revenue_with_demand_ss_fees {
   label: "net revenue with demand ss fees"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: base_data_demand {
   label: "Base Data Demand"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: net_revenue_without_demand_ss_fees {
@@ -149,6 +151,7 @@ explore: net_revenue_without_demand_ss_fees {
 explore: base_data_without_demand {
   label: "Base Data Without Demand"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: ads_txt_domain_publisher {
@@ -166,15 +169,23 @@ explore: unruly_pmp {
 explore: deal_splits_owner_report {
   label: "Deal_splits_owner_report"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: active_inactive_publishers {
   label: "Active Inactive Publishers"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 
 explore:  exchange_daily_report_component{
   label: "Exchange Daily Report Component"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+explore:  new_revenue{
+  label: "New Revenue"
+  required_access_grants: [can_view_pub_come_looker]
+
 }

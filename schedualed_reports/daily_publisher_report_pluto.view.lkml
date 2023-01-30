@@ -11,7 +11,7 @@ view: daily_publisher_report_pluto {
       when add2.dsp_deal_type='rx' and rddb.brand is null and adv_cnt.adv_count >1 then 'Many to Many'
       when add2.dsp_deal_type ='pub' and adv_cnt.adv_count =1 then '1 to 1'
       when add2.dsp_deal_type ='pub' and adv_cnt.adv_count >1 then 'Many to 1'
-      else 'Unknown' end as deal_type,
+      else null end as deal_type,
       add2.rx_deal_id as deal_id,
       add2.rx_device_type as device_type,
       coalesce(case when instr(rdd.deal_description,'$')>10 then left(rdd.deal_description ,instr(rdd.deal_description,'$')-1 ) else rdd.deal_description end,
@@ -124,7 +124,7 @@ view: daily_publisher_report_pluto {
       when add2.dsp_deal_type='rx' and rddb.brand is null and adv_cnt.adv_count >1 then 'Many to Many'
       when add2.dsp_deal_type ='pub' and adv_cnt.adv_count =1 then '1 to 1'
       when add2.dsp_deal_type ='pub' and adv_cnt.adv_count >1 then 'Many to 1'
-      else 'Unknown' end as deal_type,
+      else null end as deal_type,
       add2.rx_deal_id as deal_id,
       add2.rx_device_type as device_type,
       coalesce(case when instr(rdd.deal_description,'$')>10 then left(rdd.deal_description ,instr(rdd.deal_description,'$')-1 ) else rdd.deal_description end,

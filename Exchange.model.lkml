@@ -640,7 +640,6 @@ join: dim_publisher {
     relationship: many_to_one
   }
 
-
 join: dim_ssp {
   type: inner
   view_label: "SSP"
@@ -669,7 +668,8 @@ join: dim_dsp_flight {
   join: dim_employee {
     type: inner
     view_label: "Employee"
-    sql_on: ${dim_employee.employee_key}=${dim_publisher.ops_owner_key};;
+    sql_on:  ${dim_employee.employee_key}=${dim_publisher.bizdev_owner_key}
+      and ${dim_employee.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one
   }
 

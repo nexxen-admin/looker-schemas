@@ -15,10 +15,7 @@ view: new_revenue {
     sql: ${TABLE}.cogs ;;
   }
 
-  #dimension: event_time {
-   # type: string
-    #sql: ${TABLE}.Event_Time ;;
-  #}
+
 
   dimension_group: event_time {
     type: time

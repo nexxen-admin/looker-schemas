@@ -15,8 +15,17 @@ view: new_revenue {
     sql: ${TABLE}.cogs ;;
   }
 
-  dimension: event_time {
-    type: string
+  dimension_group: event_time {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     sql: ${TABLE}.Event_Time ;;
   }
 

@@ -2000,6 +2000,7 @@ view: fact_ad_daily_agg {
     sql: (${current_period_revenue}-${current_period_cost})/${current_period_revenue} ;;
     value_format: "0.00%"
 
+
   }
   measure: previous_period_margin {
     view_label: "PoP"
@@ -2008,18 +2009,49 @@ view: fact_ad_daily_agg {
     sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
     value_format: "0.00%"
 
+
 }
 
 
   measure: margin_pop_change {
     view_label: "PoP"
-    label: " Margin Previous{{_filters['compare_to']}} Change"
+    label: " Margin Previous {{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_margin} = 0
                 THEN NULL
                 ELSE  (${current_period_margin} - ${previous_period_margin}) END ;;
     value_format_name: percent_2
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
+
+
+
+
+
 
   measure: previous_period_revenue{
     view_label: "PoP"
@@ -2038,6 +2070,31 @@ view: fact_ad_daily_agg {
                 THEN NULL
                 ELSE (1.0 * ${current_period_revenue} / NULLIF(${previous_period_revenue} ,0)) - 1 END ;;
     value_format_name: percent_2
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
 
   measure: current_period_cost {
@@ -2064,7 +2121,35 @@ view: fact_ad_daily_agg {
                 THEN NULL
                 ELSE (1.0 * ${current_period_revenue} / NULLIF(${previous_period_revenue} ,0)) - 1 END ;;
     value_format_name: percent_2
+
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
+
+
   measure: current_period_profit {
     view_label: "PoP"
     type: sum
@@ -2088,6 +2173,32 @@ view: fact_ad_daily_agg {
                 THEN NULL
                 ELSE (1.0 * ${current_period_profit} / NULLIF(${previous_period_profit} ,0)) - 1 END ;;
     value_format_name: percent_2
+
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
 
 
@@ -2141,6 +2252,32 @@ measure: fill_rate__pop_change {
   type: number
   sql: ${current_period_fill_rate} - ${previous_period_fill_rate} ;;
   value_format_name: percent_2
+
+  html:
+  {% if value > 0 %}
+  {% assign indicator = "green,▲" | split: ',' %}
+  {% elsif value < 0 %}
+
+  {% assign indicator = "red,▼" | split: ',' %}
+
+  {% else %}
+
+  {% assign indicator = "black,▬" | split: ',' %}
+
+  {% endif %}
+  <font color="{{indicator[0]}}">
+
+  {% if value == 99999.12345 %} &infin
+
+  {% else %}{{indicator[1]}}
+
+  {% endif %}
+
+  </font>
+  {{rendered_value}}
+
+
+  ;;
 }
 
 measure: bid_price_top_25_perc {

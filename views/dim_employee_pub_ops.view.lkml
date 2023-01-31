@@ -94,7 +94,7 @@ view: v_dim_employee_pub_ops {
   }
 
   dimension: pub_name {
-    label: "Publisher Name"
+    label: "Pub Ops Publisher Name"
     type: string
     sql: ${TABLE}.PUB_Name ;;
     drill_fields: [new_revenue.publisher_name]
@@ -115,9 +115,10 @@ view: v_dim_employee_pub_ops {
   }
 
   dimension: employee_office {
+    label: "PubOps Office"
     type: string
     sql: ${TABLE}.Employee_Office ;;
-    hidden: yes
+
   }
 
   dimension: employee_region {

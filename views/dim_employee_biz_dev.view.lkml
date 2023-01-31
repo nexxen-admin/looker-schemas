@@ -95,11 +95,13 @@ view: v_dim_employee_biz_dev {
     }
   }
 
+
+
   dimension: employee_office {
     label: "BizDev Office"
     type: string
     sql: ${TABLE}.Employee_Office ;;
-    hidden: yes
+
   }
 
   dimension: employee_region {

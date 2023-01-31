@@ -48,7 +48,7 @@ view: dim_employee {
     label: "Employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
-    hidden: yes
+
   }
 
   dimension: employee_office {
@@ -63,8 +63,9 @@ view: dim_employee {
     label: "Employee Region"
     type: string
     sql: ${TABLE}.Employee_Region ;;
+}
 
-  }
+
 
   dimension: role_source {
     label: "Employee Role"

@@ -187,7 +187,7 @@ explore:  exchange_daily_report_component{
 
 explore: new_revenue {
   label: "New Revenue"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants:  [can_view_pub_come_looker]
 
   join: dim_publisher  {
   type:inner

@@ -72,14 +72,14 @@ view: new_revenue {
   #--------------------------------------------------------
   filter: current_date_range {
     type: date
-    view_label: "PoP"
+    view_label: "pop"
     label: "Current Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
     sql: ${period} IS NOT NULL ;;
 
   }
   parameter: compare_to {
-    view_label: "PoP"
+    view_label: "pop"
     description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
     label: "Compare To:"
     type: unquoted
@@ -108,7 +108,7 @@ view: new_revenue {
 
   parameter: choose_breakdown {
     label: "Choose Grouping (Rows)"
-    view_label: "PoP"
+    view_label: "pop"
     type: unquoted
     default_value: "day_of_month"
     allowed_value: {label:"daily" value:"day_of_month"}
@@ -136,7 +136,7 @@ view: new_revenue {
   }
   parameter: choose_comparison {
     label: "Choose Comparison (Pivot)"
-    view_label: "PoP"
+    view_label: "pop"
     type: unquoted
     default_value: "month"
     allowed_value: {value: "year" }
@@ -144,7 +144,7 @@ view: new_revenue {
 
   }
   dimension: pop_pivot {
-    view_label: "PoP"
+    view_label: "pop"
     label_from_parameter: choose_comparison
     type: string
     order_by_field: sort_by2 # Important
@@ -155,7 +155,7 @@ view: new_revenue {
   }
 
   dimension: pop_row  {
-    view_label: "PoP"
+    view_label: "pop"
     label_from_parameter: choose_breakdown
     type: string
     order_by_field: sort_by1 # Important
@@ -167,7 +167,7 @@ view: new_revenue {
 
   dimension: days_in_period {
     hidden:  yes
-    view_label: "PoP"
+    view_label: "pop"
     description: "Gives the number of days in the current period date range"
     type: number
     sql: TIMESTAMPDIFF(DAY, CAST({% date_start current_date_range %} AS TIMESTAMP), CAST({% date_end current_date_range %} AS TIMESTAMP)) ;;
@@ -175,7 +175,7 @@ view: new_revenue {
 
   dimension: period_2_start {
     hidden:  yes
-    view_label: "PoP"
+    view_label: "pop"
     description: "Calculates the start of the previous period"
     type: date
     sql:
@@ -189,7 +189,7 @@ view: new_revenue {
 
   dimension: period_2_end {
     hidden:  yes
-    view_label: "PoP"
+    view_label: "pop"
     description: "Calculates the end of the previous period"
     type: date
     sql:
@@ -220,7 +220,7 @@ view: new_revenue {
   dimension: mtd_only {
     group_label: "To-Date Filters"
     label: "MTD"
-    view_label: "PoP"
+    view_label: "pop"
     type: yesno
     sql:  (EXTRACT(DAY FROM ${date_in_period_date}) < EXTRACT(DAY FROM GETDATE())
                     OR
@@ -234,7 +234,7 @@ view: new_revenue {
   dimension: ytd_only {
     group_label: "To-Date Filters"
     label: "YTD"
-    view_label: "PoP"
+    view_label: "pop"
     type: yesno
     sql:  (EXTRACT(DOY FROM ${date_in_period_date}) < EXTRACT(DOY FROM GETDATE())
                     OR
@@ -269,7 +269,7 @@ view: new_revenue {
     label: "Current Period"
     type: time
     sql: TIMESTAMPADD(DAY, ${day_in_period} - 1, CAST({% date_start current_date_range %} AS TIMESTAMP)) ;;
-    view_label: "PoP"
+    view_label: "pop"
     timeframes: [
       date,
       hour_of_day,
@@ -288,7 +288,7 @@ view: new_revenue {
 
 
   dimension: period {
-    view_label: "PoP"
+    view_label: "pop"
     label: "Period"
     description: "Pivot me! Returns the period the metric covers, i.e. either the 'This Period' or 'Previous Period'"
     type: string
@@ -326,7 +326,7 @@ view: new_revenue {
   # Filtered measures
 
   measure: current_period_revenue {
-    view_label: "PoP"
+    view_label: "pop"
     label: "Revenue  {{_filters['current_date_range']}} "
     type: sum
     sql: ${TABLE}.revenue ;;
@@ -335,7 +335,7 @@ view: new_revenue {
   }
 
   measure: current_period_margin {
-    view_label: "PoP"
+    view_label: "pop"
     label: "Margin  {{_filters['current_date_range']}} "
     type: number
     sql: (${current_period_revenue}-${current_period_cost})/${current_period_revenue} ;;
@@ -343,7 +343,7 @@ view: new_revenue {
 
   }
   measure: previous_period_margin {
-    view_label: "PoP"
+    view_label: "pop"
     #label: " {{_filters['current_date_range']}} "
     type: number
     sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
@@ -353,7 +353,7 @@ view: new_revenue {
 
 
   measure: margin_pop_change {
-    view_label: "PoP"
+    view_label: "pop"
     label: " Margin Previous{{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_margin} = 0
@@ -363,7 +363,7 @@ view: new_revenue {
   }
 
   measure: previous_period_revenue{
-    view_label: "PoP"
+    view_label: "pop"
 
     type: sum
     sql: ${TABLE}.revenue ;;
@@ -372,7 +372,7 @@ view: new_revenue {
   }
 
   measure: revenue_pop_change {
-    view_label: "PoP"
+    view_label: "pop"
     label: " Revenue Previous{{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_revenue} = 0
@@ -382,7 +382,7 @@ view: new_revenue {
   }
 
   measure: current_period_cost {
-    view_label: "PoP"
+    view_label: "pop"
     type: sum
     sql: ${TABLE}.cogs ;;
     value_format: "$#,##0"
@@ -390,7 +390,7 @@ view: new_revenue {
   }
 
   measure: previous_period_cost{
-    view_label: "PoP"
+    view_label: "pop"
     type: sum
     sql: ${TABLE}.cogs ;;
     value_format: "$#,##0"
@@ -398,7 +398,7 @@ view: new_revenue {
   }
 
   measure: cost_pop_change {
-    view_label: "PoP"
+    view_label: "pop"
     label: "Total cost period-over-period % change"
     type: number
     sql: CASE WHEN ${current_period_revenue} = 0
@@ -407,14 +407,14 @@ view: new_revenue {
     value_format_name: percent_2
   }
   measure: current_period_profit {
-    view_label: "PoP"
+    view_label: "pop"
     type: sum
     sql: (${TABLE}.revenue-${TABLE}.cogs) ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
   }
   measure: previous_period_profit{
-    view_label: "PoP"
+    view_label: "pop"
     type: sum
     sql: (${TABLE}.revenue-${TABLE}.cogs) ;;
     value_format: "$#,##0"
@@ -422,7 +422,7 @@ view: new_revenue {
   }
 
   measure: profit_pop_change {
-    view_label: "PoP"
+    view_label: "pop"
     label: "Total profit period-over-period % change"
     type: number
     sql: CASE WHEN ${current_period_profit} = 0

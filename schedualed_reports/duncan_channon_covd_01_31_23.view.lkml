@@ -91,6 +91,7 @@ ORDER BY 1 ASC
     type: number
     label: "SPEND"
     sql: ${TABLE}.SPEND ;;
+    value_format: "0.00"
   }
 
   dimension: impressions {
@@ -121,12 +122,14 @@ ORDER BY 1 ASC
     type: number
     label: "VCR"
     sql: ${TABLE}.VCR ;;
+    value_format: "0.00"
   }
 
   dimension: ctr {
     type: number
     label: "CTR"
     sql: ${TABLE}.CTR ;;
+    value_format: "0.00"
   }
 
   set: detail {

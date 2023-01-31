@@ -368,6 +368,20 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  measure: html_for_kpi{
+    type: count
+    html:  <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+         <div style="display: block;  font-size: 20px;letter-spacing: 0.01em;">Impressions
+        <div style="display: block; line-height: 10px; font-size: 25px;">{{ current_period_revenue._rendered_value }} {{impression_change_parameter._value}}
+        <div style="display: block;  font-size: 10px;letter-spacing: 0.01em;"> {{ date_for_html._value }}
+        <div style="display: inline-block; font-size: 15px;">
+        <span class="drillable-item-content">  </span></span></span>
+       </div></div>
+       {{revenue_pop_change._rendered_value}} from  </div>
+     </div> ;;
+    group_label: "Admins Metrics"
+  }
+
   measure: HTML_variable {
     type: count
     html:
@@ -894,12 +908,11 @@ view: fact_ad_daily_agg {
     #hidden: yes
   }
 
-    dimension: min_date_key {
-    type: yesno
+    measure: min_date_key {
+    type:date
       label: "min Date"
     group_label: "Time Frame"
-    sql: case when ${TABLE}.sum_of_revenue >0 and ${TABLE}.Date_Key > TIMESTAMPADD('Quarter', -8, date_trunc('Quarter',(CURRENT_TIMESTAMP)))
-           then 1 else 0 end;;
+    sql:  min(${TABLE}.Date_Key) ;;
 
     #hidden: yes
   }
@@ -1132,9 +1145,9 @@ view: fact_ad_daily_agg {
     type: number
     label: "Margin%"
     description: "Profit/Revenue"
-    value_format: "0.00"
+    value_format: "0.00%"
     group_label: "Daily Measures"
-    sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0))*100 ;;
+    sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0)) ;;
   }
 
   measure: Pub_eCPM {
@@ -1701,7 +1714,20 @@ view: fact_ad_daily_agg {
     label: "Current Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
     sql: ${period} IS NOT NULL ;;
+
+
   }
+  dimension:  date_for_html {
+    type: date
+    view_label: "PoP"
+    sql: ${current_date_range} ;;
+    html:
+    <ul>
+         <li> value: {{ rendered_value }} </li>
+    </ul> ;;
+
+  }
+
 
 
   parameter: compare_to {
@@ -1711,7 +1737,7 @@ view: fact_ad_daily_agg {
     type: unquoted
     allowed_value: {
       label: "Previous Period"
-      value: "Period"
+     value: "Period"
     }
     allowed_value: {
       label: "Previous Week"
@@ -1737,8 +1763,8 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: unquoted
     default_value: "day_of_month"
-    allowed_value: {value:"day_of_month"}
-    allowed_value: {value: "month_name"}
+    allowed_value: {label:"daily" value:"day_of_month"}
+    allowed_value: {label:"monthly" value: "month_name"}
   }
 
 ## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##
@@ -1806,6 +1832,7 @@ view: fact_ad_daily_agg {
     type: date
     sql:
             {% if compare_to._parameter_value == "Period" %}
+           -- TIMESTAMPADD({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
             TIMESTAMPADD(DAY, -${days_in_period}, CAST({% date_start current_date_range %} AS TIMESTAMP))
             {% else %}
             TIMESTAMPADD({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
@@ -1959,14 +1986,76 @@ view: fact_ad_daily_agg {
 
   measure: current_period_revenue {
     view_label: "PoP"
+    label: "Revenue  {{_filters['current_date_range']}} "
     type: sum
     sql: ${TABLE}.sum_of_revenue ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
   }
 
+  measure: current_period_margin {
+    view_label: "PoP"
+    label: "Margin  {{_filters['current_date_range']}} "
+    type: number
+    sql: (${current_period_revenue}-${current_period_cost})/${current_period_revenue} ;;
+    value_format: "0.00%"
+
+
+  }
+  measure: previous_period_margin {
+    view_label: "PoP"
+    #label: " {{_filters['current_date_range']}} "
+    type: number
+    sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
+    value_format: "0.00%"
+
+
+}
+
+
+  measure: margin_pop_change {
+    view_label: "PoP"
+    label: " Margin Previous {{_filters['compare_to']}} Change"
+    type: number
+    sql: CASE WHEN ${current_period_margin} = 0
+                THEN NULL
+                ELSE  (${current_period_margin} - ${previous_period_margin}) END ;;
+    value_format_name: percent_2
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
+  }
+
+
+
+
+
+
   measure: previous_period_revenue{
     view_label: "PoP"
+
     type: sum
     sql: ${TABLE}.sum_of_revenue ;;
     value_format: "$#,##0"
@@ -1975,12 +2064,37 @@ view: fact_ad_daily_agg {
 
   measure: revenue_pop_change {
     view_label: "PoP"
-    label: "Total revenue period-over-period % change"
+    label: " Revenue Previous{{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_revenue} = 0
                 THEN NULL
                 ELSE (1.0 * ${current_period_revenue} / NULLIF(${previous_period_revenue} ,0)) - 1 END ;;
     value_format_name: percent_2
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
 
   measure: current_period_cost {
@@ -2007,7 +2121,35 @@ view: fact_ad_daily_agg {
                 THEN NULL
                 ELSE (1.0 * ${current_period_revenue} / NULLIF(${previous_period_revenue} ,0)) - 1 END ;;
     value_format_name: percent_2
+
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
+
+
   measure: current_period_profit {
     view_label: "PoP"
     type: sum
@@ -2031,6 +2173,32 @@ view: fact_ad_daily_agg {
                 THEN NULL
                 ELSE (1.0 * ${current_period_profit} / NULLIF(${previous_period_profit} ,0)) - 1 END ;;
     value_format_name: percent_2
+
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
 
 
@@ -2084,11 +2252,57 @@ measure: fill_rate__pop_change {
   type: number
   sql: ${current_period_fill_rate} - ${previous_period_fill_rate} ;;
   value_format_name: percent_2
+
+  html:
+  {% if value > 0 %}
+  {% assign indicator = "green,▲" | split: ',' %}
+  {% elsif value < 0 %}
+
+  {% assign indicator = "red,▼" | split: ',' %}
+
+  {% else %}
+
+  {% assign indicator = "black,▬" | split: ',' %}
+
+  {% endif %}
+  <font color="{{indicator[0]}}">
+
+  {% if value == 99999.12345 %} &infin
+
+  {% else %}{{indicator[1]}}
+
+  {% endif %}
+
+  </font>
+  {{rendered_value}}
+
+
+  ;;
 }
+
+measure: bid_price_top_25_perc {
+  label: "bid price top 25%"
+  type: number
+  sql: case when ${TABLE}.avg_of_dsp_bid_price>${TABLE}.avg_of_ssp_bid_floor*0.75,${TABLE}.avg_of_dsp_bid_price else null end ;;
+}
+
+measure: diff_bid_floor_bid_price{
+  label: "diff bid floor bid price"
+  type: number
+  sql: case when ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc>0 then ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc else null end) ;;
+}
+
+  measure: Bucket {
+    label: "Bucket"
+    type: count_distinct
+    sql: SELECT CASE WHEN ${TABLE}.diff_bid_floor_bid_price>0 AND ${TABLE}.diff_bid_floor_bid_price<1 THEN 'under 1'
+    WHEN ${TABLE}.diff_bid_floor_bid_price>=1 AND ${TABLE}.diff_bid_floor_bid_price<2 THEN '1 to 2'
+    WHEN ${TABLE}.diff_bid_floor_bid_price>=2 THEN 'over 2';;
+  }
 
   measure: count {
     type: count
     drill_fields: []
-    hidden: yes
+   ## hidden: yes
   }
 }

@@ -38,6 +38,45 @@ view: dim_publisher {
 
     }
 
+  parameter: department_granularity {
+    label: "Choose Department"
+    description: "For dynamic Department Role."
+    type: unquoted
+    allowed_value: {value:"Biz_Dev"}
+    allowed_value: {value:"Pub_Ops"}
+  }
+
+
+  dimension: dapartment {
+    type: string
+    label_from_parameter: department_granularity
+    sql:
+        {% if department_granularity._parameter_value == 'Biz_Dev' %}
+                 ${v_dim_employee_biz_dev.employee_name}
+        {% elsif department_granularity._parameter_value == 'Pub_Ops' %}
+             ${v_dim_employee_pub_ops.employee_name}
+        {% else %} NULL {% endif%};;
+    drill_fields: [v_dim_employee_pub_ops.employee_name]
+    link: {
+      label: "Drill To"
+      url: "https://tremor.cloud.looker.com/dashboards/560?PubOps+Name={{ value }}"
+    }
+  }
+
+  dimension: office {
+    type: string
+    label_from_parameter: department_granularity
+    sql:
+        {% if department_granularity._parameter_value == 'Biz_Dev' %}
+                 ${v_dim_employee_biz_dev.employee_office}
+        {% elsif department_granularity._parameter_value == 'Pub_Ops' %}
+             ${v_dim_employee_pub_ops.employee_office}
+        {% else %} NULL {% endif%};;
+
+  }
+
+
+
     parameter: insert_publisher {
         type: string
         allowed_value: {value: "insert"}
@@ -65,6 +104,7 @@ view: dim_publisher {
            1
       {% endif %};;
   }
+
 
 
     dimension_group: db_create {
@@ -177,16 +217,15 @@ view: dim_publisher {
       #hidden: yes
     }
 
-    dimension: bid_price {
-      type: number
-      sql: ${TABLE}.bid_price ;;
-    }
-
     dimension: pub_name {
       label: "Publisher Name"
       type: string
       sql: ${TABLE}.PUB_Name ;;
-      drill_fields: [bid_price]
+      drill_fields: [new_revenue.publisher_name]
+      link: {
+        label: "Drill To"
+        url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"
+      }
     }
 
     dimension_group: pub_updated {
@@ -217,18 +256,15 @@ view: dim_publisher {
       hidden: yes
     }
 
+
   measure: count_pub {
-    type: count_distinct
+    type: string
     sql: ${TABLE}.PUB_ID;;
     hidden: no
   }
 
-    measure: count {
-      type: count
-      label: "count of pub"
-      drill_fields: [pub_id]
-      hidden: no
-    }
+
+
 
   parameter: max_rank {
     type: number

@@ -10,6 +10,7 @@ view: dim_country {
     label: "Country Code"
     description: "Country Short Name - describe the code of the country"
     type: string
+    map_layer_name: countries
     sql: ${TABLE}.Country_Code ;;
   }
 

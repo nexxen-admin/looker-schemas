@@ -134,11 +134,13 @@ explore: bd_comm_intl {
 explore: net_revenue_with_demand_ss_fees {
   label: "net revenue with demand ss fees"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: base_data_demand {
   label: "Base Data Demand"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: net_revenue_without_demand_ss_fees {
@@ -149,6 +151,7 @@ explore: net_revenue_without_demand_ss_fees {
 explore: base_data_without_demand {
   label: "Base Data Without Demand"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: ads_txt_domain_publisher {
@@ -166,25 +169,42 @@ explore: unruly_pmp {
 explore: deal_splits_owner_report {
   label: "Deal_splits_owner_report"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: active_inactive_publishers {
   label: "Active Inactive Publishers"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
-
-explore: ip_per_day_try {
-  label: "ip per day try"
-  required_access_grants: [can_view_all_tremor]
-}
-
-explore: daily_metric_ip_count_v2 {
-  label: "daily metric ip count v2"
-  required_access_grants: [can_view_all_tremor]
-}
 
 explore:  exchange_daily_report_component{
   label: "Exchange Daily Report Component"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: new_revenue {
+  label: "New Revenue"
+  required_access_grants:  [can_view_pub_come_looker]
+
+  join: dim_publisher  {
+  type:inner
+   sql_on:  ${dim_publisher.pub_id} = ${new_revenue.pub_id};;
+  relationship: many_to_one
+  }
+  join: v_dim_employee_pub_ops {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
+    relationship: many_to_one
+  }
+  join: v_dim_employee_biz_dev {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
+    relationship: many_to_one
+  }
+
 }

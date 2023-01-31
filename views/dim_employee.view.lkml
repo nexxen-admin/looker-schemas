@@ -43,11 +43,12 @@ view: dim_employee {
     hidden: yes
   }
 
+
   dimension: employee_name {
     label: "Employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
-    hidden: yes
+
   }
 
   dimension: employee_office {
@@ -57,18 +58,21 @@ view: dim_employee {
 
   }
 
+
   dimension: employee_region {
     label: "Employee Region"
     type: string
     sql: ${TABLE}.Employee_Region ;;
+}
 
-  }
+
 
   dimension: role_source {
     label: "Employee Role"
     type: string
-    sql: ${TABLE}.Role_Source ;;
-    hidden: yes
+    sql: case when ${TABLE}.Role_Source = 'pubops' then 'Pub Ops'
+              when ${TABLE}.Role_Source = 'bizdev' then'Biz Dev' end;;
+    #Mhidden: yes
   }
 
   measure: count {

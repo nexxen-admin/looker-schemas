@@ -2,10 +2,12 @@ view: acr_weekly_unique_program_over_networks_linear {
   derived_table: {
     sql: SELECT concat(concat(year(viewing_start_utc),'-'),week(viewing_start_utc)) as week_year,
        affiliate_call_sign,
-       COUNT(DISTINCT AA.tv_program_tremor_id) AS distinct_program_count
+       COUNT(DISTINCT PP.title) AS distinct_title_count
 FROM dragon.viewership_content_sessions_combined AA
 LEFT JOIN dragon.airing BB
 ON AA.airing_tremor_id = BB.airing_tremor_id
+LEFT JOIN dragon.program PP
+ON AA.tv_program_tremor_id=PP.tv_program_tremor_id
 where source='linear'
 GROUP BY 1,2
 ORDER BY 1 DESC
@@ -27,12 +29,12 @@ ORDER BY 1 DESC
     sql: ${TABLE}.affiliate_call_sign ;;
   }
 
-  measure: distinct_program_count {
+  measure: distinct_title_count {
     type: average
-    sql: ${TABLE}.distinct_program_count ;;
+    sql: ${TABLE}.distinct_title_count ;;
   }
 
   set: detail {
-    fields: [week_year, affiliate_call_sign, distinct_program_count]
+    fields: [week_year, affiliate_call_sign, distinct_title_count]
   }
 }

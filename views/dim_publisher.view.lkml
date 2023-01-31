@@ -218,7 +218,7 @@ view: dim_publisher {
     }
 
   measure: count_pub {
-    type: count
+    type: count_distinct
     sql: ${TABLE}.PUB_ID;;
     hidden: no
   }

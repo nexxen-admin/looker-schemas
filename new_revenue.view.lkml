@@ -360,6 +360,27 @@ view: new_revenue {
                 THEN NULL
                 ELSE  (${current_period_margin} - ${previous_period_margin}) END ;;
     value_format_name: percent_2
+    html:   {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}} ;;
   }
 
   measure: previous_period_revenue{
@@ -379,6 +400,27 @@ view: new_revenue {
                 THEN NULL
                 ELSE (1.0 * ${current_period_revenue} / NULLIF(${previous_period_revenue} ,0)) - 1 END ;;
     value_format_name: percent_2
+    html:   {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}} ;;
   }
 
   measure: current_period_cost {

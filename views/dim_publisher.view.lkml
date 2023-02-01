@@ -56,10 +56,10 @@ view: dim_publisher {
         {% elsif department_granularity._parameter_value == 'Pub_Ops' %}
              ${v_dim_employee_pub_ops.employee_name}
         {% else %} NULL {% endif%};;
-    drill_fields: [v_dim_employee_pub_ops.employee_name]
+    drill_fields: [v_dim_employee_biz_ops.employee_name]
     link: {
       label: "Drill To"
-      url: "https://tremor.cloud.looker.com/dashboards/560?PubOps+Name={{ value }}"
+      url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name=&BizDev+Name={{ value }}"
     }
   }
 

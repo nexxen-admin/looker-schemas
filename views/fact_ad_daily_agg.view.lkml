@@ -1988,16 +1988,16 @@ view: fact_ad_daily_agg {
     label: "Margin  {{_filters['current_date_range']}} "
     type: number
     sql: (${current_period_revenue}-${current_period_cost})/${current_period_revenue} ;;
-    value_format: "0.00%"
+    value_format: "0%"
 
 
   }
   measure: previous_period_margin {
-    view_label: "PoP"
+    view_label: ""
     label: " {{_filters['compare_to']}} "
     type: number
     sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
-    value_format: "0.00%"
+    value_format: "0%"
 
 
 }
@@ -2009,8 +2009,8 @@ view: fact_ad_daily_agg {
     type: number
     sql: CASE WHEN ${current_period_margin} = 0
                 THEN NULL
-                ELSE  (${current_period_margin} - ${previous_period_margin}) END ;;
-    value_format_name: percent_2
+                ELSE  (${current_period_margin}/${previous_period_margin})-1 END ;;
+    value_format_name: percent_0
     html:
     {% if value > 0 %}
     {% assign indicator = "green,▲" | split: ',' %}
@@ -2059,7 +2059,7 @@ view: fact_ad_daily_agg {
     sql: CASE WHEN ${current_period_revenue} = 0
                 THEN NULL
                 ELSE (1.0 * ${current_period_revenue} / NULLIF(${previous_period_revenue} ,0)) - 1 END ;;
-    value_format_name: percent_2
+    value_format_name: percent_0
     html:
     {% if value > 0 %}
     {% assign indicator = "green,▲" | split: ',' %}
@@ -2162,7 +2162,7 @@ view: fact_ad_daily_agg {
     sql: CASE WHEN ${current_period_profit} = 0
                 THEN NULL
                 ELSE (1.0 * ${current_period_profit} / NULLIF(${previous_period_profit} ,0)) - 1 END ;;
-    value_format_name: percent_2
+    value_format_name: percent_0
 
     html:
     {% if value > 0 %}
@@ -2210,7 +2210,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: number
     sql:  (${current_period_impressions}/${current_period_requests})*100 ;;
-    value_format: "0.0%"
+    value_format: "0%"
     #filters: [period_filtered_measures: "this"]
   }
 
@@ -2232,7 +2232,7 @@ measure: previous_period_requests{
     view_label: "PoP"
     type: number
     sql:  (${previous_period_impressions}/${previous_period_requests})*100 ;;
-    value_format: "0.0%"
+    value_format: "0%"
     #filters: [period_filtered_measures: "this"]
   }
 
@@ -2240,8 +2240,8 @@ measure: fill_rate__pop_change {
   view_label: ""
   label: "Previous {{_filters['compare_to']}} Change"
   type: number
-  sql: ${current_period_fill_rate} - ${previous_period_fill_rate} ;;
-  value_format_name: percent_2
+  sql: (${current_period_fill_rate}/${previous_period_fill_rate})-1 ;;
+  value_format_name: percent_0
 
   html:
   {% if value > 0 %}

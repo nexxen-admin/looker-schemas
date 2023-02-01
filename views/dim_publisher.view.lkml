@@ -257,6 +257,14 @@ view: dim_publisher {
     }
 
 
+  measure: count_pub {
+    type: string
+    sql: ${TABLE}.PUB_ID;;
+    hidden: no
+  }
+
+
+
 
   parameter: max_rank {
     type: number

@@ -1735,22 +1735,12 @@ view: fact_ad_daily_agg {
     description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
     label: "Compare To:"
     type: unquoted
-    allowed_value: {
-      label: "Previous Period"
-     value: "Period"
-    }
-    allowed_value: {
-      label: "Previous Week"
-      value: "Week"
-    }
+
     allowed_value: {
       label: "Previous Month"
       value: "Month"
     }
-    allowed_value: {
-      label: "Previous Quarter"
-      value: "Quarter"
-    }
+
     allowed_value: {
       label: "Previous Year"
       value: "Year"
@@ -1759,7 +1749,7 @@ view: fact_ad_daily_agg {
   }
 
   parameter: choose_breakdown {
-    label: "Choose Grouping (Rows)"
+    label: "Choose Grouping"
     view_label: "PoP"
     type: unquoted
     default_value: "day_of_month"
@@ -2004,7 +1994,7 @@ view: fact_ad_daily_agg {
   }
   measure: previous_period_margin {
     view_label: "PoP"
-    #label: " {{_filters['current_date_range']}} "
+    label: " {{_filters['compare_to']}} "
     type: number
     sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
     value_format: "0.00%"
@@ -2015,7 +2005,7 @@ view: fact_ad_daily_agg {
 
   measure: margin_pop_change {
     view_label: "PoP"
-    label: " Margin Previous {{_filters['compare_to']}} Change"
+    label: "Margin Previous {{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_margin} = 0
                 THEN NULL
@@ -2063,8 +2053,8 @@ view: fact_ad_daily_agg {
   }
 
   measure: revenue_pop_change {
-    view_label: "PoP"
-    label: " Revenue Previous{{_filters['compare_to']}} Change"
+    view_label: ""
+    label: "Rev Previous {{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_revenue} = 0
                 THEN NULL
@@ -2166,8 +2156,8 @@ view: fact_ad_daily_agg {
   }
 
   measure: profit_pop_change {
-    view_label: "PoP"
-    label: "Total profit period-over-period % change"
+    view_label: ""
+    label: "Profit Previous {{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_profit} = 0
                 THEN NULL
@@ -2247,8 +2237,8 @@ measure: previous_period_requests{
   }
 
 measure: fill_rate__pop_change {
-  view_label: "PoP"
-  label: "Total flll rate period-over-period % change"
+  view_label: ""
+  label: "Previous {{_filters['compare_to']}} Change"
   type: number
   sql: ${current_period_fill_rate} - ${previous_period_fill_rate} ;;
   value_format_name: percent_2

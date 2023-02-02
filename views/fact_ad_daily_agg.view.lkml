@@ -2209,7 +2209,7 @@ view: fact_ad_daily_agg {
   measure: current_period_fill_rate {
     view_label: "PoP"
     type: number
-    sql:  (${current_period_impressions}/${current_period_requests})*100 ;;
+    sql:  (${current_period_impressions}/${current_period_requests}) ;;
     value_format: "0%"
     #filters: [period_filtered_measures: "this"]
   }

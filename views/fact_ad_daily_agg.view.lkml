@@ -2231,7 +2231,7 @@ measure: previous_period_requests{
   measure: previous_period_fill_rate {
     view_label: "PoP"
     type: number
-    sql:  (${previous_period_impressions}/${previous_period_requests})*100 ;;
+    sql:  (${previous_period_impressions}/${previous_period_requests}) ;;
     value_format: "0%"
     #filters: [period_filtered_measures: "this"]
   }

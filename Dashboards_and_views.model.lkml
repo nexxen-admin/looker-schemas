@@ -206,6 +206,6 @@ explore: new_revenue {
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
-  hidden: yes
+  #hidden: yes
 
 }

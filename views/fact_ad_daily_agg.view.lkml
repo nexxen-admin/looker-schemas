@@ -2210,7 +2210,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: number
     sql:  (${current_period_impressions}/${current_period_requests}) ;;
-    value_format: "0%"
+    value_format: "0.00%"
     #filters: [period_filtered_measures: "this"]
   }
 

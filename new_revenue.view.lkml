@@ -48,6 +48,11 @@ view: new_revenue {
     sql: ${TABLE}.revenue ;;
   }
 
+  dimension: country {
+    type: string
+    sql: ${TABLE}.country ;;
+  }
+
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
@@ -346,7 +351,8 @@ view: new_revenue {
     view_label: "pop"
     #label: " {{_filters['current_date_range']}} "
     type: number
-    sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
+    sql: case when ${previous_period_revenue}=0 then null else
+    (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} end ;;
     value_format: "0.00%"
 
   }

@@ -48,9 +48,9 @@ view: new_revenue {
     sql: ${TABLE}.revenue ;;
   }
 
-  dimension: country {
+  dimension: origin_domain {
     type: string
-    sql: ${TABLE}.country ;;
+    sql: ${TABLE}.origin_domain ;;
   }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.

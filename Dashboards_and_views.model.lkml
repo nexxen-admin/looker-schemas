@@ -185,6 +185,11 @@ explore:  exchange_daily_report_component{
   hidden: yes
 }
 
+explore:  ivt_report{
+  label: "IVT Report"
+  required_access_grants: [can_view_all_tremor]
+  }
+
 explore: new_revenue {
   label: "New Revenue"
   #required_access_grants:  [can_view_pub_come_looker]

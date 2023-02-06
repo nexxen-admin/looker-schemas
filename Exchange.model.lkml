@@ -628,8 +628,6 @@ join: dim_publisher {
   sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
   relationship: many_to_one
 }
-
-
 join: dim_ssp {
   type: inner
   view_label: "SSP"

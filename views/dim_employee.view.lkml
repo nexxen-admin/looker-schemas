@@ -42,43 +42,13 @@ view: dim_employee {
     sql: ${TABLE}.Employee_Key ;;
     hidden: yes
   }
-  parameter: department_granularity {
 
-    label: "Choose Department"
-    description: "For dynamic Department Role."
-    type: string
-    allowed_value: {value:"Biz Dev"}
-    allowed_value: {value:"Pub Ops"}
-  }
-
-  filter: department {
-    type: string
-    #view_label: "PoP"
-    label:  "Choose Department"
-    description: "For dynamic Department Role."
-    sql: ${role_source} ;;
-
-
-  }
-
-  dimension: dapartment {
-    #group_label: "{{_filters['department_granularity']}}"
-    label: "{{_filters['department']}}"
-    #value_format: "%m/%d"
-    sql:  CASE
-      WHEN ${department} = 'Biz Dev'
-        THEN ${employee_name}
-      When ${department} ='Pub Ops'
-        THEN ${employee_name}
-      ELSE NULL
-    END ;;
-  }
 
   dimension: employee_name {
     label: "Employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
-    hidden: yes
+
   }
 
   dimension: employee_office {
@@ -93,15 +63,16 @@ view: dim_employee {
     label: "Employee Region"
     type: string
     sql: ${TABLE}.Employee_Region ;;
+}
 
-  }
+
 
   dimension: role_source {
     label: "Employee Role"
     type: string
     sql: case when ${TABLE}.Role_Source = 'pubops' then 'Pub Ops'
               when ${TABLE}.Role_Source = 'bizdev' then'Biz Dev' end;;
-    hidden: yes
+    #Mhidden: yes
   }
 
   measure: count {

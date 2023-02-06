@@ -656,20 +656,22 @@ join: dim_dsp_flight {
  join: v_dim_employee_biz_dev {
     type: inner
     view_label: "Employee"
-    sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
+    sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key}  ;;
     relationship: many_to_one
   }
+
   join: v_dim_employee_pub_ops {
     type: inner
     view_label: "Employee"
-    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key}  ;;
     relationship: many_to_one
   }
+
   join: dim_employee {
-    type: inner
-    view_label: "Employee"
-    sql_on:  ${dim_employee.employee_key}=${dim_publisher.bizdev_owner_key}
-      and ${dim_employee.employee_key}=${dim_publisher.ops_owner_key};;
+   type: full_outer
+   view_label: "Employee"
+    sql_on: ${dim_employee.employee_key}=${dim_publisher.bizdev_owner_key} or
+            ${dim_employee.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one
   }
 

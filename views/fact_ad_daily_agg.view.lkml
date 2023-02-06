@@ -1735,22 +1735,12 @@ view: fact_ad_daily_agg {
     description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
     label: "Compare To:"
     type: unquoted
-    allowed_value: {
-      label: "Previous Period"
-     value: "Period"
-    }
-    allowed_value: {
-      label: "Previous Week"
-      value: "Week"
-    }
+
     allowed_value: {
       label: "Previous Month"
       value: "Month"
     }
-    allowed_value: {
-      label: "Previous Quarter"
-      value: "Quarter"
-    }
+
     allowed_value: {
       label: "Previous Year"
       value: "Year"
@@ -1759,7 +1749,7 @@ view: fact_ad_daily_agg {
   }
 
   parameter: choose_breakdown {
-    label: "Choose Grouping (Rows)"
+    label: "Choose Grouping"
     view_label: "PoP"
     type: unquoted
     default_value: "day_of_month"
@@ -1998,28 +1988,60 @@ view: fact_ad_daily_agg {
     label: "Margin  {{_filters['current_date_range']}} "
     type: number
     sql: (${current_period_revenue}-${current_period_cost})/${current_period_revenue} ;;
-    value_format: "0.00%"
+    value_format: "0%"
+
 
   }
   measure: previous_period_margin {
-    view_label: "PoP"
-    #label: " {{_filters['current_date_range']}} "
+    view_label: ""
+    label: " {{_filters['compare_to']}} "
     type: number
     sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
-    value_format: "0.00%"
+    value_format: "0%"
+
 
 }
 
 
   measure: margin_pop_change {
     view_label: "PoP"
-    label: " Margin Previous{{_filters['compare_to']}} Change"
+    label: "Margin Previous {{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_margin} = 0
                 THEN NULL
-                ELSE  (${current_period_margin} - ${previous_period_margin}) END ;;
-    value_format_name: percent_2
+                ELSE  (${current_period_margin}/${previous_period_margin})-1 END ;;
+    value_format_name: percent_0
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
+
+
+
+
+
 
   measure: previous_period_revenue{
     view_label: "PoP"
@@ -2031,13 +2053,38 @@ view: fact_ad_daily_agg {
   }
 
   measure: revenue_pop_change {
-    view_label: "PoP"
-    label: " Revenue Previous{{_filters['compare_to']}} Change"
+    view_label: ""
+    label: "Rev Previous {{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_revenue} = 0
                 THEN NULL
                 ELSE (1.0 * ${current_period_revenue} / NULLIF(${previous_period_revenue} ,0)) - 1 END ;;
-    value_format_name: percent_2
+    value_format_name: percent_0
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
 
   measure: current_period_cost {
@@ -2064,7 +2111,35 @@ view: fact_ad_daily_agg {
                 THEN NULL
                 ELSE (1.0 * ${current_period_revenue} / NULLIF(${previous_period_revenue} ,0)) - 1 END ;;
     value_format_name: percent_2
+
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
+
+
   measure: current_period_profit {
     view_label: "PoP"
     type: sum
@@ -2081,13 +2156,39 @@ view: fact_ad_daily_agg {
   }
 
   measure: profit_pop_change {
-    view_label: "PoP"
-    label: "Total profit period-over-period % change"
+    view_label: ""
+    label: "Profit Previous {{_filters['compare_to']}} Change"
     type: number
     sql: CASE WHEN ${current_period_profit} = 0
                 THEN NULL
                 ELSE (1.0 * ${current_period_profit} / NULLIF(${previous_period_profit} ,0)) - 1 END ;;
-    value_format_name: percent_2
+    value_format_name: percent_0
+
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}}
+
+
+    ;;
   }
 
 
@@ -2108,8 +2209,8 @@ view: fact_ad_daily_agg {
   measure: current_period_fill_rate {
     view_label: "PoP"
     type: number
-    sql:  (${current_period_impressions}/${current_period_requests})*100 ;;
-    value_format: "0.0%"
+    sql:  (${current_period_impressions}/${current_period_requests}) ;;
+    value_format: "0.00%"
     #filters: [period_filtered_measures: "this"]
   }
 
@@ -2130,17 +2231,43 @@ measure: previous_period_requests{
   measure: previous_period_fill_rate {
     view_label: "PoP"
     type: number
-    sql:  (${previous_period_impressions}/${previous_period_requests})*100 ;;
-    value_format: "0.0%"
+    sql:  (${previous_period_impressions}/${previous_period_requests}) ;;
+    value_format: "0%"
     #filters: [period_filtered_measures: "this"]
   }
 
 measure: fill_rate__pop_change {
-  view_label: "PoP"
-  label: "Total flll rate period-over-period % change"
+  view_label: ""
+  label: "Previous {{_filters['compare_to']}} Change"
   type: number
-  sql: ${current_period_fill_rate} - ${previous_period_fill_rate} ;;
-  value_format_name: percent_2
+  sql: (${current_period_fill_rate}/${previous_period_fill_rate})-1 ;;
+  value_format_name: percent_0
+
+  html:
+  {% if value > 0 %}
+  {% assign indicator = "green,▲" | split: ',' %}
+  {% elsif value < 0 %}
+
+  {% assign indicator = "red,▼" | split: ',' %}
+
+  {% else %}
+
+  {% assign indicator = "black,▬" | split: ',' %}
+
+  {% endif %}
+  <font color="{{indicator[0]}}">
+
+  {% if value == 99999.12345 %} &infin
+
+  {% else %}{{indicator[1]}}
+
+  {% endif %}
+
+  </font>
+  {{rendered_value}}
+
+
+  ;;
 }
 
 measure: bid_price_top_25_perc {

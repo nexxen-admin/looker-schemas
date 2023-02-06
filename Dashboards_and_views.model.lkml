@@ -185,9 +185,14 @@ explore:  exchange_daily_report_component{
   hidden: yes
 }
 
+explore:  ivt_report{
+  label: "IVT Report"
+  required_access_grants: [can_view_all_tremor]
+  }
+
 explore: new_revenue {
   label: "New Revenue"
-  required_access_grants: [can_view_pub_come_looker]
+  #required_access_grants:  [can_view_pub_come_looker]
 
   join: dim_publisher  {
   type:inner
@@ -206,15 +211,6 @@ explore: new_revenue {
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
-
-  join: dim_employee {
-
-    type: inner
-    view_label: "Employee"
-    sql_on: ${dim_employee.employee_key}=${dim_publisher.bizdev_owner_key}
-     and ${dim_employee.employee_key}=${dim_publisher.ops_owner_key};;
-    relationship: many_to_one
-
-  }
+  #hidden: yes
 
 }

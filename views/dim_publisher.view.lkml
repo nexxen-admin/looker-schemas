@@ -38,6 +38,45 @@ view: dim_publisher {
 
     }
 
+  parameter: department_granularity {
+    label: "Choose Department"
+    description: "For dynamic Department Role."
+    type: unquoted
+    allowed_value: {value:"Biz_Dev"}
+    allowed_value: {value:"Pub_Ops"}
+  }
+
+
+  dimension: dapartment {
+    type: string
+    label_from_parameter: department_granularity
+    sql:
+        {% if department_granularity._parameter_value == 'Biz_Dev' %}
+                 ${v_dim_employee_biz_dev.employee_name}
+        {% elsif department_granularity._parameter_value == 'Pub_Ops' %}
+             ${v_dim_employee_pub_ops.employee_name}
+        {% else %} NULL {% endif%};;
+    drill_fields: [v_dim_employee_biz_ops.employee_name]
+    link: {
+      label: "Drill To"
+      url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name=&BizDev+Name={{ value }}"
+    }
+  }
+
+  dimension: office {
+    type: string
+    label_from_parameter: department_granularity
+    sql:
+        {% if department_granularity._parameter_value == 'Biz_Dev' %}
+                 ${v_dim_employee_biz_dev.employee_office}
+        {% elsif department_granularity._parameter_value == 'Pub_Ops' %}
+             ${v_dim_employee_pub_ops.employee_office}
+        {% else %} NULL {% endif%};;
+
+  }
+
+
+
     parameter: insert_publisher {
         type: string
         allowed_value: {value: "insert"}
@@ -216,6 +255,13 @@ view: dim_publisher {
       sql: ${TABLE}.RI_Info ;;
       hidden: yes
     }
+
+
+  measure: count_pub {
+    type: string
+    sql: ${TABLE}.PUB_ID;;
+    hidden: no
+  }
 
 
 

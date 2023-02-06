@@ -70,8 +70,8 @@ explore: acr_weekly_app_os_device_count {
   required_access_grants: [can_view_acr_group]
 }
 
-explore: acr_monthly_title_device {
-  label: "acr monthly title device"
+explore: acr_weekly_title_device {
+  label: "acr weekly title device"
   required_access_grants: [can_view_acr_group]
 }
 

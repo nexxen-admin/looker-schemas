@@ -15,7 +15,7 @@ ORDER BY 1,2
   }
 
   dimension: week_date {
-    type: date
+    type: date_week
     sql: ${TABLE}.week_date ;;
   }
 

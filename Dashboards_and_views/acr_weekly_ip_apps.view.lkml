@@ -16,7 +16,7 @@ ORDER BY 1,2
 
   dimension: week_date {
     type: date_day_of_week
-    sql: ${TABLE}.week_year ;;
+    sql: ${TABLE}.week_date ;;
   }
 
   dimension: tv_app_name {

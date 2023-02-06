@@ -1,9 +1,9 @@
 view: acr_weekly_ip_apps {
   derived_table: {
     sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
-       viewership_content_sessions_combined.tv_app_name,
-       COUNT(DISTINCT viewership_content_sessions_combined.ip) AS distinct_ip_count
-FROM dragon.viewership_content_sessions_combined
+       AA.tv_app_name,
+       COUNT(DISTINCT AA.ip) AS distinct_ip_count
+FROM dragon.viewership_content_sessions_combined AA
 GROUP BY 1,2
 ORDER BY 1,2
  ;;

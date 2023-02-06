@@ -315,12 +315,7 @@ explore: extend_Inbound_Exchange {
     relationship: many_to_one
   }
 
-  join: new_revenue {
-    type: inner
-    view_label: "Publishers"
-    sql_on: ${dim_publisher.pub_id}=${new_revenue.pub_id} ;;
-    relationship: many_to_one
-  }
+
   join: dim_ssp {
     type: inner
     view_label: "SSP"

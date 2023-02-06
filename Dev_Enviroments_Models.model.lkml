@@ -65,8 +65,8 @@ explore: acr_weekly_ip_apps {
   required_access_grants: [can_view_acr_group]
 }
 
-explore: acr_monthly_device_app_os_count {
-  label: "acr monthly device app os count"
+explore: acr_weekly_app_os_device_count {
+  label: "acr weekly app os device count"
   required_access_grants: [can_view_acr_group]
 }
 

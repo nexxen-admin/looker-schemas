@@ -1,6 +1,6 @@
-view: acr_monthly_device_app_os_count {
+view: acr_weekly_app_os_device_count {
   derived_table: {
-    sql: SELECT concat(concat(year(AA.viewing_start_utc),'-'),week(AA.viewing_start_utc)) as week_year,
+    sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
        BB.os,
        AA.tv_app_name,
        COUNT(DISTINCT AA.device_id) AS distinct_ip_count
@@ -18,7 +18,7 @@ ORDER BY 1,2
   }
 
   dimension: week_year {
-    type: string
+    type: date_week
     sql: ${TABLE}.week_year ;;
   }
 

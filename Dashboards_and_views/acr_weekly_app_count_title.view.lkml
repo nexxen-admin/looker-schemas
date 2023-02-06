@@ -18,7 +18,7 @@ ORDER BY 1,2 DESC
   }
 
   dimension: year_week {
-    type: string
+    type: date_week
     sql: ${TABLE}.year_week ;;
   }
 

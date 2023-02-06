@@ -2,9 +2,9 @@ view: monthly_device_count {
   derived_table: {
     sql: SELECT
        CASE  WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -1) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN 'last_30_days'
-                             WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -2) and ADD_MONTHS(CURRENT_TIMESTAMP, -1) THEN 'last_60_30_days'
-                             WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP, -2) THEN 'last_90_60_days'
-                             WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP, -3) THEN 'last_120_90_days'
+                             WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -2) and ADD_MONTHS(CURRENT_TIMESTAMP, -1) THEN 'between_30_to_60_days'
+                             WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP, -2) THEN 'between_60_to_90_days'
+                             WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP, -3) THEN 'between_90_to_120_days'
                              ELSE null
                              END AS date_segment,
        COUNT(DISTINCT AA.device_id) as count_devices

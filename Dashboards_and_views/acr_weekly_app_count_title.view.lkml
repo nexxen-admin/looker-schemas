@@ -1,6 +1,6 @@
 view: acr_weekly_app_count_title {
   derived_table: {
-    sql: SELECT concat(concat(year(AA.viewing_start_utc),'-'),week(AA.viewing_start_utc)) as year_week,
+    sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
        AA.tv_app_name,
        COUNT(DISTINCT pp.title) AS distinct_program_count
 FROM dragon.viewership_content_sessions_combined AA
@@ -17,9 +17,9 @@ ORDER BY 1,2 DESC
     drill_fields: [detail*]
   }
 
-  dimension: year_week {
+  dimension: week_date {
     type: date_week
-    sql: ${TABLE}.year_week ;;
+    sql: ${TABLE}.week_date ;;
   }
 
   dimension: tv_app_name {
@@ -33,6 +33,6 @@ ORDER BY 1,2 DESC
   }
 
   set: detail {
-    fields: [year_week, tv_app_name, distinct_title_count]
+    fields: [week_date, tv_app_name, distinct_title_count]
   }
 }

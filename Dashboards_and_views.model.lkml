@@ -157,7 +157,7 @@ explore: base_data_without_demand {
 explore: ads_txt_domain_publisher {
   label: "ads_txt_domain_publisher"
   required_access_grants: [can_view_all_tremor]
-  hidden: yes
+ # hidden: yes
 }
 
 explore: unruly_pmp {

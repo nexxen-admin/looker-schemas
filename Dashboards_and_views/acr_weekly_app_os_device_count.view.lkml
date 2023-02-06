@@ -17,9 +17,9 @@ ORDER BY 1,2
     drill_fields: [detail*]
   }
 
-  dimension: week_year {
+  dimension: week_date {
     type: date_week
-    sql: ${TABLE}.week_year ;;
+    sql: ${TABLE}.week_date ;;
   }
 
   dimension: os {
@@ -38,6 +38,6 @@ ORDER BY 1,2
   }
 
   set: detail {
-    fields: [week_year, os, tv_app_name, distinct_ip_count]
+    fields: [week_date, os, tv_app_name, distinct_ip_count]
   }
 }

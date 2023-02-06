@@ -1,6 +1,6 @@
-view: acr_monthly_ip_apps {
+view: acr_weekly_ip_apps {
   derived_table: {
-    sql: SELECT concat(concat(year(viewership_content_sessions_combined.viewing_start_utc),'-'),week(viewership_content_sessions_combined.viewing_start_utc)) as week_year,
+    sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
        viewership_content_sessions_combined.tv_app_name,
        COUNT(DISTINCT viewership_content_sessions_combined.ip) AS distinct_ip_count
 FROM dragon.viewership_content_sessions_combined
@@ -14,8 +14,8 @@ ORDER BY 1,2
     drill_fields: [detail*]
   }
 
-  dimension: week_year {
-    type: string
+  dimension: week_date {
+    type: date_day_of_week
     sql: ${TABLE}.week_year ;;
   }
 
@@ -30,6 +30,6 @@ ORDER BY 1,2
   }
 
   set: detail {
-    fields: [week_year, tv_app_name, distinct_ip_count]
+    fields: [week_date, tv_app_name, distinct_ip_count]
   }
 }

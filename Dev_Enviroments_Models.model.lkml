@@ -60,8 +60,8 @@ explore: all_coumns_is_null_chart {
   required_access_grants: [can_view_acr_group]
 }
 
-explore: acr_monthly_ip_apps {
-  label: "acr monthly ip apps"
+explore: acr_weekly_ip_apps {
+  label: "acr weekly ip apps"
   required_access_grants: [can_view_acr_group]
 }
 

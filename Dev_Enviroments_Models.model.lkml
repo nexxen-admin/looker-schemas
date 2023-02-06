@@ -75,8 +75,8 @@ explore: acr_weekly_title_device {
   required_access_grants: [can_view_acr_group]
 }
 
-explore: unique_tremor_programs_id_app {
-  label: "unique tremor programs id app"
+explore: acr_weekly_app_count_title {
+  label: "acr weekly app count title"
   required_access_grants: [can_view_acr_group]
 }
 

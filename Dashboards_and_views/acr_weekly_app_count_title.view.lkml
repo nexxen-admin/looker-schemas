@@ -1,4 +1,4 @@
-view: unique_tremor_programs_id_app {
+view: acr_weekly_app_count_title {
   derived_table: {
     sql: SELECT concat(concat(year(AA.viewing_start_utc),'-'),week(AA.viewing_start_utc)) as year_week,
        AA.tv_app_name,

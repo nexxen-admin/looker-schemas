@@ -1,6 +1,6 @@
 view: acr_weekly_unique_program_over_networks_linear {
   derived_table: {
-    sql: SELECT concat(concat(year(viewing_start_utc),'-'),week(viewing_start_utc)) as week_year,
+    sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
        affiliate_call_sign,
        COUNT(DISTINCT PP.title) AS distinct_title_count
 FROM dragon.viewership_content_sessions_combined AA
@@ -19,9 +19,9 @@ ORDER BY 1 DESC
     drill_fields: [detail*]
   }
 
-  dimension: week_year {
-    type: string
-    sql: ${TABLE}.week_year ;;
+  dimension: week_date {
+    type: date_week
+    sql: ${TABLE}.week_date ;;
   }
 
   dimension: affiliate_call_sign {
@@ -35,6 +35,6 @@ ORDER BY 1 DESC
   }
 
   set: detail {
-    fields: [week_year, affiliate_call_sign, distinct_title_count]
+    fields: [week_date, affiliate_call_sign, distinct_title_count]
   }
 }

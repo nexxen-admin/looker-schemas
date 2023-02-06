@@ -1,6 +1,6 @@
-view: acr_monthly_title_device {
+view: acr_weekly_title_device {
   derived_table: {
-    sql: SELECT concat(concat(year(AA.viewing_start_utc),'-'),week(AA.viewing_start_utc)) as year_week,
+    sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
        PP.title,
        COUNT(DISTINCT device_id) as count_devices
 FROM dragon.viewership_content_sessions_combined AA
@@ -16,9 +16,9 @@ ORDER BY 1 DESC
     drill_fields: [detail*]
   }
 
-  dimension: year_week {
-    type: string
-    sql: ${TABLE}.year_week ;;
+  dimension: week_date {
+    type: date_week
+    sql: ${TABLE}.week_date ;;
   }
 
 
@@ -33,6 +33,6 @@ ORDER BY 1 DESC
   }
 
   set: detail {
-    fields: [year_week, title, count_devices]
+    fields: [week_date, title, count_devices]
   }
 }

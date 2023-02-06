@@ -18,7 +18,7 @@ SELECT date_segment,
         SUM(CASE WHEN distinct_ip=3 THEN 1 else 0 END) as ip_3,
         SUM(CASE WHEN distinct_ip=4 THEN 1 else 0 END) as ip_4,
         SUM(CASE WHEN distinct_ip=5 THEN 1 else 0 END) as ip_5,
-        SUM(CASE WHEN (distinct_ip>=6 AND distinct_ip<=10) THEN 1 else 0 END) as ip_between_6_10,
+        SUM(CASE WHEN (distinct_ip>=6 AND distinct_ip<=10) THEN 1 else 0 END) as ip_6_to_10,
         SUM(CASE WHEN (distinct_ip>=11 AND distinct_ip<=15) THEN 1 else 0 END) as ip_between_11_15,
         SUM(CASE WHEN (distinct_ip>=16 AND distinct_ip<=20) THEN 1 else 0 END) as ip_between_16_20,
         SUM(CASE WHEN (distinct_ip>=21) THEN 1 else 0 END) as ip_is_above_20,
@@ -65,9 +65,9 @@ ORDER BY 1 DESC
     sql: ${TABLE}.ip_5 ;;
   }
 
-  measure: ip_between_6_10 {
+  measure: ip_6_to_10 {
     type: average
-    sql: ${TABLE}.ip_between_6_10 ;;
+    sql: ${TABLE}.ip_6_to_10 ;;
   }
 
   measure: ip_between_11_15 {
@@ -98,7 +98,7 @@ ORDER BY 1 DESC
       ip_3,
       ip_4,
       ip_5,
-      ip_between_6_10,
+      ip_6_to_10,
       ip_between_11_15,
       ip_between_16_20,
       ip_is_above_20,

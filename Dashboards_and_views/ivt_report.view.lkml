@@ -82,6 +82,11 @@ view: ivt_report {
     sql: ${TABLE}.Publisher ;;
   }
 
+  dimension: revenue_type {
+    type: string
+    sql: ${TABLE}.revenue_type ;;
+  }
+
   dimension: publisher_name {
     type: string
     sql: ${TABLE}.publisher_name ;;

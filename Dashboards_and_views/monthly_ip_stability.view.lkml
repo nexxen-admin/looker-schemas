@@ -18,10 +18,10 @@ SELECT date_segment,
         SUM(CASE WHEN distinct_ip=3 THEN 1 else 0 END) as ip_3,
         SUM(CASE WHEN distinct_ip=4 THEN 1 else 0 END) as ip_4,
         SUM(CASE WHEN distinct_ip=5 THEN 1 else 0 END) as ip_5,
-        SUM(CASE WHEN (distinct_ip>=6 AND distinct_ip<=10) THEN 1 else 0 END) as ip_6_to_10,
-        SUM(CASE WHEN (distinct_ip>=11 AND distinct_ip<=15) THEN 1 else 0 END) as ip_between_11_15,
-        SUM(CASE WHEN (distinct_ip>=16 AND distinct_ip<=20) THEN 1 else 0 END) as ip_between_16_20,
-        SUM(CASE WHEN (distinct_ip>=21) THEN 1 else 0 END) as ip_is_above_20,
+        SUM(CASE WHEN (distinct_ip>=6 AND distinct_ip<=10) THEN 1 else 0 END) as ip_between_6_and_10,
+        SUM(CASE WHEN (distinct_ip>=11 AND distinct_ip<=15) THEN 1 else 0 END) as ip_between_11_and_15,
+        SUM(CASE WHEN (distinct_ip>=16 AND distinct_ip<=20) THEN 1 else 0 END) as ip_between_16_and_20,
+        SUM(CASE WHEN (distinct_ip>=21) THEN 1 else 0 END) as ip_above_20,
         count(*) as all
 FROM tempy
 GROUP BY 1
@@ -65,24 +65,24 @@ ORDER BY 1 DESC
     sql: ${TABLE}.ip_5 ;;
   }
 
-  measure: ip_6_to_10 {
+  measure: ip_between_6_and_10 {
     type: average
-    sql: ${TABLE}.ip_6_to_10 ;;
+    sql: ${TABLE}.ip_between_6_and_10 ;;
   }
 
-  measure: ip_between_11_15 {
+  measure: ip_between_11_and_15 {
     type: average
-    sql: ${TABLE}.ip_between_11_15 ;;
+    sql: ${TABLE}.ip_between_11_and_15 ;;
   }
 
-  measure: ip_between_16_20 {
+  measure: ip_between_16_and_20 {
     type: average
-    sql: ${TABLE}.ip_between_16_20 ;;
+    sql: ${TABLE}.ip_between_16_and_20 ;;
   }
 
-  measure: ip_is_above_20 {
+  measure: ip_above_20 {
     type: average
-    sql: ${TABLE}.ip_is_above_20 ;;
+    sql: ${TABLE}.ip_above_20 ;;
   }
 
   measure: all {
@@ -98,10 +98,10 @@ ORDER BY 1 DESC
       ip_3,
       ip_4,
       ip_5,
-      ip_6_to_10,
-      ip_between_11_15,
-      ip_between_16_20,
-      ip_is_above_20,
+      ip_between_6_and_10,
+      ip_between_11_and_15,
+      ip_between_16_and_20,
+      ip_above_20,
       all
     ]
   }

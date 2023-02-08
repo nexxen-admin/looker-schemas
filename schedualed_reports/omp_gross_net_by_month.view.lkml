@@ -1,5 +1,4 @@
 view: omp_gross_net_by_month {
-  required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: With NC_Pubs as
       (Select spts.publisher_id,

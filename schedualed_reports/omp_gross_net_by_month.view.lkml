@@ -82,11 +82,19 @@ view: omp_gross_net_by_month {
     drill_fields: [detail*]
   }
 
-  dimension: event_date {
-    type: date
-    label: "Date"
+  dimension_group: event {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
     sql: ${TABLE}.event_date ;;
-    html: {{ rendered_value | date: "%m-%d-%Y" }} ;;
   }
 
   dimension: classification {

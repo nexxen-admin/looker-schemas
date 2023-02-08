@@ -157,7 +157,7 @@ view: omp_gross_net_by_month {
     sql: ${TABLE}.Net_Revenue ;;
   }
 
-  dimension: impressions {
+  measure: impressions {
     type: number
     label: "Impressions"
     sql: ${TABLE}.Impressions ;;

@@ -48,7 +48,12 @@ view: new_revenue {
     sql: ${TABLE}.revenue ;;
   }
 
-  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  dimension: origin_domain {
+    type: string
+    sql: ${TABLE}.origin_domain ;;
+  }
+
+  #  Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: start {
@@ -346,7 +351,8 @@ view: new_revenue {
     view_label: "pop"
     #label: " {{_filters['current_date_range']}} "
     type: number
-    sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
+    sql: case when ${previous_period_revenue}=0 then null else
+    (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} end ;;
     value_format: "0.00%"
 
   }
@@ -360,6 +366,27 @@ view: new_revenue {
                 THEN NULL
                 ELSE  (${current_period_margin} - ${previous_period_margin}) END ;;
     value_format_name: percent_2
+    html:   {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}} ;;
   }
 
   measure: previous_period_revenue{
@@ -379,6 +406,27 @@ view: new_revenue {
                 THEN NULL
                 ELSE (1.0 * ${current_period_revenue} / NULLIF(${previous_period_revenue} ,0)) - 1 END ;;
     value_format_name: percent_2
+    html:   {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+    {% assign indicator = "red,▼" | split: ',' %}
+
+    {% else %}
+
+    {% assign indicator = "black,▬" | split: ',' %}
+
+    {% endif %}
+    <font color="{{indicator[0]}}">
+
+    {% if value == 99999.12345 %} &infin
+
+    {% else %}{{indicator[1]}}
+
+    {% endif %}
+
+    </font>
+    {{rendered_value}} ;;
   }
 
   measure: current_period_cost {

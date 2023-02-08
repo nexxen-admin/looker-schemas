@@ -157,7 +157,7 @@ explore: base_data_without_demand {
 explore: ads_txt_domain_publisher {
   label: "ads_txt_domain_publisher"
   required_access_grants: [can_view_all_tremor]
-  hidden: yes
+ # hidden: yes
 }
 
 explore: unruly_pmp {
@@ -185,9 +185,14 @@ explore:  exchange_daily_report_component{
   hidden: yes
 }
 
+explore:  ivt_report{
+  label: "IVT Report"
+  required_access_grants: [can_view_all_tremor]
+  }
+
 explore: new_revenue {
   label: "New Revenue"
-  required_access_grants:  [can_view_pub_come_looker]
+  #required_access_grants:  [can_view_pub_come_looker]
 
   join: dim_publisher  {
   type:inner
@@ -206,5 +211,6 @@ explore: new_revenue {
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
+  #hidden: yes
 
 }

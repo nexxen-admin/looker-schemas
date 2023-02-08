@@ -60,23 +60,23 @@ explore: all_coumns_is_null_chart {
   required_access_grants: [can_view_acr_group]
 }
 
-explore: acr_monthly_ip_apps {
-  label: "acr monthly ip apps"
+explore: acr_weekly_ip_apps {
+  label: "acr weekly ip apps"
   required_access_grants: [can_view_acr_group]
 }
 
-explore: acr_monthly_device_app_os_count {
-  label: "acr monthly device app os count"
+explore: acr_weekly_app_os_device_count {
+  label: "acr weekly app os device count"
   required_access_grants: [can_view_acr_group]
 }
 
-explore: acr_monthly_title_device {
-  label: "acr monthly title device"
+explore: acr_weekly_title_device {
+  label: "acr weekly title device"
   required_access_grants: [can_view_acr_group]
 }
 
-explore: unique_tremor_programs_id_app {
-  label: "unique tremor programs id app"
+explore: acr_weekly_app_count_title {
+  label: "acr weekly app count title"
   required_access_grants: [can_view_acr_group]
 }
 

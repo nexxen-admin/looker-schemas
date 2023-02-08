@@ -82,7 +82,7 @@ view: omp_gross_net_by_month {
     drill_fields: [detail*]
   }
 
-  dimension: event_date {
+  measure: event_date {
     type: date
     label: "Date"
     sql: ${TABLE}.event_date ;;
@@ -143,14 +143,14 @@ view: omp_gross_net_by_month {
     sql: ${TABLE}.device_type ;;
   }
 
-  dimension: revenue {
+  measure: revenue {
     type: number
     value_format: "#,##0.00"
     label: "Revenue"
     sql: ${TABLE}.Revenue ;;
   }
 
-  dimension: net_revenue {
+  measure: net_revenue {
     type: number
     value_format: "#,##0.00"
     label: "Net Revenue"

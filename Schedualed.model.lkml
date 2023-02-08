@@ -101,6 +101,11 @@ explore: duncan_channon_covd_01_31_23 {
   label: "Duncan Channon - COVD T Digital '23"
 }
 
+explore: omp_gross_net_by_month {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "OMP Gross & Net by Month (2023)"
+}
+
 explore: ctv_frequency_by_month {
   required_access_grants: [can_view_pub_come_looker]
   label: "CTV Frequency by Week"

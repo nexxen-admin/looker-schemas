@@ -144,21 +144,21 @@ view: omp_gross_net_by_month {
   }
 
   measure: revenue {
-    type: number
+    type: sum
     value_format: "#,##0.00"
     label: "Revenue"
     sql: ${TABLE}.Revenue ;;
   }
 
   measure: net_revenue {
-    type: number
+    type: sum
     value_format: "#,##0.00"
     label: "Net Revenue"
     sql: ${TABLE}.Net_Revenue ;;
   }
 
   measure: impressions {
-    type: number
+    type: sum
     label: "Impressions"
     sql: ${TABLE}.Impressions ;;
   }

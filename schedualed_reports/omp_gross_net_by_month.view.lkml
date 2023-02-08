@@ -82,7 +82,7 @@ view: omp_gross_net_by_month {
     drill_fields: [detail*]
   }
 
-  measure: event_date {
+  dimension: event_date {
     type: date
     label: "Date"
     sql: ${TABLE}.event_date ;;

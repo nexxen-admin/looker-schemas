@@ -96,6 +96,12 @@ explore: just_bare_chicken_prepared_foods_11_23_22 {
   label: "Just Bare Chicken Prepared Foods"
 }
 
+explore: cache_creek_casino_resort_daily_02_08_23 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Cache Creek Casino Resort"
+}
+
+
 explore: duncan_channon_covd_01_31_23 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Duncan Channon - COVD T Digital '23"

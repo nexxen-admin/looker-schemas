@@ -70,7 +70,7 @@ view: omp_gross_net_by_month {
       left outer join NC_Pubs pl on pl.publisher_id::varchar(500) = imp.pub_id
       and pl.placement_id::varchar(500) = imp.media_id
       Left Outer Join andromeda.rx_dim_country c on c.country_code = imp.country_code
-      WHERE imp.classification = 'OMP'
+      WHERE imp.classification IN ('OMP', 'PMP')
       Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
       ORDER BY 1 ASC
       ;;

@@ -160,8 +160,9 @@ view: unruly_pmp {
     sql: ${TABLE}.Total_Impressions ;;
   }
 
-  dimension: total_revenue {
-    type: number
+  measure: total_revenue {
+    type: sum
+    value_format: "$0"
     sql: ${TABLE}.Total_Revenue ;;
   }
 

@@ -162,7 +162,7 @@ view: unruly_pmp {
 
   measure: total_revenue {
     type: sum
-    value_format: "$0"
+    value_format: "$#,##0.00"
     sql: ${TABLE}.Total_Revenue ;;
   }
 

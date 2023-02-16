@@ -3,6 +3,7 @@ view: ACR_daily_count_unique_ip {
     sql: SELECT date(AA.viewing_start_utc) as date,
        COUNT(DISTINCT AA.ip) as distinct_ip_count
 FROM dragon.viewership_content_sessions_combined AA
+GROUP BY 1
  ;;
   }
 
@@ -13,8 +14,8 @@ FROM dragon.viewership_content_sessions_combined AA
   }
 
 
-  dimension: distinct_ip_count {
-    type: number
+  measure: distinct_ip_count {
+    type: average
     sql: ${TABLE}."distinct_ip_count" ;;
   }
 

@@ -28,17 +28,13 @@ access_grant: can_view_all_tremor {
 access_grant: can_view_pub_come_looker {
   user_attribute: admins
   allowed_values: ["Looker_Admins"]
-
 }
+
 access_grant: can_view_acr_group {
   user_attribute: acr_group
   allowed_values: ["ACR_Group"]
 }
 
-explore: ACR_daily_ip_per_day_try {
-  label: "ACR daily ip per day try"
-  required_access_grants: [can_view_acr_group]
-}
 
 explore: count_device_id_per_os {
   label: "count device id per os"

@@ -1,6 +1,7 @@
 view: daily_publisher_report_pluto {
   derived_table: {
     sql: select add2.event_time,pub_id,
+      concat(media_id, concat(' - ', placement_name)) AS Placement,
       CASE WHEN ((add2.dsp_deal_type = 'rx') AND (add2.revenue_type = 'thirdparty' or add2.dsp_display_name = 'Amobee')) THEN 'Unruly Curated PMPs'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
@@ -43,13 +44,13 @@ view: daily_publisher_report_pluto {
       pub_id in ('78614','104062')
       and add2.impression_pixel >0
       and add2.dsp_display_name <>'Tremor'
-      group by 1,2,3,4,5,6,7,8,9,10
+      group by 1,2,3,4,5,6,7,8,9,10,11
 
 
       UNION
 
 
-      select add2.event_time, pub_id,
+      select add2.event_time, pub_id, concat(media_id, concat(' - ', placement_name)) AS Placement,
       CASE WHEN ((add2.dsp_deal_type = 'rx') AND (add2.revenue_type = 'thirdparty' or add2.dsp_display_name = 'Amobee')) THEN 'Unruly Curated PMPs'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
@@ -75,13 +76,13 @@ view: daily_publisher_report_pluto {
       and add2.impression_pixel >0
       and add2.rx_deal_id is null
       and add2.dsp_display_name <> 'Tremor'
-      group by 1,2,3,4,5,6,7,8,9,10
+      group by 1,2,3,4,5,6,7,8,9,10,11
 
 
       union
 
 
-      select add2.event_time, pub_id,
+      select add2.event_time, pub_id,concat(media_id, concat(' - ', placement_name)) AS Placement,
       CASE WHEN ((add2.dsp_deal_type = 'rx') AND (add2.revenue_type = 'thirdparty' or add2.dsp_display_name = 'Amobee')) THEN 'Unruly Curated PMPs'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
@@ -107,13 +108,13 @@ view: daily_publisher_report_pluto {
       and add2.impression_pixel >0
       and add2.dsp_display_name = 'Tremor'
       and (add2.dsp_deal_type <>'pub' or add2.dsp_deal_type is null)
-      group by 1,2,3,4,5,6,7,8,9,10
+      group by 1,2,3,4,5,6,7,8,9,10,11
 
 
       union
 
 
-      select add2.event_time, pub_id,
+      select add2.event_time, pub_id, concat(media_id, concat(' - ', placement_name)) AS Placement,
       CASE WHEN ((add2.dsp_deal_type = 'rx') AND (add2.revenue_type = 'thirdparty' or add2.dsp_display_name = 'Amobee')) THEN 'Unruly Curated PMPs'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
@@ -156,7 +157,7 @@ view: daily_publisher_report_pluto {
       and add2.impression_pixel >0
       and add2.dsp_display_name = 'Tremor'
       and add2.dsp_deal_type ='pub'
-      group by 1,2,3,4,5,6,7,8,9,10
+      group by 1,2,3,4,5,6,7,8,9,10,11
       order by 1,2,6,4,8
       ;;
   }
@@ -189,7 +190,7 @@ view: daily_publisher_report_pluto {
   dimension: deal_id {
     type: string
     sql: case when ${TABLE}.deal_id is null AND ${TABLE}.deal_name is null AND ${TABLE}.buying_channel='Open Market' then 'Open Market'
-              else ${TABLE}.deal_id end ;;
+      else ${TABLE}.deal_id end ;;
   }
 
   dimension: pub_id {
@@ -200,12 +201,17 @@ view: daily_publisher_report_pluto {
   dimension: deal_name {
     type: string
     sql: case when ${TABLE}.deal_id is null AND ${TABLE}.deal_name is null AND ${TABLE}.buying_channel='Open Market' then 'Open Market'
-    else ${TABLE}.deal_name end ;;
+      else ${TABLE}.deal_name end ;;
   }
 
   dimension: dsp {
     type: string
     sql: ${TABLE}.DSP ;;
+  }
+
+  dimension: Placement {
+    type: string
+    sql: ${TABLE}.Placement ;;
   }
 
   dimension: advertiser_count {

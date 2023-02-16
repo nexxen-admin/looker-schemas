@@ -13,13 +13,13 @@ FROM dragon.viewership_content_sessions_combined AA
   }
 
 
-  dimension: ip {
+  dimension: distinct_ip_count {
     type: number
     sql: ${TABLE}."distinct_ip_count" ;;
   }
 
 
   set: detail {
-    fields: [date, ip]
+    fields: [date, distinct_ip_count]
   }
 }

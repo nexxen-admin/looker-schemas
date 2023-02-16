@@ -1,7 +1,7 @@
 view: ACR_daily_count_unique_ip {
   derived_table: {
     sql: SELECT date(AA.viewing_start_utc) as date,
-       AA.ip as ip
+       COUNT(DISTINCT AA.ip) as distinct_ip_count
 FROM dragon.viewership_content_sessions_combined AA
  ;;
   }
@@ -14,8 +14,8 @@ FROM dragon.viewership_content_sessions_combined AA
 
 
   dimension: ip {
-    type: string
-    sql: ${TABLE}."ip" ;;
+    type: number
+    sql: ${TABLE}."distinct_ip_count" ;;
   }
 
 

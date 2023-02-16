@@ -61,14 +61,14 @@ view: fact_ad_daily_agg {
       {% endif %}
       <font color="{{indicator[0]}}">
 
-        {% if value == 99999.12345 %} &infin
+      {% if value == 99999.12345 %} &infin
 
-        {% else %}{{indicator[1]}}
+      {% else %}{{indicator[1]}}
 
-        {% endif %}
+      {% endif %}
 
-        </font>
-        {{rendered_value}}
+      </font>
+      {{rendered_value}}
 
 
       ;;
@@ -387,88 +387,88 @@ view: fact_ad_daily_agg {
     html:
     <div style="text-align:center; border-radius: 0px; padding: 5px 10px; background:#eeeeee; height: 60px; color: red;">
 
-    <nav style="font-size: 18px;">
-       <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#home">Reports
-       </a>
-      <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="https://tremor.cloud.looker.com/dashboards-next/29">News️</a>
-      <a style="color: #393838; padding: 5px 15px;line-height: 40px;" href="https://tremor.cloud.looker.com/extensions/marketplace_extension_data_dictionary::data-dictionary/models/Exchange/explores/fact_ad_daily_agg">Data Dictionary</a>
-      <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#about">Contact️</a>
-    </nav>
+          <nav style="font-size: 18px;">
+             <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#home">Reports
+             </a>
+            <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="https://tremor.cloud.looker.com/dashboards-next/29">News️</a>
+            <a style="color: #393838; padding: 5px 15px;line-height: 40px;" href="https://tremor.cloud.looker.com/extensions/marketplace_extension_data_dictionary::data-dictionary/models/Exchange/explores/fact_ad_daily_agg">Data Dictionary</a>
+            <a style="color: #393838; padding: 5px 15px; line-height: 40px;" href="#about">Contact️</a>
+          </nav>
 
-    </div>
-     <div>
-     <img style= "width: 100%" src="https://i.ibb.co/nzf8gc7/Frame-4-1.png" alt="Frame-4-1" border="0">
-    </div>
-     <div style = "background:#ffffff;height: 60px; display: inline-block;text-align:center;width:100%"><h1 style=" font-family: Raleway ,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:700  ">Daily Matrics</h1> </div>
-    <div style = "background:#393838;">
-    <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }} {{impression_change_parameter._value}}
+      </div>
+      <div>
+      <img style= "width: 100%" src="https://i.ibb.co/nzf8gc7/Frame-4-1.png" alt="Frame-4-1" border="0">
+      </div>
+      <div style = "background:#ffffff;height: 60px; display: inline-block;text-align:center;width:100%"><h1 style=" font-family: Raleway ,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:700  ">Daily Matrics</h1> </div>
+      <div style = "background:#393838;">
+      <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+      <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions
+      <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }} {{impression_change_parameter._value}}
 
-        <div style="display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
-     </div>
-     <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Requests {{requests_change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ request_parameter._rendered_value }}
-        <div style="display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{request_lastday_change_parameter._rendered_value}} from past day </div>
-    </div>
-     <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-         <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Bids {{bids_change_parameter._value}}
-        <div style= "display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Bids_parameter._rendered_value }}
-        <div style=" display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{bids_lastday_change_parameter._rendered_value}} from past day </div>
-     </div>
-    </div>
-    <div style = "background:#393838; margin-top: 10px;">
-    <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Revenue {{revenue_change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}
-        <div style="display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{revenue_lastday_change_parameter._rendered_value}} from past day </div>
-    </div>
+      <div style="display: inline-block; font-size: 15px;color:#fff">
+      <span class="drillable-item-content">  </span></span></span>
+      </div></div>
+      {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
+      </div>
+      <div style="margin-right: 120px; display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+      <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Requests {{requests_change_parameter._value}}
+      <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ request_parameter._rendered_value }}
+      <div style="display: inline-block; font-size: 15px;color:#fff">
+      <span class="drillable-item-content">  </span></span></span>
+      </div></div>
+      {{request_lastday_change_parameter._rendered_value}} from past day </div>
+      </div>
+      <div style="display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+      <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Bids {{bids_change_parameter._value}}
+      <div style= "display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Bids_parameter._rendered_value }}
+      <div style=" display: inline-block; font-size: 15px;color:#fff">
+      <span class="drillable-item-content">  </span></span></span>
+      </div></div>
+      {{bids_lastday_change_parameter._rendered_value}} from past day </div>
+      </div>
+      </div>
+      <div style = "background:#393838; margin-top: 10px;">
+      <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+      <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Revenue {{revenue_change_parameter._value}}
+      <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ revenue_parameter._rendered_value }}
+      <div style="display: inline-block; font-size: 15px;color:#fff">
+      <span class="drillable-item-content">  </span></span></span>
+      </div></div>
+      {{revenue_lastday_change_parameter._rendered_value}} from past day </div>
+      </div>
 
-     <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{impression_change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
-        <div style="display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
-    </div>
-    <div style=" display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
-        <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Net Revenue {{net_rev_change_parameter._value}}
-        <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Net_Margin_parameter._rendered_value }}
-        <div style="display: inline-block; font-size: 15px;color:#fff">
-        <span class="drillable-item-content">  </span></span></span>
-       </div></div>
-       {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
-    </div>
-    </div>
+      <div style="margin-right: 120px;display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+      <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em;">Impressions {{impression_change_parameter._value}}
+      <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ impression_parameter._rendered_value }}
+      <div style="display: inline-block; font-size: 15px;color:#fff">
+      <span class="drillable-item-content">  </span></span></span>
+      </div></div>
+      {{impressions_lastday_change_parameter._rendered_value}} from past day </div>
+      </div>
+      <div style=" display: inline-block ;linear-gradient(180deg, rgba(2, 12, 13, 0.03) 18.92%, rgba(2, 12, 13, 0) 79.34%);">
+      <div style="display: block;  font-size: 20px; color:#fff;letter-spacing: 0.01em">Net Revenue {{net_rev_change_parameter._value}}
+      <div style="display: block; line-height: 10px; font-size: 25px;color:#fff">{{ Net_Margin_parameter._rendered_value }}
+      <div style="display: inline-block; font-size: 15px;color:#fff">
+      <span class="drillable-item-content">  </span></span></span>
+      </div></div>
+      {{net_revenue_lastday_change_parameter._rendered_value}} from past day </div>
+      </div>
+      </div>
 
-    <div>
-    <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img  style= "width:100%"  src= "https://i.ibb.co/7WgQTps/Frame-3-1.png" alt="Frame-3-1" border="0">"></a>
-    </div>
-    <div style="text-align:center; border-radius: 0px;  padding: 5px 10px; background:#393838; height: 60px; color: red;">
+      <div>
+      <a href="https://tremor.cloud.looker.com/explore/Exchange/fact_ad_daily_agg"><img  style= "width:100%"  src= "https://i.ibb.co/7WgQTps/Frame-3-1.png" alt="Frame-3-1" border="0">"></a>
+      </div>
+      <div style="text-align:center; border-radius: 0px;  padding: 5px 10px; background:#393838; height: 60px; color: red;">
 
-    <nav style="font-size: 18px;">
+      <nav style="font-size: 18px;">
       <img style=" width;100px ;padding: 5px 15px; float: left; height: 40px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAA…prs+779J3Te6590L1/j8HLRpR86ZVlgAAAABJRU5ErkJggg==">
       <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#home">Reports 📊 </a>
       <a style="color: #efefef; padding: 5px 15px; line-height: 40px;" href="#news">News 📜</a>
       <a style="color: #efefef; padding: 5px 15px;line-height: 40px;" href="#contact">Data Dictionary❓</a>
       <a style=" color: #efefef; padding: 5px 15px; line-height: 40px;" href="#about">Contact️ 📒</a>
-    </nav>
+      </nav>
 
-    ;;
+      ;;
     group_label: "Admins Metrics"
   }
 
@@ -476,45 +476,45 @@ view: fact_ad_daily_agg {
     type: count
     html:
 
-  <table>
-  <tr>
-    <th><div style="text-align: left; margin:72px 72px;">
-  <img style="width:400px" src="https://www.tremorinternational.com/wp-content/uploads/2022/01/Ti_logo_black-fitted.svg">
-  </div></th>
-    <th><div style ="vertical-align: bottom;padding-top:50px;text-align:right;">| Business Intelligence Platform</div></th>
-  </tr>
-</table>
+      <table>
+      <tr>
+        <th><div style="text-align: left; margin:72px 72px;">
+      <img style="width:400px" src="https://www.tremorinternational.com/wp-content/uploads/2022/01/Ti_logo_black-fitted.svg">
+      </div></th>
+        <th><div style ="vertical-align: bottom;padding-top:50px;text-align:right;">| Business Intelligence Platform</div></th>
+      </tr>
+    </table>
 
-    <div style = "margin:5px 72px 72px 72px; text-align:left; ">Hey {{ _user_attributes['name'] }},<br>
+      <div style = "margin:5px 72px 72px 72px; text-align:left; ">Hey {{ _user_attributes['name'] }},<br>
 
-       <div><a style="float:right; color: #FFFFFF; background-color:#000000; border: solid 3px #000000; font-weight: 400;height:70px;
-       text-align: center;text-float: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 120px 30px 120px ;margin-left:900px;font-size:30px;
-       line-height: 0px; border-radius: 25px" href="https://tremor.cloud.looker.com/extensions/marketplace_extension_data_dictionary::data-dictionary/models/Exchange/explores/fact_ad_daily_agg">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
-           Browse through the data dictionary to find definitions, restrictions<br style= "line-height:1px">
-           and general information about the dimensions and measures you're using  <br>
-           in your reports.
-           All missing descriptions will be added shortly. <strong></strong></p>
-          </div>
+      <div><a style="float:right; color: #FFFFFF; background-color:#000000; border: solid 3px #000000; font-weight: 400;height:70px;
+      text-align: center;text-float: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 120px 30px 120px ;margin-left:900px;font-size:30px;
+      line-height: 0px; border-radius: 25px" href="https://tremor.cloud.looker.com/extensions/marketplace_extension_data_dictionary::data-dictionary/models/Exchange/explores/fact_ad_daily_agg">Data Dictionary </a><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
+      Browse through the data dictionary to find definitions, restrictions<br style= "line-height:1px">
+      and general information about the dimensions and measures you're using  <br>
+      in your reports.
+      All missing descriptions will be added shortly. <strong></strong></p>
+      </div>
 
-          <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:70px;
-       text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 110px 30px 110px ;margin-left:900px;font-size:30px;
-       line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/162">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           Visit the new site to find learning experiences <br style= "line-height:1px">
-            with self-paced education and hands-on practice <br>
-           designed to get you up to speed quickly. <strong></strong></p></div>
+      <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:70px;
+      text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 110px 30px 110px ;margin-left:900px;font-size:30px;
+      line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/162">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
+      Visit the new site to find learning experiences <br style= "line-height:1px">
+      with self-paced education and hands-on practice <br>
+      designed to get you up to speed quickly. <strong></strong></p></div>
 
 
-          <div><a style="float:right;  color: #FFFFFF; background-color:#000000;  border: solid 3px #000000;x font-weight: 400;height:70px;
-       text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
-       line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/29">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
-           Stay up to date on what's new in Looker!<br style= "line-height:1px">
-           New additions and important BI information will be added to the news page.<br>
-           You will receive an update in the slack group with a link <br>
-           to the news page.<strong></strong></p></div>
-    </div>
+      <div><a style="float:right;  color: #FFFFFF; background-color:#000000;  border: solid 3px #000000;x font-weight: 400;height:70px;
+      text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
+      line-height: 0px;  border-radius: 25px" href="https://tremor.cloud.looker.com/dashboards/29">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#000000;">
+      Stay up to date on what's new in Looker!<br style= "line-height:1px">
+      New additions and important BI information will be added to the news page.<br>
+      You will receive an update in the slack group with a link <br>
+      to the news page.<strong></strong></p></div>
+      </div>
       <img style="width:1350px" src="https://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/BeeProAgency/632029_614016/Header-03.jpg">
 
-    ;;
+      ;;
 
 
     group_label: "Admins Metrics"
@@ -524,30 +524,30 @@ view: fact_ad_daily_agg {
     type: count
     html:
 
-  <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
-       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin; font-size:30px;
-       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
-      <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
-       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
-       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
-      <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
-       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
-       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
-     <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
-       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
-       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a></div>
       <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
-       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin; font-size:30px;
-       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
-      <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
-       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
-       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
-      <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
-       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
-       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
-     <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
-       text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
-       line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a></div>;;
+           text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin; font-size:30px;
+           line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+          <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+           text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+           line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+          <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+           text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+           line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+         <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+           text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+           line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a></div>
+          <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+           text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin; font-size:30px;
+           line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+          <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+           text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+           line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+          <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+           text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+           line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a>
+         <a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
+           text-align: center; vertical-align: middle; cursor: pointer;user-select: none;padding:  ;margin;font-size:30px;
+           line-height: 350px;  border-radius: 50%" href="#home">Looker Academy </a></div>;;
 
   }
 
@@ -555,115 +555,115 @@ view: fact_ad_daily_agg {
     type: count
     html:
 
-<table>
-  <tr>
-    <th><div style = "display: inline-block">
+    <table>
+      <tr>
+        <th><div style = "display: inline-block">
 
-    <video width="800" height="450" controls>
-    <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
-    </video>
-    <p style = "font-size:20px;line-height: 1.6; color:#000000;">Buiding My first Looker Report<style= "line-height:1px">
-</div>
-</th>
-    <th><p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;"> | </p></th>
+      <video width="800" height="450" controls>
+      <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
+      </video>
+      <p style = "font-size:20px;line-height: 1.6; color:#000000;">Buiding My first Looker Report<style= "line-height:1px">
+      </div>
+      </th>
+      <th><p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;"> | </p></th>
 
-    <th><div style = "display: inline-block">
+      <th><div style = "display: inline-block">
 
-    <video width="800" height="450" controls>
-    <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep02_Save%20Report%20to%20Personal%20Folder.mp4" type="video/mp4">
-    </video>
-    <p style = "font-size:20px;line-height: 1.6; color:#000000;">Saving a Report to my Personal Folder<style= "line-height:1px">
-</div>
-</th>
-  </tr>
-  <tr>
-    <th><div style = "display: inline-block">
+      <video width="800" height="450" controls>
+      <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep02_Save%20Report%20to%20Personal%20Folder.mp4" type="video/mp4">
+      </video>
+      <p style = "font-size:20px;line-height: 1.6; color:#000000;">Saving a Report to my Personal Folder<style= "line-height:1px">
+      </div>
+      </th>
+      </tr>
+      <tr>
+      <th><div style = "display: inline-block">
 
-    <video width="800" height="450" controls>
-    <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep03_Save%20Report%20to%20Existing%20Dashboard.mp4" type="video/mp4">
-    </video>
-    <p style = "font-size:20px;line-height: 1.6; color:#000000;">Saving a Report to an Existing Dashboard<style= "line-height:1px">
-</div>
-</th>
-    <th><div style = "display: inline-block"> </th>
-    <th><div style = "display: inline-block">
+      <video width="800" height="450" controls>
+      <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep03_Save%20Report%20to%20Existing%20Dashboard.mp4" type="video/mp4">
+      </video>
+      <p style = "font-size:20px;line-height: 1.6; color:#000000;">Saving a Report to an Existing Dashboard<style= "line-height:1px">
+      </div>
+      </th>
+      <th><div style = "display: inline-block"> </th>
+      <th><div style = "display: inline-block">
 
-    <video width="800" height="450" controls>
-    <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep04_Add%20New%20Filters.mp4" type="video/mp4">
-    </video>
-    <p style = "font-size:20px;line-height: 1.6; color:#000000;">Applying Filters<style= "line-height:1px">
-</div>
-</th>
-  </tr>
-</table>
+      <video width="800" height="450" controls>
+      <source src="https://tremorinternational-my.sharepoint.com/:v:/r/personal/chen_tal_unrulygroup_com/Documents/looker%20academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep04_Add%20New%20Filters.mp4" type="video/mp4">
+      </video>
+      <p style = "font-size:20px;line-height: 1.6; color:#000000;">Applying Filters<style= "line-height:1px">
+      </div>
+      </th>
+      </tr>
+      </table>
 
-;;
+      ;;
 
-    }
+  }
 
- measure: video_4 {
+  measure: video_4 {
 
-  type: count
-  html:
-
-
-<table>
-        <tr>
-            <td style = "padding: 2px">
-              <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_01_static.png">
-              <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
-              </video>
-            </td>
-
-            <td>
-                <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;"> | </p>
-            </td>
-
-            <td style = "padding: 2px">
-              <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound/ep_02_static.png?csf=1&web=1&e=MBdDCb">
-              <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound/EP_02_Mar3.mp4?csf=1&web=1&e=EvFlDG" type="video/mp4">
-              </video>
-            </td>
-
-            <td>
-                <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;"> | </p>
-            </td>
-
-            <td style = "padding: 2px">
-              <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_03_static.png">
-              <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/EP_03_Mar3.mp4" type="video/mp4">
-              </video>
-            </td>
-        </tr>
-
-        <tr>
-            <td >
-              <h1 style = "font-size:18px;line-height: 1.6; color:#000000;text-align: left;">Building My First Report</h1>
-              <p style = "font-size:16px;line-height: 1.2; color:#71767A;text-align: left;">Learn how to add dimetions and measures and how to filter your report</p>
-            </td>
-            <td>
-                <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;text-align: left;"> | </p>
-            </td>
-
-            <td>
-              <h1 style = "font-size:18px;line-height: 1.6; color:#000000;text-align: left;">Saving a Report to my Personal Folder</h1>
-              <p style = "font-size:16px;line-height: 1.2; color:#71767A;text-align: left;">Learn how to save your report into your own personal folder</p>
-            </td>
-            <td>
-                <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;text-align: left;"> | </p>
-            </td>
-            <td>
-              <h1 style = "font-size:18px;line-height: 1.6; color:#000000;text-align: left;">Saving a Report to an Existing Dashboard</h1>
-              <p style = "font-size:16px;line-height: 1.2; color:#71767A;text-align: left;">Learn how to add a new look to an existing dashboard</p>
-            </td>
-
-        </tr>
-    </table>
-
-    ;;
+    type: count
+    html:
 
 
- }
+    <table>
+            <tr>
+                <td style = "padding: 2px">
+                  <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_01_static.png">
+                  <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/Ep01_Building%20My%20First%20Report.mp4" type="video/mp4">
+                  </video>
+                </td>
+
+      <td>
+      <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;"> | </p>
+      </td>
+
+      <td style = "padding: 2px">
+      <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound/ep_02_static.png?csf=1&web=1&e=MBdDCb">
+      <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound/EP_02_Mar3.mp4?csf=1&web=1&e=EvFlDG" type="video/mp4">
+      </video>
+      </td>
+
+      <td>
+      <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;"> | </p>
+      </td>
+
+      <td style = "padding: 2px">
+      <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/ep_03_static.png">
+      <source src="https://tremorinternational.sharepoint.com/:v:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound-Pending%20Chen%20Approval/EP_03_Mar3.mp4" type="video/mp4">
+      </video>
+      </td>
+      </tr>
+
+      <tr>
+      <td >
+      <h1 style = "font-size:18px;line-height: 1.6; color:#000000;text-align: left;">Building My First Report</h1>
+      <p style = "font-size:16px;line-height: 1.2; color:#71767A;text-align: left;">Learn how to add dimetions and measures and how to filter your report</p>
+      </td>
+      <td>
+      <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;text-align: left;"> | </p>
+      </td>
+
+      <td>
+      <h1 style = "font-size:18px;line-height: 1.6; color:#000000;text-align: left;">Saving a Report to my Personal Folder</h1>
+      <p style = "font-size:16px;line-height: 1.2; color:#71767A;text-align: left;">Learn how to save your report into your own personal folder</p>
+      </td>
+      <td>
+      <p style = "font-size:20px;line-height: 1.6; color:#FFFFFF;text-align: left;"> | </p>
+      </td>
+      <td>
+      <h1 style = "font-size:18px;line-height: 1.6; color:#000000;text-align: left;">Saving a Report to an Existing Dashboard</h1>
+      <p style = "font-size:16px;line-height: 1.2; color:#71767A;text-align: left;">Learn how to add a new look to an existing dashboard</p>
+      </td>
+
+      </tr>
+      </table>
+
+      ;;
+
+
+  }
 
   dimension: rank_limit {
     type: number
@@ -723,6 +723,7 @@ view: fact_ad_daily_agg {
 
   measure:: ias_viewability {
     type: number
+    description: "Analyses the video views amount"
     value_format: "0.00\%"
     label: "IAS Viewability"
     group_label: "Daily Measures"
@@ -763,6 +764,7 @@ view: fact_ad_daily_agg {
 
   measure:: Moat_viewability {
     type: number
+    description: "Analyses the video views amount"
     value_format: "0.00\%"
     label: "Moat Viewability"
     group_label: "Daily Measures"
@@ -777,7 +779,7 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_rmp_attempts ;;
-   # hidden: yes
+    # hidden: yes
   }
 
   measure: slot_attempts {
@@ -786,7 +788,7 @@ view: fact_ad_daily_agg {
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_slot_attempts ;;
-   # hidden: yes
+    # hidden: yes
   }
 
   measure: ias_viewability_score {
@@ -908,9 +910,9 @@ view: fact_ad_daily_agg {
     #hidden: yes
   }
 
-    measure: min_date_key {
+  measure: min_date_key {
     type:date
-      label: "min Date"
+    label: "min Date"
     group_label: "Time Frame"
     sql:  min(${TABLE}.Date_Key) ;;
 
@@ -1110,6 +1112,7 @@ view: fact_ad_daily_agg {
 
   measure: Fill_Rate {
     type: number
+    description: "Number of impressions out of the requests"
     label: "Fill Rate"
     value_format: "0.00%"
     group_label: "Daily Measures"
@@ -1118,6 +1121,7 @@ view: fact_ad_daily_agg {
 
   measure: Net_Revenue {
     type: number
+    description: "Maring between revenue and cogs"
     label: "Net Revenue"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
@@ -1153,6 +1157,7 @@ view: fact_ad_daily_agg {
   measure: Pub_eCPM {
     type: number
     label: "Pub eCPM"
+    description: "cogs/impressions"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
@@ -1161,6 +1166,7 @@ view: fact_ad_daily_agg {
   measure: Pub_RPM {
     type: number
     label: "Pub RPM"
+    description: "revenue/impressions"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${revenue}/NULLIF(${impression_pixel},0))*1000 ;;
@@ -1169,6 +1175,7 @@ view: fact_ad_daily_agg {
 
   measure: Render_Rate {
     type: number
+    description: "impressions/wins"
     label: "Render Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -1177,6 +1184,7 @@ view: fact_ad_daily_agg {
 
   measure: Response_Rate {
     type: number
+    description: "responses/requests"
     label: "Response Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -1186,6 +1194,7 @@ view: fact_ad_daily_agg {
   measure: RPM {
     type: number
     label: "RPM"
+    description: "revenue/requests"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${requests}/1000000),0) ;;
@@ -1193,6 +1202,7 @@ view: fact_ad_daily_agg {
 
   measure: VTR {
     type: number
+    description: "Number of times the video has been completed out of all the impressions it had"
     label: "VTR"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -1201,6 +1211,7 @@ view: fact_ad_daily_agg {
 
   measure: VCR {
     type: number
+    description: "Number of times the video has been completed out of the times it has started"
     label: "VCR"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -1208,7 +1219,7 @@ view: fact_ad_daily_agg {
 
   }
 
-  measure:CTR {
+  measure: CTR {
     type: number
     label: "CTR"
     value_format: "0.00\%"
@@ -1218,6 +1229,7 @@ view: fact_ad_daily_agg {
 
   measure: Win_Rate {
     type: number
+    description: "wins/responses"
     label: "Win Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -1264,7 +1276,7 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: case when ${dsp_key} in ('3900006','4600005') then ${TABLE}.sum_of_revenue
-           else '0' end;;
+      else '0' end;;
   }
 
   measure: MediaMath_Rebate_value {
@@ -1291,11 +1303,11 @@ view: fact_ad_daily_agg {
     value_format: "#,##0.0"
     group_label: "Daily Measures"
     sql: case when dsp_key in ('4900006','4600005','4400008','4900006','4800007','5100008','3900006','5000005') and
-     (case WHEN ((pub_key in ('5200026','5300019','3500026','5100027','3300025','3300025','3000031','4700048') and
-               ssp_key in ('3000003','3400010','3500005','3600004','3800001','3800002','4000002','4000003','4100003','4100004','4500005','5000003','5600006','5600008','434400001'))
-               or (ssp_key in ('3000003','3400010','3500005','3600004','3800001','3800002','4000002','4000003','4100003','4100004','4500005','5000003','5600006','5600008','434400001') and ${TABLE}.Placement_Key
-                 in ('8980315','13780125','16881034','3000164','29381285','42581092','16881035','16881036'))
-                   then 1 else 0 end) =1 then ${revenue} else 0 end) * 0.0335259539604279 * -1;;
+           (case WHEN ((pub_key in ('5200026','5300019','3500026','5100027','3300025','3300025','3000031','4700048') and
+                     ssp_key in ('3000003','3400010','3500005','3600004','3800001','3800002','4000002','4000003','4100003','4100004','4500005','5000003','5600006','5600008','434400001'))
+                     or (ssp_key in ('3000003','3400010','3500005','3600004','3800001','3800002','4000002','4000003','4100003','4100004','4500005','5000003','5600006','5600008','434400001') and ${TABLE}.Placement_Key
+                       in ('8980315','13780125','16881034','3000164','29381285','42581092','16881035','16881036'))
+                         then 1 else 0 end) =1 then ${revenue} else 0 end) * 0.0335259539604279 * -1;;
   }
 
   measure: revenue_test
@@ -1310,6 +1322,7 @@ view: fact_ad_daily_agg {
 
   measure: Ad_eCPM{
     type: number
+    description: "revenue/impressions"
     label: "Ad eCPM"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
@@ -1691,14 +1704,14 @@ view: fact_ad_daily_agg {
     label: "Bid Floor"
     group_label: "Daily Measures"
     sql: ${TABLE}.avg_of_ssp_bid_floor ;;
-   # hidden: yes
+    # hidden: yes
   }
 
   dimension: dsp_bid_price {
     type: number
     label: "Bid Price"
     sql: ${TABLE}.avg_of_dsp_bid_price ;;
-   # hidden: yes
+    # hidden: yes
   }
 
   dimension: Genre_Norm_Key {
@@ -1796,16 +1809,16 @@ view: fact_ad_daily_agg {
         {% else %}NULL{% endif %} ;;
   }
 
-   dimension: pop_row  {
-      view_label: "PoP"
-      label_from_parameter: choose_breakdown
-      type: string
-      order_by_field: sort_by1 # Important
-      sql:
+  dimension: pop_row  {
+    view_label: "PoP"
+    label_from_parameter: choose_breakdown
+    type: string
+    order_by_field: sort_by1 # Important
+    sql:
         {% if choose_breakdown._parameter_value == 'day_of_month' %} ${date_in_period_day_of_month}
         {% elsif choose_breakdown._parameter_value == 'month_name' %} ${date_in_period_month_name}
         {% else %}'2022-01-01'{% endif %} ;;
-    }
+  }
 
   dimension: days_in_period {
     hidden:  yes
@@ -2000,7 +2013,7 @@ view: fact_ad_daily_agg {
     value_format: "0%"
 
 
-}
+  }
 
 
   measure: margin_pop_change {
@@ -2016,26 +2029,26 @@ view: fact_ad_daily_agg {
     {% assign indicator = "green,▲" | split: ',' %}
     {% elsif value < 0 %}
 
-    {% assign indicator = "red,▼" | split: ',' %}
+      {% assign indicator = "red,▼" | split: ',' %}
 
-    {% else %}
+      {% else %}
 
-    {% assign indicator = "black,▬" | split: ',' %}
+      {% assign indicator = "black,▬" | split: ',' %}
 
-    {% endif %}
-    <font color="{{indicator[0]}}">
+      {% endif %}
+      <font color="{{indicator[0]}}">
 
-    {% if value == 99999.12345 %} &infin
+      {% if value == 99999.12345 %} &infin
 
-    {% else %}{{indicator[1]}}
+      {% else %}{{indicator[1]}}
 
-    {% endif %}
+      {% endif %}
 
-    </font>
-    {{rendered_value}}
+      </font>
+      {{rendered_value}}
 
 
-    ;;
+      ;;
   }
 
 
@@ -2065,26 +2078,26 @@ view: fact_ad_daily_agg {
     {% assign indicator = "green,▲" | split: ',' %}
     {% elsif value < 0 %}
 
-    {% assign indicator = "red,▼" | split: ',' %}
+      {% assign indicator = "red,▼" | split: ',' %}
 
-    {% else %}
+      {% else %}
 
-    {% assign indicator = "black,▬" | split: ',' %}
+      {% assign indicator = "black,▬" | split: ',' %}
 
-    {% endif %}
-    <font color="{{indicator[0]}}">
+      {% endif %}
+      <font color="{{indicator[0]}}">
 
-    {% if value == 99999.12345 %} &infin
+      {% if value == 99999.12345 %} &infin
 
-    {% else %}{{indicator[1]}}
+      {% else %}{{indicator[1]}}
 
-    {% endif %}
+      {% endif %}
 
-    </font>
-    {{rendered_value}}
+      </font>
+      {{rendered_value}}
 
 
-    ;;
+      ;;
   }
 
   measure: current_period_cost {
@@ -2117,26 +2130,26 @@ view: fact_ad_daily_agg {
     {% assign indicator = "green,▲" | split: ',' %}
     {% elsif value < 0 %}
 
-    {% assign indicator = "red,▼" | split: ',' %}
+      {% assign indicator = "red,▼" | split: ',' %}
 
-    {% else %}
+      {% else %}
 
-    {% assign indicator = "black,▬" | split: ',' %}
+      {% assign indicator = "black,▬" | split: ',' %}
 
-    {% endif %}
-    <font color="{{indicator[0]}}">
+      {% endif %}
+      <font color="{{indicator[0]}}">
 
-    {% if value == 99999.12345 %} &infin
+      {% if value == 99999.12345 %} &infin
 
-    {% else %}{{indicator[1]}}
+      {% else %}{{indicator[1]}}
 
-    {% endif %}
+      {% endif %}
 
-    </font>
-    {{rendered_value}}
+      </font>
+      {{rendered_value}}
 
 
-    ;;
+      ;;
   }
 
 
@@ -2169,36 +2182,36 @@ view: fact_ad_daily_agg {
     {% assign indicator = "green,▲" | split: ',' %}
     {% elsif value < 0 %}
 
-    {% assign indicator = "red,▼" | split: ',' %}
+      {% assign indicator = "red,▼" | split: ',' %}
 
-    {% else %}
+      {% else %}
 
-    {% assign indicator = "black,▬" | split: ',' %}
+      {% assign indicator = "black,▬" | split: ',' %}
 
-    {% endif %}
-    <font color="{{indicator[0]}}">
+      {% endif %}
+      <font color="{{indicator[0]}}">
 
-    {% if value == 99999.12345 %} &infin
+      {% if value == 99999.12345 %} &infin
 
-    {% else %}{{indicator[1]}}
+      {% else %}{{indicator[1]}}
 
-    {% endif %}
+      {% endif %}
 
-    </font>
-    {{rendered_value}}
+      </font>
+      {{rendered_value}}
 
 
-    ;;
+      ;;
   }
 
 
   measure: current_period_impressions {
-  view_label: "PoP"
-  type: sum
-  sql:  ${TABLE}.sum_of_impression_pixel ;;
-  value_format: "$#,##0"
-  filters: [period_filtered_measures: "this"]
-}
+    view_label: "PoP"
+    type: sum
+    sql:  ${TABLE}.sum_of_impression_pixel ;;
+    value_format: "$#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
   measure: current_period_requests {
     view_label: "PoP"
     type: sum
@@ -2214,13 +2227,13 @@ view: fact_ad_daily_agg {
     #filters: [period_filtered_measures: "this"]
   }
 
-measure: previous_period_requests{
-  view_label: "PoP"
-  type: sum
-  sql: ${TABLE}.sum_of_requests ;;
-  value_format: "$#,##0"
-  filters: [period_filtered_measures: "last"]
-}
+  measure: previous_period_requests{
+    view_label: "PoP"
+    type: sum
+    sql: ${TABLE}.sum_of_requests ;;
+    value_format: "$#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
   measure: previous_period_impressions{
     view_label: "PoP"
     type: sum
@@ -2236,63 +2249,63 @@ measure: previous_period_requests{
     #filters: [period_filtered_measures: "this"]
   }
 
-measure: fill_rate__pop_change {
-  view_label: ""
-  label: "Previous {{_filters['compare_to']}} Change"
-  type: number
-  sql: (${current_period_fill_rate}/${previous_period_fill_rate})-1 ;;
-  value_format_name: percent_0
+  measure: fill_rate__pop_change {
+    view_label: ""
+    label: "Previous {{_filters['compare_to']}} Change"
+    type: number
+    sql: (${current_period_fill_rate}/${previous_period_fill_rate})-1 ;;
+    value_format_name: percent_0
 
-  html:
-  {% if value > 0 %}
-  {% assign indicator = "green,▲" | split: ',' %}
-  {% elsif value < 0 %}
+    html:
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
 
-  {% assign indicator = "red,▼" | split: ',' %}
+      {% assign indicator = "red,▼" | split: ',' %}
 
-  {% else %}
+      {% else %}
 
-  {% assign indicator = "black,▬" | split: ',' %}
+      {% assign indicator = "black,▬" | split: ',' %}
 
-  {% endif %}
-  <font color="{{indicator[0]}}">
+      {% endif %}
+      <font color="{{indicator[0]}}">
 
-  {% if value == 99999.12345 %} &infin
+      {% if value == 99999.12345 %} &infin
 
-  {% else %}{{indicator[1]}}
+      {% else %}{{indicator[1]}}
 
-  {% endif %}
+      {% endif %}
 
-  </font>
-  {{rendered_value}}
+      </font>
+      {{rendered_value}}
 
 
-  ;;
-}
+      ;;
+  }
 
-measure: bid_price_top_25_perc {
-  label: "bid price top 25%"
-  type: number
-  sql: case when ${TABLE}.avg_of_dsp_bid_price>${TABLE}.avg_of_ssp_bid_floor*0.75,${TABLE}.avg_of_dsp_bid_price else null end ;;
-}
+  measure: bid_price_top_25_perc {
+    label: "bid price top 25%"
+    type: number
+    sql: case when ${TABLE}.avg_of_dsp_bid_price>${TABLE}.avg_of_ssp_bid_floor*0.75,${TABLE}.avg_of_dsp_bid_price else null end ;;
+  }
 
-measure: diff_bid_floor_bid_price{
-  label: "diff bid floor bid price"
-  type: number
-  sql: case when ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc>0 then ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc else null end) ;;
-}
+  measure: diff_bid_floor_bid_price{
+    label: "diff bid floor bid price"
+    type: number
+    sql: case when ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc>0 then ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc else null end) ;;
+  }
 
   measure: Bucket {
     label: "Bucket"
     type: count_distinct
     sql: SELECT CASE WHEN ${TABLE}.diff_bid_floor_bid_price>0 AND ${TABLE}.diff_bid_floor_bid_price<1 THEN 'under 1'
-    WHEN ${TABLE}.diff_bid_floor_bid_price>=1 AND ${TABLE}.diff_bid_floor_bid_price<2 THEN '1 to 2'
-    WHEN ${TABLE}.diff_bid_floor_bid_price>=2 THEN 'over 2';;
+          WHEN ${TABLE}.diff_bid_floor_bid_price>=1 AND ${TABLE}.diff_bid_floor_bid_price<2 THEN '1 to 2'
+          WHEN ${TABLE}.diff_bid_floor_bid_price>=2 THEN 'over 2';;
   }
 
   measure: count {
     type: count
     drill_fields: []
-   ## hidden: yes
+    ## hidden: yes
   }
 }

@@ -190,6 +190,11 @@ explore:  ivt_report{
   required_access_grants: [can_view_all_tremor]
   }
 
+explore:  no_bid_reason{
+  label: "No_Bid_Reason"
+  required_access_grants: [can_view_all_tremor]
+}
+
 explore: new_revenue {
   label: "New Revenue"
   #required_access_grants:  [can_view_pub_come_looker]

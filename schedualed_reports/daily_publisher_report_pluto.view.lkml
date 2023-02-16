@@ -5,7 +5,7 @@ view: daily_publisher_report_pluto {
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
       WHEN (add2.dsp_deal_type = 'pub') THEN 'Publisher Deal'
-      WHEN (add2.revenue_type = 'firstparty' and add2.dsp_display_name<>'Amobee') THEN 'Direct Demand' ELSE 'Open Market' END AS buying_channel,
+      ELSE 'Open Market' END AS buying_channel,
       case when rddb.brand ='Multi-Advertiser' then 'Many to Many'
       when rddb.brand <> 'Multi-Advertiser' and adv_cnt.adv_count =1 then '1 to Many'
       when add2.dsp_deal_type='rx' and rddb.brand is null and adv_cnt.adv_count >1 then 'Many to Many'
@@ -54,7 +54,7 @@ view: daily_publisher_report_pluto {
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
       WHEN (add2.dsp_deal_type = 'pub') THEN 'Publisher Deal'
-      WHEN (add2.revenue_type = 'firstparty' and add2.dsp_display_name<>'Amobee') THEN 'Direct Demand' ELSE 'Open Market' END AS buying_channel,
+      ELSE 'Open Market' END AS buying_channel,
       null as deal_type,
       null as deal_id,
       add2.rx_device_type as device_type,
@@ -86,7 +86,7 @@ view: daily_publisher_report_pluto {
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
       WHEN (add2.dsp_deal_type = 'pub') THEN 'Publisher Deal'
-      WHEN (add2.revenue_type = 'firstparty' and add2.dsp_display_name<>'Amobee') THEN 'Direct Demand' ELSE 'Open Market' END AS buying_channel,
+      ELSE 'Open Market' END AS buying_channel,
       null as deal_type,
       null as deal_id,
       add2.rx_device_type as device_type,
@@ -118,7 +118,7 @@ view: daily_publisher_report_pluto {
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
       WHEN ((add2.dsp_deal_type = 'pub') AND (add2.platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
       WHEN (add2.dsp_deal_type = 'pub') THEN 'Publisher Deal'
-      WHEN (add2.revenue_type = 'firstparty' and add2.dsp_display_name<>'Amobee') THEN 'Direct Demand' ELSE 'Open Market' END AS buying_channel,
+      ELSE 'Open Market' END AS buying_channel,
       case when rddb.brand ='Multi-Advertiser' then 'Many to Many'
       when rddb.brand <> 'Multi-Advertiser' and adv_cnt.adv_count =1 then '1 to Many'
       when add2.dsp_deal_type='rx' and rddb.brand is null and adv_cnt.adv_count >1 then 'Many to Many'

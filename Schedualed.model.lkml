@@ -81,6 +81,11 @@ explore: duncan_channon_ctcp_cessation_daily_12_13_22 {
   label: "Duncan Channon - CTCP Cessation"
 }
 
+explore: uc_health_campaign_id_4561986_daily_02_08_23 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "UC Health Campaign ID 4561986"
+}
+
 explore: tremor_forecasting_data_daily {
   required_access_grants: [can_view_pub_come_looker]
   label: "Tremor Current Quarter Forecasting Report"
@@ -96,9 +101,20 @@ explore: just_bare_chicken_prepared_foods_11_23_22 {
   label: "Just Bare Chicken Prepared Foods"
 }
 
+explore: cache_creek_casino_resort_daily_02_08_23 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Cache Creek Casino Resort"
+}
+
+
 explore: duncan_channon_covd_01_31_23 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Duncan Channon - COVD T Digital '23"
+}
+
+explore: omp_gross_net_by_month {
+  #required_access_grants: [can_view_pub_come_looker]
+  label: "OMP Gross & Net by Month (2023)"
 }
 
 explore: ctv_frequency_by_month {

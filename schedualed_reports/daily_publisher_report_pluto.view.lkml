@@ -189,7 +189,6 @@ view: daily_publisher_report_pluto {
   dimension: deal_id {
     type: string
     sql: case when ${TABLE}.deal_id is null AND ${TABLE}.deal_name is null AND ${TABLE}.buying_channel='Open Market' then 'Open Market'
-              when ${TABLE}.deal_id is null AND ${TABLE}.deal_name is null AND ${TABLE}.buying_channel='Direct Demand' then 'Direct Demand'
               else ${TABLE}.deal_id end ;;
   }
 
@@ -201,7 +200,6 @@ view: daily_publisher_report_pluto {
   dimension: deal_name {
     type: string
     sql: case when ${TABLE}.deal_id is null AND ${TABLE}.deal_name is null AND ${TABLE}.buying_channel='Open Market' then 'Open Market'
-    when ${TABLE}.deal_id is null AND ${TABLE}.deal_name is null AND ${TABLE}.buying_channel='Direct Demand' then 'Direct Demand'
     else ${TABLE}.deal_name end ;;
   }
 

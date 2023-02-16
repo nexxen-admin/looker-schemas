@@ -93,6 +93,7 @@ view: v_dim_employee_biz_dev {
       label: "Drill To"
       url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"
     }
+    hidden: yes
   }
 
 

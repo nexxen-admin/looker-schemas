@@ -3,6 +3,7 @@ view: uc_health_campaign_id_4561986_daily_02_08_23 {
   derived_table: {
     sql: SELECT faeda.Date_Key::date as "Date",
            'Tremor Video' AS "Partner Name",
+           'UC Health' AS "Advertiser Name",
            dc.Campaign_ID AS "Campaign ID",
            dc.Campaign_Name AS "Campaign Name",
            'Self Service' AS "Service Type",
@@ -22,7 +23,7 @@ view: uc_health_campaign_id_4561986_daily_02_08_23 {
         AND faeda.Date_Key >= '2023-01-19'
         AND faeda.Date_Key < CURRENT_DATE()
         AND faeda.sum_of_Impressions > 0
-      GROUP BY 1,2,3,4,5,6,7,8
+      GROUP BY 1,2,3,4,5,6,7,8,9
       ORDER BY 1 ASC
        ;;
   }
@@ -43,6 +44,12 @@ view: uc_health_campaign_id_4561986_daily_02_08_23 {
     type: string
     label: "Partner Name"
     sql: ${TABLE}."Partner Name" ;;
+  }
+
+  dimension: advertiser_name {
+    type: string
+    label: "Advertiser Name"
+    sql: ${TABLE}."Advertiser Name" ;;
   }
 
   dimension: campaign_id {
@@ -117,6 +124,7 @@ view: uc_health_campaign_id_4561986_daily_02_08_23 {
     fields: [
       date,
       partner_name,
+      advertiser_name,
       campaign_id,
       campaign_name,
       service_type,

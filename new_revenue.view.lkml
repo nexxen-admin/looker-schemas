@@ -12,7 +12,7 @@ view: new_revenue {
 
   measure: cogs {
     type: sum
-    value_format: "$#,###.00"
+    value_format: "$#,###"
     sql: ${TABLE}.cogs ;;
   }
 
@@ -46,7 +46,7 @@ view: new_revenue {
 
   measure: revenue {
     type: sum
-    value_format: "$#,###.00"
+    value_format: "$#,###"
     sql: ${TABLE}.revenue;;
   }
 

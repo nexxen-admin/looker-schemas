@@ -12,6 +12,7 @@ view: new_revenue {
 
   measure: cogs {
     type: sum
+    value_format: "$#,###.00"
     sql: ${TABLE}.cogs ;;
   }
 
@@ -45,7 +46,8 @@ view: new_revenue {
 
   measure: revenue {
     type: sum
-    sql: ${TABLE}.revenue ;;
+    value_format: "$#,###.00"
+    sql: ${TABLE}.revenue;;
   }
 
   dimension: origin_domain {

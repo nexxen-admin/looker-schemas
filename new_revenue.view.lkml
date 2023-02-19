@@ -38,10 +38,10 @@ view: new_revenue {
     sql: ${TABLE}.pub_id ;;
   }
 
-  dimension: publisher_name {
-    type: string
-    sql: ${TABLE}.publisher_name ;;
-  }
+  #dimension: publisher_name {
+   # type: string
+   # sql: ${TABLE}.publisher_name ;;
+  #}
 
   measure: revenue {
     type: sum
@@ -72,7 +72,7 @@ view: new_revenue {
 
   measure: count {
     type: count
-    drill_fields: [publisher_name]
+    #drill_fields: [publisher_name]
   }
   #--------------------------------------------------------
   filter: current_date_range {

@@ -67,91 +67,109 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: p1_exch_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_Exch_Revenue ;;
   }
 
   measure: p1_exch_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_Exch_Cost ;;
   }
 
   measure: p1_exch_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_Exch_Net ;;
   }
 
   measure: p2_exch_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_Exch_Revenue ;;
   }
 
   measure: p2_exch_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_Exch_cost ;;
   }
 
   measure: p2_exch_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_Exch_Net ;;
   }
 
   measure: p1_dmnd_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_DMND_Revenue ;;
   }
 
   measure: p1_dmnd_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_DMND_Cost ;;
   }
 
   measure: p1_dmnd_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_DMND_Net ;;
   }
 
   measure: p2_dmnd_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_DMND_Revenue ;;
   }
 
   measure: p2_dmnd_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_DMND_cost ;;
   }
 
   measure: p2_dmnd_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_DMND_Net ;;
   }
 
   measure: p1_e2_e_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_E2E_Revenue ;;
   }
 
   measure: p1_e2_e_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_E2E_Cost ;;
   }
 
   measure: p1_e2_e_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_E2E_Net ;;
   }
 
   measure: p2_e2_e_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_E2E_Revenue ;;
   }
 
   measure: p2_e2_e_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_E2E_cost ;;
   }
 
   measure: p2_e2_e_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_E2E_Net ;;
   }
 

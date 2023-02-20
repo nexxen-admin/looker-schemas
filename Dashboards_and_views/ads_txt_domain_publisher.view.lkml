@@ -91,6 +91,7 @@ view: ads_txt_domain_publisher {
 
   dimension: vertica_pub_id {
     type: number
+    value_format: "0"
     sql: ${TABLE}.vertica_pub_id ;;
   }
 

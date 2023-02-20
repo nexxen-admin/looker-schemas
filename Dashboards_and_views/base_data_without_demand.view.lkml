@@ -57,31 +57,37 @@ view: base_data_without_demand {
 
   measure: exchange_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.Exchange_Revenue ;;
   }
 
   measure: exchange_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.Exchange_Cost ;;
   }
 
   measure: demand_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.Demand_Revenue ;;
   }
 
   measure: demand_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.Demand_Cost ;;
   }
 
   measure: e2_e_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.E2E_Revenue ;;
   }
 
   measure: e2_e_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.E2E_Cost ;;
   }
 

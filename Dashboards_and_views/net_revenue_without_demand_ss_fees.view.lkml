@@ -35,6 +35,8 @@ view: net_revenue_without_demand_ss_fees {
 
   dimension: event_month {
     type: date
+
+    group_label: "Event Month"
     sql: ${TABLE}.Event_Month ;;
   }
 
@@ -197,6 +199,36 @@ view: net_revenue_without_demand_ss_fees {
            then ${TABLE}.P1_DMND_Net else 0 end ;;
   }
 
+  measure: Total_Gross_Demand {
+    type: sum
+    sql: ${TABLE}.New_Gross_Demand+0+${TABLE}.Retained_Gross_Demand ;;
+  }
+
+  measure: Total_Net_Demand {
+    type: sum
+    sql: ${TABLE}.New_Net_Demand+0+${TABLE}.Retained_Net_Demand ;;
+  }
+
+  measure: Total_Gross_Exch {
+    type: sum
+    sql: ${TABLE}.New_Gross_Exch+0+${TABLE}.Retained_Gross_Exch ;;
+  }
+
+  measure: Total_Net_Exch {
+    type: sum
+    sql: ${TABLE}.New_Net_Exch+0+${TABLE}.Retained_Net_Exch ;;
+  }
+
+  measure: Total_Gross_E2E {
+    type: sum
+    sql: ${TABLE}.New_Gross_E2E+0+${TABLE}.Retained_Gross_E2E ;;
+  }
+
+  measure: Total_Net_E2E {
+    type: sum
+    sql: ${TABLE}.New_Net_E2E+0+${TABLE}.Retained_Net_E2E ;;
+  }
+
   measure: Retained_Gross_Demand {
     type: sum
     value_format: "0.00"
@@ -244,6 +276,44 @@ view: net_revenue_without_demand_ss_fees {
              AND ${TABLE}.P2_Exch_Net !=0)
            then ${TABLE}.P1_Exch_Net else 0 end ;;
   }
+
+  measure: Retention_Rate_Gross_E2E {
+    type: sum
+
+    sql: ${TABLE}.Retained_Gross_E2E/${TABLE}.Total_Gross_E2E ;;
+  }
+
+  measure: Retention_Rate_Net_E2E {
+    type: sum
+
+    sql: ${TABLE}.Retained_Net_E2E/${TABLE}.Total_Net_E2E ;;
+  }
+
+  measure: Retention_Rate_Gross_Exch {
+    type: sum
+
+    sql: ${TABLE}.Retained_Gross_Exch/${TABLE}.Total_Gross_Exch ;;
+  }
+
+  measure: Retention_Rate_Net_Exch {
+    type: sum
+
+    sql: ${TABLE}.Retained_Net_Exch/${TABLE}.Total_Net_Exch ;;
+  }
+
+  measure: Retention_Rate_Gross_Demand {
+    type: sum
+
+    sql: ${TABLE}.Retained_Gross_Demand/${TABLE}.Total_Gross_Demand ;;
+  }
+
+  measure: Retention_Rate_Net_Demand {
+    type: sum
+
+    sql: ${TABLE}.Retained_Net_Demand/${TABLE}.Total_Net_Demand ;;
+  }
+
+
 
   #measure: Retention_Rate_E2E {
   # type: sum

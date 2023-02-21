@@ -1398,7 +1398,7 @@ view: fact_ad_daily_agg {
     description: "The impressions of 8 days ago (last day of last week)"
     sql: ${TABLE}.sum_of_impression_pixel ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "8 days ago"]
 
   }
@@ -1409,7 +1409,7 @@ view: fact_ad_daily_agg {
     description: "The impressions of 32 days ago (last day of last month)"
     sql: ${TABLE}.sum_of_impression_pixel ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "32 days ago"]
 
   }
@@ -1420,7 +1420,7 @@ view: fact_ad_daily_agg {
     type: sum
     description: "The bid requests of 2 days ago"
     sql: ${TABLE}.sum_of_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
   }
@@ -1430,7 +1430,7 @@ view: fact_ad_daily_agg {
     type: sum
     description: "The pub requests of 2 days ago"
     sql: ${TABLE}.sum_of_rmp_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
   }
@@ -1440,7 +1440,7 @@ view: fact_ad_daily_agg {
     type: sum
     description: "The pub requests of 7 days ago"
     sql: ${TABLE}.sum_of_rmp_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "7 days ago"]
   }
@@ -1450,7 +1450,7 @@ view: fact_ad_daily_agg {
     type: sum
     description: "The pub requests of 28 days ago"
     sql: ${TABLE}.sum_of_rmp_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "28 days ago"]
   }
@@ -1460,7 +1460,7 @@ view: fact_ad_daily_agg {
     type: sum
     description: "The impressions of 2 days ago"
     sql: ${TABLE}.sum_of_impression_pixel ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
 
@@ -1480,7 +1480,7 @@ view: fact_ad_daily_agg {
     type: sum
     label: "Bids Previous day"
     description: "The responses of 2 days ago"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.dim_of_responses  ;;
     filters: [date_key_date: "2 days ago"]
@@ -1526,7 +1526,7 @@ view: fact_ad_daily_agg {
     description: "The requests of 8 days ago"
     sql: ${TABLE}.sum_of_requests ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "8 days ago"]
 
   }
@@ -1537,7 +1537,7 @@ view: fact_ad_daily_agg {
     description: "The requests of 32 days ago"
     sql: ${TABLE}.sum_of_requests ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "32 days ago"]
 
   }
@@ -1547,7 +1547,7 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.sum_of_slot_attempts ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "2 days ago"]
 
   }
@@ -1557,7 +1557,7 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.sum_of_slot_attempts ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "1 days ago"]
 
   }
@@ -1567,7 +1567,7 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.sum_of_slot_attempts ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "8 days ago"]
 
   }
@@ -1578,7 +1578,7 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.sum_of_slot_attempts ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "32 days ago"]
 
   }
@@ -1597,7 +1597,7 @@ view: fact_ad_daily_agg {
     description: "The last day revenue"
     sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
@@ -1607,7 +1607,7 @@ view: fact_ad_daily_agg {
     description: "The revenue of the last 7 days"
     sql: ${TABLE}.sum_of_revenue;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "7 days ago for 7 days"]
   }
 
@@ -1617,7 +1617,7 @@ view: fact_ad_daily_agg {
     description: "The revenue of the previous week (14 to 8 days ago)"
     sql: ${TABLE}.sum_of_revenue;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "14 days ago for 7 days"]
   }
 
@@ -1627,7 +1627,7 @@ view: fact_ad_daily_agg {
     description: "The revenue of 28 to 22 days ago"
     sql: ${TABLE}.sum_of_revenue;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "28 days ago for 7 days"]
   }
 
@@ -1637,7 +1637,7 @@ view: fact_ad_daily_agg {
     description: "The cogs of the last 7 days"
     sql: ${TABLE}.sum_of_cogs;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "7 days ago for 7 days"]
   }
 
@@ -1647,7 +1647,7 @@ view: fact_ad_daily_agg {
     description: "The cogs of the previous week (14 to 8 days ago)"
     sql: ${TABLE}.sum_of_cogs;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "14 days ago for 7 days"]
   }
 
@@ -1657,7 +1657,7 @@ view: fact_ad_daily_agg {
     description: "The cogs of 28 to 22 days ago"
     sql: ${TABLE}.sum_of_cogs;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "28 days ago for 7 days"]
   }
 
@@ -1667,7 +1667,7 @@ view: fact_ad_daily_agg {
     description: "The cogs of the last day"
     sql: ${TABLE}.sum_of_cogs ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
@@ -1695,7 +1695,7 @@ view: fact_ad_daily_agg {
     type: sum
     description: "The bid reponses of the last day"
     label: "Bids Last day"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.sum_of_responses ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
@@ -1706,7 +1706,7 @@ view: fact_ad_daily_agg {
     type: sum
     description: "The requests of the last day"
     sql: ${TABLE}.sum_of_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
@@ -1715,7 +1715,7 @@ view: fact_ad_daily_agg {
     type: sum
     description: "The pub requests of the last day"
     sql: ${TABLE}.sum_of_rmp_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }

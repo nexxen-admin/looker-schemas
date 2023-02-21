@@ -56,6 +56,7 @@ view: dim_deal {
 
   dimension: deal_bid_floor {
     type: number
+    description: "The bid floor of the specific deal. every bid price below it will be immediately filtered out"
     sql: ${TABLE}.Deal_Bid_Floor ;;
   }
 

@@ -12,6 +12,7 @@ view: no_bid_reason {
 
   dimension: bid_filterreason {
     type: string
+    label: "Bid Filter Reason"
     sql: ${TABLE}.bid_filterreason ;;
   }
 

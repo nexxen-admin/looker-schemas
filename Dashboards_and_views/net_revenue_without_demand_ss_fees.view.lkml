@@ -35,6 +35,8 @@ view: net_revenue_without_demand_ss_fees {
 
   dimension: event_month {
     type: date
+
+    group_label: "Event Month"
     sql: ${TABLE}.Event_Month ;;
   }
 
@@ -65,96 +67,115 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: p1_exch_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_Exch_Revenue ;;
   }
 
   measure: p1_exch_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_Exch_Cost ;;
   }
 
   measure: p1_exch_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_Exch_Net ;;
   }
 
   measure: p2_exch_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_Exch_Revenue ;;
   }
 
   measure: p2_exch_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_Exch_cost ;;
   }
 
   measure: p2_exch_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_Exch_Net ;;
   }
 
   measure: p1_dmnd_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_DMND_Revenue ;;
   }
 
   measure: p1_dmnd_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_DMND_Cost ;;
   }
 
   measure: p1_dmnd_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_DMND_Net ;;
   }
 
   measure: p2_dmnd_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_DMND_Revenue ;;
   }
 
   measure: p2_dmnd_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_DMND_cost ;;
   }
 
   measure: p2_dmnd_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_DMND_Net ;;
   }
 
   measure: p1_e2_e_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_E2E_Revenue ;;
   }
 
   measure: p1_e2_e_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_E2E_Cost ;;
   }
 
   measure: p1_e2_e_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P1_E2E_Net ;;
   }
 
   measure: p2_e2_e_revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_E2E_Revenue ;;
   }
 
   measure: p2_e2_e_cost {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_E2E_cost ;;
   }
 
   measure: p2_e2_e_net {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.P2_E2E_Net ;;
   }
 
   measure: New_Gross_E2E {
     type: sum
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_E2E_Revenue!=0
              AND ${TABLE}.P2_E2E_Revenue =0)
            then ${TABLE}.P1_E2E_Revenue else 0 end ;;
@@ -162,6 +183,7 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: New_Net_E2E {
     type: sum
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_E2E_Net!=0
              AND ${TABLE}.P2_E2E_Net =0)
            then ${TABLE}.P1_E2E_Net else 0 end ;;
@@ -169,6 +191,7 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: Retained_Gross_E2E {
     type: sum
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_E2E_Revenue!=0
              AND ${TABLE}.P2_E2E_Revenue !=0)
            then ${TABLE}.P1_E2E_Revenue else 0 end ;;
@@ -176,6 +199,7 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: Retained_Net_E2E {
     type: sum
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_E2E_Net!=0
              AND ${TABLE}.P2_E2E_Net !=0)
            then ${TABLE}.P1_E2E_Net else 0 end ;;
@@ -183,7 +207,7 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: New_Gross_Demand {
     type: sum
-    value_format: "0.00"
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_DMND_Revenue!=0
              AND ${TABLE}.P2_DMND_Revenue =0)
            then ${TABLE}.P1_DMND_Revenue else 0 end ;;
@@ -191,15 +215,51 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: New_Net_Demand {
     type: sum
-    value_format: "0.00"
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_DMND_Net!=0
              AND ${TABLE}.P2_DMND_Net =0)
            then ${TABLE}.P1_DMND_Net else 0 end ;;
   }
 
+  measure: Total_Gross_Demand {
+    type: sum
+    value_format: "$#,##0"
+    sql: ${TABLE}.New_Gross_Demand+0+${TABLE}.Retained_Gross_Demand ;;
+  }
+
+  measure: Total_Net_Demand {
+    type: sum
+    value_format: "$#,##0"
+    sql: ${TABLE}.New_Net_Demand+0+${TABLE}.Retained_Net_Demand ;;
+  }
+
+  measure: Total_Gross_Exch {
+    type: sum
+    value_format: "$#,##0"
+    sql: ${TABLE}.New_Gross_Exch+0+${TABLE}.Retained_Gross_Exch ;;
+  }
+
+  measure: Total_Net_Exch {
+    type: sum
+    value_format: "$#,##0"
+    sql: ${TABLE}.New_Net_Exch+0+${TABLE}.Retained_Net_Exch ;;
+  }
+
+  measure: Total_Gross_E2E {
+    type: sum
+    value_format: "$#,##0"
+    sql: ${TABLE}.New_Gross_E2E+0+${TABLE}.Retained_Gross_E2E ;;
+  }
+
+  measure: Total_Net_E2E {
+    type: sum
+    value_format: "$#,##0"
+    sql: ${TABLE}.New_Net_E2E+0+${TABLE}.Retained_Net_E2E ;;
+  }
+
   measure: Retained_Gross_Demand {
     type: sum
-    value_format: "0.00"
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_DMND_Revenue!=0
              AND ${TABLE}.P2_DMND_Revenue !=0)
            then ${TABLE}.P1_DMND_Revenue else 0 end ;;
@@ -207,7 +267,7 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: Retained_Net_Demand {
     type: sum
-    value_format: "0.00"
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_DMND_Net!=0
              AND ${TABLE}.P2_DMND_Net !=0)
            then ${TABLE}.P1_DMND_Net else 0 end ;;
@@ -231,7 +291,7 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: Retained_Gross_Exch {
     type: sum
-    value_format: "0.00"
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_Exch_Revenue!=0
              AND ${TABLE}.P2_Exch_Revenue !=0)
            then ${TABLE}.P1_Exch_Revenue else 0 end ;;
@@ -239,11 +299,49 @@ view: net_revenue_without_demand_ss_fees {
 
   measure: Retained_Net_Exch {
     type: sum
-    value_format: "0.00"
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_Exch_Net!=0
              AND ${TABLE}.P2_Exch_Net !=0)
            then ${TABLE}.P1_Exch_Net else 0 end ;;
   }
+
+  measure: Retention_Rate_Gross_E2E {
+    type: sum
+    value_format: "0.0\%"
+    sql: ${TABLE}.Retained_Gross_E2E/${TABLE}.Total_Gross_E2E ;;
+  }
+
+  measure: Retention_Rate_Net_E2E {
+    type: sum
+    value_format: "0.0\%"
+    sql: ${TABLE}.Retained_Net_E2E/${TABLE}.Total_Net_E2E ;;
+  }
+
+  measure: Retention_Rate_Gross_Exch {
+    type: sum
+    value_format: "0.0\%"
+    sql: ${TABLE}.Retained_Gross_Exch/${TABLE}.Total_Gross_Exch ;;
+  }
+
+  measure: Retention_Rate_Net_Exch {
+    type: sum
+    value_format: "0.0\%"
+    sql: ${TABLE}.Retained_Net_Exch/${TABLE}.Total_Net_Exch ;;
+  }
+
+  measure: Retention_Rate_Gross_Demand {
+    type: sum
+    value_format: "0.0\%"
+    sql: ${TABLE}.Retained_Gross_Demand/${TABLE}.Total_Gross_Demand ;;
+  }
+
+  measure: Retention_Rate_Net_Demand {
+    type: sum
+    value_format: "0.0\%"
+    sql: ${TABLE}.Retained_Net_Demand/${TABLE}.Total_Net_Demand ;;
+  }
+
+
 
   #measure: Retention_Rate_E2E {
   # type: sum

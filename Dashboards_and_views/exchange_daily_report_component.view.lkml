@@ -55,7 +55,14 @@ view: exchange_daily_report_component {
 
   measure: Cost {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.Cost ;;
+  }
+
+  measure: Net_Revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.Revenue-${TABLE}.Cost ;;
   }
 
   dimension_group: event {

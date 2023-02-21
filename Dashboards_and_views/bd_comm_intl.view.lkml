@@ -91,8 +91,9 @@ view: bd_comm_intl {
 
   measure: revenue {
     type: sum
-    sql: coalesce(${TABLE}.revenue,0) ;;
     value_format: "$#,##0.00"
+    sql: coalesce(${TABLE}.revenue,0) ;;
+
   }
 
   dimension_group: start {

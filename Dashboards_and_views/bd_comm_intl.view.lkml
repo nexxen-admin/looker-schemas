@@ -32,6 +32,7 @@ view: bd_comm_intl {
 
   measure: cogs {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.COGS ;;
   }
 
@@ -74,6 +75,7 @@ view: bd_comm_intl {
 
   measure: profit {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.profit ;;
   }
 
@@ -89,6 +91,7 @@ view: bd_comm_intl {
 
   measure: revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.revenue ;;
   }
 

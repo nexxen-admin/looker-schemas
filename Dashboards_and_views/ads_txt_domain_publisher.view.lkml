@@ -86,6 +86,7 @@ view: ads_txt_domain_publisher {
 
   measure: revenue {
     type: sum
+    value_format: "$#,###"
     sql: ${TABLE}.revenue ;;
   }
 

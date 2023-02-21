@@ -41,6 +41,7 @@ view: bd_comm_intl {
 
   dimension_group: event_month {
     type: time
+    label: ""
     timeframes: [
       raw,
       date,
@@ -92,7 +93,7 @@ view: bd_comm_intl {
   measure: revenue {
     type: sum
     value_format: "$#,##0.00"
-    sql: coalesce(${TABLE}.revenue,0) ;;
+    sql: NULLIF(${TABLE}.revenue,0) ;;
 
   }
 

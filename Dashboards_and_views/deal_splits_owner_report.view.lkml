@@ -41,11 +41,13 @@ view: deal_splits_owner_report {
 
   measure: amsplit_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.AMSplitRevenue ;;
   }
 
   measure: barter_rebate {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.barter_rebate ;;
   }
 
@@ -186,6 +188,7 @@ view: deal_splits_owner_report {
 
   measure: total_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.TotalRevenue ;;
   }
 

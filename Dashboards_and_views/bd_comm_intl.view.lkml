@@ -89,7 +89,7 @@ view: bd_comm_intl {
 
   measure: revenue {
     type: sum
-    sql: ${TABLE}.revenue ;;
+    sql: coalesce(${TABLE}.revenue,0) ;;
   }
 
   dimension_group: start {

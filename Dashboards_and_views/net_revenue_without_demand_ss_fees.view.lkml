@@ -36,8 +36,14 @@ view: net_revenue_without_demand_ss_fees {
   dimension: event_month {
     type: date
 
-    group_label: "Event Month"
+    #group_label: "Event Month"
     sql: ${TABLE}.Event_Month ;;
+  }
+
+  dimension: month {
+
+    type: string
+    sql: Month(${event_month}) ;;
   }
 
   dimension: publisher {

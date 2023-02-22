@@ -1597,7 +1597,7 @@ view: fact_ad_daily_agg {
     description: "The last day revenue"
     sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
@@ -1607,7 +1607,7 @@ view: fact_ad_daily_agg {
     description: "The revenue of the last 7 days"
     sql: ${TABLE}.sum_of_revenue;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
     filters: [date_key_date: "7 days ago for 7 days"]
   }
 
@@ -1617,7 +1617,7 @@ view: fact_ad_daily_agg {
     description: "The revenue of the previous week (14 to 8 days ago)"
     sql: ${TABLE}.sum_of_revenue;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
     filters: [date_key_date: "14 days ago for 7 days"]
   }
 
@@ -1627,7 +1627,7 @@ view: fact_ad_daily_agg {
     description: "The revenue of 28 to 22 days ago"
     sql: ${TABLE}.sum_of_revenue;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
     filters: [date_key_date: "28 days ago for 7 days"]
   }
 
@@ -1637,7 +1637,7 @@ view: fact_ad_daily_agg {
     description: "The cogs of the last 7 days"
     sql: ${TABLE}.sum_of_cogs;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
     filters: [date_key_date: "7 days ago for 7 days"]
   }
 
@@ -1647,7 +1647,7 @@ view: fact_ad_daily_agg {
     description: "The cogs of the previous week (14 to 8 days ago)"
     sql: ${TABLE}.sum_of_cogs;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
     filters: [date_key_date: "14 days ago for 7 days"]
   }
 
@@ -1667,7 +1667,7 @@ view: fact_ad_daily_agg {
     description: "The cogs of the last day"
     sql: ${TABLE}.sum_of_cogs ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 

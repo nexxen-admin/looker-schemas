@@ -184,8 +184,8 @@ view: rmp_stats {
     sql: ${TABLE}.OpsMgr ;;
   }
 
-  dimension: cogs {
-    type: string
+  measure: cogs {
+    type: sum
     sql: ${TABLE}.COGS ;;
   }
 
@@ -209,53 +209,53 @@ view: rmp_stats {
     sql: ${TABLE}.DeviceType ;;
   }
 
-  dimension: requests {
-    type: number
+  measure: requests {
+    type: sum
     sql: ${TABLE}.Requests ;;
   }
 
-  dimension: slot_requests {
-    type: number
+  measure: slot_requests {
+    type: sum
     sql: ${TABLE}.Slot_Requests ;;
   }
 
-  dimension: attempts {
-    type: number
+  measure: attempts {
+    type: sum
     sql: ${TABLE}.Attempts ;;
   }
 
-  dimension: slot_attempts {
-    type: number
+  measure: slot_attempts {
+    type: sum
     sql: ${TABLE}.Slot_Attempts ;;
   }
 
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.Impressions ;;
   }
 
-  dimension: wins {
-    type: number
+  measure: wins {
+    type: sum
     sql: ${TABLE}.Wins ;;
   }
 
-  dimension: clicks {
-    type: number
+  measure: clicks {
+    type: sum
     sql: ${TABLE}.Clicks ;;
   }
 
-  dimension: revenue {
-    type: number
+  measure: revenue {
+    type: sum
     sql: ${TABLE}.Revenue ;;
   }
 
-  dimension: pub_cost {
-    type: number
+  measure: pub_cost {
+    type: sum
     sql: ${TABLE}.PubCost ;;
   }
 
-  dimension: margin_dol {
-    type: number
+  measure: margin_dol {
+    type: sum
     sql: ${TABLE}.Margin_Dol ;;
   }
 
@@ -284,13 +284,13 @@ view: rmp_stats {
     sql: ${TABLE}.Video_Completes ;;
   }
 
-  dimension: avg_viewability {
-    type: number
+  measure: avg_viewability {
+    type: sum
     sql: ${TABLE}.Avg_Viewability ;;
   }
 
-  dimension: avg_ivt {
-    type: number
+  measure: avg_ivt {
+    type: sum
     sql: ${TABLE}.Avg_IVT ;;
   }
 

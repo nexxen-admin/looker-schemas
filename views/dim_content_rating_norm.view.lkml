@@ -12,6 +12,7 @@ view: dim_content_rating_norm {
 
   dimension: content_rating_norm {
     type: string
+    label: "Rating"
     sql: ${TABLE}.Content_Rating_Norm ;;
   }
 

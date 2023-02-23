@@ -1764,6 +1764,13 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: Content_Rating_Norm_Key {
+    type: number
+    label: "Content Rating Norm Key"
+    sql: ${TABLE}.Content_Rating_Norm_Key;;
+    hidden: yes
+  }
+
   filter: current_date_range {
     type: date
     view_label: "PoP"

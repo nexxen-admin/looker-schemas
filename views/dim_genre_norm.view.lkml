@@ -8,7 +8,7 @@ view: dim_genre_norm {
   dimension: Genre_Norm {
     label: "Genre"
     type: string
-    sql: ${TABLE}.Genre_Norm ;;
+    sql: split_part(btrim(${TABLE}.Genre_Norm,'[]'),',',1) ;;
   }
 
   dimension: Genre_Norm_key {

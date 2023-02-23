@@ -701,6 +701,12 @@ join: dim_genre_norm {
    sql_on: ${dim_genre_norm.Genre_Norm_key}=${fact_ad_daily_agg.Genre_Norm_Key};;
    relationship: many_to_one
 }
+  join: dim_content_rating_norm {
+    type: inner
+    view_label: "Rating"
+    sql_on: ${dim_content_rating_norm.content_rating_norm_key}=${fact_ad_daily_agg.Content_Rating_Norm_Key};;
+    relationship: many_to_one
+  }
 
  }
 

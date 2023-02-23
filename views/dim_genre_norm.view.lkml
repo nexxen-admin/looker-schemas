@@ -11,6 +11,12 @@ view: dim_genre_norm {
     sql: split_part(btrim(${TABLE}.Genre_Norm,'[]'),',',1) ;;
   }
 
+  dimension: Sub_Genre {
+    label: "Sub Genre"
+    type: string
+    sql: split_part(btrim(${TABLE}.Genre_Norm,'[]'),',',2) ;;
+  }
+
   dimension: Genre_Norm_key {
     type: number
     sql: ${TABLE}.Genre_Norm_Key ;;

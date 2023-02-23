@@ -1,6 +1,8 @@
 view: net_revenue_without_demand_ss_fees {
   derived_table: {
     sql: Select Event_Month,
+        to_char(Event_Month, 'mm') as month,
+        to_char(Event_Month, 'yyyy') as year,
         Publisher,
         Buyer,
         Advertiser,
@@ -43,7 +45,13 @@ view: net_revenue_without_demand_ss_fees {
   dimension: month {
 
     type: string
-    sql: Month(${event_month}) ;;
+    sql: ${TABLE}.month ;;
+  }
+
+  dimension: year {
+
+    type: string
+    sql: ${TABLE}.year ;;
   }
 
   dimension: publisher {

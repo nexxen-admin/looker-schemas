@@ -38,6 +38,12 @@ view: net_revenue_with_demand_ss_fees {
     sql: ${TABLE}.Event_Month ;;
   }
 
+  dimension: month {
+
+    type: string
+    sql: ${TABLE}.month ;;
+  }
+
   dimension: publisher {
     type: string
     sql: ${TABLE}.Publisher ;;

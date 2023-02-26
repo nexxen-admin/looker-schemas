@@ -1,6 +1,8 @@
 view: net_revenue_with_demand_ss_fees {
   derived_table: {
     sql: Select Event_Month,
+        to_char(Event_Month, 'mm') as month,
+        to_char(Event_Month, 'yyyy') as year,
         Publisher,
         Buyer,
         Advertiser,

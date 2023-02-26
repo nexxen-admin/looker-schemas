@@ -14,11 +14,13 @@ view: dim_content_rating_norm {
     type: string
     label: "Rating"
     sql: ${TABLE}.Content_Rating_Norm ;;
+    drill_fields: [dim_publisher.publisher_name]
   }
 
   dimension: content_rating_norm_key {
     type: number
     sql: ${TABLE}.Content_Rating_Norm_Key ;;
+    hidden: yes
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average

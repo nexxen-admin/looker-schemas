@@ -9,6 +9,7 @@ view: dim_genre_norm {
     label: "Genre"
     type: string
     sql: split_part(btrim(${TABLE}.Genre_Norm,'[]'),',',1) ;;
+    drill_fields: [dim_publisher.publisher_name]
   }
 
   dimension: Sub_Genre {

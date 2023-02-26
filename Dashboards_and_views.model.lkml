@@ -134,7 +134,7 @@ explore: bd_comm_intl {
 explore: net_revenue_with_demand_ss_fees {
   label: "net revenue with demand ss fees"
   required_access_grants: [can_view_all_tremor]
-  hidden: yes
+  #hidden: yes
 }
 
 explore: base_data_demand {

@@ -46,6 +46,12 @@ view: net_revenue_with_demand_ss_fees {
     sql: ${TABLE}.month ;;
   }
 
+  dimension: year {
+
+    type: string
+    sql: ${TABLE}.year ;;
+  }
+
   dimension: publisher {
     type: string
     sql: ${TABLE}.Publisher ;;

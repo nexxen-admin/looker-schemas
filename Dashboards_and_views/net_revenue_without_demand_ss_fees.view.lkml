@@ -331,7 +331,7 @@ view: net_revenue_without_demand_ss_fees {
   measure: New_Net_Exch {
     type: sum
     group_label: " "
-    value_format: "0.00"
+    value_format: "$#,##0"
     sql: case when (${TABLE}.P1_Exch_Net!=0
              AND ${TABLE}.P2_Exch_Net =0)
            then ${TABLE}.P1_Exch_Net else 0 end ;;

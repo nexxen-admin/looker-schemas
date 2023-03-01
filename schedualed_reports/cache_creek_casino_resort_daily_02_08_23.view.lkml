@@ -1,12 +1,13 @@
 view: cache_creek_casino_resort_daily_02_08_23 {
   required_access_grants: [can_view_pub_come_looker]
   derived_table: {
-    sql: SELECT faeda.Date_Key::date as "Date",
+    sql:
+SELECT faeda.Date_Key::date as "Date",
            'Tremor Video' AS "Partner Name",
-           'Cache Creek Casino Resort' as "Advertiser Name",
            dc.Campaign_ID AS "Campaign ID",
            dc.Campaign_Name AS "Campaign Name",
            'Self Service' AS "Service Type",
+           'Cache Creek Casino Resort' as "Advertiser Name",
            df.Flight_ID AS "Placement ID",
            df.Flight_Name AS "Placement Name",
            dst.Screen_Type_Name AS "Screen Type",

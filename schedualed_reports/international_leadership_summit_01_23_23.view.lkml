@@ -8,7 +8,7 @@ view: international_leadership_summit_01_23_23 {
            add2.flight_id AS "Placement ID",
            c.flight_number AS "Flight Number",
            CASE WHEN c.flight_number IN ('F-314535','F-314536','F-314537') THEN 'All Screen Video'
-              WHEN c.flight_number IN ('F-316232', 'F-316244', 'F-316243') THEN 'Added Value'
+              WHEN c.flight_number IN ('F-316232','F-316244','F-316243') THEN 'Added Value'
                 ELSE 'CTV' END AS "Placement Type",
            SUM(impressions) AS "Impressions",
            SUM(completions) AS "Completions",
@@ -16,6 +16,7 @@ view: international_leadership_summit_01_23_23 {
            SUM(clicks) AS "Clicks",
            SUM(clicks)/SUM(impressions) AS "CTR",
            CASE WHEN c.flight_number IN ('F-314535','F-314536','F-314537') THEN (SUM(impressions)/1000)*24
+              WHEN c.flight_number IN ('F-316232','F-316244','F-316243') THEN 0
                ELSE (SUM(impressions)/1000)*32.5 END AS "Spend",
            SUM(placement_reach) AS "Reach",
            SUM(impressions)/SUM(placement_reach) AS "Frequency"
@@ -26,7 +27,8 @@ view: international_leadership_summit_01_23_23 {
         AND date < CURRENT_DATE()
         AND data_type = 'AD_DATA'
         AND c.buy_type NOT IN ('Direct', 'Programmatic_Guaranteed')
-        AND c.flight_number IN ('F-314535','F-314536','F-314537','F-314539','F-314540','F-314541', 'F-316232', 'F-316244', 'F-316243')
+        AND c.flight_number IN ('F-314535','F-314536','F-314537','F-314539','F-314540','F-314541','F-316232','F-316244''F-316243')
+        AND impressions > 0
       GROUP BY 1,2,3,4,5,6,7
       ORDER BY 1 ASC
  ;;

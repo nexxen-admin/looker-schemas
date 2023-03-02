@@ -86,6 +86,11 @@ explore: uc_health_campaign_id_4561986_daily_02_08_23 {
   label: "UC Health Campaign ID 4561986"
 }
 
+explore: world_s_best_cat_litter_daily_03_01_23 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "World's Best Cat Litter"
+}
+
 explore: tremor_forecasting_data_daily {
   required_access_grants: [can_view_pub_come_looker]
   label: "Tremor Current Quarter Forecasting Report"

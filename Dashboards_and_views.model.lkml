@@ -146,6 +146,7 @@ explore: base_data_demand {
 explore: net_revenue_without_demand_ss_fees {
   label: "net revenue without demand ss fees"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: base_data_without_demand {
@@ -157,7 +158,7 @@ explore: base_data_without_demand {
 explore: ads_txt_domain_publisher {
   label: "ads_txt_domain_publisher"
   required_access_grants: [can_view_all_tremor]
- # hidden: yes
+  hidden: yes
 }
 
 explore: unruly_pmp {
@@ -188,11 +189,13 @@ explore:  exchange_daily_report_component{
 explore:  ivt_report{
   label: "IVT Report"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
   }
 
 explore:  no_bid_reason{
   label: "No_Bid_Reason"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: new_revenue {
@@ -216,6 +219,6 @@ explore: new_revenue {
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
-  #hidden: yes
+  hidden: yes
 
 }

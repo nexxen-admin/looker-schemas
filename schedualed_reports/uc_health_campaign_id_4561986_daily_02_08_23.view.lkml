@@ -3,10 +3,10 @@ view: uc_health_campaign_id_4561986_daily_02_08_23 {
   derived_table: {
     sql: SELECT faeda.Date_Key::date as "Date",
            'Tremor Video' AS "Partner Name",
-           'UC Health' AS "Advertiser Name",
            dc.Campaign_ID AS "Campaign ID",
            dc.Campaign_Name AS "Campaign Name",
            'Self Service' AS "Service Type",
+           'UC Health' AS "Advertiser Name",
            df.Flight_ID AS "Placement ID",
            df.Flight_Name AS "Placement Name",
            dst.Screen_Type_Name AS "Screen Type",

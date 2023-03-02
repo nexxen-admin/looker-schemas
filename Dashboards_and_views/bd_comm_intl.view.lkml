@@ -32,6 +32,7 @@ view: bd_comm_intl {
 
   measure: cogs {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.COGS ;;
   }
 
@@ -40,6 +41,7 @@ view: bd_comm_intl {
 
   dimension_group: event_month {
     type: time
+    label: ""
     timeframes: [
       raw,
       date,
@@ -74,6 +76,7 @@ view: bd_comm_intl {
 
   measure: profit {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.profit ;;
   }
 
@@ -89,7 +92,9 @@ view: bd_comm_intl {
 
   measure: revenue {
     type: sum
-    sql: ${TABLE}.revenue ;;
+    value_format: "$#,##0.00"
+    sql: NULLIF(${TABLE}.revenue,0) ;;
+
   }
 
   dimension_group: start {

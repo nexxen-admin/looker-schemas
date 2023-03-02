@@ -242,10 +242,16 @@ view: daily_publisher_report_pluto {
   measure: e_cpm {
     type: sum
     sql: ${TABLE}.eCPM ;;
+    hidden: yes
+  }
+
+  measure: ecpm {
+    type: number
+    sql: (${revenue}/${impressions})*1000 ;;
   }
 
   measure: bid_cpm {
-    type: sum
+    type: average
     sql: ${TABLE}.Bid_CPM ;;
   }
 

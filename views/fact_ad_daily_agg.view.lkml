@@ -680,7 +680,7 @@ view: fact_ad_daily_agg {
 
   measure:: cogs {
     label: "Cogs"
-    description: "Media Cost  (3rd Party SSP or Publisher Cost) - align to cost in CTRL platform"
+    description: "Media Cost (3rd Party SSP or Publisher Cost) - align to cost in CTRL platform"
     type: sum
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
@@ -698,6 +698,7 @@ view: fact_ad_daily_agg {
   measure: click_count {
     type: sum
     label: "Clicks"
+    description: "Number of clicks on the video"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_click_count ;;
     #hidden: yes
@@ -706,6 +707,7 @@ view: fact_ad_daily_agg {
   measure: deal_count {
     type: sum
     label: "Deal Count"
+    description: "Count of deals"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_deal_count ;;
@@ -733,6 +735,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_ivt {
     type: sum
     label: "Moat Impressions IVT"
+    #description: "The inventory was blocked due to the IVT threshold"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt ;;
     #hidden: yes
@@ -741,6 +744,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_ivt_measurable {
     type: sum
     label: "Moat Measurable Impressions IVT"
+    #description: "The inventory was blocked due to the inability to measure IVT"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable ;;
     #hidden: yes
@@ -749,6 +753,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_viewable {
     type: sum
     label: "Moat Impressions Viewable"
+    #description:"The inventory was blocked due to the Viewability threshold"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable ;;
 
@@ -757,6 +762,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_viewable_measurable {
     type: sum
     label: "Moat Impressions Viewable Measurable"
+    #description: "The inventory was blocked due to the inability to measure viewability"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable_measurable ;;
     #hidden: yes
@@ -776,6 +782,7 @@ view: fact_ad_daily_agg {
   measure: rmp_attempts {
     type: sum
     label: "RMP Attempts"
+    description: "When the SSP sends back the bid response to the publisher"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_rmp_attempts ;;
@@ -842,6 +849,7 @@ view: fact_ad_daily_agg {
   measure:: video_completes {
     type: sum
     label: "Video Completes"
+    description: "Number of times the video has been completed"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_completes ;;
     #hidden: yes
@@ -850,6 +858,7 @@ view: fact_ad_daily_agg {
   measure:: video_starts {
     type: sum
     label: "Video Starts"
+    description: "Number of times the video has been started"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_starts ;;
     #hidden: yes
@@ -1045,7 +1054,7 @@ view: fact_ad_daily_agg {
   measure: impression_pixel {
     type: sum
     label: "Impressions"
-    description: "Successfully delivered ad impression.   Billable event. ."
+    description: "Successfully delivered ad impression. Billable event"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_impression_pixel ;;
@@ -1054,7 +1063,7 @@ view: fact_ad_daily_agg {
   dimension: impression_pixel2 {
     type: number
     label: "Impressions DIM"
-    description: "Successfully delivered ad impression.   Billable event. ."
+    description: "Successfully delivered ad impression. Billable event"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_impression_pixel ;;
@@ -1063,7 +1072,7 @@ view: fact_ad_daily_agg {
   measure: impression_win {
     type: sum
     label: "Wins"
-    description: "The win event is post our bid response back to the publisher/ssp, indicating that we have won the bid in their auction.   "
+    description: "The win event posts our bid response back to the publisher/ssp, indicating that we have won the bid in their auction"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_impression_win ;;
@@ -1095,7 +1104,7 @@ view: fact_ad_daily_agg {
 
   measure: requests {
     type: sum
-    description: "Requests sent to us from the publisher / ssp to the exchange. This count is prior to any filtering and determination of which DSPs the requests are sent to and which Deals are attached to the request."
+    description: "Requests sent to us from the publisher / ssp to the exchange. This count is prior to any filtering and determination of which DSPs the requests are sent to and which Deals are attached to the request"
     label: "Inbound Requests"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
@@ -1105,6 +1114,7 @@ view: fact_ad_daily_agg {
   measure: Bid_Rate {
     type: number
     label: "Bid Rate"
+    description: "responses/requests"
     value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: (${responses}/NULLIF(${requests},0))*100 ;;
@@ -1121,7 +1131,7 @@ view: fact_ad_daily_agg {
 
   measure: Net_Revenue {
     type: number
-    description: "Maring between revenue and cogs"
+    description: "Difference between revenue and cogs"
     label: "Net Revenue"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
@@ -1148,7 +1158,7 @@ view: fact_ad_daily_agg {
   measure: Margin {
     type: number
     label: "Margin%"
-    description: "Profit/Revenue"
+    description: "Difference between revenue and cogs out of total revenue"
     value_format: "0.00%"
     group_label: "Daily Measures"
     sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0)) ;;
@@ -1157,7 +1167,7 @@ view: fact_ad_daily_agg {
   measure: Pub_eCPM {
     type: number
     label: "Pub eCPM"
-    description: "cogs/impressions"
+    description: "Cogs/Impressions"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
@@ -1166,7 +1176,7 @@ view: fact_ad_daily_agg {
   measure: Pub_RPM {
     type: number
     label: "Pub RPM"
-    description: "revenue/impressions"
+    description: "Revenue/Impressions"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${revenue}/NULLIF(${impression_pixel},0))*1000 ;;
@@ -1175,7 +1185,7 @@ view: fact_ad_daily_agg {
 
   measure: Render_Rate {
     type: number
-    description: "impressions/wins"
+    description: "Impressions/Wins"
     label: "Render Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -1184,7 +1194,7 @@ view: fact_ad_daily_agg {
 
   measure: Response_Rate {
     type: number
-    description: "responses/requests"
+    description: "Responses/Requests"
     label: "Response Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -1194,7 +1204,7 @@ view: fact_ad_daily_agg {
   measure: RPM {
     type: number
     label: "RPM"
-    description: "revenue/requests"
+    description: "Revenue/Requests"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${requests}/1000000),0) ;;
@@ -1222,6 +1232,7 @@ view: fact_ad_daily_agg {
   measure: CTR {
     type: number
     label: "CTR"
+    description: "Number of video clicks out of the impressions"
     value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: (${click_count}/NULLIF(${impression_pixel},0))*100;;
@@ -1229,7 +1240,7 @@ view: fact_ad_daily_agg {
 
   measure: Win_Rate {
     type: number
-    description: "wins/responses"
+    description: "Wins/Responses"
     label: "Win Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -1245,7 +1256,7 @@ view: fact_ad_daily_agg {
   measure: responses {
     type: sum
     label: "Bids"
-    description: "Bid responses returned from dsps.   There may be more than one bid response per bid request.   "
+    description: "Bid responses returned from dsps. There may be more than one bid response per bid request.   "
     value_format: "#,##0"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_responses ;;
@@ -1256,19 +1267,20 @@ view: fact_ad_daily_agg {
     type: sum
     label: "Revenue"
     #sql_distinct_key: ${deal_key} ;;
+    description: "Amount of money we earned"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_revenue;;
   }
-  dimension: revenue_d
-  {
-    type: number
-    label: "Revenue_d"
-    #sql_distinct_key: ${deal_key} ;;
-    value_format: "$#,##0.00"
-    #group_label: "Daily Measures"
-    sql: ${TABLE}.sum_of_revenue;;
-  }
+  # dimension: revenue_d
+  # {
+  #   type: number
+  #   label: "Revenue_d"
+  #   #sql_distinct_key: ${deal_key} ;;
+  #   value_format: "$#,##0.00"
+  #   #group_label: "Daily Measures"
+  #   sql: ${TABLE}.sum_of_revenue;;
+  # }
 
   measure: MediaMath_Revenue {
     type: sum
@@ -1333,6 +1345,7 @@ view: fact_ad_daily_agg {
   measure:  Previous_day_Revenue {
     label: "Revenue Previous day "
     type: sum
+    description: "The revenue of 2 days ago"
     sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1342,6 +1355,7 @@ view: fact_ad_daily_agg {
 
   measure: revenue_lastday_change {
     type: number
+    description: "Change in revenue from 2 days ago to yesterday"
     value_format: "0.00%"
     group_label: "Time Shifted Measures"
     sql: (${Last_day_Revenue}/${Previous_day_Revenue})-1 ;;
@@ -1351,6 +1365,7 @@ view: fact_ad_daily_agg {
   measure:  Previous_week_Revenue {
     label: "Revenue Previous week "
     type: sum
+    description: "The revenue of 2 weeks ago"
     sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1361,6 +1376,7 @@ view: fact_ad_daily_agg {
   measure:  last_week_Revenue {
     label: "Revenue last week "
     type: sum
+    description: "The revenue of 8 days ago (last day of last week)"
     sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1372,6 +1388,7 @@ view: fact_ad_daily_agg {
   measure:  last_month_Revenue {
     label: "Revenue last month "
     type: sum
+    description: "The revenue of 32 days ago (last day of last month)"
     sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1382,9 +1399,10 @@ view: fact_ad_daily_agg {
   measure:  last_week_Impressions {
     label: "Impressions last week "
     type: sum
+    description: "The impressions of 8 days ago (last day of last week)"
     sql: ${TABLE}.sum_of_impression_pixel ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "8 days ago"]
 
   }
@@ -1392,9 +1410,10 @@ view: fact_ad_daily_agg {
   measure:  last_Month_Impressions {
     label: "Impressions last month "
     type: sum
+    description: "The impressions of 32 days ago (last day of last month)"
     sql: ${TABLE}.sum_of_impression_pixel ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "32 days ago"]
 
   }
@@ -1403,8 +1422,9 @@ view: fact_ad_daily_agg {
   measure:  Previous_day_Requests {
     label: "Requests Previous day "
     type: sum
+    description: "The bid requests of 2 days ago"
     sql: ${TABLE}.sum_of_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
   }
@@ -1412,8 +1432,9 @@ view: fact_ad_daily_agg {
   measure:  Previous_day_PubRequests {
     label: "Pub Requests Previous day "
     type: sum
+    description: "The pub requests of 2 days ago"
     sql: ${TABLE}.sum_of_rmp_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
   }
@@ -1421,8 +1442,9 @@ view: fact_ad_daily_agg {
   measure:  Seven_day_PubRequests {
     label: "Pub Requests 7 days ago "
     type: sum
+    description: "The pub requests of 7 days ago"
     sql: ${TABLE}.sum_of_rmp_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "7 days ago"]
   }
@@ -1430,8 +1452,9 @@ view: fact_ad_daily_agg {
   measure:  MonthAgo_PubRequests {
     label: "Pub Requests 28 days ago "
     type: sum
+    description: "The pub requests of 28 days ago"
     sql: ${TABLE}.sum_of_rmp_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "28 days ago"]
   }
@@ -1439,8 +1462,9 @@ view: fact_ad_daily_agg {
   measure:  Previous_day_impressions {
     label: "Impressions Previous day "
     type: sum
+    description: "The impressions of 2 days ago"
     sql: ${TABLE}.sum_of_impression_pixel ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "2 days ago"]
 
@@ -1449,6 +1473,7 @@ view: fact_ad_daily_agg {
   measure:  previous_day_Bid_Rate {
     label: "Bid Rate Previous day"
     type: sum
+    description: "responses/requests of 2 days ago"
     sql: ${TABLE}.sum_of_responses/NULLIF(${TABLE}.sum_of_requests,0) ;;
     value_format: "0.00\%"
     group_label: "Time Shifted Measures"
@@ -1458,7 +1483,8 @@ view: fact_ad_daily_agg {
   measure: previous_day_responses {
     type: sum
     label: "Bids Previous day"
-    value_format: "#,##0.00"
+    description: "The responses of 2 days ago"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.dim_of_responses  ;;
     filters: [date_key_date: "2 days ago"]
@@ -1468,6 +1494,7 @@ view: fact_ad_daily_agg {
   measure: prev_Day_net_Revenue {
     type: sum
     label: "Net Revenue prev Day"
+    description: "The net revenue (difference between revenue and cogs) of 2 days ago"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
@@ -1478,6 +1505,7 @@ view: fact_ad_daily_agg {
   measure: last_week_net_Revenue {
     type: sum
     label: "Net Revenue Last Week"
+    description: "The difference between revenue an cogs of 8 days ago"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
@@ -1487,6 +1515,7 @@ view: fact_ad_daily_agg {
 
   measure: last_month_net_Revenue {
     type: sum
+    description: "The difference between revenue an cogs of 32 days ago"
     label: "Net Revenue Last Month"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
@@ -1498,9 +1527,10 @@ view: fact_ad_daily_agg {
   measure:  last_week_Requests {
     label: "Requests last week "
     type: sum
+    description: "The requests of 8 days ago"
     sql: ${TABLE}.sum_of_requests ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "8 days ago"]
 
   }
@@ -1508,9 +1538,10 @@ view: fact_ad_daily_agg {
   measure:  last_month_Requests {
     label: "Requests last month "
     type: sum
+    description: "The requests of 32 days ago"
     sql: ${TABLE}.sum_of_requests ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "32 days ago"]
 
   }
@@ -1520,7 +1551,7 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.sum_of_slot_attempts ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "2 days ago"]
 
   }
@@ -1530,7 +1561,7 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.sum_of_slot_attempts ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "1 days ago"]
 
   }
@@ -1540,7 +1571,7 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.sum_of_slot_attempts ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "8 days ago"]
 
   }
@@ -1551,7 +1582,7 @@ view: fact_ad_daily_agg {
     type: sum
     sql: ${TABLE}.sum_of_slot_attempts ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "32 days ago"]
 
   }
@@ -1567,6 +1598,7 @@ view: fact_ad_daily_agg {
   measure:  Last_day_Revenue {
     label: "Revenue Last day "
     type: sum
+    description: "The last day revenue"
     sql: ${TABLE}.sum_of_revenue ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1576,6 +1608,7 @@ view: fact_ad_daily_agg {
   measure: Last_7_Days_Revenue{
     label: "Revenue Last 7 Days"
     type: sum
+    description: "The revenue of the last 7 days"
     sql: ${TABLE}.sum_of_revenue;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1585,6 +1618,7 @@ view: fact_ad_daily_agg {
   measure: Prior_Week_Revenue{
     label: "Revenue Prior Week"
     type: sum
+    description: "The revenue of the previous week (14 to 8 days ago)"
     sql: ${TABLE}.sum_of_revenue;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1594,6 +1628,7 @@ view: fact_ad_daily_agg {
   measure: Last_Month_Revenue{
     label: "Revenue Prior Month"
     type: sum
+    description: "The revenue of 28 to 22 days ago"
     sql: ${TABLE}.sum_of_revenue;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1603,6 +1638,7 @@ view: fact_ad_daily_agg {
   measure: Last_7_Days_Cogs{
     label: "Cogs Last 7 Days"
     type: sum
+    description: "The cogs of the last 7 days"
     sql: ${TABLE}.sum_of_cogs;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1612,6 +1648,7 @@ view: fact_ad_daily_agg {
   measure: Prior_Week_Cogs{
     label: "Cogs Prior Week"
     type: sum
+    description: "The cogs of the previous week (14 to 8 days ago)"
     sql: ${TABLE}.sum_of_cogs;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1621,15 +1658,17 @@ view: fact_ad_daily_agg {
   measure: Last_Month_Cogs{
     label: "Cogs Prior Month"
     type: sum
+    description: "The cogs of 28 to 22 days ago"
     sql: ${TABLE}.sum_of_cogs;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [date_key_date: "28 days ago for 7 days"]
   }
 
   measure:  Last_day_cogs {
     label: "Cogs Last day "
     type: sum
+    description: "The cogs of the last day"
     sql: ${TABLE}.sum_of_cogs ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -1639,6 +1678,7 @@ view: fact_ad_daily_agg {
   measure:  Last_day_impressions {
     label: "Impressions Last day "
     type: sum
+    description: "The impressions of the last day"
     sql: ${TABLE}.sum_of_impression_pixel ;;
     value_format: "#,##0.00"
     group_label: "Time Shifted Measures"
@@ -1647,6 +1687,7 @@ view: fact_ad_daily_agg {
 
   measure: Last_Day_net_Revenue {
     type: sum
+    description: "The difference between revenue and cogs of the last day"
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
@@ -1656,8 +1697,9 @@ view: fact_ad_daily_agg {
 
   measure: Last_day_bids {
     type: sum
+    description: "The bid reponses of the last day"
     label: "Bids Last day"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.sum_of_responses ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
@@ -1666,16 +1708,18 @@ view: fact_ad_daily_agg {
   measure:  Last_day_Requests {
     label: "Requests Last day "
     type: sum
+    description: "The requests of the last day"
     sql: ${TABLE}.sum_of_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
   measure:  Last_day_PubRequests {
     label: "Pub Requests Last day "
     type: sum
+    description: "The pub requests of the last day"
     sql: ${TABLE}.sum_of_rmp_requests ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     group_label: "Time Shifted Measures"
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
@@ -1683,6 +1727,7 @@ view: fact_ad_daily_agg {
   measure:  Last_day_Bid_Rate {
     label: " Bid Rate Last day"
     type: sum
+    description: "response/requests of the last day"
     sql: ${TABLE}.sum_of_responses/NULLIF(${TABLE}.sum_of_requests,0) ;;
     value_format: "0.00\%"
     group_label: "Time Shifted Measures"
@@ -1692,7 +1737,7 @@ view: fact_ad_daily_agg {
 
   measure: rmp_requests {
     type: sum
-    description: "Requests sent to us from the publisher only to the exchange. This count is prior to any filtering and determination of which DSPs the requests are sent to and which Deals are attached to the request."
+    description: "Requests sent to us from the publisher only to the exchange. This count is prior to any filtering and determination of which DSPs the requests are sent to and which Deals are attached to the request"
     label: "Pub Requests"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
@@ -1701,6 +1746,7 @@ view: fact_ad_daily_agg {
 
   measure: rx_bid_floor {
     type: average
+    description: "The bid floor every publisher determines. every bid price below it will be immediately filtered out"
     label: "Bid Floor"
     group_label: "Daily Measures"
     sql: ${TABLE}.avg_of_ssp_bid_floor ;;
@@ -1709,6 +1755,7 @@ view: fact_ad_daily_agg {
 
   dimension: dsp_bid_price {
     type: number
+    description: "The bid price every advertiser is willing to pay on an ad"
     label: "Bid Price"
     sql: ${TABLE}.avg_of_dsp_bid_price ;;
     # hidden: yes
@@ -1718,6 +1765,13 @@ view: fact_ad_daily_agg {
     type: number
     label: "Genre Norm Key"
     sql: ${TABLE}.Genre_Norm_Key;;
+    hidden: yes
+  }
+
+  dimension: Content_Rating_Norm_Key {
+    type: number
+    label: "Content Rating Norm Key"
+    sql: ${TABLE}.Content_Rating_Norm_Key;;
     hidden: yes
   }
 
@@ -1792,6 +1846,7 @@ view: fact_ad_daily_agg {
   parameter: choose_comparison {
     label: "Choose Comparison (Pivot)"
     view_label: "PoP"
+    description: "Defines whether the comparison will be monthly or yearly"
     type: unquoted
     default_value: "month"
     allowed_value: {value: "year" }
@@ -1800,6 +1855,7 @@ view: fact_ad_daily_agg {
   }
   dimension: pop_pivot {
     view_label: "PoP"
+    description: "Takes the 'choose comparison' parameter and adds a suitable parameter to it"
     label_from_parameter: choose_comparison
     type: string
     order_by_field: sort_by2 # Important
@@ -1975,7 +2031,7 @@ view: fact_ad_daily_agg {
 
   dimension: period_filtered_measures {
     hidden: yes
-    description: "We just use this for the filtered measures"
+    description: "We are just using this for the filtered measures"
     type: string
     sql:
             {% if current_date_range._is_filtered %}
@@ -1991,6 +2047,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     label: "Revenue  {{_filters['current_date_range']}} "
     type: sum
+    description: "Specifies the revenue of the current period we are looking at, using the filter 'current date range' which has to be applied"
     sql: ${TABLE}.sum_of_revenue ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
@@ -2000,6 +2057,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     label: "Margin  {{_filters['current_date_range']}} "
     type: number
+    description: "Specifies the % of the net revenue out of the revenue of the current period we are looking at, using the filter 'current date range' which has to be applied"
     sql: (${current_period_revenue}-${current_period_cost})/${current_period_revenue} ;;
     value_format: "0%"
 
@@ -2008,6 +2066,7 @@ view: fact_ad_daily_agg {
   measure: previous_period_margin {
     view_label: ""
     label: " {{_filters['compare_to']}} "
+    description: "Specifies the % of the net revenue out of the revenue of the previous period, using the filter 'compare to' which has to be applied"
     type: number
     sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
     value_format: "0%"
@@ -2019,6 +2078,7 @@ view: fact_ad_daily_agg {
   measure: margin_pop_change {
     view_label: "PoP"
     label: "Margin Previous {{_filters['compare_to']}} Change"
+    description: "Specifies the change in the margin from previous period to current period, using the filter 'compare to' which has to be applied"
     type: number
     sql: CASE WHEN ${current_period_margin} = 0
                 THEN NULL
@@ -2052,13 +2112,9 @@ view: fact_ad_daily_agg {
   }
 
 
-
-
-
-
   measure: previous_period_revenue{
     view_label: "PoP"
-
+    description: "Specifies the revenue of the previous period"
     type: sum
     sql: ${TABLE}.sum_of_revenue ;;
     value_format: "$#,##0"
@@ -2068,6 +2124,7 @@ view: fact_ad_daily_agg {
   measure: revenue_pop_change {
     view_label: ""
     label: "Rev Previous {{_filters['compare_to']}} Change"
+    description: "Specifies the revenue change from the previous period to the current, using the filter 'compare to' which has to be applied"
     type: number
     sql: CASE WHEN ${current_period_revenue} = 0
                 THEN NULL
@@ -2103,6 +2160,7 @@ view: fact_ad_daily_agg {
   measure: current_period_cost {
     view_label: "PoP"
     type: sum
+    description: "The current period's cost"
     sql: ${TABLE}.sum_of_cogs ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
@@ -2111,6 +2169,7 @@ view: fact_ad_daily_agg {
   measure: previous_period_cost{
     view_label: "PoP"
     type: sum
+    description: "The previous period's cost"
     sql: ${TABLE}.sum_of_cogs ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
@@ -2119,6 +2178,7 @@ view: fact_ad_daily_agg {
   measure: cost_pop_change {
     view_label: "PoP"
     label: "Total cost period-over-period % change"
+    description: "Cost change from previous period to current"
     type: number
     sql: CASE WHEN ${current_period_revenue} = 0
                 THEN NULL
@@ -2156,6 +2216,7 @@ view: fact_ad_daily_agg {
   measure: current_period_profit {
     view_label: "PoP"
     type: sum
+    description: "Current period difference between revenue and cogs"
     sql: (${TABLE}.sum_of_revenue-${TABLE}.sum_of_cogs) ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
@@ -2163,6 +2224,7 @@ view: fact_ad_daily_agg {
   measure: previous_period_profit{
     view_label: "PoP"
     type: sum
+    description: "Previous period difference between revenue and cogs"
     sql: (${TABLE}.sum_of_revenue-${TABLE}.sum_of_cogs) ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
@@ -2171,6 +2233,7 @@ view: fact_ad_daily_agg {
   measure: profit_pop_change {
     view_label: ""
     label: "Profit Previous {{_filters['compare_to']}} Change"
+    description: "The change in the difference between revenue and cogs between previous and current periods"
     type: number
     sql: CASE WHEN ${current_period_profit} = 0
                 THEN NULL
@@ -2208,6 +2271,7 @@ view: fact_ad_daily_agg {
   measure: current_period_impressions {
     view_label: "PoP"
     type: sum
+    description: "Current period impressions"
     sql:  ${TABLE}.sum_of_impression_pixel ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
@@ -2215,6 +2279,7 @@ view: fact_ad_daily_agg {
   measure: current_period_requests {
     view_label: "PoP"
     type: sum
+    description: "Current period bid requests"
     sql:  ${TABLE}.sum_of_requests ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
@@ -2222,6 +2287,7 @@ view: fact_ad_daily_agg {
   measure: current_period_fill_rate {
     view_label: "PoP"
     type: number
+    description: "Current period impressions/bid requests"
     sql:  (${current_period_impressions}/${current_period_requests}) ;;
     value_format: "0.00%"
     #filters: [period_filtered_measures: "this"]
@@ -2230,6 +2296,7 @@ view: fact_ad_daily_agg {
   measure: previous_period_requests{
     view_label: "PoP"
     type: sum
+    description: "Previous period bid requests"
     sql: ${TABLE}.sum_of_requests ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
@@ -2237,6 +2304,7 @@ view: fact_ad_daily_agg {
   measure: previous_period_impressions{
     view_label: "PoP"
     type: sum
+    description: "Previous period impressions"
     sql: ${TABLE}.sum_of_impression_pixel ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
@@ -2244,6 +2312,7 @@ view: fact_ad_daily_agg {
   measure: previous_period_fill_rate {
     view_label: "PoP"
     type: number
+    description: "Previous period impressions/bid requests"
     sql:  (${previous_period_impressions}/${previous_period_requests}) ;;
     value_format: "0%"
     #filters: [period_filtered_measures: "this"]
@@ -2253,6 +2322,7 @@ view: fact_ad_daily_agg {
     view_label: ""
     label: "Previous {{_filters['compare_to']}} Change"
     type: number
+    description: "Change in impressions/bid requests between previous and current periods"
     sql: (${current_period_fill_rate}/${previous_period_fill_rate})-1 ;;
     value_format_name: percent_0
 
@@ -2285,12 +2355,14 @@ view: fact_ad_daily_agg {
 
   measure: bid_price_top_25_perc {
     label: "bid price top 25%"
+    description: "Shows only bid prices that are above 0.75 of the bid floor"
     type: number
     sql: case when ${TABLE}.avg_of_dsp_bid_price>${TABLE}.avg_of_ssp_bid_floor*0.75,${TABLE}.avg_of_dsp_bid_price else null end ;;
   }
 
   measure: diff_bid_floor_bid_price{
     label: "diff bid floor bid price"
+    description: "Shows the difference between the bid floor and the bid prices that are above 0.75 of the bid floor"
     type: number
     sql: case when ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc>0 then ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc else null end) ;;
   }

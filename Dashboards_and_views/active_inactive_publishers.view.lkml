@@ -1,6 +1,6 @@
 view: active_inactive_publishers {
   derived_table: {
-    sql: Select 'From '||(current_date()-8)::date||' Through '||(current_date()-1)::date as RANGE,
+    sql: Select 'From '||(current_date()-7)::date||' Through '||(current_date()-1)::date as RANGE,
           coalesce(l.pub_count,0) as ACTIVE,
           coalesce(t.pub_count,0) - coalesce(l.pub_count,0) as INACTIVE,
           coalesce(t.pub_count,0) as TOTAL

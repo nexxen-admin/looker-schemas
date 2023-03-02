@@ -220,8 +220,9 @@ view: dim_publisher {
     dimension: pub_name {
       label: "Publisher Name"
       type: string
-      sql: ${TABLE}.PUB_Name ;;
-      drill_fields: [new_revenue.publisher_name]
+      sql: ${TABLE}.PUB_Name;;
+      drill_fields: [new_revenue.publisher_name, dim_genre_norm.Genre_Norm,
+        dim_content_rating_norm.content_rating_norm]
       link: {
         label: "Drill To"
         url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"

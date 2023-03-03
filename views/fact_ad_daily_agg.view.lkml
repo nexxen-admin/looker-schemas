@@ -735,6 +735,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_ivt {
     type: sum
     label: "Moat Impressions IVT"
+    #description: "The inventory was blocked due to the IVT threshold"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt ;;
     #hidden: yes
@@ -743,6 +744,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_ivt_measurable {
     type: sum
     label: "Moat Measurable Impressions IVT"
+    #description: "The inventory was blocked due to the inability to measure IVT"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable ;;
     #hidden: yes
@@ -751,6 +753,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_viewable {
     type: sum
     label: "Moat Impressions Viewable"
+    #description:"The inventory was blocked due to the Viewability threshold"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable ;;
 
@@ -759,6 +762,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_viewable_measurable {
     type: sum
     label: "Moat Impressions Viewable Measurable"
+    #description: "The inventory was blocked due to the inability to measure viewability"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable_measurable ;;
     #hidden: yes
@@ -1163,7 +1167,7 @@ view: fact_ad_daily_agg {
   measure: Pub_eCPM {
     type: number
     label: "Pub eCPM"
-    description: "cogs/impressions"
+    description: "Cogs/Impressions"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
@@ -1172,7 +1176,7 @@ view: fact_ad_daily_agg {
   measure: Pub_RPM {
     type: number
     label: "Pub RPM"
-    description: "revenue/impressions"
+    description: "Revenue/Impressions"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${revenue}/NULLIF(${impression_pixel},0))*1000 ;;
@@ -1181,7 +1185,7 @@ view: fact_ad_daily_agg {
 
   measure: Render_Rate {
     type: number
-    description: "impressions/wins"
+    description: "Impressions/Wins"
     label: "Render Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -1190,7 +1194,7 @@ view: fact_ad_daily_agg {
 
   measure: Response_Rate {
     type: number
-    description: "responses/requests"
+    description: "Responses/Requests"
     label: "Response Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -1200,7 +1204,7 @@ view: fact_ad_daily_agg {
   measure: RPM {
     type: number
     label: "RPM"
-    description: "revenue/requests"
+    description: "Revenue/Requests"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${requests}/1000000),0) ;;
@@ -1236,7 +1240,7 @@ view: fact_ad_daily_agg {
 
   measure: Win_Rate {
     type: number
-    description: "wins/responses"
+    description: "Wins/Responses"
     label: "Win Rate"
     value_format: "0.00\%"
     group_label: "Daily Measures"
@@ -2027,7 +2031,7 @@ view: fact_ad_daily_agg {
 
   dimension: period_filtered_measures {
     hidden: yes
-    description: "We just use this for the filtered measures"
+    description: "We are just using this for the filtered measures"
     type: string
     sql:
             {% if current_date_range._is_filtered %}

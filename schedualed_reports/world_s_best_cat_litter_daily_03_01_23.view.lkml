@@ -1,13 +1,12 @@
-view: cache_creek_casino_resort_daily_02_08_23 {
+view: world_s_best_cat_litter_daily_03_01_23 {
   required_access_grants: [can_view_pub_come_looker]
   derived_table: {
-    sql:
-SELECT faeda.Date_Key::date as "Date",
+    sql: SELECT faeda.Date_Key::date as "Date",
            'Tremor Video' AS "Partner Name",
            dc.Campaign_ID AS "Campaign ID",
            dc.Campaign_Name AS "Campaign Name",
            'Self Service' AS "Service Type",
-           'Cache Creek Casino Resort' as "Advertiser Name",
+           'Worlds Best Cat Litter' AS "Advertiser Name",
            df.Flight_ID AS "Placement ID",
            df.Flight_Name AS "Placement Name",
            dst.Screen_Type_Name AS "Screen Type",
@@ -20,13 +19,14 @@ SELECT faeda.Date_Key::date as "Date",
         INNER JOIN BI_TVDSP.Dim_Flight df on faeda.Flight_Key = df.Flight_Key
         INNER JOIN BI_TVDSP.Dim_Campaign dc on df.Campaign_Key = dc.Campaign_Key
         INNER JOIN BI_TVDSP.Dim_Screen_Type dst on faeda.Screen_Type_Key = dst.Screen_Type_Key
-      WHERE df.flight_ID IN (4540266, 4540276, 4540236, 4540216, 4540246, 4540226)
-        AND faeda.Date_Key >= '2023-01-04'
+      WHERE df.flight_ID IN (4467646,4467656,4467676,4467696,4467786,4468536,4481076,4474756,4572976,4572996,4573016,4573076,4573096,
+               4573036,4573046,4573056,4573106,4573116,4572986,4573006,4573066,4467666,4467706,4468526,4468546,4474766,4573026,4481046,4467686,4573086)
+        AND faeda.Date_Key >= '2022-10-19'
         AND faeda.Date_Key < CURRENT_DATE()
         AND faeda.sum_of_Impressions > 0
       GROUP BY 1,2,3,4,5,6,7,8,9
       ORDER BY 1 ASC
-       ;;
+ ;;
   }
 
   measure: count {
@@ -47,12 +47,6 @@ SELECT faeda.Date_Key::date as "Date",
     sql: ${TABLE}."Partner Name" ;;
   }
 
-  dimension: advertiser_name {
-    type: string
-    label: "Advertiser Name"
-    sql: ${TABLE}."Advertiser Name" ;;
-  }
-
   dimension: campaign_id {
     type: number
     label: "Campaign ID"
@@ -69,6 +63,12 @@ SELECT faeda.Date_Key::date as "Date",
     type: string
     label: "Service Type"
     sql: ${TABLE}."Service Type" ;;
+  }
+
+  dimension: advertiser_name {
+    type: string
+    label: "Advertiser Name"
+    sql: ${TABLE}."Advertiser Name" ;;
   }
 
   dimension: placement_id {
@@ -125,10 +125,10 @@ SELECT faeda.Date_Key::date as "Date",
     fields: [
       date,
       partner_name,
-      advertiser_name,
       campaign_id,
       campaign_name,
       service_type,
+      advertiser_name,
       placement_id,
       placement_name,
       screen_type,

@@ -464,7 +464,7 @@ measure: sum_of_progress75 {
 measure: sum_of_requests {
   type: sum
   label: "Requests"
-  value_format: "$#,##0.00"
+  value_format: "#,##0.00"
   sql: ${TABLE}.sum_of_Requests ;;
 }
 

@@ -1,33 +1,34 @@
 view: choctaw_casinos___resorts_10_17_22 {
   required_access_grants: [can_view_pub_come_looker]
   derived_table: {
-    sql: SELECT date::date AS "Date",
-           add2.flight_id AS "Placement ID",
-           c.advertiser_name AS "Advertiser Name",
-           'Tremor Video' AS "Partner Name",
-           c.campaign_name AS "Campaign Name",
-           c.flight_name AS "Placement Name",
-           'Self Service' AS "Service Type",
-           c.campaign_id AS "Campaign ID",
-           st.screen_type_name AS "Screen Type",
-           SUM(impressions) AS "Impressions",
-           SUM(clicks) AS "Clicks",
-           SUM(completions) AS "Completions",
-           SUM(revenue + cost_data + cost_partner + cost_platform) AS "Revenue",
-           (SUM(revenue + cost_data + cost_partner + cost_platform)/SUM(impressions))*1000 AS "eCPM"
-      FROM dwh.ad_data_daily add2
-        left join dwh.campaign c on add2.flight_id = c.flight_id
-        left join dwh.screen_type st on add2.screen_type = st.screen_type_code
-      WHERE add2.flight_id IN (4454276,4454286,4454346,4454376,4454396,4454426,4455616,4459136,
-                 4459146,4460086,4460096,4460106,4460136,4453536,4453566,4453596,4453616,4455496,
-                 4459096,4454476,4454486,4454496,4454506,4455566,4455606,4459406, 4459416, 4459436)
-          AND date >= '2022-10-04'
-          AND date < CURRENT_DATE()
-          AND impressions > 0
-          AND data_type = 'AD_DATA'
-          AND buy_type NOT IN ('Direct', 'Programmatic_Guaranteed')
-      GROUP BY 1,2,3,4,5,6,7,8,9
-      ORDER BY 1 ASC
+    sql:
+SELECT date::date AS "Date",
+     'Tremor Video' AS "Partner Name",
+     c.campaign_id AS "Campaign ID",
+     c.campaign_name AS "Campaign Name",
+     'Self Service' AS "Service Type",
+     c.advertiser_name AS "Advertiser Name",
+       add2.flight_id AS "Placement ID",
+       c.flight_name AS "Placement Name",
+       st.screen_type_name AS "Screen Type",
+       SUM(impressions) AS "Impressions",
+       SUM(clicks) AS "Clicks",
+       SUM(completions) AS "Completions",
+       SUM(revenue + cost_data + cost_partner + cost_platform) AS "Revenue",
+       (SUM(revenue + cost_data + cost_partner + cost_platform)/SUM(impressions))*1000 AS "eCPM"
+FROM dwh.ad_data_daily add2
+  left join dwh.campaign c on add2.flight_id = c.flight_id
+    left join dwh.screen_type st on add2.screen_type = st.screen_type_code
+WHERE add2.flight_id IN (4454276,4454286,4454346,4454376,4454396,4454426,4455616,4459136,
+                     4459146,4460086,4460096,4460106,4460136,4453536,4453566,4453596,4453616,4455496,
+                     4459096,4454476,4454486,4454496,4454506,4455566,4455606,4459406, 4459416, 4459436)
+      AND date >= '2022-10-04'
+      AND date < CURRENT_DATE()
+      AND impressions > 0
+      AND data_type = 'AD_DATA'
+      AND buy_type NOT IN ('Direct', 'Programmatic_Guaranteed')
+GROUP BY 1,2,3,4,5,6,7,8,9
+ORDER BY 1 ASC
  ;;
   }
 

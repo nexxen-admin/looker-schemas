@@ -223,7 +223,7 @@ view: dim_publisher {
       sql: ${TABLE}.PUB_Name;;
       drill_fields: [dim_genre_norm.Genre_Norm,
         dim_content_rating_norm.content_rating_norm]
-     # hidden: yes
+      hidden: yes
 
     }
 
@@ -231,8 +231,7 @@ view: dim_publisher {
       label: "Publisher Name"
       type: string
       sql: ${TABLE}.PUB_Name;;
-      drill_fields: [new_revenue.publisher_name, dim_genre_norm.Genre_Norm,
-        dim_content_rating_norm.content_rating_norm]
+      drill_fields: [new_revenue.publisher_name,dim_imp_type.imp_type,dim_buying_channel.buying_channel]
       link: {
         label: "Drill To"
         url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"

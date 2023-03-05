@@ -217,6 +217,16 @@ view: dim_publisher {
       #hidden: yes
     }
 
+    dimension: pub_name_genre_rating {
+      label: "Publisher Name for genre dashboard"
+      type: string
+      sql: ${TABLE}.PUB_Name;;
+      drill_fields: [dim_genre_norm.Genre_Norm,
+        dim_content_rating_norm.content_rating_norm]
+     # hidden: yes
+
+    }
+
     dimension: pub_name {
       label: "Publisher Name"
       type: string

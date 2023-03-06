@@ -791,6 +791,7 @@ view: fact_ad_daily_agg {
 
   measure: slot_attempts {
     type: sum
+    description: "The actual amount of attempts each placement trying to play an ad tag"
     label: "Slot Attempts"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"

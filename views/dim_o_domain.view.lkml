@@ -33,6 +33,7 @@ view: dim_o_domain {
 
   dimension: o_domain {
     type: string
+    description: "The domain that the ads are published in"
     sql: ${TABLE}.O_Domain ;;
     label: "Origin Domain"
   }

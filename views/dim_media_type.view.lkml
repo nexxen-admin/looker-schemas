@@ -45,6 +45,7 @@ view: dim_media_type {
 
   dimension: media_type {
     type: string
+    description: "Specifies where the ad is displayed - app or site"
     sql: ${TABLE}.Media_Type ;;
   }
 

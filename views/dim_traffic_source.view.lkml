@@ -33,6 +33,7 @@ view: dim_traffic_source {
 
   dimension: is_active {
     label: "Is Active"
+    description: "Specifies whether the traffic source is active"
     type: yesno
     sql: ${TABLE}.Is_Active ;;
 
@@ -40,24 +41,29 @@ view: dim_traffic_source {
 
   dimension: tmax {
     label: "Tmax"
+    description: "Maximum time in milliseconds the exchange allows for bids to be received to avoid timeout.
+    This value supersedes any 'a priori guidance' from the exchange. "
     type: number
     sql: ${TABLE}.Tmax ;;
   }
 
   dimension: traffic_source_id {
     label: "Traffic Source ID"
+    description: "Identification of the traffic source"
     type: number
     sql: ${TABLE}.Traffic_Source_ID ;;
   }
 
   dimension: ts_create {
     label: "Create Date"
+    description: "Traffic Source create date"
     type: date
     sql: ${TABLE}.TS_Create_At ;;
   }
 
   dimension: ts_display_name {
     label: "Traffic Source"
+    description: "Traffic Source name"
     type: string
     sql: ${TABLE}.TS_Display_Name ;;
   }

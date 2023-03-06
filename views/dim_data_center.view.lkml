@@ -12,6 +12,7 @@ view: dim_data_center {
 
   dimension: data_center {
     type: string
+    description: "The centers where our servers are located"
     label: "Data Center"
     sql: ${TABLE}.DataCenter ;;
   }

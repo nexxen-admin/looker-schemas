@@ -39,18 +39,21 @@ view: dim_ssp {
 
   dimension: gp_id {
     label: "GP ID"
+    description: "A key that the RhythmOne platform reporting use to calculate fields"
     type: string
     sql: ${TABLE}.GP_ID ;;
   }
 
   dimension: is_1st_party {
     label: "Is 1st Party Supply"
+    description: "The SSP is first party - Tremor, Unruly or Amobee"
     type: yesno
     sql: ${TABLE}.Is_1st_Party ;;
   }
 
   dimension: Supply_source {
     label: "Supply Source"
+    description: "Specified whether the SSP source is first or third party"
     type: string
     sql: case when ${is_1st_party} = 'YES' THEN '1P'
         ELSE '3P' END;;
@@ -59,6 +62,7 @@ view: dim_ssp {
 
   dimension: platform_fee_cpm {
     label: "Platform Fee CPM"
+    description: "The average cost the Platform takes per 1000 impressions"
     type: number
     sql: ${TABLE}.Platform_Fee_CPM ;;
   }
@@ -77,6 +81,7 @@ view: dim_ssp {
 
   dimension: ssp_id {
     label: "SSP ID"
+    description: "The SSP identification"
     type: string
     sql: ${TABLE}.SSP_ID ;;
   }
@@ -89,6 +94,7 @@ view: dim_ssp {
 
   dimension: ssp_name {
     label: "RX SSP Name"
+    description: "SSP name as it is written in the RX"
     type: string
     sql: ${TABLE}.SSP_Name ;;
   }
@@ -96,6 +102,7 @@ view: dim_ssp {
   dimension: ssp_name_display {
     type: string
     label: "SSP"
+    description: "SSP name"
     sql: ${TABLE}.SSP_Name_Display ;;
 
   }

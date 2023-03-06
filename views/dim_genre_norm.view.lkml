@@ -7,6 +7,7 @@ view: dim_genre_norm {
 
   dimension: Genre_Norm {
     label: "Genre"
+    description: "The genre of the ad"
     type: string
     sql: split_part(btrim(${TABLE}.Genre_Norm,'[]'),',',1) ;;
     drill_fields: [dim_publisher.publisher_name]

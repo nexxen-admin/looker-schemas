@@ -46,12 +46,13 @@ view: dim_dsp {
 
   dimension: dsp_display_name {
     label: "DSP"
+    description: "DSP seat Name - the gateway in which a speficic inventory is sent to the DSP"
     type: string
     sql: ${TABLE}.DSP_DISPLAY_NAME ;;
   }
 
   dimension: dsp_id {
-    description: "The uniqe ID recevied from the DSP in order to identified him  "
+    description: "The uniqe ID recevied from the DSP in order to identify him"
     label: "DSP ID"
     type: string
     sql: ${TABLE}.DSP_ID ;;

@@ -69,6 +69,7 @@ view: dim_employee {
 
   dimension: role_source {
     label: "Employee Role"
+    description: "Specifies whether the employee is Pub Owner or Biz dev"
     type: string
     sql: case when ${TABLE}.Role_Source = 'pubops' then 'Pub Ops'
               when ${TABLE}.Role_Source = 'bizdev' then'Biz Dev' end;;

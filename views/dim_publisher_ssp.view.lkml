@@ -46,6 +46,7 @@ view: dim_publisher_ssp {
   dimension: pub_ssp_key {
     type: number
     sql: ${TABLE}.PUB_SSP_Key ;;
+    hidden: yes
   }
 
   dimension: ri_info {
@@ -57,6 +58,7 @@ view: dim_publisher_ssp {
   dimension: ssp_key {
     type: number
     sql: ${TABLE}.SSP_Key ;;
+    hidden: yes
   }
 
   dimension: ssp_name {

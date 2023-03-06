@@ -128,6 +128,8 @@ view: dim_publisher {
 
     dimension: signup_step {
       type: string
+      description: "Specifies the steps in the signup process of a publisher
+                    "
       sql: ${TABLE}.signup_step ;;
     }
 
@@ -195,6 +197,7 @@ view: dim_publisher {
     dimension: pub_craeted {
       type: date
       label: "Create Date"
+      description: "The date when the publisher was first created in the CTRL"
       sql: ${TABLE}.PUB_Craeted_ON ;;
 
     }
@@ -202,6 +205,7 @@ view: dim_publisher {
     dimension: pub_id {
       label: "Pub ID"
       type: string
+      description: "The identification of publisher"
       sql: ${TABLE}.PUB_ID ;;
     }
 
@@ -214,7 +218,7 @@ view: dim_publisher {
     dimension: pub_key {
       type: number
       sql: ${TABLE}.PUB_Key ;;
-      #hidden: yes
+      hidden: yes
     }
 
     dimension: pub_name_genre_rating {
@@ -230,6 +234,7 @@ view: dim_publisher {
     dimension: pub_name {
       label: "Publisher Name"
       type: string
+      description: "The name of the entity that operates one or more sites"
       sql: ${TABLE}.PUB_Name;;
       drill_fields: [new_revenue.publisher_name,dim_imp_type.imp_type,dim_buying_channel.buying_channel]
       link: {
@@ -255,6 +260,7 @@ view: dim_publisher {
 
     dimension: publisher_account_type {
       label: "Publisher Account Type"
+      description: "Specifies whether a publisher's account is being managed or is self-served"
       type: string
       sql: ${TABLE}.Publisher_Account_Type ;;
     }

@@ -39,6 +39,7 @@ view: dim_seat {
 
   dimension: seat_id {
     type: string
+    description: "The identification of a gateway in which a specific inventory is sent to the DSP"
     sql: ${TABLE}.Seat_ID ;;
   }
 

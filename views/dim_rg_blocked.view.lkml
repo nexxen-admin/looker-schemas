@@ -17,7 +17,7 @@ view: dim_rg_blocked {
 
   dimension: rg_blocked {
     label: "Fraud Block"
-    description: "Indicates that an Impression Event was blocked by the our anti-fraud system"
+    description: "Indicates that an Impression Event was blocked by our anti-fraud system"
     type: string
     sql: ${TABLE}.RG_Blocked ;;
   }

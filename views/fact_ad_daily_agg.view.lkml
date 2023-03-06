@@ -707,7 +707,7 @@ view: fact_ad_daily_agg {
   measure: deal_count {
     type: sum
     label: "Deal Count"
-    description: "Count of deals"
+    description: "Count of deals made with a publisher"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_deal_count ;;
@@ -2374,6 +2374,7 @@ view: fact_ad_daily_agg {
     sql: SELECT CASE WHEN ${TABLE}.diff_bid_floor_bid_price>0 AND ${TABLE}.diff_bid_floor_bid_price<1 THEN 'under 1'
           WHEN ${TABLE}.diff_bid_floor_bid_price>=1 AND ${TABLE}.diff_bid_floor_bid_price<2 THEN '1 to 2'
           WHEN ${TABLE}.diff_bid_floor_bid_price>=2 THEN 'over 2';;
+          hidden: yes
   }
 
   measure: count {

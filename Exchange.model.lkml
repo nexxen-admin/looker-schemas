@@ -208,6 +208,7 @@ explore: extend_Inbound_Exchange {
     relationship: many_to_one
   }
 
+
   join: dim_data_center {
     type:  inner
     view_label: "Data Center"
@@ -521,6 +522,12 @@ join: dim_country {
     sql_on: ${dim_deal_agency.deal_agency_key}=${dim_deal.deal_agency_key};;
     relationship: many_to_one
   }
+  join: dim_deal_agency_hold_co {
+    type: full_outer
+    view_label: "Deal"
+    sql_on: ${dim_deal_agency_hold_co.deal_agency_key}=${dim_deal.deal_agency_key};;
+    relationship: many_to_one
+  }
 
   join: dim_data_center {
     type:  inner
@@ -686,7 +693,14 @@ join: dim_dsp_seat {
   view_label: "DSP"
   sql_on: ${dim_dsp_seat.dsp_seat_key}=${fact_ad_daily_agg.dsp_seat_key};;
   relationship: many_to_one
+}
 
+join: dim_dsp_seat_hold_co  {
+  type: inner
+  view_label: "DSP"
+  sql_on: ${dim_dsp_seat_hold_co.dsp_account_id} = ${dim_dsp_account.dsp_account_id} AND
+            ${dim_dsp_seat_hold_co.seat_id} = ${dim_dsp_seat.seat_id};;
+  relationship: many_to_one
 }
 join: dim_seat {
   type: inner

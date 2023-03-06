@@ -58,6 +58,7 @@ view: dim_video_linearity {
   dimension: video_linearity_description {
     label: "Video Linearity"
     type: string
+    description: "Indicates if the impression must be linear, nonlinear, etc. If none specified, assume all are allowed"
     sql: ${TABLE}.Video_Linearity_Description ;;
   }
 

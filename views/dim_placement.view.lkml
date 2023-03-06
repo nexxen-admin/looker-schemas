@@ -28,12 +28,15 @@ view: dim_placement {
   dimension: coppa {
     label: "COPPA"
     type: number
+    description: "Flag indicating if this request is subject to the COPPA (Children’s Online Privacy Protection Act) regulations established by the USA FTC,
+                  where 0 = no, 1 = yes"
     sql: ${TABLE}.Coppa ;;
   }
 
   dimension: created {
     label: "Create Date"
     type: date
+    description: "Date when the placement was created"
     sql: ${TABLE}.Created_At ;;
 
   }
@@ -94,6 +97,7 @@ view: dim_placement {
 
   dimension: is_1st_party {
     label: "Is 1st Party"
+    description: "Determines whether the placement belongs to a first party SSP"
     type: yesno
     sql: ${TABLE}.Is_1st_Party ;;
   }
@@ -106,12 +110,14 @@ view: dim_placement {
 
   dimension: media_type {
     label: "Media Type"
+    description: "Specifies where the placement is located - app or site"
     type: string
     sql: ${TABLE}.Media_Type ;;
   }
 
   dimension: placement_id {
     label: "Placement ID"
+    description: "Identification for a placement"
     type: string
     sql: ${TABLE}.Placement_ID ;;
   }
@@ -124,6 +130,7 @@ view: dim_placement {
 
   dimension: placement_name {
     label: "Placement"
+    description: "A position of an ad inside a domain"
     type: string
     sql: ${TABLE}.Placement_Name ;;
   }
@@ -170,6 +177,7 @@ view: dim_placement {
   dimension: tmax {
     label: "Tmax"
     type: number
+    description: "Maximum time in milliseconds the exchange allows for bids to be received to avoid timeout. "
     sql: ${TABLE}.Tmax ;;
   }
 

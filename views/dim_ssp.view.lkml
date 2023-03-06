@@ -69,6 +69,7 @@ view: dim_ssp {
 
   dimension: platform_fee_spend {
     label: "Platform Fee Spend%"
+    description: "The cost a platform takes"
     type: number
     sql: ${TABLE}.Platform_Fee_Spend ;;
   }

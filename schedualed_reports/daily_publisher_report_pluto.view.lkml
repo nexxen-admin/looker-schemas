@@ -23,6 +23,7 @@ view: daily_publisher_report_pluto {
       sum(requests) as requests,
       sum(impression_pixel) as impressions,
       sum(cogs) as revenue,
+      sum(ssp_win_price*impression_pixel) as win_imp,
       (sum(cogs)/sum(impression_pixel))*1000 as eCPM,
       (sum(ssp_win_price*impression_pixel)/sum(impression_pixel)) as Bid_CPM
 
@@ -66,6 +67,7 @@ view: daily_publisher_report_pluto {
       sum(requests) as requests,
       sum(impression_pixel) as impressions,
       sum(cogs) as revenue,
+      sum(ssp_win_price*impression_pixel) as win_imp,
       (sum(cogs)/sum(impression_pixel))*1000 as eCPM,
       (sum(ssp_win_price*impression_pixel)/sum(impression_pixel)) as Bid_CPM
       from Andromeda.ad_data_daily add2
@@ -98,6 +100,7 @@ view: daily_publisher_report_pluto {
       sum(requests) as requests,
       sum(impression_pixel) as impressions,
       sum(cogs) as revenue,
+      sum(ssp_win_price*impression_pixel) as win_imp,
       (sum(cogs)/sum(impression_pixel))*1000 as eCPM,
       (sum(ssp_win_price*impression_pixel)/sum(impression_pixel)) as Bid_CPM
       from Andromeda.ad_data_daily add2
@@ -136,6 +139,7 @@ view: daily_publisher_report_pluto {
       sum(requests) as requests,
       sum(impression_pixel) as impressions,
       sum(cogs) as revenue,
+      sum(ssp_win_price*impression_pixel) as win_imp,
       (sum(cogs)/sum(impression_pixel))*1000 as eCPM,
       (sum(ssp_win_price*impression_pixel)/sum(impression_pixel)) as Bid_CPM
       from Andromeda.ad_data_daily add2
@@ -233,6 +237,13 @@ view: daily_publisher_report_pluto {
     type: sum
     sql: ${TABLE}.impressions ;;
   }
+  measure: win_imp {
+    type: sum
+    sql: ${TABLE}.win_imp ;;
+    hidden: yes
+  }
+
+
 
   measure: revenue {
     type: sum
@@ -251,8 +262,14 @@ view: daily_publisher_report_pluto {
   }
 
   measure: bid_cpm {
+    type: number
+    sql: ${win_imp}/${impressions} ;;
+  }
+
+  measure: bidcpm {
     type: average
     sql: ${TABLE}.Bid_CPM ;;
+    hidden: yes
   }
 
   set: detail {

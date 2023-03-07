@@ -206,6 +206,39 @@ view: fact_ad_daily_agg {
 
       ;;
   }
+  measure: Change_previous_Period_Supply{
+    type: number
+    group_label: "Time Shifted Measures"
+    label: "Change previous Period Supply"
+    sql: 2.15;;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
 
 
 

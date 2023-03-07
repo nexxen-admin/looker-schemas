@@ -19,6 +19,7 @@ view: publishers_report_monthly_for_finance {
        SUM(ssd.impressions) as impressions,
        SUM(ssd.clicks) as clicks,
        SUM(ssd.revenue) as revenue,
+       sum(platform_fee) as Tech_fee,
        SUM(ssd.cost) as cost,
        SUM(ssd.firstparty_revenue) as firstparty_revenue,
        SUM(ssd.thirdparty_revenue) as thirdparty_revenue
@@ -149,6 +150,11 @@ view: publishers_report_monthly_for_finance {
   measure: win_rate {
     type: average
     sql: ${TABLE}.win_rate ;;
+  }
+
+  measure: tech_fee {
+    type: sum
+    sql: ${TABLE}.Tech_fee ;;
   }
 
   measure: fill_rate {

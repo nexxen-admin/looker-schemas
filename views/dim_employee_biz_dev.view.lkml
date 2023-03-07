@@ -82,10 +82,6 @@ view: v_dim_employee_biz_dev {
       label: "Drill To New Publishers"
       url: "https://tremor.cloud.looker.com/dashboards/560?BizDev+Name={{ value }}"
     }
-    link: {
-      label: "Drill To Supply Tracker"
-      url: "https://tremor.cloud.looker.com/dashboards/544?BizDev+Name={{ value }}"
-    }
   }
 
   dimension: pub_name {

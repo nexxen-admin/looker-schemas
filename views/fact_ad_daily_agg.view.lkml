@@ -211,7 +211,7 @@ view: fact_ad_daily_agg {
     group_label: "Time Shifted Measures"
     label: "Change previous Period Supply"
     sql: 2.15;;
-    value_format: "0.00%"
+    value_format: "0.00\%"
     html:
 
       {% if value > 0 %}
@@ -240,8 +240,12 @@ view: fact_ad_daily_agg {
       ;;
   }
 
-
-
+  measure: New_Publishers{
+    type: number
+    label: "New Publisher"
+    sql: 664;;
+    value_format: "0"
+  }
 
 
   measure: Bids_parameter {

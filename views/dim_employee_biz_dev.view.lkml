@@ -79,8 +79,12 @@ view: v_dim_employee_biz_dev {
     full_suggestions: yes
     drill_fields: [v_dim_employee_pub_ops.employee_name]
     link: {
-      label: "Drill To"
-      url: "https://tremor.cloud.looker.com/dashboards/560?PubOps+Name={{ value }}"
+      label: "Drill To New Publishers"
+      url: "https://tremor.cloud.looker.com/dashboards/560?BizDev+Name={{ value }}"
+    }
+    link: {
+      label: "Drill To Supply Tracker"
+      url: "https://tremor.cloud.looker.com/dashboards/544?BizDev+Name={{ value }}"
     }
   }
 

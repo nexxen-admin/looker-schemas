@@ -29,7 +29,7 @@ explore: publishers_report_monthly_for_finance {
 }
 
 explore: daily_publisher_report_pluto {
-  #required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_pub_come_looker]
   label: "Daily_Publisher_Reports"
 }
 
@@ -118,7 +118,7 @@ explore: duncan_channon_covd_01_31_23 {
 }
 
 explore: omp_gross_net_by_month {
-  #required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_pub_come_looker]
   label: "OMP Gross & Net by Month (2023)"
 }
 

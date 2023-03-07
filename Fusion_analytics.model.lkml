@@ -12,9 +12,11 @@ access_grant: can_view_fusion_explores {
 explore: dsrs_requests {
   required_access_grants: [can_view_fusion_explores]
   label: "DSRS Request Statistics"
+  hidden: yes
 }
 
 explore: kong_consumers {
   required_access_grants: [can_view_fusion_explores]
   label: "Kong Consumers Statistics"
+  hidden: yes
 }

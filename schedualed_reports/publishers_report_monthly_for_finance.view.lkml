@@ -28,7 +28,7 @@ view: publishers_report_monthly_for_finance {
        ,CASE WHEN SUM(ssd.pub_requests) = 0 THEN 0 ELSE SUM(ssd.impressions) * 100.0 / SUM(ssd.pub_requests) END as fill_rate
        FROM Andromeda.supply_stat_summary_daily as ssd
        left join andromeda.rx_dim_supply_publisher_r as pub on ssd.publisher_id=pub.publisher_id
-       WHERE MONTH(ssd.event_time) >=month(current_date-1)-1 and case when to_char(ssd.event_time, 'mm/dd')= '12/31' then year(ssd.event_time) = year(current_date-1)
+       WHERE MONTH(ssd.event_time) =month(current_date-1) and case when to_char(ssd.event_time, 'mm/dd')= '12/31' then year(ssd.event_time) = year(current_date-1)
        else year(ssd.event_time) = year(current_date) end
        GROUP BY DATE_PART('MONTH', ssd.event_time),DATE_PART('YEAR', ssd.event_time)
        ,ssd.publisher_id,ssd.publisher_name,pub.ACCOUNTING_ID , ssd.placement_id, ssd.placement_name

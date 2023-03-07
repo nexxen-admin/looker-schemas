@@ -238,8 +238,12 @@ view: dim_publisher {
       sql: ${TABLE}.PUB_Name;;
       drill_fields: [new_revenue.publisher_name,dim_imp_type.imp_type,dim_buying_channel.buying_channel]
       link: {
-        label: "Drill To"
+        label: "Drill To New Publishers"
         url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"
+      }
+      link: {
+        label: "Drill To Supply Tracker"
+        url: "https://tremor.cloud.looker.com/dashboards/544?Publisher+Name={{ value }}"
       }
     }
 

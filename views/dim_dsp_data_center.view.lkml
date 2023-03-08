@@ -91,6 +91,7 @@ view: dim_dsp_data_center {
 
   dimension: max_qps {
     label: "Max QPS"
+    description: "Max number of query per second available"
     type: number
     sql: ${TABLE}.max_qps ;;
   }

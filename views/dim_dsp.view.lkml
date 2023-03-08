@@ -66,7 +66,7 @@ view: dim_dsp {
 
   dimension: dsp_name {
     description: "DSP Name"
-    label: "DSP Name"
+    label: "DSP"
     type: string
     sql: ${TABLE}.DSP_Name ;;
     hidden: yes

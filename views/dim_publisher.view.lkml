@@ -32,6 +32,7 @@ view: dim_publisher {
   }
   dimension: status {
     label: "Is Active"
+    description: "Determines whether the publisher is active or not"
     sql: case when ${TABLE}.status in ('active') then 'True'
              when ${TABLE}.status in ('inactive') then 'False' else 'unknown staus'
              end;;
@@ -49,6 +50,7 @@ view: dim_publisher {
 
   dimension: dapartment {
     type: string
+    description: "Specifies whether the department is BizDev or PubOps"
     label_from_parameter: department_granularity
     sql:
         {% if department_granularity._parameter_value == 'Biz_Dev' %}
@@ -128,7 +130,15 @@ view: dim_publisher {
 
     dimension: signup_step {
       type: string
-      description: "Specifies the steps in the signup process of a publisher
+      description: "The status of a publisher in the approval queue in CTRL.
+                    values:
+                    New - The publisher filled an online signup form and is waiting to be reviewed.
+                    Content OK - The publishers business details have been validated by business and finance teams.
+                    Content Declined - The publishers business details have been rejected.
+                    Payment Ready - All publisher's payment details in the online form are complete.
+                    Payment Hold - Some of the publisher's payment details in the online form are incomplete or the the finance
+                    teams reviwed the payment details and documents and decided to reject them.
+                    Payment Approved - The finance teams reviews the payment details and documents and decides to approve them.
                     "
       sql: ${TABLE}.signup_step ;;
     }

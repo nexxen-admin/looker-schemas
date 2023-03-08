@@ -165,6 +165,7 @@ view: dim_deal {
   }
 
   dimension: monthly_rev_target {
+    description: "The monthly revenue target of the deal"
     type: number
     sql: ${TABLE}.Monthly_Rev_Target ;;
   }
@@ -177,6 +178,7 @@ view: dim_deal {
 
   dimension: vcr_target {
     type: number
+    description: "Video complete rate threshold"
     sql: ${TABLE}.Vcr_Target ;;
   }
 

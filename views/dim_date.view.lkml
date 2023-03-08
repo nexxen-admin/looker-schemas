@@ -23,7 +23,7 @@ view: dim_date {
     description: "should be used when comparing month to month while including the current not complited month -
                   in this case the - Is Before Mtd,
                   will filter the other months on exact days of the not complited month.
-                  e.g when compating last 2 monthes January and Fabuarty and the current month is Fab and the day is 16 ,
+                  e.g when comparing last 2 monthes January and Fabuarty and the current month is Fab and the day is 16 ,
                   the - Is Before Mtd will filter Jan to be 1-16 also "
     type: yesno
     sql: DATE_PART('DAY', ${date_key_raw}::TIMESTAMP) < DATE_PART('DAY', CURRENT_TIMESTAMP) ;;
@@ -31,13 +31,16 @@ view: dim_date {
   }
 
   dimension: is_before_ytd {
-
+    description: "should be used when comparing year to year while including the current not complited year -
+                  in this case the - Is Before Ytd,
+                  will filter the other years on exact months of the not complited year.
+                  e.g when comparing last 2 years 2023 and 2022 and the current year is 2023 and the month is march,
+                  the - Is Before Ytd will filter 2022 to be Jan-Mar also"
     type: yesno
     sql: DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) < DATE_PART('YEAR', CURRENT_TIMESTAMP) ;;
 
   }
   dimension: is_before_qtd {
- # current_month_number_in_quarter{
 
     type: number
     sql: case when month(${date_key_raw}) = month(current_date-1) then ${month_number_in_quarter} end;;

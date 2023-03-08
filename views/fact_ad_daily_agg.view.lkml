@@ -238,6 +238,7 @@ view: fact_ad_daily_agg {
 
 
       ;;
+      hidden: yes
   }
 
   measure: New_Publishers{
@@ -245,6 +246,7 @@ view: fact_ad_daily_agg {
     label: "New Publisher"
     sql: 20;;
     value_format: "0"
+    hidden: yes
   }
 
 

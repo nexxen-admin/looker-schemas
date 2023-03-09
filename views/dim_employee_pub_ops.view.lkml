@@ -83,6 +83,7 @@ view: v_dim_employee_pub_ops {
 
   dimension: employee_name {
     label: "PubOps Name"
+    description: "Name of the PubOps employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
       full_suggestions: yes

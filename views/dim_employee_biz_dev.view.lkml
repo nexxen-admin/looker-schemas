@@ -74,6 +74,7 @@ view: v_dim_employee_biz_dev {
 
   dimension: employee_name {
     label: "BizDev Name"
+    description: "Name of the BizDev employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
     full_suggestions: yes

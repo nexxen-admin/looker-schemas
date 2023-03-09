@@ -170,6 +170,7 @@ view: dim_placement {
 
   dimension: status {
     label: "Status"
+    description: "Determines whether the placement is active or not"
     type: string
     sql: ${TABLE}.Status ;;
   }

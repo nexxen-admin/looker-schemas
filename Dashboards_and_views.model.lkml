@@ -222,3 +222,8 @@ explore: new_revenue {
   hidden: yes
 
 }
+
+explore: investor_kpi{
+  label: "Investor KPI"
+  required_access_grants: [can_view_all_tremor]
+}

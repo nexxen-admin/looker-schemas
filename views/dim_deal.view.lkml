@@ -51,6 +51,7 @@ view: dim_deal {
 
   dimension: deal_auction_type {
     type: string
+    description: "Can be either fixed price or normal auction"
     sql: ${TABLE}.Deal_Auction_Type ;;
   }
 
@@ -61,6 +62,8 @@ view: dim_deal {
   }
 
   dimension: deal_data_fee {
+    description: "when creating a deal which take use of data targeting or 3rd party vendor,
+                  there can be an extra charge to the cost of the bid"
     type: number
     sql: ${TABLE}.Deal_Data_Fee ;;
   }

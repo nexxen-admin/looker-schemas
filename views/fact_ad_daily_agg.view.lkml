@@ -774,7 +774,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_ivt {
     type: sum
     label: "Moat Impressions IVT"
-    #description: "The inventory was blocked due to the IVT threshold"
+    description: "The impressions invalid traffic measured by Moat vendor"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt ;;
     #hidden: yes
@@ -783,7 +783,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_ivt_measurable {
     type: sum
     label: "Moat Measurable Impressions IVT"
-    #description: "The inventory was blocked due to the inability to measure IVT"
+    description: "The inventory was blocked due to the inability to measure IVT"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable ;;
     #hidden: yes
@@ -792,7 +792,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_viewable {
     type: sum
     label: "Moat Impressions Viewable"
-    #description:"The inventory was blocked due to the Viewability threshold"
+    description:"The inventory was blocked due to the Viewability threshold"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable ;;
 
@@ -801,7 +801,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_viewable_measurable {
     type: sum
     label: "Moat Impressions Viewable Measurable"
-    #description: "The inventory was blocked due to the inability to measure viewability"
+    description: "The inventory was blocked due to the inability to measure viewability"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable_measurable ;;
     #hidden: yes
@@ -809,7 +809,7 @@ view: fact_ad_daily_agg {
 
   measure:: Moat_viewability {
     type: number
-    description: "Analyses the video views amount"
+    description: "Moat vendor analyses the video views amount"
     value_format: "0.00\%"
     label: "Moat Viewability"
     group_label: "Daily Measures"

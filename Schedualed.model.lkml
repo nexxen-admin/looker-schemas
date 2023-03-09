@@ -30,7 +30,7 @@ explore: publishers_report_monthly_for_finance {
 }
 
 explore: daily_publisher_report_pluto {
-  required_access_grants: [can_view_pub_come_looker]
+  #required_access_grants: [can_view_pub_come_looker]
   label: "Daily_Publisher_Reports"
   hidden: yes
 }

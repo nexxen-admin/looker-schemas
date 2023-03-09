@@ -227,3 +227,8 @@ explore: investor_kpi{
   label: "Investor KPI"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: pubs_and_advertisers{
+  label: "Pubs and Advertisers"
+  required_access_grants: [can_view_all_tremor]
+}

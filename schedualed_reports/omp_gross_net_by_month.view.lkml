@@ -5,7 +5,7 @@ view: omp_gross_net_by_month {
         nc.placement_id
       From
       (Select distinct placement_id::varchar(500) from
-                    sandbox.SVC_NewsCorp_MRG_Placements
+                    bi.SVC_NewsCorp_MRG_Placements
                  Union
                   Select spl.placement_id
                   From andromeda.rx_dim_supply_placement spl

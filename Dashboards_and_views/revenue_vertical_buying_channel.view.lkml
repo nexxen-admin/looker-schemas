@@ -55,11 +55,11 @@ view: revenue_vertical_buying_channel {
 
   dimension: buy_type {
     type: string
-    sql: case when ${revenue_vertical_buying_channel.buying_channel}='Firstparty - Other' OR ${revenue_vertical_buying_channel.buying_channel}='Firstparty - Tvdsp'
+    sql: case when ${TABLE}.Buying_Channel='Firstparty - Other' OR ${TABLE}.Buying_Channel='Firstparty - Tvdsp'
     then 'First Party'
-              when ${revenue_vertical_buying_channel.buying_channel}='Omp' then 'OMP'
-              when(${revenue_vertical_buying_channel.buying_channel}='Pmp' then 'PMP'
-              else ${revenue_vertical_buying_channel.buying_channel} end ;;
+              when ${TABLE}.Buying_Channel='Omp' then 'OMP'
+              when ${TABLE}.Buying_Channel='Pmp' then 'PMP'
+              else ${TABLE}.Buying_Channel end ;;
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average

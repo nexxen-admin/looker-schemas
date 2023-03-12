@@ -55,10 +55,10 @@ view: revenue_vertical_buying_channel {
 
   dimension: buy_type {
     type: string
-    sql: case when ${revenue_vertical_buying_channel.buying_channel}="Firstparty - Other" OR ${revenue_vertical_buying_channel.buying_channel}="Firstparty - Tvdsp"
-    then "First Party"
-              when ${revenue_vertical_buying_channel.buying_channel}="Omp" then "OMP"
-              when(${revenue_vertical_buying_channel.buying_channel}="Pmp"then "PMP"
+    sql: case when ${revenue_vertical_buying_channel.buying_channel}='Firstparty - Other' OR ${revenue_vertical_buying_channel.buying_channel}='Firstparty - Tvdsp'
+    then 'First Party'
+              when ${revenue_vertical_buying_channel.buying_channel}='Omp' then 'OMP'
+              when(${revenue_vertical_buying_channel.buying_channel}='Pmp' then 'PMP'
               else ${revenue_vertical_buying_channel.buying_channel} end ;;
   }
 

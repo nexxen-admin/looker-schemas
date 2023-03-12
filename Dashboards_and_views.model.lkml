@@ -237,3 +237,8 @@ explore: revenue_vertical_buying_channel{
   label: "Revenue Vertical Buying Channel"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: investor_kpi_excluding_amobee{
+  label: "Investor KPI Excluding Amobee"
+  required_access_grants: [can_view_all_tremor]
+}

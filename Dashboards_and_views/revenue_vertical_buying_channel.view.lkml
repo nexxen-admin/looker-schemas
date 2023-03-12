@@ -53,6 +53,14 @@ view: revenue_vertical_buying_channel {
     sql: ${TABLE}.Revenue ;;
   }
 
+  dimension: buy_type {
+    type: string
+    sql: case when ${revenue_vertical_buying_channel.buying_channel}="Firstparty - Other" OR ${revenue_vertical_buying_channel.buying_channel}="Firstparty - Tvdsp" then "First Party",
+              when ${revenue_vertical_buying_channel.buying_channel}="Omp" then "OMP"
+              when(${revenue_vertical_buying_channel.buying_channel}="Pmp"then "PMP"
+              else ${revenue_vertical_buying_channel.buying_channel} end ;;
+  }
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.

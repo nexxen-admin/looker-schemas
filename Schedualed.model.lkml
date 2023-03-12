@@ -137,7 +137,7 @@ explore: duncan_channon_covd_01_31_23 {
 }
 
 explore: omp_gross_net_by_month {
-  required_access_grants: [can_view_pub_come_looker]
+  #required_access_grants: [can_view_pub_come_looker]
   label: "OMP Gross & Net by Month (2023)"
   hidden: yes
 }

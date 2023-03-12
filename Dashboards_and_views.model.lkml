@@ -232,3 +232,8 @@ explore: pubs_and_advertisers{
   label: "Pubs and Advertisers"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: revenue_vertical_buying_channel{
+  label: "Revenue Vertical Buying Channel"
+  required_access_grants: [can_view_all_tremor]
+}

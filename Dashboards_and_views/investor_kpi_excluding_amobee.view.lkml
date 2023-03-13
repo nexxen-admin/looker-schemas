@@ -79,6 +79,17 @@ view: investor_kpi_excluding_amobee {
     sql: ${TABLE}.Total_Revenue ;;
   }
 
+  measure: Net_Revenue{
+    type: sum
+    value_format: "$#,##0"
+    sql: ${TABLE}.Total_Revenue-${TABLE}.Cost ;;
+  }
+
+  measure: Margin {
+    type: sum
+    sql: (${TABLE}.Total_Revenue-${TABLE}.Cost)/${TABLE}.Total_Revenue ;;
+  }
+
   measure: count {
     type: count
     drill_fields: []

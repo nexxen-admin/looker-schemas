@@ -40,6 +40,7 @@ view: pubs_and_advertisers_excluding_amobee {
 
   measure: revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.revenue ;;
   }
 

@@ -48,6 +48,7 @@ view: pub_req_content_attributes_report {
   dimension: genrenorm {
     type: string
     sql: ${TABLE}.genrenorm ;;
+    drill_fields: [cntgenre]
   }
 
   dimension: cntlanguage {

@@ -74,6 +74,7 @@ view: investor_kpi_excluding_amobee {
 
   measure: total_revenue {
     type: sum
+    value_format: "#,##0$"
     sql: ${TABLE}.Total_Revenue ;;
   }
 

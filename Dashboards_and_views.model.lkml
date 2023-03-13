@@ -246,11 +246,6 @@ explore: investor_kpi_excluding_amobee{
   required_access_grants: [can_view_all_tremor]
 }
 
-explore: pub_req_content_attributes_report{
-  label: "Pub Req Content Attributes Report"
-  required_access_grants: [can_view_all_tremor]
-}
-
 explore: pubs_and_advertisers_excluding_amobee{
   label: "Pubs and Adverstisers Excluding Amobee"
   required_access_grants: [can_view_all_tremor]

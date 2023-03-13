@@ -38,6 +38,7 @@ view: pub_req_content_attributes_report {
   dimension: contentratingnorm {
     type: string
     sql: ${TABLE}.contentratingnorm ;;
+    drill_fields: [cntcontentrating]
   }
 
   dimension: cntgenre {
@@ -59,6 +60,7 @@ view: pub_req_content_attributes_report {
   dimension: cntlanguagenorm {
     type: string
     sql: ${TABLE}.cntlanguagenorm ;;
+    drill_fields: [cntlanguage]
   }
 
   measure: count_ {

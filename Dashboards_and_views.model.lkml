@@ -226,19 +226,27 @@ explore: new_revenue {
 explore: investor_kpi{
   label: "Investor KPI"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: pubs_and_advertisers{
   label: "Pubs and Advertisers"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: revenue_vertical_buying_channel{
   label: "Revenue Vertical Buying Channel"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: investor_kpi_excluding_amobee{
   label: "Investor KPI Excluding Amobee"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: pub_req_content_attributes_report{
+  label: "Pub Req Content Attributes Report"
   required_access_grants: [can_view_all_tremor]
 }

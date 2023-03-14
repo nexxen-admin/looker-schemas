@@ -262,5 +262,5 @@ explore: investor_kpi_only_amobee{
 explore: pubs_and_advertisers_only_amobee{
   label: "Pubs and Advertisers Only Amobee"
   required_access_grants: [can_view_all_tremor]
-  #hidden: yes
+  hidden: yes
 }

@@ -255,6 +255,7 @@ view: dim_publisher {
         label: "Drill To Supply Tracker"
         url: "https://tremor.cloud.looker.com/dashboards/544?Publisher+Name={{ value }}"
       }
+
     }
 
     dimension_group: pub_updated {

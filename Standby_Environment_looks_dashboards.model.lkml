@@ -26,5 +26,6 @@ access_grant: can_view_pub_come_looker {
 }
 explore: pub_req_content_attributes_report{
   label: "Pub Req Content Attributes Report"
-  required_access_grants: [can_view_pub_come_looker]
+  #required_access_grants: [can_view_pub_come_looker]
+  hidden: yes
 }

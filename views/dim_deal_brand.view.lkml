@@ -73,6 +73,7 @@ view: dim_deal_brand {
 
   dimension: deal_brand_name {
     type: string
+    description: "The Brand that's being advertised in the ad"
     sql: ${TABLE}.Deal_Brand_Name ;;
   }
 

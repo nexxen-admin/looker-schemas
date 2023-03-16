@@ -164,7 +164,7 @@ explore: ads_txt_domain_publisher {
 explore: unruly_pmp {
   label: "Unruly PMP"
   required_access_grants: [can_view_all_tremor]
-  hidden: no
+  hidden: yes
 }
 
 explore: deal_splits_owner_report {
@@ -221,4 +221,46 @@ explore: new_revenue {
   }
   hidden: yes
 
+}
+
+explore: investor_kpi{
+  label: "Investor KPI"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: pubs_and_advertisers{
+  label: "Pubs and Advertisers"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: revenue_vertical_buying_channel{
+  label: "Revenue Vertical Buying Channel"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: investor_kpi_excluding_amobee{
+  label: "Investor KPI Excluding Amobee"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: pubs_and_advertisers_excluding_amobee{
+  label: "Pubs and Adverstisers Excluding Amobee"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: investor_kpi_only_amobee{
+  label: "Investor KPI Only Amobee"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: pubs_and_advertisers_only_amobee{
+  label: "Pubs and Advertisers Only Amobee"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }

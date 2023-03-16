@@ -206,9 +206,48 @@ view: fact_ad_daily_agg {
 
       ;;
   }
+  measure: Change_previous_Period_Supply{
+    type: number
+    group_label: "Time Shifted Measures"
+    label: "Change previous Period Supply"
+    sql: -57.44;;
+    value_format: "0.00\%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
 
 
+      ;;
+      hidden: yes
+  }
 
+  measure: New_Publishers{
+    type: number
+    label: "New Publisher"
+    sql: 20;;
+    value_format: "0"
+    hidden: yes
+  }
 
 
   measure: Bids_parameter {
@@ -707,7 +746,7 @@ view: fact_ad_daily_agg {
   measure: deal_count {
     type: sum
     label: "Deal Count"
-    description: "Count of deals"
+    description: "Count of deals made with a publisher"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_deal_count ;;
@@ -735,7 +774,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_ivt {
     type: sum
     label: "Moat Impressions IVT"
-    #description: "The inventory was blocked due to the IVT threshold"
+    description: "The impressions invalid traffic measured by Moat vendor"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt ;;
     #hidden: yes
@@ -744,7 +783,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_ivt_measurable {
     type: sum
     label: "Moat Measurable Impressions IVT"
-    #description: "The inventory was blocked due to the inability to measure IVT"
+    description: "The inventory was blocked due to the inability to measure IVT"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable ;;
     #hidden: yes
@@ -753,7 +792,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_viewable {
     type: sum
     label: "Moat Impressions Viewable"
-    #description:"The inventory was blocked due to the Viewability threshold"
+    description:"The inventory was blocked due to the Viewability threshold"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable ;;
 
@@ -762,7 +801,7 @@ view: fact_ad_daily_agg {
   measure: moat_impressions_viewable_measurable {
     type: sum
     label: "Moat Impressions Viewable Measurable"
-    #description: "The inventory was blocked due to the inability to measure viewability"
+    description: "The inventory was blocked due to the inability to measure viewability"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_moat_impressions_viewable_measurable ;;
     #hidden: yes
@@ -770,7 +809,7 @@ view: fact_ad_daily_agg {
 
   measure:: Moat_viewability {
     type: number
-    description: "Analyses the video views amount"
+    description: "Moat vendor analyses the video views amount"
     value_format: "0.00\%"
     label: "Moat Viewability"
     group_label: "Daily Measures"
@@ -791,6 +830,7 @@ view: fact_ad_daily_agg {
 
   measure: slot_attempts {
     type: sum
+    description: "The actual amount of attempts each placement trying to play an ad tag"
     label: "Slot Attempts"
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
@@ -2373,6 +2413,7 @@ view: fact_ad_daily_agg {
     sql: SELECT CASE WHEN ${TABLE}.diff_bid_floor_bid_price>0 AND ${TABLE}.diff_bid_floor_bid_price<1 THEN 'under 1'
           WHEN ${TABLE}.diff_bid_floor_bid_price>=1 AND ${TABLE}.diff_bid_floor_bid_price<2 THEN '1 to 2'
           WHEN ${TABLE}.diff_bid_floor_bid_price>=2 THEN 'over 2';;
+          hidden: yes
   }
 
   measure: count {

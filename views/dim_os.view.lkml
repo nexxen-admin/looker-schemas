@@ -45,6 +45,7 @@ view: dim_os {
 
   dimension: os {
     type: string
+    description: "Device operating system"
     sql: ${TABLE}.OS ;;
   }
 

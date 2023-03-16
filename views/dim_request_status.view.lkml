@@ -33,6 +33,7 @@ view: dim_request_status {
 
   dimension:  is_valid_requests {
     label: "Is Valid Requests"
+    description: "There was no problem with the requests"
     sql: case
     when ${TABLE}.Request_Status in ('nodsp','nodspbids','bidresponse','pass','unknown')
     then 'True' else 'False'

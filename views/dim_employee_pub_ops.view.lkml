@@ -83,14 +83,20 @@ view: v_dim_employee_pub_ops {
 
   dimension: employee_name {
     label: "PubOps Name"
+    description: "Name of the PubOps employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
       full_suggestions: yes
     drill_fields: [v_dim_employee_pub_ops.employee_name]
     link: {
-      label: "Drill To"
+      label: "Drill To New Publishers"
       url: "https://tremor.cloud.looker.com/dashboards/560?PubOps+Name={{ value }}"
     }
+    link: {
+      label: "Drill To Supply Tracker"
+      url: "https://tremor.cloud.looker.com/dashboards/544?PubOps+Name={{ value }}"
+    }
+
   }
 
   dimension: pub_name {

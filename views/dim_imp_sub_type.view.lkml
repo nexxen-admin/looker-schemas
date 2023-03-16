@@ -33,6 +33,7 @@ view: dim_imp_sub_type {
 
   dimension: imp_sub_type {
     label: "Imp Sub Type"
+    description: "Sub type of the location where the ad is shown"
     type: string
     sql: ${TABLE}.Imp_SubType ;;
   }

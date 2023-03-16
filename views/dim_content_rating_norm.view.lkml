@@ -12,6 +12,7 @@ view: dim_content_rating_norm {
 
   dimension: content_rating_norm {
     type: string
+    description: "Defines the appropriate age for viewing the ad"
     label: "Rating"
     sql: ${TABLE}.Content_Rating_Norm ;;
     drill_fields: [dim_publisher.publisher_name]

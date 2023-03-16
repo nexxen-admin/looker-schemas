@@ -32,6 +32,7 @@ view: dim_publisher {
   }
   dimension: status {
     label: "Is Active"
+    description: "Determines whether the publisher is active or not"
     sql: case when ${TABLE}.status in ('active') then 'True'
              when ${TABLE}.status in ('inactive') then 'False' else 'unknown staus'
              end;;
@@ -49,6 +50,7 @@ view: dim_publisher {
 
   dimension: dapartment {
     type: string
+    description: "Specifies whether the department is BizDev or PubOps"
     label_from_parameter: department_granularity
     sql:
         {% if department_granularity._parameter_value == 'Biz_Dev' %}
@@ -128,6 +130,16 @@ view: dim_publisher {
 
     dimension: signup_step {
       type: string
+      description: "The status of a publisher in the approval queue in CTRL.
+                    values:
+                    New - The publisher filled an online signup form and is waiting to be reviewed.
+                    Content OK - The publishers business details have been validated by business and finance teams.
+                    Content Declined - The publishers business details have been rejected.
+                    Payment Ready - All publisher's payment details in the online form are complete.
+                    Payment Hold - Some of the publisher's payment details in the online form are incomplete or the the finance
+                    teams reviwed the payment details and documents and decided to reject them.
+                    Payment Approved - The finance teams reviews the payment details and documents and decides to approve them.
+                    "
       sql: ${TABLE}.signup_step ;;
     }
 
@@ -195,6 +207,7 @@ view: dim_publisher {
     dimension: pub_craeted {
       type: date
       label: "Create Date"
+      description: "The date when the publisher was first created in the CTRL"
       sql: ${TABLE}.PUB_Craeted_ON ;;
 
     }
@@ -202,6 +215,7 @@ view: dim_publisher {
     dimension: pub_id {
       label: "Pub ID"
       type: string
+      description: "The identification of publisher"
       sql: ${TABLE}.PUB_ID ;;
     }
 
@@ -214,19 +228,34 @@ view: dim_publisher {
     dimension: pub_key {
       type: number
       sql: ${TABLE}.PUB_Key ;;
-      #hidden: yes
+      hidden: yes
+    }
+
+    dimension: pub_name_genre_rating {
+      label: "Publisher Name for genre dashboard"
+      type: string
+      sql: ${TABLE}.PUB_Name;;
+      drill_fields: [dim_genre_norm.Genre_Norm,
+        dim_content_rating_norm.content_rating_norm]
+      hidden: yes
+
     }
 
     dimension: pub_name {
       label: "Publisher Name"
       type: string
+      description: "The name of the entity that operates one or more sites"
       sql: ${TABLE}.PUB_Name;;
-      drill_fields: [new_revenue.publisher_name, dim_genre_norm.Genre_Norm,
-        dim_content_rating_norm.content_rating_norm]
+      drill_fields: [new_revenue.publisher_name,dim_imp_type.imp_type,dim_buying_channel.buying_channel]
       link: {
-        label: "Drill To"
+        label: "Drill To New Publishers"
         url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"
       }
+      link: {
+        label: "Drill To Supply Tracker"
+        url: "https://tremor.cloud.looker.com/dashboards/544?Publisher+Name={{ value }}"
+      }
+
     }
 
     dimension_group: pub_updated {
@@ -246,6 +275,7 @@ view: dim_publisher {
 
     dimension: publisher_account_type {
       label: "Publisher Account Type"
+      description: "Specifies whether a publisher's account is being managed or is self-served"
       type: string
       sql: ${TABLE}.Publisher_Account_Type ;;
     }

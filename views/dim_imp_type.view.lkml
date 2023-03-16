@@ -33,6 +33,7 @@ view: dim_imp_type {
 
   dimension: imp_type {
     label: "Imp Type"
+    description: "How and where the ad is displayed - video, banner, audio, native, mixed"
     type: string
     sql: ${TABLE}.Imp_Type ;;
   }

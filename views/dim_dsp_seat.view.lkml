@@ -64,6 +64,7 @@ view: dim_dsp_seat {
   dimension: Is_1st_Party_Demand {
     type: yesno
     label: "Is 1st Party Demand"
+    description: "The demand is from within the company, hence Amobee or Tremor"
     sql: ${TABLE}.Is_1st_Party_Demand ;;
 
   }

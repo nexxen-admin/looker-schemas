@@ -31,9 +31,9 @@ view: dim_device_type {
     hidden: yes
   }
 
-  dimension: device_type_id {
+  dimension: device_type {
     label: "Device Type"
-    #description: "The device in which the ad was displayed"
+    description: "The device type in which the ad was displayed"
     type: string
     sql: ${TABLE}.Device_Type_ID ;;
 

@@ -44,13 +44,13 @@ SELECT faeda.Date_Key::date as "Date",
   dimension: partner_name {
     type: string
     label: "Partner"
-    sql: ${TABLE}."Partner Name" ;;
+    sql: ${TABLE}."Partner" ;;
   }
 
   dimension: advertiser_name {
     type: string
     label: "Advertiser"
-    sql: ${TABLE}."Advertiser Name" ;;
+    sql: ${TABLE}."Advertiser" ;;
   }
 
   dimension: campaign_id {
@@ -62,7 +62,7 @@ SELECT faeda.Date_Key::date as "Date",
   dimension: campaign_name {
     type: string
     label: "Campaign"
-    sql: ${TABLE}."Campaign Name" ;;
+    sql: ${TABLE}."Campaign" ;;
   }
 
   dimension: service_type {

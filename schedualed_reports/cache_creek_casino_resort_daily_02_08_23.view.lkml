@@ -3,11 +3,11 @@ view: cache_creek_casino_resort_daily_02_08_23 {
   derived_table: {
     sql:
 SELECT faeda.Date_Key::date as "Date",
-           'Tremor Video' AS "Partner Name",
+           'Tremor Video' AS "Partner",
            dc.Campaign_ID AS "Campaign ID",
-           dc.Campaign_Name AS "Campaign Name",
+           dc.Campaign_Name AS "Campaign",
            'Self Service' AS "Service Type",
-           'Cache Creek Casino Resort' as "Advertiser Name",
+           'Cache Creek Casino Resort' as "Advertiser",
            df.Flight_ID AS "Placement ID",
            df.Flight_Name AS "Placement Name",
            dst.Screen_Type_Name AS "Screen Type",
@@ -43,13 +43,13 @@ SELECT faeda.Date_Key::date as "Date",
 
   dimension: partner_name {
     type: string
-    label: "Partner Name"
+    label: "Partner"
     sql: ${TABLE}."Partner Name" ;;
   }
 
   dimension: advertiser_name {
     type: string
-    label: "Advertiser Name"
+    label: "Advertiser"
     sql: ${TABLE}."Advertiser Name" ;;
   }
 
@@ -61,7 +61,7 @@ SELECT faeda.Date_Key::date as "Date",
 
   dimension: campaign_name {
     type: string
-    label: "Campaign Name"
+    label: "Campaign"
     sql: ${TABLE}."Campaign Name" ;;
   }
 

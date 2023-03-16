@@ -2,11 +2,11 @@ view: uc_health_campaign_id_4561986_daily_02_08_23 {
   required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: SELECT faeda.Date_Key::date as "Date",
-           'Tremor Video' AS "Partner Name",
+           'Tremor Video' AS "Partner",
            dc.Campaign_ID AS "Campaign ID",
-           dc.Campaign_Name AS "Campaign Name",
+           dc.Campaign_Name AS "Campaign",
            'Self Service' AS "Service Type",
-           'UC Health' AS "Advertiser Name",
+           'UC Health' AS "Advertiser",
            df.Flight_ID AS "Placement ID",
            df.Flight_Name AS "Placement Name",
            dst.Screen_Type_Name AS "Screen Type",
@@ -42,14 +42,14 @@ view: uc_health_campaign_id_4561986_daily_02_08_23 {
 
   dimension: partner_name {
     type: string
-    label: "Partner Name"
-    sql: ${TABLE}."Partner Name" ;;
+    label: "Partner"
+    sql: ${TABLE}."Partner" ;;
   }
 
   dimension: advertiser_name {
     type: string
-    label: "Advertiser Name"
-    sql: ${TABLE}."Advertiser Name" ;;
+    label: "Advertiser"
+    sql: ${TABLE}."Advertiser" ;;
   }
 
   dimension: campaign_id {
@@ -60,8 +60,8 @@ view: uc_health_campaign_id_4561986_daily_02_08_23 {
 
   dimension: campaign_name {
     type: string
-    label: "Campaign Name"
-    sql: ${TABLE}."Campaign Name" ;;
+    label: "Campaign"
+    sql: ${TABLE}."Campaign" ;;
   }
 
   dimension: service_type {

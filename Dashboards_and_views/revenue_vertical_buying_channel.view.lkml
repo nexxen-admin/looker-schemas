@@ -50,6 +50,7 @@ view: revenue_vertical_buying_channel {
 
   measure: revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.Revenue ;;
   }
 

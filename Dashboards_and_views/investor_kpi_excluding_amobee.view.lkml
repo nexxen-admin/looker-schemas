@@ -15,6 +15,16 @@ view: investor_kpi_excluding_amobee {
     sql: ${TABLE}.Bid_Requests ;;
   }
 
+  dimension: month {
+    type: string
+    sql: ${TABLE}.month ;;
+  }
+
+  dimension: year {
+    type: string
+    sql: ${TABLE}.year ;;
+  }
+
   measure: cost {
     type: sum
     value_format: "$#,##0"

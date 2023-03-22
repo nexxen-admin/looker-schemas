@@ -89,7 +89,6 @@ Group by 1, 2, 3, 4
 Order by 1, 2, 3, 4
 
 
-SELECT MAX(event_date) FROM BI.SVC_DRR_DSP_Amobee_Base_Metrics
        ;;
   }
 

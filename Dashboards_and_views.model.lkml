@@ -107,6 +107,11 @@ explore: phase_2_ak {
   hidden: yes
 }
 
+explore: yearly_consolidated_revenue_by_region_with_amobee {
+  label: "Yearly Consolidated Revenue by Region With Amobee"
+  required_access_grants: [can_view_all_tremor]
+}
+
 explore: spearad_fifa_view {
   label: "FIFA-SpearAd View"
   required_access_grants: [can_view_all_tremor]

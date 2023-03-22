@@ -280,5 +280,5 @@ explore: pubs_and_advertisers_only_amobee{
 explore: publisher_90_day_revenue{
   label: "Publisher 90-Day Revenue"
   required_access_grants: [can_view_all_tremor]
-  hidden: no
+  hidden: yes
 }

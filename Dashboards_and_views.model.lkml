@@ -113,6 +113,12 @@ explore: yearly_consolidated_revenue_by_region_with_amobee {
   hidden: yes
 }
 
+explore: bid_details_in_app {
+  label: "Bid Details - In App"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
 explore: spearad_fifa_view {
   label: "FIFA-SpearAd View"
   required_access_grants: [can_view_all_tremor]
@@ -191,6 +197,7 @@ explore:  exchange_daily_report_component{
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
 
 explore:  ivt_report{
   label: "IVT Report"

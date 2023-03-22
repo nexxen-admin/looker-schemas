@@ -63,19 +63,19 @@ view: exchange_daily_report_component {
 
   measure: Revenue {
     type: sum
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: ${TABLE}.Revenue ;;
   }
 
   measure: Cost {
     type: sum
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: ${TABLE}.Cost ;;
   }
 
   measure: Net_Revenue {
     type: sum
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: ${TABLE}.Revenue-${TABLE}.Cost ;;
   }
 

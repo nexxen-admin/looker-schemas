@@ -24,6 +24,16 @@ view: pubs_and_advertisers_only_amobee {
     sql: ${TABLE}.Event_Month ;;
   }
 
+  dimension: month {
+    type: string
+    sql: ${TABLE}.month ;;
+  }
+
+  dimension: year {
+    type: string
+    sql: ${TABLE}.year ;;
+  }
+
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Profile" in Explore.

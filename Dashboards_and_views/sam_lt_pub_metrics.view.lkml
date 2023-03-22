@@ -6,17 +6,20 @@ view: sam_lt_pub_metrics {
               when deal_name ilike '%ICON_%' then 'Icon'
               when deal_name ilike '%Orion_%' then 'Orion'
               when deal_name ilike '%Agyle_%' then 'Agyle'
+              when deal_name ilike '%Evergreen%' then 'Evergreen'
               else 'other' end as Barter_Agency,
        case when deal_name ilike '%Involved_%' then 0.20
               when deal_name ilike '%ICON_%' then 0.20
               when deal_name ilike '%Orion_%' then 0.15
-              when deal_name ilike '%Agyle_%' then 0
+              when deal_name ilike '%Agyle_%' then 0.15
+              when deal_name ilike '%Evergreen%' then 0.20
               else 0 end as Rebate_Percent
        From bi_new.Dim_Deal
        where (deal_name ilike '%Involved_%'
                      or deal_name ilike '%ICON_%'
                      or deal_name ilike '%Orion_%'
-                     or deal_name ilike '%Agyle_%')
+                     or deal_name ilike '%Agyle_%'
+                     or deal_name ilike '%Evergreen%')
               and lower(right(deal_name,6)) = 'incent'),
 
    MM_Rebate_Percents as (

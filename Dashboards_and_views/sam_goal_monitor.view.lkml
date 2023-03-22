@@ -3,22 +3,25 @@ view: sam_goal_monitor {
     sql:
 with barter_fees as (
        Select deal_id_external as rx_deal_id,
-       case when deal_description ilike '%Involved_%' then 'Involved'
-              when deal_description ilike '%ICON_%' then 'Icon'
-              when deal_description ilike '%Orion_%' then 'Orion'
-              when deal_description ilike '%Agyle_%' then 'Agyle'
-              else 'other' end as Barter_Agency,
-       case when deal_description ilike '%Involved_%' then 0.20
-              when deal_description ilike '%ICON_%' then 0.20
-              when deal_description ilike '%Orion_%' then 0.15
-              when deal_description ilike '%Agyle_%' then 0
-              else 0 end as Rebate_Percent
-       From andromeda.rx_dim_deal
-       where (deal_description ilike '%Involved_%'
-                     or deal_description ilike '%ICON_%'
-                     or deal_description ilike '%Orion_%'
-                     or deal_description ilike '%Agyle_%')
-              and lower(right(deal_description,6)) = 'incent'),
+    case when deal_description ilike '%Involved_%' then 'Involved'
+      when deal_description ilike '%ICON_%' then 'Icon'
+      when deal_description ilike '%Orion_%' then 'Orion'
+      when deal_description ilike '%Agyle_%' then 'Agyle'
+      when deal_description ilike '%Evergreen%' then 'Evergreen'
+      else 'other' end as Barter_Agency,
+    case when deal_description ilike '%Involved_%' then 0.20
+      when deal_description ilike '%ICON_%' then 0.20
+      when deal_description ilike '%Orion_%' then 0.15
+      when deal_description ilike '%Agyle_%' then 0.15
+      when deal_description ilike '%Evergreen%' then 0.20
+      else 0 end as Rebate_Percent
+  From andromeda.rx_dim_deal
+  where (deal_description ilike '%Involved_%'
+    or deal_description ilike '%ICON_%'
+    or deal_description ilike '%Orion_%'
+    or deal_description ilike '%Agyle_%'
+    or deal_description ilike '%Evergreen%')
+    and lower(right(deal_description,6)) = 'incent'),
 
 MM_Rebate_Percents as (
 Select date_trunc('quarter',event_time)::date as Quarter_Start,

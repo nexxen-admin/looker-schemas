@@ -33,6 +33,16 @@ view: pubs_and_advertisers {
     sql: ${TABLE}."profile" ;;
   }
 
+  dimension: month {
+    type: string
+    sql: ${TABLE}.month ;;
+  }
+
+  dimension: year {
+    type: string
+    sql: ${TABLE}.year ;;
+  }
+
   dimension: profile_name {
     type: string
     sql: ${TABLE}.Profile_Name ;;

@@ -38,6 +38,16 @@ view: pubs_and_advertisers_excluding_amobee {
     sql: ${TABLE}.Profile_Name ;;
   }
 
+  dimension: month {
+    type: string
+    sql: ${TABLE}.month ;;
+  }
+
+  dimension: year {
+    type: string
+    sql: ${TABLE}.year ;;
+  }
+
   measure: revenue {
     type: sum
     value_format: "$#,##0"

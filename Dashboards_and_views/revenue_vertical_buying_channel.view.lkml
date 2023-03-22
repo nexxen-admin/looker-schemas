@@ -15,6 +15,16 @@ view: revenue_vertical_buying_channel {
     sql: ${TABLE}.advertiser_category ;;
   }
 
+   dimension: Verticals {
+     type: string
+     sql: case when ${revenue_vertical_buying_channel.advertiser_category} = 'CPG' OR ${revenue_vertical_buying_channel.advertiser_category}='Other' OR
+                    ${revenue_vertical_buying_channel.advertiser_category}='Food' OR ${revenue_vertical_buying_channel.advertiser_category}='Health' OR
+                    ${revenue_vertical_buying_channel.advertiser_category}='Retail' OR ${revenue_vertical_buying_channel.advertiser_category}='Business' OR
+                    ${revenue_vertical_buying_channel.advertiser_category}='Entertainment' OR ${revenue_vertical_buying_channel.advertiser_category}='Personal Finance' OR
+                    ${revenue_vertical_buying_channel.advertiser_category}='Travel' then ${revenue_vertical_buying_channel.advertiser_category} else 'Grouped Other' end;;
+    drill_fields: [advertiser_category]
+   }
+
   dimension: buying_channel {
     type: string
     sql: ${TABLE}.Buying_Channel ;;
@@ -23,6 +33,16 @@ view: revenue_vertical_buying_channel {
   dimension: device_type {
     type: string
     sql: ${TABLE}.device_type ;;
+  }
+
+  dimension: month {
+    type: string
+    sql: ${TABLE}.month ;;
+  }
+
+  dimension: year {
+    type: string
+    sql: ${TABLE}.year ;;
   }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
@@ -50,6 +70,7 @@ view: revenue_vertical_buying_channel {
 
   measure: revenue {
     type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.Revenue ;;
   }
 

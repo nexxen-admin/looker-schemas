@@ -1,17 +1,21 @@
 view: exchange_daily_report_component {
   derived_table: {
     sql: Select event_date::date as event_date,
+      to_char(event_date, 'yy') as year,
+      to_char(event_date, 'mm') as month,
       region,
+      category,
       subcategory,
       record_type,
       file_record,
       sum(revenue) as Revenue,
       sum(cost) as Cost
     From BI.SVC_DRR_Daily_Revenue_Report
-    where event_date >= date_trunc('quarter',timestampadd('month',-2,date_trunc('month',current_date())))
-      and event_date < date_trunc('month',current_date())
-    and category = 'Exchange'
-    Group by 1, 2, 3, 4, 5
+    where event_date> '2022-01-01'
+    --event_date >= date_trunc('quarter',timestampadd('month',-2,date_trunc('month',current_date())))
+     -- and event_date < date_trunc('month',current_date())
+    --and category = 'Exchange'
+    Group by 1, 2, 3, 4, 5, 6, 7, 8
     Order by 1, 2, 3, 4, 5
 
       ;;
@@ -22,10 +26,20 @@ view: exchange_daily_report_component {
     drill_fields: [detail*]
   }
 
- # dimension: month {
-  #  type: number
-   # sql: ${TABLE}."month" ;;
-  #}
+  dimension: year {
+    type: string
+    sql: ${TABLE}.year ;;
+  }
+
+  dimension: month {
+    type: string
+    sql: ${TABLE}.month ;;
+  }
+
+  dimension: category {
+    type: string
+    sql: ${TABLE}.category ;;
+  }
 
   dimension: file_record {
     type: string

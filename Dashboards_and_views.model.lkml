@@ -116,7 +116,6 @@ explore: yearly_consolidated_revenue_by_region_with_amobee {
 explore: bid_details_in_app {
   label: "Bid Details - In App"
   required_access_grants: [can_view_all_tremor]
-  hidden: yes
 }
 
 explore: spearad_fifa_view {

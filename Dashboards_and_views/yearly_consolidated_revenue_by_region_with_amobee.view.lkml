@@ -123,14 +123,14 @@ Order by 1, 2, 3, 4
 
   measure: revenue {
     type: sum
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Revenue"
     sql: ${TABLE}.Revenue ;;
   }
 
   measure: cost {
     type: sum
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Cost"
     sql: ${TABLE}.Cost ;;
   }

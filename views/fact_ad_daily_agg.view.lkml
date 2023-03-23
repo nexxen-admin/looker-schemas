@@ -1982,6 +1982,16 @@ view: fact_ad_daily_agg {
                 EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
                 EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
   }
+
+  dimension: qtd_only {
+    group_label: "To-Date Filters"
+    label: "QTD"
+    view_label: "PoP"
+    type: yesno
+    sql: ${date_in_period_date} > TO_DATE(DATE_TRUNC('quarter', CURRENT_DATE())) AND ${date_in_period_date} <
+    (TO_DATE(DATEADD('month', 3, CAST(DATE_TRUNC('quarter', CAST(DATE_TRUNC('quarter', CURRENT_DATE()) AS DATE)) AS DATE)))) ;;
+  }
+
   dimension: ytd_only {
     group_label: "To-Date Filters"
     label: "YTD"

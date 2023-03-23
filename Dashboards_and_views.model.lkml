@@ -113,6 +113,11 @@ explore: yearly_consolidated_revenue_by_region_with_amobee {
   hidden: yes
 }
 
+explore: bid_details_in_app {
+  label: "Bid Details - In App"
+  required_access_grants: [can_view_all_tremor]
+}
+
 explore: spearad_fifa_view {
   label: "FIFA-SpearAd View"
   required_access_grants: [can_view_all_tremor]
@@ -192,6 +197,7 @@ explore:  exchange_daily_report_component{
   hidden: yes
 }
 
+
 explore:  ivt_report{
   label: "IVT Report"
   required_access_grants: [can_view_all_tremor]
@@ -267,6 +273,12 @@ explore: investor_kpi_only_amobee{
 
 explore: pubs_and_advertisers_only_amobee{
   label: "Pubs and Advertisers Only Amobee"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: publisher_90_day_revenue{
+  label: "Publisher 90-Day Revenue"
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }

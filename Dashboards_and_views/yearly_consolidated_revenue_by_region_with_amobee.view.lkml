@@ -100,7 +100,7 @@ Order by 1, 2, 3, 4
   dimension: year {
     type: number
     label: "Year"
-    sql: ${TABLE}."Year" ;;
+    sql: ${TABLE}.Year ;;
   }
 
   dimension: quarter {

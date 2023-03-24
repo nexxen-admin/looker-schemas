@@ -13,26 +13,31 @@ view: rx_dim_deal_personnel {
   dimension: employee_id {
     type: string
     sql: ${TABLE}.employee_id ;;
+   # hidden: yes
   }
 
   dimension: rx_deal_id {
     type: number
     sql: ${TABLE}.rx_deal_id ;;
+    #hidden: yes
   }
 
   dimension: rx_personnel_id {
     type: number
     sql: ${TABLE}.rx_personnel_id ;;
+    #hidden: yes
   }
 
   dimension: rx_personnel_name {
     type: string
     sql: ${TABLE}.rx_personnel_name ;;
+   # hidden: yes
   }
 
   dimension: rx_personnel_role {
     type: string
     sql: ${TABLE}.rx_personnel_role ;;
+    #hidden: yes
   }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.

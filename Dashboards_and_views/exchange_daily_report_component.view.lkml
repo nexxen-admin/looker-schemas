@@ -8,6 +8,9 @@ view: exchange_daily_report_component {
       subcategory,
       record_type,
       file_record,
+      Media_Type,
+      Device_Type,
+      Impression_Type,
       sum(revenue) as Revenue,
       sum(cost) as Cost
     From BI.SVC_DRR_Daily_Revenue_Report
@@ -15,7 +18,7 @@ view: exchange_daily_report_component {
     --event_date >= date_trunc('quarter',timestampadd('month',-2,date_trunc('month',current_date())))
      -- and event_date < date_trunc('month',current_date())
     --and category = 'Exchange'
-    Group by 1, 2, 3, 4, 5, 6, 7, 8
+    Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
     Order by 1, 2, 3, 4, 5
 
       ;;
@@ -24,6 +27,21 @@ view: exchange_daily_report_component {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  dimension: Media_Type {
+    type: string
+    sql: ${TABLE}.Media_Type ;;
+  }
+
+  dimension: Device_Type {
+    type: string
+    sql: ${TABLE}.Device_Type ;;
+  }
+
+  dimension: Impression_Type {
+    type: string
+    sql: ${TABLE}.Impression_Type ;;
   }
 
   dimension: year {
@@ -79,6 +97,7 @@ view: exchange_daily_report_component {
     sql: ${TABLE}.Revenue-${TABLE}.Cost ;;
   }
 
+
   dimension_group: event {
     type: time
     timeframes: [
@@ -94,6 +113,10 @@ view: exchange_daily_report_component {
     sql: ${TABLE}.event_date ;;
   }
 
+  measure: max_day {
+    type: max
+    sql: max(day(${event_month}) ;;
+  }
 
   set: detail {
     fields: [file_record, Revenue]

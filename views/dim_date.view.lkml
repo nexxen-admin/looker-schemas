@@ -30,6 +30,8 @@ view: dim_date {
 
   }
 
+
+
   dimension: is_before_ytd {
     description: "should be used when comparing year to year while including the current not complited year -
                   in this case the - Is Before Ytd,
@@ -44,7 +46,7 @@ view: dim_date {
 
     type: number
     sql: case when month(${date_key_raw}) = month(current_date-1) then ${month_number_in_quarter} end;;
-   hidden: yes
+  # hidden: yes
   }
 
   dimension: current_month_number_in_quarter{

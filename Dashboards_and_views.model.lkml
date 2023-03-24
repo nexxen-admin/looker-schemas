@@ -288,3 +288,9 @@ explore: bliss_point_media_margin_profile{
   #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
+explore: holdco_revenue_report{
+  label: "HoldCo Revenue View"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: no
+}

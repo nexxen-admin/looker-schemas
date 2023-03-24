@@ -285,6 +285,6 @@ explore: publisher_90_day_revenue{
 
 explore: bliss_point_media_margin_profile{
   label: "BPM Margin Profile"
-  required_access_grants: [can_view_all_tremor]
+  #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }

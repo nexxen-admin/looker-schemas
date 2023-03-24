@@ -35,9 +35,9 @@ view: holdco_revenue_report {
       sum(case when ad.event_time >= current_date()-1 and ad.event_time < current_date()
       THEN revenue else NULL end) as Yst_Revenue,
 
-      sum(case when ad.event_time >= TIMESTAMPADD (year, -1,date_trunc('year',current_date()-1))::date
-      and ad.event_time < TIMESTAMPADD (year, -1,current_date())::date
-      THEN revenue else NULL end) as Yst_LY_Revenue,
+       sum(case when ad.event_time >= TIMESTAMPADD (year, -1,current_date()-1)::date
+                and ad.event_time < TIMESTAMPADD (year, -1,current_date())::date
+            THEN revenue else NULL end) as Yst_LY_Revenue,
 
       sum(case when ad.event_time >= date_trunc('quarter',current_date()-1)::date and ad.event_time < current_date()
       THEN revenue else NULL end)  as QTD_Revenue,

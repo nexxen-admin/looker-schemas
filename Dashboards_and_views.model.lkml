@@ -76,7 +76,7 @@ explore: sam_lt_comm {
      user_attribute: allowed_users_sam_lt
    }
   label: "SAM LT Commision"
-  required_access_grants: [can_view_all_tremor]
+  #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
 
@@ -285,6 +285,6 @@ explore: publisher_90_day_revenue{
 
 explore: bliss_point_media_margin_profile{
   label: "BPM Margin Profile"
-  required_access_grants: [can_view_all_tremor]
+  #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }

@@ -624,6 +624,13 @@ Group by 1, 2, 3, 4, 5
     sql: ${TABLE}.DSP_Platform_Cost ;;
   }
 
+  measure: inv_cost {
+    type: sum
+    value_format: "$#,##0"
+    label: "Inventory Cost"
+    sql: ${TABLE}.Inv_Cost ;;
+  }
+
   measure: partner_rev_share {
     type: sum
     value_format: "$#,##0"

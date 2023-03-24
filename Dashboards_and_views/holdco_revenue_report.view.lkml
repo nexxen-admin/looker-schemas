@@ -239,6 +239,7 @@ view: holdco_revenue_report {
   measure: ytd_sales_split_revenue {
     type: sum
     label: "YTD Rev"
+    value_format: "$#,##0"
     sql: ${TABLE}.YTD_SalesSplitRevenue ;;
   }
 

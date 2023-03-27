@@ -1,0 +1,41 @@
+view: xf_third_party_placements_seat {
+  label: "Third Party Data"
+  derived_table: {
+    sql:  SELECT
+            p2.placement_id,
+            STUFF((
+              SELECT
+                ', ' + p.third_party_type_id
+              FROM
+                dbo.XF_Third_Party_Placements p (NOLOCK)
+              WHERE
+                p.third_party_type = 'Seat' AND
+                p.third_party_type_id <> '' AND
+                p.active = 1 AND
+                p.placement_id = p2.placement_id
+              ORDER BY
+                p.third_party_type_id
+              FOR XML PATH('')), 1, 2, '') AS seat
+          FROM
+            dbo.XF_Third_Party_Placements p2 (NOLOCK)
+          WHERE
+            p2.third_party_type = 'Seat' AND
+            p2.third_party_type_id <> '' AND
+            p2.active = 1
+          GROUP BY
+            p2.placement_id ;;
+  }
+
+  dimension: placement_id {
+    type: number
+    hidden: yes
+    primary_key: yes
+    sql: ${TABLE}.placement_id ;;
+  }
+
+  dimension: seat {
+    type: string
+    label: "Seats"
+    sql: ${TABLE}.seat ;;
+  }
+}

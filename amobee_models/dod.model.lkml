@@ -1,0 +1,23 @@
+connection: "druid"
+
+# include all the views
+include: "*.view"
+include: "dod_data_tests.lkml"
+
+datagroup: dod_default_datagroup {
+  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  max_cache_age: "1 hour"
+}
+
+
+persist_with: dod_default_datagroup
+
+explore: social_media {
+  hidden: yes
+}
+
+explore: dsp_media_and_bids {
+  hidden: yes
+}
+
+explore: dod_partner_ops {}

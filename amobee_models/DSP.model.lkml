@@ -1,6 +1,6 @@
 connection: "snowflake"
 label: "DSP Analytics"
-include: "sno_*.view"
+include: "/**/*.view.lkml"
 case_sensitive: no
 
 explore: supply_qps_and_bids {

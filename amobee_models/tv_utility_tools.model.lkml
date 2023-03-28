@@ -1,6 +1,6 @@
 connection: "snowflake"
 
-include: "sno_*.view"        # include all views in this project
+include: "/**/*.view.lkml"       # include all views in this project
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 #explore: quarterly_ad_reach_frequency {

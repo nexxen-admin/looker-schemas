@@ -1,6 +1,6 @@
 connection: "snowflake"
 
-include: "sno_*.view"
+include: "/**/*.view.lkml"
 case_sensitive: no
 
 

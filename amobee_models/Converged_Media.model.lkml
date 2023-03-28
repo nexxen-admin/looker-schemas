@@ -1,8 +1,7 @@
 connection: "an_opt"
 label: "TV Media Plans"
 
-include: "opt_*.view.lkml"         # include all views in this project
-include: "mssql_oltp_*.view.lkml"
+include: "/**/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 

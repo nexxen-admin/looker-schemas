@@ -1,7 +1,7 @@
 connection: "why_dashboard_metrics"
 label: "Reference"
 
-include: "why_*.view.lkml"
+include: "/**/*.view.lkml"
 
 explore: why_reviews {
   label: "Why Dashboard Reviews"

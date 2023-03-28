@@ -1,7 +1,7 @@
 connection: "snowflake_dbaadmin"
 label: "Snowflake"
 
-include: "snodba_*.view.lkml"         # include all views in this project
+include: "/**/*.view.lkml"         # include all views in this project
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 explore: snowflake_query_history {}

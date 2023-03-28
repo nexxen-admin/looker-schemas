@@ -1,7 +1,6 @@
 connection: "aurora"
 label: "Real Time Delivery"
-include: "aur_*.view.lkml"         # include all views in this project
-include: "real_time_delivery_data_tests.lkml"
+include: "/**/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 

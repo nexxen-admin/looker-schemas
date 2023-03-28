@@ -1,7 +1,6 @@
 connection: "druid"
 
-include: "dod_druid_atv_raw_impression.view"
-include: "atv_placement_details.view"
+include: "/**/*.view.lkml"
 
 explore: dod_druid_atv_raw_impression {
   join: atv_placement_details {

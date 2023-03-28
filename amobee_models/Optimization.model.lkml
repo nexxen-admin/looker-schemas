@@ -1,8 +1,6 @@
 connection: "an_opt"
 
-include: "opt_*.view.lkml"         # include all views in this project
-include: "mssql_oltp_*.view.lkml"
-include: "Optimization_data_tests.lkml"
+include: "/**/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }

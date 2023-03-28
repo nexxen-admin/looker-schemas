@@ -1,6 +1,6 @@
 
 connection: "snowflake"
-include: "sno_*.view"
+include: "/**/*.view.lkml"
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }
 

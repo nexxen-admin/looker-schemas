@@ -2,8 +2,7 @@ connection: "snowflake"
 label: "Reference"
 case_sensitive: no
 
-include: "sno_*.view.lkml"         # include all views in this project
-include: "snowflake_reference_data_tests.lkml"
+include: "/**/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }

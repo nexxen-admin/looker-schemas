@@ -1,8 +1,7 @@
 connection: "snowflake"
 label: "Delivery"
 # include all the views
-include: "sno_*.view"
-include: "videology_data_tests.lkml"
+include: "/**/*.view.lkml"
 case_sensitive: no
 
 # include all the dashboards

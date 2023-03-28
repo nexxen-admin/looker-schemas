@@ -1,6 +1,6 @@
 connection: "snowflake"
 
-include: "itv_sla_*.view.lkml"
+include: "/**/*.view.lkml"
 
 label: "DSP SLA"
 

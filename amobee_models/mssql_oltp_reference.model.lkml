@@ -1,8 +1,7 @@
 connection: "mssql-oltp"
 label: "Reference"
 
-include: "mssql_oltp_*.view.lkml"
-include: "mssql_oltp_reference_data_tests.lkml"
+include: "/**/*.view.lkml"
 # include: "*.dashboard.lookml"  # include all dashboards in this project
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }

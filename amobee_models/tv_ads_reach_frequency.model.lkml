@@ -1,7 +1,6 @@
 connection: "snowflake"
 
-include: "sno_m_*.view"         # include all views in this project
-include: "sno_q_*.view"
+include: "/**/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 # # Select the views that should be a part of this model,

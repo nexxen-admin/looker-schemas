@@ -28,7 +28,7 @@ FROM   (SELECT keydate,
                             AND p.passback_allowed = 0
                        JOIN an_main..partner (nolock) pa
                          ON pa.partner_id = p.partner_id
-                            AND {% condition publisher_id) %} pa.partner_id {% endcondition %}
+                            AND {% condition publisher_id %} pa.partner_id {% endcondition %}
                        JOIN an_main..campaign ca (nolock)
                          ON ca.campaign_id = a.campaign_id
                        JOIN (SELECT placement_id,

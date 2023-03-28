@@ -75,13 +75,19 @@ explore: acr_weekly_app_os_device_count {
 explore: acr_weekly_title_device {
   label: "acr weekly title device"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: acr_weekly_app_count_title {
   label: "acr weekly app count title"
   required_access_grants: [can_view_acr_group]
   hidden: yes
+}
+
+explore: acr_weekly_title_device_by_vod_linear {
+  label: "acr weekly app count title by vod linear"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
 }
 
 explore: acr_weekly_unique_program_over_networks_linear {

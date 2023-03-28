@@ -6,8 +6,13 @@ include: "/**/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }
+access_grant: can_see_model {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
 
 explore: campaign_details_base {
+  required_access_grants: [can_see_model]
   label: "Snowflake Demand Reference"
   description: "This explore includes reference data on the demand side concepts, as well as information within that hierarchy.  This explore
   is designed to get any demand side information even if the campaign has no delivery."
@@ -176,13 +181,14 @@ explore: campaign_details_base {
 }
 
 explore: monthly_exchange_rate{
+  required_access_grants: [can_see_model]
   hidden: yes
   label: "Monthly Exchange Rates"
   description: "Includes monthly averaged exchange rates"
 }
 
 explore: tv_flights {
-  required_access_grants: [can_use_explore]
+  required_access_grants: [can_use_explore, can_see_model]
   label: "TV Order Metrics"
   description: "This explore includes metrics and facets surrounding TV campaigns. "
   fields: [ALL_FIELDS*,-campaign_details_base.agency_fee, -advertiser_brand_details.future_advertisers, -customer_details.future_customers]
@@ -243,6 +249,7 @@ explore: tv_flights {
 }
 
 explore: placement_details_base {
+  required_access_grants: [can_see_model]
   label: "Snowflake Supply Reference"
   description: "This explore includes reference data on the supply side concepts, as well as information within that hierarchy.  This explore
   is designed to get any supply side information even if the placement has no delivery."
@@ -266,12 +273,13 @@ explore: placement_details_base {
 }
 
 explore: marketplace_login_history_view {
-  required_access_grants: [can_use_explore]
+  required_access_grants: [can_use_explore, can_see_model]
   label: "Marketplace Login History"
   description: "This explore includes login history for marketplace users allowing filtering by time, buyer, and seller."
 }
 
 explore: suggest_demand_ref {
+  required_access_grants: [can_see_model]
   access_filter: {
     field: suggest_demand_ref.country_id
     user_attribute: access_filter_country_id

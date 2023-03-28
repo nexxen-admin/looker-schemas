@@ -3,8 +3,14 @@ connection: "snowflake"
 include: "/**/*.view.lkml"
 case_sensitive: no
 
+access_grant: can_see_model {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
 
 explore: auction_log {
+  required_access_grants: [can_see_model]
   label: "Raw Auction Logs"
   fields: [ALL_FIELDS*,-flight_media_details_base.yj_begin_datetime_local, -flight_media_details_base.yj_end_datetime_local, -placement_details_base.platform_client_xaxis, -campaign_details_buyer.campaign_name_custom, -campaign_details_seller.campaign_name_custom]
 

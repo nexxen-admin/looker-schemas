@@ -3,8 +3,14 @@ label: "Real Time Delivery"
 include: "/**/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
+access_grant: can_see_model {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
 
  explore: flight_media_statistics {
+  required_access_grants: [can_see_model]
   label: "Real Time Delivery Statistics"
   description: "These are near real time delivery statistics (updated approximately every 15 minutes).  These numbers are for directional purposes only and are not final reporting numbers.
   They are based on a GMT day and are not in local timezones."
@@ -58,6 +64,7 @@ join: aur_flight_media_details {
 }
 
 explore: flight_media_placement_imp_stats_log  {
+  required_access_grants: [can_see_model]
   label: "Short Cycle Logging"
   hidden: yes
 

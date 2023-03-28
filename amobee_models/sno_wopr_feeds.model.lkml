@@ -2,11 +2,17 @@
 connection: "snowflake"
 include: "/**/*.view.lkml"
 
+access_grant: can_see_model {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
+
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }
 
 explore: cadreon_daily_monthly_feed {
   hidden: yes
-  required_access_grants: [can_use_explore]
+  required_access_grants: [can_use_explore, can_see_model]
   view_name: sno_supply_hourly_core_metrics
   join: flight_media_details_base {
     type: inner

@@ -559,6 +559,41 @@ view: fact_ad_daily_agg {
     group_label: "Admins Metrics"
   }
 
+  measure: HTML_variable10 {
+    type: count
+    html:
+
+      <table>
+      <tr>
+        <th><div style="text-align: left; margin:72px 72px;">
+      <img style="width:400px" src="https://www.tremorinternational.com/wp-content/uploads/2022/01/Ti_logo_black-fitted.svg">
+      </div></th>
+        <th><div style ="vertical-align: bottom;padding-top:50px;text-align:right;">| Business Intelligence Platform</div></th>
+      </tr>
+    </table>
+
+      <div style = "margin:5px 72px 72px 72px; text-align:left; ">Hey {{ _user_attributes['name'] }},<br><br>
+
+      <div><p style = "float:none;font-size:25px;line-height: 1.6; color:#eb3434;">
+      Please Note!!<br> <strong></strong></p>
+      </div>
+       <div><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
+       On Monday, 4/2 Your User/password will be changed to your Office 365 credentials.<br>
+       If you don’t remember your login details, please get in touch with the IT team to restore them. <br>
+
+       This is a warning! Your login to looker will be blocked with your old credentials from  Monday, 4/2
+      <br> <strong></strong></p>
+      </div>
+
+      </div>
+
+
+      ;;
+
+
+    group_label: "Admins Metrics"
+  }
+
   measure: video_2 {
     type: count
     html:

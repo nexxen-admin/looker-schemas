@@ -108,7 +108,7 @@ view: holdco_revenue_report {
       bm.YTD_LY_Revenue as Total_Deal_YTD_LY_Revenue,
       */
       case when bm.Yst_Revenue / sp.SCount = 'Infinity' or bm.Yst_Revenue / sp.SCount IS NULL THEN bm.Yst_Revenue else bm.Yst_Revenue / sp.SCount end as Yst_SalesSplitRevenue,
-      case when bm.Yst_LY_Revenue / sp.SCount = 'Infinity' or bm.Prev_Day_Revenue / sp.SCount IS NULL THEN bm.Prev_Day_Revenue else bm.Prev_Day_Revenue / sp.SCount end as Prev_Day_SalesSplitRevenue,
+      case when bm.Prev_Day_Revenue / sp.SCount = 'Infinity' or bm.Prev_Day_Revenue / sp.SCount IS NULL THEN bm.Prev_Day_Revenue else bm.Prev_Day_Revenue / sp.SCount end as Prev_Day_SalesSplitRevenue,
       case when bm.QTD_Revenue / sp.SCount = 'Infinity' or bm.QTD_Revenue / sp.SCount IS NULL THEN bm.QTD_Revenue else bm.QTD_Revenue / sp.SCount end as QTD_SalesSplitRevenue,
       case when bm.QTD_LY_Revenue / sp.SCount = 'Infinity' or bm.QTD_LY_Revenue / sp.SCount IS NULL THEN bm.QTD_LY_Revenue else bm.QTD_LY_Revenue / sp.SCount end as QTD_LY_SalesSplitRevenue,
       case when bm.YTD_Revenue / sp.SCount = 'Infinity' or bm.YTD_Revenue / sp.SCount IS NULL THEN bm.YTD_Revenue else bm.YTD_Revenue / sp.SCount end as YTD_SalesSplitRevenue,

@@ -572,7 +572,7 @@ view: fact_ad_daily_agg {
       </tr>
     </table>
 
-      <div style = "margin:5px 72px 72px 72px; text-align:left; ">Hey {{ _user_attributes['name'] }},<br><br>
+      <div style = "margin:5px 72px 72px 72px;text-align:left; ">Hey {{ _user_attributes['name'] }},<br><br>
 
       <div><p style = "float:none;font-size:25px;line-height: 1.6; color:#eb3434;">
       Please Note!!<br> <strong></strong></p>
@@ -583,6 +583,30 @@ view: fact_ad_daily_agg {
 
        This is a warning! Your login to looker will be blocked with your old credentials from  Monday, 4/2
       <br> <strong></strong></p>
+      </div>
+       <div><a style="float:right; color:#FFFFFF; background-color:#ffffff;  border: solid 3px #ffffff; font-weight: 400;height:70px;
+      text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 110px 30px 110px ;margin-left:900px;font-size:30px;
+      line-height: 0px;  border-radius: 25px" href="">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#ffffff;">
+      Visit the new site to find learning experiences <br style= "line-height:1px">
+      with self-paced education and hands-on practice <br>
+      designed to get you up to speed quickly. <strong></strong></p></div>
+
+
+      <div><a style="float:right;  color: #FFFFFF; background-color:#ffffff;  border: solid 3px #ffffff;x font-weight: 400;height:70px;
+      text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
+      line-height: 0px;  border-radius: 25px" href="">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#ffffff;">
+      Stay up to date on what's new in Looker!<br style= "line-height:1px">
+      New additions and important BI information will be added to the news page.<br>
+      You will receive an update in the slack group with a link <br>
+      to the news page.<strong></strong></p></div>
+      </div>
+       <div><a style="float:right;  color: #FFFFFF; background-color:#ffffff;  border: solid 3px #ffffff;x font-weight: 400;height:70px;
+      text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
+      line-height: 0px;  border-radius: 25px" href="">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#ffffff;">
+      Stay up to date on what's new in Looker!<br style= "line-height:1px">
+      New additions and important BI information will be added to the news page.<br>
+      You will receive an update in the slack group with a link <br>
+      to the news page.<strong></strong></p></div>
       </div>
 
       </div>

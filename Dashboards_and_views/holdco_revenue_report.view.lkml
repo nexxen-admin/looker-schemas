@@ -35,9 +35,9 @@ view: holdco_revenue_report {
       sum(case when ad.event_time >= current_date()-1 and ad.event_time < current_date()
       THEN revenue else NULL end) as Yst_Revenue,
 
-       sum(case when ad.event_time >= TIMESTAMPADD (year, -1,current_date()-1)::date
-                and ad.event_time < TIMESTAMPADD (year, -1,current_date())::date
-            THEN revenue else NULL end) as Yst_LY_Revenue,
+       sum(case when ad.event_time >= current_date()-2
+                and ad.event_time <  current_date()-1
+            THEN revenue else NULL end) as Prev_Day_Revenue,
 
       sum(case when ad.event_time >= date_trunc('quarter',current_date()-1)::date and ad.event_time < current_date()
       THEN revenue else NULL end)  as QTD_Revenue,
@@ -108,7 +108,7 @@ view: holdco_revenue_report {
       bm.YTD_LY_Revenue as Total_Deal_YTD_LY_Revenue,
       */
       case when bm.Yst_Revenue / sp.SCount = 'Infinity' or bm.Yst_Revenue / sp.SCount IS NULL THEN bm.Yst_Revenue else bm.Yst_Revenue / sp.SCount end as Yst_SalesSplitRevenue,
-      case when bm.Yst_LY_Revenue / sp.SCount = 'Infinity' or bm.Yst_LY_Revenue / sp.SCount IS NULL THEN bm.Yst_LY_Revenue else bm.Yst_LY_Revenue / sp.SCount end as Yst_LY_SalesSplitRevenue,
+      case when bm.Yst_LY_Revenue / sp.SCount = 'Infinity' or bm.Prev_Day_Revenue / sp.SCount IS NULL THEN bm.Prev_Day_Revenue else bm.Prev_Day_Revenue / sp.SCount end as Prev_Day_SalesSplitRevenue,
       case when bm.QTD_Revenue / sp.SCount = 'Infinity' or bm.QTD_Revenue / sp.SCount IS NULL THEN bm.QTD_Revenue else bm.QTD_Revenue / sp.SCount end as QTD_SalesSplitRevenue,
       case when bm.QTD_LY_Revenue / sp.SCount = 'Infinity' or bm.QTD_LY_Revenue / sp.SCount IS NULL THEN bm.QTD_LY_Revenue else bm.QTD_LY_Revenue / sp.SCount end as QTD_LY_SalesSplitRevenue,
       case when bm.YTD_Revenue / sp.SCount = 'Infinity' or bm.YTD_Revenue / sp.SCount IS NULL THEN bm.YTD_Revenue else bm.YTD_Revenue / sp.SCount end as YTD_SalesSplitRevenue,
@@ -215,11 +215,11 @@ view: holdco_revenue_report {
     sql: ${TABLE}.Yst_SalesSplitRevenue ;;
   }
 
-  measure: yst_ly_sales_split_revenue {
+  measure: Prev_Day_SalesSplitRevenue {
     type: sum
-    label: "Yesterday LY Rev"
+    label: "Prev Day Rev"
     value_format: "$#,##0"
-    sql: ${TABLE}.Yst_LY_SalesSplitRevenue ;;
+    sql: ${TABLE}.Prev_Day_SalesSplitRevenue ;;
   }
 
   measure: qtd_sales_split_revenue {

@@ -1343,7 +1343,7 @@ dimension: browser_type_name {
     group_label: "Deliverydate Granularity"
     label: "Deliverydate Granularity"
     description: "For dynamic Delivery period Granularity. Use with Filter Date Granularity"
-    value_format: "%m/%d"
+    #value_format: "%m/%d"
     sql:  CASE
       WHEN {% parameter date_granularity %} = 'Day'
         THEN ${__time_date}

@@ -31,16 +31,19 @@ view: unruly_player_demands {
   measure: av_mp_net {
     type: sum
     sql: ${TABLE}."AV MP Net" ;;
+    value_format: "#,##0"
   }
 
   measure: av_mp_total_rev {
     type: sum
     sql: ${TABLE}."AV MP Total Rev" ;;
+    value_format: "#,##0"
   }
 
   measure: cost {
     type: sum
     sql: ${TABLE}.cost ;;
+    value_format: "#,##0"
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -65,11 +68,13 @@ view: unruly_player_demands {
   measure: impressions {
     type: sum
     sql: ${TABLE}.impressions ;;
+    value_format: "#,##0"
   }
 
   measure: inventory {
     type: sum
     sql: ${TABLE}.inventory ;;
+    value_format: "#,##0"
   }
 
   dimension: media_type {
@@ -80,31 +85,37 @@ view: unruly_player_demands {
   measure: player_total_rev {
     type: sum
     sql: ${TABLE}."Player Total Rev" ;;
+    value_format: "#,##0"
   }
 
   measure: pub_mp_net {
     type: sum
     sql: ${TABLE}."Pub MP Net" ;;
+    value_format: "#,##0"
   }
 
   measure: pub_mp_total_rev {
     type: sum
     sql: ${TABLE}."Pub MP Total Rev" ;;
+    value_format: "#,##0"
   }
 
   measure: requests {
     type: sum
     sql: ${TABLE}.requests ;;
+    value_format: "#,##0"
   }
 
   measure: revenue {
     type: sum
     sql: ${TABLE}.revenue ;;
+    value_format: "#,##0"
   }
 
   measure: sf {
     type: sum
     sql: ${TABLE}.SF ;;
+    value_format: "#,##0"
   }
 
   measure: count {

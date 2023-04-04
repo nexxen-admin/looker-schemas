@@ -116,6 +116,7 @@ explore: yearly_consolidated_revenue_by_region_with_amobee {
 explore: bid_details_in_app {
   label: "Bid Details - In App"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: spearad_fifa_view {
@@ -292,7 +293,7 @@ explore: bliss_point_media_margin_profile{
 explore: holdco_revenue_report{
   label: "HoldCo Revenue View"
   #required_access_grants: [can_view_all_tremor]
-  hidden: no
+  hidden: yes
 }
 
 explore: tremor_to_unruly{

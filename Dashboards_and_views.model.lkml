@@ -301,3 +301,8 @@ explore: tremor_to_unruly{
   #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
+explore: unruly_player {
+  label: "Unruly Player"
+  required_access_grants: [can_view_all_tremor]
+}

@@ -294,3 +294,9 @@ explore: holdco_revenue_report{
   #required_access_grants: [can_view_all_tremor]
   hidden: no
 }
+
+explore: tremor_to_unruly{
+  label: "Tremor to Unruly"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}

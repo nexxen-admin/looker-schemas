@@ -1,5 +1,5 @@
 view: pilgrim_s_pride_report {
-required_access_grants: [can_view_pub_come_looker]
+ #required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: SELECT  date::date as date,
                TRIM(BOTH '''' FROM dma.dma_name) as DMA,

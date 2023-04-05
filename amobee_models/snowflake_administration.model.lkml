@@ -6,7 +6,7 @@ include: "/**/*.view.lkml"         # include all views in this project
 
 access_grant: can_see_model {
   user_attribute: admins
-  allowed_values: ["Looker_Admins"]
+  allowed_values: ["External_Users"]
 }
 
 

@@ -6,7 +6,7 @@ label: "DSP SLA"
 
 access_grant: can_see_model {
   user_attribute: admins
-  allowed_values: ["Looker_Admins"]
+  allowed_values: ["External_Users"]
 }
 
 datagroup: dsp_sla_metric_default_datagroup {

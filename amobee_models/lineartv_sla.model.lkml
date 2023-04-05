@@ -12,7 +12,7 @@ persist_with: lineartv_sla_metric_default_datagroup
 
 access_grant: can_see_model {
   user_attribute: admins
-  allowed_values: ["Looker_Admins"]
+  allowed_values: ["External_Users"]
 }
 
 explore: media_plan_workflow {

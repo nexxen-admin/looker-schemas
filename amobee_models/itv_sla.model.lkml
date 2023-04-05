@@ -13,7 +13,7 @@ persist_with: itv_sla_metric_default_datagroup
 
 access_grant: can_see_model {
   user_attribute: admins
-  allowed_values: ["Looker_Admins"]
+  allowed_values: ["External_Users"]
 }
 
 explore: daily_gw_report_snapshot {

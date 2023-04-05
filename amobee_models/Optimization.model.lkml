@@ -5,9 +5,10 @@ include: "/**/*.view.lkml"
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }
 
-access_grant: can_see_model {
+
+access_grant: can_see_model{
   user_attribute: admins
-  allowed_values: ["Looker_Admins"]
+  allowed_values: ["External_Users"]
 }
 
 explore: rta_group_finder {
@@ -20,7 +21,7 @@ explore: rta_group_finder {
 
 
 explore: opt_rpt_placement_at_glance_stats {
-  required_access_grants: [can_see_model, can_see_model]
+  required_access_grants: [can_use_explore,can_see_model]
   label: "Placement at a Glance"
   description: "This can be used to obtain to view pre-aggregated placement stats"
 

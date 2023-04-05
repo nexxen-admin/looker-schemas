@@ -332,3 +332,9 @@ explore: QPSxRPM {
   label: "QPSxRPM Supply"
   hidden: yes
 }
+
+explore: blue_buffalo_weekly_report {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Blue Buffalo Weekly Report"
+  hidden: yes
+}

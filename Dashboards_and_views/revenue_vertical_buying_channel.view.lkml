@@ -23,6 +23,9 @@ view: revenue_vertical_buying_channel {
                     ${revenue_vertical_buying_channel.advertiser_category}='Entertainment' OR ${revenue_vertical_buying_channel.advertiser_category}='Personal Finance' OR
                     ${revenue_vertical_buying_channel.advertiser_category}='Travel' then ${revenue_vertical_buying_channel.advertiser_category} else 'Grouped Other' end;;
     drill_fields: [advertiser_category]
+    link: {
+      label: "Open Grouped Others Trend Line"
+    url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=zuC1YfhN6SY5reOE3Iemiq&origin_space=249&toggle=dat,fil,vis"}
    }
 
   dimension: buying_channel {

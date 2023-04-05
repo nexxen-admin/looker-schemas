@@ -3,7 +3,7 @@ connection: "snowflake"
 include: "/**/*.view.lkml"
 
 access_grant: can_see_model {
-  user_attribute: admins
+  user_attribute: external_users
   allowed_values: ["External_Users"]
 }
 

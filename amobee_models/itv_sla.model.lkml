@@ -12,7 +12,7 @@ datagroup: itv_sla_metric_default_datagroup {
 persist_with: itv_sla_metric_default_datagroup
 
 access_grant: can_see_model {
-  user_attribute: admins
+  user_attribute: external_users
   allowed_values: ["External_Users"]
 }
 

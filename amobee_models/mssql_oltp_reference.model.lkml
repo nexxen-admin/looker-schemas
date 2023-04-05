@@ -6,7 +6,7 @@ include: "/**/*.view.lkml"
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }
 access_grant: can_see_model {
-  user_attribute: admins
+  user_attribute: external_users
   allowed_values: ["External_Users"]
 }
 

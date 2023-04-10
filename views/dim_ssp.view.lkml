@@ -48,7 +48,7 @@ view: dim_ssp {
     label: "Is 1st Party Supply"
     description: "The SSP is first party - Tremor, Unruly or Amobee"
     type: yesno
-    sql: ${TABLE}.Is_1st_Party ;;
+    sql: ${TABLE}.Is_1st_Party   ;;
   }
 
   dimension: Supply_source {

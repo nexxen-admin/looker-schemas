@@ -2,10 +2,7 @@ connection: "druid"
 
 include: "/**/*.view.lkml"
 
-access_grant: can_see_model {
-  user_attribute: external_users
-  allowed_values: ["External_Users"]
-}
+
 
 
 datagroup: dod_default_datagroup {

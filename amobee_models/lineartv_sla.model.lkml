@@ -5,17 +5,13 @@ include: "/**/*.view.lkml"
 # include: "*.dashboard.lookml"  # include all dashboards in this project
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }
-access_grant: can_see_model {
-  user_attribute: external_users
-  allowed_values: ["External_Users"]
-}
 
 explore: placement {
   label: "Platform Supply Reference"
   description: "This explore includes reference data on the supply side concepts, as well as information within that hierarchy.
   Source is the Platform OLTP database."
 
-  required_access_grants: [can_see_model]
+
 
   access_filter: {
     field: mssql_oltp_platform_client.office_id
@@ -485,7 +481,7 @@ explore: placement {
 }
 
 explore: hourly_filler_placement_stats_details {
-  required_access_grants: [can_see_model]
+
   label: "Placement Filler Statistics"
   description: "This explore can be used to see hourly filler statistics for supply side attributes (Placement, Publisher, etc.)."
   access_filter: {
@@ -619,7 +615,7 @@ explore: hourly_filler_placement_stats_details {
 }
 
 explore: creative_rejection_view {
-  required_access_grants: [can_see_model]
+
   label: "Creative Rejection Alerting"
 
   access_filter: {
@@ -723,7 +719,7 @@ explore: creative_rejection_view {
 }
 
 explore: mssql_oltp_daypart_alert {
-  required_access_grants: [can_see_model]
+
   label: "Watershed Daypart Alerting"
   hidden: yes
 
@@ -735,7 +731,7 @@ explore: mssql_oltp_daypart_alert {
 }
 
 explore: brand_rejection {
-  required_access_grants: [can_see_model]
+
   label: "Brand Rejection Alerting"
   hidden: yes
 
@@ -748,7 +744,7 @@ explore: brand_rejection {
 }
 
 explore: user_access {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "User Access"
 
   join: mssql_oltp_user_activity {
@@ -769,12 +765,12 @@ explore: user_access {
 }
 
 explore: user_access_changes {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Platform Client Access Changes"
 }
 
 explore: mssql_oltp_eligibility_check {
-  required_access_grants: [can_see_model]
+
   label: "Flight Media Eligibility Check"
   hidden: yes
 
@@ -842,7 +838,7 @@ explore: mssql_oltp_eligibility_check {
 }
 
 explore: placement_delivery_cap_statistics {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Placement Delivery Cap Metrics"
 
   join: placement {
@@ -932,7 +928,7 @@ explore: placement_delivery_cap_statistics {
 
 explore: mssql_oltp_campaign {
   view_name: mssql_oltp_campaign
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Platform Demand Reference"
   description: "This explore includes reference data on the demand side concepts, as well as information within that hierarchy. Source is the Platform OLTP database."
   fields: [ALL_FIELDS*, -mssql_oltp_campaign_dates.tapl_campaign_end_datetm, -mssql_oltp_campaign_dates.tapl_campaign_start_datetm]
@@ -1110,7 +1106,7 @@ explore: mssql_oltp_campaign {
 }
 
 explore: mssql_oltp_campaign_wopr_only {
-  required_access_grants: [can_see_model]
+
   extends: [mssql_oltp_campaign]
   label: "Platform Demand Reference (for WOPR only)"
   description: "This explore includes reference data on the demand side concepts, as well as information within that hierarchy. Source is the Platform OLTP database."
@@ -1197,13 +1193,13 @@ explore: mssql_oltp_campaign_wopr_only {
 }
 
 explore: mssql_oltp_domain_blacklist {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Domain Blacklist"
   sql_always_where: ${mssql_oltp_domain_blacklist.active} = 1 ;;
 }
 
 explore: mssql_oltp_data_vendor_cost_schedule {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   fields: [ALL_FIELDS*, -mssql_oltp_platform_client.dst_changedon_raw, -mssql_oltp_platform_client.dst_changedon_date, -mssql_oltp_platform_client.dst_changedon_time,
     -mssql_oltp_platform_client.dst_changedon_week, -mssql_oltp_platform_client.dst_changedon_month, -mssql_oltp_platform_client.dst_changedon_quarter,
     -mssql_oltp_platform_client.dst_changedon_year]
@@ -1231,7 +1227,7 @@ explore: mssql_oltp_data_vendor_cost_schedule {
 }
 
 explore: mssql_oltp_flight_media_statistics {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Flight Media Statistics"
 
   join: videology_flightmedia_statistics_view {
@@ -1351,7 +1347,7 @@ explore: mssql_oltp_flight_media_statistics {
 }
 
 explore: mssql_oltp_an_hist_campaign {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Campaign Settings KPI"
 
   join: mssql_oltp_campaign {
@@ -1407,7 +1403,7 @@ explore: mssql_oltp_an_hist_campaign {
 }
 
 explore: mssql_oltp_an_hist_campaign_target {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Campaign Targeting KPI"
 
   join: mssql_oltp_campaign {
@@ -1463,7 +1459,7 @@ explore: mssql_oltp_an_hist_campaign_target {
 }
 
 explore: mssql_oltp_suggest_demand_ref {
-  required_access_grants: [can_see_model]
+
   access_filter: {
     field: mssql_oltp_suggest_demand_ref.country_id
     user_attribute: access_filter_country_id
@@ -1479,7 +1475,7 @@ explore: mssql_oltp_suggest_demand_ref {
 }
 
 explore: mssql_oltp_suggest_supply_ref {
-  required_access_grants: [can_see_model]
+
   access_filter: {
     field: mssql_oltp_suggest_supply_ref.country_id
     user_attribute: access_filter_country_id

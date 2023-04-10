@@ -2,13 +2,9 @@ connection: "druid"
 
 include: "/**/*.view.lkml"
 
-access_grant: can_see_model {
-  user_attribute: external_users
-  allowed_values: ["External_Users"]
-}
 
 explore: dod_druid_atv_raw_impression {
-  required_access_grants: [can_see_model]
+
   join: atv_placement_details {
     type: left_outer
     relationship: one_to_many

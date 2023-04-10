@@ -12,7 +12,7 @@ access_grant: can_see_model {
 
 explore: converged_fox_deal_staging {
   label: "FNG Deals"
-  required_access_grants: [can_see_model]
+ # required_access_grants: [can_see_model]
 
   sql_always_where: ${converged_fox_deal_staging.pull_type}  = 'adhoc_call' ;;
 

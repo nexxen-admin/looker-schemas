@@ -315,6 +315,18 @@ view: sno_opt_viewing_spot_level_pacing {
     suggestable: no
   }
 
+  dimension_group: broadcast {
+    type: time
+    timeframes: [
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}."BROADCAST_DAY" ;;
+  }
+
   measure: count_distinct_usn {
     type: count_distinct
     sql: ${TABLE}."USN" ;;

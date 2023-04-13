@@ -3,14 +3,10 @@ connection: "snowflake"
 include: "/**/*.view.lkml"       # include all views in this project
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
-access_grant: can_see_model {
-  user_attribute: external_users
-  allowed_values: ["External_Users"]
-}
 
 
 explore:  ads_finder {
-  required_access_grants: [can_see_model]
+
   view_name: sno_ad_content
   label: "TV Ads Finder"
   fields: [ALL_FIELDS*]
@@ -30,7 +26,7 @@ explore:  ads_finder {
 }
 
 explore: latest_date_finder{
-  required_access_grants: [can_see_model]
+
   view_name: sno_latest_viewing_date
   label: "AED & Viewing Date Finder"
   fields: [ALL_FIELDS*]
@@ -38,7 +34,7 @@ explore: latest_date_finder{
 }
 
 explore: latest_linkage_finder{
-  required_access_grants: [can_see_model]
+
   view_name: sno_latest_linkage_date
   label: "Monthly Linkage Finder"
   fields: [ALL_FIELDS*]
@@ -46,7 +42,7 @@ explore: latest_linkage_finder{
 }
 
 explore: ad_cost_finder{
-  required_access_grants: [can_see_model]
+
   view_name: sno_ad_cost
   label: "Ad Cost Finder"
   fields: [ALL_FIELDS*]

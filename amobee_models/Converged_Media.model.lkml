@@ -4,15 +4,12 @@ label: "TV Media Plans"
 include: "/**/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
-access_grant: can_see_model {
-  user_attribute: external_users
-  allowed_values: ["External_Users"]
-}
+
 
 
 explore: converged_fox_deal_staging {
   label: "FNG Deals"
- # required_access_grants: [can_see_model]
+
 
   sql_always_where: ${converged_fox_deal_staging.pull_type}  = 'adhoc_call' ;;
 
@@ -24,7 +21,7 @@ explore: converged_fox_deal_staging {
 
 explore: converged_fox_deal_spot_staging {
   label: "FNG Spots"
-  required_access_grants: [can_see_model]
+
 
   sql_always_where: ${converged_fox_deal_spot_staging.pull_type}  = 'adhoc_call' ;;
 
@@ -37,7 +34,7 @@ explore: converged_fox_deal_spot_staging {
 
 explore: placement {
   label: "TV Supply Reference"
-  required_access_grants: [can_see_model]
+
 
   join: converged_placement_selling_title {
     relationship: one_to_one
@@ -127,7 +124,7 @@ explore: placement {
 
 explore: converged_li_forecast_staging_new {
   label: "Demo Estimates"
-  required_access_grants: [can_see_model]
+
 
   join: cluster {
     relationship: many_to_one

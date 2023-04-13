@@ -6,10 +6,7 @@ include: "/**/*.view.lkml"
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }
 
 
-access_grant: can_see_model{
-  user_attribute: external_users
-  allowed_values: ["External_Users"]
-}
+
 
 explore: rta_group_finder {
   required_access_grants: [can_use_explore]
@@ -21,7 +18,7 @@ explore: rta_group_finder {
 
 
 explore: opt_rpt_placement_at_glance_stats {
-  required_access_grants: [can_use_explore,can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Placement at a Glance"
   description: "This can be used to obtain to view pre-aggregated placement stats"
 
@@ -73,7 +70,7 @@ explore: daily_placement_attribute_value_eligibility_stats {
 
 
 explore: scale_metric {
-  #required_access_grants: [can_see_model]
+
   label: "Allocation Metrics"
   description: "This explore can be used to check allocation metrics. Do not use fields from across different allocation metrics
   (Example: using quanity metric date for scale metric) unless it is intended (Example: house fields used in scale metric).
@@ -116,7 +113,7 @@ explore: scale_metric {
 }
 
 explore: opt_misdelivery {
-  #required_access_grants: [can_see_model]
+
   label: "Allocation vs Delivery"
   access_filter: {
     field: an_main_platform_client.office_id
@@ -253,7 +250,7 @@ explore: opt_inventory_assignment {
 }
 
 explore: opt_total_ccp {
-  #required_access_grants: [can_see_model]
+
   label: "Total CCP"
   description: "Campaign CCP"
   access_filter: {

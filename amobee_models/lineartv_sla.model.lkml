@@ -1,4 +1,4 @@
-connection: "snowflake"
+  connection: "snowflake"
 
 include: "/**/*.view.lkml"
 

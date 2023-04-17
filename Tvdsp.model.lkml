@@ -6,8 +6,10 @@ include: "/**/*.view.lkml"                 # include all views in this project
 
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
-
-
+access_grant: can_view_all_tremor {
+  user_attribute: all_tremor
+  allowed_values: ["all_tremor"]
+}
 explore: v_fact_ad_events_hourly_agg {
  always_filter: {
     filters: [v_dim_date_hourly.date_key_date: "last 10 days "]
@@ -16,6 +18,8 @@ explore: v_fact_ad_events_hourly_agg {
   #persist_with: CleanCash_datagroup
   label: "TVDSP Hourly"
   view_label: "Measures"
+  required_access_grants: [can_view_all_tremor]
+
 
   join: v_dim_ad_orientation {
     type: inner

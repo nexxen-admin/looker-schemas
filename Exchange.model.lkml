@@ -1048,7 +1048,7 @@ explore: fact_ad_bid_request_daily_agg{
   persist_with: CleanCash_datagroup
   label: "Outbound Exchange"
   view_label: "Measures"
-
+  required_access_grants: [can_view_all_tremor]
 
   join: dim_dsp_data_center {
     type: inner

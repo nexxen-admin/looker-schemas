@@ -2,7 +2,7 @@ view: tpm_metrics {
   sql_table_name: TPMM.TPM_METRICS ;;
 
   dimension: campaign_id {
-    type: string
+    type: number
     hidden: yes
     sql: ${TABLE}.CAMPAIGN_ID ;;
   }
@@ -56,6 +56,13 @@ view: tpm_metrics {
     type: string
     hidden: yes
     sql: ${TABLE}.FACETS ;;
+  }
+
+  dimension: daypart {
+    type: string
+    label: "Daypart"
+    view_label: "TPM Facets"
+    sql: ${facets}:daypart::varchar ;;
   }
 
   dimension: deal_number {

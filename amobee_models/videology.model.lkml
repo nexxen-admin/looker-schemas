@@ -1538,6 +1538,12 @@ explore: sno_opt_viewing_spot_level_pacing {
     sql_on: ${sno_validation_report_result.request_id} = ${sno_validation_rule_result.request_id} ;;
   }
 
+  join: tpm_metrics {
+    relationship: many_to_many
+    sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${tpm_metrics.campaign_id} ;;
+    fields: [tpm_metrics.daypart]
+  }
+
   sql_always_where: {% if sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_any" or sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_approved" %} ${sno_opt_viewing_spot_level_pacing_latest_report.campaign_id} IS NOT NULL {% else %} TRUE {% endif %}
     AND {% if sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_approved" %} ${sno_opt_pacing_report_approval.approval_state} = 'approved' {% else %} TRUE {% endif %} ;;
 }

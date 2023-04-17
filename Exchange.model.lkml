@@ -78,6 +78,7 @@ explore: publishers_report_monthly_for_finance {
 explore: extend_Inbound_Exchange {
   extends: [fact_ad_daily_agg]
   from: fact_ad_daily_agg
+  required_access_grants: [can_view_all_tremor]
   access_filter: {
     field: v_dim_employee_pub_ops.employee_name
     user_attribute: allowed_users
@@ -398,6 +399,7 @@ explore: fact_ad_daily_agg{
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange"
   view_label: "Measures"
+  required_access_grants: [can_view_all_tremor]
 
 
 join: dim_date {
@@ -734,7 +736,9 @@ join: dim_deal_personnel {
 explore: fact_ad_hourly_agg{
   always_filter: {
     filters: [dim_date_hourly.date_time_key_date: "last 10 days "]
+
   }
+  required_access_grants: [can_view_all_tremor]
 
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange Hourly"

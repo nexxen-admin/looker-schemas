@@ -720,26 +720,26 @@ join: dim_seat {
 
 join: dim_genre_norm {
    type: inner
-   view_label: "Genre"
+   view_label: "Content Attributes"
    sql_on: ${dim_genre_norm.Genre_Norm_key}=${fact_ad_daily_agg.Genre_Norm_Key};;
    relationship: many_to_one
 }
   join: dim_content_rating_norm {
     type: inner
-    view_label: "Rating"
+    view_label: "Content Attributes"
     sql_on: ${dim_content_rating_norm.content_rating_norm_key}=${fact_ad_daily_agg.Content_Rating_Norm_Key};;
     relationship: many_to_one
   }
 
   join: dim_content_network {
     type: inner
-    view_label: "Rating"
+    view_label: "Content Attributes"
     sql_on: ${dim_content_network.content_network_key}=${fact_ad_daily_agg.Content_Network_Key};;
     relationship: many_to_one
   }
   join: dim_content_language_norm {
     type: inner
-    view_label: "Rating"
+    view_label: "Content Attributes"
     sql_on: ${dim_content_language_norm.content_language_norm_key}=${fact_ad_daily_agg.Content_Language_Norm_Key};;
     relationship: many_to_one
   }

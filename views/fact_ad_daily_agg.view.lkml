@@ -1035,6 +1035,13 @@ view: fact_ad_daily_agg {
 
   }
 
+  dimension: Deal_Auction_Type_Key {
+    type: number
+    sql: ${TABLE}.Deal_Auction_Type_Key ;;
+    hidden: yes
+
+  }
+
   dimension: device_type_key {
     type: number
     sql: ${TABLE}.Device_Type_Key ;;
@@ -1871,6 +1878,18 @@ view: fact_ad_daily_agg {
     type: number
     label: "Content Rating Norm Key"
     sql: ${TABLE}.Content_Rating_Norm_Key;;
+    hidden: yes
+  }
+
+  dimension: Content_Network_Key{
+    type: number
+    sql: ${TABLE}.Content_Network_Key;;
+    hidden: yes
+  }
+
+  dimension: Content_Language_Norm_Key{
+    type: number
+    sql: ${TABLE}.Content_Language_Norm_Key;;
     hidden: yes
   }
 

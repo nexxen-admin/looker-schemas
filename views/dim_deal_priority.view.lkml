@@ -73,6 +73,7 @@ view: dim_deal_priority {
 
   dimension: deal_priority_name {
     type: string
+    label: "Deal Priority"
     description: "Priority of the deal"
     sql: ${TABLE}.Deal_Priority_Name ;;
   }
@@ -84,7 +85,7 @@ view: dim_deal_priority {
   }
 
   dimension: weight {
-    label: "Priority Weight"
+    label: "Deal Priority Weight"
     description: "Weight according to priority:
                   Low - 25, medium - 50, High - 75, Programmatic Guaranteed - 100, Open Market - 0"
     type: number

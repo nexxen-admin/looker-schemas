@@ -53,13 +53,13 @@ view: dim_publisher_traffic_source {
   dimension: seller_id {
     type: number
     sql: ${TABLE}.seller_id ;;
-    hidden: yes
+
   }
 
   dimension: seller_type {
     type: number
     sql: ${TABLE}.seller_type ;;
-    hidden: yes
+
   }
 
   dimension_group: pub_ts_created {

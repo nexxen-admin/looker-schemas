@@ -12,7 +12,6 @@ view: all_coumns_is_null_chart {
        ROUND(SUM(CASE WHEN tv_tuner_channel is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as tv_tuner_channel,
        ROUND(SUM(CASE WHEN ip is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as ip,
        ROUND(SUM(CASE WHEN message_count is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as message_count,
-       ROUND(SUM(CASE WHEN viewing_duration is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as viewing_duration,
        ROUND(SUM(CASE WHEN viewing_offset is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as viewing_offset,
        ROUND(SUM(CASE WHEN session_start_utc is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as session_start_utc,
        ROUND(SUM(CASE WHEN session_end_utc is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as session_end_utc,

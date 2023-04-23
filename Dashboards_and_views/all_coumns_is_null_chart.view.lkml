@@ -88,10 +88,6 @@ ORDER BY 1
     sql: ${TABLE}.message_count ;;
   }
 
-  dimension: viewing_duration {
-    type: number
-    sql: ${TABLE}.viewing_duration ;;
-  }
 
   dimension: viewing_offset {
     type: number
@@ -108,10 +104,7 @@ ORDER BY 1
     sql: ${TABLE}.session_end_utc ;;
   }
 
-  dimension: dat_track_id {
-    type: number
-    sql: ${TABLE}.dat_track_id ;;
-  }
+
 
   dimension: station_tremor_id {
     type: number
@@ -123,10 +116,6 @@ ORDER BY 1
     sql: ${TABLE}.airing_tremor_id ;;
   }
 
-  dimension: aggregated_at {
-    type: number
-    sql: ${TABLE}.aggregated_at ;;
-  }
 
   set: detail {
     fields: [
@@ -142,14 +131,11 @@ ORDER BY 1
       tv_tuner_channel,
       ip,
       message_count,
-      viewing_duration,
       viewing_offset,
       session_start_utc,
       session_end_utc,
-      dat_track_id,
       station_tremor_id,
-      airing_tremor_id,
-      aggregated_at
+      airing_tremor_id
     ]
   }
 }

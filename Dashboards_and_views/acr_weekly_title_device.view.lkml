@@ -3,7 +3,7 @@ view: acr_weekly_title_device {
     sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
        PP.title,
        COUNT(DISTINCT device_id) as count_devices
-FROM dragon.viewership_content_sessions_combined AA
+FROM dragon.viewership_content_sessions_combined_daily AA
 LEFT JOIN dragon.program PP
 ON AA.tv_program_tremor_id=PP.tv_program_tremor_id
 GROUP BY 1,2

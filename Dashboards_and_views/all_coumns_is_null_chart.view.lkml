@@ -20,7 +20,7 @@ view: all_coumns_is_null_chart {
        ROUND(SUM(CASE WHEN station_tremor_id is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as station_tremor_id,
        ROUND(SUM(CASE WHEN airing_tremor_id is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as airing_tremor_id,
        ROUND(SUM(CASE WHEN aggregated_at is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as aggregated_at
-FROM dragon.viewership_content_sessions_combined
+FROM dragon.viewership_content_sessions_combined_daily
 GROUP BY 1
 ORDER BY 1
  ;;

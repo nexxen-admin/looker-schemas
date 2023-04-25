@@ -3,7 +3,7 @@ view: acr_weekly_unique_program_over_networks_linear {
     sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
        affiliate_call_sign,
        COUNT(DISTINCT PP.title) AS distinct_title_count
-FROM dragon.viewership_content_sessions_combined AA
+FROM dragon.viewership_content_sessions_combined_daily AA
 LEFT JOIN dragon.airing BB
 ON AA.airing_tremor_id = BB.airing_tremor_id
 LEFT JOIN dragon.program PP

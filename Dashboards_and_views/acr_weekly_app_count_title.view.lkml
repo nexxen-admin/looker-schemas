@@ -3,7 +3,7 @@ view: acr_weekly_app_count_title {
     sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
        AA.tv_app_name,
        COUNT(DISTINCT pp.title) AS distinct_program_count
-FROM dragon.viewership_content_sessions_combined AA
+FROM dragon.viewership_content_sessions_combined_daily AA
 LEFT JOIN dragon.program PP
 ON AA.tv_program_tremor_id=PP.tv_program_tremor_id
 where source='vod'

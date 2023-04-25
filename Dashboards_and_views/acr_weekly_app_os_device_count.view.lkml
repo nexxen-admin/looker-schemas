@@ -4,7 +4,7 @@ view: acr_weekly_app_os_device_count {
        BB.os,
        AA.tv_app_name,
        COUNT(DISTINCT AA.device_id) AS distinct_ip_count
-FROM dragon.viewership_content_sessions_combined AA
+FROM dragon.viewership_content_sessions_combined_daily AA
 LEFT JOIN dragon.device_info_r BB
 ON AA.device_id = BB.device_id
 GROUP BY 1,2,3

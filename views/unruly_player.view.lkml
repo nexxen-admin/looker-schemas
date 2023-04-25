@@ -139,6 +139,26 @@ view: unruly_player_demands {
     value_format: "#,##0"
   }
 
+  measure: MyCast_20 {
+    type: sum
+    sql: ${TABLE}."MyCast 20%" ;;
+    value_format: "#,##0"
+  }
+
+  measure: Widgets_AI {
+    type: sum
+    sql: ${TABLE}."Widgets AI" ;;
+    value_format: "#,##0"
+  }
+
+  measure: Wiseroll_LTD_Yeda {
+    label:"Wiseroll LTD + Yeda"
+    type: sum
+    sql: ${TABLE}."Wiseroll LTD + Yeda" ;;
+    value_format: "#,##0"
+  }
+
+
   measure: count {
     type: count
     drill_fields: []

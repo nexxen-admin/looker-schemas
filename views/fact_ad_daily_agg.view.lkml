@@ -2382,9 +2382,179 @@ view: fact_ad_daily_agg {
     type: sum
     description: "Current period impressions"
     sql:  ${TABLE}.sum_of_impression_pixel ;;
-    value_format: "$#,##0"
+    value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
   }
+
+  measure: current_period_clicks {
+    view_label: "PoP"
+    type: sum
+    description: "Current period clicks"
+    sql: ${TABLE}.sum_of_click_count  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_clicks {
+    view_label: "PoP"
+    type: sum
+    description: "Previous period clicks"
+    sql: ${TABLE}.sum_of_click_count  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_video_completes {
+    view_label: "PoP"
+    type:  sum
+    description: "Current period video completes"
+    sql: ${TABLE}.sum_of_video_completes  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_video_completes {
+    view_label: "PoP"
+    type:  sum
+    description: "Previous period completes"
+    sql: ${TABLE}.sum_of_video_completes  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
+
+  measure: current_period_video_starts {
+    view_label: "PoP"
+    type:  sum
+    description: "Current period video starts"
+    sql: ${TABLE}.sum_of_video_starts  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+  measure: previous_period_video_starts {
+    view_label: "PoP"
+    type:  sum
+    description: "Previous period video_starts"
+    sql: ${TABLE}.sum_of_video_starts  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
+
+  measure: current_period_vcr {
+    view_label: "PoP"
+    type:  number
+    description: "Current period VCR"
+    sql: ${current_period_video_completes}/nullif(${current_period_video_starts},0)  ;;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_vcr {
+    view_label: "PoP"
+    type: number
+    description: "Previous period VCR"
+    sql:  ${previous_period_video_completes}/nullif(${previous_period_video_starts},0) ;;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_ctr {
+    view_label: "PoP"
+    type: number
+    description: "Current period CTR"
+    sql:  ${current_period_clicks}/nullif(${current_period_impressions},0);;
+    value_format: "0.00%"
+   # filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_ctr {
+    view_label: "PoP"
+    type: number
+    description: "Previous period CTR"
+    sql:  ${previous_period_clicks}/nullif(${previous_period_impressions},0);;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_cpm {
+    view_label: "PoP"
+    type: number
+    description: "Current period CPM"
+    sql: ${current_period_revenue}/nullif(${current_period_impressions},0) ;;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_cpm {
+    view_label: "PoP"
+    type: number
+    description: "Previous Current period CPM"
+    sql: ${previous_period_revenue}/nullif(${previous_period_impressions},0);;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_ias_measurable_impressions {
+    view_label: "PoP"
+    type: sum
+    description: "Current period ias measurable impressions"
+    sql: ${TABLE}.sum_of_ias_measurable_impression ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_ias_measurable_impressions {
+    view_label: "PoP"
+    type: sum
+    description: "Previous period ias measurable impressions"
+    sql: ${TABLE}.sum_of_ias_measurable_impression ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: current_period_ias_viewable_impressions {
+    view_label: "PoP"
+    type: sum
+    description: "Current period ias viewable impressions"
+    sql:  ${TABLE}.sum_of_ias_viewable_impression ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_ias_viewable_impressions {
+    view_label: "PoP"
+    type: sum
+    description: "Previous period ias viewable impressions"
+    sql:  ${TABLE}.sum_of_ias_viewable_impression ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
+
+  measure: current_period_viewability {
+    view_label: "PoP"
+    type: number
+    description: "Current period viewability"
+    sql: ${current_period_ias_viewable_impressions}/nullif(${current_period_ias_measurable_impressions},0);;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_viewability {
+    view_label: "PoP"
+    type: number
+    description: "Previous period viewability"
+    sql:  ${previous_period_ias_viewable_impressions}/nullif(${previous_period_ias_measurable_impressions},0) ;;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "last"]
+  }
+
   measure: current_period_requests {
     view_label: "PoP"
     type: sum
@@ -2415,7 +2585,7 @@ view: fact_ad_daily_agg {
     type: sum
     description: "Previous period impressions"
     sql: ${TABLE}.sum_of_impression_pixel ;;
-    value_format: "$#,##0"
+    value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
   }
   measure: previous_period_fill_rate {
@@ -2423,7 +2593,7 @@ view: fact_ad_daily_agg {
     type: number
     description: "Previous period impressions/bid requests"
     sql:  (${previous_period_impressions}/${previous_period_requests}) ;;
-    value_format: "0%"
+    value_format: "0.00%"
     #filters: [period_filtered_measures: "this"]
   }
 

@@ -34,6 +34,17 @@ view: unruly_player_demands {
     sql: ${TABLE}.year ;;
   }
 
+  dimension: seat_name {
+    type: string
+    sql: ${TABLE}.seat_name ;;
+  }
+
+  dimension: pub_id {
+    type: number
+    sql: ${TABLE}.pub_id ;;
+  }
+
+
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Av Mp Net" in Explore.

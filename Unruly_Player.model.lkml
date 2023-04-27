@@ -19,10 +19,10 @@ access_grant: can_view_all_tremor {
 
 explore: unruly_player_demands {
   label: "Unruly Player Demands"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_all_tremor]
 }
 
 explore: unruly_player_supplies {
   label: "Unruly Player Supplies"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_all_tremor]
 }

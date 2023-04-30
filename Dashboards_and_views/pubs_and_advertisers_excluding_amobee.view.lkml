@@ -72,4 +72,25 @@ view: pubs_and_advertisers_excluding_amobee {
     type: count
     drill_fields: [profile_name]
   }
+
+  dimension_group: current_date {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: current_date ;;
+  }
+
+  dimension: is_current_month {
+    type: string
+    sql: case when ${event_month_month} = ${current_date_month}
+      then 'Yes' else 'No' end;;
+  }
 }

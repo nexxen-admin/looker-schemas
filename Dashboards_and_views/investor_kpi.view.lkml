@@ -99,6 +99,28 @@ view: investor_kpi {
     sql: (${TABLE}.Total_Revenue-${TABLE}.Cost)/${TABLE}.Total_Revenue ;;
   }
 
+
+  dimension_group: current_date {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: current_date ;;
+  }
+
+  dimension: is_current_month {
+    type: string
+    sql: case when ${event_month_month} = ${current_date_month}
+      then 'Yes' else 'No' end;;
+  }
+
   measure: count {
     type: count
     drill_fields: []

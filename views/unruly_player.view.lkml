@@ -158,6 +158,24 @@ view: unruly_player_demands {
     value_format: "#,##0"
   }
 
+  #dimension_group: today {
+  #  type: time
+    #hidden: yes
+   # timeframes: [day_of_month, month, month_num, date, raw]
+   # sql: current_date;;
+   # }
+
+  #dimension: is_current_month {
+   # label: "is_current_month"
+   # type: date
+   # sql: case when ${activity_month} = ${today_month}
+  #  then "Current_Month" else "No" end;;
+  #}
+
+  dimension: is_current_month {
+    type: string
+    sql: case when ${activity_month} = month(current_date) then "Yes" else "No" end;;
+  }
 
   measure: count {
     type: count

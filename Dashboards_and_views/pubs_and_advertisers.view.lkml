@@ -83,12 +83,16 @@ view: pubs_and_advertisers {
     sql: current_date ;;
   }
 
-  dimension: is_current_month {
+  dimension: previous_month {
     type: string
-    sql: case when ${event_month_month} = ${current_date_month}
-      then 'Yes' else 'No' end;;
+    sql: LEFT(CAST(DATE_TRUNC('MONTH', TO_DATE(${current_date_month} || '-01', 'YYYY-MM-DD')) - INTERVAL '1 month' AS VARCHAR), 7) ;;
   }
 
+  dimension: is_current_month {
+    type: string
+    sql: case when ${event_month_month} = ${previous_month}
+      then 'Yes' else 'No' end;;
+  }
   measure: count {
     type: count
     drill_fields: [profile_name]

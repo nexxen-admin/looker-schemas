@@ -115,11 +115,22 @@ view: investor_kpi {
     sql: current_date ;;
   }
 
+  #dimension: previous_month {
+   # type: date
+    #sql: add_months(-1,${current_date_month}) ;;
+  #}
+
+  dimension: previous_month {
+    type: string
+    sql: LEFT(CAST(DATE_TRUNC('MONTH', TO_DATE(${current_date_month} || '-01', 'YYYY-MM-DD')) - INTERVAL '1 month' AS VARCHAR), 7) ;;
+  }
+
   dimension: is_current_month {
     type: string
-    sql: case when ${event_month_month} = ${current_date_month}
+    sql: case when ${event_month_month} = ${previous_month}
       then 'Yes' else 'No' end;;
   }
+
 
   measure: count {
     type: count

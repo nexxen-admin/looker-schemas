@@ -34,6 +34,12 @@ view: unruly_player_demands {
     sql: ${TABLE}.year ;;
   }
 
+  dimension: Is_1st_Party_Demand {
+    type: yesno
+    label: "Is 1st Party Demand"
+    sql: ${TABLE}.Is_1st_Party_Demand ;;
+  }
+
   dimension: seat_name {
     type: string
     sql: ${TABLE}.seat_name ;;
@@ -130,6 +136,13 @@ view: unruly_player_demands {
   measure: revenue {
     type: sum
     sql: ${TABLE}.revenue ;;
+    value_format: "#,##0"
+  }
+
+  measure: net_revenue {
+    label: "Net Revenue"
+    type: sum
+    sql: ${TABLE}.net_revenue ;;
     value_format: "#,##0"
   }
 

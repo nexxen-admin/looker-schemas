@@ -2173,7 +2173,7 @@ view: fact_ad_daily_agg {
 
   measure: current_period_revenue {
     view_label: "PoP"
-    label: "Revenue  {{_filters['current_date_range']}} "
+    label: "Current Period Revenue  {{_filters['current_date_range']}} "
     type: sum
     description: "Specifies the revenue of the current period we are looking at, using the filter 'current date range' which has to be applied"
     sql: ${TABLE}.sum_of_revenue ;;
@@ -2183,7 +2183,7 @@ view: fact_ad_daily_agg {
 
   measure: current_period_margin {
     view_label: "PoP"
-    label: "Margin  {{_filters['current_date_range']}} "
+    label: "Current Period Margin  {{_filters['current_date_range']}} "
     type: number
     description: "Specifies the % of the net revenue out of the revenue of the current period we are looking at, using the filter 'current date range' which has to be applied"
     sql: (${current_period_revenue}-${current_period_cost})/${current_period_revenue} ;;

@@ -127,6 +127,12 @@ view: v_dim_employee_pub_ops {
 
   }
 
+  dimension: Manager_Type {
+    label: "Manager Type"
+    type: string
+    sql: ${TABLE}.manager_type ;;
+  }
+
   dimension: employee_region {
     type: string
     sql: ${TABLE}.Employee_Region ;;

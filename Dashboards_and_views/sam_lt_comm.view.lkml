@@ -145,6 +145,12 @@ view: sam_lt_comm {
     sql: ${TABLE}.supply_source ;;
   }
 
+  dimension: Demand_Source {
+    type: string
+    label: "Demand Source"
+    sql: ${TABLE}.Demand_Source ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [supply_name]

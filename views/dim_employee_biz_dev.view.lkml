@@ -57,9 +57,10 @@ view: v_dim_employee_biz_dev {
   }
 
   dimension: Manager_Type {
-    label: "Manager Type"
+    label: "Pub Ops Group"
     type: string
     sql: ${TABLE}.manager_type ;;
+    hidden: yes
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average

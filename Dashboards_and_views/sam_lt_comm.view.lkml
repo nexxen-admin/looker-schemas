@@ -28,15 +28,31 @@ view: sam_lt_comm {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: cogs_amer {
+  measure: COGS {
     type: sum
     label: "COGS"
     value_format: "$#,##0"
-    sql: ${TABLE}.cogs_AMER ;;
+    sql: ${TABLE}.COGS ;;
   }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
+
+
+  dimension_group: Quarter_Start {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.Quarter_Start ;;
+  }
 
   dimension_group: event_month {
     type: time
@@ -53,18 +69,11 @@ view: sam_lt_comm {
     sql: ${TABLE}.Event_Month ;;
   }
 
-  measure: gross_revenue_amer {
+  measure: Revenue {
     type: sum
     label: "Gross Revenue"
     value_format: "$#,##0"
-    sql: ${TABLE}.gross_revenue_AMER ;;
-  }
-
-  measure: media_math_rebate {
-    type: sum
-    label: "MediaMath Rebate"
-    value_format: "$#,##0"
-    sql: ${TABLE}.MediaMath_Rebate ;;
+    sql: ${TABLE}.Revenue ;;
   }
 
   measure: net_revenue {
@@ -105,17 +114,10 @@ view: sam_lt_comm {
     sql: ${TABLE}.Pub_Platform_Fee ;;
   }
 
-  measure: pubmatic_platform_fee {
-    type: sum
-    label: "Pubmatic Platform Fee"
-    value_format: "$#,##0"
-    sql: ${TABLE}.Pubmatic_Platform_Fee ;;
-  }
-
-  dimension: revenue_group {
+  dimension: revenue_region {
     type: string
     label: "Revenue Group"
-    sql: ${TABLE}.revenue_group ;;
+    sql: ${TABLE}.Revenue_Region ;;
   }
 
   measure: ssp_platform_fee {
@@ -141,6 +143,12 @@ view: sam_lt_comm {
     type: string
     label: "Supply Source"
     sql: ${TABLE}.supply_source ;;
+  }
+
+  dimension: Demand_Source {
+    type: string
+    label: "Demand Source"
+    sql: ${TABLE}.Demand_Source ;;
   }
 
   measure: count {

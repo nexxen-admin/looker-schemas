@@ -1289,7 +1289,7 @@ view: fact_ad_daily_agg {
     type: number
     label: "Pub eCPM"
     description: "Cogs/Impressions"
-    value_format: "0.00%"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
   }
@@ -1298,7 +1298,7 @@ view: fact_ad_daily_agg {
     type: number
     label: "Pub RPM"
     description: "Revenue/Impressions"
-    value_format: "0.00%"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${revenue}/NULLIF(${impression_pixel},0))*1000 ;;
   }

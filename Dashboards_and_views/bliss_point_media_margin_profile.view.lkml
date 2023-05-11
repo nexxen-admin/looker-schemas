@@ -266,7 +266,7 @@ BP_Data_Current as (
   sum(vendor_modeled_cost) as vendor_modeled_cost,
   sum(customer_matched_cost) as customer_matched_cost,
   sum(customer_modeled_cost) as customer_modeled_cost
- From sandbox.temp_di_BP_Seg_usage seg
+ From DSP_Audience_Seg_Usage seg
 Group by 1, 2, 3, 4, 5--, 6
 ),
 
@@ -396,7 +396,7 @@ From dwh.dmp_segment_usage dsu
                 and c.agency_id in ('439896','446496')
   left outer join andromeda.rx_dim_supply_publisher_deal_r r on c.deal_id = r.external_deal_id
 Where dsu.date >= '2022-01-01'
-  and dsu.date < '2023-03-23'
+  and dsu.date < current_date()
   and dsu.vendor in ('cs','comscore')
   and dsu.matched_impressions > 0
 Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11

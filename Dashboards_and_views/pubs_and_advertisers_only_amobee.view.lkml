@@ -72,4 +72,30 @@ view: pubs_and_advertisers_only_amobee {
     type: count
     drill_fields: [profile_name]
   }
+
+  dimension_group: current_date {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: current_date ;;
+  }
+
+  dimension: previous_month {
+    type: string
+    sql: LEFT(CAST(DATE_TRUNC('MONTH', TO_DATE(${current_date_month} || '-01', 'YYYY-MM-DD')) - INTERVAL '1 month' AS VARCHAR), 7) ;;
+  }
+
+  dimension: is_current_month {
+    type: string
+    sql: case when ${event_month_month} = ${previous_month}
+      then 'Yes' else 'No' end;;
+  }
 }

@@ -8,14 +8,11 @@ case_sensitive: no
 #include: "*.dashboard"
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }
-access_grant: can_see_model {
-  user_attribute: admins
-  allowed_values: ["Looker_Admins"]
-}
+
 
 
 explore: hourly_analytics {
-  required_access_grants: [can_see_model]
+
   view_name: hourly_analytics
   label: "Request and Impression Metrics"
   description: "This explore includes both impression and request metrics. This data can be analyzed by the core supply and demand dimensions,
@@ -162,13 +159,13 @@ explore: hourly_analytics {
 
 explore: hourly_analytics_wopr_only {
   label: "Request and Impression Metrics (for WOPR only)"
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   extends: [hourly_analytics]
   fields: [ALL_FIELDS*, -advertiser_brand_details.future_advertisers, -customer_details.future_customers]
 }
 
 explore: hourly_logging_audit {
-  required_access_grants: [can_see_model]
+
   label: "Logging Audit"
   hidden: yes
 
@@ -197,7 +194,7 @@ explore: hourly_logging_audit {
 }
 
 explore: sno_domain_spreader {
-  required_access_grants: [can_see_model]
+
   label: "Domain Spreader"
   description: "This explore is used to monitor the percent of impressions served to any single domain URL, per campaign."
   hidden: yes
@@ -222,7 +219,8 @@ explore: sno_domain_spreader {
 }
 
 explore: sno_frequency_by_tier {
-  required_access_grants: [can_see_model]
+
+
   label: "Frequency By Tier"
   hidden: yes
   description: "Campaign or Plan To-Date Delivery Statistics by Frequency Tier. This Explore allows you to view delivery statistics bucketed into frequencies
@@ -241,7 +239,7 @@ explore: sno_frequency_by_tier {
 
 
 explore: daily_bt_acquisition {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "BT Acquisition"
   description: "Information on the data points we acquired for a segment. This is based on data sent to us by third party vendors and is independent from request information.  This data is available by-day, as far back as October 2009."
   fields: [ALL_FIELDS*, -advertiser_brand_details.future_advertisers, -customer_details.future_customers]
@@ -300,7 +298,7 @@ explore: daily_bt_acquisition {
 }
 
 explore: retargeting_attribute {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Segments and Reach/Cookies"
   description: "This Explore is used to pull segments with no uniques."
   fields: [ALL_FIELDS*, -retargeting_attribute.dst_createdon_date, -retargeting_attribute.dst_createdon_time,
@@ -326,7 +324,7 @@ explore: retargeting_attribute {
 }
 
 explore: daily_core_stats {
-  required_access_grants: [can_see_model]
+
   label: "Impression Metrics"
   description: "This explore includes impression metrics along with the demand and supply dimensions they can be aggregated by.
   Data is available by-day, as far back as November 2015.  You will only find demand which has had delivery, campaigns which have yet to have
@@ -549,7 +547,7 @@ explore: daily_core_stats {
 
 
 explore: daily_data_usage {
-  required_access_grants: [can_see_model]
+
   label: "Data Usage Metrics"
   description: "This explore includes data provider cost and usage metrics. Cost and usage metrics are recorded when data on a user is used to deliver an impression.
   Cost and usage are commonly segmented down to source provider, data provider, payee provider and retargeting attribute. The data is available by-day, as far back as January 2014."
@@ -653,7 +651,7 @@ explore: daily_data_usage {
 
 
 explore: demand_metrics {
-  required_access_grants: [can_see_model]
+
   view_name: daily_core_stats
   label: "Demand Metrics"
   description: "This explore includes impression metrics along with the demand dimensions they can be aggregated by. Additional demand metrics such as CCP and allocation,
@@ -846,7 +844,7 @@ explore: demand_metrics {
 }
 
 explore: conversion_fact {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Conversion Metrics"
   description: "This explore includes conversion metrics along with the supply and demand dimensions they can be aggregated by. Conversions are recorded when a pixel is fired, usually associated with a campaign.
   Advertisers will place these pixels on their sites to record some action being done by the user. This data is available by-hour, as far back as August 2013."
@@ -918,14 +916,14 @@ explore: conversion_fact {
 }
 
 explore: survey_fact_derived {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Brandscore Metrics"
   description: "Survey and Brandscore Metrics."
 }
 
 
 explore: tpm_metrics {
-  required_access_grants: [can_see_model]
+
   hidden: yes
   label: "Third Party Metrics"
   description: "This explore includes metrics that we have ingested from Third Parties."
@@ -971,7 +969,7 @@ explore: tpm_metrics {
 }
 
 explore: raw_impression {
-  required_access_grants: [can_see_model]
+
   label: "Raw Impression Metrics"
   description: "This explore includes raw impression metrics. This data can be analyzed by nearly any facet that is available down to the raw detail of a single impression.
   This data is only available for the last seven days."
@@ -1168,7 +1166,7 @@ explore: raw_impression {
 
 
 explore: portfolio_trends {
-  required_access_grants: [can_see_model]
+
   label: "Portfolio Trends"
   description: "This explore includes Portfolio Trends and can be sliced by various demand-level dimensions."
   access_filter: {
@@ -1222,7 +1220,7 @@ explore: portfolio_trends {
 }
 
 explore: daily_campaign_retargeting_stats {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Campaign Targeted/Untargeted Stats"
   description:"This explore includes data segments where campaigns have delivered (Retargeting Billable impressions)"
   fields: [ALL_FIELDS*,-campaign_details_base.agency_fee, -advertiser_brand_details.future_advertisers, -customer_details.future_customers]
@@ -1266,7 +1264,7 @@ explore: daily_campaign_retargeting_stats {
 }
 
 explore: sno_demand_raw_impression_validation {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Demand Raw Impression Validation"
   hidden: yes
 
@@ -1288,7 +1286,7 @@ explore: sno_demand_raw_impression_validation {
 }
 
 explore: sno_supply_raw_impression_validation {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Supply Raw Impression Validation"
   hidden: yes
 
@@ -1310,20 +1308,20 @@ explore: sno_supply_raw_impression_validation {
 }
 
 explore: demand_warehouse_validation {
-  required_access_grants: [can_see_model]
+
   label: "Demand Warehouse Validation"
   hidden: yes
 }
 
 explore: supply_warehouse_validation {
-  required_access_grants: [can_see_model]
+
   label: "Supply Warehouse Validation"
   hidden: yes
 
 }
 
 explore: retarg_by_vendor_coverage {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   hidden: yes
   label: "Source Provider Coverage Metrics"
   description: "Vendors that have provided BT attributes within sampled request data are extracted to estimate overall source provider coverage.
@@ -1331,13 +1329,13 @@ explore: retarg_by_vendor_coverage {
 }
 
 explore: lm_serendipity {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Lucy Slice and Dice"
   group_label: "Lucy Slice and Dice"
 }
 
 explore: blacklist_whitelist{
-  required_access_grants: [can_see_model]
+
   view_name: sno_blacklist_whitelist
   label: "Blacklist Whitelist Report"
   description: "Blacklist Whitelist Tracking Report"
@@ -1383,7 +1381,7 @@ explore: blacklist_whitelist{
 }
 
 explore: suggest_demand_ref {
-  required_access_grants: [can_see_model]
+
   access_filter: {
     field: suggest_demand_ref.country_id
     user_attribute: access_filter_country_id
@@ -1399,7 +1397,7 @@ explore: suggest_demand_ref {
 }
 
 explore: suggest_supply_ref {
-  required_access_grants: [can_see_model]
+
   access_filter: {
     field: suggest_supply_ref.placement_country_id
     user_attribute: access_filter_country_id
@@ -1415,7 +1413,7 @@ explore: suggest_supply_ref {
 }
 
 explore: sno_load_tracking_whse_validation {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "Load tracking warehouse validation"
   view_name: timezone
 
@@ -1431,7 +1429,7 @@ explore: sno_load_tracking_whse_validation {
 }
 
 explore: sno_sas_monitoring {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "SAS forecasting monitoring"
   view_name: sno_fce_atv_fdp_data_prod
 
@@ -1447,7 +1445,7 @@ explore: sno_sas_monitoring {
 }
 
 explore: fce_atv_fdp_forecasts_data {
-  required_access_grants: [can_see_model]
+
   label: "ITV Forecast"
   description: "This explore includes forecasting data. This data can be fetched for specific forecast - use Forecasts Info parameters to filter for required forecast."
   # sql_always_where: acess is limited by filtering in fce_atv_fdp_forecasts_info view
@@ -1467,7 +1465,7 @@ explore: fce_atv_fdp_forecasts_data {
 }
 
 explore: sno_opt_viewing_spot_level_pacing {
-  required_access_grants: [can_use_explore, can_see_model]
+  required_access_grants: [can_use_explore]
   label: "OPT Pacing"
 
   fields: [ALL_FIELDS*,-campaign_details_base.agency_fee]
@@ -1540,12 +1538,18 @@ explore: sno_opt_viewing_spot_level_pacing {
     sql_on: ${sno_validation_report_result.request_id} = ${sno_validation_rule_result.request_id} ;;
   }
 
+  join: tpm_metrics {
+    relationship: many_to_many
+    sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${tpm_metrics.campaign_id} ;;
+    fields: [tpm_metrics.daypart]
+  }
+
   sql_always_where: {% if sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_any" or sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_approved" %} ${sno_opt_viewing_spot_level_pacing_latest_report.campaign_id} IS NOT NULL {% else %} TRUE {% endif %}
     AND {% if sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_approved" %} ${sno_opt_pacing_report_approval.approval_state} = 'approved' {% else %} TRUE {% endif %} ;;
 }
 
 explore: sno_smartmon_events_forecast_error_metrics {
-  required_access_grants: [can_see_model]
+
   label: "Forecast Error Metrics"
 
   sql_always_where: (${sno_smartmon_events_forecast_error_metrics.name} = 'forecast_error_metrics') AND

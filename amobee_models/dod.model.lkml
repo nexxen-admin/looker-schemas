@@ -2,10 +2,7 @@ connection: "druid"
 
 include: "/**/*.view.lkml"
 
-access_grant: can_see_model {
-  user_attribute: admins
-  allowed_values: ["Looker_Admins"]
-}
+
 
 
 datagroup: dod_default_datagroup {
@@ -21,7 +18,7 @@ explore: social_media {
 }
 
 explore: dsp_media_and_bids {
-  hidden: yes
+
 }
 
 explore: dod_partner_ops {}

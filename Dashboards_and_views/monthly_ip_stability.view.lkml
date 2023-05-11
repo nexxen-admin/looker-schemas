@@ -9,7 +9,7 @@ view: monthly_ip_stability {
                              END AS date_segment,
                         AA.device_id,
                         COUNT(DISTINCT ip) as distinct_ip
-                        FROM dragon.viewership_content_sessions_combined AA
+                        FROM dragon.viewership_content_sessions_combined_daily AA
                         GROUP BY 1,2)
 
 SELECT date_segment,

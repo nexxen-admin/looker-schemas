@@ -78,6 +78,7 @@ explore: publishers_report_monthly_for_finance {
 explore: extend_Inbound_Exchange {
   extends: [fact_ad_daily_agg]
   from: fact_ad_daily_agg
+  required_access_grants: [can_view_all_tremor]
   access_filter: {
     field: v_dim_employee_pub_ops.employee_name
     user_attribute: allowed_users
@@ -398,6 +399,7 @@ explore: fact_ad_daily_agg{
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange"
   view_label: "Measures"
+  required_access_grants: [can_view_all_tremor]
 
 
 join: dim_date {
@@ -419,6 +421,13 @@ join: dim_country {
     type:  inner
     view_label: "Buying Channel"
     sql_on: ${dim_buying_channel.buying_channel_key}=${fact_ad_daily_agg.buying_channel_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_auction_type {
+    type:  inner
+    view_label: "Buying Channel"
+    sql_on: ${dim_deal_auction_type.deal_auction_type_key}=${fact_ad_daily_agg.Deal_Auction_Type_Key};;
     relationship: many_to_one
   }
 
@@ -711,14 +720,27 @@ join: dim_seat {
 
 join: dim_genre_norm {
    type: inner
-   view_label: "Genre"
+   view_label: "Content Attributes"
    sql_on: ${dim_genre_norm.Genre_Norm_key}=${fact_ad_daily_agg.Genre_Norm_Key};;
    relationship: many_to_one
 }
   join: dim_content_rating_norm {
     type: inner
-    view_label: "Rating"
+    view_label: "Content Attributes"
     sql_on: ${dim_content_rating_norm.content_rating_norm_key}=${fact_ad_daily_agg.Content_Rating_Norm_Key};;
+    relationship: many_to_one
+  }
+
+  join: dim_content_network {
+    type: inner
+    view_label: "Content Attributes"
+    sql_on: ${dim_content_network.content_network_key}=${fact_ad_daily_agg.Content_Network_Key};;
+    relationship: many_to_one
+  }
+  join: dim_content_language_norm {
+    type: inner
+    view_label: "Content Attributes"
+    sql_on: ${dim_content_language_norm.content_language_norm_key}=${fact_ad_daily_agg.Content_Language_Norm_Key};;
     relationship: many_to_one
   }
 
@@ -734,7 +756,9 @@ join: dim_deal_personnel {
 explore: fact_ad_hourly_agg{
   always_filter: {
     filters: [dim_date_hourly.date_time_key_date: "last 10 days "]
+
   }
+  required_access_grants: [can_view_all_tremor]
 
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange Hourly"
@@ -1044,7 +1068,7 @@ explore: fact_ad_bid_request_daily_agg{
   persist_with: CleanCash_datagroup
   label: "Outbound Exchange"
   view_label: "Measures"
-
+  required_access_grants: [can_view_all_tremor]
 
   join: dim_dsp_data_center {
     type: inner

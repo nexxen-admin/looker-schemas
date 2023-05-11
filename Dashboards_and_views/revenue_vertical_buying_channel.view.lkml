@@ -23,6 +23,9 @@ view: revenue_vertical_buying_channel {
                     ${revenue_vertical_buying_channel.advertiser_category}='Entertainment' OR ${revenue_vertical_buying_channel.advertiser_category}='Personal Finance' OR
                     ${revenue_vertical_buying_channel.advertiser_category}='Travel' then ${revenue_vertical_buying_channel.advertiser_category} else 'Grouped Other' end;;
     drill_fields: [advertiser_category]
+    link: {
+      label: "Open Grouped Others Trend Line"
+    url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=zuC1YfhN6SY5reOE3Iemiq&origin_space=249&toggle=dat,fil,vis"}
    }
 
   dimension: buying_channel {
@@ -81,6 +84,27 @@ view: revenue_vertical_buying_channel {
               when ${TABLE}.Buying_Channel='Omp' then 'OMP'
               when ${TABLE}.Buying_Channel='Pmp' then 'PMP'
               else ${TABLE}.Buying_Channel end ;;
+  }
+
+  dimension_group: current_date {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: current_date ;;
+  }
+
+  dimension: is_current_month {
+    type: string
+    sql: case when ${event_month_month} = ${current_date_month}
+      then 'Yes' else 'No' end;;
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average

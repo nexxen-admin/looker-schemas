@@ -11,13 +11,10 @@ datagroup: itv_sla_metric_default_datagroup {
 
 persist_with: itv_sla_metric_default_datagroup
 
-access_grant: can_see_model {
-  user_attribute: admins
-  allowed_values: ["Looker_Admins"]
-}
+
 
 explore: daily_gw_report_snapshot {
-  required_access_grants: [can_see_model]
+
   join: sla_report_info {
     type: inner
     sql_on: ${daily_gw_report_snapshot.sla_report_info_id} = ${sla_report_info.sla_report_info_id} ;;
@@ -26,7 +23,7 @@ explore: daily_gw_report_snapshot {
 }
 
 explore: daily_report_snapshot {
-  required_access_grants: [can_see_model]
+
   join: sla_report_info {
     type: inner
     sql_on: ${daily_report_snapshot.sla_report_info_id} = ${sla_report_info.sla_report_info_id} ;;
@@ -40,7 +37,7 @@ explore: daily_report_snapshot {
 }
 
 explore: derived_gw_metric_daily {
-  required_access_grants: [can_see_model]
+
   join: golden_window {
     type: inner
     sql_on: ${derived_gw_metric_daily.golden_window_id} = ${golden_window.golden_window_id} ;;
@@ -49,7 +46,7 @@ explore: derived_gw_metric_daily {
 }
 
 explore: derived_metric_daily {
-  required_access_grants: [can_see_model]
+
   join: sla_lookup {
     type: left_outer
     sql_on: (sla_lookup_id = 'atv.platform_client_id.provider_name' and lookup_key = ${derived_metric_daily.platform_client_id}) ;;
@@ -57,12 +54,12 @@ explore: derived_metric_daily {
   }
 }
 
-explore: golden_window {required_access_grants: [can_see_model]}
+explore: golden_window {}
 
-explore: metric_info {required_access_grants: [can_see_model]}
+explore: metric_info {}
 
 explore: monthly_gw_report_snapshot {
-  required_access_grants: [can_see_model]
+
   join: sla_report_info {
     type: inner
     sql_on: ${monthly_gw_report_snapshot.sla_report_info_id} = ${sla_report_info.sla_report_info_id} ;;
@@ -71,7 +68,7 @@ explore: monthly_gw_report_snapshot {
 }
 
 explore: monthly_report_snapshot {
-  required_access_grants: [can_see_model]
+
   join: sla_report_info {
     type: inner
     sql_on: ${sla_report_info_id} = ${sla_report_info.sla_report_info_id} ;;
@@ -91,7 +88,7 @@ explore: monthly_report_snapshot {
 }
 
 explore: raw_metric_daily {
-  required_access_grants: [can_see_model]
+
   join: sla_lookup {
     type: left_outer
     sql_on: (sla_lookup_id = 'atv.platform_client_id.provider_name' and lookup_key = ${raw_metric_daily.platform_client_id}) ;;
@@ -100,7 +97,7 @@ explore: raw_metric_daily {
 }
 
 explore: raw_metric_minute {
-  required_access_grants: [can_see_model]
+
   join: sla_lookup {
     type: left_outer
     sql_on: (sla_lookup_id = 'atv.platform_client_id.provider_name' and lookup_key = ${raw_metric_minute.platform_client_id}) ;;
@@ -108,10 +105,10 @@ explore: raw_metric_minute {
   }
 }
 
-explore: sla_report_info {required_access_grants: [can_see_model]}
+explore: sla_report_info {}
 
 explore: monthly_report_info {
-  required_access_grants: [can_see_model]
+
   join: sla_report_info {
     type: inner
     sql_on: ${sla_report_info_id} = ${sla_report_info.sla_report_info_id} ;;
@@ -120,7 +117,7 @@ explore: monthly_report_info {
 }
 
 explore: sla_false_positive {
-  required_access_grants: [can_see_model]
+
   join: sla_report_info {
     type: inner
     sql_on: ${sla_report_info_id} = ${sla_report_info.sla_report_info_id};;
@@ -129,7 +126,7 @@ explore: sla_false_positive {
 }
 
 explore: sla_alert_info {
-  required_access_grants: [can_see_model]
+
   join: sla_report_info {
     type: left_outer
     sql_on: ${sla_report_info_id} = ${sla_report_info.sla_report_info_id};;
@@ -144,7 +141,7 @@ explore: sla_alert_info {
 }
 
 explore: sla_alert_log {
-  required_access_grants: [can_see_model]
+
   join: sla_alert_info {
     type: inner
     sql_on: ${sla_alert_info_id} = ${sla_alert_info.sla_alert_info_id};;
@@ -157,4 +154,4 @@ explore: sla_alert_log {
   }
 }
 
-explore: sla_lookup {required_access_grants: [can_see_model]}
+explore: sla_lookup {}

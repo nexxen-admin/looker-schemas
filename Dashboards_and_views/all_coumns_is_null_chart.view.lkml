@@ -12,15 +12,12 @@ view: all_coumns_is_null_chart {
        ROUND(SUM(CASE WHEN tv_tuner_channel is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as tv_tuner_channel,
        ROUND(SUM(CASE WHEN ip is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as ip,
        ROUND(SUM(CASE WHEN message_count is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as message_count,
-       ROUND(SUM(CASE WHEN viewing_duration is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as viewing_duration,
        ROUND(SUM(CASE WHEN viewing_offset is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as viewing_offset,
        ROUND(SUM(CASE WHEN session_start_utc is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as session_start_utc,
        ROUND(SUM(CASE WHEN session_end_utc is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as session_end_utc,
-       ROUND(SUM(CASE WHEN dat_track_id is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as dat_track_id,
        ROUND(SUM(CASE WHEN station_tremor_id is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as station_tremor_id,
-       ROUND(SUM(CASE WHEN airing_tremor_id is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as airing_tremor_id,
-       ROUND(SUM(CASE WHEN aggregated_at is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as aggregated_at
-FROM dragon.viewership_content_sessions_combined
+       ROUND(SUM(CASE WHEN airing_tremor_id is not null THEN 1 ELSE 0 END)*1.0/COUNT(*),2) as airing_tremor_id
+FROM dragon.viewership_content_sessions_combined_daily
 GROUP BY 1
 ORDER BY 1
  ;;
@@ -91,10 +88,6 @@ ORDER BY 1
     sql: ${TABLE}.message_count ;;
   }
 
-  dimension: viewing_duration {
-    type: number
-    sql: ${TABLE}.viewing_duration ;;
-  }
 
   dimension: viewing_offset {
     type: number
@@ -111,10 +104,7 @@ ORDER BY 1
     sql: ${TABLE}.session_end_utc ;;
   }
 
-  dimension: dat_track_id {
-    type: number
-    sql: ${TABLE}.dat_track_id ;;
-  }
+
 
   dimension: station_tremor_id {
     type: number
@@ -126,10 +116,6 @@ ORDER BY 1
     sql: ${TABLE}.airing_tremor_id ;;
   }
 
-  dimension: aggregated_at {
-    type: number
-    sql: ${TABLE}.aggregated_at ;;
-  }
 
   set: detail {
     fields: [
@@ -145,14 +131,11 @@ ORDER BY 1
       tv_tuner_channel,
       ip,
       message_count,
-      viewing_duration,
       viewing_offset,
       session_start_utc,
       session_end_utc,
-      dat_track_id,
       station_tremor_id,
-      airing_tremor_id,
-      aggregated_at
+      airing_tremor_id
     ]
   }
 }

@@ -7,7 +7,14 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
 #
+access_grant: can_view_Taptica {
+  user_attribute: taptica
+  allowed_values: ["Taptica"]
+}
+
+
  explore: daily_activity_fact {
+  required_access_grants: [can_view_Taptica]
   join: advertiser_dim {
     type: left_outer
     view_label: "Advertisers"

@@ -15,6 +15,11 @@ view: deal_splits_owner_report {
     sql: ${TABLE}.agency ;;
   }
 
+  dimension: deal_type {
+    type: string
+    sql: ${TABLE}.deal_type ;;
+  }
+
   measure: amsplit_cogs {
     type: sum
     sql: ${TABLE}.AMSplitCogs ;;

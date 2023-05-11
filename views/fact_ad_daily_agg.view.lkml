@@ -44,6 +44,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Time Shifted Measures"
     label: "Pub Request Change Last Day"
+    description: "Change in the pub requests from yesterday"
     sql: ${pub_request_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -78,6 +79,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Time Shifted Measures"
     label:  "Revenue Change Last Day"
+    description: "Change in the revenue from yesterday"
     sql: ${revenue_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -111,6 +113,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Time Shifted Measures"
     label:  "Impressions Change Last Day"
+    description: "Change in the impressions from yesterday"
     sql: ${impressions_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -144,6 +147,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Time Shifted Measures"
     label:  "Bids Change Last Day"
+    description: "Change in the bids from yesterday"
     sql: ${bids_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -177,6 +181,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Time Shifted Measures"
     label:  "Inbound Requests Change Last Day"
+    description: "Change in the inbound requests from yesterday"
     sql: ${request_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -419,6 +424,7 @@ view: fact_ad_daily_agg {
        {{revenue_pop_change._rendered_value}} from  </div>
      </div> ;;
     group_label: "Admins Metrics"
+    hidden: yes
   }
 
   measure: HTML_variable {
@@ -509,6 +515,7 @@ view: fact_ad_daily_agg {
 
       ;;
     group_label: "Admins Metrics"
+    hidden: yes
   }
 
   measure: HTML_variable2 {
@@ -557,10 +564,72 @@ view: fact_ad_daily_agg {
 
 
     group_label: "Admins Metrics"
+    hidden: yes
+  }
+
+  measure: HTML_variable10 {
+    type: count
+    html:
+
+      <table>
+      <tr>
+        <th><div style="text-align: left; margin:72px 72px;">
+      <img style="width:400px" src="https://www.tremorinternational.com/wp-content/uploads/2022/01/Ti_logo_black-fitted.svg">
+      </div></th>
+        <th><div style ="vertical-align: bottom;padding-top:50px;text-align:right;">| Business Intelligence Platform</div></th>
+      </tr>
+    </table>
+
+      <div style = "margin:5px 72px 72px 72px;text-align:left; ">Hey {{ _user_attributes['name'] }},<br><br>
+
+      <div><p style = "float:none;font-size:25px;line-height: 1.6; color:#eb3434;">
+      Please Note!!<br> <strong></strong></p>
+      </div>
+       <div><p style = "float:none;font-size:20px;line-height: 1.6; color:#000000;">
+       On Monday, 4/2 Your User/password will be changed to your Office 365 credentials.<br>
+       If you don’t remember your login details, please get in touch with the IT team to restore them. <br>
+
+       This is a warning! Your login to looker will be blocked with your old credentials from  Monday, 4/2
+      <br> <strong></strong></p>
+      </div>
+       <div><a style="float:right; color:#FFFFFF; background-color:#ffffff;  border: solid 3px #ffffff; font-weight: 400;height:70px;
+      text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding: 30px 110px 30px 110px ;margin-left:900px;font-size:30px;
+      line-height: 0px;  border-radius: 25px" href="">Looker Academy </a><p style = "font-size:20px;line-height: 1.6; color:#ffffff;">
+      Visit the new site to find learning experiences <br style= "line-height:1px">
+      with self-paced education and hands-on practice <br>
+      designed to get you up to speed quickly. <strong></strong></p></div>
+
+
+      <div><a style="float:right;  color: #FFFFFF; background-color:#ffffff;  border: solid 3px #ffffff;x font-weight: 400;height:70px;
+      text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
+      line-height: 0px;  border-radius: 25px" href="">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#ffffff;">
+      Stay up to date on what's new in Looker!<br style= "line-height:1px">
+      New additions and important BI information will be added to the news page.<br>
+      You will receive an update in the slack group with a link <br>
+      to the news page.<strong></strong></p></div>
+      </div>
+       <div><a style="float:right;  color: #FFFFFF; background-color:#ffffff;  border: solid 3px #ffffff;x font-weight: 400;height:70px;
+      text-align: center; vertical-align: middle;cursor: pointer;user-select: none;padding:30px 145px 30px 145px ;margin-left:900px;font-size:30px;
+      line-height: 0px;  border-radius: 25px" href="">News Page </a><p style = "font-size:20px;line-height: 1.6; color:#ffffff;">
+      Stay up to date on what's new in Looker!<br style= "line-height:1px">
+      New additions and important BI information will be added to the news page.<br>
+      You will receive an update in the slack group with a link <br>
+      to the news page.<strong></strong></p></div>
+      </div>
+
+      </div>
+
+
+      ;;
+
+
+    group_label: "Admins Metrics"
+    hidden: yes
   }
 
   measure: video_2 {
     type: count
+    hidden: yes
     html:
 
       <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
@@ -592,6 +661,7 @@ view: fact_ad_daily_agg {
 
   measure: video_3 {
     type: count
+    hidden: yes
     html:
 
     <table>
@@ -641,8 +711,8 @@ view: fact_ad_daily_agg {
   }
 
   measure: video_4 {
-
     type: count
+    hidden: yes
     html:
 
 
@@ -907,6 +977,7 @@ view: fact_ad_daily_agg {
   measure: video_creative_views {
     type: sum
     label: "Video Creative Views"
+    description: "Number of times the video creative had been watched"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_creative_views ;;
     #hidden: yes
@@ -925,6 +996,7 @@ view: fact_ad_daily_agg {
   measure: video_errors {
     type: sum
     label: "Video Errors"
+    description: "Number of errors that appeared"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_errors ;;
     #hidden: yes
@@ -972,6 +1044,13 @@ view: fact_ad_daily_agg {
   dimension: deal_key {
     type: number
     sql: ${TABLE}.Deal_Key ;;
+    hidden: yes
+
+  }
+
+  dimension: Deal_Auction_Type_Key {
+    type: number
+    sql: ${TABLE}.Deal_Auction_Type_Key ;;
     hidden: yes
 
   }
@@ -1180,6 +1259,7 @@ view: fact_ad_daily_agg {
 
   filter: publisher_filter {
     type: string
+    hidden: yes
     suggest_dimension: pub_ssp_key
   }
 
@@ -1191,6 +1271,7 @@ view: fact_ad_daily_agg {
 
   measure: sum_dynamic_pub {
     type: sum
+    hidden: yes
     sql: ${TABLE}.sum_of_revenue ;;
     filters: [publisher_filter_filter: "yes"]
   }
@@ -1245,7 +1326,7 @@ view: fact_ad_daily_agg {
     type: number
     label: "RPM"
     description: "Revenue/Requests"
-    value_format: "$#,##0.00"
+    value_format: "0.00%"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${requests}/1000000),0) ;;
   }
@@ -1815,6 +1896,18 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: Content_Network_Key{
+    type: number
+    sql: ${TABLE}.Content_Network_Key;;
+    hidden: yes
+  }
+
+  dimension: Content_Language_Norm_Key{
+    type: number
+    sql: ${TABLE}.Content_Language_Norm_Key;;
+    hidden: yes
+  }
+
   filter: current_date_range {
     type: date
     view_label: "PoP"
@@ -2095,7 +2188,7 @@ view: fact_ad_daily_agg {
 
   measure: current_period_revenue {
     view_label: "PoP"
-    label: "Revenue  {{_filters['current_date_range']}} "
+    label: "Current Period Revenue  {{_filters['current_date_range']}} "
     type: sum
     description: "Specifies the revenue of the current period we are looking at, using the filter 'current date range' which has to be applied"
     sql: ${TABLE}.sum_of_revenue ;;
@@ -2105,7 +2198,7 @@ view: fact_ad_daily_agg {
 
   measure: current_period_margin {
     view_label: "PoP"
-    label: "Margin  {{_filters['current_date_range']}} "
+    label: "Current Period Margin  {{_filters['current_date_range']}} "
     type: number
     description: "Specifies the % of the net revenue out of the revenue of the current period we are looking at, using the filter 'current date range' which has to be applied"
     sql: (${current_period_revenue}-${current_period_cost})/${current_period_revenue} ;;
@@ -2323,9 +2416,179 @@ view: fact_ad_daily_agg {
     type: sum
     description: "Current period impressions"
     sql:  ${TABLE}.sum_of_impression_pixel ;;
-    value_format: "$#,##0"
+    value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
   }
+
+  measure: current_period_clicks {
+    view_label: "PoP"
+    type: sum
+    description: "Current period clicks"
+    sql: ${TABLE}.sum_of_click_count  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_clicks {
+    view_label: "PoP"
+    type: sum
+    description: "Previous period clicks"
+    sql: ${TABLE}.sum_of_click_count  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_video_completes {
+    view_label: "PoP"
+    type:  sum
+    description: "Current period video completes"
+    sql: ${TABLE}.sum_of_video_completes  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_video_completes {
+    view_label: "PoP"
+    type:  sum
+    description: "Previous period completes"
+    sql: ${TABLE}.sum_of_video_completes  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
+
+  measure: current_period_video_starts {
+    view_label: "PoP"
+    type:  sum
+    description: "Current period video starts"
+    sql: ${TABLE}.sum_of_video_starts  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+  measure: previous_period_video_starts {
+    view_label: "PoP"
+    type:  sum
+    description: "Previous period video_starts"
+    sql: ${TABLE}.sum_of_video_starts  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
+
+  measure: current_period_vcr {
+    view_label: "PoP"
+    type:  number
+    description: "Current period VCR"
+    sql: ${current_period_video_completes}/nullif(${current_period_video_starts},0)  ;;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_vcr {
+    view_label: "PoP"
+    type: number
+    description: "Previous period VCR"
+    sql:  ${previous_period_video_completes}/nullif(${previous_period_video_starts},0) ;;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_ctr {
+    view_label: "PoP"
+    type: number
+    description: "Current period CTR"
+    sql:  ${current_period_clicks}/nullif(${current_period_impressions},0);;
+    value_format: "0.00%"
+   # filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_ctr {
+    view_label: "PoP"
+    type: number
+    description: "Previous period CTR"
+    sql:  ${previous_period_clicks}/nullif(${previous_period_impressions},0);;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_cpm {
+    view_label: "PoP"
+    type: number
+    description: "Current period CPM"
+    sql: ${current_period_revenue}/nullif(${current_period_impressions},0) ;;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_cpm {
+    view_label: "PoP"
+    type: number
+    description: "Previous Current period CPM"
+    sql: ${previous_period_revenue}/nullif(${previous_period_impressions},0);;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_ias_measurable_impressions {
+    view_label: "PoP"
+    type: sum
+    description: "Current period ias measurable impressions"
+    sql: ${TABLE}.sum_of_ias_measurable_impression ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_ias_measurable_impressions {
+    view_label: "PoP"
+    type: sum
+    description: "Previous period ias measurable impressions"
+    sql: ${TABLE}.sum_of_ias_measurable_impression ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: current_period_ias_viewable_impressions {
+    view_label: "PoP"
+    type: sum
+    description: "Current period ias viewable impressions"
+    sql:  ${TABLE}.sum_of_ias_viewable_impression ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_ias_viewable_impressions {
+    view_label: "PoP"
+    type: sum
+    description: "Previous period ias viewable impressions"
+    sql:  ${TABLE}.sum_of_ias_viewable_impression ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
+
+  measure: current_period_viewability {
+    view_label: "PoP"
+    type: number
+    description: "Current period viewability"
+    sql: ${current_period_ias_viewable_impressions}/nullif(${current_period_ias_measurable_impressions},0);;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_viewability {
+    view_label: "PoP"
+    type: number
+    description: "Previous period viewability"
+    sql:  ${previous_period_ias_viewable_impressions}/nullif(${previous_period_ias_measurable_impressions},0) ;;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "last"]
+  }
+
   measure: current_period_requests {
     view_label: "PoP"
     type: sum
@@ -2356,7 +2619,7 @@ view: fact_ad_daily_agg {
     type: sum
     description: "Previous period impressions"
     sql: ${TABLE}.sum_of_impression_pixel ;;
-    value_format: "$#,##0"
+    value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
   }
   measure: previous_period_fill_rate {
@@ -2364,7 +2627,7 @@ view: fact_ad_daily_agg {
     type: number
     description: "Previous period impressions/bid requests"
     sql:  (${previous_period_impressions}/${previous_period_requests}) ;;
-    value_format: "0%"
+    value_format: "0.00%"
     #filters: [period_filtered_measures: "this"]
   }
 

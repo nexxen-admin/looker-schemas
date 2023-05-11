@@ -5,7 +5,7 @@ view: daily_null_count_all_col {
        SUM(CASE WHEN CC.season_number is not null THEN 1 ELSE 0 END)/count(*) as count_events_with_season_number,
        SUM(CASE WHEN BB.genre_tremor_id is not null THEN 1 ELSE 0 END)/count(*) as count_events_with_genre_tremor_id,
        SUM(CASE WHEN AA.tv_program_tremor_id is not null THEN 1 ELSE 0 END)/count(*) as tv_program_tremor_id
-FROM dragon.viewership_content_sessions_combined AA
+FROM dragon.viewership_content_sessions_combined_daily AA
 RIGHT JOIN dragon.program_genre BB
 ON AA.tv_program_tremor_id=BB.tv_program_tremor_id
 RIGHT JOIN dragon.program CC

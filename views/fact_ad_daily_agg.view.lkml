@@ -1326,7 +1326,7 @@ view: fact_ad_daily_agg {
     type: number
     label: "RPM"
     description: "Revenue/Requests"
-    value_format: "0.00%"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${requests}/1000000),0) ;;
   }

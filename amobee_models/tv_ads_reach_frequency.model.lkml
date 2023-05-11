@@ -1,25 +1,16 @@
 connection: "snowflake"
 
-include: "sno_m_*.view"         # include all views in this project
-include: "sno_q_*.view"
+include: "/**/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
-# # Select the views that should be a part of this model,
-# # and define the joins that connect them together.
-#
-# explore: order_items {
-#   join: orders {
-#     relationship: many_to_one
-#     sql_on: ${orders.id} = ${order_items.order_id} ;;
-#   }
-#
-#   join: users {
-#     relationship: many_to_one
-#     sql_on: ${users.id} = ${orders.user_id} ;;
-#   }
-# }
+access_grant: can_see_model {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
 
 explore: sno_m_viewer_equi_imps {
+  required_access_grants: [can_see_model]
   view_name: sno_m_viewer_equi_imps
   label: "Monthly Reach and Impressions"
   description: "This can be used to obtain reach/impressions by total exposure count for a broadcast month for the Strategic Target.  It can be aggregated
@@ -294,6 +285,7 @@ explore: sno_m_viewer_equi_imps {
 
 
 explore: sno_q_viewer_equi_imps {
+  required_access_grants: [can_see_model]
   view_name: sno_q_viewer_equi_imps
   label: "Quarterly Reach and Impressions"
   description: "This can be used to obtain reach/impressions by total exposure count for a broadcast quarter for the Strategic Target.  It can be aggregated
@@ -569,6 +561,7 @@ explore: sno_q_viewer_equi_imps {
 }
 
 explore: quarterly_reach_by_ad_frequency{
+  required_access_grants: [can_see_model]
   view_name: sno_q_reach_by_ad_frequency
   label: "Quarterly Ad Exposure Reach Buckets"
   fields: [ALL_FIELDS*]
@@ -576,6 +569,7 @@ explore: quarterly_reach_by_ad_frequency{
 }
 
 explore: monthly_reach_by_ad_frequency{
+  required_access_grants: [can_see_model]
   view_name: sno_m_reach_by_ad_frequency
   label: "Monthly Ad Exposure Reach Buckets"
   fields: [ALL_FIELDS*]

@@ -1,20 +1,28 @@
 connection: "snowflake_dbaadmin"
 label: "Snowflake"
 
-include: "snodba_*.view.lkml"         # include all views in this project
+include: "/**/*.view.lkml"         # include all views in this project
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
-explore: snowflake_query_history {}
+access_grant: can_see_model {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
+
+explore: snowflake_query_history {required_access_grants:[can_see_model]}
 
 
 
 
 explore:  snodba_database_storage_history_mtd{
+  required_access_grants:[can_see_model]
   label: "Database Storage"
 }
 
 
 explore: warehouse_metering_history {
+  required_access_grants:[can_see_model]
   label: "Warehouse Usage"
 
   join: expected_warehouse_usage {

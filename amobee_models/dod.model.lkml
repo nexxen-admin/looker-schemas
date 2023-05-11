@@ -1,8 +1,12 @@
 connection: "druid"
 
-# include all the views
-include: "*.view"
-include: "dod_data_tests.lkml"
+include: "/**/*.view.lkml"
+
+access_grant: can_see_model {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
 
 datagroup: dod_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;

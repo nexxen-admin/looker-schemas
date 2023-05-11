@@ -168,45 +168,45 @@ explore: base_data_without_demand {
 
 explore: ads_txt_domain_publisher {
   label: "ads_txt_domain_publisher"
-  required_access_grants: [can_view_all_tremor]
+  #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
 
 explore: unruly_pmp {
   label: "Unruly PMP"
-  required_access_grants: [can_view_all_tremor]
+  #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
 
 explore: deal_splits_owner_report {
   label: "Deal_splits_owner_report"
-  required_access_grants: [can_view_all_tremor]
+  #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
 
 explore: active_inactive_publishers {
   label: "Active Inactive Publishers"
-  required_access_grants: [can_view_all_tremor]
+  #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
 
 
 explore:  exchange_daily_report_component{
   label: "Exchange Daily Report Component"
-  required_access_grants: [can_view_all_tremor]
+  #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
 
 
 explore:  ivt_report{
   label: "IVT Report"
-  required_access_grants: [can_view_all_tremor]
+  #required_access_grants: [can_view_all_tremor]
   hidden: yes
   }
 
 explore:  no_bid_reason{
   label: "No_Bid_Reason"
-  required_access_grants: [can_view_all_tremor]
+  #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
 

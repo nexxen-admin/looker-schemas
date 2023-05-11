@@ -1,14 +1,17 @@
 connection: "an_opt"
 
-include: "opt_*.view.lkml"         # include all views in this project
-include: "mssql_oltp_*.view.lkml"
-include: "Optimization_data_tests.lkml"
+include: "/**/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }
 
+access_grant: can_see_model {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
 explore: rta_group_finder {
-  required_access_grants: [can_use_explore]
+  required_access_grants: [can_use_explore, can_see_model]
   label: "RTA Group ID Finder"
   view_name: opt_smart_converged_campaign
   fields: [ALL_FIELDS*]
@@ -17,7 +20,7 @@ explore: rta_group_finder {
 
 
 explore: opt_rpt_placement_at_glance_stats {
-  required_access_grants: [can_use_explore]
+  required_access_grants: [can_see_model, can_see_model]
   label: "Placement at a Glance"
   description: "This can be used to obtain to view pre-aggregated placement stats"
 
@@ -39,7 +42,7 @@ explore: rta_rules_present {
 }
 
 explore: opt_retargeting_attribute  {
-  required_access_grants: [can_use_explore]
+  required_access_grants: [can_use_explore, can_see_model]
   label: "RTA Reach and Usage"
   description: "This explore is used for pulling retargeting attributes, reach, usage and retargeting information"
 
@@ -55,7 +58,7 @@ explore: opt_retargeting_attribute  {
 }
 
 explore: daily_placement_attribute_value_eligibility_stats {
-  required_access_grants: [can_use_explore]
+  required_access_grants: [can_use_explore, can_see_model]
   label: "Eligible Requests and Segments"
   description: "This explore includes retargeting segments request eligibility metrics."
 
@@ -69,6 +72,7 @@ explore: daily_placement_attribute_value_eligibility_stats {
 
 
 explore: scale_metric {
+  required_access_grants: [can_see_model]
   label: "Allocation Metrics"
   description: "This explore can be used to check allocation metrics. Do not use fields from across different allocation metrics
   (Example: using quanity metric date for scale metric) unless it is intended (Example: house fields used in scale metric).
@@ -111,6 +115,7 @@ explore: scale_metric {
 }
 
 explore: opt_misdelivery {
+  required_access_grants: [can_see_model]
   label: "Allocation vs Delivery"
   access_filter: {
     field: an_main_platform_client.office_id
@@ -198,12 +203,12 @@ explore: opt_misdelivery {
 }
 
 explore: opt_cluster_kpi_performance_view  {
-  required_access_grants: [can_use_explore]
+  required_access_grants: [can_use_explore, can_see_model]
   label: "Clusters KPI"
 }
 
 explore: cluster_kpi_performance {
-  required_access_grants: [can_use_explore]
+  required_access_grants: [can_use_explore, can_see_model]
   view_name: opt_main_placement
   label: "Cluster KPI Performance"
   description: "Explore is used to pull segment with or without eligible requests"
@@ -241,12 +246,13 @@ explore: cluster_kpi_performance {
 }
 
 explore: opt_inventory_assignment {
-  required_access_grants: [can_use_explore]
+  required_access_grants: [can_use_explore, can_see_model]
   label: "Inventory Assignment"
   description: "View Inventory Campaign targets and Campaign CCP"
 }
 
 explore: opt_total_ccp {
+  required_access_grants: [can_see_model]
   label: "Total CCP"
   description: "Campaign CCP"
   access_filter: {

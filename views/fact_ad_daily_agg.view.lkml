@@ -1457,7 +1457,7 @@ view: fact_ad_daily_agg {
     type: number
     description: "revenue/impressions"
     label: "Ad eCPM"
-    value_format: "0.00%"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${impression_pixel}/1000),0) ;;
   }

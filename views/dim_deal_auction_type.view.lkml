@@ -1,32 +1,10 @@
-# The name of this view in Looker is "Dim Content Rating Norm"
-view: dim_content_rating_norm {
+# The name of this view in Looker is "Dim Deal Auction Type"
+view: dim_deal_auction_type {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_New.Dim_Content_Rating_Norm ;;
+  sql_table_name: BI_New.Dim_Deal_Auction_Type ;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
-
-  # Here's what a typical dimension looks like in LookML.
-  # A dimension is a groupable field that can be used to filter query results.
-  # This dimension will be called "Content Rating Norm" in Explore.
-
-  dimension: content_rating_norm {
-    type: string
-    description: "Defines the appropriate age for viewing the ad"
-    label: "Rating"
-    sql: ${TABLE}.Content_Rating_Norm ;;
-    drill_fields: [dim_publisher.publisher_name]
-  }
-
-  dimension: content_rating_norm_key {
-    type: number
-    sql: ${TABLE}.Content_Rating_Norm_Key ;;
-    hidden: yes
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
@@ -58,6 +36,21 @@ view: dim_content_rating_norm {
       year
     ]
     sql: ${TABLE}.DB_Update_Date ;;
+    hidden: yes
+  }
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Deal Auction Type" in Explore.
+
+  dimension: deal_auction_type {
+    type: string
+    sql: ${TABLE}.Deal_Auction_Type ;;
+  }
+
+  dimension: deal_auction_type_key {
+    type: number
+    sql: ${TABLE}.Deal_Auction_Type_Key ;;
     hidden: yes
   }
 

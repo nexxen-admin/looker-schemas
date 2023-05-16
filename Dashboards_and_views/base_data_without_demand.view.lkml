@@ -2,6 +2,8 @@ view: base_data_without_demand {
   derived_table: {
     sql: Select
           Event_Month,
+          to_char(Event_Month, 'mm') as month,
+          to_char(Event_Month, 'yyyy') as year,
           trim(Publisher) as Publisher,
           case when Billing_Agency ilike '%bidswitch%'
           then 'Bidswitch'
@@ -16,7 +18,7 @@ view: base_data_without_demand {
           sum(E2E_Revenue) as E2E_Revenue,
           sum(E2E_Cost) as E2E_Cost
       From BI.SVC_TRMRCon_Consolidated
-      Group by 1, 2, 3, 4, 5, 6
+      Group by 1, 2, 3, 4, 5, 6,7,8
        ;;
   }
 
@@ -28,6 +30,16 @@ view: base_data_without_demand {
   dimension: event_month {
     type: date
     sql: ${TABLE}.Event_Month ;;
+  }
+
+  dimension: month {
+    type: string
+    sql: ${TABLE}.month ;;
+  }
+
+  dimension: year {
+    type: string
+    sql: ${TABLE}.year ;;
   }
 
   dimension: publisher {

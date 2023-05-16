@@ -34,6 +34,23 @@ view: unruly_player_demands {
     sql: ${TABLE}.year ;;
   }
 
+  dimension: Is_1st_Party_Demand {
+    type: yesno
+    label: "Is 1st Party Demand"
+    sql: ${TABLE}.Is_1st_Party_Demand ;;
+  }
+
+  dimension: seat_name {
+    type: string
+    sql: ${TABLE}.seat_name ;;
+  }
+
+  dimension: pub_id {
+    type: number
+    sql: ${TABLE}.pub_id ;;
+  }
+
+
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Av Mp Net" in Explore.
@@ -122,10 +139,71 @@ view: unruly_player_demands {
     value_format: "#,##0"
   }
 
-  measure: sf {
+  measure: net_revenue {
+    label: "Net Revenue"
     type: sum
-    sql: ${TABLE}.SF ;;
+    sql: ${TABLE}.net_revenue ;;
     value_format: "#,##0"
+  }
+
+  measure: is_sf {
+    label: "IS SF"
+    type: sum
+    sql: ${TABLE}.IS_SF ;;
+    value_format: "#,##0"
+  }
+
+  measure: os_sf {
+    type: sum
+    sql: ${TABLE}.OS_SF ;;
+    value_format: "#,##0"
+  }
+
+
+  measure: MyCast_20 {
+    type: sum
+    sql: ${TABLE}."MyCast 20%" ;;
+    value_format: "#,##0"
+  }
+
+  measure: Widgets_AI {
+    type: sum
+    sql: ${TABLE}."Widgets AI" ;;
+    value_format: "#,##0"
+  }
+
+  measure: Wiseroll_LTD_Yeda {
+    label:"Wiseroll LTD + Yeda"
+    type: sum
+    sql: ${TABLE}."Wiseroll LTD + Yeda" ;;
+    value_format: "#,##0"
+  }
+
+  dimension_group: current_date {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: current_date ;;
+  }
+
+  #dimension: is_current_month {
+   # type: string
+    #sql: case when month(${activity_month}) = month(current_date)
+    #and year(${activity_year}) = year(current_date) then 'Yes' else 'No' end;;
+  #}
+
+  dimension: is_current_month {
+    type: string
+    sql: case when ${activity_month} = ${current_date_month}
+       then 'Yes' else 'No' end;;
   }
 
   measure: count {

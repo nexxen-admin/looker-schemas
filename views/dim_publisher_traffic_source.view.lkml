@@ -50,6 +50,18 @@ view: dim_publisher_traffic_source {
     hidden: yes
   }
 
+  dimension: seller_id {
+    type: number
+    sql: ${TABLE}.seller_id ;;
+
+  }
+
+  dimension: seller_type {
+    type: string
+    sql: ${TABLE}.seller_type ;;
+
+  }
+
   dimension_group: pub_ts_created {
     type: time
     timeframes: [

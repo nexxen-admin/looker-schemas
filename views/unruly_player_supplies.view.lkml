@@ -27,20 +27,32 @@ view: unruly_player_supplies {
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Av Mp Net" in Explore.
+  dimension: seat_name {
+    type: string
+    sql: ${TABLE}.seat_name ;;
+  }
+
+  dimension: pub_id {
+    type: number
+    sql: ${TABLE}.pub_id ;;
+  }
 
   measure: av_mp_net {
     type: sum
     sql: ${TABLE}."AV MP Net" ;;
+    value_format: "$#,##0"
   }
 
   measure: av_mp_total_rev {
     type: sum
     sql: ${TABLE}."AV MP Total Rev" ;;
+    value_format: "$#,##0"
   }
 
   measure: cost {
     type: sum
     sql: ${TABLE}.cost ;;
+    value_format: "#,##0"
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -65,11 +77,13 @@ view: unruly_player_supplies {
   measure: impressions {
     type: sum
     sql: ${TABLE}.impressions ;;
+    value_format: "#,##0"
   }
 
   measure: inventory {
     type: sum
     sql: ${TABLE}.inventory ;;
+    value_format: "#,##0"
   }
 
   dimension: media_type {
@@ -80,26 +94,31 @@ view: unruly_player_supplies {
   measure: player_total_rev {
     type: sum
     sql: ${TABLE}."Player Total Rev" ;;
+    value_format: "$#,##0"
   }
 
   measure: pub_mp_net {
     type: sum
     sql: ${TABLE}."Pub MP Net" ;;
+    value_format: "$#,##0"
   }
 
   measure: pub_mp_total_rev {
     type: sum
     sql: ${TABLE}."Pub MP Total Rev" ;;
+    value_format: "$#,##0"
   }
 
   measure: requests {
     type: sum
     sql: ${TABLE}.requests ;;
+    value_format: "#,##0"
   }
 
   measure: revenue {
     type: sum
     sql: ${TABLE}.revenue ;;
+    value_format: "$#,##0"
   }
 
   measure: sf {

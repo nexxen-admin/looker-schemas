@@ -86,6 +86,27 @@ view: revenue_vertical_buying_channel {
               else ${TABLE}.Buying_Channel end ;;
   }
 
+  dimension_group: current_date {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: current_date ;;
+  }
+
+  dimension: is_current_month {
+    type: string
+    sql: case when ${event_month_month} = ${current_date_month}
+      then 'Yes' else 'No' end;;
+  }
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.

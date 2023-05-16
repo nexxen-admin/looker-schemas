@@ -1,7 +1,7 @@
 connection: "snowflake_dbaadmin"
 label: "Snowflake"
 
-include: "snodba_*.view.lkml"         # include all views in this project
+include: "/**/*.view.lkml"         # include all views in this project
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 explore: snowflake_query_history {}
@@ -37,33 +37,6 @@ explore: warehouse_metering_history {
   }
 }
 
-explore: account_query_history {
-  label: "Warehouse Weekly Statistics"
-  join: account_warehouse_metering_history {
-    relationship: one_to_one
-    type: inner
-    sql_on: ${account_warehouse_metering_history.warehouse_name} = ${account_query_history.warehouse_name}
-        AND ${account_warehouse_metering_history.capture_date} =   ${account_query_history.capture_date};;
-  }
-
-  join: account_warehouse_load_history {
-    relationship: one_to_one
-    type: inner
-    sql_on:   ${account_query_history.warehouse_name} = ${account_warehouse_load_history.warehouse_name}
-          AND ${account_query_history.capture_date} =   ${account_warehouse_load_history.capture_date}
-          ;;
-  }
-}
-
-explore: account_users {}
-
-explore: account_tables {
-  join: account_table_storage_metrics {
-    relationship: one_to_one
-    type: inner
-    sql_on: ${account_tables.table_id} = ${account_table_storage_metrics.id} ;;
-  }
-}
 
 explore: snodba_account_db_storage_history {
   label: "DB account storage"
@@ -77,7 +50,6 @@ explore: account_full_query_history_daily {
 
 }
 
-explore: account_query_history_clean {}
 
 explore: new_query_history {}
 

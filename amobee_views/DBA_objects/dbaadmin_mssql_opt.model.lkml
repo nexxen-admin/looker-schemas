@@ -1,6 +1,7 @@
 connection: "mssql-opt_dbaadmin"
 
 include: "dbaadmin_*.view.lkml"
+include: "dbaadmin_mssql_prd.dashboard*"
 
 access_grant: can_use {
   user_attribute: admins

@@ -1,6 +1,7 @@
 connection: "mssql-oltp-sbx_dbaadmin"
 
 include: "dbaadmin_*.view.lkml"
+include: "dbaadmin_mssql_stg.dashboard*"
 
 access_grant: can_use {
   user_attribute: admins

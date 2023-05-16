@@ -147,6 +147,7 @@ view: unruly_player_demands {
   }
 
   measure: is_sf {
+    label: "IS SF"
     type: sum
     sql: ${TABLE}.IS_SF ;;
     value_format: "#,##0"

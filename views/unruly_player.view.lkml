@@ -50,6 +50,10 @@ view: unruly_player_demands {
     sql: ${TABLE}.pub_id ;;
   }
 
+  dimension: pub_name {
+    type: string
+    sql: ${TABLE}.pub_name ;;
+  }
 
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.

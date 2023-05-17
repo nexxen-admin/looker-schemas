@@ -50,6 +50,16 @@ view: unruly_player_demands {
     sql: ${TABLE}.pub_id ;;
   }
 
+  dimension: pub_name {
+    type: string
+    sql: ${TABLE}.pub_name ;;
+  }
+
+  dimension: ts_display_name {
+    label: "Traffic Source"
+    type: string
+    sql: ${TABLE}.TS_Display_Name ;;
+  }
 
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
@@ -146,11 +156,26 @@ view: unruly_player_demands {
     value_format: "#,##0"
   }
 
-  measure: sf {
+  measure: is_sf {
+    label: "IS SF"
     type: sum
-    sql: ${TABLE}.SF ;;
+    sql: ${TABLE}.IS_SF ;;
     value_format: "#,##0"
   }
+
+  measure: os_sf {
+    type: sum
+    sql: ${TABLE}.OS_SF ;;
+    value_format: "#,##0"
+  }
+
+  measure: ia_sf {
+    label: "IA SF"
+    type: sum
+    sql: ${TABLE}.IA_SF ;;
+    value_format: "#,##0"
+  }
+
 
   measure: MyCast_20 {
     type: sum

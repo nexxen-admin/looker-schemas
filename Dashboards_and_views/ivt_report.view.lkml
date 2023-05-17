@@ -10,9 +10,16 @@ view: ivt_report {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Cost" in Explore.
 
-  measure: cost {
+  measure: cost_1_party {
     type: sum
-    sql: ${TABLE}.Cost ;;
+    value_format: "$#,##0"
+    sql: ${TABLE}.Cost_1_party ;;
+  }
+
+  measure: cost_3_party {
+    type: sum
+    value_format: "$#,##0"
+    sql: ${TABLE}.Cost_3_party ;;
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -34,25 +41,48 @@ view: ivt_report {
     sql: ${TABLE}.Domain_Bundle ;;
   }
 
-  measure: givt {
+  measure: givt_1_party {
     type: sum
-    sql: ${TABLE}.GIVT ;;
+    sql: ${TABLE}.GIVT_1_party ;;
   }
 
-  measure: impressions {
+  measure: impressions_1_party {
     type: sum
-    sql: ${TABLE}.Impressions ;;
+    sql: ${TABLE}.Impressions_1_party ;;
   }
 
-  measure: ivt {
+  measure: ivt_1_party {
     type: sum
-    sql: ${TABLE}.IVT ;;
+    sql: ${TABLE}.IVT_1_party ;;
   }
 
-  measure: ivt_cost {
+  measure: ivt_cost_1_party {
     type: sum
-    sql: ${TABLE}.IVT_Cost ;;
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.IVT_1_party_Cost ;;
   }
+
+  measure: givt_3_party {
+    type: sum
+    sql: ${TABLE}.GIVT_3_party ;;
+  }
+
+  measure: impressions_3_party {
+    type: sum
+    sql: ${TABLE}.Impressions_3_party ;;
+  }
+
+  measure: ivt_3_party {
+    type: sum
+    sql: ${TABLE}.IVT_3_party ;;
+  }
+
+  measure: ivt_cost_3_party {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.IVT_3_party_Cost ;;
+  }
+
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
@@ -97,9 +127,14 @@ view: ivt_report {
     sql: ${TABLE}.rx_dsp_account_id ;;
   }
 
-  measure: sivt {
+  measure: sivt_1_party {
     type: sum
-    sql: ${TABLE}.SIVT ;;
+    sql: ${TABLE}.SIVT_1_party ;;
+  }
+
+  measure: sivt_3_party {
+    type: sum
+    sql: ${TABLE}.SIVT_3_party ;;
   }
 
   dimension: ssp {

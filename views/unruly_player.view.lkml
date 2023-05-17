@@ -159,6 +159,12 @@ view: unruly_player_demands {
     value_format: "#,##0"
   }
 
+  measure: ia_sf {
+    type: sum
+    sql: ${TABLE}.IA_SF ;;
+    value_format: "#,##0"
+  }
+
 
   measure: MyCast_20 {
     type: sum

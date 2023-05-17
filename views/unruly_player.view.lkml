@@ -55,6 +55,12 @@ view: unruly_player_demands {
     sql: ${TABLE}.pub_name ;;
   }
 
+  dimension: ts_display_name {
+    label: "Traffic Source"
+    type: string
+    sql: ${TABLE}.TS_Display_Name ;;
+  }
+
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Av Mp Net" in Explore.

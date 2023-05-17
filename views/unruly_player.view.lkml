@@ -160,6 +160,7 @@ view: unruly_player_demands {
   }
 
   measure: ia_sf {
+    label: "IA SF"
     type: sum
     sql: ${TABLE}.IA_SF ;;
     value_format: "#,##0"

@@ -77,11 +77,18 @@ view: unruly_player_demands {
     value_format: "#,##0"
   }
 
-  measure: cost {
+  measure: OLV_cost {
     type: sum
-    sql: ${TABLE}.cost ;;
+    sql: ${TABLE}.OLV_cost ;;
     value_format: "#,##0"
   }
+
+  measure: IA_cost {
+    type: sum
+    sql: ${TABLE}.IA_cost ;;
+    value_format: "#,##0"
+  }
+
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
@@ -102,9 +109,15 @@ view: unruly_player_demands {
     sql: ${TABLE}."DataBase" ;;
   }
 
-  measure: impressions {
+  measure: olv_impressions {
     type: sum
-    sql: ${TABLE}.impressions ;;
+    sql: ${TABLE}.OLV_impressions ;;
+    value_format: "#,##0"
+  }
+
+  measure: ia_impressions {
+    type: sum
+    sql: ${TABLE}.IA_impressions ;;
     value_format: "#,##0"
   }
 
@@ -137,22 +150,41 @@ view: unruly_player_demands {
     value_format: "#,##0"
   }
 
-  measure: requests {
+  measure: OLV_requests {
     type: sum
-    sql: ${TABLE}.requests ;;
+    sql: ${TABLE}.OLV_requests ;;
     value_format: "#,##0"
   }
 
-  measure: revenue {
+  measure: ia_requests {
     type: sum
-    sql: ${TABLE}.revenue ;;
+    sql: ${TABLE}.IA_requests ;;
     value_format: "#,##0"
   }
 
-  measure: net_revenue {
-    label: "Net Revenue"
+  measure: OLV_revenue {
     type: sum
-    sql: ${TABLE}.net_revenue ;;
+    sql: ${TABLE}.OLV_revenue ;;
+    value_format: "#,##0"
+  }
+
+  measure: ia_revenue {
+    type: sum
+    sql: ${TABLE}.IA_revenue ;;
+    value_format: "#,##0"
+  }
+
+  measure: OLV_net_revenue {
+    label: "OLV_Net Revenue"
+    type: sum
+    sql: ${TABLE}.OLV_net_revenue ;;
+    value_format: "#,##0"
+  }
+
+  measure: IA_net_revenue {
+    label: "IA_Net Revenue"
+    type: sum
+    sql: ${TABLE}.IA_net_revenue ;;
     value_format: "#,##0"
   }
 

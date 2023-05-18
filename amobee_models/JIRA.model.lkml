@@ -1,7 +1,7 @@
 connection: "jira"
 
-include: "jira_*.view.lkml"         # include all views in this project
-include: "JIRA_data_tests.lkml"
+include: "/**/*.view.lkml"         # include all views in this project
+include: "/**/*data_tests.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 

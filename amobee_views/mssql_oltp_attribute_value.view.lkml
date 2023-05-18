@@ -6,8 +6,8 @@ view: mssql_oltp_attribute_value {
     primary_key: yes
     view_label: "Campaign"
     label: "Segment ID"
-    sql: CASE WHEN ${mssql_oltp_campaign_settings.use_advanced_targeting} THEN COALESCE(${TABLE}.attribute_value_id, ${mssql_oltp_expression.expression_value_id})
-    ELSE ${TABLE}.attribute_value_id END ;;
+    sql:  {% if _explore._name == 'mssql_oltp_campaign' %} ${TABLE}.attribute_value_id {% else %} CASE WHEN ${mssql_oltp_campaign_settings.use_advanced_targeting} THEN COALESCE(${TABLE}.attribute_value_id, ${mssql_oltp_expression.expression_value_id})
+    ELSE ${TABLE}.attribute_value_id END {% endif %} ;;
     value_format_name: id
   }
 

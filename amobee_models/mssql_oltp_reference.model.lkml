@@ -1104,6 +1104,31 @@ explore: mssql_oltp_campaign {
     relationship: many_to_one
     sql_on: ${payment_order.currency_id} = ${mssql_oltp_currency.currency_id} ;;
   }
+
+  join: mssql_oltp_campaign_target {
+    fields: []
+    relationship: one_to_many
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_campaign_target.campaign_id} ;;
+  }
+
+  join: mssql_oltp_attribute_value {
+    fields: []
+    relationship: many_to_one
+    sql_on: CAST(${mssql_oltp_campaign_target.attribute_value_id} AS NVARCHAR(400)) =
+      CAST(${mssql_oltp_attribute_value.attribute_value_id} AS NVARCHAR(400)) ;;
+  }
+
+  join: mssql_oltp_attribute {
+    fields: []
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_attribute_value.attribute_id} = ${mssql_oltp_attribute.attribute_id} ;;
+  }
+
+  join: mssql_oltp_user_data_vendor {
+    relationship: many_to_one
+    type: inner
+    sql_on: ${mssql_oltp_attribute_value.max_range} = ${mssql_oltp_user_data_vendor.user_data_vendor_id} ;;
+  }
 }
 
 explore: mssql_oltp_campaign_wopr_only {

@@ -56,6 +56,7 @@ view: v_dim_employee_pub_ops {
     type: string
     sql: case when ${employee_id} in ('64','45','37','63','60','11') then 'SAM'
           else 'LT' end;;
+          hidden: yes
 
   }
 
@@ -128,9 +129,10 @@ view: v_dim_employee_pub_ops {
   }
 
   dimension: Manager_Type {
-    label: "Manager Type"
+    label: "Pub Ops Group"
     type: string
     sql: ${TABLE}.manager_type ;;
+    hidden: yes
   }
 
   dimension: employee_region {

@@ -44,6 +44,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Time Shifted Measures"
     label: "Pub Request Change Last Day"
+    description: "Change in the pub requests from yesterday"
     sql: ${pub_request_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -78,6 +79,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Time Shifted Measures"
     label:  "Revenue Change Last Day"
+    description: "Change in the revenue from yesterday"
     sql: ${revenue_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -111,6 +113,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Time Shifted Measures"
     label:  "Impressions Change Last Day"
+    description: "Change in the impressions from yesterday"
     sql: ${impressions_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -144,6 +147,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Time Shifted Measures"
     label:  "Bids Change Last Day"
+    description: "Change in the bids from yesterday"
     sql: ${bids_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -177,6 +181,7 @@ view: fact_ad_daily_agg {
     type: number
     group_label: "Time Shifted Measures"
     label:  "Inbound Requests Change Last Day"
+    description: "Change in the inbound requests from yesterday"
     sql: ${request_lastday_change_parameter};;
     value_format: "0.00%"
     html:
@@ -419,6 +424,7 @@ view: fact_ad_daily_agg {
        {{revenue_pop_change._rendered_value}} from  </div>
      </div> ;;
     group_label: "Admins Metrics"
+    hidden: yes
   }
 
   measure: HTML_variable {
@@ -509,6 +515,7 @@ view: fact_ad_daily_agg {
 
       ;;
     group_label: "Admins Metrics"
+    hidden: yes
   }
 
   measure: HTML_variable2 {
@@ -557,6 +564,7 @@ view: fact_ad_daily_agg {
 
 
     group_label: "Admins Metrics"
+    hidden: yes
   }
 
   measure: HTML_variable10 {
@@ -616,10 +624,12 @@ view: fact_ad_daily_agg {
 
 
     group_label: "Admins Metrics"
+    hidden: yes
   }
 
   measure: video_2 {
     type: count
+    hidden: yes
     html:
 
       <div><a style="float:right; color:#FFFFFF; background-color:#000000;  border: solid 3px #000000; font-weight: 400;height:350px; width: 350px;
@@ -651,6 +661,7 @@ view: fact_ad_daily_agg {
 
   measure: video_3 {
     type: count
+    hidden: yes
     html:
 
     <table>
@@ -700,8 +711,8 @@ view: fact_ad_daily_agg {
   }
 
   measure: video_4 {
-
     type: count
+    hidden: yes
     html:
 
 
@@ -966,6 +977,7 @@ view: fact_ad_daily_agg {
   measure: video_creative_views {
     type: sum
     label: "Video Creative Views"
+    description: "Number of times the video creative had been watched"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_creative_views ;;
     #hidden: yes
@@ -984,6 +996,7 @@ view: fact_ad_daily_agg {
   measure: video_errors {
     type: sum
     label: "Video Errors"
+    description: "Number of errors that appeared"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_errors ;;
     #hidden: yes
@@ -1246,6 +1259,7 @@ view: fact_ad_daily_agg {
 
   filter: publisher_filter {
     type: string
+    hidden: yes
     suggest_dimension: pub_ssp_key
   }
 
@@ -1257,6 +1271,7 @@ view: fact_ad_daily_agg {
 
   measure: sum_dynamic_pub {
     type: sum
+    hidden: yes
     sql: ${TABLE}.sum_of_revenue ;;
     filters: [publisher_filter_filter: "yes"]
   }
@@ -1274,7 +1289,7 @@ view: fact_ad_daily_agg {
     type: number
     label: "Pub eCPM"
     description: "Cogs/Impressions"
-    value_format: "0.00%"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
   }
@@ -1283,7 +1298,7 @@ view: fact_ad_daily_agg {
     type: number
     label: "Pub RPM"
     description: "Revenue/Impressions"
-    value_format: "0.00%"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: (${revenue}/NULLIF(${impression_pixel},0))*1000 ;;
   }
@@ -1311,7 +1326,7 @@ view: fact_ad_daily_agg {
     type: number
     label: "RPM"
     description: "Revenue/Requests"
-    value_format: "0.00%"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${requests}/1000000),0) ;;
   }
@@ -1442,7 +1457,7 @@ view: fact_ad_daily_agg {
     type: number
     description: "revenue/impressions"
     label: "Ad eCPM"
-    value_format: "0.00%"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${revenue}/NULLIF((${impression_pixel}/1000),0) ;;
   }

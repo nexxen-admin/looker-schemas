@@ -66,7 +66,7 @@ view: dim_employee {
 }
 
 dimension: manager_type {
-  label: "Manager Type"
+  label: "Pub Ops Group"
   type: string
   sql: ${TABLE}.manager_type ;;
 }

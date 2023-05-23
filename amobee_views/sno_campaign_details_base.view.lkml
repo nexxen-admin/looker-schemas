@@ -391,9 +391,10 @@ view: campaign_details_base {
     sql: ${cpu_type_id} ;;
   }
 
-  dimension: createdon {
-    type: string
-    hidden: yes
+  dimension_group: createdon {
+    label: "Created On "
+    type: time
+    timeframes: [raw, date, time, week, quarter, year]
     sql: ${TABLE}.CREATEDON ;;
   }
 

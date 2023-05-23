@@ -296,6 +296,12 @@ explore: holdco_revenue_report{
   hidden: yes
 }
 
+explore: q1_concentration_data{
+  label: "Concentration - Q1"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
+
 explore: tremor_to_unruly{
   label: "Tremor to Unruly"
   #required_access_grants: [can_view_all_tremor]

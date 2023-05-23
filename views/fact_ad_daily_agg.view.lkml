@@ -1945,6 +1945,11 @@ view: fact_ad_daily_agg {
       label: "Previous Year"
       value: "Year"
     }
+
+    allowed_value: {
+      label: "Previous Week"
+      value: "Week"
+    }
     default_value: "Period"
   }
 
@@ -2139,6 +2144,7 @@ view: fact_ad_daily_agg {
       day_of_month,
       day_of_year,
       week_of_year,
+      week,
       month,
       quarter,
       month_name,

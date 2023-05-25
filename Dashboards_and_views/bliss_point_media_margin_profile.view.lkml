@@ -553,6 +553,17 @@ From Audience_RevShare_Final ar
 Group by 1, 2, 3, 4, 5
 ),
 
+DV_Revshare as (
+Select Case when network_name = 'Bliss Point Media (DSP)' then '439896' else '446496' end as agency_id,
+  date_trunc('month',event_date)::date as event_month,
+  sum(billable_Amount) as Billable_Amount,
+  sum(billable_Amount) * case when date_trunc('month',event_date)::date < '2023-04-01' then 0.1 else 0.2 end as DV_Revshare
+From bi.svc_di_dv_sbs_data dv
+Where event_month >= '2023-01-01'
+  and network_name in ('Bliss Point Media (DSP)','Bliss Point Media')
+Group by 1, 2
+),
+
 Results_Orig as (
 Select event_month,
   agency_name,
@@ -587,12 +598,14 @@ Select og.event_month,
   --coalesce(bps.Vendor_Cost_Diff,0) as vendor_cost_diff,
   og.DSP_Platform_Cost - coalesce(bps.Vendor_Cost_Diff,0) as DSP_Platform_Cost,
   og.Inv_Cost,
-  og.Partner_RevShare,
-  og.Gross_Revenue,
+  og.Partner_RevShare + coalesce(dv.DV_Revshare,0) as Partner_RevShare,
+  og.Gross_Revenue + coalesce(dv.DV_Revshare,0) as Gross_Revenue,
   og.Overall_Cost - coalesce(bps.Vendor_Cost_Diff,0) as Overall_Cost
 From Results_Orig og
   left outer join BP_CPM_Spread bps on bps.event_month = og.event_month
                       and bps.agency_id = og.agency_id
+  left outer join DV_Revshare dv on dv.event_month = og.event_month
+                      and dv.agency_id = og.agency_id
       ;;
   }
 

@@ -277,14 +277,34 @@ Select bp.event_month,
   bp.buy_type,
   bp.external_provider,
   prc.revshare / 100 as revshare_pct,
-  bp.vendor_matched_cost,
-  bp.vendor_modeled_cost,
+  bp.matched_impressions,
+  bp.modeled_impressions,
+  bp.vendor_matched_cost as Matched_Cost,
+  bp.vendor_modeled_cost as Modeled_Cost,
+  customer_matched_cost,
+  customer_modeled_cost,
   coalesce(bp.vendor_matched_cost,0) + coalesce(bp.vendor_modeled_cost,0) as Total_Cost,
   (coalesce(bp.vendor_matched_cost,0) + coalesce(bp.vendor_modeled_cost,0)) * (coalesce(prc.revshare,0)/100) as RevShare
 From BP_Data_Current bp
   left outer join bi.svc_partner_revshare_config prc on prc.event_month = bp.event_month
                             and prc.external_provider = bp.external_provider
 ),
+
+BP_CPM_Spread as (
+Select bp.event_month,
+  bp.agency_id,
+  --bp.external_provider,
+  vs.Spread_Pct,
+  sum(bp.total_cost) as total_cost,
+  sum(bp.total_cost * vs.Spread_Pct) as Vendor_Cost_Diff
+From BP_Data_Current_Results bp
+  left outer join bi.svc_BPM_TVI_Vendor_Spread vs on vs.event_month = bp.event_month
+                          and vs.external_provider = bp.external_provider
+Where bp.external_provider = 'TV_INTELLIGENCE'
+  and bp.event_month >= '2023-04-01'
+Group by 1, 2, 3
+),
+
 
 BP_Data_Legacy as (
  Select date_trunc('month',event_date)::date as event_month,
@@ -531,13 +551,14 @@ Select ar.event_month,
   sum(ar.RevShare) as Partner_RevShare
 From Audience_RevShare_Final ar
 Group by 1, 2, 3, 4, 5
-)
+),
 
+Results_Orig as (
 Select event_month,
   agency_name,
   agency_id,
   buy_type,
-  deal_id,
+  NULL as deal_id,
   sum(DSP_Revenue) as DSP_Revenue,
   sum(DSP_Data_Cost) as DSP_Data_Cost,
   sum(DSP_Partner_Cost) as DSP_Partner_Cost,
@@ -552,6 +573,26 @@ Select event_month,
   sum(coalesce(Inv_Cost,0)) + sum(coalesce(DSP_Data_Cost,0)) + sum(coalesce(DSP_Partner_Cost,0)) as Overall_Cost
 From DSP_BASE_Metrics
 Group by 1, 2, 3, 4, 5
+)
+
+Select og.event_month,
+  og.agency_name,
+  og.agency_id,
+  og.buy_type,
+  og.deal_id,
+  og.DSP_Revenue,
+  og.DSP_Data_Cost,
+  og.DSP_Partner_Cost,
+  og.DSP_PlatformFee_Profit,
+  --coalesce(bps.Vendor_Cost_Diff,0) as vendor_cost_diff,
+  og.DSP_Platform_Cost - coalesce(bps.Vendor_Cost_Diff,0) as DSP_Platform_Cost,
+  og.Inv_Cost,
+  og.Partner_RevShare,
+  og.Gross_Revenue,
+  og.Overall_Cost - coalesce(bps.Vendor_Cost_Diff,0) as Overall_Cost
+From Results_Orig og
+  left outer join BP_CPM_Spread bps on bps.event_month = og.event_month
+                      and bps.agency_id = og.agency_id
       ;;
   }
 

@@ -1,4 +1,4 @@
-connection: "mssql-oltp-sbx_dbaadmin"
+connection: "mssql-oltp-stg_dbaadmin"
 
 include: "dbaadmin_*.view.lkml"
 include: "dbaadmin_mssql_stg.dashboard*"

@@ -307,3 +307,8 @@ explore: tremor_to_unruly{
   #required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
+explore: deal_commision_data {
+  label: "Deal Commision Data"
+  required_access_grants: [can_view_pub_come_looker]
+}

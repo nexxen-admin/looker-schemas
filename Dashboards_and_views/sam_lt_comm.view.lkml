@@ -151,6 +151,16 @@ view: sam_lt_comm {
     sql: ${TABLE}.Demand_Source ;;
   }
 
+  #dimension: is_gam {
+  #  type: string
+   # sql:
+   #   {% if _user_attributes['allowed_users_sam_lt ']  == 'yes' and ${pub_group}="gam" %}
+   #       ${TABLE}.operations_owner
+    #  {% else %}
+   #       '[REDACTED]'
+    #  {% endif %}   ;;
+ # }
+
   measure: count {
     type: count
     drill_fields: [supply_name]

@@ -17,16 +17,19 @@ view: deal_commision_data {
 
   measure: amsplit_cogs {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.AMSplitCogs ;;
   }
 
   measure: amsplit_net_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.AMSplitNetRevenue ;;
   }
 
   measure: amsplit_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.AMSplitRevenue ;;
   }
 
@@ -47,6 +50,7 @@ view: deal_commision_data {
 
   measure: cogs {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.cogs ;;
   }
 
@@ -85,6 +89,7 @@ view: deal_commision_data {
 
   measure: gross_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.Gross_Revenue ;;
   }
 
@@ -95,6 +100,7 @@ view: deal_commision_data {
 
   measure: net_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.net_revenue ;;
   }
 
@@ -105,16 +111,19 @@ view: deal_commision_data {
 
   measure: ops_split_cogs {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.OpsSplitCogs ;;
   }
 
   measure: ops_split_net_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.OpsSplitNetRevenue ;;
   }
 
   measure: ops_split_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.OpsSplitRevenue ;;
   }
 
@@ -135,36 +144,43 @@ view: deal_commision_data {
 
   measure: sales_split_barter_rebate {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.SalesSplitBarterRebate ;;
   }
 
   measure: sales_split_cogs {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.SalesSplitCogs ;;
   }
 
   measure: sales_split_net_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.SalesSplitNetRevenue ;;
   }
 
   measure: sales_split_net_revenue_no_rebate {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.SalesSplitNetRevenue_No_Rebate ;;
   }
 
   measure: sales_split_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.SalesSplitRevenue ;;
   }
 
   measure: sales_split_revenue_no_rebate {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.SalesSplitRevenue_No_Rebate ;;
   }
 
   measure: total_revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.TotalRevenue ;;
   }
 

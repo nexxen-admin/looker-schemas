@@ -1,7 +1,7 @@
 connection: "bi_prod"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
- include: "/**/*.view.lkml"                 # include all views in this project
+include: "/**/*.view.lkml"                 # include all views in this project
 # include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 
 # # Select the views that should be a part of this model,
@@ -40,8 +40,8 @@ access_grant: can_view_candidates {
   allowed_values: ["candidates"]
 }
 #access_grant: can_view_pub_come_looker {
- # user_attribute: allowed_users
-  #allowed_values: ["Looker_Admins"]
+# user_attribute: allowed_users
+#allowed_values: ["Looker_Admins"]
 #}
 explore: datorama_forcast_poc {
 
@@ -50,10 +50,10 @@ explore: datorama_forcast_poc {
 
 }
 explore: sam_goal_monitor {
- access_filter: {
-     field: sam_goal_monitor.sam
-     user_attribute: allowed_users
-   }
+  access_filter: {
+    field: sam_goal_monitor.sam
+    user_attribute: allowed_users
+  }
   label: "SAM Performance Monitor"
   required_access_grants: [can_view_all_tremor]
   hidden: yes
@@ -71,10 +71,10 @@ explore: sam {
 }
 
 explore: sam_lt_comm {
-   access_filter: {
-     field: sam_lt_comm.operations_owner
-     user_attribute: allowed_users_sam_lt
-   }
+  access_filter: {
+    field: sam_lt_comm.operations_owner
+    user_attribute: allowed_users_sam_lt
+  }
   label: "SAM LT Commision"
   #required_access_grants: [can_view_all_tremor]
   hidden: yes
@@ -203,7 +203,7 @@ explore:  ivt_report{
   label: "IVT Report"
   #required_access_grants: [can_view_all_tremor]
   hidden: yes
-  }
+}
 
 explore:  no_bid_reason{
   label: "No_Bid_Reason"
@@ -216,9 +216,9 @@ explore: new_revenue {
   #required_access_grants:  [can_view_pub_come_looker]
 
   join: dim_publisher  {
-  type:inner
-   sql_on:  ${dim_publisher.pub_id} = ${new_revenue.pub_id};;
-  relationship: many_to_one
+    type:inner
+    sql_on:  ${dim_publisher.pub_id} = ${new_revenue.pub_id};;
+    relationship: many_to_one
   }
   join: v_dim_employee_pub_ops {
     type: inner
@@ -310,5 +310,16 @@ explore: tremor_to_unruly{
 
 explore: deal_commision_data {
   label: "Deal Commision Data"
+  #required_access_grants: [can_view_pub_come_looker]
+  hidden: yes
+}
+
+explore: new_money_unruly_player_aniview {
+  label: "New Money Unruly Player Aniview"
+  required_access_grants: [can_view_pub_come_looker]
+}
+
+explore: new_money_unruly_player_ctrl{
+  label: "New Money Unruly Player CTRL"
   required_access_grants: [can_view_pub_come_looker]
 }

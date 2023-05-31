@@ -41,10 +41,10 @@ view: sno_opt_viewing_spot_level_pacing {
     sql: ${TABLE}."DEAL_NUMBER" ;;
   }
 
-  measure: list_distinct_deal_number {
-    type: list
-    list_field: deal_number
-  }
+  # measure: list_distinct_deal_number {
+  #   type: list
+  #   list_field: deal_number
+  # }
 
   dimension: demo_impressions {
     type: number
@@ -110,10 +110,10 @@ view: sno_opt_viewing_spot_level_pacing {
     sql: ${TABLE}."IMPRESSION_TYPE" ;;
   }
 
-  measure: list_distinct_impression_type {
-    type: list
-    list_field: impression_type
-  }
+  # measure: list_distinct_impression_type {
+  #   type: list
+  #   list_field: impression_type
+  # }
 
   dimension: impressions {
     type: number
@@ -171,10 +171,10 @@ view: sno_opt_viewing_spot_level_pacing {
     sql: ${TABLE}."NETWORK_CODE" ;;
   }
 
-  measure: list_distinct_network_code {
-    type: list
-    list_field: network_code
-  }
+  # measure: list_distinct_network_code {
+  #   type: list
+  #   list_field: network_code
+  # }
 
   dimension: placement_id {
     type: number
@@ -238,10 +238,10 @@ view: sno_opt_viewing_spot_level_pacing {
     sql: ${TABLE}."STAGE" ;;
   }
 
-  measure: list_distinct_stage {
-    type: list
-    list_field: stage
-  }
+  # measure: list_distinct_stage {
+  #   type: list
+  #   list_field: stage
+  # }
 
   dimension: strategic_impressions {
     type: number
@@ -332,10 +332,10 @@ view: sno_opt_viewing_spot_level_pacing {
     sql: ${TABLE}."USN" ;;
   }
 
-  measure: list_distinct_usn {
-    type: list
-    list_field: usn
-  }
+  # measure: list_distinct_usn {
+  #   type: list
+  #   list_field: usn
+  # }
 
   measure: latest_ingested_report {
     type: date_time

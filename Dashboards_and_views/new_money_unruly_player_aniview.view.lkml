@@ -45,8 +45,8 @@ view: new_money_unruly_player_aniview {
     sql: ${TABLE}.publisher_name ;;
   }
 
-  dimension: pubs_mp {
-    type: number
+  measure: pubs_mp {
+    type: sum
     sql: ${TABLE}.PUbs_MP ;;
   }
 

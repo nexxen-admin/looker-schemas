@@ -1,6 +1,6 @@
 view: placement_details_base {
   label: "Placement"
-  sql_table_name: DIM.PLACEMENT_DETAILS_BASE ;;
+  sql_table_name: DIM.PLACEMENT_DETAILS_BASE_VIEW ;;
 
   dimension: market_code {
     type: string

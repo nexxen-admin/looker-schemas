@@ -1,6 +1,6 @@
 view: customer_details {
   label: "Customer"
-  sql_table_name: DIM.CUSTOMER_DETAILS ;;
+  sql_table_name: DIM.CUSTOMER_DETAILS_VIEW ;;
 
   dimension: addr_line1 {
     type: string

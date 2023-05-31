@@ -1,6 +1,6 @@
 view: flight_details {
   label: "Flight"
-  sql_table_name: DIM.FLIGHT_DETAILS ;;
+  sql_table_name: DIM.FLIGHT_DETAILS_VIEW ;;
 
   dimension: campaign_id {
     type: string

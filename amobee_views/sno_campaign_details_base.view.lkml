@@ -1,5 +1,5 @@
 view: campaign_details_base {
-  sql_table_name: DIM.CAMPAIGN_DETAILS_BASE;;
+  sql_table_name: DIM.CAMPAIGN_DETAILS_BASE_VIEW ;;
   label: "Campaign"
 
   dimension: advertiser_brand_id {

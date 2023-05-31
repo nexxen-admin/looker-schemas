@@ -1,4 +1,4 @@
-connection: "snowflake"
+connection: "amobee_prod"
 label: "Delivery"
 # include all the views
 include: "/**/*.view.lkml"
@@ -1464,89 +1464,89 @@ explore: fce_atv_fdp_forecasts_data {
   }
 }
 
-explore: sno_opt_viewing_spot_level_pacing {
-  required_access_grants: [can_use_explore]
-  label: "OPT Pacing"
+# explore: sno_opt_viewing_spot_level_pacing {
+#   required_access_grants: [can_use_explore]
+#   label: "OPT Pacing"
 
-  fields: [ALL_FIELDS*,-campaign_details_base.agency_fee]
+#   fields: [ALL_FIELDS*,-campaign_details_base.agency_fee]
 
-  join: sno_opt_pacing_report_approval {
-    relationship: many_to_one
-    sql_on: ${sno_opt_viewing_spot_level_pacing.report_id} = ${sno_opt_pacing_report_approval.report_id} ;;
-  }
+#   join: sno_opt_pacing_report_approval {
+#     relationship: many_to_one
+#     sql_on: ${sno_opt_viewing_spot_level_pacing.report_id} = ${sno_opt_pacing_report_approval.report_id} ;;
+#   }
 
-  join: sno_opt_viewing_spot_level_pacing_latest_report {
-    relationship: many_to_one
-    sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${sno_opt_viewing_spot_level_pacing_latest_report.campaign_id} AND ${sno_opt_viewing_spot_level_pacing.run_raw} = ${sno_opt_viewing_spot_level_pacing_latest_report.latest_run_date} ;;
-  }
+#   join: sno_opt_viewing_spot_level_pacing_latest_report {
+#     relationship: many_to_one
+#     sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${sno_opt_viewing_spot_level_pacing_latest_report.campaign_id} AND ${sno_opt_viewing_spot_level_pacing.run_raw} = ${sno_opt_viewing_spot_level_pacing_latest_report.latest_run_date} ;;
+#   }
 
-  join: sno_converged_approved_campaigns {
-    relationship: many_to_one
-    sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${sno_converged_approved_campaigns.campaign_id} and ${sno_converged_approved_campaigns.approved_campaign_status} in (3,4) ;;
-  }
+#   join: sno_converged_approved_campaigns {
+#     relationship: many_to_one
+#     sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${sno_converged_approved_campaigns.campaign_id} and ${sno_converged_approved_campaigns.approved_campaign_status} in (3,4) ;;
+#   }
 
-  join: campaign_details_base {
-    relationship: many_to_one
-    sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${campaign_details_base.campaign_id} ;;
-  }
+#   join: campaign_details_base {
+#     relationship: many_to_one
+#     sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${campaign_details_base.campaign_id} ;;
+#   }
 
-  join: flight_details {
-    relationship: one_to_many
-    sql_on: ${campaign_details_base.campaign_id} = ${flight_details.campaign_id} ;;
-    fields: []
-  }
+#   join: flight_details {
+#     relationship: one_to_many
+#     sql_on: ${campaign_details_base.campaign_id} = ${flight_details.campaign_id} ;;
+#     fields: []
+#   }
 
-  join: flight_media_details_base {
-    relationship: many_to_one
-    sql_on: ${flight_details.flight_id} = ${flight_media_details_base.flight_id} ;;
-    fields: []
-  }
+#   join: flight_media_details_base {
+#     relationship: many_to_one
+#     sql_on: ${flight_details.flight_id} = ${flight_media_details_base.flight_id} ;;
+#     fields: []
+#   }
 
-  join: advertiser_brand_details {
-    relationship: many_to_one
-    sql_on: ${campaign_details_base.advertiser_brand_id} = ${advertiser_brand_details.advertiser_brand_id} ;;
-  }
+#   join: advertiser_brand_details {
+#     relationship: many_to_one
+#     sql_on: ${campaign_details_base.advertiser_brand_id} = ${advertiser_brand_details.advertiser_brand_id} ;;
+#   }
 
-  join: platform_client {
-    relationship: many_to_one
-    sql_on: ${campaign_details_base.platform_client_id} = ${platform_client.platform_client_id} ;;
-  }
+#   join: platform_client {
+#     relationship: many_to_one
+#     sql_on: ${campaign_details_base.platform_client_id} = ${platform_client.platform_client_id} ;;
+#   }
 
-  join: customer_details {
-    relationship: many_to_one
-    sql_on: ${campaign_details_base.customer_id} = ${customer_details.customer_id} ;;
-  }
+#   join: customer_details {
+#     relationship: many_to_one
+#     sql_on: ${campaign_details_base.customer_id} = ${customer_details.customer_id} ;;
+#   }
 
-  join: customer_country {
-    relationship: many_to_one
-    sql_on: ${customer_details.country_id} = ${customer_country.country_id} ;;
-  }
+#   join: customer_country {
+#     relationship: many_to_one
+#     sql_on: ${customer_details.country_id} = ${customer_country.country_id} ;;
+#   }
 
-  join: timezone {
-    relationship: many_to_one
-    sql_on: ${campaign_details_base.timezone_id} = ${timezone.timezone_id} ;;
-    fields: []
-  }
+#   join: timezone {
+#     relationship: many_to_one
+#     sql_on: ${campaign_details_base.timezone_id} = ${timezone.timezone_id} ;;
+#     fields: []
+#   }
 
-  join: sno_validation_report_result {
-    relationship: many_to_many
-    sql_on: ${sno_opt_viewing_spot_level_pacing.report_id} = ${sno_validation_report_result.report_id} ;;
-  }
+#   join: sno_validation_report_result {
+#     relationship: many_to_many
+#     sql_on: ${sno_opt_viewing_spot_level_pacing.report_id} = ${sno_validation_report_result.report_id} ;;
+#   }
 
-  join: sno_validation_rule_result {
-    relationship: one_to_many
-    sql_on: ${sno_validation_report_result.request_id} = ${sno_validation_rule_result.request_id} ;;
-  }
+#   join: sno_validation_rule_result {
+#     relationship: one_to_many
+#     sql_on: ${sno_validation_report_result.request_id} = ${sno_validation_rule_result.request_id} ;;
+#   }
 
-  join: tpm_metrics {
-    relationship: many_to_many
-    sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${tpm_metrics.campaign_id} ;;
-    fields: [tpm_metrics.daypart]
-  }
+#   join: tpm_metrics {
+#     relationship: many_to_many
+#     sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${tpm_metrics.campaign_id} ;;
+#     fields: [tpm_metrics.daypart]
+#   }
 
-  sql_always_where: {% if sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_any" or sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_approved" %} ${sno_opt_viewing_spot_level_pacing_latest_report.campaign_id} IS NOT NULL {% else %} TRUE {% endif %}
-    AND {% if sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_approved" %} ${sno_opt_pacing_report_approval.approval_state} = 'approved' {% else %} TRUE {% endif %} ;;
-}
+#   sql_always_where: {% if sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_any" or sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_approved" %} ${sno_opt_viewing_spot_level_pacing_latest_report.campaign_id} IS NOT NULL {% else %} TRUE {% endif %}
+#     AND {% if sno_opt_viewing_spot_level_pacing.show_only_latest_report._parameter_value == "latest_approved" %} ${sno_opt_pacing_report_approval.approval_state} = 'approved' {% else %} TRUE {% endif %} ;;
+# }
 
 explore: sno_smartmon_events_forecast_error_metrics {
 

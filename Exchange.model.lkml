@@ -409,7 +409,6 @@ join: dim_date {
   relationship: many_to_one
 }
 
-
 join: dim_country {
   type: inner
   view_label: "Geo"

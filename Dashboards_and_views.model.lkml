@@ -316,10 +316,12 @@ explore: deal_commision_data {
 
 explore: new_money_unruly_player_aniview {
   label: "New Money Unruly Player Aniview"
-  required_access_grants: [can_view_pub_come_looker]
+  #required_access_grants: [can_view_pub_come_looker]
+  hidden: yes
 }
 
 explore: new_money_unruly_player_ctrl{
   label: "New Money Unruly Player CTRL"
-  required_access_grants: [can_view_pub_come_looker]
+  #required_access_grants: [can_view_pub_come_looker]
+  hidden: yes
 }

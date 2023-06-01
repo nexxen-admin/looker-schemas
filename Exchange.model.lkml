@@ -409,6 +409,13 @@ join: dim_date {
   relationship: many_to_one
 }
 
+  join: exchange_rev_ops_targets {
+    type: inner
+    view_label: "Exchange RevOps Targets"
+    sql_on: ${exchange_rev_ops_targets.date_key_raw}=${dim_date.date_key_raw} ;;
+    relationship: one_to_one
+  }
+
 join: dim_country {
   type: inner
   view_label: "Geo"

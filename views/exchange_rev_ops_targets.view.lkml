@@ -23,7 +23,12 @@ view: exchange_rev_ops_targets {
     datatype: date
     sql: ${TABLE}.date_key ;;
   }
-
+  dimension: date_pk  {
+    type: string
+    hidden: yes
+    primary_key: yes
+    sql: ${date_key_date} ;;
+  }
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Target 1party" in Explore.
@@ -31,6 +36,8 @@ view: exchange_rev_ops_targets {
   measure: target_1party {
     type: sum
     sql: ${TABLE}.target_1party ;;
+    value_format: "#,##0"
+    hidden: yes
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -41,6 +48,8 @@ view: exchange_rev_ops_targets {
   measure: target_3party {
     type: sum
     sql: ${TABLE}.target_3party ;;
+    value_format: "#,##0"
+    hidden: yes
   }
 
   measure: count {

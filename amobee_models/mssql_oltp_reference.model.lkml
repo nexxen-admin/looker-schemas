@@ -1685,6 +1685,11 @@ explore: campaign_reference {
     relationship: many_to_one
     sql_on: ${payment_order.currency_id} = ${mssql_oltp_currency.currency_id} ;;
   }
+
+  join: mssql_oltp_campaign_report {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_campaign_report.campaign_id} ;;
+  }
 }
 
 explore: mssql_oltp_suggest_demand_ref {

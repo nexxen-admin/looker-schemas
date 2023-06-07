@@ -42,11 +42,20 @@ view: dim_date {
     sql: DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) < DATE_PART('YEAR', CURRENT_TIMESTAMP) ;;
 
   }
-  dimension: is_before_qtd {
+  #dimension: is_before_qtd {
 
-    type: number
-    sql: case when month(${date_key_raw}) = month(current_date-1) then ${month_number_in_quarter} end;;
+   # type: number
+    #sql: case when month(${date_key_raw}) = month(current_date-1) then ${month_number_in_quarter} end;;
   # hidden: yes
+  #}
+
+  dimension: is_before_qtd {
+    description: "should be used when comparing year to year while including the current not complited year -
+    in this case the - Is Before Qtd,
+    will filter the other years on exact quarters of the not complited year."
+    type: yesno
+    sql: DATE_PART('QUARTER', ${date_key_raw}::TIMESTAMP) < DATE_PART('QUARTER', CURRENT_TIMESTAMP) ;;
+
   }
 
   dimension: current_month_number_in_quarter{

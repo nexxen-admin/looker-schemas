@@ -52,6 +52,33 @@ view: exchange_rev_ops_targets {
     hidden: yes
   }
 
+  dimension_group: current_date {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: current_date ;;
+  }
+
+  #dimension: is_current_month {
+  # type: string
+  #sql: case when month(${activity_month}) = month(current_date)
+  #and year(${activity_year}) = year(current_date) then 'Yes' else 'No' end;;
+  #}
+
+  dimension: is_current_month {
+    type: string
+    sql: case when ${date_key_month} = ${current_date_month}
+      then 'Yes' else 'No' end;;
+  }
+
   measure: count {
     type: count
     drill_fields: []

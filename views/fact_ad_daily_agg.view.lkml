@@ -1002,6 +1002,12 @@ view: fact_ad_daily_agg {
     #hidden: yes
   }
 
+  measure: sum_of_pad_amount {
+    type: sum
+    label: "PAD Amount"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_pad_amount ;;
+  }
 
   dimension: country_key {
     type: number

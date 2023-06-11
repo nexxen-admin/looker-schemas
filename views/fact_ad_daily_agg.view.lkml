@@ -2208,6 +2208,16 @@ view: fact_ad_daily_agg {
     filters: [period_filtered_measures: "this"]
   }
 
+  measure: current_period_revenue_tmp {
+    view_label: "PoP"
+    type: sum
+    description: "Current period revenue tmp"
+    sql:  ${TABLE}.sum_of_revenue ;;
+    value_format: "[>=1000000000]0.00,,\" B\";[>=1000000]0.00,,\" M\";[>=1000]0.00,,\" K\";0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
   measure: current_period_margin {
     view_label: "PoP"
     label: "Current Period Margin  {{_filters['current_date_range']}} "
@@ -2430,6 +2440,17 @@ view: fact_ad_daily_agg {
     sql:  ${TABLE}.sum_of_impression_pixel ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
+  }
+
+
+  measure: current_period_impressions_tmp {
+    view_label: "PoP"
+    type: sum
+    description: "Current period impressions tmp"
+    sql:  ${TABLE}.sum_of_impression_pixel ;;
+    value_format: "[>=1000000000]0.00,,\" B\";[>=1000000]0.00,,\" M\";[>=1000]0.00,,\" K\";0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
   }
 
   measure: current_period_clicks {

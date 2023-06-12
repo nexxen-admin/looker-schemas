@@ -35,7 +35,7 @@ view: exchange_rev_ops_targets {
 
   measure: target_1party {
     type: sum
-    sql: ${TABLE}.target_1party ;;
+    sql: ${TABLE}.target_1party;;
     value_format: "#,##0"
     hidden: yes
   }

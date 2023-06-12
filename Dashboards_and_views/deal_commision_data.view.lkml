@@ -2,7 +2,7 @@
 view: deal_commision_data {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_New.Deal_Commision_Data ;;
+  sql_table_name: BI_New.Deal_Commission_Data ;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
 
@@ -137,10 +137,10 @@ view: deal_commision_data {
     sql: ${TABLE}.personnel_role ;;
   }
 
-  dimension: rx_deal_type {
-    type: string
-    sql: ${TABLE}.RX_Deal_Type ;;
-  }
+  #dimension: rx_deal_type {
+   # type: string
+    #sql: ${TABLE}.RX_Deal_Type ;;
+  #}
 
   measure: sales_split_barter_rebate {
     type: sum

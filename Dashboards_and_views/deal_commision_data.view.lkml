@@ -137,10 +137,10 @@ view: deal_commision_data {
     sql: ${TABLE}.personnel_role ;;
   }
 
-  #dimension: rx_deal_type {
-   # type: string
-    #sql: ${TABLE}.RX_Deal_Type ;;
-  #}
+  dimension: deal_type {
+    type: string
+    sql: ${TABLE}.deal_type ;;
+  }
 
   measure: sales_split_barter_rebate {
     type: sum

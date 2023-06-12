@@ -34,6 +34,12 @@ view: unruly_player_demands {
     sql: ${TABLE}.year ;;
   }
 
+  dimension: Is_1st_Party_Demand {
+    type: yesno
+    label: "Is 1st Party Demand"
+    sql: ${TABLE}.Is_1st_Party_Demand ;;
+  }
+
   dimension: seat_name {
     type: string
     sql: ${TABLE}.seat_name ;;
@@ -44,6 +50,16 @@ view: unruly_player_demands {
     sql: ${TABLE}.pub_id ;;
   }
 
+ # dimension: pub_name {
+  #  type: string
+   # sql: ${TABLE}.pub_name ;;
+  #}
+
+  #dimension: ts_display_name {
+   # label: "Traffic Source"
+    #type: string
+    #sql: ${TABLE}.TS_Display_Name ;;
+  #}
 
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
@@ -61,11 +77,18 @@ view: unruly_player_demands {
     value_format: "#,##0"
   }
 
-  measure: cost {
-    type: sum
-    sql: ${TABLE}.cost ;;
-    value_format: "#,##0"
-  }
+  #measure: OLV_cost {
+   # type: sum
+    #sql: ${TABLE}.OLV_cost ;;
+    #value_format: "#,##0"
+  #}
+
+  #measure: IA_cost {
+   # type: sum
+    #sql: ${TABLE}.IA_cost ;;
+    #value_format: "#,##0"
+  #}
+
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
@@ -86,11 +109,17 @@ view: unruly_player_demands {
     sql: ${TABLE}."DataBase" ;;
   }
 
-  measure: impressions {
-    type: sum
-    sql: ${TABLE}.impressions ;;
-    value_format: "#,##0"
-  }
+  #measure: olv_impressions {
+    #type: sum
+    #sql: ${TABLE}.OLV_impressions ;;
+    #value_format: "#,##0"
+  #}
+
+  #measure: ia_impressions {
+   # type: sum
+    #sql: ${TABLE}.IA_impressions ;;
+    #value_format: "#,##0"
+  #}
 
   measure: inventory {
     type: sum
@@ -120,10 +149,15 @@ view: unruly_player_demands {
     sql: ${TABLE}."Pub MP Total Rev" ;;
     value_format: "#,##0"
   }
-
   measure: requests {
     type: sum
     sql: ${TABLE}.requests ;;
+    value_format: "#,##0"
+  }
+
+  measure: impressions {
+    type: sum
+    sql: ${TABLE}.impressions ;;
     value_format: "#,##0"
   }
 
@@ -133,11 +167,77 @@ view: unruly_player_demands {
     value_format: "#,##0"
   }
 
-  measure: sf {
+  measure: cost {
     type: sum
-    sql: ${TABLE}.SF ;;
+    sql: ${TABLE}.cost ;;
     value_format: "#,##0"
   }
+
+    measure: net_revenue {
+    label: "Net Revenue"
+    type: sum
+    sql: ${TABLE}.net_revenue ;;
+    value_format: "#,##0"
+  }
+
+  #measure: OLV_requests {
+    #type: sum
+    #sql: ${TABLE}.OLV_requests ;;
+    #value_format: "#,##0"
+  #}
+
+  #measure: ia_requests {
+    #type: sum
+    #sql: ${TABLE}.IA_requests ;;
+   # value_format: "#,##0"
+  #}
+
+  #measure: OLV_revenue {
+   # type: sum
+    #sql: ${TABLE}.OLV_revenue ;;
+    #value_format: "#,##0"
+  #}
+
+  #measure: ia_revenue {
+  #  type: sum
+   # sql: ${TABLE}.IA_revenue ;;
+    #value_format: "#,##0"
+  #}
+
+  #measure: OLV_net_revenue {
+    #label: "OLV_Net Revenue"
+    #type: sum
+    #sql: ${TABLE}.OLV_net_revenue ;;
+    #value_format: "#,##0"
+  #}
+
+  #measure: IA_net_revenue {
+    #label: "IA_Net Revenue"
+    #type: sum
+    #sql: ${TABLE}.IA_net_revenue ;;
+    #value_format: "#,##0"
+  #}
+
+  measure: is_sf {
+    label: "IS SF"
+    type: sum
+    sql: ${TABLE}.IS_SF ;;
+    value_format: "#,##0"
+  }
+
+  measure: os_sf {
+    type: sum
+    sql: ${TABLE}.OS_SF ;;
+    value_format: "#,##0"
+  }
+
+  measure: ia_sf {
+    label: "IA SF"
+    type: sum
+    sql: ${TABLE}.IA_SF ;;
+    value_format: "#,##0"
+  }
+
 
   measure: MyCast_20 {
     type: sum

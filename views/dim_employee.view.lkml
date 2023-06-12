@@ -65,6 +65,11 @@ view: dim_employee {
     sql: ${TABLE}.Employee_Region ;;
 }
 
+dimension: manager_type {
+  label: "Pub Ops Group"
+  type: string
+  sql: ${TABLE}.manager_type ;;
+}
 
 
   dimension: role_source {

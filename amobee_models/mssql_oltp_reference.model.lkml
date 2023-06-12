@@ -1459,6 +1459,239 @@ explore: mssql_oltp_an_hist_campaign_target {
   }
 }
 
+explore: campaign_reference {
+  view_name: mssql_oltp_campaign
+  required_access_grants: [can_use_explore]
+  label: "Campaign Reference"
+  description: "This explore includes reference data on the demand side concepts, as well as information within that hierarchy. Source is the Platform OLTP database."
+  fields: [ALL_FIELDS*, -mssql_oltp_campaign_dates.tapl_campaign_end_datetm, -mssql_oltp_campaign_dates.tapl_campaign_start_datetm]
+
+  join: mssql_oltp_campaign_status {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_status_id} = ${mssql_oltp_campaign_status.campaign_status_id} ;;
+  }
+
+  join: mssql_oltp_campaign_dates {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_campaign_dates.campaign_id} ;;
+  }
+
+  join: mssql_oltp_campaign_target {
+    relationship: one_to_many
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_campaign_target.campaign_id} ;;
+  }
+
+  join: demand_platform_client {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_campaign.platform_client_id} = ${demand_platform_client.platform_client_id} ;;
+  }
+
+  join: mssql_oltp_campaign_type {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_type_id} = ${mssql_oltp_campaign_type.campaign_type_id} ;;
+    fields: [mssql_oltp_campaign_type.description]
+  }
+
+  join: mssql_oltp_campaign_settings {
+    fields: []
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_campaign_settings.campaign_id} ;;
+  }
+
+  join: mssql_oltp_attribute_value {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_expression_document_plain.expression_group_item} =
+    ${mssql_oltp_attribute_value.code} ;;
+  }
+
+  join: mssql_oltp_attribute {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_attribute_value.attribute_id} = ${mssql_oltp_attribute.attribute_id} ;;
+  }
+
+  join: mssql_oltp_user_data_vendor {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_attribute_value.max_range} = ${mssql_oltp_user_data_vendor.user_data_vendor_id} ;;
+    sql_where: (${mssql_oltp_user_data_vendor.active} OR (${mssql_oltp_campaign_settings.use_advanced_targeting} AND ${mssql_oltp_user_data_vendor.user_data_vendor_id} = 0 ) OR (${mssql_oltp_campaign_settings.use_advanced_targeting} AND ${mssql_oltp_user_data_vendor.user_data_vendor_id} is null))  ;;
+  }
+
+  join: mssql_oltp_user_data_vendor_type {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_user_data_vendor.user_data_vendor_type_id} = ${mssql_oltp_user_data_vendor_type.user_data_vendor_type_id} ;;
+  }
+
+  join: mssql_oltp_expression_document {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_expression.expression_value_id} = ${mssql_oltp_expression_document.expression_document_id} ;;
+  }
+
+  join: mssql_oltp_expression_document_plain {
+    relationship: one_to_many
+    sql_on: ${mssql_oltp_expression_document.expression_document_id} = ${mssql_oltp_expression_document_plain.expression_document_id} ;;
+  }
+
+  join: demand_platform_client_office {
+    relationship: many_to_one
+    sql_on: ${demand_platform_client.office_id} = ${demand_platform_client_office.office_id} ;;
+    fields: [office_name]
+  }
+
+  join: mssql_oltp_insertion_order {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_insertion_order.insertion_order_id} = ${mssql_oltp_campaign.insertion_order_id} ;;
+  }
+
+  join: mssql_oltp_advertiser_brand {
+    relationship: many_to_one
+    sql: {% if mssql_oltp_advertiser_brand.include_all_brands._in_query %}FULL{% else %}LEFT{% endif %} JOIN dbo.advertiser_brand (NOLOCK)  AS mssql_oltp_advertiser_brand ON ${mssql_oltp_campaign.advertiser_brand_id} = ${mssql_oltp_advertiser_brand.adveriser_brand_id} ;;
+  }
+
+  join: mssql_oltp_advertiser {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_advertiser.adveriser_id} = ${mssql_oltp_advertiser_brand.adveriser_id} ;;
+  }
+
+  join: mssql_oltp_customer {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_customer.customer_id} = ${mssql_oltp_advertiser.customer_id} ;;
+  }
+
+  join: mssql_oltp_activity_log {
+    relationship: one_to_many
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_activity_log.campaign_id} ;;
+  }
+
+  join: mssql_oltp_user {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_campaign.createdby} = ${mssql_oltp_user.user_id} ;;
+  }
+
+  join: mssql_oltp_pl_plan {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_campaign.pl_plan_id} = ${mssql_oltp_pl_plan.pl_plan_id} ;;
+  }
+
+  join: mssql_oltp_deal {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_deal.seller_campaign_id} or ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_deal.buyer_campaign_id} ;;
+  }
+
+  join: mssql_oltp_deal_media_plan {
+    relationship: one_to_many
+    sql_on: ${mssql_oltp_deal.id} = ${mssql_oltp_deal_media_plan.deal_id} ;;
+  }
+
+  join: mssql_oltp_demo_composition_vendor {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_campaign.demo_composition_vendor_id} = ${mssql_oltp_demo_composition_vendor.demo_composition_vendor_id} ;;
+  }
+
+  join: mssql_oltp_campaign_report_settings {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_campaign_report_settings.campaign_id} ;;
+  }
+
+  join: mssql_oltp_attribution_report {
+    relationship: one_to_many
+    sql_on: ${mssql_oltp_deal.id} = ${mssql_oltp_attribution_report.entity_id} ;;
+  }
+
+  join: mssql_oltp_expression {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_expression.entity_id}
+      and ${mssql_oltp_expression.expression_context_id} = 2 and ${mssql_oltp_expression.entity_type_id} = 2 ;;
+  }
+
+  join: mssql_oltp_platform_client_group {
+    relationship: many_to_one
+    sql_on: ${demand_platform_client.platform_client_group_id} = ${mssql_oltp_platform_client_group.platform_client_group_id} ;;
+  }
+
+  join: mssql_oltp_timezone {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_campaign.timezone_id} = ${mssql_oltp_timezone.timezone_id} ;;
+  }
+
+  join: mssql_oltp_deal_status {
+    relationship: many_to_one
+    sql_on: ${mssql_oltp_deal_status.deal_status_id} = ${mssql_oltp_deal.deal_status_id} ;;
+  }
+
+  join: mssql_oltp_plan_deal_settings {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_plan_deal_settings.seller_plan_id} = ${mssql_oltp_pl_plan.pl_plan_id} ;;
+  }
+
+  join: mssql_oltp_internal_deal {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_internal_deal.campaign_id} and ${mssql_oltp_internal_deal.active} ;;
+  }
+
+  join: mssql_oltp_campaign_statistics_v3 {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_campaign_statistics_v3.campaign_id} ;;
+  }
+
+  join: mssql_oltp_localization_resource_13_5 {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_demo_composition_vendor.demo_universe_localization_map} = ${mssql_oltp_localization_resource_13_5.text_name}
+      and ${mssql_oltp_localization_resource_13_5.locale_id} = 9 and ${mssql_oltp_localization_resource_13_5.app_id} = 1 ;;
+  }
+
+  join: payment_order_entity {
+    relationship: one_to_many
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${payment_order_entity.entity_id} and ${payment_order_entity.entity_type_id} = 2 ;;
+  }
+
+  join: payment_order {
+    relationship: many_to_one
+    sql_on: ${payment_order_entity.payment_order_id} = ${payment_order.payment_order_id} ;;
+  }
+
+  join: payment_order_status {
+    relationship: many_to_one
+    sql_on: ${payment_order.status_id} = ${payment_order_status.payment_order_status_id} ;;
+  }
+
+  join: payment_gateway {
+    relationship: many_to_one
+    sql_on: ${payment_order.payment_gateway_id} = ${payment_gateway.payment_gateway_id} ;;
+  }
+
+  join: payment_order_adjustment {
+    relationship: one_to_many
+    sql_on: ${payment_order.payment_order_id} = ${payment_order_adjustment.payment_order_id} ;;
+  }
+
+  join: payment_adjustment_type {
+    relationship: many_to_one
+    sql_on: ${payment_order_adjustment.payment_adjustment_type_id} = ${payment_adjustment_type.payment_adjustment_type_id} ;;
+  }
+
+  join: discount_code {
+    relationship: many_to_one
+    sql_on: ${payment_order.discount_code_id} = ${discount_code.discount_code_id} ;;
+  }
+
+  join: payment_order_user {
+    from: mssql_oltp_user
+    view_label: "Payment Order User"
+    relationship: many_to_one
+    sql_on: ${payment_order.createdby} = ${payment_order_user.user_id} ;;
+  }
+
+  join: mssql_oltp_currency {
+    view_label: "Payment Order"
+    relationship: many_to_one
+    sql_on: ${payment_order.currency_id} = ${mssql_oltp_currency.currency_id} ;;
+  }
+
+  join: mssql_oltp_campaign_report {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_campaign.campaign_id} = ${mssql_oltp_campaign_report.campaign_id} ;;
+  }
+}
+
 explore: mssql_oltp_suggest_demand_ref {
 
   access_filter: {

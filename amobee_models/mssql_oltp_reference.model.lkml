@@ -1525,6 +1525,11 @@ explore: campaign_reference {
     sql_on: ${mssql_oltp_expression.expression_value_id} = ${mssql_oltp_expression_document.expression_document_id} ;;
   }
 
+  join: mssql_oltp_expression_document_plain_bda {
+    relationship: one_to_one
+    sql_on: ${mssql_oltp_expression_document_plain_bda.expression_document_id} = ${mssql_oltp_expression.expression_value_id} ;;
+  }
+
   join: mssql_oltp_expression_document_plain {
     relationship: one_to_many
     sql_on: ${mssql_oltp_expression_document.expression_document_id} = ${mssql_oltp_expression_document_plain.expression_document_id} ;;

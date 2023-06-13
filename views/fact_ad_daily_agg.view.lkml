@@ -525,7 +525,7 @@ view: fact_ad_daily_agg {
       <table>
       <tr>
         <th><div style="text-align: left; margin:72px 72px;">
-      <img style="width:400px" src="https://www.tremorinternational.com/wp-content/uploads/2022/01/Ti_logo_black-fitted.svg">
+      <img style="width:400px" src="https://tremor.cloud.looker.com/api/internal/homepage_items/248/image">
       </div></th>
         <th><div style ="vertical-align: bottom;padding-top:50px;text-align:right;">| Business Intelligence Platform</div></th>
       </tr>

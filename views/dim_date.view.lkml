@@ -17,6 +17,12 @@ view: dim_date {
     sql: ${TABLE}.Date_Key ;;
   }
 
+  dimension: month_year {
+
+    type: string
+    sql: month(${TABLE}.Date_Key);;
+  }
+
 
 
   dimension: is_before_mtd {
@@ -135,7 +141,7 @@ view: dim_date {
   }
 
   dimension: month_number {
-    type: number
+    type: string
     sql: ${TABLE}.Month_Number ;;
   }
 

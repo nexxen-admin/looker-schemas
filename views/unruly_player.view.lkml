@@ -2,7 +2,7 @@
 view: unruly_player_demands {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_New.Unruly_Player_Demands ;;
+  sql_table_name: BI_New.Unruly_Player_Demands_Old ;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
 

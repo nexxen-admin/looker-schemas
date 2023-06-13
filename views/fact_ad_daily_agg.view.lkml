@@ -1006,6 +1006,7 @@ view: fact_ad_daily_agg {
     type: sum
     label: "PAD Amount"
     group_label: "Daily Measures"
+    value_format: "$#,##0.00"
     sql: ${TABLE}.sum_of_pad_amount ;;
   }
 

@@ -2,7 +2,7 @@
 view: unruly_player_demands {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_New.Unruly_Player_Demands_Old ;;
+  sql_table_name: BI_New.Unruly_Player_Demands ;;
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
 
@@ -67,13 +67,13 @@ view: unruly_player_demands {
 
   measure: av_mp_net {
     type: sum
-    sql: ${TABLE}."AV MP Net" ;;
+    sql: ${TABLE}.AV_MP_Net ;;
     value_format: "#,##0"
   }
 
   measure: av_mp_total_rev {
     type: sum
-    sql: ${TABLE}."AV MP Total Rev" ;;
+    sql: ${TABLE}.AV_MP_Total_Rev ;;
     value_format: "#,##0"
   }
 
@@ -134,19 +134,19 @@ view: unruly_player_demands {
 
   measure: player_total_rev {
     type: sum
-    sql: ${TABLE}."Player Total Rev" ;;
+    sql: ${TABLE}.Player_Total_Rev ;;
     value_format: "#,##0"
   }
 
   measure: pub_mp_net {
     type: sum
-    sql: ${TABLE}."Pub MP Net" ;;
+    sql: ${TABLE}.Pub_MP_Net ;;
     value_format: "#,##0"
   }
 
   measure: pub_mp_total_rev {
     type: sum
-    sql: ${TABLE}."Pub MP Total Rev" ;;
+    sql: ${TABLE}.Pub_MP_Total_Rev ;;
     value_format: "#,##0"
   }
   measure: requests {
@@ -241,20 +241,20 @@ view: unruly_player_demands {
 
   measure: MyCast_20 {
     type: sum
-    sql: ${TABLE}."MyCast 20%" ;;
+    sql: ${TABLE}.MyCast_20_precent ;;
     value_format: "#,##0"
   }
 
   measure: Widgets_AI {
     type: sum
-    sql: ${TABLE}."Widgets AI" ;;
+    sql: ${TABLE}.Widgets_AI ;;
     value_format: "#,##0"
   }
 
   measure: Wiseroll_LTD_Yeda {
     label:"Wiseroll LTD + Yeda"
     type: sum
-    sql: ${TABLE}."Wiseroll LTD + Yeda" ;;
+    sql: ${TABLE}.Wiseroll_LTD_Yeda ;;
     value_format: "#,##0"
   }
 

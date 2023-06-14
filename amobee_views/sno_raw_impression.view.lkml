@@ -1146,7 +1146,7 @@ measure: sum_demand_revenue {
   dimension: epoch {
     type: number
     hidden: yes
-    sql: ${TABLE}.EPOCH ;;
+    sql: ${TABLE}.EPOCH_NUMBER ;;
   }
 
 

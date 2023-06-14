@@ -1,6 +1,6 @@
 view: flight_media_details_base {
   label: "Flight Media"
-  sql_table_name: DIM.FLIGHT_MEDIA_DETAILS_BASE ;;
+  sql_table_name: DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW ;;
 
   dimension: agency_fee {
     type:number

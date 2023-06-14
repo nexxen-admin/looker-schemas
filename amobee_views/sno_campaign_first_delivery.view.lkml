@@ -6,9 +6,9 @@ view: campaign_first_delivery {
         cd.campaign_id,
         min(ri.keydate) AS first_delivery_date,
         max(ri.keydate) AS last_delivery_date
-      FROM dim.campaign_details_base AS cd
+      FROM dim.campaign_details_base_view AS cd
       JOIN rawdb.raw_impression AS ri ON cd.campaign_id = ri.campaign_id
-      GROUP BY cd.campaign_id );;
+      GROUP BY cd.campaign_id ) AS cfd;;
   }
 
   dimension: first_delivery_date {

@@ -1,4 +1,4 @@
-connection: "snowflake"
+connection: "amobee_prod"
 label: "Delivery"
 # include all the views
 include: "/**/*.view.lkml"

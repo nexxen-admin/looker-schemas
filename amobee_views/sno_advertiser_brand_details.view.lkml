@@ -1,6 +1,6 @@
 view: advertiser_brand_details {
   label: "Brand"
-  sql_table_name: DIM.ADVERTISER_BRAND_DETAILS ;;
+  sql_table_name: DIM.ADVERTISER_BRAND_DETAILS_VIEW ;;
 
   dimension: advertiser_brand_id {
     type: number

@@ -1,5 +1,5 @@
 view: platform_client {
-  sql_table_name: DIM.PLATFORM_CLIENT ;;
+  sql_table_name: DIM.PLATFORM_CLIENT_VIEW ;;
   view_label: "Demand Platform Client"
 
   dimension: platform_client_id {

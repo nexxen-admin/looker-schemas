@@ -1986,7 +1986,7 @@ view: fact_ad_daily_agg {
 
   dimension: qtd_start_date {
     type: date
-    sql: date_trunc('quarter', ${current_date_range};;
+    sql: date_trunc('quarter', ${current_date_range});;
   }
 
   dimension: qtd_start {

@@ -1969,6 +1969,36 @@ view: fact_ad_daily_agg {
     allowed_value: {label:"monthly" value: "month_name"}
   }
 
+  # parameter: start_date {
+  #   type: date
+  #   label: "Start Date"
+  # }
+
+  # parameter: end_date {
+  #   type: date
+  #   label: "End Date"
+  # }
+
+  parameter: chosen_date {
+    type: date
+    label: "Chosen Date"
+  }
+
+  dimension: qtd_start_date {
+    type: date
+    sql: date_trunc('quarter', ${current_date_range};;
+  }
+
+  dimension: qtd_start {
+    type: date
+    sql: ${TABLE}.qtd_start_date ;;
+  }
+
+  dimension: qtd_end {
+    type: date
+    sql: dateadd('day', -1, ${current_date_range}) ;;
+  }
+
 ## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##
   dimension: sort_by1 {
     hidden: yes

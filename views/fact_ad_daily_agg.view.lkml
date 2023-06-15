@@ -1986,7 +1986,7 @@ view: fact_ad_daily_agg {
 
   dimension: qtd_start_date {
     type: date
-    sql: date_trunc('quarter', ${current_date_range});;
+    sql: date_trunc('quarter', ${chosen_date});;
   }
 
   dimension: qtd_start {
@@ -1996,7 +1996,7 @@ view: fact_ad_daily_agg {
 
   dimension: qtd_end {
     type: date
-    sql: date_trunc('day', ${current_date_range});;#dateadd('day', -1, ${current_date_range}) ;;
+    sql: date_trunc('day', ${chosen_date});;#dateadd('day', -1, ${current_date_range}) ;;
   }
 
 ## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##

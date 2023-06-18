@@ -1986,10 +1986,10 @@ view: fact_ad_daily_agg {
   #   end_date: yes
   # }
 
-  # dimension: qtd_start_date {
-  #   type: date
-  #   sql: date_trunc('quarter', ${chosen_date});;
-  # }
+   dimension: qtd_start_date {
+     type: date
+     sql: date_trunc('quarter', ${current_date_range});;
+   }
 
   dimension: qtd_start {
     type: date

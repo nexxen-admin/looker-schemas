@@ -245,7 +245,7 @@ view: dim_date {
   }
 
   dimension: qtd_start {
-    type: date
+    type: string
     sql:  case when ${date_key_quarter} like 'Q1%' then '1'
           else null end;;
     #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;

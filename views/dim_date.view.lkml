@@ -215,8 +215,16 @@ view: dim_date {
     view_label: "Measures"
     label: "Chosen Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
-    sql: ${date_key_raw} IS NOT NULL ;;
+    sql: ${date_key_raw} between  ;;
   }
+
+
+  filter: quarter_filter {
+    type: date
+    view_label: "Measures"
+    sql: (case when ${date_key_raw} between '2023-01-01' and '2023-03-31' then "Q1")= ;;
+  }
+
 
   dimension: dynamic_sum {
     type: date
@@ -238,7 +246,7 @@ view: dim_date {
 
   dimension: qtd_start {
     type: date
-    sql: {% date_start ${current_date_range} %} ;;
+    sql: where {% ${date_key_quarter} %} like "Q1%";;
     #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
   }
 

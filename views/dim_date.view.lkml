@@ -229,7 +229,7 @@ view: dim_date {
 
   dimension: qtd_start {
     type: date
-    sql: {% date_start ${chosen_date} %} ;;
+    sql: {% date_start date_key_raw %} ;;
     #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
   }
 

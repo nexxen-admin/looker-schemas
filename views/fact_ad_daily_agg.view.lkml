@@ -1993,12 +1993,14 @@ view: fact_ad_daily_agg {
 
   dimension: qtd_start {
     type: date
-    sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
+    sql: {% date_start current_date_range %} ;;
+    #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
   }
 
   dimension: qtd_end {
     type: date
-    sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_end current_date_range %} | date_trunc: 'quarter' | dateadd: -1, 'day' | date_trunc: 'quarter' | dateadd: 3, 'month' }}{% endif %} ;;
+    sql: {% date_start current_date_range %} ;;
+    #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_end current_date_range %} | date_trunc: 'quarter' | dateadd: -1, 'day' | date_trunc: 'quarter' | dateadd: 3, 'month' }}{% endif %} ;;
   }
 
 ## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##

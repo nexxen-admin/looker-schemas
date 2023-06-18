@@ -195,6 +195,15 @@ view: dim_date {
            ELSE 'Other' END ;;
 }
 
+  filter: current_date_range {
+    type: date
+    view_label: "PoP"
+    label: "Current Date Range"
+    description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
+    sql: ${date_key_raw} IS NOT NULL ;;
+
+
+  }
   parameter: chosen_date {
     type: date
     label: "Chosen Date"
@@ -229,13 +238,13 @@ view: dim_date {
 
   dimension: qtd_start {
     type: date
-    sql: {% date_start date_key_raw %} ;;
+    sql: {% date_start ${current_date_range} %} ;;
     #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
   }
 
   dimension: qtd_end {
     type: date
-    sql: timestampadd(DAY,-1,{% date_end ${date_key_raw} %}) ;;
+    sql: timestampadd(DAY,-1,{% date_end ${chosen_date_range} %}) ;;
     #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_end current_date_range %} | date_trunc: 'quarter' | dateadd: -1, 'day' | date_trunc: 'quarter' | dateadd: 3, 'month' }}{% endif %} ;;
   }
 

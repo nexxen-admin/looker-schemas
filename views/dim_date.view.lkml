@@ -195,14 +195,24 @@ view: dim_date {
            ELSE 'Other' END ;;
 }
 
-  dimension: chosen_date_range {
+  parameter: chosen_date {
+    type: date
+    label: "Chosen Date"
+  }
+
+  filter: chosen_date_range {
     type: date
     view_label: "Measures"
     label: "Chosen Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
     sql: ${date_key_raw} IS NOT NULL ;;
+  }
 
-
+  dimension: quarter_start {
+    type: date
+    sql: ${date_key_raw} ;;
+    sql_start: date_trunc('quarter', {{ _view.chosen_date.start._value }})
+    ;;
   }
 
   dimension: qtd_start_date {

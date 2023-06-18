@@ -198,6 +198,7 @@ view: dim_date {
   parameter: chosen_date {
     type: date
     label: "Chosen Date"
+
   }
 
   filter: chosen_date_range {
@@ -206,6 +207,12 @@ view: dim_date {
     label: "Chosen Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
     sql: ${date_key_raw} IS NOT NULL ;;
+  }
+
+  dimension: dynamic_sum {
+    type: date
+    sql: ${TABLE}.{% parameter ${chosen_date} %} ;;
+    value_format_name: "usd"
   }
 
   dimension: quarter_start {
@@ -222,7 +229,7 @@ view: dim_date {
 
   dimension: qtd_start {
     type: date
-    sql: {% date_start ${date_key_raw} %} ;;
+    sql: {% date_start ${chosen_date} %} ;;
     #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
   }
 

@@ -1979,29 +1979,32 @@ view: fact_ad_daily_agg {
   #   label: "End Date"
   # }
 
-  # parameter: chosen_date_range {
+  # filter: chosen_date_range {
   #   type: date
+  #   view_label: "Measures"
   #   label: "Chosen Date Range"
-  #   start_date: yes
-  #   end_date: yes
+  #   description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
+  #   sql: ${period} IS NOT NULL ;;
+
+
   # }
 
-   dimension: qtd_start_date {
-     type: date
-     sql: date_trunc('quarter', ${current_date_range});;
-   }
+  # dimension: qtd_start_date {
+  #   type: date
+  #   sql: date_trunc('quarter', ${chosen_date_range});;
+  # }
 
-  dimension: qtd_start {
-    type: date
-    sql: {% date_start current_date_range %} ;;
-    #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
-  }
+  # dimension: qtd_start {
+  #   type: date
+  #   sql: {% date_start chosen_date_range %} ;;
+  #   #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
+  # }
 
-  dimension: qtd_end {
-    type: date
-    sql: timestampadd(DAY,-1,{% date_end current_date_range %}) ;;
-    #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_end current_date_range %} | date_trunc: 'quarter' | dateadd: -1, 'day' | date_trunc: 'quarter' | dateadd: 3, 'month' }}{% endif %} ;;
-  }
+  # dimension: qtd_end {
+  #   type: date
+  #   sql: timestampadd(DAY,-1,{% date_end current_date_range %}) ;;
+  #   #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_end current_date_range %} | date_trunc: 'quarter' | dateadd: -1, 'day' | date_trunc: 'quarter' | dateadd: 3, 'month' }}{% endif %} ;;
+  # }
 
 ## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##
   dimension: sort_by1 {

@@ -1999,7 +1999,7 @@ view: fact_ad_daily_agg {
 
   dimension: qtd_end {
     type: date
-    sql: {% date_end current_date_range %} ;;
+    sql: {% date_end current_date_range -1 %} ;;
     #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_end current_date_range %} | date_trunc: 'quarter' | dateadd: -1, 'day' | date_trunc: 'quarter' | dateadd: 3, 'month' }}{% endif %} ;;
   }
 

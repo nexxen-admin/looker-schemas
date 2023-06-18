@@ -195,7 +195,7 @@ view: dim_date {
            ELSE 'Other' END ;;
 }
 
-  filter: chosen_date_range {
+  dimension: chosen_date_range {
     type: date
     view_label: "Measures"
     label: "Chosen Date Range"

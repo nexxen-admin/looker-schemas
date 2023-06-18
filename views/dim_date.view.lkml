@@ -222,7 +222,7 @@ view: dim_date {
   filter: quarter_filter {
     type: date
     view_label: "Measures"
-    sql: (case when ${date_key_raw} between '2023-01-01' and '2023-03-31' then "Q1")= ;;
+    sql: (case when ${date_key_raw} between '2023-01-01' and '2023-03-31' then 'Q1')= ;;
   }
 
 
@@ -246,7 +246,7 @@ view: dim_date {
 
   dimension: qtd_start {
     type: date
-    sql:  ${date_key_quarter} like "Q1%";;
+    sql:  ${date_key_quarter} like 'Q1%';;
     #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
   }
 

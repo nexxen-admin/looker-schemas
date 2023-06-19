@@ -2,8 +2,8 @@ view: monthly_device_count_60_days_segments {
   derived_table: {
     sql: SELECT
   COUNT(DISTINCT CASE WHEN viewing_start_utc >= CURRENT_DATE - INTERVAL '1 MONTH' THEN device_id END) AS users_1_month,
-  COUNT(DISTINCT CASE WHEN viewing_start_utc >= CURRENT_DATE - INTERVAL '2 MONTH' THEN device_id END) AS users_2_months,
-  COUNT(DISTINCT CASE WHEN viewing_start_utc >= CURRENT_DATE - INTERVAL '3 MONTH' THEN device_id END) AS users_3_months
+  COUNT(DISTINCT CASE WHEN viewing_start_utc >= CURRENT_DATE - INTERVAL '2 MONTH' THEN device_id END) AS users_2_month,
+  COUNT(DISTINCT CASE WHEN viewing_start_utc >= CURRENT_DATE - INTERVAL '3 MONTH' THEN device_id END) AS users_3_month
 FROM dragon.viewership_content_sessions_combined_daily AA
 
  ;;

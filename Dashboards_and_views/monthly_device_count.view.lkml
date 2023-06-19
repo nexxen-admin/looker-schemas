@@ -33,6 +33,11 @@ ORDER BY 1 DESC
     sql: ${TABLE}.date_segment ;;
   }
 
+  dimension: date_segment_2_month {
+    type: string
+    sql: ${TABLE}.date_segment_2_month ;;
+  }
+
   measure: count_devices {
     type: average
     sql: ${TABLE}.count_devices ;;

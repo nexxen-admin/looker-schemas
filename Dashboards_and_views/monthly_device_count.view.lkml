@@ -7,6 +7,15 @@ view: monthly_device_count {
                              WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP, -3) THEN 'between_90_to_120_days'
                              ELSE null
                              END AS date_segment,
+       CASE  WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -2) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN 'between_0_to_60_days'
+                             ELSE null
+                             END AS date_segment_2_month,
+       CASE  WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN 'between_0_to_90_days'
+                             ELSE null
+                             END AS date_segment_3_month,
+       CASE  WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN 'between_0_to_120_days'
+                             ELSE null
+                             END AS date_segment_4_month,
        COUNT(DISTINCT AA.device_id) as count_devices
 FROM dragon.viewership_content_sessions_combined_daily AA
 GROUP BY 1

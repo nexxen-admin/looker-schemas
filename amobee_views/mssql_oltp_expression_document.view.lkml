@@ -10,7 +10,8 @@ view: mssql_oltp_expression_document {
 
   dimension: expression {
     type: string
-    hidden: yes
+    view_label: "Campaign"
+    label: "Buy Demo Audience"
     sql: ${TABLE}.expression ;;
   }
 

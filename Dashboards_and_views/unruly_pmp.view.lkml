@@ -163,7 +163,7 @@ view: unruly_pmp {
   measure: total_revenue {
     type: sum
     value_format: "$#,##0.00"
-    sql: ${TABLE}.Total_Revenue ;;
+    sql: ${TABLE}.Total_revenue ;;
   }
 
   dimension: un_opportunity {

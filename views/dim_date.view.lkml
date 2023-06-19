@@ -17,6 +17,12 @@ view: dim_date {
     sql: ${TABLE}.Date_Key ;;
   }
 
+  dimension: month_year {
+
+    type: string
+    sql: month(${TABLE}.Date_Key);;
+  }
+
 
 
   dimension: is_before_mtd {
@@ -42,11 +48,20 @@ view: dim_date {
     sql: DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) < DATE_PART('YEAR', CURRENT_TIMESTAMP) ;;
 
   }
-  dimension: is_before_qtd {
+  #dimension: is_before_qtd {
 
-    type: number
-    sql: case when month(${date_key_raw}) = month(current_date-1) then ${month_number_in_quarter} end;;
+   # type: number
+    #sql: case when month(${date_key_raw}) = month(current_date-1) then ${month_number_in_quarter} end;;
   # hidden: yes
+  #}
+
+  dimension: is_before_qtd {
+    description: "should be used when comparing year to year while including the current not complited year -
+    in this case the - Is Before Qtd,
+    will filter the other years on exact quarters of the not complited year."
+    type: yesno
+    sql: DATE_PART('QUARTER', ${date_key_raw}::TIMESTAMP) < DATE_PART('QUARTER', CURRENT_TIMESTAMP) ;;
+
   }
 
   dimension: current_month_number_in_quarter{
@@ -126,7 +141,7 @@ view: dim_date {
   }
 
   dimension: month_number {
-    type: number
+    type: string
     sql: ${TABLE}.Month_Number ;;
   }
 
@@ -179,4 +194,66 @@ view: dim_date {
            WHEN ${TABLE}.Date_Key >= current_date()-7 and ${TABLE}.Date_Key < current_date() THEN 'Last Week'
            ELSE 'Other' END ;;
 }
+
+  filter: current_date_range {
+    type: date
+    view_label: "PoP"
+    label: "Current Date Range"
+    description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
+    sql: ${date_key_raw} IS NOT NULL ;;
+
+
+  }
+  parameter: chosen_date {
+    type: date
+    label: "Chosen Date"
+
+  }
+
+  filter: chosen_date_range {
+    type: date
+    view_label: "Measures"
+    label: "Chosen Date Range"
+    description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
+    sql: ${date_key_raw} between  ;;
+  }
+
+
+  filter: quarter_filter {
+    type: date
+    view_label: "Measures"
+    sql: (case when ${date_key_raw} between '2023-01-01' and '2023-03-31' then 'Q1')= ;;
+  }
+
+
+  dimension: dynamic_sum {
+    type: date
+    sql: ${TABLE}.{% parameter ${chosen_date} %} ;;
+    value_format_name: "usd"
+  }
+
+  dimension: quarter_start {
+    type: date
+    sql: ${date_key_raw} ;;
+    sql_start: date_trunc('quarter', {{ _view.chosen_date.start._value }})
+    ;;
+  }
+
+  dimension: qtd_start_date {
+    type: date
+    sql: date_trunc('quarter', ${chosen_date_range});;
+  }
+
+  dimension: qtd_start {
+    type: string
+    sql:  case when ${date_key_quarter} like '%Q1' then '1'
+          else null end;;
+    #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
+  }
+
+  dimension: qtd_end {
+    type: date
+    sql: timestampadd(DAY, -1, {% date_end ${chosen_date_range.field} %}) ;;
+  }
+
 }

@@ -14,7 +14,7 @@ view: mssql_oltp_user_data_vendor {
     type: string
     view_label: "Campaign"
     label: "Data Provider Name"
-    description: "Data Provider whose data is selected for targeting in the campaign."
+    description: "{% if _explore._name == 'campaign_reference' %}Data Provider whose data is selected for targeting in the campaign, for advanced targeting.{% else %}Data Provider whose data is selected for targeting in the campaign.{% endif %}"
     sql:  COALESCE(${TABLE}.description, '') ;;
   }
 

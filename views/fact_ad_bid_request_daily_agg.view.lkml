@@ -203,6 +203,15 @@ view: fact_ad_bid_request_daily_agg {
     sql:  ${TABLE}.sum_of_ias_viewable_impression_from_ad_data ;;
   }
 
+  measure:: ias_viewability {
+    type: number
+    description: "Analyses the video views amount"
+    value_format: "0.00\%"
+    label: "IAS Viewability"
+    group_label: "Daily Measures"
+    sql: ${ias_viewable_impression}/NULLIF(${ias_measurable_impression},0);;
+  }
+
   measure: impression_pixel {
     type: sum
     label: "Impressions"
@@ -363,14 +372,7 @@ view: fact_ad_bid_request_daily_agg {
     #hidden: yes
   }
 
-  measure:: ias_viewability {
-    type: number
-    description: "Analyses the video views amount"
-    value_format: "0.00\%"
-    label: "IAS Viewability"
-    group_label: "Daily Measures"
-    sql: ${TABLE}.sum_of_ias_viewable_impression_from_ad_data/NULLIF(${TABLE}.sum_of_ias_measurable_impression_from_ad_data,0);;
-  }
+
 
 
 

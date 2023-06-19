@@ -14,18 +14,24 @@ FROM dragon.viewership_content_sessions_combined_daily AA
     drill_fields: [detail*]
   }
 
-  dimension: date_segment {
-    type: string
-    sql: ${TABLE}.date_segment ;;
+
+
+  measure: users_1_month {
+    type: average
+    sql: ${TABLE}.users_1_month ;;
   }
 
-
-  measure: count_devices {
+  measure: users_2_month {
     type: average
-    sql: ${TABLE}.count_devices ;;
+    sql: ${TABLE}.users_1_month ;;
+  }
+
+  measure: users_3_month {
+    type: average
+    sql: ${TABLE}.users_1_month ;;
   }
 
   set: detail {
-    fields: [date_segment, count_devices]
+    fields: [users_1_month, users_2_month, users_3_month]
   }
 }

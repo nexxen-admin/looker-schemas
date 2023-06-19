@@ -363,6 +363,15 @@ view: fact_ad_bid_request_daily_agg {
     #hidden: yes
   }
 
+  measure:: ias_viewability {
+    type: number
+    description: "Analyses the video views amount"
+    value_format: "0.00\%"
+    label: "IAS Viewability"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_ias_viewability_score/NULLIF(${TABLE}.sum_of_ias_viewability_score,0);;
+  }
+
 
 
   dimension: user_matched_key {

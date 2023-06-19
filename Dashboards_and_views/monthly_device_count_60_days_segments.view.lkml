@@ -3,7 +3,7 @@ view: monthly_device_count_60_days_segments {
     sql: SELECT
   COUNT(DISTINCT CASE WHEN viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -1) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN device_id END) AS between_0_to_30_days,
   COUNT(DISTINCT CASE WHEN viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -2) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN device_id END) AS between_0_to_60_days,
-  COUNT(DISTINCT CASE WHEN viewing_start_utc >= CURRENT_DATE - INTERVAL '3 MONTH' THEN device_id END) AS between_0_to_90_days
+  COUNT(DISTINCT CASE WHEN viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN device_id END) AS between_0_to_90_days
 FROM dragon.viewership_content_sessions_combined_daily AA
 
  ;;

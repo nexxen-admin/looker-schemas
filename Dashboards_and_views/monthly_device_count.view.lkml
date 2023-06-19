@@ -6,8 +6,8 @@ view: monthly_device_count {
                              WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP, -2) THEN 'between_60_to_90_days'
                              WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP, -3) THEN 'between_90_to_120_days'
                              ELSE null
-                             END AS date_segment
-       COUNT(DISTINCT AA.device_id) as count_devices,
+                             END AS date_segment,
+       COUNT(DISTINCT AA.device_id) as count_devices
 FROM dragon.viewership_content_sessions_combined_daily AA
 GROUP BY 1
 ORDER BY 1 DESC

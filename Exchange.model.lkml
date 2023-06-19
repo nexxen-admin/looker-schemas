@@ -1064,9 +1064,9 @@ explore: fact_ad_hourly_agg{
 
 
 explore: fact_ad_bid_request_daily_agg{
-  always_filter: {
-    filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
-  }
+  #always_filter: {
+   # filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
+  #}
 
 
 

@@ -23,12 +23,12 @@ FROM dragon.viewership_content_sessions_combined_daily AA
 
   measure: users_2_month {
     type: average
-    sql: ${TABLE}.users_1_month ;;
+    sql: ${TABLE}.users_2_month ;;
   }
 
   measure: users_3_month {
     type: average
-    sql: ${TABLE}.users_1_month ;;
+    sql: ${TABLE}.users_3_month ;;
   }
 
   set: detail {

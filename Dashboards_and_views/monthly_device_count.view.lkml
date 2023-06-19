@@ -24,6 +24,7 @@ ORDER BY 1 DESC
     sql: ${TABLE}.date_segment ;;
   }
 
+
   measure: count_devices {
     type: average
     sql: ${TABLE}.count_devices ;;

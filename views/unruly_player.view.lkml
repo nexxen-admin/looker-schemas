@@ -239,9 +239,9 @@ view: unruly_player_demands {
   }
 
 
-  measure: MyCast_20 {
+  measure: MyCast {
     type: sum
-    sql: ${TABLE}.MyCast_20_precent ;;
+    sql: ${TABLE}.MyCast ;;
     value_format: "#,##0"
   }
 

@@ -18,7 +18,7 @@ view: monthly_device_count {
                              END AS date_segment_4_month,
        COUNT(DISTINCT AA.device_id) as count_devices
 FROM dragon.viewership_content_sessions_combined_daily AA
-GROUP BY 1
+GROUP BY 1,2,3,4
 ORDER BY 1 DESC
  ;;
   }

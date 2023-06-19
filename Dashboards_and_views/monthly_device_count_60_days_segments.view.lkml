@@ -16,22 +16,22 @@ FROM dragon.viewership_content_sessions_combined_daily AA
 
 
 
-  measure: users_1_month {
+  measure: between_0_to_30_days {
     type: average
-    sql: ${TABLE}.users_1_month ;;
+    sql: ${TABLE}.between_0_to_30_days ;;
   }
 
-  measure: users_2_month {
+  measure: between_0_to_60_days {
     type: average
-    sql: ${TABLE}.users_2_month ;;
+    sql: ${TABLE}.between_0_to_60_days ;;
   }
 
-  measure: users_3_month {
+  measure: between_0_to_90_days {
     type: average
-    sql: ${TABLE}.users_3_month ;;
+    sql: ${TABLE}.between_0_to_90_days ;;
   }
 
   set: detail {
-    fields: [users_1_month, users_2_month, users_3_month]
+    fields: [between_0_to_30_days, between_0_to_60_days, between_0_to_90_days]
   }
 }

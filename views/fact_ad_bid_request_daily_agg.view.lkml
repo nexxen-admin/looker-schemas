@@ -369,7 +369,7 @@ view: fact_ad_bid_request_daily_agg {
     value_format: "0.00\%"
     label: "IAS Viewability"
     group_label: "Daily Measures"
-    sql: ${TABLE}.sum_of_ias_viewability_score/NULLIF(${TABLE}.sum_of_ias_viewability_score,0);;
+    sql: ${TABLE}.sum_of_ias_viewable_impression_from_ad_data/NULLIF(${TABLE}.sum_of_ias_measurable_impression_from_ad_data,0);;
   }
 
 

@@ -111,5 +111,5 @@ explore: monthly_device_count {
 explore: monthly_device_count_60_days_segments {
   label: "monthly device count 60 days segments"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }

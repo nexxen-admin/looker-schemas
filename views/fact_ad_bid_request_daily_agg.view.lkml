@@ -448,6 +448,15 @@ view: fact_ad_bid_request_daily_agg {
 
   }
 
+  measure: revenue_change_from_yesterday_pivot {
+    type: number
+    description: "Change in revenue from 2 days ago to yesterday"
+    value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: (${revenue} / pivot_offset(${revenue}, 1)) -1 ;;
+
+  }
+
   measure:  Last_day_Render_Rate {
     label: "Render Rate Last day "
     type: sum

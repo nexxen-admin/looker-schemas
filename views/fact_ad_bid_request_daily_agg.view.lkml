@@ -474,7 +474,7 @@ view: fact_ad_bid_request_daily_agg {
     description: "Change in Render Rate from 2 days ago to yesterday"
     value_format: "0.00%"
     group_label: "Time Shifted Measures"
-    sql: (${Last_day_Render_Rate}/${Previous_day_Render_Rate})-1 ;;
+    sql: (${Last_day_Render_Rate}/coalesce(${Previous_day_Render_Rate},0))-1 ;;
 
   }
 

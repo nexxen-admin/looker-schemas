@@ -448,6 +448,35 @@ view: fact_ad_bid_request_daily_agg {
 
   }
 
+  measure:  Last_day_Render_Rate {
+    label: "Render Rate Last day "
+    type: sum
+    description: "The last day Render Rate"
+    sql: ${TABLE}.sum_of_responses_from_ad_data/${TABLE}.sum_of_impression_pixel_from_ad_data ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure:  Previous_day_Render_Rate{
+    label: "Render Rate Previous day "
+    type: sum
+    description: "The Render Rate of 2 days ago"
+    sql: ${TABLE}.sum_of_responses_from_ad_data/${TABLE}.sum_of_impression_pixel_from_ad_data ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+  measure: render_rate_lastday_change {
+    type: number
+    description: "Change in Render Rate from 2 days ago to yesterday"
+    value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: (${Last_day_Render_Rate}/${Previous_day_Render_Rate})-1 ;;
+
+  }
 
 
   dimension: user_matched_key {

@@ -71,6 +71,7 @@ view: dim_deal {
   dimension: deal_demand_margin_pct {
     type: number
     sql: ${TABLE}.Deal_demand_margin_pct ;;
+    value_format: "0.00\%"
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average

@@ -372,7 +372,81 @@ view: fact_ad_bid_request_daily_agg {
     #hidden: yes
   }
 
+  measure: Change_Revenue{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Revenue Change Last Day"
+    description: "Change in the revenue from yesterday"
+    sql: ${revenue_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
 
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: revenue_lastday_change_parameter {
+    type: number
+    sql: coalesce((${Last_day_Revenue}-${Previous_day_Revenue})/ NULLIF(${Previous_day_Revenue},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+  measure:  Last_day_Revenue {
+    label: "Revenue Last day "
+    type: sum
+    description: "The last day revenue"
+    sql: ${TABLE}.sum_of_revenue_from_ad_data ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure:  Previous_day_Revenue {
+    label: "Revenue Previous day "
+    type: sum
+    description: "The revenue of 2 days ago"
+    sql: ${TABLE}.sum_of_revenue_from_ad_data ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+  measure: revenue_lastday_change {
+    type: number
+    description: "Change in revenue from 2 days ago to yesterday"
+    value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: (${Last_day_Revenue}/${Previous_day_Revenue})-1 ;;
+
+  }
 
 
 

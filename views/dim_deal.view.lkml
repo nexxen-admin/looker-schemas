@@ -77,15 +77,6 @@ view: dim_deal {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_deal_demand_margin_pct {
-    type: sum
-    sql: ${deal_demand_margin_pct} ;;
-  }
-
-  measure: average_deal_demand_margin_pct {
-    type: average
-    sql: ${deal_demand_margin_pct} ;;
-  }
 
   dimension: deal_end {
     type: date
@@ -190,6 +181,7 @@ view: dim_deal {
     type: number
     sql: ${TABLE}.Viewability_Target ;;
   }
+
 
   measure: count {
     type: count

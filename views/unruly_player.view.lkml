@@ -99,15 +99,7 @@ view: unruly_player_demands {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  # measure: total_cost {
-  #   type: sum
-  #   sql: ${cost} ;;
-  # }
 
-  # measure: average_cost {
-  #   type: average
-  #   sql: ${cost} ;;
-  # }
 
   dimension: data_base {
     type: string

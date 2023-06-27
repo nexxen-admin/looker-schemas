@@ -21,22 +21,22 @@ explore: unruly_player_demands {
   label: "Unruly Player Demands"
   required_access_grants: [can_view_all_tremor]
 
-  join: dim_publisher {
-      type: left_outer
-     # view_label: "Impression Attributes"
-      sql_on: ${unruly_player_demands.pub_id}=${dim_publisher.pub_id} ;;
-      relationship: many_to_one
-    }
+  # join: dim_publisher {
+  #     type: left_outer
+  #   # view_label: "Impression Attributes"
+  #     sql_on: ${unruly_player_demands.pub_id}=${dim_publisher.pub_id} ;;
+  #     relationship: many_to_one
+  #   }
 
   join: dim_employee {
     type: left_outer
-    sql_on: ${dim_employee.employee_key}=${dim_publisher.ops_owner_key} ;;
+    sql_on: ${dim_employee.employee_key}=${unruly_player_demands.employee_key} ;;
     relationship: many_to_one
   }
 
   join: dim_up_employee_targets {
     type: left_outer
-    sql_on: ${dim_employee.employee_key}=${dim_up_employee_targets.employee_key} and
+    sql_on: ${unruly_player_demands.employee_key}=${dim_up_employee_targets.employee_key} and
     ${unruly_player_demands.activity_month}=${dim_up_employee_targets.target_month};;
     relationship: many_to_one
   }

@@ -17,9 +17,15 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
+access_grant: can_view_aniview {
+  user_attribute: aniview
+  allowed_values: ["Aniview"]
+
+}
+
 explore: unruly_player_demands {
   label: "Unruly Player Demands"
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [can_view_aniview]
 
   # join: dim_publisher {
   #     type: left_outer

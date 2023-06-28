@@ -106,17 +106,6 @@ view: unruly_player_demands {
     sql: ${TABLE}."DataBase" ;;
   }
 
-  #measure: olv_impressions {
-    #type: sum
-    #sql: ${TABLE}.OLV_impressions ;;
-    #value_format: "#,##0"
-  #}
-
-  #measure: ia_impressions {
-   # type: sum
-    #sql: ${TABLE}.IA_impressions ;;
-    #value_format: "#,##0"
-  #}
 
   measure: inventory {
     type: sum

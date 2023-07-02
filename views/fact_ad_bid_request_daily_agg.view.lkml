@@ -230,6 +230,15 @@ view: fact_ad_bid_request_daily_agg {
     sql: ${TABLE}.sum_of_impression_win_from_ad_data ;;
   }
 
+  measure: Pub_eCPM {
+    type: number
+    label: "Pub eCPM"
+    description: "Cogs/Impressions"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
+  }
+
   dimension: sum_of_media_requests_from_bidrequest {
     type: number
     sql: ${TABLE}.sum_of_media_requests_from_bidrequest ;;
@@ -406,6 +415,29 @@ view: fact_ad_bid_request_daily_agg {
 
       ;;
   }
+
+  parameter: choose_filter {
+    type: unquoted
+    allowed_value: {
+      label: "Revenue"
+      value: "revenue"
+    }
+    allowed_value: {
+      label: "Positive Change"
+      value: "cogs"
+    }
+
+  }
+
+  measure: dynamic_sum {
+    type: sum
+    sql: ${TABLE}.sum_of_{% parameter choose_filter %}_from_ad_data ;;
+    value_format_name: "usd"
+  }
+
+  # measure: calculation_filter {
+  #   sql: {% if choose_filter._parameter_value == 'revenue' %} ;;
+  # }
 
   measure: revenue_lastday_change_parameter {
     type: number

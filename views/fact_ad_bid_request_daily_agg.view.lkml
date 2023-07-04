@@ -867,22 +867,22 @@ view: fact_ad_bid_request_daily_agg {
 
   measure:  Last_day_CPM {
     label: "CPM Last day "
-    type: sum
+    type: number
     description: "The CPM of the last day"
-    sql: (${TABLE}.sum_of_cogs_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0))*1000 ;;
+    sql: (${Last_day_cogs}/NULLIF(${Last_day_impressions},0)) ;;
     group_label: "Time Shifted Measures"
     value_format: "0.00%"
-    filters: [date_key_date: "last 1 day ago for 1 day"]
+    #filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
   measure:  Previous_day_CPM {
     label: "CPM Previous day "
-    type: sum
+    type: number
     description: "The CPM of 2 days ago"
-    sql: (${TABLE}.sum_of_cogs_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0))*1000 ;;
+    sql: (${Previous_day_cogs}/NULLIF(${Previous_day_impressions},0)) ;;
     value_format: "0.00%"
     group_label: "Time Shifted Measures"
-    filters: [date_key_date: "2 days ago"]
+    #filters: [date_key_date: "2 days ago"]
   }
 
 
@@ -902,7 +902,7 @@ view: fact_ad_bid_request_daily_agg {
     description: "The responses of 2 days ago"
     value_format: "#,##0"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.dim_of_responses_from_ad_data  ;;
+    sql: ${TABLE}.sum_of_responses_from_ad_data  ;;
     filters: [date_key_date: "2 days ago"]
 
   }
@@ -959,13 +959,13 @@ view: fact_ad_bid_request_daily_agg {
   }
 
   measure: Last_day_VCR {
-    type: sum
+    type: number
     description: "The VCR of the last day"
     label: "VCR Last day"
-    #value_format: "0.00%"
+    value_format: "0.00%"
     group_label: "Time Shifted Measures"
-    sql: (${TABLE}.sum_of_video_completes_from_ad_data/NULLIF(${TABLE}.sum_of_video_starts_from_ad_data,0))*100 ;;
-    filters: [date_key_date: "last 1 day ago for 1 day"]
+    sql: (${Last_day_video_completes}/NULLIF(${Last_day_video_starts},0)) ;;
+    #filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
   measure: Last_day_video_completes {
@@ -989,23 +989,43 @@ view: fact_ad_bid_request_daily_agg {
   }
 
   measure: Last_day_CTR {
-    type: sum
+    type: number
     description: "The CTR of the last day"
     label: "CTR Last day"
     value_format: "0.00%"
     group_label: "Time Shifted Measures"
-    sql: (${TABLE}.sum_of_click_count_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0))*100 ;;
+    sql: (${Last_day_click_count}/NULLIF(${Last_day_impressions},0)) ;;
+    #filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure: Last_day_click_count{
+    type: sum
+    description: "The click count of the last day"
+    label: "click count Last day"
+    #value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_click_count_from_ad_data ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
-  measure: previous_day_VCR {
+  measure: previous_day_click_count {
     type: sum
+    label: "click count Previous day"
+    description: "The click count of 2 days ago"
+    #value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_click_count_from_ad_data  ;;
+    filters: [date_key_date: "2 days ago"]
+  }
+
+  measure: previous_day_VCR {
+    type: number
     label: "VCR Previous day"
     description: "The VCR of 2 days ago"
     value_format: "0.00%"
     group_label: "Time Shifted Measures"
-    sql: (${TABLE}.sum_of_video_completes_from_ad_data/NULLIF(${TABLE}.sum_of_video_starts_from_ad_data,0))*100  ;;
-    filters: [date_key_date: "2 days ago"]
+    sql: (${previous_day_video_completes}/NULLIF(${previous_day_video_starts},0))  ;;
+    #filters: [date_key_date: "2 days ago"]
   }
 
   measure: previous_day_video_completes {
@@ -1029,13 +1049,13 @@ view: fact_ad_bid_request_daily_agg {
   }
 
   measure: previous_day_CTR {
-    type: sum
+    type: number
     label: "CTR Previous day"
     description: "The CTR of 2 days ago"
     value_format: "0.00%"
     group_label: "Time Shifted Measures"
-    sql: (${TABLE}.sum_of_click_count_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0))*100  ;;
-    filters: [date_key_date: "2 days ago"]
+    sql: (${previous_day_click_count}/NULLIF(${Previous_day_impressions},0))  ;;
+    #filters: [date_key_date: "2 days ago"]
 
   }
 
@@ -1129,22 +1149,22 @@ view: fact_ad_bid_request_daily_agg {
 
   measure:  Last_day_Render_Rate {
     label: "Render Rate Last day "
-    type: sum
+    type: number
     description: "The last day Render Rate"
-    sql: ${TABLE}.sum_of_responses_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0) ;;
+    sql: ${Last_day_impressions}/NULLIF(${Last_day_bids},0) ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
-    filters: [date_key_date: "last 1 day ago for 1 day"]
+    value_format: "0.00%"
+    #filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
   measure:  Previous_day_Render_Rate{
     label: "Render Rate Previous day "
-    type: sum
+    type: number
     description: "The Render Rate of 2 days ago"
-    sql: ${TABLE}.sum_of_responses_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0) ;;
+    sql: ${Previous_day_impressions}/NULLIF(${previous_day_responses},0) ;;
     group_label: "Time Shifted Measures"
-    value_format: "$#,##0.00"
-    filters: [date_key_date: "2 days ago"]
+    value_format: "0.00%"
+    #filters: [date_key_date: "2 days ago"]
 
   }
 

@@ -1006,7 +1006,26 @@ view: fact_ad_bid_request_daily_agg {
     group_label: "Time Shifted Measures"
     sql: (${TABLE}.sum_of_video_completes_from_ad_data/NULLIF(${TABLE}.sum_of_video_starts_from_ad_data,0))*100  ;;
     filters: [date_key_date: "2 days ago"]
+  }
 
+  measure: previous_day_video_completes {
+    type: sum
+    label: "video completes Previous day"
+    description: "The video completes of 2 days ago"
+    #value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_video_completes_from_ad_data  ;;
+    filters: [date_key_date: "2 days ago"]
+  }
+
+  measure: previous_day_video_starts{
+    type: sum
+    label: "video starts Previous day"
+    description: "The video starts of 2 days ago"
+    #value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_video_starts_from_ad_data  ;;
+    filters: [date_key_date: "2 days ago"]
   }
 
   measure: previous_day_CTR {

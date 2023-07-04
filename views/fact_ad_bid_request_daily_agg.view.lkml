@@ -334,7 +334,7 @@ view: fact_ad_bid_request_daily_agg {
   }
   measure:CTR {
     type: number
-    label: "VTR"
+    label: "CTR"
     value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: (${click_count}/NULLIF(${impression_pixel},0))*100;;
@@ -416,6 +416,619 @@ view: fact_ad_bid_request_daily_agg {
       ;;
   }
 
+  measure: Change_Impressions{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Impressinos Change Last Day"
+    description: "Change in the impressions from yesterday"
+    sql: ${impressions_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: Change_Bids{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Bids Change Last Day"
+    description: "Change in the bids from yesterday"
+    sql: ${responses_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: Change_Clicks{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Clicks Change Last Day"
+    description: "Change in the clicks from yesterday"
+    sql: ${clicks_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: Change_VCR{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "VCR Change Last Day"
+    description: "Change in the VCR from yesterday"
+    sql: ${VCR_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: Change_Cogs{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Cogs Change Last Day"
+    description: "Change in the cogs from yesterday"
+    sql: ${cogs_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: Change_CPM{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "CPM Change Last Day"
+    description: "Change in the CPM from yesterday"
+    sql: ${CPM_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: Change_Net_Revenue{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Net Revenue Change Last Day"
+    description: "Change in the net revenue from yesterday"
+    sql: ${Net_Revenue_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: Change_Render_Rate{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Render Rate Change Last Day"
+    description: "Change in the render rate from yesterday"
+    sql: ${Render_Rate_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: Change_CTR{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "CTR Change Last Day"
+    description: "Change in the CTR from yesterday"
+    sql: ${CTR_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+  measure: impressions_lastday_change_parameter {
+    type: number
+    sql: coalesce((${Last_day_impressions}-${Previous_day_impressions})/ NULLIF(${Previous_day_impressions},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+  measure: responses_lastday_change_parameter {
+    type: number
+    label: "Bids Last Day Change Parameter"
+    sql: coalesce((${Last_day_bids}-${previous_day_responses})/ NULLIF(${previous_day_responses},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+  measure: clicks_lastday_change_parameter {
+    type: number
+    label: "Clicks Last Day Change Parameter"
+    sql: coalesce((${Last_day_clicks}-${Previous_day_clicks})/ NULLIF(${Previous_day_clicks},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+  measure: VCR_lastday_change_parameter {
+    type: number
+    sql: coalesce((${Last_day_VCR}-${previous_day_VCR})/ NULLIF(${previous_day_VCR},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+  measure: CTR_lastday_change_parameter {
+    type: number
+    sql: coalesce((${Last_day_CTR}-${previous_day_CTR})/ NULLIF(${previous_day_CTR},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+  measure: cogs_lastday_change_parameter {
+    type: number
+    sql: coalesce((${Last_day_cogs}-${Previous_day_cogs})/ NULLIF(${Previous_day_cogs},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+  measure: CPM_lastday_change_parameter {
+    type: number
+    sql: coalesce((${Last_day_CPM}-${Previous_day_CPM})/ NULLIF(${Previous_day_CPM},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+  measure: Net_Revenue_lastday_change_parameter {
+    type: number
+    sql: coalesce((${Last_Day_net_Revenue}-${prev_Day_net_Revenue})/ NULLIF(${prev_Day_net_Revenue},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+  measure: Render_Rate_lastday_change_parameter {
+    type: number
+    sql: coalesce((${Last_day_Render_Rate}-${Previous_day_Render_Rate})/ NULLIF(${Previous_day_Render_Rate},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
+  measure:  Previous_day_impressions {
+    label: "Impressions Previous day "
+    type: sum
+    description: "The impressions of 2 days ago"
+    sql: ${TABLE}.sum_of_impression_pixel_from_ad_data ;;
+    value_format: "#,##0"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+
+  measure:  Previous_day_clicks {
+    label: "Clicks Previous day "
+    type: sum
+    description: "The clicks of 2 days ago"
+    sql: ${TABLE}.sum_of_click_from_ad_data ;;
+    value_format: "#,##0"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+  measure:  Last_day_clicks {
+    label: "Clicks Last day "
+    type: sum
+    description: "The clicks of the last day"
+    sql: ${TABLE}.sum_of_click_from_ad_data ;;
+    group_label: "Time Shifted Measures"
+    value_format: "#,##0"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure:  Last_day_CPM {
+    label: "CPM Last day "
+    type: sum
+    description: "The CPM of the last day"
+    sql: (${TABLE}.sum_of_cogs_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0))*1000 ;;
+    group_label: "Time Shifted Measures"
+    value_format: "0.00%"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure:  Previous_day_CPM {
+    label: "CPM Previous day "
+    type: sum
+    description: "The CPM of 2 days ago"
+    sql: (${TABLE}.sum_of_cogs_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0))*1000 ;;
+    value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "2 days ago"]
+  }
+
+
+  measure:  Previous_day_cogs {
+    label: "Cogs Previous day "
+    type: sum
+    description: "The cogs of 2 days ago"
+    sql: ${TABLE}.sum_of_cogs_from_ad_data ;;
+    value_format: "$#,##0"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "2 days ago"]
+  }
+
+  measure: previous_day_responses {
+    type: sum
+    label: "Bids Previous day"
+    description: "The responses of 2 days ago"
+    value_format: "#,##0"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.dim_of_responses_from_ad_data  ;;
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+  measure: prev_Day_net_Revenue {
+    type: sum
+    label: "Net Revenue prev Day"
+    description: "The net revenue (difference between revenue and cogs) of 2 days ago"
+    value_format: "$#,##0.00"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data  ;;
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+  measure:  Last_day_cogs {
+    label: "Cogs Last day "
+    type: sum
+    description: "The cogs of the last day"
+    sql: ${TABLE}.sum_of_cogs_from_ad_data ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure:  Last_day_impressions {
+    label: "Impressions Last day "
+    type: sum
+    description: "The impressions of the last day"
+    sql: ${TABLE}.sum_of_impression_pixel_from_ad_data ;;
+    value_format: "#,##0"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure: Last_Day_net_Revenue {
+    type: sum
+    description: "The difference between revenue and cogs of the last day"
+    label: "Net Revenue Last Day"
+    value_format: "$#,##0.00"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data  ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure: Last_day_bids {
+    type: sum
+    description: "The bid reponses of the last day"
+    label: "Bids Last day"
+    value_format: "#,##0"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_responses_from_ad_data ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure: Last_day_VCR {
+    type: sum
+    description: "The VCR of the last day"
+    label: "VCR Last day"
+    #value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: (${TABLE}.sum_of_video_completes_from_ad_data/NULLIF(${TABLE}.sum_of_video_starts_from_ad_data,0))*100 ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure: Last_day_video_completes {
+    type: sum
+    description: "The video completes of the last day"
+    label: "viceo completes Last day"
+    #value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_video_completes_from_ad_data ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure: Last_day_video_starts {
+    type: sum
+    description: "The video starts of the last day"
+    label: "video starts Last day"
+    #value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_video_starts_from_ad_data ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure: Last_day_CTR {
+    type: sum
+    description: "The CTR of the last day"
+    label: "CTR Last day"
+    value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: (${TABLE}.sum_of_click_count_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0))*100 ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure: previous_day_VCR {
+    type: sum
+    label: "VCR Previous day"
+    description: "The VCR of 2 days ago"
+    value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: (${TABLE}.sum_of_video_completes_from_ad_data/NULLIF(${TABLE}.sum_of_video_starts_from_ad_data,0))*100  ;;
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+  measure: previous_day_CTR {
+    type: sum
+    label: "CTR Previous day"
+    description: "The CTR of 2 days ago"
+    value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: (${TABLE}.sum_of_click_count_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0))*100  ;;
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+
+  measure: revenue_comparison {
+    type: string
+    sql: CASE WHEN ${revenue_lastday_change} > 0.15 THEN "positive"
+              WHEN ${revenue_lastday_change} < -0.15 THEN 'negative' ELSE 'none' END ;;
+  }
+
+
+
   parameter: choose_filter {
     type: unquoted
     allowed_value: {
@@ -424,16 +1037,22 @@ view: fact_ad_bid_request_daily_agg {
     }
     allowed_value: {
       label: "Positive Change"
-      value: "cogs"
+      value: "positive_change"
     }
 
   }
 
-  measure: dynamic_sum {
-    type: sum
-    sql: ${TABLE}.sum_of_{% parameter choose_filter %}_from_ad_data ;;
-    value_format_name: "usd"
-  }
+  # measure: positive_change{
+  #   type: sum
+  #   filters: [revenue_lastday_change: ">=0.15", revenue: ">=1000"]
+  #   sql: ${revenue} ;;
+  # }
+
+  # measure: dynamic_sum {
+  #   type: sum
+  #   sql: {% parameter choose_filter %};; #${TABLE}.sum_of_{% parameter choose_filter %}_from_ad_data ;;
+  #   value_format_name: "usd"
+  # }
 
   # measure: calculation_filter {
   #   sql: {% if choose_filter._parameter_value == 'revenue' %} ;;
@@ -493,7 +1112,7 @@ view: fact_ad_bid_request_daily_agg {
     label: "Render Rate Last day "
     type: sum
     description: "The last day Render Rate"
-    sql: ${TABLE}.sum_of_responses_from_ad_data/coalesce(${TABLE}.sum_of_impression_pixel_from_ad_data,0) ;;
+    sql: ${TABLE}.sum_of_responses_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0) ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [date_key_date: "last 1 day ago for 1 day"]
@@ -503,7 +1122,7 @@ view: fact_ad_bid_request_daily_agg {
     label: "Render Rate Previous day "
     type: sum
     description: "The Render Rate of 2 days ago"
-    sql: ${TABLE}.sum_of_responses_from_ad_data/coalesce(${TABLE}.sum_of_impression_pixel_from_ad_data,0) ;;
+    sql: ${TABLE}.sum_of_responses_from_ad_data/NULLIF(${TABLE}.sum_of_impression_pixel_from_ad_data,0) ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [date_key_date: "2 days ago"]
@@ -516,7 +1135,7 @@ view: fact_ad_bid_request_daily_agg {
     value_format: "0.00%"
     group_label: "Time Shifted Measures"
     sql: (${Last_day_Render_Rate}/coalesce(${Previous_day_Render_Rate},0))-1 ;;
-
+    hidden: yes
   }
 
 

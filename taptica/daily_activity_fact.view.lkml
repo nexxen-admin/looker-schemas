@@ -10,7 +10,7 @@ view: daily_activity_fact {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Adv Discount" in Explore.
 
-  measure: adv_discount {
+  dimension: adv_discount {
     type: number
     sql: ${TABLE}.Adv_Discount ;;
     #hidden: yes

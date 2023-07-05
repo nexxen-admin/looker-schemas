@@ -141,7 +141,7 @@ view: dim_date {
   }
 
   dimension: month_number {
-    type: string
+    type: number
     sql: ${TABLE}.Month_Number ;;
   }
 

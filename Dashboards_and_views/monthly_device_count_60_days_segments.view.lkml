@@ -1,9 +1,9 @@
 view: monthly_device_count_60_days_segments {
   derived_table: {
     sql: SELECT
-  COUNT(DISTINCT CASE WHEN viewing_start_utc >= CURRENT_DATE - INTERVAL '1 MONTH' THEN device_id END) AS users_1_month,
-  COUNT(DISTINCT CASE WHEN viewing_start_utc >= CURRENT_DATE - INTERVAL '2 MONTH' THEN device_id END) AS users_2_months,
-  COUNT(DISTINCT CASE WHEN viewing_start_utc >= CURRENT_DATE - INTERVAL '3 MONTH' THEN device_id END) AS users_3_months
+  COUNT(DISTINCT CASE WHEN viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -1) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN device_id END) AS between_0_to_30_days,
+  COUNT(DISTINCT CASE WHEN viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -2) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN device_id END) AS between_0_to_60_days,
+  COUNT(DISTINCT CASE WHEN viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN device_id END) AS between_0_to_90_days
 FROM dragon.viewership_content_sessions_combined_daily AA
 
  ;;
@@ -16,22 +16,22 @@ FROM dragon.viewership_content_sessions_combined_daily AA
 
 
 
-  measure: users_1_month {
+  measure: between_0_to_30_days {
     type: average
-    sql: ${TABLE}.users_1_month ;;
+    sql: ${TABLE}.between_0_to_30_days ;;
   }
 
-  measure: users_2_month {
+  measure: between_0_to_60_days {
     type: average
-    sql: ${TABLE}.users_1_month ;;
+    sql: ${TABLE}.between_0_to_60_days ;;
   }
 
-  measure: users_3_month {
+  measure: between_0_to_90_days {
     type: average
-    sql: ${TABLE}.users_1_month ;;
+    sql: ${TABLE}.between_0_to_90_days ;;
   }
 
   set: detail {
-    fields: [users_1_month, users_2_month, users_3_month]
+    fields: [between_0_to_30_days, between_0_to_60_days, between_0_to_90_days]
   }
 }

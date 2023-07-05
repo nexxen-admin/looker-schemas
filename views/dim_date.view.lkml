@@ -141,7 +141,7 @@ view: dim_date {
   }
 
   dimension: month_number {
-    type: string
+    type: number
     sql: ${TABLE}.Month_Number ;;
   }
 
@@ -226,34 +226,34 @@ view: dim_date {
   }
 
 
-  dimension: dynamic_sum {
-    type: date
-    sql: ${TABLE}.{% parameter ${chosen_date} %} ;;
-    value_format_name: "usd"
-  }
+  # dimension: dynamic_sum {
+  #   type: date
+  #   sql: ${TABLE}.{% parameter ${chosen_date} %} ;;
+  #   value_format_name: "usd"
+  # }
 
-  dimension: quarter_start {
-    type: date
-    sql: ${date_key_raw} ;;
-    sql_start: date_trunc('quarter', {{ _view.chosen_date.start._value }})
-    ;;
-  }
+  # dimension: quarter_start {
+  #   type: date
+  #   sql: ${date_key_raw} ;;
+  #   sql_start: date_trunc('quarter', {{ _view.chosen_date.start._value }})
+  #   ;;
+  # }
 
-  dimension: qtd_start_date {
-    type: date
-    sql: date_trunc('quarter', ${chosen_date_range});;
-  }
+  # dimension: qtd_start_date {
+  #   type: date
+  #   sql: date_trunc('quarter', ${chosen_date_range});;
+  # }
 
-  dimension: qtd_start {
-    type: string
-    sql:  case when ${date_key_quarter} like '%Q1' then '1'
-          else null end;;
-    #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
-  }
+  # dimension: qtd_start {
+  #   type: string
+  #   sql:  case when ${date_key_quarter} like '%Q1' then '1'
+  #         else null end;;
+  #   #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
+  # }
 
-  dimension: qtd_end {
-    type: date
-    sql: timestampadd(DAY, -1, {% date_end ${chosen_date_range.field} %}) ;;
-  }
+  # dimension: qtd_end {
+  #   type: date
+  #   sql: timestampadd(DAY, -1, {% date_end ${chosen_date_range.field} %}) ;;
+  # }
 
 }

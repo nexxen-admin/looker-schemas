@@ -50,6 +50,11 @@ view: unruly_player_demands {
     sql: ${TABLE}.pub_id ;;
   }
 
+  dimension: employee_key {
+    type: number
+    sql: ${TABLE}.employee_key ;;
+  }
+
  # dimension: pub_name {
   #  type: string
    # sql: ${TABLE}.pub_name ;;
@@ -94,32 +99,13 @@ view: unruly_player_demands {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  # measure: total_cost {
-  #   type: sum
-  #   sql: ${cost} ;;
-  # }
 
-  # measure: average_cost {
-  #   type: average
-  #   sql: ${cost} ;;
-  # }
 
   dimension: data_base {
     type: string
     sql: ${TABLE}."DataBase" ;;
   }
 
-  #measure: olv_impressions {
-    #type: sum
-    #sql: ${TABLE}.OLV_impressions ;;
-    #value_format: "#,##0"
-  #}
-
-  #measure: ia_impressions {
-   # type: sum
-    #sql: ${TABLE}.IA_impressions ;;
-    #value_format: "#,##0"
-  #}
 
   measure: inventory {
     type: sum

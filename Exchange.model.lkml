@@ -1293,4 +1293,11 @@ explore: fact_ad_bid_request_daily_agg{
     relationship: many_to_one
   }
 
+  join: dim_deal_personnel {
+    type: inner
+    view_label: "Personnel"
+    sql_on: ${dim_deal_personnel.deal_id}=${dim_deal.internal_deal_id} ;;
+    relationship: many_to_one
+  }
+
 }

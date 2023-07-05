@@ -2760,6 +2760,36 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+
+  parameter: choose_filter {
+    type: unquoted
+    allowed_value: {
+      label: "Revenue"
+      value: "revenue"
+    }
+    allowed_value: {
+      label: "Positive Change"
+      value: "positive_change"
+    }
+
+  }
+
+  # measure: positive_change{
+  #   type: sum
+  #   filters: [revenue_lastday_change: ">=0.15", revenue: ">=1000"]
+  #   sql: ${revenue} ;;
+  # }
+
+  # measure: dynamic_sum {
+  #   type: sum
+  #   sql: {% parameter choose_filter %};; #${TABLE}.sum_of_{% parameter choose_filter %}_from_ad_data ;;
+  #   value_format_name: "usd"
+  # }
+
+  # measure: calculation_filter {
+  #   sql: {% if choose_filter._parameter_value == 'revenue' %} ;;
+  # }
+
   measure: count {
     type: count
     drill_fields: []

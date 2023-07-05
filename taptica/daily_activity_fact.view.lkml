@@ -13,7 +13,7 @@ view: daily_activity_fact {
   dimension: adv_discount {
     type: number
     sql: ${TABLE}.Adv_Discount ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: adv_id {

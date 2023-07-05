@@ -520,6 +520,34 @@ view: fact_ad_bid_request_daily_agg {
   }
 
 
+  parameter: choose_measure {
+    type: unquoted
+    allowed_value: {
+      label: "Revenue"
+      value: "revenue"
+    }
+    allowed_value: {
+      label: "Positive Change"
+      value: "positive_change"
+    }
+
+  }
+
+  # dimension: test {
+
+  #   type: yesno
+  #   sql:  case when ${revenue_lastday_change} > 0.15 then yes else no end ;;
+
+  #   }
+
+
+#   measure: positive_change {
+#     type: sum
+#     filters: [test: "yes"]
+#     sql:  ${TABLE}.sum_of_revenue_from_ad_data;;
+# }
+
+
   dimension: user_matched_key {
     type: number
     sql: ${TABLE}.User_Matched_Key ;;

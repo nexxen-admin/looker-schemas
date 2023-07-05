@@ -232,6 +232,15 @@ view: net_revenue_without_demand_ss_fees {
            then ${TABLE}.P1_E2E_Revenue else 0 end ;;
   }
 
+  measure: Retained_Gross_2_E2E {
+    type: sum
+    group_label: " "
+    value_format: "$#,##0"
+    sql: case when (${TABLE}.P1_E2E_Revenue!=0
+             AND ${TABLE}.P2_E2E_Revenue !=0)
+           then ${TABLE}.P2_E2E_Revenue else 0 end ;;
+  }
+
   measure: Retained_Net_E2E {
     type: sum
     group_label: " "
@@ -239,6 +248,15 @@ view: net_revenue_without_demand_ss_fees {
     sql: case when (${TABLE}.P1_E2E_Net!=0
              AND ${TABLE}.P2_E2E_Net !=0)
            then ${TABLE}.P1_E2E_Net else 0 end ;;
+  }
+
+  measure: Retained_Net_2_E2E {
+    type: sum
+    group_label: " "
+    value_format: "$#,##0"
+    sql: case when (${TABLE}.P1_E2E_Net!=0
+             AND ${TABLE}.P2_E2E_Net !=0)
+           then ${TABLE}.P2_E2E_Net else 0 end ;;
   }
 
   measure: New_Gross_Demand {

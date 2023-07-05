@@ -1,5 +1,5 @@
 view: insertion_order_details {
-  sql_table_name: DIM.INSERTION_ORDER_DETAILS ;;
+  sql_table_name: DIM.INSERTION_ORDER_DETAILS_VIEW ;;
   view_label: "Insertion Order"
 
   dimension: account_rep {

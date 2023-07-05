@@ -3,9 +3,9 @@ view: campaign_pacing_by_day {
     sql:
       WITH _DATE_DIM AS (
         SELECT
-          DATEADD('DAY', ROW_NUMBER() OVER (ORDER BY cd.CAMPAIGN_ID) - 1, (SELECT DATE_TRUNC('DAY', MIN(fd.BEGIN_DATETIME_LOCAL)) FROM DIM.FLIGHT_DETAILS fd WHERE fd.FLIGHT_ACTIVE = 1)) AS DATE
+          DATEADD('DAY', ROW_NUMBER() OVER (ORDER BY cd.CAMPAIGN_ID) - 1, (SELECT DATE_TRUNC('DAY', MIN(fd.BEGIN_DATETIME_LOCAL)) FROM DIM.FLIGHT_DETAILS_VIEW fd WHERE fd.FLIGHT_ACTIVE = 1)) AS DATE
         FROM
-          DIM.CAMPAIGN_DETAILS_BASE cd
+          DIM.CAMPAIGN_DETAILS_BASE_VIEW cd
         ORDER BY
           DATE
         LIMIT
@@ -30,10 +30,10 @@ view: campaign_pacing_by_day {
             CAST(MAX(b.BUDGET) * (1 + MAX(fmd.AGENCY_FEE)) AS FLOAT) AS TARGET_GROSS_SPEND,
             CAST(MAX(b.UNITS) AS FLOAT) AS TARGET_UNITS
           FROM
-            DIM.FLIGHT_MEDIA_DETAILS_BASE fmd
-              JOIN DIM.FLIGHT_DETAILS fd
+            DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW fmd
+              JOIN DIM.FLIGHT_DETAILS_VIEW fd
                 ON fd.FLIGHT_ID = fmd.FLIGHT_ID
-              JOIN DIM.CAMPAIGN_DETAILS_BASE cd
+              JOIN DIM.CAMPAIGN_DETAILS_BASE_VIEW cd
                 ON fd.CAMPAIGN_ID = cd.CAMPAIGN_ID
               JOIN DEMAND_MART.LOAD_TRACKING lt
                 ON fmd.STARTTIMEZONE_ID = lt.START_TIMEZONE AND
@@ -64,7 +64,7 @@ view: campaign_pacing_by_day {
           CAST(SUM(s.BILLABLE_UNITS) AS FLOAT) AS BILLABLE_UNITS
         FROM
           DEMAND_MART.DAILY_CORE_STATS s
-            JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE fmd
+            JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW fmd
               ON s.FLIGHT_MEDIA_ID = fmd.FLIGHT_MEDIA_ID
         WHERE
           {% condition campaign_details_base.campaign_id %} fmd.CAMPAIGN_ID {% endcondition %}

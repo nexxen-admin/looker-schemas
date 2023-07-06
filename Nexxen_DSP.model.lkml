@@ -10,6 +10,19 @@ access_grant: can_view_all_tremor {
   user_attribute: all_tremor
   allowed_values: ["all_tremor"]
 }
+
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
+explore: fact_dataroma_data_ver1{
+  label: "Datorama Data"
+  required_access_grants: [can_view_pub_come_looker]
+
+}
+
+
 explore: v_fact_ad_events_hourly_agg {
  always_filter: {
     filters: [v_dim_date_hourly.date_key_date: "last 10 days "]

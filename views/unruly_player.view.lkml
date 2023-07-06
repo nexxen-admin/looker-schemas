@@ -55,10 +55,10 @@ view: unruly_player_demands {
     sql: ${TABLE}.employee_key ;;
   }
 
- # dimension: pub_name {
-  #  type: string
-   # sql: ${TABLE}.pub_name ;;
-  #}
+  dimension: buying_channel {
+    type: string
+    sql: ${TABLE}.buying_channel ;;
+  }
 
   #dimension: ts_display_name {
    # label: "Traffic Source"

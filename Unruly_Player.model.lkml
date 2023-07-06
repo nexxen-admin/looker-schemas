@@ -45,6 +45,7 @@ explore: unruly_player_demands {
     sql_on: ${unruly_player_demands.employee_key}=${dim_up_employee_targets.employee_key} and
     ${unruly_player_demands.activity_month}=${dim_up_employee_targets.target_month};;
     relationship: many_to_one
+    required_access_grants: [can_view_pub_come_looker]
   }
 
 }

@@ -11,7 +11,7 @@ view: daily_activity_fact {
   # This dimension will be called "Adv Discount" in Explore.
 
   measure: adv_discount {
-    type: number
+    type: sum
     sql: ${TABLE}.Adv_Discount ;;
     #hidden: yes
   }

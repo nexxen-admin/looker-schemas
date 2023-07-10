@@ -50,6 +50,11 @@ view: unruly_player_demands {
     sql: ${TABLE}.pub_id ;;
   }
 
+  dimension: pub_name {
+    type: string
+    sql: ${TABLE}.pub_name ;;
+  }
+
   dimension: employee_key {
     type: number
     sql: ${TABLE}.employee_key ;;

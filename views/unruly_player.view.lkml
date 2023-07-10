@@ -52,7 +52,7 @@ view: unruly_player_demands {
 
   dimension: pub_name {
     type: string
-    sql: ${TABLE}.pub_name ;;
+    sql: ${TABLE}.PUB_Name ;;
   }
 
   dimension: employee_key {

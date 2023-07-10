@@ -2,7 +2,7 @@
 view: fact_dataroma_data_ver1 {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_New.fact_dataroma_data ;;
+  sql_table_name: BI_TVDSP.fact_dataroma_data ;;
 
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.

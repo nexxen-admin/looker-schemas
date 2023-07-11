@@ -26,6 +26,10 @@ access_grant: can_view_aniview {
 explore: unruly_player_demands {
   label: "Unruly Player Demands"
   required_access_grants: [can_view_aniview]
+  # access_filter: {
+  #   field: dim_employee.employee_name
+  #   user_attribute: unruly_player
+  #   }
 
   # join: dim_publisher {
   #     type: left_outer

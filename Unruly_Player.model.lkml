@@ -24,12 +24,13 @@ access_grant: can_view_aniview {
 }
 
 explore: unruly_player_demands {
+  view_name: unruly_player_demands
   label: "Unruly Player Demands"
   required_access_grants: [can_view_aniview]
-   access_filter: {
-     field: dim_employee.employee_name_1
-     user_attribute: unruly_player
-  }
+  # access_filter: {
+  #   field: dim_employee.employee_name
+  #   user_attribute: unruly_player
+  # }
 
   # join: dim_publisher {
   #     type: left_outer
@@ -59,12 +60,27 @@ explore: unruly_player_supplies {
   required_access_grants: [can_view_all_tremor]
 }
 
-# explore: extend_unruly_player_demands {
-#   extends: [unruly_player_demands]
-#   from: unruly_player_demands
-#   required_access_grants: [can_view_pub_come_looker]
-#   access_filter: {
-#     field: dim_employee.employee_name
-#     user_attribute: unruly_player
-#   }
-# }
+explore: extend_unruly_player_demands {
+  extends: [unruly_player_demands]
+  label: "Extend Unruly Player Demands"
+  from: unruly_player_demands
+  required_access_grants: [can_view_aniview]
+  access_filter: {
+    field: dim_employee.employee_name
+    user_attribute: unruly_player
+  }
+
+  join: dim_employee {
+    type: inner
+    sql_on: ${dim_employee.employee_key}=${unruly_player_demands.employee_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_up_employee_targets {
+    type: inner
+    sql_on: ${unruly_player_demands.employee_key}=${dim_up_employee_targets.employee_key} and
+      ${unruly_player_demands.activity_month}=${dim_up_employee_targets.target_month};;
+    relationship: many_to_one
+    required_access_grants: [can_view_aniview]
+  }
+}

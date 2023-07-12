@@ -51,6 +51,13 @@ view: dim_employee {
 
   }
 
+  dimension: employee_name_1 {
+    label: "Employee"
+    type: string
+    sql: ${TABLE}.Employee_Name ;;
+
+  }
+
   dimension: employee_office {
     label: "Employee Office"
     type: string

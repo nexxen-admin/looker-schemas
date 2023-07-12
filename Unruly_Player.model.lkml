@@ -26,10 +26,10 @@ access_grant: can_view_aniview {
 explore: unruly_player_demands {
   label: "Unruly Player Demands"
   required_access_grants: [can_view_aniview]
-  # access_filter: {
-  #   field: dim_employee.employee_name
-  #   user_attribute: unruly_player
-  #   }
+   access_filter: {
+     field: dim_employee.employee_name_1
+     user_attribute: unruly_player
+  }
 
   # join: dim_publisher {
   #     type: left_outer
@@ -58,3 +58,13 @@ explore: unruly_player_supplies {
   label: "Unruly Player Supplies"
   required_access_grants: [can_view_all_tremor]
 }
+
+# explore: extend_unruly_player_demands {
+#   extends: [unruly_player_demands]
+#   from: unruly_player_demands
+#   required_access_grants: [can_view_pub_come_looker]
+#   access_filter: {
+#     field: dim_employee.employee_name
+#     user_attribute: unruly_player
+#   }
+# }

@@ -14,7 +14,11 @@ view: dim_data_center {
     type: string
     description: "The centers where our servers are located"
     label: "Data Center"
-    sql: ${TABLE}.DataCenter ;;
+    sql: case when ${TABLE}.DataCenter='ams' then 'EMEA'
+              when ${TABLE}.DataCenter='ap' then 'APAC'
+              when ${TABLE}.DataCenter='iad' then 'US-East'
+              when ${TABLE}.DataCenter='usw' then 'US-West'
+              else 'Unknown' end;;
   }
 
   dimension: data_center_key {

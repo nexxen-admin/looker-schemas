@@ -776,9 +776,9 @@ view: fact_ad_daily_agg {
 
   dimension: classification {
     type: string
-    sql: case when ${dim_dsp_seat.Is_1st_Party_Demand}= "Yes" then "1st_Party_Demand"
-              when ${dim_deal_type.deal_type_name} ="unknown" then "OMP"
-              else "PMP" end ;;
+    sql: case when ${dim_dsp_seat.Is_1st_Party_Demand}= 'Yes' then '1st_Party_Demand'
+              when ${dim_deal_type.deal_type_name} ='unknown' then 'OMP'
+              else 'PMP' end ;;
   }
 
   dimension: rank_limit {

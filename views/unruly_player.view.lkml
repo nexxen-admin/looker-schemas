@@ -75,6 +75,16 @@ view: unruly_player_demands {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Av Mp Net" in Explore.
 
+  measure: total_actual_monthly_net_by_employee {
+    type: number
+    sql: ${TABLE}.total_actual_monthly_net_by_employee ;;
+  }
+
+  measure: total_actual_monthly_net_by_all {
+    type: number
+    sql: ${TABLE}.total_actual_monthly_net_by_all ;;
+  }
+
   measure: av_mp_net {
     type: sum
     sql: ${TABLE}.AV_MP_Net ;;

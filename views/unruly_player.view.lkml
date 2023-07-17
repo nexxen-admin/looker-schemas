@@ -83,23 +83,25 @@ view: unruly_player_demands {
   measure: total_actual_monthly_net_by_employee {
     type: max
     sql: ${TABLE}.total_actual_monthly_net_by_employee ;;
+    value_format: "$#,##0"
   }
 
   measure: total_actual_monthly_net_by_all {
     type: max
     sql: ${TABLE}.total_actual_monthly_net_by_all ;;
+    value_format: "$#,##0"
   }
 
   measure: av_mp_net {
     type: sum
     sql: ${TABLE}.AV_MP_Net ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   measure: av_mp_total_rev {
     type: sum
     sql: ${TABLE}.AV_MP_Total_Rev ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   #measure: OLV_cost {
@@ -141,19 +143,19 @@ view: unruly_player_demands {
   measure: player_total_rev {
     type: sum
     sql: ${TABLE}.Player_Total_Rev ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   measure: pub_mp_net {
     type: sum
     sql: ${TABLE}.Pub_MP_Net ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   measure: pub_mp_total_rev {
     type: sum
     sql: ${TABLE}.Pub_MP_Total_Rev ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
   measure: requests {
     type: sum
@@ -170,7 +172,7 @@ view: unruly_player_demands {
   measure: revenue {
     type: sum
     sql: ${TABLE}.revenue ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   measure: cost {
@@ -183,7 +185,7 @@ view: unruly_player_demands {
     label: "Net Revenue"
     type: sum
     sql: ${TABLE}.net_revenue ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   #measure: OLV_requests {
@@ -228,40 +230,40 @@ view: unruly_player_demands {
     label: "IS SF"
     type: sum
     sql: ${TABLE}.IS_SF ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   measure: os_sf {
     type: sum
     sql: ${TABLE}.OS_SF ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   measure: ia_sf {
     label: "IA SF"
     type: sum
     sql: ${TABLE}.IA_SF ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
 
   measure: MyCast {
     type: sum
     sql: ${TABLE}.MyCast ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   measure: Widgets_AI {
     type: sum
     sql: ${TABLE}.Widgets_AI ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   measure: Wiseroll_LTD_Yeda {
     label:"Wiseroll LTD + Yeda"
     type: sum
     sql: ${TABLE}.Wiseroll_LTD_Yeda ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
   }
 
   dimension_group: current_date {

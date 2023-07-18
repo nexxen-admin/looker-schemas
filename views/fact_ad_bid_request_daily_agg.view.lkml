@@ -869,7 +869,7 @@ view: fact_ad_bid_request_daily_agg {
     label: "CPM Last day "
     type: number
     description: "The CPM of the last day"
-    sql: (${Last_day_cogs}/NULLIF(${Last_day_impressions},0)) ;;
+    sql: (${Last_day_cogs}/NULLIF(${Last_day_impressions},0))*1000 ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     #filters: [date_key_date: "last 1 day ago for 1 day"]
@@ -879,7 +879,7 @@ view: fact_ad_bid_request_daily_agg {
     label: "CPM Previous day "
     type: number
     description: "The CPM of 2 days ago"
-    sql: (${Previous_day_cogs}/NULLIF(${Previous_day_impressions},0)) ;;
+    sql: (${Previous_day_cogs}/NULLIF(${Previous_day_impressions},0))*1000 ;;
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
     #filters: [date_key_date: "2 days ago"]

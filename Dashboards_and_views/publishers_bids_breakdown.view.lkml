@@ -73,7 +73,7 @@ view: publishers_bids_breakdown {
   }
 
   measure: range_from_bid_floor {
-    type: sum
+    type: string
     sql: ${TABLE}.range_from_bid_floor ;;
   }
 

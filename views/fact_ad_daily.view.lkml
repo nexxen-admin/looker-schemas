@@ -18,6 +18,7 @@ view: v_fact_ad_daily {
   dimension: a_domain_key {
     type: number
     sql: ${TABLE}.A_Domain_Key ;;
+    hidden: yes
   }
 
   dimension: buying_channel {
@@ -28,20 +29,21 @@ view: v_fact_ad_daily {
   dimension: buying_channel_key {
     type: number
     sql: ${TABLE}.Buying_Channel_Key ;;
+    hidden: yes
   }
 
-  dimension: click_count {
-    type: number
+  measure: click_count {
+    type: sum
     sql: ${TABLE}.click_count ;;
   }
 
-  dimension: cogs {
-    type: number
+  measure: cogs {
+    type: sum
     sql: ${TABLE}.cogs ;;
   }
 
-  dimension: cost {
-    type: number
+  measure: cost {
+    type: sum
     sql: ${TABLE}.cost ;;
   }
 
@@ -49,15 +51,15 @@ view: v_fact_ad_daily {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_cost {
-    type: sum
-    sql: ${cost} ;;
-  }
+  # measure: total_cost {
+  #   type: sum
+  #   sql: ${cost} ;;
+  # }
 
-  measure: average_cost {
-    type: average
-    sql: ${cost} ;;
-  }
+  # measure: average_cost {
+  #   type: average
+  #   sql: ${cost} ;;
+  # }
 
   dimension: country_code {
     type: string
@@ -67,6 +69,7 @@ view: v_fact_ad_daily {
   dimension: country_key {
     type: number
     sql: ${TABLE}.Country_Key ;;
+    hidden: yes
   }
 
   dimension: data_center {
@@ -77,6 +80,7 @@ view: v_fact_ad_daily {
   dimension: data_center_key {
     type: number
     sql: ${TABLE}.DataCenter_Key ;;
+    hidden: yes
   }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
@@ -102,8 +106,8 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.deal_bid_floor ;;
   }
 
-  dimension: deal_count {
-    type: number
+  measure: deal_count {
+    type: sum
     sql: ${TABLE}.deal_count ;;
   }
 
@@ -115,6 +119,7 @@ view: v_fact_ad_daily {
   dimension: deal_key {
     type: number
     sql: ${TABLE}.Deal_Key ;;
+    hidden: yes
   }
 
   dimension: device_type_id {
@@ -125,6 +130,7 @@ view: v_fact_ad_daily {
   dimension: device_type_key {
     type: number
     sql: ${TABLE}.Device_Type_Key ;;
+    hidden: yes
   }
 
   dimension: dsp_bid_price {
@@ -132,8 +138,8 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.dsp_bid_price ;;
   }
 
-  dimension: dsp_count {
-    type: number
+  measure: dsp_count {
+    type: sum
     sql: ${TABLE}.dsp_count ;;
   }
 
@@ -145,11 +151,13 @@ view: v_fact_ad_daily {
   dimension: dsp_deal_type_key {
     type: number
     sql: ${TABLE}.DSP_Deal_Type_Key ;;
+    hidden: yes
   }
 
   dimension: dsp_flight_key {
     type: number
     sql: ${TABLE}.DSP_Flight_Key ;;
+    hidden: yes
   }
 
   dimension: dsp_id {
@@ -160,6 +168,7 @@ view: v_fact_ad_daily {
   dimension: dsp_key {
     type: number
     sql: ${TABLE}.DSP_Key ;;
+    hidden: yes
   }
 
   dimension: dsp_name {
@@ -170,6 +179,7 @@ view: v_fact_ad_daily {
   dimension: dsp_seat_key {
     type: number
     sql: ${TABLE}.DSP_Seat_Key ;;
+    hidden: yes
   }
 
   dimension: flight_id {
@@ -177,33 +187,33 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.Flight_ID ;;
   }
 
-  dimension: ias_ivt_impression {
-    type: number
+  measure: ias_ivt_impression {
+    type: sum
     sql: ${TABLE}.ias_ivt_impression ;;
   }
 
-  dimension: ias_ivt_rate {
-    type: number
+  measure: ias_ivt_rate {
+    type: sum
     sql: ${TABLE}.ias_ivt_rate ;;
   }
 
-  dimension: ias_measurable_impression {
-    type: number
+  measure: ias_measurable_impression {
+    type: sum
     sql: ${TABLE}.ias_measurable_impression ;;
   }
 
-  dimension: ias_total_impression {
-    type: number
+  measure: ias_total_impression {
+    type: sum
     sql: ${TABLE}.ias_total_impression ;;
   }
 
-  dimension: ias_viewability_score {
-    type: number
+  measure: ias_viewability_score {
+    type: sum
     sql: ${TABLE}.ias_viewability_score ;;
   }
 
-  dimension: ias_viewable_impression {
-    type: number
+  measure: ias_viewable_impression {
+    type: sum
     sql: ${TABLE}.ias_viewable_impression ;;
   }
 
@@ -215,6 +225,7 @@ view: v_fact_ad_daily {
   dimension: imp_sub_type_key {
     type: number
     sql: ${TABLE}.Imp_SubType_Key ;;
+    hidden: yes
   }
 
   dimension: imp_type {
@@ -225,6 +236,7 @@ view: v_fact_ad_daily {
   dimension: imp_type_key {
     type: number
     sql: ${TABLE}.Imp_Type_Key ;;
+    hidden: yes
   }
 
   measure: impression_pixel {
@@ -233,8 +245,8 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.impression_pixel ;;
   }
 
-  dimension: impression_win {
-    type: number
+  measure: impression_win {
+    type: sum
     sql: ${TABLE}.impression_win ;;
   }
 
@@ -256,25 +268,26 @@ view: v_fact_ad_daily {
   dimension: media_type_key {
     type: number
     sql: ${TABLE}.Media_Type_Key ;;
+    hidden: yes
   }
 
-  dimension: moat_impressions_ivt {
-    type: number
+  measure: moat_impressions_ivt {
+    type: sum
     sql: ${TABLE}.moat_impressions_ivt ;;
   }
 
-  dimension: moat_impressions_ivt_measurable {
-    type: number
+  measure: moat_impressions_ivt_measurable {
+    type: sum
     sql: ${TABLE}.moat_impressions_ivt_measurable ;;
   }
 
-  dimension: moat_impressions_viewable {
-    type: number
+  measure: moat_impressions_viewable {
+    type: sum
     sql: ${TABLE}.moat_impressions_viewable ;;
   }
 
-  dimension: moat_impressions_viewable_measurable {
-    type: number
+  measure: moat_impressions_viewable_measurable {
+    type: sum
     sql: ${TABLE}.moat_impressions_viewable_measurable ;;
   }
 
@@ -286,6 +299,7 @@ view: v_fact_ad_daily {
   dimension: o_domain_key {
     type: number
     sql: ${TABLE}.O_Domain_Key ;;
+    hidden: yes
   }
 
   dimension: placement_id {
@@ -296,6 +310,7 @@ view: v_fact_ad_daily {
   dimension: placement_key {
     type: number
     sql: ${TABLE}.Placement_Key ;;
+    hidden: yes
   }
 
   dimension: placement_name {
@@ -308,8 +323,8 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.platformfee_type ;;
   }
 
-  dimension: pub_cost {
-    type: number
+  measure: pub_cost {
+    type: sum
     sql: ${TABLE}.pub_cost ;;
   }
 
@@ -321,6 +336,7 @@ view: v_fact_ad_daily {
   dimension: pub_ssp_key {
     type: number
     sql: ${TABLE}.PUB_SSP_Key ;;
+    hidden: yes
   }
 
   dimension: request_status {
@@ -331,10 +347,11 @@ view: v_fact_ad_daily {
   dimension: request_status_key {
     type: number
     sql: ${TABLE}.Request_Status_Key ;;
+    hidden: yes
   }
 
-  dimension: requests {
-    type: number
+  measure: requests {
+    type: sum
     sql: ${TABLE}.requests ;;
   }
 
@@ -346,15 +363,16 @@ view: v_fact_ad_daily {
   dimension: response_status_key {
     type: number
     sql: ${TABLE}.Response_Status_Key ;;
+    hidden: yes
   }
 
-  dimension: responses {
-    type: number
+  measure: responses {
+    type: sum
     sql: ${TABLE}.responses ;;
   }
 
-  dimension: revenue {
-    type: number
+  measure: revenue {
+    type: sum
     sql: ${TABLE}.revenue ;;
   }
 
@@ -363,13 +381,13 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.revenue_type ;;
   }
 
-  dimension: rmp_attempts {
-    type: number
+  measure: rmp_attempts {
+    type: sum
     sql: ${TABLE}.rmp_attempts ;;
   }
 
-  dimension: rmp_requests {
-    type: number
+  measure: rmp_requests {
+    type: sum
     sql: ${TABLE}.rmp_requests ;;
   }
 
@@ -383,13 +401,13 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.Seat_ID ;;
   }
 
-  dimension: slot_attempts {
-    type: number
+  measure: slot_attempts {
+    type: sum
     sql: ${TABLE}.slot_attempts ;;
   }
 
-  dimension: slot_requests {
-    type: number
+  measure: slot_requests {
+    type: sum
     sql: ${TABLE}.slot_requests ;;
   }
 
@@ -403,7 +421,7 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.SSP_Name ;;
   }
 
-  dimension: ssp_win_price {
+  measure: ssp_win_price {
     type: number
     sql: ${TABLE}.ssp_win_price ;;
   }
@@ -413,43 +431,98 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.usermatched ;;
   }
 
-  dimension: video_completes {
-    type: number
+  measure: video_completes {
+    type: sum
     sql: ${TABLE}.video_completes ;;
   }
 
-  dimension: video_creative_views {
-    type: number
+  measure: video_creative_views {
+    type: sum
     sql: ${TABLE}.video_creative_views ;;
   }
 
-  dimension: video_errors {
-    type: number
+  measure: video_errors {
+    type: sum
     sql: ${TABLE}.video_errors ;;
   }
 
-  dimension: video_first_quartiles {
-    type: number
+  measure: video_first_quartiles {
+    type: sum
     sql: ${TABLE}.video_first_quartiles ;;
   }
 
-  dimension: video_midpoints {
-    type: number
+  measure: video_midpoints {
+    type: sum
     sql: ${TABLE}.video_midpoints ;;
   }
 
-  dimension: video_starts {
-    type: number
+  measure: video_starts {
+    type: sum
     sql: ${TABLE}.video_starts ;;
   }
 
-  dimension: win_price {
-    type: number
+  measure: win_price {
+    type: sum
     sql: ${TABLE}.win_price ;;
   }
 
+  dimension: greatest_bid_floor {
+    type: number
+    sql: case when ${rx_bid_floor}>${ssp_bid_floor} then ${rx_bid_floor} else ${ssp_bid_floor} end;;
+  }
+
+  dimension: diff_floor_price {
+    type: number
+    sql: ${greatest_bid_floor}-${dsp_bid_price} ;;
+  }
+
+  dimension: range_from_bid_floor{
+    type: string
+    sql:
+   CASE
+            WHEN (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} <= 0.1 THEN '0-10%'
+            WHEN (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} > 0.1 AND (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} <= 0.2 THEN '11-20%'
+            WHEN (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} > 0.2 AND (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} <= 0.3 THEN '21-30%'
+            WHEN (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} > 0.3 AND (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} <= 0.4 THEN '31-40%'
+            WHEN (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} > 0.4 AND (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} <= 0.5 THEN '41-50%'
+            WHEN (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} > 0.5 AND (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} <= 0.6 THEN '51-60%'
+            WHEN (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} > 0.6 AND (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} <= 0.7 THEN '61-70%'
+            WHEN (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} > 0.7 AND (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} <= 0.8 THEN '71-80%'
+            WHEN (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} > 0.8 AND (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} <= 0.9 THEN '81-90%'
+            WHEN (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} > 0.9 AND (${greatest_bid_floor} - ${dsp_bid_price}) / ${greatest_bid_floor} <= 1 THEN '91-100%'
+            ELSE 'Other' end ;;
+  }
+
+  measure: num_of_bids {
+    description: "A measure containing the total sales value over a dynamic window."
+    type: number
+    sql: count(${diff_floor_price}) OVER (PARTITION BY
+      {% if pub_id._is_selected %} ${pub_id}, {% endif %}
+      {% if device_type_id._is_selected %} ${device_type_id}, {% endif %}
+      {% if imp_type._is_selected %} ${imp_type}, {% endif %}
+      {% if country_code._is_selected %} ${country_code}, {% endif %}
+      1 -- helper if none of the above dimensions is selected
+    )
+    ;;
+  }
+
+  measure: num_of_bids_per_range {
+    description: "A measure containing the total sales value over a dynamic window."
+    type: number
+    sql: count(${diff_floor_price}) OVER (PARTITION BY
+      {% if pub_id._is_selected %} ${pub_id}, {% endif %}
+      {% if device_type_id._is_selected %} ${device_type_id}, {% endif %}
+      {% if imp_type._is_selected %} ${imp_type}, {% endif %}
+      {% if country_code._is_selected %} ${country_code}, {% endif %}
+      {% if range_from_bid_floor._is_selected %} ${range_from_bid_floor}, {% endif %}
+      1 -- helper if none of the above dimensions is selected
+    )
+    ;;
+  }
+
+
   measure: count {
     type: count
-    drill_fields: [placement_name, dsp_name, ssp_name]
+    drill_fields: [pub_id, device_type_id, imp_type, country_code]
   }
 }

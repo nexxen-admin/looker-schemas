@@ -72,14 +72,14 @@ view: publishers_bids_breakdown {
     sql: ${TABLE}.country ;;
   }
 
-  measure: range_from_bid_floor {
+  dimension: range_from_bid_floor {
     type: string
     sql: ${TABLE}.range_from_bid_floor ;;
   }
 
 
   measure: percentage {
-    type: sum
+    type: number
     sql: ${TABLE}.percentage ;;
   }
 

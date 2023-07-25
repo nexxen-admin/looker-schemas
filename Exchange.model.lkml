@@ -104,6 +104,12 @@ join: v_dim_employee_biz_dev {
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key} ;;
     relationship: many_to_one
   }
+
+  join: dim_dsp {
+    type: inner
+    sql_on: ${dim_dsp.dsp_key}=${v_fact_ad_daily.dsp_key} ;;
+    relationship: many_to_one
+  }
 }
 
 

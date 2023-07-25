@@ -520,6 +520,15 @@ view: v_fact_ad_daily {
     ;;
   }
 
+  dimension: Classification {
+    type: string
+    sql: CASE WHEN ((dsp_deal_type = 'rx') AND (revenue_type = 'thirdparty' or ${dim_dsp.dsp_display_name} ilike 'Amobee')) THEN 'Unruly Curated PMPs'
+      WHEN ((dsp_deal_type = 'pub') AND (platformfee_type = 'pub_initiated')) THEN 'Publisher Initiated Deal'
+      WHEN ((dsp_deal_type = 'pub') AND (platformfee_type = 'unruly_initiated')) THEN 'Unruly Initiated Deal'
+      WHEN (dsp_deal_type = 'pub') THEN 'Publisher Deal'
+      ELSE 'Open Market' END;;
+  }
+
 
   measure: count {
     type: count

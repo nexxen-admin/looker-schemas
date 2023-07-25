@@ -246,6 +246,20 @@ view: unruly_player_demands {
     value_format: "$#,##0"
   }
 
+  measure: ko_sf {
+    label: "KO SF"
+    type: sum
+    sql: ${TABLE}.KO_SF ;;
+    value_format: "$#,##0"
+  }
+
+  measure: tw_sf {
+    label: "TW SF"
+    type: sum
+    sql: ${TABLE}.TW_SF ;;
+    value_format: "$#,##0"
+  }
+
 
   measure: MyCast {
     type: sum

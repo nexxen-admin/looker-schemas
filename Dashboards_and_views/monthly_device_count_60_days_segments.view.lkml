@@ -36,17 +36,17 @@ FROM dragon.viewership_content_sessions_combined_daily AA
 
   measure: ip_between_0_to_30_days {
     type: average
-    sql: ${TABLE}.between_0_to_30_days ;;
+    sql: ${TABLE}.ip_between_0_to_30_days ;;
   }
 
   measure: ip_between_0_to_60_days {
     type: average
-    sql: ${TABLE}.between_0_to_60_days ;;
+    sql: ${TABLE}.ip_between_0_to_60_days ;;
   }
 
   measure: ip_between_0_to_90_days {
     type: average
-    sql: ${TABLE}.between_0_to_90_days ;;
+    sql: ${TABLE}.ip_between_0_to_90_days ;;
   }
 
 

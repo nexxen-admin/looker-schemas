@@ -119,3 +119,9 @@ explore: peerlogix_daily_device_ip_count {
   required_access_grants: [can_view_acr_group]
   hidden: no
 }
+
+explore: ACR_weekly_count_ip_device {
+  label: "ACR weekly count ip device"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}

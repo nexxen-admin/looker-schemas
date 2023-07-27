@@ -2,7 +2,7 @@ view: peerlogix_daily_device_ip_count {
   derived_table: {
     sql: SELECT date(AA.viewing_start_utc) as date,
        COUNT(DISTINCT AA.ip) as distinct_ip_count,
-       COUNT(DISTINCT AA.device) as distinct_device_count
+       COUNT(DISTINCT AA.device_id) as distinct_device_count
 FROM dragon.viewership_content_peerlogix_daily AA
 GROUP BY 1
  ;;

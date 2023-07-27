@@ -113,3 +113,21 @@ explore: monthly_device_count_60_days_segments {
   required_access_grants: [can_view_acr_group]
   hidden: no
 }
+
+explore: peerlogix_daily_device_ip_count {
+  label: "peerlogix daily device ip count"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}
+
+explore: ACR_weekly_count_ip_device {
+  label: "ACR weekly count ip device"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}
+
+explore: peerlogix_weekly_title_device_ip {
+  label: "peerlogix weekly title device ip"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}

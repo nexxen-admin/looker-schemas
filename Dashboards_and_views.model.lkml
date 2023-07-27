@@ -330,3 +330,8 @@ explore: new_money_unruly_player_ctrl{
   #required_access_grants: [can_view_pub_come_looker]
   hidden: yes
 }
+
+explore: publishers_bids_breakdown {
+  label: "Publishers Bids Breakdown"
+  required_access_grants: [can_view_pub_come_looker]
+}

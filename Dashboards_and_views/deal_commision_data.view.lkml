@@ -184,6 +184,36 @@ view: deal_commision_data {
     sql: ${TABLE}.TotalRevenue ;;
   }
 
+  measure: split_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: case when ${TABLE}.personnel_role='Account Manager' then CAST(${TABLE}.AMSplitRevenue AS float)
+              when ${TABLE}.personnel_role='Sales' then CAST(${TABLE}.SalesSplitRevenue AS float)
+              else CAST(${TABLE}.OpsSplitRevenue AS float) end  ;;
+  }
+
+  measure: split_net_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: case when ${TABLE}.personnel_role='Account Manager' then CAST(${TABLE}.AMSplitNetRevenue AS float)
+              when ${TABLE}.personnel_role='Sales' then CAST(${TABLE}.SalesSplitNetRevenue AS float)
+              else CAST(${TABLE}.OpsSplitNetRevenue AS float) end  ;;
+  }
+
+  measure: split_revenue_no_rebate {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: case when ${TABLE}.personnel_role='Sales' then CAST(${TABLE}.SalesSplitRevenue_No_Rebate AS float)
+              else null end  ;;
+  }
+
+  measure: split_net_revenue_no_rebate {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: case when ${TABLE}.personnel_role='Sales' then CAST(${TABLE}.SalesSplitNetRevenue_No_Rebate AS float)
+      else null end  ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [dsp_name, personnel_name]

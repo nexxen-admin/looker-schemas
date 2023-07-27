@@ -204,26 +204,26 @@ view: dim_date {
 
 
   }
-  parameter: chosen_date {
-    type: date
-    label: "Chosen Date"
+  # parameter: chosen_date {
+  #   type: date
+  #   label: "Chosen Date"
 
-  }
+  # }
 
-  filter: chosen_date_range {
-    type: date
-    view_label: "Measures"
-    label: "Chosen Date Range"
-    description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
-    sql: ${date_key_raw} between  ;;
-  }
+  # filter: chosen_date_range {
+  #   type: date
+  #   view_label: "Measures"
+  #   label: "Chosen Date Range"
+  #   description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
+  #   sql: ${date_key_raw} between  ;;
+  # }
 
 
-  filter: quarter_filter {
-    type: date
-    view_label: "Measures"
-    sql: (case when ${date_key_raw} between '2023-01-01' and '2023-03-31' then 'Q1')= ;;
-  }
+  # filter: quarter_filter {
+  #   type: date
+  #   view_label: "Measures"
+  #   sql: (case when ${date_key_raw} between '2023-01-01' and '2023-03-31' then 'Q1')= ;;
+  # }
 
 
   # dimension: dynamic_sum {

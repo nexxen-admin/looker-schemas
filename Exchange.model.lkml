@@ -74,6 +74,44 @@ explore: publishers_report_monthly_for_finance {
   label: "publishers report monthly for finance"
 }
 
+explore: v_fact_ad_daily {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Fact Ad Daily Exchange"
+
+
+  join: dim_publisher_ssp {
+    type: inner
+    view_label: "SSP"
+    sql_on: ${dim_publisher_ssp.pub_ssp_key}=${v_fact_ad_daily.pub_ssp_key};;
+    relationship: many_to_one
+    #fields: []
+  }
+
+join: dim_publisher  {
+  type: inner
+  sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
+  relationship: many_to_one
+}
+
+join: v_dim_employee_biz_dev {
+  type: inner
+  sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key} ;;
+  relationship: many_to_one
+}
+
+  join: v_dim_employee_pub_ops {
+    type: inner
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp {
+    type: inner
+    sql_on: ${dim_dsp.dsp_key}=${v_fact_ad_daily.dsp_key} ;;
+    relationship: many_to_one
+  }
+}
+
 
 explore: extend_Inbound_Exchange {
   extends: [fact_ad_daily_agg]

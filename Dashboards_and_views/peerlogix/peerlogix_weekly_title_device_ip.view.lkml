@@ -7,7 +7,7 @@ view: peerlogix_weekly_title_device_ip {
 FROM dragon.viewership_content_peerlogix_daily AA
 LEFT JOIN dragon.program PP
 ON AA.tv_program_tremor_id=PP.tv_program_tremor_id
-group by 1,2
+group by week_date,title
          ;;
     }
 
@@ -18,7 +18,7 @@ group by 1,2
     }
 
 
-    measure: title {
+    dimension: title {
       type: string
       sql: ${TABLE}."title" ;;
     }

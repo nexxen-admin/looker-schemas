@@ -125,3 +125,9 @@ explore: ACR_weekly_count_ip_device {
   required_access_grants: [can_view_acr_group]
   hidden: no
 }
+
+explore: peerlogix_weekly_title_device_ip {
+  label: "peerlogix weekly title device ip"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}

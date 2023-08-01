@@ -131,3 +131,9 @@ explore: peerlogix_weekly_title_device_ip {
   required_access_grants: [can_view_acr_group]
   hidden: no
 }
+
+explore: peerlogix_monthly_ip_stability {
+  label: "peerlogix monthly ip stability"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}

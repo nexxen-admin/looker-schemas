@@ -28,8 +28,13 @@ datagroup: ChangeCleanCash_datagroup {
 access_grant: can_view_pub_come_looker {
   user_attribute: admins
   allowed_values: ["Looker_Admins"]
-
 }
+
+access_grant: allowed_users_sam_lt {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["allowed_users_sam_lt"]
+}
+
 access_grant: can_view_all_tremor {
   user_attribute: all_tremor
   allowed_values: ["all_tremor"]
@@ -298,7 +303,7 @@ explore: holdco_revenue_report{
 
 explore: q1_concentration_data{
   label: "Concentration - Q1"
-  #required_access_grants: [can_view_all_tremor]
+  required_access_grants: [can_view_pub_come_looker,allowed_users_sam_lt]
   hidden: no
 }
 
@@ -324,4 +329,14 @@ explore: new_money_unruly_player_ctrl{
   label: "New Money Unruly Player CTRL"
   #required_access_grants: [can_view_pub_come_looker]
   hidden: yes
+}
+
+explore: publishers_bids_breakdown {
+  label: "Publishers Bids Breakdown"
+  required_access_grants: [can_view_pub_come_looker]
+}
+
+explore: schain_report {
+  label: "Supply Chain Report"
+  required_access_grants: [can_view_all_tremor]
 }

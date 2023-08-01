@@ -7,7 +7,8 @@ view: monthly_device_count {
                              WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP, -3) THEN 'between_90_to_120_days'
                              ELSE null
                              END AS date_segment,
-       COUNT(DISTINCT AA.device_id) as count_devices
+       COUNT(DISTINCT AA.device_id) as count_devices,
+       COUNT(DISTINCT AA.ip) as count_ip
 FROM dragon.viewership_content_sessions_combined_daily AA
 GROUP BY 1
 ORDER BY 1 DESC
@@ -30,7 +31,14 @@ ORDER BY 1 DESC
     sql: ${TABLE}.count_devices ;;
   }
 
+  measure: count_ip {
+    type: average
+    sql: ${TABLE}.count_ip ;;
+  }
+
+
+
   set: detail {
-    fields: [date_segment, count_devices]
+    fields: [date_segment, count_devices,count_ip]
   }
 }

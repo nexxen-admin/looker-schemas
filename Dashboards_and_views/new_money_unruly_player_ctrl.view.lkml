@@ -86,6 +86,7 @@ view: new_money_unruly_player_ctrl {
   dimension: month_year {
     type: string
     sql: ${TABLE}.month_year ;;
+    suggest_persist_for: "0 seconds"
   }
 
   measure: net_revenue {

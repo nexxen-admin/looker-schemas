@@ -1,4 +1,4 @@
-view: monthly_ip_stability {
+view: peerlogix_monthly_ip_stability {
   derived_table: {
     sql: WITH tempy AS (
                 SELECT CASE  WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -1) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN '1_segment (last_30_days)'
@@ -9,23 +9,23 @@ view: monthly_ip_stability {
                              END AS date_segment,
                         AA.device_id,
                         COUNT(DISTINCT ip) as distinct_ip
-                        FROM dragon.viewership_content_sessions_combined_daily AA
+                        FROM dragon.viewership_content_peerlogix_daily AA
                         GROUP BY 1,2)
 
-SELECT date_segment,
-        SUM(CASE WHEN distinct_ip=1 THEN 1 else 0 END) as ip_1,
-        SUM(CASE WHEN distinct_ip=2 THEN 1 else 0 END) as ip_2,
-        SUM(CASE WHEN distinct_ip=3 THEN 1 else 0 END) as ip_3,
-        SUM(CASE WHEN distinct_ip=4 THEN 1 else 0 END) as ip_4,
-        SUM(CASE WHEN distinct_ip=5 THEN 1 else 0 END) as ip_5,
-        SUM(CASE WHEN (distinct_ip>=6 AND distinct_ip<=10) THEN 1 else 0 END) as ip_between_6_and_10,
-        SUM(CASE WHEN (distinct_ip>=11 AND distinct_ip<=15) THEN 1 else 0 END) as ip_between_11_and_15,
-        SUM(CASE WHEN (distinct_ip>=16 AND distinct_ip<=20) THEN 1 else 0 END) as ip_between_16_and_20,
-        SUM(CASE WHEN (distinct_ip>=21) THEN 1 else 0 END) as ip_above_20,
-        count(*) as all
-FROM tempy
-GROUP BY 1
-ORDER BY 1 DESC
+      SELECT date_segment,
+      SUM(CASE WHEN distinct_ip=1 THEN 1 else 0 END) as ip_1,
+      SUM(CASE WHEN distinct_ip=2 THEN 1 else 0 END) as ip_2,
+      SUM(CASE WHEN distinct_ip=3 THEN 1 else 0 END) as ip_3,
+      SUM(CASE WHEN distinct_ip=4 THEN 1 else 0 END) as ip_4,
+      SUM(CASE WHEN distinct_ip=5 THEN 1 else 0 END) as ip_5,
+      SUM(CASE WHEN (distinct_ip>=6 AND distinct_ip<=10) THEN 1 else 0 END) as ip_between_6_and_10,
+      SUM(CASE WHEN (distinct_ip>=11 AND distinct_ip<=15) THEN 1 else 0 END) as ip_between_11_and_15,
+      SUM(CASE WHEN (distinct_ip>=16 AND distinct_ip<=20) THEN 1 else 0 END) as ip_between_16_and_20,
+      SUM(CASE WHEN (distinct_ip>=21) THEN 1 else 0 END) as ip_above_20,
+      count(*) as all
+      FROM tempy
+      GROUP BY 1
+      ORDER BY 1 DESC
 
       ;;
   }

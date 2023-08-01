@@ -51,7 +51,7 @@ view: dim_publisher_traffic_source {
   }
 
   dimension: seller_id {
-    type: number
+    type: string
     sql: ${TABLE}.seller_id ;;
 
   }

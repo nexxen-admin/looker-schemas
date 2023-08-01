@@ -774,6 +774,13 @@ view: fact_ad_daily_agg {
 
   }
 
+  dimension: classification {
+    type: string
+    sql: case when ${dim_dsp_seat.Is_1st_Party_Demand}= 'Yes' then '1st_Party_Demand'
+              when ${dim_deal_type.deal_type_name} ='unknown' then 'OMP'
+              else 'PMP' end ;;
+  }
+
   dimension: rank_limit {
     type: number
     group_label: "Admins dim"
@@ -1035,7 +1042,7 @@ view: fact_ad_daily_agg {
     label: "Date"
     group_label: "Time Frame"
     sql: ${TABLE}.Date_Key ;;
-    #hidden: yes
+    hidden: yes
   }
 
   measure: min_date_key {
@@ -2759,6 +2766,36 @@ view: fact_ad_daily_agg {
           WHEN ${TABLE}.diff_bid_floor_bid_price>=2 THEN 'over 2';;
     hidden: yes
   }
+
+
+  parameter: choose_filter {
+    type: unquoted
+    allowed_value: {
+      label: "Revenue"
+      value: "revenue"
+    }
+    allowed_value: {
+      label: "Positive Change"
+      value: "positive_change"
+    }
+
+  }
+
+  # measure: positive_change{
+  #   type: sum
+  #   filters: [revenue_lastday_change: ">=0.15", revenue: ">=1000"]
+  #   sql: ${revenue} ;;
+  # }
+
+  # measure: dynamic_sum {
+  #   type: sum
+  #   sql: {% parameter choose_filter %};; #${TABLE}.sum_of_{% parameter choose_filter %}_from_ad_data ;;
+  #   value_format_name: "usd"
+  # }
+
+  # measure: calculation_filter {
+  #   sql: {% if choose_filter._parameter_value == 'revenue' %} ;;
+  # }
 
   measure: count {
     type: count

@@ -51,6 +51,7 @@ view: dim_employee {
 
   }
 
+
   dimension: employee_office {
     label: "Employee Office"
     type: string

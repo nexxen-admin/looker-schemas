@@ -34,9 +34,11 @@ view: deal_commision_data {
   }
 
   dimension: barter_rebate {
-    type: string
+    type: number
+    value_format: "0\%"
     sql: ${TABLE}.barter_rebate ;;
   }
+
 
   dimension: brand {
     type: string
@@ -182,6 +184,36 @@ view: deal_commision_data {
     type: sum
     value_format: "$#,##0.00"
     sql: ${TABLE}.TotalRevenue ;;
+  }
+
+  measure: split_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: case when ${TABLE}.personnel_role='Account Manager' then CAST(${TABLE}.AMSplitRevenue AS float)
+              when ${TABLE}.personnel_role='Sales' then CAST(${TABLE}.SalesSplitRevenue AS float)
+              else CAST(${TABLE}.OpsSplitRevenue AS float) end  ;;
+  }
+
+  measure: split_net_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: case when ${TABLE}.personnel_role='Account Manager' then CAST(${TABLE}.AMSplitNetRevenue AS float)
+              when ${TABLE}.personnel_role='Sales' then CAST(${TABLE}.SalesSplitNetRevenue AS float)
+              else CAST(${TABLE}.OpsSplitNetRevenue AS float) end  ;;
+  }
+
+  measure: split_revenue_no_rebate {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: case when ${TABLE}.personnel_role='Sales' then CAST(${TABLE}.SalesSplitRevenue_No_Rebate AS float)
+              else null end  ;;
+  }
+
+  measure: split_net_revenue_no_rebate {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: case when ${TABLE}.personnel_role='Sales' then CAST(${TABLE}.SalesSplitNetRevenue_No_Rebate AS float)
+      else null end  ;;
   }
 
   measure: count {

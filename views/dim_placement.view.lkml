@@ -122,6 +122,11 @@ view: dim_placement {
     sql: ${TABLE}.Placement_ID ;;
   }
 
+  dimension: NC_Check {
+    type: string
+    sql: case when ${placement_id} is null then 'No' else 'Yes' end;;
+  }
+
   dimension: placement_key {
     type: number
     sql: ${TABLE}.Placement_Key ;;

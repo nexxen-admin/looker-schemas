@@ -39,6 +39,11 @@ view: dim_up_employee_targets {
     sql: ${TABLE}.employee_key ;;
   }
 
+  dimension: team {
+    type: string
+    sql: ${TABLE}.team ;;
+  }
+
   measure: target_amount {
     type: sum
     sql: ${TABLE}.target_amount ;;

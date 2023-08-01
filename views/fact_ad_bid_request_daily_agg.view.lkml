@@ -869,9 +869,9 @@ view: fact_ad_bid_request_daily_agg {
     label: "CPM Last day "
     type: number
     description: "The CPM of the last day"
-    sql: (${Last_day_cogs}/NULLIF(${Last_day_impressions},0)) ;;
+    sql: (${Last_day_cogs}/NULLIF(${Last_day_impressions},0))*1000 ;;
     group_label: "Time Shifted Measures"
-    value_format: "0.00%"
+    value_format: "$#,##0.00"
     #filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
@@ -879,8 +879,8 @@ view: fact_ad_bid_request_daily_agg {
     label: "CPM Previous day "
     type: number
     description: "The CPM of 2 days ago"
-    sql: (${Previous_day_cogs}/NULLIF(${Previous_day_impressions},0)) ;;
-    value_format: "0.00%"
+    sql: (${Previous_day_cogs}/NULLIF(${Previous_day_impressions},0))*1000 ;;
+    value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
     #filters: [date_key_date: "2 days ago"]
   }
@@ -1138,6 +1138,11 @@ view: fact_ad_bid_request_daily_agg {
 
   }
 
+  measure: deal_stopped {
+    type: string
+    sql: case when ${Last_day_Revenue}=0 and ${Previous_day_Revenue}>0 then 'Yes' else 'No' end ;;
+  }
+
   measure: revenue_change_from_yesterday_pivot {
     type: number
     description: "Change in revenue from 2 days ago to yesterday"
@@ -1176,6 +1181,34 @@ view: fact_ad_bid_request_daily_agg {
     sql: (${Last_day_Render_Rate}/coalesce(${Previous_day_Render_Rate},0))-1 ;;
     hidden: yes
   }
+
+
+  parameter: choose_measure {
+    type: unquoted
+    allowed_value: {
+      label: "Revenue"
+      value: "revenue"
+    }
+    allowed_value: {
+      label: "Positive Change"
+      value: "positive_change"
+    }
+
+  }
+
+  # dimension: test {
+
+  #   type: yesno
+  #   sql:  case when ${revenue_lastday_change} > 0.15 then yes else no end ;;
+
+  #   }
+
+
+#   measure: positive_change {
+#     type: sum
+#     filters: [test: "yes"]
+#     sql:  ${TABLE}.sum_of_revenue_from_ad_data;;
+# }
 
 
   dimension: user_matched_key {

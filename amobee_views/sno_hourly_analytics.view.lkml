@@ -2956,7 +2956,7 @@ view: hourly_analytics {
     label: "Impressions - Last 24 Hours"
     description: "The total impressions served within the last 24 hours"
     value_format_name: decimal_0
-    sql: case when ${gmt_date_raw} > dateadd(d, -1, ${load_tracking.load_through_date}) and ${gmt_date_raw} <= ${load_tracking.load_through_date} then ${impressions} else 0 end ;;
+    sql: case when ${gmt_date_raw} > TIMESTAMPADD('day', -1, ${load_tracking.load_through_date}) and ${gmt_date_raw} <= ${load_tracking.load_through_date} then ${impressions} else 0 end ;;
   }
 
   measure: net_erpm_supply {
@@ -2990,7 +2990,7 @@ view: hourly_analytics {
   dimension: supply_load_through_date {
     type: date_raw
     hidden: yes
-    sql: date_trunc(d, dateadd(d, -1, dateadd(h, ${placement_timezone.utc_offset}, ${load_tracking.load_through_date}))) ;;
+    sql: date_trunc('day', TIMESTAMPADD('day', -1, TIMESTAMPADD(hour, ${placement_timezone.utc_offset}::INTEGER, ${load_tracking.load_through_date}))) ;;
   }
 
   measure: sum_publisher_requests_yesterday_2 {
@@ -2999,7 +2999,7 @@ view: hourly_analytics {
     description: "The total number of all requests for yesterday based on supply date"
     view_label: "Yesterday Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${publisher_requests} else 0 end ;;
+    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${publisher_requests} else 0 end ;;
   }
 
   measure: sum_eligible_requests_yesterday {
@@ -3008,7 +3008,7 @@ view: hourly_analytics {
     description: "Sum of publisher requests for yesterday where rejection code is not Blacklist, Bad Geo, Whitelist, Placement Freq Cap or Bot Rejection"
     view_label: "Yesterday Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${eligible_requests} else 0 end ;;
+    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${eligible_requests} else 0 end ;;
   }
 
   measure: eligible_requests_pct_yesterday {
@@ -3026,7 +3026,7 @@ view: hourly_analytics {
     description: "The total number of all requests that were served yesterday. These may or may not become impressions, but they were intended to be impressions; however, they might not have won at auction or there may have been some technical drop-off or any other reason why they did not turn into impressions"
     view_label: "Yesterday Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${TABLE}.ADSERVER_CODE = 1 and ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${publisher_requests} else 0 end ;;
+    sql: case when ${TABLE}.ADSERVER_CODE = 1 and ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${publisher_requests} else 0 end ;;
   }
 
   measure: served_requests_pct_yesterday {
@@ -3044,7 +3044,7 @@ view: hourly_analytics {
     description: "The total impressions yesterday"
     view_label: "Yesterday Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${impressions} else 0 end ;;
+    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${impressions} else 0 end ;;
   }
 
   measure: drop_off_rate_yesterday {
@@ -3071,7 +3071,7 @@ view: hourly_analytics {
     description: "Sum of filler campaign impressions yesterday"
     view_label: "Yesterday Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${house_impressions} else 0 end ;;
+    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${house_impressions} else 0 end ;;
   }
 
   measure: sum_completed_100_yesterday {
@@ -3080,7 +3080,7 @@ view: hourly_analytics {
     description: "The total of all impressions yesterday which were 100% completed"
     view_label: "Yesterday Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${completed_100} else 0 end ;;
+    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${completed_100} else 0 end ;;
   }
 
   measure: sum_completed_pct_impressions_yesterday {
@@ -3089,7 +3089,7 @@ view: hourly_analytics {
     description: "The total number of impressions yesterday where completed (completed 100) is measured"
     view_label: "Yesterday Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${completed_pct_impressions} else 0 end ;;
+    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${completed_pct_impressions} else 0 end ;;
   }
 
   measure: vtr_yesterday {
@@ -3107,7 +3107,7 @@ view: hourly_analytics {
     description: "The total of all clicks (where an impression was clicked upon) yesterday"
     view_label: "Yesterday Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${clicks} else 0 end ;;
+    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${clicks} else 0 end ;;
   }
 
   measure: sum_click_impressions_yesterday {
@@ -3116,7 +3116,7 @@ view: hourly_analytics {
     description: "The total of all impressions yesterday where clicks are tracked"
     view_label: "Yesterday Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${click_impressions} else 0 end ;;
+    sql: case when ${supply_date_raw} >= ${supply_load_through_date} and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${click_impressions} else 0 end ;;
   }
 
   measure: ctr_yesterday {
@@ -3134,7 +3134,7 @@ view: hourly_analytics {
     description: "The total number of all requests for day before yesterday based on supply date"
     view_label: "Day Before Yesterday Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= dateadd(d, -1, ${supply_load_through_date}) and ${supply_date_raw} < ${supply_load_through_date} then ${publisher_requests} else 0 end ;;
+    sql: case when ${supply_date_raw} >= TIMESTAMPADD('day', -1, ${supply_load_through_date}) and ${supply_date_raw} < ${supply_load_through_date} then ${publisher_requests} else 0 end ;;
   }
 
   measure: publisher_requests_diff_day_before_yesterday {
@@ -3152,7 +3152,7 @@ view: hourly_analytics {
     description: "The total of all impressions during last 14 days which were 100% completed"
     view_label: "Last 14 Days Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= dateadd(d, -13, ${supply_load_through_date}) and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${completed_100} else 0 end ;;
+    sql: case when ${supply_date_raw} >= TIMESTAMPADD('day', -13, ${supply_load_through_date}) and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${completed_100} else 0 end ;;
   }
 
   measure: sum_completed_pct_impressions_last_14_days {
@@ -3161,7 +3161,7 @@ view: hourly_analytics {
     description: "The total number of impressions during last 14 days where completed (completed 100) is measured"
     view_label: "Last 14 Days Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= dateadd(d, -13, ${supply_load_through_date}) and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${completed_pct_impressions} else 0 end ;;
+    sql: case when ${supply_date_raw} >= TIMESTAMPADD('day', -13, ${supply_load_through_date}) and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${completed_pct_impressions} else 0 end ;;
   }
 
   measure: vtr_last_14_days {
@@ -3179,7 +3179,7 @@ view: hourly_analytics {
     description: "The total of all clicks (where an impression was clicked upon) during last 14 days"
     view_label: "Last 14 Days Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= dateadd(d, -13, ${supply_load_through_date}) and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${clicks} else 0 end ;;
+    sql: case when ${supply_date_raw} >= TIMESTAMPADD('day', -13, ${supply_load_through_date}) and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${clicks} else 0 end ;;
   }
 
   measure: sum_click_impressions_last_14_days {
@@ -3188,7 +3188,7 @@ view: hourly_analytics {
     description: "The total of all impressions during last 14 days where clicks are tracked"
     view_label: "Last 14 Days Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= dateadd(d, -13, ${supply_load_through_date}) and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${click_impressions} else 0 end ;;
+    sql: case when ${supply_date_raw} >= TIMESTAMPADD('day', -13, ${supply_load_through_date}) and ${supply_date_raw} < TIMESTAMPADD('day', 1, ${supply_load_through_date}) then ${click_impressions} else 0 end ;;
   }
 
   measure: ctr_last_14_days {
@@ -3206,7 +3206,7 @@ view: hourly_analytics {
     description: "The total impressions during last 14 days"
     view_label: "Last 14 Days Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= dateadd(d, -13, ${supply_load_through_date}) and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${impressions} else 0 end ;;
+    sql: case when ${supply_date_raw} >= TIMESTAMPADD(day, -13, ${supply_load_through_date}) and ${supply_date_raw} < TIMESTAMPADD(day, 1, ${supply_load_through_date}) then ${impressions} else 0 end ;;
   }
 
   measure: sum_served_requests_last_14_days {
@@ -3215,7 +3215,7 @@ view: hourly_analytics {
     description: "The total number of all requests that were served during last 14 days. These may or may not become impressions, but they were intended to be impressions; however, they might not have won at auction or there may have been some technical drop-off or any other reason why they did not turn into impressions"
     view_label: "Last 14 Days Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${TABLE}.ADSERVER_CODE = 1 and ${supply_date_raw} >= dateadd(d, -13, ${supply_load_through_date}) and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${publisher_requests} else 0 end ;;
+    sql: case when ${TABLE}.ADSERVER_CODE = 1 and ${supply_date_raw} >= TIMESTAMPADD(day, -13, ${supply_load_through_date}) and ${supply_date_raw} < TIMESTAMPADD(day, 1, ${supply_load_through_date}) then ${publisher_requests} else 0 end ;;
   }
 
   measure: drop_off_rate_last_14_days {
@@ -3233,7 +3233,7 @@ view: hourly_analytics {
     description: "The total number of all requests during last 14 days based on supply date"
     view_label: "Last 14 Days Request and Impression Metrics"
     value_format_name: decimal_0
-    sql: case when ${supply_date_raw} >= dateadd(d, -13, ${supply_load_through_date}) and ${supply_date_raw} < dateadd(d, 1, ${supply_load_through_date}) then ${publisher_requests} else 0 end ;;
+    sql: case when ${supply_date_raw} >= TIMESTAMPADD(day, -13, ${supply_load_through_date}) and ${supply_date_raw} < TIMESTAMPADD(day, 1, ${supply_load_through_date}) then ${publisher_requests} else 0 end ;;
   }
 
   measure: average_publisher_requests_last_14_days {

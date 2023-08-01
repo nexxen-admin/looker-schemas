@@ -1,6 +1,6 @@
 view: daily_ccp_metrics {
   view_label: "Daily CCP Metrics"
-  sql_table_name: DEMAND.DAILY_CCP_METRICS ;;
+  sql_table_name: DEMAND_MART.DAILY_CCP_METRICS ;;
 
   dimension_group: asofdate {
     type: time

@@ -1,5 +1,5 @@
 view: bt_cluster_provider_core {
-  sql_table_name: DIM.USER_DATA_VENDOR ;;
+  sql_table_name: DIM.USER_DATA_VENDOR_VIEW ;;
 
   dimension: user_data_vendor_id {
     type: string

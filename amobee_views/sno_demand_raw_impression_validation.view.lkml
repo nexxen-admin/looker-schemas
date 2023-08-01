@@ -12,7 +12,7 @@ view: sno_demand_raw_impression_validation {
           t.demand_date
         , fmd.starttimezone_id AS timezone_id
         , SUM(t.impressions) AS impressions
-      FROM rawdb.raw_impression t
+      FROM rawdb.raw_impression_v2 t
       JOIN dim.flight_media_details fmd
         ON t.flight_media_id = fmd.flight_media_id
       WHERE {% condition demand_date %} demand_date {% endcondition %}

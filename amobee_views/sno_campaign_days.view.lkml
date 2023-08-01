@@ -1,15 +1,15 @@
 view: campaign_days {
   label: "Campaign"
   derived_table: {
-    sql_trigger_value: select hour(dateadd(m, 5, current_time())) ;;
+    sql_trigger_value: select hour(TIMESTAMPADD(m, 5, current_time())) ;;
     sql:
       SELECT
         fd.CAMPAIGN_ID,
         COUNT(DISTINCT td.TIME) / 24 AS CAMPAIGN_TOTAL_DAYS,
-        COUNT(DISTINCT CASE WHEN td.TIME >= DATEADD('DAY', 1, lt.LOAD_THROUGH_DATE) THEN td.TIME END) / 24 AS CAMPAIGN_REMAINING_DAYS
+        COUNT(DISTINCT CASE WHEN td.TIME >= TIMESTAMPADD(DAY, 1, lt.LOAD_THROUGH_DATE) THEN td.TIME END) / 24 AS CAMPAIGN_REMAINING_DAYS
       FROM
-        DIM.FLIGHT_MEDIA_DETAILS_BASE fmd
-          JOIN DIM.FLIGHT_DETAILS fd
+        DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW fmd
+          JOIN DIM.FLIGHT_DETAILS_VIEW fd
             ON fd.flight_id = fmd.flight_id
           JOIN DEMAND_MART.LOAD_TRACKING lt
             ON fmd.STARTTIMEZONE_ID = lt.START_TIMEZONE AND
@@ -18,9 +18,9 @@ view: campaign_days {
           JOIN
           (
             SELECT
-              DATEADD('HOUR', ROW_NUMBER() OVER (ORDER BY cd.CAMPAIGN_ID) - 1, (SELECT DATE_TRUNC('HOUR', MIN(fd2.BEGIN_DATETIME_LOCAL)) FROM DIM.FLIGHT_DETAILS fd2 WHERE fd2.FLIGHT_ACTIVE = 1)) AS TIME
+              TIMESTAMPADD(hour, ROW_NUMBER() OVER (ORDER BY cd.CAMPAIGN_ID) - 1, (SELECT DATE_TRUNC('HOUR', MIN(fd2.BEGIN_DATETIME_LOCAL)) FROM DIM.FLIGHT_DETAILS_VIEW fd2 WHERE fd2.FLIGHT_ACTIVE = 1)) AS TIME
             FROM
-              DIM.CAMPAIGN_DETAILS_BASE cd
+              DIM.CAMPAIGN_DETAILS_BASE_VIEW cd
             ORDER BY
               TIME
             LIMIT

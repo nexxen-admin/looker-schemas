@@ -17,7 +17,7 @@ view: flight_frequency_cap_violations {
               coalesce(max(fc.max_exposures),0) as max_exposures,
               coalesce(max(fc.exposure_minutes),0) as exposure_minutes,
               sum(r1.billable_units) as units_in_cap
-            FROM rawdb.raw_impression r1
+            FROM rawdb.raw_impression_v2 r1
             JOIN dim.flight_media_details f ON r1.flight_media_id = f.flight_media_id
             LEFT JOIN dim.frequency_cap fc ON fc.level = 4 AND fc.ref_id = f.flight_id AND r1.eventtime >= fc.start_time and r1.eventtime < coalesce(fc.end_time, to_date('9999-12-12'))
             LEFT JOIN (
@@ -31,7 +31,7 @@ view: flight_frequency_cap_violations {
                   r.userid,
                   r.billable_units,
                   f.flight_id
-                FROM rawdb.raw_impression r
+                FROM rawdb.raw_impression_v2 r
                 JOIN dim.flight_media_details f ON r.flight_media_id = f.flight_media_id
                 WHERE 1=1
                 {% if raw_impression.raw_demand_date._is_filtered %}

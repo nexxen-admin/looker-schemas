@@ -1,5 +1,5 @@
 view: daily_data_usage {
-  sql_table_name: EDW.DAILY_DATA_USAGE_EXTENDED ;;
+  sql_table_name: RAWDB.DAILY_DATA_USAGE ;;
   label: "Data Usage Metrics"
 
   dimension: cost_attribute_id {

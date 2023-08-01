@@ -1,5 +1,5 @@
 view: partner_media {
-  sql_table_name: DIM.PARTNER_MEDIA ;;
+  sql_table_name: DIM.PARTNER_MEDIA_VIEW ;;
 
   dimension: partner_id {
     type: number

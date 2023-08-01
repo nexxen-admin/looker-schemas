@@ -1,55 +1,55 @@
 view: raw_impression {
   label: "Raw Impression Metrics"
   derived_table: {
-    sql: SELECT * FROM RAWDB.RAW_IMPRESSION
+    sql: SELECT * FROM RAWDB.RAW_IMPRESSION_V2
     WHERE
     {% if dst_epoch_raw_date._is_filtered %}
-      epoch::timestamp_ntz >= DATEADD('day', -1, {% date_start dst_epoch_raw_date %}) AND
-      epoch::timestamp_ntz < DATEADD('day', 1, {% date_end dst_epoch_raw_date %}) AND
+      epoch::timestamp_ntz >= TIMESTAMPADD('day', -1, {% date_start dst_epoch_raw_date %}) AND
+      epoch::timestamp_ntz < TIMESTAMPADD('day', 1, {% date_end dst_epoch_raw_date %}) AND
     {% endif %}
     {% if dst_eventtime_date._is_filtered %}
-      eventtime >= DATEADD('day', -1, {% date_start dst_eventtime_date %}) AND
-      eventtime < DATEADD('day', 1, {% date_end dst_eventtime_date %}) AND
+      eventtime >= TIMESTAMPADD('day', -1, {% date_start dst_eventtime_date %}) AND
+      eventtime < TIMESTAMPADD('day', 1, {% date_end dst_eventtime_date %}) AND
     {% endif %}
     {% if dst_eventtime_time._is_filtered %}
-      eventtime >= DATEADD('day', -1, {% date_start dst_eventtime_time %}) AND
-      eventtime < DATEADD('day', 1, {% date_end dst_eventtime_time %}) AND
+      eventtime >= TIMESTAMPADD('day', -1, {% date_start dst_eventtime_time %}) AND
+      eventtime < TIMESTAMPADD('day', 1, {% date_end dst_eventtime_time %}) AND
     {% endif %}
     {% if dst_eventtime_week._is_filtered %}
-      eventtime >= DATEADD('day', -1, {% date_start dst_eventtime_week %}) AND
-      eventtime < DATEADD('day', 1, {% date_end dst_eventtime_week %}) AND
+      eventtime >= TIMESTAMPADD('day', -1, {% date_start dst_eventtime_week %}) AND
+      eventtime < TIMESTAMPADD('day', 1, {% date_end dst_eventtime_week %}) AND
     {% endif %}
     {% if dst_eventtime_month._is_filtered %}
-      eventtime >= DATEADD('day', -1, {% date_start dst_eventtime_month %}) AND
-      eventtime < DATEADD('day', 1, {% date_end dst_eventtime_month %}) AND
+      eventtime >= TIMESTAMPADD('day', -1, {% date_start dst_eventtime_month %}) AND
+      eventtime < TIMESTAMPADD('day', 1, {% date_end dst_eventtime_month %}) AND
     {% endif %}
     {% if dst_eventtime_quarter._is_filtered %}
-      eventtime >= DATEADD('day', -1, {% date_start dst_eventtime_quarter %}) AND
-      eventtime < DATEADD('day', 1, {% date_end dst_eventtime_quarter %}) AND
+      eventtime >= TIMESTAMPADD('day', -1, {% date_start dst_eventtime_quarter %}) AND
+      eventtime < TIMESTAMPADD('day', 1, {% date_end dst_eventtime_quarter %}) AND
     {% endif %}
     {% if dst_eventtime_year._is_filtered %}
-      eventtime >= DATEADD('day', -1, {% date_start dst_eventtime_year %}) AND
-      eventtime < DATEADD('day', 1, {% date_end dst_eventtime_year %}) AND
+      eventtime >= TIMESTAMPADD('day', -1, {% date_start dst_eventtime_year %}) AND
+      eventtime < TIMESTAMPADD('day', 1, {% date_end dst_eventtime_year %}) AND
     {% endif %}
     {% if dst_keydate_date._is_filtered %}
-      keydate >= DATEADD('day', -1, {% date_start dst_keydate_date %}) AND
-      keydate < DATEADD('day', 1, {% date_end dst_keydate_date %}) AND
+      keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_date %}) AND
+      keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_date %}) AND
     {% endif %}
     {% if dst_keydate_week._is_filtered %}
-      keydate >= DATEADD('day', -1, {% date_start dst_keydate_week %}) AND
-      keydate < DATEADD('day', 1, {% date_end dst_keydate_week %}) AND
+      keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_week %}) AND
+      keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_week %}) AND
     {% endif %}
     {% if dst_keydate_month._is_filtered %}
-      keydate >= DATEADD('day', -1, {% date_start dst_keydate_month %}) AND
-      keydate < DATEADD('day', 1, {% date_end dst_keydate_month %}) AND
+      keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_month %}) AND
+      keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_month %}) AND
     {% endif %}
     {% if dst_keydate_quarter._is_filtered %}
-      keydate >= DATEADD('day', -1, {% date_start dst_keydate_quarter %}) AND
-      keydate < DATEADD('day', 1, {% date_end dst_keydate_quarter %}) AND
+      keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_quarter %}) AND
+      keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_quarter %}) AND
     {% endif %}
     {% if dst_keydate_year._is_filtered %}
-      keydate >= DATEADD('day', -1, {% date_start dst_keydate_year %}) AND
-      keydate < DATEADD('day', 1, {% date_end dst_keydate_year %}) AND
+      keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_year %}) AND
+      keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_year %}) AND
     {% endif %}
     1=1 ;;
 }
@@ -197,7 +197,14 @@ view: raw_impression {
     type: string
     label: "Age"
     hidden: no
-    sql: public.f_attr_lookup(${TABLE}.AGE) ;;
+    sql: ${attribute_lookup_languageid.description} ;;
+  }
+
+  dimension: ageid {
+    type: number
+    hidden: yes
+    value_format_name: id
+    sql: ${TABLE}.AGE ;;
   }
 
   dimension: age_description {
@@ -244,6 +251,12 @@ view: raw_impression {
     type: string
     hidden: yes
     sql: ${TABLE}.ATTRIBUTES ;;
+  }
+
+  dimension: bt_id {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.BT_ID ;;
   }
 
   dimension: autoplay {
@@ -329,7 +342,7 @@ view: raw_impression {
     type: string
     view_label: "Supplemental Facets"
     description: "The browser which was used to view the impression"
-    sql: prod.public.f_attr_lookup(${TABLE}.BROWSERID) ;;
+    sql: ${attribute_lookup_browserid.description} ;;
   }
 
   dimension: browserid {
@@ -979,7 +992,7 @@ measure: sum_demand_revenue {
     label: "Device"
     view_label: "Supplemental Facets"
     description: "The name of the device where the impression was seen."
-    sql: prod.public.f_attr_lookup(${TABLE}.DEVICEID) ;;
+    sql:${attribute_lookup_deviceid.description} ;;
     suggestable: no
   }
 
@@ -1185,8 +1198,8 @@ measure: sum_demand_revenue {
     label: "[DST] Local Event Time (RAW)"
     view_label: "Raw Impression Dates"
     description: "The date/time of the request in local time accounting DST. Includes minute and second."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, ${TABLE}.EPOCH::timestamp_ntz)
-      else ${TABLE}.EPOCH::timestamp_ntz end ;;
+    sql: case when ${platform_client.use_daylight_saving} then ${TABLE}.EPOCH_NUMBER::timestamp_ntz AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
+      else ${TABLE}.EPOCH_NUMBER::timestamp_ntz end ;;
   }
 
   dimension_group: eventtime {
@@ -1218,7 +1231,7 @@ measure: sum_demand_revenue {
     ]
     label: "[DST] Local Event Time"
     view_label: "Raw Impression Dates"
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, ${TABLE}.EVENTTIME)
+    sql: case when ${platform_client.use_daylight_saving} then ${TABLE}.EVENTTIME AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
       else ${TABLE}.EVENTTIME end ;;
   }
 
@@ -1301,7 +1314,14 @@ measure: sum_demand_revenue {
     type: string
     label: "Gender"
     hidden: no
-    sql: public.f_attr_lookup(${TABLE}.GENDER)  ;;
+    sql: ${attribute_lookup_genderid.description}  ;;
+  }
+
+  dimension: genderid {
+    type: number
+    hidden: yes
+    value_format_name: id
+    sql: ${TABLE}.GENDER  ;;
   }
 
   dimension: gender_description {
@@ -1627,7 +1647,7 @@ measure: sum_demand_revenue {
       year
     ]
     description: "The date/time of the impression in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, ${TABLE}.KEYDATE)
+    sql: case when ${platform_client.use_daylight_saving} then ${TABLE}.KEYDATE AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
       else ${TABLE}.KEYDATE end ;;
   }
 
@@ -1637,7 +1657,14 @@ measure: sum_demand_revenue {
     label: "Browser Language"
     view_label: "Supplemental Facets"
     description: "Language used by the browser"
-    sql: prod.public.f_attr_lookup(${TABLE}.LANGUAGE) ;;
+    sql: ${attribute_lookup_languageid.description} ;;
+  }
+
+  dimension: languageid {
+    type: number
+    hidden: yes
+    value_format_name: id
+    sql: ${TABLE}.LANGUAGE ;;
   }
 
   dimension: logging_diagnostic_code {
@@ -1813,7 +1840,7 @@ measure: IBMM_Amount{
     label: "Platform"
     view_label: "Supplemental Facets"
     description: "The platform where the impression was seen examples include Android, iOS, Mac, Windows, etc."
-    sql: public.f_attr_lookup(${TABLE}.PLATFORMID) ;;
+    sql: ${attribute_lookup_platformid.description} ;;
   }
 
   dimension: platform_markup {

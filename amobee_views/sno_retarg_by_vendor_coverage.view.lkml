@@ -64,7 +64,7 @@ view: retarg_by_vendor_coverage {
       AND p.placement_id = rbv.placement_id
       AND p.business_region = rbv.business_region
       AND p.device_type = rbv.device_type
-    JOIN dim.user_data_vendor udv ON rbv.vendor_id = udv.user_data_vendor_id AND
+    JOIN dim.user_data_vendor_view udv ON rbv.vendor_id = udv.user_data_vendor_id AND
                                      rbv.vendor_type = udv.user_data_vendor_type_id ;;
   }
 

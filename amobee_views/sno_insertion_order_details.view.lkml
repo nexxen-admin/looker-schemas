@@ -151,7 +151,7 @@ view: insertion_order_details {
     type: date
     label: "[DST] IO Local Begin Date"
     description: "The start date of the Insertion Order in local time accounting DST"
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, ${TABLE}.IO_BEGIN_DATE)
+    sql: case when ${platform_client.use_daylight_saving} then ${TABLE}.IO_BEGIN_DATE AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
       else ${TABLE}.IO_BEGIN_DATE end ;;
   }
 
@@ -159,15 +159,15 @@ view: insertion_order_details {
     type: date
     label: "IO End Date"
     description: "The end date of the Insertion Order"
-    sql: DATEADD(m, -1, ${TABLE}.IO_END_DATE) ;;
+    sql: TIMESTAMPADD(month, -1, ${TABLE}.IO_END_DATE) ;;
   }
 
   dimension: dst_io_end_date {
     type: date
     label: "[DST] IO Local End Date"
     description: "The end date of the Insertion Order in local time accounting DST"
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, DATEADD(m, -1, ${TABLE}.IO_END_DATE))
-      else DATEADD(m, -1, ${TABLE}.IO_END_DATE) end ;;
+    sql: case when ${platform_client.use_daylight_saving} then TIMESTAMPADD(month, -1, ${TABLE}.IO_END_DATE) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
+      else TIMESTAMPADD(month, -1, ${TABLE}.IO_END_DATE) end ;;
   }
 
   dimension: io_impressions {

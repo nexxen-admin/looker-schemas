@@ -1,5 +1,5 @@
 view: load_tracking {
-  sql_table_name: DIM.LOAD_TRACKING ;;
+  sql_table_name: RAWDB.LOAD_TRACKING ;;
 
   dimension: end_timezone {
     type: number

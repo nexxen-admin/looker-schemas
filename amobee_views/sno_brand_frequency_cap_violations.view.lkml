@@ -17,9 +17,9 @@ view: brand_frequency_cap_violations {
               coalesce(max(fc.max_exposures),0) as max_exposures,
               coalesce(max(fc.exposure_minutes),0) as exposure_minutes,
               sum(r1.billable_units) as units_in_cap
-            FROM rawdb.raw_impression r1
-            JOIN dim.campaign_details c ON c.campaign_id = r1.campaign_id
-            LEFT JOIN dim.frequency_cap fc ON fc.level = 6 AND fc.ref_id = r1.placement_id AND r1.eventtime >= fc.start_time AND r1.eventtime < coalesce(fc.end_time, to_date('9999-12-12'))
+            FROM rawdb.raw_impression_v2 r1
+            JOIN dim.campaign_details_view c ON c.campaign_id = r1.campaign_id
+            LEFT JOIN dim.frequency_cap_view fc ON fc.level = 6 AND fc.ref_id = r1.placement_id AND r1.eventtime >= fc.start_time AND r1.eventtime < coalesce(fc.end_time, TO_TIMESTAMP('9999-12-12', 'YYYY-MM-DD'))
             LEFT JOIN (
                 SELECT
                   r.pk_id,
@@ -31,212 +31,212 @@ view: brand_frequency_cap_violations {
                   r.userid,
                   r.billable_units,
                   c.advertiser_brand_id
-                FROM rawdb.raw_impression r
-                JOIN dim.campaign_details c ON c.campaign_id = r.campaign_id
+                FROM rawdb.raw_impression_v2 r
+                JOIN dim.campaign_details_view c ON c.campaign_id = r.campaign_id
                 WHERE 1=1
                 {% if raw_impression.raw_demand_date._is_filtered %}
-                  AND r.demand_date >= DATEADD('day', -1, {% date_start raw_impression.raw_demand_date %}) AND
+                  AND r.demand_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.raw_demand_date %}) AND
                   r.demand_date < {% date_end raw_impression.raw_demand_date %}
                 {% endif %}
                 {% if raw_impression.demand_date_date._is_filtered %}
-                  AND r.demand_date >= DATEADD('day', -1, {% date_start raw_impression.demand_date_date %}) AND
+                  AND r.demand_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.demand_date_date %}) AND
                   r.demand_date < {% date_end raw_impression.demand_date_date %}
                 {% endif %}
                 {% if raw_impression.demand_date_month._is_filtered %}
-                  AND r.demand_date >= DATEADD('day', -1, {% date_start raw_impression.demand_date_month %}) AND
+                  AND r.demand_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.demand_date_month %}) AND
                   r.demand_date < {% date_end raw_impression.demand_date_month %}
                 {% endif %}
                 {% if raw_impression.demand_date_year._is_filtered %}
-                  AND r.demand_date >= DATEADD('day', -1, {% date_start raw_impression.demand_date_year %}) AND
+                  AND r.demand_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.demand_date_year %}) AND
                   r.demand_date < {% date_end raw_impression.demand_date_year %}
                 {% endif %}
 
                 {% if raw_impression.local_demand_date_date._is_filtered %}
-                  AND r.local_demand_date >= DATEADD('day', -1, {% date_start raw_impression.local_demand_date_date %}) AND
+                  AND r.local_demand_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.local_demand_date_date %}) AND
                   r.local_demand_date < {% date_end raw_impression.local_demand_date_date %}
                 {% endif %}
                 {% if raw_impression.local_demand_date_month._is_filtered %}
-                  AND r.local_demand_date >= DATEADD('day', -1, {% date_start raw_impression.local_demand_date_month %}) AND
+                  AND r.local_demand_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.local_demand_date_month %}) AND
                   r.local_demand_date < {% date_end raw_impression.local_demand_date_month %}
                 {% endif %}
                 {% if raw_impression.local_demand_date_year._is_filtered %}
-                  AND r.local_demand_date >= DATEADD('day', -1, {% date_start raw_impression.local_demand_date_year %}) AND
+                  AND r.local_demand_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.local_demand_date_year %}) AND
                   r.local_demand_date < {% date_end raw_impression.local_demand_date_year %}
                 {% endif %}
 
                 {% if raw_impression.supply_date_date._is_filtered %}
-                  AND r.supply_date >= DATEADD('day', -1, {% date_start raw_impression.supply_date_date %}) AND
+                  AND r.supply_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.supply_date_date %}) AND
                   r.supply_date < {% date_end raw_impression.supply_date_date %}
                 {% endif %}
                 {% if raw_impression.supply_date_month._is_filtered %}
-                  AND r.supply_date >= DATEADD('day', -1, {% date_start raw_impression.supply_date_month %}) AND
+                  AND r.supply_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.supply_date_month %}) AND
                   r.supply_date < {% date_end raw_impression.supply_date_month %}
                 {% endif %}
                 {% if raw_impression.supply_date_year._is_filtered %}
-                  AND r.supply_date >= DATEADD('day', -1, {% date_start raw_impression.supply_date_year %}) AND
+                  AND r.supply_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.supply_date_year %}) AND
                   r.supply_date < {% date_end raw_impression.supply_date_year %}
                 {% endif %}
 
                 {% if raw_impression.local_supply_date_date._is_filtered %}
-                  AND r.local_supply_date >= DATEADD('day', -1, {% date_start raw_impression.local_supply_date_date %}) AND
+                  AND r.local_supply_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.local_supply_date_date %}) AND
                   r.local_supply_date < {% date_end raw_impression.local_supply_date_date %}
                 {% endif %}
                 {% if raw_impression.local_supply_date_month._is_filtered %}
-                  AND r.local_supply_date >= DATEADD('day', -1, {% date_start raw_impression.local_supply_date_month %}) AND
+                  AND r.local_supply_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.local_supply_date_month %}) AND
                   r.local_supply_date < {% date_end raw_impression.local_supply_date_month %}
                 {% endif %}
                 {% if raw_impression.local_supply_date_year._is_filtered %}
-                  AND r.local_supply_date >= DATEADD('day', -1, {% date_start raw_impression.local_supply_date_year %}) AND
+                  AND r.local_supply_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.local_supply_date_year %}) AND
                   r.local_supply_date < {% date_end raw_impression.local_supply_date_year %}
                 {% endif %}
 
                 {% if raw_impression.raw_region_date._is_filtered %}
-                  AND r.region_date >= DATEADD('day', -1, {% date_start raw_impression.raw_region_date %}) AND
+                  AND r.region_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.raw_region_date %}) AND
                   r.region_date < {% date_end raw_impression.raw_region_date %}
                 {% endif %}
                 {% if raw_impression.region_date_date._is_filtered %}
-                  AND r.region_date >= DATEADD('day', -1, {% date_start raw_impression.region_date_date %}) AND
+                  AND r.region_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.region_date_date %}) AND
                   r.region_date < {% date_end raw_impression.region_date_date %}
                 {% endif %}
                 {% if raw_impression.region_date_month._is_filtered %}
-                  AND r.region_date >= DATEADD('day', -1, {% date_start raw_impression.region_date_month %}) AND
+                  AND r.region_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.region_date_month %}) AND
                   r.region_date < {% date_end raw_impression.region_date_month %}
                 {% endif %}
                 {% if raw_impression.region_date_year._is_filtered %}
-                  AND r.region_date >= DATEADD('day', -1, {% date_start raw_impression.region_date_year %}) AND
+                  AND r.region_date >= TIMESTAMPADD('day', -1, {% date_start raw_impression.region_date_year %}) AND
                   r.region_date < {% date_end raw_impression.region_date_year %}
                 {% endif %}
 
                 {% if raw_impression.keydate_date._is_filtered %}
-                  AND r.keydate >= DATEADD('day', -1, {% date_start raw_impression.keydate_date %}) AND
+                  AND r.keydate >= TIMESTAMPADD('day', -1, {% date_start raw_impression.keydate_date %}) AND
                   r.keydate < {% date_end raw_impression.keydate_date %}
                 {% endif %}
                 {% if raw_impression.keydate_month._is_filtered %}
-                  AND r.keydate >= DATEADD('day', -1, {% date_start raw_impression.keydate_month %}) AND
+                  AND r.keydate >= TIMESTAMPADD('day', -1, {% date_start raw_impression.keydate_month %}) AND
                   r.keydate < {% date_end raw_impression.keydate_month %}
                 {% endif %}
                 {% if raw_impression.keydate_year._is_filtered %}
-                  AND r.keydate >= DATEADD('day',-1, {% date_start raw_impression.keydate_year %}) AND
+                  AND r.keydate >= TIMESTAMPADD('day',-1, {% date_start raw_impression.keydate_year %}) AND
                   r.keydate < {% date_end raw_impression.keydate_year %}
                 {% endif %}
                 {% if raw_impression.keydate_quarter._is_filtered %}
-                  AND r.keydate >= DATEADD('day',-1, {% date_start raw_impression.keydate_quarter %}) AND
+                  AND r.keydate >= TIMESTAMPADD('day',-1, {% date_start raw_impression.keydate_quarter %}) AND
                   r.keydate < {% date_end raw_impression.keydate_quarter %}
                 {% endif %}
                 {% if raw_impression.keydate_week._is_filtered %}
-                  AND r.keydate >= DATEADD('day',-1, {% date_start raw_impression.keydate_week %}) AND
+                  AND r.keydate >= TIMESTAMPADD('day',-1, {% date_start raw_impression.keydate_week %}) AND
                   r.keydate < {% date_end raw_impression.keydate_week %}
                 {% endif %}
 
                 {% if raw_impression.dst_keydate_date._is_filtered %}
-                  AND r.keydate >= DATEADD('day',-2, {% date_start raw_impression.dst_keydate_date %}) AND
-                  r.keydate < DATEADD('day',1, {% date_end raw_impression.dst_keydate_date %})
+                  AND r.keydate >= TIMESTAMPADD('day',-2, {% date_start raw_impression.dst_keydate_date %}) AND
+                  r.keydate < TIMESTAMPADD('day',1, {% date_end raw_impression.dst_keydate_date %})
                 {% endif %}
                 {% if raw_impression.dst_keydate_week._is_filtered %}
-                  AND r.keydate >= DATEADD('day', -2, {% date_start raw_impression.dst_keydate_week %}) AND
-                  r.keydate < DATEADD('day',1, {% date_end raw_impression.dst_keydate_week %})
+                  AND r.keydate >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_keydate_week %}) AND
+                  r.keydate < TIMESTAMPADD('day',1, {% date_end raw_impression.dst_keydate_week %})
                 {% endif %}
                 {% if raw_impression.dst_keydate_month._is_filtered %}
-                  AND r.keydate >= DATEADD('day', -2, {% date_start raw_impression.dst_keydate_month %}) AND
-                  r.keydate < DATEADD('day',1, {% date_end raw_impression.dst_keydate_month %})
+                  AND r.keydate >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_keydate_month %}) AND
+                  r.keydate < TIMESTAMPADD('day',1, {% date_end raw_impression.dst_keydate_month %})
                 {% endif %}
                 {% if raw_impression.dst_keydate_quarter._is_filtered %}
-                  AND r.keydate >= DATEADD('day', -2, {% date_start raw_impression.dst_keydate_quarter %}) AND
-                  r.keydate < DATEADD('day', 1, {% date_end raw_impression.dst_keydate_quarter %})
+                  AND r.keydate >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_keydate_quarter %}) AND
+                  r.keydate < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_keydate_quarter %})
                 {% endif %}
                 {% if raw_impression.dst_keydate_year._is_filtered %}
-                  AND r.keydate >= DATEADD('day', -2, {% date_start raw_impression.dst_keydate_year %}) AND
-                  r.keydate < DATEADD('day', 1, {% date_end raw_impression.dst_keydate_year %})
+                  AND r.keydate >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_keydate_year %}) AND
+                  r.keydate < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_keydate_year %})
                 {% endif %}
 
                 {% if raw_impression.epoch_raw_date._is_filtered %}
-                AND r.epoch::timestamp_ntz >= DATEADD('day',-1, TO_TIMESTAMP({% date_start raw_impression.epoch_raw_date %})) AND
+                AND r.epoch::timestamp_ntz >= TIMESTAMPADD('day',-1, TO_TIMESTAMP({% date_start raw_impression.epoch_raw_date %})) AND
                 r.epoch < {% date_end raw_impression.epoch_raw_date %}
                 {% endif %}
                 {% if raw_impression.eventtime_date._is_filtered %}
-                  AND eventtime >= DATEADD('day', -1, {% date_start raw_impression.eventtime_date %}) AND
+                  AND eventtime >= TIMESTAMPADD('day', -1, {% date_start raw_impression.eventtime_date %}) AND
                   eventtime < {% date_end raw_impression.eventtime_date %}
                 {% endif %}
                 {% if raw_impression.eventtime_time._is_filtered %}
-                  AND eventtime >= DATEADD('day', -1, {% date_start raw_impression.eventtime_time %}) AND
+                  AND eventtime >= TIMESTAMPADD('day', -1, {% date_start raw_impression.eventtime_time %}) AND
                   eventtime < {% date_end raw_impression.eventtime_time %}
                 {% endif %}
                 {% if raw_impression.eventtime_week._is_filtered %}
-                  AND eventtime >= DATEADD('day', -1, {% date_start raw_impression.eventtime_week %}) AND
+                  AND eventtime >= TIMESTAMPADD('day', -1, {% date_start raw_impression.eventtime_week %}) AND
                   eventtime < {% date_end raw_impression.eventtime_week %}
                 {% endif %}
                 {% if raw_impression.eventtime_month._is_filtered %}
-                  AND eventtime >= DATEADD('day', -1, {% date_start raw_impression.eventtime_month %}) AND
+                  AND eventtime >= TIMESTAMPADD('day', -1, {% date_start raw_impression.eventtime_month %}) AND
                   eventtime < {% date_end raw_impression.eventtime_month %}
                 {% endif %}
                 {% if raw_impression.eventtime_quarter._is_filtered %}
-                  AND eventtime >= DATEADD('day', -1, {% date_start raw_impression.eventtime_quarter %}) AND
+                  AND eventtime >= TIMESTAMPADD('day', -1, {% date_start raw_impression.eventtime_quarter %}) AND
                   eventtime < {% date_end raw_impression.eventtime_quarter %}
                 {% endif %}
                 {% if raw_impression.eventtime_year._is_filtered %}
-                  AND eventtime >= DATEADD('day', -1, {% date_start raw_impression.eventtime_year %}) AND
+                  AND eventtime >= TIMESTAMPADD('day', -1, {% date_start raw_impression.eventtime_year %}) AND
                   eventtime < {% date_end raw_impression.eventtime_year %}
                 {% endif %}
 
                 {% if raw_impression.dst_epoch_raw_date._is_filtered %}
-                  AND epoch::timestamp_ntz >= DATEADD('day', -2, {% date_start raw_impression.dst_epoch_raw_date %}) AND
-                  epoch::timestamp_ntz < DATEADD('day', 1, {% date_end raw_impression.dst_epoch_raw_date %})
+                  AND epoch::timestamp_ntz >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_epoch_raw_date %}) AND
+                  epoch::timestamp_ntz < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_epoch_raw_date %})
                 {% endif %}
                 {% if raw_impression.dst_eventtime_date._is_filtered %}
-                  AND eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_date %}) AND
-                  eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_date %})
+                  AND eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_date %}) AND
+                  eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_date %})
                 {% endif %}
                 {% if raw_impression.dst_eventtime_time._is_filtered %}
-                  AND eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_time %}) AND
-                  eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_time %})
+                  AND eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_time %}) AND
+                  eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_time %})
                 {% endif %}
                 {% if raw_impression.dst_eventtime_week._is_filtered %}
-                  AND eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_week %}) AND
-                  eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_week %})
+                  AND eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_week %}) AND
+                  eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_week %})
                 {% endif %}
                 {% if raw_impression.dst_eventtime_month._is_filtered %}
-                  AND eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_month %}) AND
-                  eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_month %})
+                  AND eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_month %}) AND
+                  eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_month %})
                 {% endif %}
                 {% if raw_impression.dst_eventtime_quarter._is_filtered %}
-                  AND eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_quarter %}) AND
-                  eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_quarter %})
+                  AND eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_quarter %}) AND
+                  eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_quarter %})
                 {% endif %}
                 {% if raw_impression.dst_eventtime_year._is_filtered %}
-                  AND eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_year %}) AND
-                  eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_year %})
+                  AND eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_year %}) AND
+                  eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_year %})
                 {% endif %}
 
                 {% if raw_impression.epoch_time._is_filtered %}
-                  AND epoch::timestamp_ntz >= DATEADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_time %})) AND
+                  AND epoch::timestamp_ntz >= TIMESTAMPADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_time %})) AND
                   epoch < {% date_end raw_impression.epoch_time %}
                 {% endif %}
                 {% if raw_impression.epoch_hour._is_filtered %}
-                  AND epoch::timestamp_ntz >= DATEADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_hour %})) AND
+                  AND epoch::timestamp_ntz >= TIMESTAMPADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_hour %})) AND
                   epoch < {% date_end raw_impression.epoch_hour %}
                 {% endif %}
                 {% if raw_impression.epoch_date._is_filtered %}
-                  AND epoch::timestamp_ntz >= DATEADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_date %})) AND
+                  AND epoch::timestamp_ntz >= TIMESTAMPADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_date %})) AND
                   epoch < {% date_end raw_impression.epoch_date %}
                 {% endif %}
                 {% if raw_impression.epoch_week._is_filtered %}
-                  AND epoch::timestamp_ntz >= DATEADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_week %})) AND
+                  AND epoch::timestamp_ntz >= TIMESTAMPADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_week %})) AND
                   epoch < {% date_end raw_impression.epoch_week %}
                 {% endif %}
                 {% if raw_impression.epoch_month._is_filtered %}
-                  AND epoch::timestamp_ntz >= DATEADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_month %})) AND
+                  AND epoch::timestamp_ntz >= TIMESTAMPADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_month %})) AND
                   epoch < {% date_end raw_impression.epoch_month %}
                 {% endif %}
                 {% if raw_impression.epoch_quarter._is_filtered %}
-                  AND epoch::timestamp_ntz >= DATEADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_quarter %})) AND
+                  AND epoch::timestamp_ntz >= TIMESTAMPADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_quarter %})) AND
                   epoch < {% date_end raw_impression.epoch_quarter %}
                 {% endif %}
                 {% if raw_impression.epoch_year._is_filtered %}
-                  AND epoch::timestamp_ntz >= DATEADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_year %})) AND
+                  AND epoch::timestamp_ntz >= TIMESTAMPADD('day', -1, TO_TIMESTAMP({% date_start raw_impression.epoch_year %})) AND
                   epoch < {% date_end raw_impression.epoch_year %}
                 {% endif %}
               ) r2 ON c.advertiser_brand_id = r2.advertiser_brand_id AND r1.placement_id = r2.placement_id AND r1.userid = r2.userid
-              AND ( (r1.eventtime > r2.eventtime AND r1.eventtime < dateadd(minute,coalesce(fc.exposure_minutes,0), r2.eventtime))
+              AND ( (r1.eventtime > r2.eventtime AND r1.eventtime < TIMESTAMPADD('minute',coalesce(fc.exposure_minutes,0)::INTEGER, r2.eventtime))
               OR  (r2.eventtime = r1.eventtime AND r1.pk_id >= r2.pk_id))
 
              WHERE {% condition raw_impression.demand_date_date %} r1.demand_date {% endcondition %}
@@ -277,56 +277,56 @@ view: brand_frequency_cap_violations {
               AND {% condition raw_impression.supply_date_year %} r1.supply_date {% endcondition %}
 
               {% if raw_impression.dst_keydate_date._is_filtered %}
-                AND r1.keydate >= DATEADD('day', -1, {% date_start raw_impression.dst_keydate_date %}) AND
-                r1.keydate < DATEADD('day', 1, {% date_end raw_impression.dst_keydate_date %})
+                AND r1.keydate >= TIMESTAMPADD('day', -1, {% date_start raw_impression.dst_keydate_date %}) AND
+                r1.keydate < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_keydate_date %})
               {% endif %}
               {% if raw_impression.dst_keydate_week._is_filtered %}
-                AND r1.keydate >= DATEADD('day', -1, {% date_start raw_impression.dst_keydate_week %}) AND
-                r1.keydate < DATEADD('day', 1, {% date_end raw_impression.dst_keydate_week %})
+                AND r1.keydate >= TIMESTAMPADD('day', -1, {% date_start raw_impression.dst_keydate_week %}) AND
+                r1.keydate < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_keydate_week %})
               {% endif %}
               {% if raw_impression.dst_keydate_month._is_filtered %}
-                AND r1.keydate >= DATEADD('day', -1, {% date_start raw_impression.dst_keydate_month %}) AND
-                r1.keydate < DATEADD('day', 1, {% date_end raw_impression.dst_keydate_month %})
+                AND r1.keydate >= TIMESTAMPADD('day', -1, {% date_start raw_impression.dst_keydate_month %}) AND
+                r1.keydate < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_keydate_month %})
               {% endif %}
               {% if raw_impression.dst_keydate_quarter._is_filtered %}
-                AND r1.keydate >= DATEADD('day', -1, {% date_start raw_impression.dst_keydate_quarter %}) AND
-                r1.keydate < DATEADD('day', 1, {% date_end raw_impression.dst_keydate_quarter %})
+                AND r1.keydate >= TIMESTAMPADD('day', -1, {% date_start raw_impression.dst_keydate_quarter %}) AND
+                r1.keydate < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_keydate_quarter %})
               {% endif %}
               {% if raw_impression.dst_keydate_year._is_filtered %}
-                AND r1.keydate >= DATEADD('day', -1, {% date_start raw_impression.dst_keydate_year %}) AND
-                r1.keydate < DATEADD('day', 1, {% date_end raw_impression.dst_keydate_year %})
+                AND r1.keydate >= TIMESTAMPADD('day', -1, {% date_start raw_impression.dst_keydate_year %}) AND
+                r1.keydate < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_keydate_year %})
               {% endif %}
 
               {% if raw_impression.dst_epoch_raw_date._is_filtered %}
-                 AND r1.epoch::timestamp_ntz >= DATEADD('day', -2, TO_TIMESTAMP({% date_start raw_impression.dst_epoch_raw_date %})) AND
-                 r1.epoch::timestamp_ntz < DATEADD('day', 1, TO_TIMESTAMP({% date_end raw_impression.dst_epoch_raw_date %}))
+                 AND r1.epoch::timestamp_ntz >= TIMESTAMPADD('day', -2, TO_TIMESTAMP({% date_start raw_impression.dst_epoch_raw_date %})) AND
+                 r1.epoch::timestamp_ntz < TIMESTAMPADD('day', 1, TO_TIMESTAMP({% date_end raw_impression.dst_epoch_raw_date %}))
               {% endif %}
               {% if raw_impression.dst_eventtime_date._is_filtered %}
-                AND r1.eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_date %}) AND
-                 r1.eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_date %})
+                AND r1.eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_date %}) AND
+                 r1.eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_date %})
               {% endif %}
               {% if raw_impression.dst_eventtime_time._is_filtered %}
-                 AND r1.eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_time %}) AND
-                r1.eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_time %})
+                 AND r1.eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_time %}) AND
+                r1.eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_time %})
               {% endif %}
               {% if raw_impression.dst_eventtime_week._is_filtered %}
-                 AND r1.eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_week %}) AND
-                 r1.eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_week %})
+                 AND r1.eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_week %}) AND
+                 r1.eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_week %})
                {% endif %}
                {% if raw_impression.dst_eventtime_month._is_filtered %}
-                 AND r1.eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_month %}) AND
-                 r1.eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_month %})
+                 AND r1.eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_month %}) AND
+                 r1.eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_month %})
                {% endif %}
                {% if raw_impression.dst_eventtime_quarter._is_filtered %}
-                 AND r1.eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_quarter %}) AND
-                 r1.eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_quarter %})
+                 AND r1.eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_quarter %}) AND
+                 r1.eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_quarter %})
                {% endif %}
                {% if raw_impression.dst_eventtime_year._is_filtered %}
-                 AND r1.eventtime >= DATEADD('day', -2, {% date_start raw_impression.dst_eventtime_year %}) AND
-                 r1.eventtime < DATEADD('day', 1, {% date_end raw_impression.dst_eventtime_year %})
+                 AND r1.eventtime >= TIMESTAMPADD('day', -2, {% date_start raw_impression.dst_eventtime_year %}) AND
+                 r1.eventtime < TIMESTAMPADD('day', 1, {% date_end raw_impression.dst_eventtime_year %})
                {% endif %}
                GROUP BY r1.pk_id
-          )
+          )as fcv
     ;;
   }
 

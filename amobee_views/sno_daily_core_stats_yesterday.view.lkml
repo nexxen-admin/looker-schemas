@@ -23,16 +23,16 @@ view: daily_core_stats_yesterday {
       ,sum(dcs.completed_pct_impressions) as completed_pct_impressions
       ,sum(dcs.completion_pct_impressions) as completion_pct_impressions
       ,sum(dcs.units) as units
-    FROM demand_mart.daily_core_stats dcs
-    JOIN dim.flight_media_details_base fmd on fmd.flight_media_id = dcs.flight_media_id
-    JOIN dim.campaign_details_base cd on fmd.campaign_id = cd.campaign_id
-    JOIN dim.advertiser_brand_details abd on cd.advertiser_brand_id = abd.advertiser_brand_id
-    {% if placement_details_base._in_query %} JOIN dim.placement_details_base pd on dcs.placement_id = pd.placement_id {% endif %}
-    JOIN dim.customer_details cud on cd.customer_id = cud.customer_id
+    FROM demand_mart.DAILY_CORE_STATS dcs
+    JOIN dim.flight_media_details_base_view fmd on fmd.flight_media_id = dcs.flight_media_id
+    JOIN dim.campaign_details_base_view cd on fmd.campaign_id = cd.campaign_id
+    JOIN dim.advertiser_brand_details_view abd on cd.advertiser_brand_id = abd.advertiser_brand_id
+    {% if placement_details_base._in_query %} JOIN dim.placement_details_base_view pd on dcs.placement_id = pd.placement_id {% endif %}
+    JOIN dim.customer_details_view cud on cd.customer_id = cud.customer_id
     JOIN (
   SELECT dd.date_value
     ,sub.start_timezone
-  FROM dim.day_dimension dd
+  FROM dim.date_dimension dd
   JOIN (
     SELECT max(load_through_date) AS yesterday
       ,start_timezone

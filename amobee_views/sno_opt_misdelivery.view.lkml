@@ -1,5 +1,5 @@
 view: sno_opt_misdelivery {
-  sql_table_name: dim.opt_misdelivery ;;
+  sql_table_name: dim.opt_misdelivery_view ;;
 
   dimension: pk {
     type: number

@@ -1,5 +1,5 @@
 view: pl_plan {
-  sql_table_name: DIM.PL_PLAN ;;
+  sql_table_name: DIM.PL_PLAN_VIEW ;;
 
   dimension: pl_plan_id {
     primary_key: yes

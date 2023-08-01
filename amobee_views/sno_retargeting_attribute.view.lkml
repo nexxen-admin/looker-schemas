@@ -1,5 +1,5 @@
 view: retargeting_attribute {
-  sql_table_name: DIM.RETARGETING_ATTRIBUTE_DETAILS ;;
+  sql_table_name: DIM.RETARGETING_ATTRIBUTE_DETAILS_VIEW ;;
   suggestions: no
 
 #Note DIM.RETARGETING_ATTRIBUTE_DETAILS is a custom view. Read definition in Snowflake.*
@@ -58,7 +58,7 @@ view: retargeting_attribute {
   }
 
   dimension: data_provider_id {
-    type: string
+    type: number
     description: "The ID number we create & associate with each data provider"
     sql: ${TABLE}.DATA_PROVIDER_ID ;;
   }

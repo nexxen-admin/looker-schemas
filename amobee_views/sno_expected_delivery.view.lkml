@@ -9,7 +9,7 @@ view: expected_delivery {
               CAST(MAX(b.BUDGET) * (1 + MAX(fmd.AGENCY_FEE)) AS FLOAT) AS TARGET_GROSS_SPEND,
               CAST(MAX(b.UNITS) AS FLOAT) AS TARGET_UNITS
             FROM
-              DIM.FLIGHT_MEDIA_DETAILS_BASE fmd
+              DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW fmd
                 JOIN DIM.FLIGHT_DETAILS fd
                   ON fd.flight_id = fmd.flight_id
                 JOIN DEMAND_MART.LOAD_TRACKING lt

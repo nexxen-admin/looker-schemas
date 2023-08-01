@@ -340,7 +340,7 @@ explore: daily_core_stats {
 
   join: flight_media_details_base {
     relationship: many_to_one
-    sql: {% if flight_media_details_base.future_flight_media._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE  AS flight_media_details_base ON ${flight_media_details_base.flight_media_id} = ${daily_core_stats.flight_media_id} ;;
+    sql: {% if flight_media_details_base.future_flight_media._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW  AS flight_media_details_base ON ${flight_media_details_base.flight_media_id} = ${daily_core_stats.flight_media_id} ;;
   }
 
   join: deal_flight_media_details {
@@ -366,8 +366,8 @@ explore: daily_core_stats {
   }
 
   join: flight_details {
-    sql: {% if flight_details.future_flights._in_query %}FULL OUTER JOIN DIM.FLIGHT_DETAILS AS flight_details ON ${flight_media_details_base.flight_id} = ${flight_details.flight_id}
-         {% else %}LEFT JOIN DIM.FLIGHT_DETAILS AS flight_details ON ${flight_media_details_base.flight_id} = ${flight_details.flight_id} {% endif %} ;;
+    sql: {% if flight_details.future_flights._in_query %}FULL OUTER JOIN DIM.FLIGHT_DETAILS_VIEW AS flight_details ON ${flight_media_details_base.flight_id} = ${flight_details.flight_id}
+         {% else %}LEFT JOIN DIM.FLIGHT_DETAILS_VIEW AS flight_details ON ${flight_media_details_base.flight_id} = ${flight_details.flight_id} {% endif %} ;;
     relationship: many_to_one
   }
 
@@ -422,7 +422,7 @@ explore: daily_core_stats {
 
   join: customer_details {
     relationship: many_to_one
-    sql: {% if customer_details.future_customers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.CUSTOMER_DETAILS  AS customer_details ON ${campaign_details_base.customer_id} = ${customer_details.customer_id} ;;
+    sql: {% if customer_details.future_customers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.CUSTOMER_DETAILS_VIEW  AS customer_details ON ${campaign_details_base.customer_id} = ${customer_details.customer_id} ;;
   }
 
   join: customer_country {
@@ -432,7 +432,7 @@ explore: daily_core_stats {
 
   join: advertiser_brand_details {
     relationship: many_to_one
-    sql: {% if advertiser_brand_details.future_advertisers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.ADVERTISER_BRAND_DETAILS  AS advertiser_brand_details ON ${campaign_details_base.advertiser_brand_id} = ${advertiser_brand_details.advertiser_brand_id} ;;
+    sql: {% if advertiser_brand_details.future_advertisers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.ADVERTISER_BRAND_DETAILS_VIEW  AS advertiser_brand_details ON ${campaign_details_base.advertiser_brand_id} = ${advertiser_brand_details.advertiser_brand_id} ;;
   }
 
   join:  insertion_order_details {
@@ -551,10 +551,10 @@ explore: daily_data_usage {
   label: "Data Usage Metrics"
   description: "This explore includes data provider cost and usage metrics. Cost and usage metrics are recorded when data on a user is used to deliver an impression.
   Cost and usage are commonly segmented down to source provider, data provider, payee provider and retargeting attribute. The data is available by-day, as far back as January 2014."
-  sql_always_where: ({% if daily_data_usage.demand_date_date._in_query or daily_data_usage.demand_date_week._in_query %}COALESCE(${daily_data_usage.demand_date_raw}, '9999-12-31') >= (SELECT MIN(DEMAND_DATE) FROM EDW.daily_data_usage)
-                    {% elsif daily_data_usage.EST_date_date._in_query or daily_data_usage.EST_date_week._in_query %}COALESCE(${daily_data_usage.est_date_raw}, '9999-12-31') >= (SELECT MIN(EST_DATE) FROM EDW.daily_data_usage)
-                    {% elsif daily_data_usage.gmt_date_date._in_query or daily_data_usage.gmt_date_week._in_query %}COALESCE(${daily_data_usage.gmt_date_raw}, '9999-12-31') >= (SELECT MIN(GMT_DATE) FROM EDW.daily_data_usage)
-                    {% elsif daily_data_usage.region_date_date._in_query or daily_data_usage.region_date_week._in_query %}COALESCE(${daily_data_usage.region_date_raw}, '9999-12-31') >= (SELECT MIN(REGION_DATE) FROM EDW.daily_data_usage)
+  sql_always_where: ({% if daily_data_usage.demand_date_date._in_query or daily_data_usage.demand_date_week._in_query %}COALESCE(${daily_data_usage.demand_date_raw}, '9999-12-31') >= (SELECT MIN(DEMAND_DATE) FROM RAWDB.daily_data_usage)
+                    {% elsif daily_data_usage.EST_date_date._in_query or daily_data_usage.EST_date_week._in_query %}COALESCE(${daily_data_usage.est_date_raw}, '9999-12-31') >= (SELECT MIN(EST_DATE) FROM RAWDB.daily_data_usage)
+                    {% elsif daily_data_usage.gmt_date_date._in_query or daily_data_usage.gmt_date_week._in_query %}COALESCE(${daily_data_usage.gmt_date_raw}, '9999-12-31') >= (SELECT MIN(GMT_DATE) FROM RAWDB.daily_data_usage)
+                    {% elsif daily_data_usage.region_date_date._in_query or daily_data_usage.region_date_week._in_query %}COALESCE(${daily_data_usage.region_date_raw}, '9999-12-31') >= (SELECT MIN(REGION_DATE) FROM RAWDB.daily_data_usage)
                     {% else %}TRUE{% endif %}) AND
                     ({% if _user_attributes['access_filter_office_id'] == '>=0, NULL' %} TRUE {% else %} (${platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }}) OR ${supply_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }})) {% endif %}) AND
                     ({% if _user_attributes['access_filter_platform_client_id'] == '>=0, NULL' %} TRUE {% else %} (${campaign_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${platform_client.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) {% endif %}) AND
@@ -703,7 +703,7 @@ explore: demand_metrics {
 
   join: flight_media_details_base {
     relationship: many_to_one
-    sql: {% if flight_media_details_base.future_flight_media._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE  AS flight_media_details_base ON {% if mediaplanner_allocation_view._in_query or mediaplanner_allocation_yesterday._in_query or daily_ccp_metrics._in_query %}COALESCE(${daily_core_stats.flight_media_id}{% if mediaplanner_allocation_view._in_query %}, mediaplanner_allocation_view.FLIGHT_MEDIA_ID{% endif %}{% if mediaplanner_allocation_yesterday._in_query %}, mediaplanner_allocation_yesterday.FLIGHT_MEDIA_ID{% endif %}{% if daily_ccp_metrics._in_query %}, daily_ccp_metrics.FLIGHT_MEDIA_ID{% endif %}){% else %}${daily_core_stats.flight_media_id}{% endif %} = ${flight_media_details_base.flight_media_id} ;;
+    sql: {% if flight_media_details_base.future_flight_media._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW  AS flight_media_details_base ON {% if mediaplanner_allocation_view._in_query or mediaplanner_allocation_yesterday._in_query or daily_ccp_metrics._in_query %}COALESCE(${daily_core_stats.flight_media_id}{% if mediaplanner_allocation_view._in_query %}, mediaplanner_allocation_view.FLIGHT_MEDIA_ID{% endif %}{% if mediaplanner_allocation_yesterday._in_query %}, mediaplanner_allocation_yesterday.FLIGHT_MEDIA_ID{% endif %}{% if daily_ccp_metrics._in_query %}, daily_ccp_metrics.FLIGHT_MEDIA_ID{% endif %}){% else %}${daily_core_stats.flight_media_id}{% endif %} = ${flight_media_details_base.flight_media_id} ;;
   }
 
   join: demand_mart_load_tracking {
@@ -719,8 +719,8 @@ explore: demand_metrics {
   }
 
   join: flight_details {
-    sql: {% if flight_details.future_flights._in_query %}FULL OUTER JOIN DIM.FLIGHT_DETAILS AS flight_details ON ${flight_media_details_base.flight_id} = ${flight_details.flight_id}
-      {% else %}LEFT JOIN DIM.FLIGHT_DETAILS AS flight_details ON ${flight_media_details_base.flight_id} = ${flight_details.flight_id} {% endif %} ;;
+    sql: {% if flight_details.future_flights._in_query %}FULL OUTER JOIN DIM.FLIGHT_DETAILS_VIEW AS flight_details ON ${flight_media_details_base.flight_id} = ${flight_details.flight_id}
+      {% else %}LEFT JOIN DIM.FLIGHT_DETAILS_VIEW AS flight_details ON ${flight_media_details_base.flight_id} = ${flight_details.flight_id} {% endif %} ;;
     relationship: many_to_one
   }
 
@@ -737,8 +737,8 @@ explore: demand_metrics {
 
   join: campaign_details_base {
     relationship: many_to_one
-    sql: {% if campaign_bookings._in_query %}FULL OUTER JOIN DIM.CAMPAIGN_DETAILS_BASE AS campaign_details_base ON ${flight_details.campaign_id} = ${campaign_details_base.campaign_id}
-      {% else %}LEFT JOIN DIM.CAMPAIGN_DETAILS_BASE AS campaign_details_base ON ${flight_details.campaign_id} = ${campaign_details_base.campaign_id} {% endif %} ;;
+    sql: {% if campaign_bookings._in_query %}FULL OUTER JOIN DIM.CAMPAIGN_DETAILS_BASE_VIEW AS campaign_details_base ON ${flight_details.campaign_id} = ${campaign_details_base.campaign_id}
+      {% else %}LEFT JOIN DIM.CAMPAIGN_DETAILS_BASE_VIEW AS campaign_details_base ON ${flight_details.campaign_id} = ${campaign_details_base.campaign_id} {% endif %} ;;
   }
 
   join: expected_delivery {
@@ -764,7 +764,7 @@ explore: demand_metrics {
 
   join: customer_details {
     relationship: many_to_one
-    sql: {% if customer_details.future_customers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.CUSTOMER_DETAILS  AS customer_details ON ${campaign_details_base.customer_id} = ${customer_details.customer_id} ;;
+    sql: {% if customer_details.future_customers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.CUSTOMER_DETAILS_VIEW  AS customer_details ON ${campaign_details_base.customer_id} = ${customer_details.customer_id} ;;
   }
 
   join: campaign_bookings {
@@ -780,7 +780,7 @@ explore: demand_metrics {
 
   join: advertiser_brand_details {
     relationship: many_to_one
-    sql: {% if advertiser_brand_details.future_advertisers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.ADVERTISER_BRAND_DETAILS  AS advertiser_brand_details ON ${campaign_details_base.advertiser_brand_id} = ${advertiser_brand_details.advertiser_brand_id} ;;
+    sql: {% if advertiser_brand_details.future_advertisers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.ADVERTISER_BRAND_DETAILS_VIEW  AS advertiser_brand_details ON ${campaign_details_base.advertiser_brand_id} = ${advertiser_brand_details.advertiser_brand_id} ;;
   }
 
   join:  insertion_order_details {
@@ -981,7 +981,7 @@ explore: raw_impression {
   join: bt_cost_attributes {
     view_label: "Raw Impression Metrics"
     relationship: one_to_many
-    type: cross
+    sql_on: ${bt_cost_attributes.bt_id} = ${raw_impression.bt_id};;
   }
 
   join: flight_media_details_base {
@@ -1161,6 +1161,40 @@ explore: raw_impression {
     view_label: "Campaign"
     relationship: one_to_one
     sql_on: ${campaign_details_base.campaign_id} = ${campaign_first_delivery.campaign_id} ;;
+  }
+
+  join: attribute_lookup_platformid{
+    relationship: many_to_one
+    sql_on: ${attribute_lookup_platformid.attr_id} = ${raw_impression.platformid} ;;
+
+  }
+
+  join: attribute_lookup_ageid{
+    relationship: many_to_one
+   sql_on: ${attribute_lookup_ageid.attr_id} =  ${raw_impression.ageid} ;;
+  }
+
+  join: attribute_lookup_browserid{
+    relationship: many_to_one
+    sql_on: ${attribute_lookup_browserid.attr_id} = ${raw_impression.browserid} ;;
+
+  }
+
+  join: attribute_lookup_deviceid{
+    relationship: many_to_one
+    sql_on: ${attribute_lookup_deviceid.attr_id} =  ${raw_impression.deviceid} ;;
+  }
+
+
+  join: attribute_lookup_languageid{
+    relationship: many_to_one
+    sql_on: ${attribute_lookup_languageid.attr_id} = ${raw_impression.languageid} ;;
+
+  }
+
+  join: attribute_lookup_genderid{
+    relationship: many_to_one
+    sql_on: ${attribute_lookup_genderid.attr_id} =  ${raw_impression.genderid} ;;
   }
 }
 

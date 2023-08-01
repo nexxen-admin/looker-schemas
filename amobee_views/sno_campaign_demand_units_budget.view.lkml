@@ -1,5 +1,5 @@
 view: campaign_demand_units_budget {
-  sql_table_name: DIM.DEMAND_UNITS_BUDGET ;;
+  sql_table_name: DIM.DEMAND_UNITS_BUDGET_VIEW ;;
 
   dimension: budget {
     type: number

@@ -33,7 +33,7 @@ view: flight_details {
     type: date
     label: "[DST] Flight Local Contract End Date"
     description: "The end date of the flight as stated in the contract in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, ${TABLE}.CONTRACT_END_DATE)
+    sql: case when ${platform_client.use_daylight_saving} then ${TABLE}.CONTRACT_END_DATE AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
       else ${TABLE}.CONTRACT_END_DATE end ;;
   }
 
@@ -48,7 +48,7 @@ view: flight_details {
     type: date
     label: "[DST] Flight Local Contract Start Date"
     description: "The start date of the flight as stated in the contract in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, ${TABLE}.CONTRACT_START_DATE)
+    sql: case when ${platform_client.use_daylight_saving} then ${TABLE}.CONTRACT_START_DATE AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
       else ${TABLE}.CONTRACT_START_DATE end ;;
   }
 
@@ -169,8 +169,8 @@ view: flight_details {
     hidden: yes
     description: "The total number of days remaining (end date - yesterday) in the flight."
     label: "Flight Remaining Days"
-    sql: greatest(0, ceil(coalesce(datediff(h, greatest(${TABLE}.BEGIN_DATETIME_LOCAL, dateadd(d, 1, ${demand_mart_load_tracking.load_through_date})), ${TABLE}.END_DATETIME_LOCAL),
-      datediff(h, greatest(${TABLE}.CONTRACT_START_DATE, dateadd(d, 1, ${demand_mart_load_tracking.load_through_date})), ${TABLE}.CONTRACT_END_DATE)) / 24)) ;;
+    sql: greatest(0, ceil(coalesce(datediff(h, greatest(${TABLE}.BEGIN_DATETIME_LOCAL, TIMESTAMPADD(d, 1, ${demand_mart_load_tracking.load_through_date})), ${TABLE}.END_DATETIME_LOCAL),
+      datediff(h, greatest(${TABLE}.CONTRACT_START_DATE, TIMESTAMPADD(d, 1, ${demand_mart_load_tracking.load_through_date})), ${TABLE}.CONTRACT_END_DATE)) / 24)) ;;
   }
 
   dimension: flight_elapsed_days {
@@ -215,7 +215,7 @@ view: flight_details {
     ]
     label: "Flight Begin"
     description: "The start date of the flight in UTC."
-    sql: COALESCE(DATEADD(HOUR, COALESCE(-${timezone.utc_offset}, 0), ${TABLE}.BEGIN_DATETIME_LOCAL), ${TABLE}.CONTRACT_START_DATE) ;;
+    sql: COALESCE(TIMESTAMPADD(HOUR, COALESCE(-${timezone.utc_offset}, 0)::INTEGER, ${TABLE}.BEGIN_DATETIME_LOCAL), ${TABLE}.CONTRACT_START_DATE) ;;
   }
 
   dimension_group: dst_begin_datetm {
@@ -231,8 +231,8 @@ view: flight_details {
     ]
     label: "[DST] Flight Begin"
     description: "The start date of the flight in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then COALESCE(convert_timezone('GMT', ${timezone.timezone_name}, DATEADD(HOUR, COALESCE(-${timezone.utc_offset}, 0), ${TABLE}.BEGIN_DATETIME_LOCAL)), convert_timezone('UTC', ${timezone.timezone_name}, ${TABLE}.CONTRACT_START_DATE))
-      else COALESCE(DATEADD(HOUR, COALESCE(-${timezone.utc_offset}, 0), ${TABLE}.BEGIN_DATETIME_LOCAL), ${TABLE}.CONTRACT_START_DATE) end ;;
+    sql: case when ${platform_client.use_daylight_saving} then COALESCE(TIMESTAMPADD(hour, COALESCE(-${timezone.utc_offset}, 0), ${TABLE}.BEGIN_DATETIME_LOCAL) AT TIME ZONE 'GMT' AT TIME ZONE ${timezone.timezone_name} ,${TABLE}.CONTRACT_START_DATE AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name} )
+      else COALESCE(TIMESTAMPADD(HOUR, COALESCE(-${timezone.utc_offset}, 0)::INTEGER, ${TABLE}.BEGIN_DATETIME_LOCAL), ${TABLE}.CONTRACT_START_DATE) end ;;
   }
 
   dimension_group: end_datetm {
@@ -248,7 +248,7 @@ view: flight_details {
     ]
     label: "Flight End"
     description: "The end date of the flight in UTC."
-    sql: COALESCE(DATEADD(HOUR, COALESCE(-${timezone.utc_offset}, 0), DATEADD('M', -1, ${TABLE}.END_DATETIME_LOCAL)), DATEADD('M', -1, ${TABLE}.CONTRACT_END_DATE)) ;;
+    sql: COALESCE(TIMESTAMPADD(HOUR, COALESCE(-${timezone.utc_offset}, 0)::INTEGER, TIMESTAMPADD(month, -1, ${TABLE}.END_DATETIME_LOCAL)), TIMESTAMPADD(month, -1, ${TABLE}.CONTRACT_END_DATE)) ;;
   }
 
   dimension_group: dst_end_datetm {
@@ -264,8 +264,8 @@ view: flight_details {
     ]
     label: "[DST] Flight End"
     description: "The end date of the flight in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then COALESCE(convert_timezone('GMT', ${timezone.timezone_name}, DATEADD(HOUR, COALESCE(-${timezone.utc_offset}, 0), DATEADD('M', -1, ${TABLE}.END_DATETIME_LOCAL))), convert_timezone('UTC', ${timezone.timezone_name}, DATEADD('M', -1, ${TABLE}.CONTRACT_END_DATE)))
-      else COALESCE(DATEADD(HOUR, COALESCE(-${timezone.utc_offset}, 0), DATEADD('M', -1, ${TABLE}.END_DATETIME_LOCAL)), DATEADD('M', -1, ${TABLE}.CONTRACT_END_DATE)) end ;;
+    sql: case when ${platform_client.use_daylight_saving} then  COALESCE(TIMESTAMPADD(HOUR, COALESCE(-${timezone.utc_offset}, 0)::INTEGER, TIMESTAMPADD(month, -1, ${TABLE}.END_DATETIME_LOCAL)) AT TIME ZONE 'GMT' AT TIME ZONE ${timezone.timezone_name},TIMESTAMPADD('month', -1, ${TABLE}.CONTRACT_END_DATE) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name})
+      else COALESCE(TIMESTAMPADD(HOUR, COALESCE(-${timezone.utc_offset}, 0)::INTEGER, TIMESTAMPADD(month, -1, ${TABLE}.END_DATETIME_LOCAL)), TIMESTAMPADD(month, -1, ${TABLE}.CONTRACT_END_DATE)) end ;;
   }
 
   dimension_group: begin_datetm_local {
@@ -297,7 +297,7 @@ view: flight_details {
     ]
     label: "[DST] Flight Local Begin"
     description: "The start date of the flight in local time accountin DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, DATEADD(HOUR, COALESCE(-${timezone.utc_offset}, 0), ${TABLE}.BEGIN_DATETIME_LOCAL))
+    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, TIMESTAMPADD(HOUR, COALESCE(-${timezone.utc_offset}, 0), ${TABLE}.BEGIN_DATETIME_LOCAL))
       else ${TABLE}.BEGIN_DATETIME_LOCAL end ;;
   }
 
@@ -314,7 +314,7 @@ view: flight_details {
     ]
     label: "Flight Local End"
     description: "The end date of the flight in local time."
-    sql: DATEADD('M', -1,${TABLE}.END_DATETIME_LOCAL) ;;
+    sql: TIMESTAMPADD(month, -1,${TABLE}.END_DATETIME_LOCAL) ;;
   }
 
   dimension_group: dst_end_datetm_local {
@@ -330,8 +330,8 @@ view: flight_details {
     ]
     label: "[DST] Flight Local End"
     description: "The end date of the flight in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, DATEADD(HOUR, COALESCE(-${timezone.utc_offset}, 0), DATEADD('M', -1,${TABLE}.END_DATETIME_LOCAL)))
-      else DATEADD('M', -1,${TABLE}.END_DATETIME_LOCAL) end ;;
+    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, TIMESTAMPADD(HOUR, COALESCE(-${timezone.utc_offset}, 0), TIMESTAMPADD(month, -1,${TABLE}.END_DATETIME_LOCAL)))
+      else TIMESTAMPADD(month, -1,${TABLE}.END_DATETIME_LOCAL) end ;;
   }
 
   dimension: flight_status {

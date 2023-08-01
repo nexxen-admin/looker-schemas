@@ -16,7 +16,7 @@ view: reach_and_frequency {
                 DCS.DEMAND_DATE,
                 max(DCS.PK_ID) as pk_id,
                 sum(DCS.impressions) impressions
-            FROM DEMAND_MART.DAILY_CORE_STATS DCS
+            FROM DEMAND_MART.DAILY_CORE_STATS_VIEW DCS
               JOIN DIM.FLIGHT_MEDIA_DETAILS FMD on DCS.flight_media_id = FMD.flight_media_id
             {% if campaign_details_base._in_query %} JOIN DIM.CAMPAIGN_DETAILS_BASE CD on FMD.campaign_id = CD.campaign_id {% endif %}
             {% if advertiser_brand_details._in_query %} JOIN DIM.ADVERTISER_BRAND_DETAILS ABD on CD.advertiser_brand_id = ABD.advertiser_brand_id {% endif %}

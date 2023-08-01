@@ -1,4 +1,4 @@
-connection: "snowflake"
+connection: "amobee_prod"
 label: "Reference"
 case_sensitive: no
 
@@ -101,12 +101,12 @@ explore: campaign_details_base {
 
   join: customer_details {
     relationship: many_to_one
-    sql: {% if customer_details.future_customers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.CUSTOMER_DETAILS  AS customer_details ON ${campaign_details_base.customer_id} = ${customer_details.customer_id} ;;
+    sql: {% if customer_details.future_customers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.CUSTOMER_DETAILS_VIEW  AS customer_details ON ${campaign_details_base.customer_id} = ${customer_details.customer_id} ;;
   }
 
   join: advertiser_brand_details {
     relationship: many_to_one
-    sql: {% if advertiser_brand_details.future_advertisers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.ADVERTISER_BRAND_DETAILS  AS advertiser_brand_details ON ${campaign_details_base.advertiser_brand_id} = ${advertiser_brand_details.advertiser_brand_id} ;;
+    sql: {% if advertiser_brand_details.future_advertisers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.ADVERTISER_BRAND_DETAILS_VIEW  AS advertiser_brand_details ON ${campaign_details_base.advertiser_brand_id} = ${advertiser_brand_details.advertiser_brand_id} ;;
   }
 
   join: insertion_order_details {

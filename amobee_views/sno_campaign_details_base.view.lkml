@@ -52,7 +52,7 @@ view: campaign_details_base {
     ]
     label: "[DST] Begin Time - Local"
     description: "The start time of the Campaign in the Campaign's timezone accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, dateadd(h, -${timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL))
+    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, TIMESTAMPADD(h, -${timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL))
       else ${TABLE}.BEGIN_DATETIME_LOCAL end ;;
   }
 
@@ -117,7 +117,7 @@ view: campaign_details_base {
     ]
     label: "Campaign End"
     description: "The end date of the campaign in UTC."
-    sql: DATEADD('M',-1,${TABLE}.CAMPAIGN_END_DATE) ;;
+    sql: TIMESTAMPADD('M',-1,${TABLE}.CAMPAIGN_END_DATE) ;;
   }
 
   dimension_group: dst_campaign_end_date {
@@ -133,8 +133,8 @@ view: campaign_details_base {
     ]
     label: "[DST] Campaign Local End"
     description: "The end date of the campaign in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, DATEADD('M',-1,${TABLE}.CAMPAIGN_END_DATE))
-      else DATEADD('M',-1,${TABLE}.CAMPAIGN_END_DATE) end ;;
+    sql: case when ${platform_client.use_daylight_saving} then TIMESTAMPADD('M', -1, ${TABLE}.CAMPAIGN_END_DATE) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
+      else TIMESTAMPADD('M',-1,${TABLE}.CAMPAIGN_END_DATE) end ;;
   }
 
   dimension: campaign_id {
@@ -165,8 +165,11 @@ view: campaign_details_base {
     label: "Campaign Name"
     view_label: "Custom Dimensions"
     description: "Customized Campaign Name for UK Operations. Excludes characters including and after a '#' symbol"
-    sql:  IFF(substring(${campaign_name},0,(position('#',${campaign_name}))-1) = '',${campaign_name},
-        substring(${campaign_name},0,(position('#',${campaign_name}))-1)) ;;
+    sql: CASE
+    WHEN POSITION('#' IN ${campaign_name}) <= 1
+    THEN ${campaign_name}
+    ELSE SUBSTRING(${campaign_name} FROM 1 FOR POSITION('#' IN ${campaign_name}) - 1)
+END  ;;
     suggest_explore: suggest_demand_ref
     suggest_dimension: suggest_demand_ref.campaign_name_custom
   }
@@ -221,7 +224,7 @@ view: campaign_details_base {
     ]
     label: "[DST] Campaign Local Start"
     description: "The start date of the campaign in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, ${TABLE}.CAMPAIGN_START_DATE)
+    sql: case when ${platform_client.use_daylight_saving} then ${TABLE}.CAMPAIGN_START_DATE AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
       else ${TABLE}.CAMPAIGN_START_DATE end ;;
   }
 
@@ -229,7 +232,7 @@ view: campaign_details_base {
     type: string
     label: "Campaign Status"
     description: "The current status of the campaign (i.e. running, paused, ended, etc.)"
-    sql: COALESCE(CASE WHEN ${campaign_type_id} IN (8, 9, 10) THEN ${TABLE}.MISC_DATA:deal_status:description END, ${TABLE}.CAMPAIGN_STATUS_DESCRIPTION) ;;
+    sql: COALESCE(CASE WHEN ${campaign_type_id} IN (8, 9, 10) THEN ${TABLE}.misc_deal_status_description END, ${TABLE}.CAMPAIGN_STATUS_DESCRIPTION) ;;
     suggest_explore: suggest_demand_ref
     suggest_dimension: suggest_demand_ref.campaign_status_description
   }
@@ -238,7 +241,7 @@ view: campaign_details_base {
     type: string
     label: "Campaign Information"
     description: "Campaign custom string"
-    sql: COALESCE(${TABLE}.MISC_DATA:campaign_info, '') ;;
+    sql: COALESCE(${TABLE}.misc_campaign_info, '') ;;
     suggest_explore: suggest_demand_ref
     suggest_dimension: suggest_demand_ref.campaign_info
   }
@@ -494,7 +497,7 @@ view: campaign_details_base {
     ]
     label: "End Time - Local"
     description: "The end time of the Campaign in the Campaign's timezone."
-    sql: DATEADD('M',-1,${TABLE}.END_DATETIME_LOCAL) ;;
+    sql: TIMESTAMPADD('M',-1,${TABLE}.END_DATETIME_LOCAL) ;;
   }
 
   dimension_group: dst_end_datetime_local {
@@ -510,8 +513,8 @@ view: campaign_details_base {
     ]
     label: "[DST] End Time - Local"
     description: "The end time of the Campaign in the Campaign's timezone accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, dateadd(h, -${timezone.utc_offset}, DATEADD('M',-1,${TABLE}.END_DATETIME_LOCAL)))
-      else DATEADD('M',-1,${TABLE}.END_DATETIME_LOCAL) end ;;
+    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, TIMESTAMPADD(h, -${timezone.utc_offset}, TIMESTAMPADD('M',-1,${TABLE}.END_DATETIME_LOCAL)))
+      else TIMESTAMPADD('M',-1,${TABLE}.END_DATETIME_LOCAL) end ;;
   }
 
   dimension: format_type_description {
@@ -640,7 +643,7 @@ view: campaign_details_base {
     label: "Plan End Date"
     view_label: "{% if _explore._name == 'auction_log' and _view._name == 'campaign_details_seller' %}Seller Deal Campaign{% elsif _explore._name == 'auction_log' and _view._name == 'campaign_details_buyer' %}Buyer Campaign{% else %}Plan{% endif %}"
     description: "The end date of the Plan in UTC."
-    sql: DATEADD(m, -1, ${TABLE}.PLAN_END_DATE) ;;
+    sql: TIMESTAMPADD(m, -1, ${TABLE}.PLAN_END_DATE) ;;
   }
 
   dimension: dst_plan_end_date {
@@ -648,8 +651,8 @@ view: campaign_details_base {
     label: "[DST] Plan Local End Date"
     view_label: "{% if _explore._name == 'auction_log' and _view._name == 'campaign_details_seller' %}Seller Deal Campaign{% elsif _explore._name == 'auction_log' and _view._name == 'campaign_details_buyer' %}Buyer Campaign{% else %}Plan{% endif %}"
     description: "The end date of the Plan in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, DATEADD(m, -1, ${TABLE}.PLAN_END_DATE))
-      else DATEADD(m, -1, ${TABLE}.PLAN_END_DATE) end ;;
+    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, TIMESTAMPADD(m, -1, ${TABLE}.PLAN_END_DATE))
+      else TIMESTAMPADD(m, -1, ${TABLE}.PLAN_END_DATE) end ;;
   }
 
   dimension: plan_start_date {
@@ -845,8 +848,8 @@ view: campaign_details_base {
     hidden: yes
     description: "The total number of days remaining (end date - yesterday) in the campaign."
     label: "Campaign Remaining Days"
-    sql: CASE when datediff('day',dateadd('day',-1,current_date()),${campaign_end_date_raw}) < 0 then 0
-              else datediff('day',dateadd('day',-1,current_date()),${campaign_end_date_raw}) end;;
+    sql: CASE when datediff('day',TIMESTAMPADD('day',-1,current_date()),${campaign_end_date_raw}) < 0 then 0
+              else datediff('day',TIMESTAMPADD('day',-1,current_date()),${campaign_end_date_raw}) end;;
   }
 
   measure: max_campaign_remaining_days {
@@ -886,13 +889,13 @@ view: campaign_details_base {
   dimension: is_amobee_served {
     type: yesno
     hidden: yes
-    sql: ${TABLE}.misc_data:is_amobee_served:value::boolean ;;
+    sql: ${TABLE}.misc_is_amobee_served_value::boolean ;;
   }
 
   dimension: is_amobee_served_changedon {
     type: date_time
     hidden: yes
-    sql: ${TABLE}.misc_data:is_amobee_served:changedon ;;
+    sql: ${TABLE}.misc_is_amobee_served_changedon ;;
   }
 
   dimension: plan_status {
@@ -963,7 +966,7 @@ view: campaign_details_base {
     ]
     label: "Ordered"
     description: "Launch time of the deal."
-    sql: ${TABLE}.misc_data:date_ordered::timestamp_ntz ;;
+    sql: ${TABLE}.misc_date_ordered::timestamp_ntz ;;
   }
 
   # ----- Sets of fields for drilling ------

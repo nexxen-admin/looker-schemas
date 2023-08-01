@@ -12,7 +12,7 @@ view: sno_supply_raw_impression_validation {
           t.supply_date
         , pd.placement_timezone_id AS timezone_id
         , SUM(t.impressions) AS impressions
-      FROM rawdb.raw_impression t
+      FROM rawdb.raw_impression_v2 t
       JOIN dim.placement_details pd
         ON t.placement_id = pd.placement_id
       WHERE {% condition supply_date %} supply_date {% endcondition %}

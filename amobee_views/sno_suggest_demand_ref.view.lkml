@@ -181,12 +181,12 @@ view: suggest_demand_ref {
 
   dimension: campaign_status_description {
     type: string
-    sql: COALESCE(${TABLE}.MISC_DATA:deal_status:description, ${TABLE}.CAMPAIGN_STATUS_DESCRIPTION) ;;
+    sql: COALESCE(${TABLE}.misc_data_description, ${TABLE}.CAMPAIGN_STATUS_DESCRIPTION) ;;
   }
 
   dimension: campaign_info {
     type: string
-    sql: COALESCE(${TABLE}.MISC_DATA:campaign_info, '') ;;
+    sql: COALESCE(${TABLE}.misc_campaign_info, '') ;;
   }
 
   dimension: campaign_targeting_type {

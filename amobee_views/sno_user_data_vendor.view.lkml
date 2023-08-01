@@ -1,5 +1,5 @@
 view: user_data_vendor {
-  sql_table_name: DIM.USER_DATA_VENDOR ;;
+  sql_table_name: DIM.USER_DATA_VENDOR_VIEW ;;
 
   dimension: user_data_vendor_id {
     primary_key: yes

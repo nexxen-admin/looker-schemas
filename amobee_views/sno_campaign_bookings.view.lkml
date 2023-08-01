@@ -31,8 +31,8 @@ view: campaign_bookings {
          s.previous_month_billed,
          row_number() over (partition by cd.campaign_id order by s.billing_year desc, s.billing_month desc) as rn
        from
-         dim.campaign_details cd
-           left join demand_mart.campaign_billing_stats s
+         dim.campaign_details_view cd
+           left join dim.campaign_billing_stats_view s
              on cd.campaign_id = s.campaign_id and
                 s.active
      ) as t

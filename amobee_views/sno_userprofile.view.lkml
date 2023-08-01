@@ -1,5 +1,5 @@
 view: account_exec {
-  sql_table_name: DIM.USER_PROFILE ;;
+  sql_table_name: DIM.USER_PROFILE_VIEW ;;
 
   dimension: id {
     primary_key: yes

@@ -34,9 +34,11 @@ view: deal_commision_data {
   }
 
   dimension: barter_rebate {
-    type: string
+    type: number
+    value_format: "0\%"
     sql: ${TABLE}.barter_rebate ;;
   }
+
 
   dimension: brand {
     type: string

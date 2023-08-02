@@ -20,7 +20,7 @@ view: schain_report {
 
   dimension_group: end_time {
     type: time
-    timeframes: [raw, date, week, month, quarter, year]
+    timeframes: [raw, date, week, month, quarter, year, hour]
     convert_tz: no
     datatype: date
     sql: ${TABLE}.End_Time ;;
@@ -93,7 +93,7 @@ view: schain_report {
 
   dimension_group: start_time {
     type: time
-    timeframes: [raw, date, week, month, quarter, year]
+    timeframes: [raw, date, week, month, quarter, year, hour]
     convert_tz: no
     datatype: date
     sql: ${TABLE}.Start_Time ;;

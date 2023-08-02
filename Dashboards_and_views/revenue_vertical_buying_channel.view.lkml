@@ -34,10 +34,15 @@ measure: partition {
     url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=zuC1YfhN6SY5reOE3Iemiq&origin_space=249&toggle=dat,fil,vis"}
    }
 
-  measure: dense_rank_measure {
-    type: number
-   sql: SELECT DENSE_RANK() OVER (ORDER BY ${revenue} DESC) ;;
+  dimension: vertical {
+    type: string
+    sql: ${TABLE}.vertical ;;
   }
+
+  # measure: dense_rank_measure {
+  #   type: number
+  # sql: SELECT DENSE_RANK() OVER (ORDER BY ${revenue} DESC) ;;
+  # }
 
   # dimension: vertical_tmp  {
   #   type: string

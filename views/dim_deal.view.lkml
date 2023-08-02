@@ -183,6 +183,11 @@ view: dim_deal {
     sql: ${TABLE}.Viewability_Target ;;
   }
 
+dimension: overall_imp_cap {
+  type: number
+  description: "The goal of impressions the deal should get "
+  sql: ${TABLE}.overall_imp_cap ;;
+}
 
   measure: count {
     type: count

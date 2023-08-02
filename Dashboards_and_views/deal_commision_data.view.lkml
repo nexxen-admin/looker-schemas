@@ -35,7 +35,6 @@ view: deal_commision_data {
 
   dimension: barter_rebate {
     type: number
-    value_format: "0\%"
     sql: ${TABLE}.barter_rebate ;;
   }
 

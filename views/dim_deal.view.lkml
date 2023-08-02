@@ -136,6 +136,11 @@ view: dim_deal {
     sql: ${TABLE}.Deal_Start ;;
   }
 
+  dimension: deal_time {
+    type: number
+    sql: datediff(day, ${deal_start}, ${deal_end}) ;;
+  }
+
   dimension: deal_supply_margin_pct {
     type: number
     sql: ${TABLE}.Deal_supply_margin_pct ;;

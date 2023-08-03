@@ -1132,6 +1132,13 @@ dimension: browser_type_name {
     sql: CASE WHEN ${inventory_source_id} in (12, 115, 50, 8, 158, 9, 179, 16, 202, 6, 11, 40, 97, 191, 37, 200, 195) THEN ${inventory_source_id} ELSE 999 END ;;
   }
 
+  dimension: home_market_name1 {
+    type: string
+    label: "Home Market Name_new"
+    sql: LOOKUP(CONCAT(market_id, ''), 'dsp_media_and_bids_market_name') ;;
+
+  }
+
   dimension: home_market_name {
     type: string
     label: "Home Market Name"
@@ -1270,6 +1277,7 @@ dimension: browser_type_name {
   WHEN 2103 THEN 'Digital Impact -Self-Serve'
   WHEN 9999 THEN 'Misc Small Volume Markets'
   ELSE 'Misc Small Spend Customers' END ;;
+
   }
 
   dimension: home_market_id {

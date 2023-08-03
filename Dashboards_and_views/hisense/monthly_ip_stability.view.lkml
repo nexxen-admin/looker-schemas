@@ -1,6 +1,6 @@
 view: monthly_ip_stability {
   derived_table: {
-    sql: WITH tempy AS (
+    sql:
                 with device_ip_count as (
                 select device_id,
                        count(distinct case when AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -1) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) then ip else null end) as ip_count_1_month,

@@ -188,10 +188,15 @@ view: dim_deal {
     sql: ${TABLE}.Viewability_Target ;;
   }
 
-dimension: overall_imp_cap {
+ dimension: overall_imp_cap {
   type: number
   description: "The goal of impressions the deal should get "
   sql: ${TABLE}.overall_imp_cap ;;
+}
+
+dimension: deal_situation {
+  type: string
+  sql: case when now()>${deal_end} then 'Finished' else 'Live Deal' end ;;
 }
 
   measure: count {

@@ -812,7 +812,8 @@ view: fact_ad_bid_request_daily_agg {
 
   measure: Net_Revenue_lastday_change_parameter {
     type: number
-    sql: coalesce((${Last_Day_net_Revenue}-${prev_Day_net_Revenue})/ NULLIF(${prev_Day_net_Revenue},0),0) ;;
+    sql: case when ${Last_Day_net_Revenue}>0 and ${prev_Day_net_Revenue}=0 then 1
+         else coalesce((${Last_Day_net_Revenue}-${prev_Day_net_Revenue})/ NULLIF(${prev_Day_net_Revenue},0),0) end ;;
     value_format: "0.00%"
     html:
     <ul>
@@ -1099,7 +1100,8 @@ view: fact_ad_bid_request_daily_agg {
 
   measure: revenue_lastday_change_parameter {
     type: number
-    sql: coalesce((${Last_day_Revenue}-${Previous_day_Revenue})/ NULLIF(${Previous_day_Revenue},0),0) ;;
+    sql: case when ${Last_day_Revenue}>0 and ${Previous_day_Revenue}=0 then 1
+         else coalesce((${Last_day_Revenue}-${Previous_day_Revenue})/ NULLIF(${Previous_day_Revenue},0),0) end ;;
     value_format: "0.00%"
     html:
     <ul>

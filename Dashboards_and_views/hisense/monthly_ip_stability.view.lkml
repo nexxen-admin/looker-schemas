@@ -11,7 +11,7 @@ view: monthly_ip_stability {
                 group by 1)
 
 
-select ip_count_1_month,count(*) as count
+select ip_count_1_month,count(*) as county
 from device_ip_count
 group by 1
 having count(*)>0
@@ -32,6 +32,11 @@ order by 1 desc
     sql: ${TABLE}.ip_count_1_month ;;
   }
 
+  measure: county {
+    type: average
+    sql: ${TABLE}.county ;;
+  }
+
 
 
   measure: all {
@@ -42,7 +47,7 @@ order by 1 desc
   set: detail {
     fields: [
       ip_count_1_month,
-      count
+      county
 
     ]
   }

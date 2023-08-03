@@ -1042,7 +1042,7 @@ view: fact_ad_daily_agg {
     label: "Date"
     group_label: "Time Frame"
     sql: ${TABLE}.Date_Key ;;
-    #hidden: yes
+    hidden: yes
   }
 
   measure: min_date_key {

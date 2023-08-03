@@ -101,6 +101,29 @@ view: dsp_media_and_bids {
     value_format_name: percent_2
   }
 
+  parameter: domain_or_app {
+    type: unquoted
+    allowed_value: {
+      label: "Domain"
+      value: "tld"
+    }
+    allowed_value: {
+      label: "App"
+      value: "app_id"
+    }
+  }
+
+    dimension: dynamic_domain_app {
+      type: string
+      sql: {% parameter domain_or_app %} ;;
+    }
+
+
+  # dimension: is_1P_SSP {
+  #   type: yesno
+  #   sql: case when ${inventory_source_id} = 158 then yes else no end ;;
+  # }
+
   measure: acc_100pct_vis_aud_sec {
     type: sum
     sql: ${TABLE}."acc_100pct_vis_aud_sec" ;;
@@ -473,7 +496,7 @@ view: dsp_media_and_bids {
 
   measure: inv_cost {
     type: sum
-    #value_format: "$#,##0,\" K\""
+    value_format: "$#,##0"
     sql: ${TABLE}."inv_cost" ;;
   }
 
@@ -1315,6 +1338,7 @@ dimension: browser_type_name {
   measure: unruly_inv_cost {
     type: sum
     label: "Unruly Inv Cost"
+    value_format: "$#,##0"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."inv_cost"  ELSE NULL END ;;
   }
 

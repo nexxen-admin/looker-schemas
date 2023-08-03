@@ -1477,6 +1477,7 @@ explore: sno_opt_viewing_spot_level_pacing {
 
   join: sno_opt_viewing_spot_level_pacing_latest_report {
     relationship: many_to_one
+    type: inner
     sql_on: ${sno_opt_viewing_spot_level_pacing.campaign_id} = ${sno_opt_viewing_spot_level_pacing_latest_report.campaign_id} AND ${sno_opt_viewing_spot_level_pacing.run_raw} = ${sno_opt_viewing_spot_level_pacing_latest_report.latest_run_date} ;;
   }
 

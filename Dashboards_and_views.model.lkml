@@ -335,3 +335,8 @@ explore: publishers_bids_breakdown {
   label: "Publishers Bids Breakdown"
   required_access_grants: [can_view_pub_come_looker]
 }
+
+explore: schain_report {
+  label: "Supply Chain Report"
+  required_access_grants: [can_view_all_tremor]
+}

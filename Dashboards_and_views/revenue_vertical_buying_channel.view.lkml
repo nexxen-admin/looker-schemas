@@ -15,28 +15,33 @@ view: revenue_vertical_buying_channel {
     sql: ${TABLE}.advertiser_category ;;
   }
 
-measure: partition {
-  type: number
-  sql:  ;;
-}
-   dimension: Verticals {
-     type: string
-     sql: case when ${revenue_vertical_buying_channel.advertiser_category} = 'CPG' OR ${revenue_vertical_buying_channel.advertiser_category}='Other' OR
-                    ${revenue_vertical_buying_channel.advertiser_category}='Food' OR ${revenue_vertical_buying_channel.advertiser_category}='Health' OR
-                    ${revenue_vertical_buying_channel.advertiser_category}='Automotive' OR ${revenue_vertical_buying_channel.advertiser_category}='Business' OR
-                    ${revenue_vertical_buying_channel.advertiser_category}='Entertainment' OR ${revenue_vertical_buying_channel.advertiser_category}='Personal Finance' OR
-                    ${revenue_vertical_buying_channel.advertiser_category}='Travel' OR ${revenue_vertical_buying_channel.advertiser_category}='Automotive'
-                    OR ${revenue_vertical_buying_channel.advertiser_category}='Education' OR ${revenue_vertical_buying_channel.advertiser_category}='Shopping'
-                    then ${revenue_vertical_buying_channel.advertiser_category} else 'Grouped Other' end;;
-    drill_fields: [advertiser_category]
-    link: {
-      label: "Open Grouped Others Trend Line"
-    url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=zuC1YfhN6SY5reOE3Iemiq&origin_space=249&toggle=dat,fil,vis"}
-   }
+# measure: partition {
+#  type: number
+ # sql:  ;;
+#}
+  # dimension: Verticals {
+  #   type: string
+  #   sql: case when ${revenue_vertical_buying_channel.advertiser_category} = 'CPG' OR ${revenue_vertical_buying_channel.advertiser_category}='Other' OR
+  #                   ${revenue_vertical_buying_channel.advertiser_category}='Food' OR ${revenue_vertical_buying_channel.advertiser_category}='Health' OR
+  #                   ${revenue_vertical_buying_channel.advertiser_category}='Automotive' OR ${revenue_vertical_buying_channel.advertiser_category}='Business' OR
+  #                   ${revenue_vertical_buying_channel.advertiser_category}='Entertainment' OR ${revenue_vertical_buying_channel.advertiser_category}='Personal Finance' OR
+  #                   ${revenue_vertical_buying_channel.advertiser_category}='Travel' OR ${revenue_vertical_buying_channel.advertiser_category}='Automotive'
+  #                   OR ${revenue_vertical_buying_channel.advertiser_category}='Education' OR ${revenue_vertical_buying_channel.advertiser_category}='Shopping'
+  #                   then ${revenue_vertical_buying_channel.advertiser_category} else 'Grouped Other' end;;
+  #   drill_fields: [advertiser_category]
+  #   link: {
+  #     label: "Open Grouped Others Trend Line"
+  #   url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=zuC1YfhN6SY5reOE3Iemiq&origin_space=249&toggle=dat,fil,vis"}
+  # }
 
   dimension: vertical {
     type: string
     sql: ${TABLE}.vertical ;;
+    drill_fields: [advertiser_category]
+       link: {
+         label: "Open Grouped Others Trend Line"
+       url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=PiSY2FLCizHclhE9Km8kt9&origin_space=249&toggle=vis"
+     }
   }
 
   # measure: dense_rank_measure {

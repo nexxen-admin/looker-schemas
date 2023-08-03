@@ -1143,6 +1143,11 @@ view: fact_ad_bid_request_daily_agg {
     sql: case when ${Last_day_Revenue}=0 and ${Previous_day_Revenue}>0 then 'Yes' else 'No' end ;;
   }
 
+  measure: deal_launched {
+    type: string
+    sql: case when ${Last_day_Revenue}>0 and ${Previous_day_Revenue}=0 then 'Yes' else 'No' end ;;
+  }
+
   measure: revenue_change_from_yesterday_pivot {
     type: number
     description: "Change in revenue from 2 days ago to yesterday"

@@ -3,17 +3,15 @@ view: monthly_ip_stability {
     sql:
 
 
-select '1 month interval' as 'Time_period',
-       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as '1_IP',
-       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as '2_IP',
-       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as '3_IP',
-       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as '4_IP',
-       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as '5_IP',
-       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as '6_IP',
-       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as '7_IP',
-       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as '8_IP',
-       round(count(distinct case when ip_count=9 then device_id end)/count(device_id),3) as '9_IP',
-       round(count(distinct case when ip_count=10 then device_id end)/count(device_id),3) as '10_IP'
+select '1 Month' as 'Time_period',
+       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
+       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
+       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
+       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as 'ip4',
+       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as 'ip5',
+       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as 'ip6',
+       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
+       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
 from (
       select device_id,count(distinct ip) as ip_count
       from dragon.viewership_content_sessions_combined_daily AA
@@ -22,17 +20,15 @@ from (
       ) BB
 
 UNION ALL
-select '2 month interval' as 'Time period',
-       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as '1_IP',
-       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as '2_IP',
-       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as '3_IP',
-       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as '4_IP',
-       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as '5_IP',
-       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as '6_IP',
-       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as '7_IP',
-       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as '8_IP',
-       round(count(distinct case when ip_count=9 then device_id end)/count(device_id),3) as '9_IP',
-       round(count(distinct case when ip_count=10 then device_id end)/count(device_id),3) as '10_IP'
+select '2 Month' as 'Time period',
+       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
+       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
+       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
+       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as 'ip4',
+       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as 'ip5',
+       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as 'ip6',
+       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
+       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
 from (
       select device_id,count(distinct ip) as ip_count
       from dragon.viewership_content_sessions_combined_daily AA
@@ -41,17 +37,15 @@ from (
       ) BB
 
 UNION ALL
-select '3 month interval' as 'Time period',
-       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as '1_IP',
-       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as '2_IP',
-       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as '3_IP',
-       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as '4_IP',
-       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as '5_IP',
-       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as '6_IP',
-       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as '7_IP',
-       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as '8_IP',
-       round(count(distinct case when ip_count=9 then device_id end)/count(device_id),3) as '9_IP',
-       round(count(distinct case when ip_count=10 then device_id end)/count(device_id),3) as '10_IP'
+select '3 Month' as 'Time period',
+       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
+       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
+       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
+       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as 'ip4',
+       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as 'ip5',
+       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as 'ip6',
+       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
+       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
 from (
       select device_id,count(distinct ip) as ip_count
       from dragon.viewership_content_sessions_combined_daily AA
@@ -60,17 +54,15 @@ from (
       ) BB
 
 UNION ALL
-select '4 month interval' as 'Time period',
-       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as '1_IP',
-       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as '2_IP',
-       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as '3_IP',
-       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as '4_IP',
-       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as '5_IP',
-       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as '6_IP',
-       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as '7_IP',
-       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as '8_IP',
-       round(count(distinct case when ip_count=9 then device_id end)/count(device_id),3) as '9_IP',
-       round(count(distinct case when ip_count=10 then device_id end)/count(device_id),3) as '10_IP'
+select '4 Month' as 'Time period',
+       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
+       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
+       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
+       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as 'ip4',
+       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as 'ip5',
+       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as 'ip6',
+       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
+       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
 from (
       select device_id,count(distinct ip) as ip_count
       from dragon.viewership_content_sessions_combined_daily AA
@@ -87,30 +79,72 @@ from (
 
   dimension: Time_period {
     type: string
+    label: "Time range"
     sql: ${TABLE}.Time_period ;;
   }
 
-  measure: one_IP {
+  measure: ip1 {
     type: average
-    sql: ${TABLE}.1_IP ;;
+    label: "Devices (1 IP)"
+    sql: ${TABLE}.ip1 ;;
   }
 
-  measure: two_IP {
+  measure: ip2 {
     type: average
-    sql: ${TABLE}.2_IP ;;
+    label: "Devices (2 IP)"
+    sql: ${TABLE}.ip2 ;;
   }
 
-  measure: three_IP {
+  measure: ip3 {
     type: average
-    sql: ${TABLE}.3_IP ;;
+    label: "Devices (3 IP)"
+    sql: ${TABLE}.ip3 ;;
   }
+
+
+
+  measure: ip4 {
+    label: "Devices (4 IP)"
+    type: average
+    sql: ${TABLE}.ip4 ;;
+  }
+
+  measure: ip5 {
+    label: "Devices (5 IP)"
+    type: average
+    sql: ${TABLE}.ip5 ;;
+  }
+
+  measure: ip6 {
+    type: average
+    label: "Devices (6 IP)"
+    sql: ${TABLE}.ip6 ;;
+  }
+
+  measure: ip7 {
+    label: "Devices (7 IP)"
+    type: average
+    sql: ${TABLE}.ip7 ;;
+  }
+
+  measure: ip8 {
+    label: "Devices (8 IP)"
+    type: average
+    sql: ${TABLE}.ip8 ;;
+  }
+
 
   set: detail {
     fields: [
       Time_period,
-      one_IP,
-      two_IP,
-      three_IP
+      ip1,
+      ip2,
+      ip3,
+      ip4,
+      ip5,
+      ip6,
+      ip7,
+      ip8
     ]
   }
 }

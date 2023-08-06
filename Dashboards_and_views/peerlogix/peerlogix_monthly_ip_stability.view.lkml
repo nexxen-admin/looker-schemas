@@ -14,7 +14,7 @@ view: peerlogix_monthly_ip_stability {
            round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
     from (
           select device_id,count(distinct ip) as ip_count
-          from dragon.viewership_content_sessions_combined_daily AA
+          from dragon.viewership_content_peerlogix_daily AA
           where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -1) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
           group by 1
           ) BB
@@ -31,7 +31,7 @@ view: peerlogix_monthly_ip_stability {
       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
       from (
       select device_id,count(distinct ip) as ip_count
-      from dragon.viewership_content_sessions_combined_daily AA
+      from dragon.viewership_content_peerlogix_daily AA
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -2) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
       group by 1
       ) BB
@@ -48,7 +48,7 @@ view: peerlogix_monthly_ip_stability {
       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
       from (
       select device_id,count(distinct ip) as ip_count
-      from dragon.viewership_content_sessions_combined_daily AA
+      from dragon.viewership_content_peerlogix_daily AA
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
       group by 1
       ) BB
@@ -65,7 +65,7 @@ view: peerlogix_monthly_ip_stability {
       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
       from (
       select device_id,count(distinct ip) as ip_count
-      from dragon.viewership_content_sessions_combined_daily AA
+      from dragon.viewership_content_peerlogix_daily AA
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
       group by 1
       ) BB

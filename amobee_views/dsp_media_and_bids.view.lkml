@@ -113,6 +113,12 @@ view: dsp_media_and_bids {
     }
   }
 
+  dimension: app_or_site {
+    type: string
+    label: "App or Site"
+    sql: case when ${app_id} is not null then "App" else "Site" end ;;
+  }
+
     dimension: dynamic_domain_app {
       type: string
       sql: {% parameter domain_or_app %} ;;

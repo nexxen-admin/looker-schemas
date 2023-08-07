@@ -1163,14 +1163,14 @@ dimension: browser_type_name {
 
   dimension: home_market_name1 {
     type: string
-    label: "Home Market Name_new"
+    label: "Home Market Name"
     sql: LOOKUP(CONCAT(market_id, ''), 'dsp_media_and_bids_market_name') ;;
 
   }
 
   dimension: home_market_name {
     type: string
-    label: "Home Market Name"
+    label: "Home Market Name_old"
     sql: CASE ${market_id} WHEN 884 THEN 'Amobee, Inc.'
   WHEN 1792 THEN 'Amobee Inc - Western Governors University'
   WHEN 2067 THEN 'Amobee Inc - Crossmedia'
@@ -1306,6 +1306,7 @@ dimension: browser_type_name {
   WHEN 2103 THEN 'Digital Impact -Self-Serve'
   WHEN 9999 THEN 'Misc Small Volume Markets'
   ELSE 'Misc Small Spend Customers' END ;;
+  hidden: yes
 
   }
 

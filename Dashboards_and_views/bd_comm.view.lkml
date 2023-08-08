@@ -73,11 +73,11 @@ view: bd_comm {
     #sql: ${impressions} ;;
   #}
 
-  measure: profit {
-    type: sum
-    value_format: "$#,##0"
-    sql: ${TABLE}.profit ;;
-  }
+  # measure: profit {
+  #   type: sum
+  #   value_format: "$#,##0"
+  #   sql: ${TABLE}.profit ;;
+  # }
 
   dimension: pub_id {
     type: number

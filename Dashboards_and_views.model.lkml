@@ -336,7 +336,7 @@ explore: publishers_bids_breakdown {
   required_access_grants: [can_view_pub_come_looker]
 }
 
-explore: schain_report {
+explore: fact_supply_chain {
   label: "Supply Chain Report"
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [can_view_pub_come_looker]
 }

@@ -494,10 +494,11 @@ view: v_fact_ad_daily {
   }
 
   measure: num_of_bids {
-    description: "A measure containing the total sales value over a dynamic window."
+    description: "A measure containing the number of bids value over a dynamic window."
     type: number
-    sql: count(${diff_floor_price}) OVER (PARTITION BY
+    sql: sum(${num_of_bids_per_range}) OVER (PARTITION BY
       {% if pub_id._is_selected %} ${pub_id}, {% endif %}
+      {% if placement_name._is_selected %} ${placement_name}, {% endif %}
       {% if device_type_id._is_selected %} ${device_type_id}, {% endif %}
       {% if imp_type._is_selected %} ${imp_type}, {% endif %}
       {% if country_code._is_selected %} ${country_code}, {% endif %}
@@ -507,10 +508,11 @@ view: v_fact_ad_daily {
   }
 
   measure: num_of_bids_per_range {
-    description: "A measure containing the total sales value over a dynamic window."
+    description: "A measure containing the total bids value over a dynamic window."
     type: number
     sql: count(${diff_floor_price}) OVER (PARTITION BY
       {% if pub_id._is_selected %} ${pub_id}, {% endif %}
+      {% if placement_name._is_selected %} ${placement_name}, {% endif %}
       {% if device_type_id._is_selected %} ${device_type_id}, {% endif %}
       {% if imp_type._is_selected %} ${imp_type}, {% endif %}
       {% if country_code._is_selected %} ${country_code}, {% endif %}

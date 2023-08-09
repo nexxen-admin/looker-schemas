@@ -149,3 +149,9 @@ explore: peerlogix_Weekly_device_distribution_over_apps {
   required_access_grants: [can_view_acr_group]
   hidden: no
 }
+
+explore: peerlogix_try {
+  label: "peerlogix try"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}

@@ -58,7 +58,7 @@ view: dsp_media_and_bids {
   }
 
   measure:  unruly_previous_day_cost {
-    label: "Inv Cost Unruly Previous Day "
+    label: "Inv Cost Nexxen Previous Day "
     type: sum
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.inv_cost ELSE NULL END ;;
     group_label: "Time Shifted Measures"
@@ -67,7 +67,7 @@ view: dsp_media_and_bids {
   }
 
   measure:  unruly_last_day_cost {
-    label: "Inv Cost Unruly - Yesterday "
+    label: "Inv Cost Nexxen - Yesterday "
     type: sum
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.inv_cost ELSE NULL END ;;
     group_label: "Time Shifted Measures"
@@ -76,7 +76,7 @@ view: dsp_media_and_bids {
   }
 
   measure: unruly_previous_day_impression {
-    label: "Impression Unruly Previous Day "
+    label: "Impression Nexxen Previous Day "
     type: sum
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.impression ELSE NULL END ;;
     group_label: "Time Shifted Measures"
@@ -85,7 +85,7 @@ view: dsp_media_and_bids {
   }
 
   measure: unruly_last_day_impression {
-    label: "Impression Unruly Current Day "
+    label: "Impression Nexxen Current Day "
     type: sum
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.impression ELSE NULL END ;;
     group_label: "Time Shifted Measures"
@@ -1344,20 +1344,20 @@ dimension: browser_type_name {
 
   measure: unruly_inv_cost {
     type: sum
-    label: "Unruly Inv Cost"
+    label: "Nexxen Inv Cost"
     value_format: "$#,##0"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."inv_cost"  ELSE NULL END ;;
   }
 
   measure: unruly_impression {
     type: sum
-    label: "Unruly Impressions"
+    label: "Nexxen Impressions"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."impression"  ELSE NULL END ;;
   }
 
   measure: unruly_adv_spend {
     type: sum
-    label: "Unruly Adv Spend"
+    label: "Nexxen Adv Spend"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."cost"  ELSE NULL END ;;
   }
 

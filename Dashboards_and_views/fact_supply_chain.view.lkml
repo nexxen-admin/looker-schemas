@@ -12,7 +12,7 @@ view: fact_supply_chain {
 
   dimension_group: datetime_hour {
     type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, time, date, week, month, quarter, year, hour]
     sql: ${TABLE}.datetime_hour ;;
   }
 
@@ -47,6 +47,7 @@ view: fact_supply_chain {
 
   measure: nodes {
     type: average
+    value_format: "0"
     sql: ${TABLE}."nodes" ;;
   }
 

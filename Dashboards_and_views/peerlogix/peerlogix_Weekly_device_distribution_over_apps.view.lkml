@@ -17,6 +17,7 @@ from bi_new.device_app_by_weekly
     }
 
   dimension: split_into_rows {
+    label: "App name"
     type: string
     sql: ${TABLE}."split_into_rows" ;;
   }
@@ -24,6 +25,7 @@ from bi_new.device_app_by_weekly
 
 
     measure: count_device {
+      label: "Device count"
       type: average
       sql: ${TABLE}."count_device" ;;
     }

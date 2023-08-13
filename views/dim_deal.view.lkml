@@ -194,6 +194,12 @@ view: dim_deal {
   sql: ${TABLE}.overall_imp_cap ;;
 }
 
+  dimension: daily_imp_cap {
+    type: number
+    description: "The daily goal of impressions the deal should get "
+    sql: ${TABLE}.daily_imp_cap ;;
+  }
+
 dimension: deal_situation {
   type: string
   sql: case when now()>${deal_end} then 'Finished' else 'Live Deal' end ;;

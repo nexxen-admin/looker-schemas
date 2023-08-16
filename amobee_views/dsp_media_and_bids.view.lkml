@@ -58,7 +58,7 @@ view: dsp_media_and_bids {
   }
 
   measure:  unruly_previous_day_cost {
-    label: "Inv Cost Unruly Previous Day "
+    label: "Inv Cost Nexxen Previous Day "
     type: sum
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.inv_cost ELSE NULL END ;;
     group_label: "Time Shifted Measures"
@@ -67,7 +67,7 @@ view: dsp_media_and_bids {
   }
 
   measure:  unruly_last_day_cost {
-    label: "Inv Cost Unruly - Yesterday "
+    label: "Inv Cost Nexxen - Yesterday "
     type: sum
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.inv_cost ELSE NULL END ;;
     group_label: "Time Shifted Measures"
@@ -76,7 +76,7 @@ view: dsp_media_and_bids {
   }
 
   measure: unruly_previous_day_impression {
-    label: "Impression Unruly Previous Day "
+    label: "Impression Nexxen Previous Day "
     type: sum
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.impression ELSE NULL END ;;
     group_label: "Time Shifted Measures"
@@ -85,7 +85,7 @@ view: dsp_media_and_bids {
   }
 
   measure: unruly_last_day_impression {
-    label: "Impression Unruly Current Day "
+    label: "Impression Nexxen Current Day "
     type: sum
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.impression ELSE NULL END ;;
     group_label: "Time Shifted Measures"
@@ -111,6 +111,12 @@ view: dsp_media_and_bids {
       label: "App"
       value: "app_id"
     }
+  }
+
+  dimension: app_or_site {
+    type: string
+    label: "App or Site"
+    sql: case when ${app_id} is not null then "App" else "Site" end ;;
   }
 
     dimension: dynamic_domain_app {
@@ -1155,9 +1161,16 @@ dimension: browser_type_name {
     sql: CASE WHEN ${inventory_source_id} in (12, 115, 50, 8, 158, 9, 179, 16, 202, 6, 11, 40, 97, 191, 37, 200, 195) THEN ${inventory_source_id} ELSE 999 END ;;
   }
 
-  dimension: home_market_name {
+  dimension: home_market_name1 {
     type: string
     label: "Home Market Name"
+    sql: LOOKUP(CONCAT(market_id, ''), 'dsp_media_and_bids_market_name') ;;
+
+  }
+
+  dimension: home_market_name {
+    type: string
+    label: "Home Market Name_old"
     sql: CASE ${market_id} WHEN 884 THEN 'Amobee, Inc.'
   WHEN 1792 THEN 'Amobee Inc - Western Governors University'
   WHEN 2067 THEN 'Amobee Inc - Crossmedia'
@@ -1293,6 +1306,8 @@ dimension: browser_type_name {
   WHEN 2103 THEN 'Digital Impact -Self-Serve'
   WHEN 9999 THEN 'Misc Small Volume Markets'
   ELSE 'Misc Small Spend Customers' END ;;
+  hidden: yes
+
   }
 
   dimension: home_market_id {
@@ -1329,20 +1344,20 @@ dimension: browser_type_name {
 
   measure: unruly_inv_cost {
     type: sum
-    label: "Unruly Inv Cost"
+    label: "Nexxen Inv Cost"
     value_format: "$#,##0"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."inv_cost"  ELSE NULL END ;;
   }
 
   measure: unruly_impression {
     type: sum
-    label: "Unruly Impressions"
+    label: "Nexxen Impressions"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."impression"  ELSE NULL END ;;
   }
 
   measure: unruly_adv_spend {
     type: sum
-    label: "Unruly Adv Spend"
+    label: "Nexxen Adv Spend"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."cost"  ELSE NULL END ;;
   }
 

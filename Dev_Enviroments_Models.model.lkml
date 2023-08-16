@@ -137,3 +137,15 @@ explore: peerlogix_monthly_ip_stability {
   required_access_grants: [can_view_acr_group]
   hidden: no
 }
+
+explore: peerlogix_rolling_days_intervals_ip_device {
+  label: "peerlogix rolling days intervals ip device"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}
+
+explore: peerlogix_Weekly_device_distribution_over_apps {
+  label: "peerlogix Weekly device distribution over apps"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}

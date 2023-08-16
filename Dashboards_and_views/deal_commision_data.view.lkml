@@ -35,7 +35,6 @@ view: deal_commision_data {
 
   dimension: barter_rebate {
     type: number
-    value_format: "0\%"
     sql: ${TABLE}.barter_rebate ;;
   }
 
@@ -216,6 +215,10 @@ view: deal_commision_data {
       else null end  ;;
   }
 
+  dimension: rebate_percent {
+    type: number
+    sql: ${TABLE}.rebate_percent;;
+  }
   measure: count {
     type: count
     drill_fields: [dsp_name, personnel_name]

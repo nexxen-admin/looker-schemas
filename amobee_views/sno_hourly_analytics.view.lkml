@@ -32,6 +32,12 @@ view: hourly_analytics {
     sql:'';;
   }
 
+  dimension: bt_id {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.BT_ID;;
+  }
+
   dimension: aws_region {
     type: string
     label: "AWS Region"
@@ -3271,7 +3277,7 @@ view: hourly_analytics {
     ${total_addon_product_cost} +
     ${sum_demand_adserving_cost} +
     ${sum_demand_bt_cluster_cost} +
-    ${bt_cost_attributes.sum_demand_bt_provider_cost} +
+    ${bt_cost_attributes_analytics.sum_demand_bt_provider_cost} +
     ${sum_demo_provider_data_cost} +
     ${sum_demand_tracking_cost} ;;
   }

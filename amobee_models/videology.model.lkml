@@ -26,10 +26,10 @@ explore: hourly_analytics {
     -flight_media_details_base.demoaud, -hourly_analytics.sum_unserved_requests,
     -advertiser_brand_details.future_advertisers, -customer_details.future_customers]
 
-  join: bt_cost_attributes {
+  join: bt_cost_attributes_analytics {
     view_label: "Request and Impression Metrics"
     relationship: one_to_many
-    type: cross
+    sql_on: ${bt_cost_attributes_analytics.bt_id} = ${hourly_analytics.bt_id};;
   }
 
   join: load_tracking {
@@ -102,7 +102,7 @@ explore: hourly_analytics {
 
   join: bt_data_provider_core {
     relationship: many_to_one
-    sql_on: ${bt_cost_attributes.bt_provider} = ${bt_data_provider_core.user_data_vendor_id} ;;
+    sql_on: ${bt_cost_attributes_analytics.bt_provider} = ${bt_data_provider_core.user_data_vendor_id} ;;
   }
 
   join: bt_cluster_provider_core {
@@ -140,7 +140,7 @@ explore: hourly_analytics {
 
   join: retargeting_attribute {
     relationship: many_to_one
-    sql_on: ${bt_cost_attributes.bt_cost_attribute} = ${retargeting_attribute.retargeting_attribute_id} ;;
+    sql_on: ${bt_cost_attributes_analytics.bt_cost_attribute} = ${retargeting_attribute.retargeting_attribute_id} ;;
   }
 
   join: hourly_analytics_derived {

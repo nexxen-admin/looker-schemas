@@ -1,7 +1,7 @@
 view: raw_impression {
   label: "Raw Impression Metrics"
   derived_table: {
-    sql: SELECT * FROM RAWDB.RAW_IMPRESSION_V2
+    sql: SELECT * FROM RAWDB.RAW_IMPRESSION
     WHERE
     {% if dst_epoch_raw_date._is_filtered %}
       epoch::timestamp_ntz >= TIMESTAMPADD('day', -1, {% date_start dst_epoch_raw_date %}) AND
@@ -1904,7 +1904,7 @@ measure: IBMM_Amount{
     label: "Postal Code"
     view_label: "Supplemental Facets"
     description: "The Postal Code of the viewer who saw the impression."
-    sql: ${TABLE}.POSTALCODE ;;
+    sql: RAWDB.DecryptPostalcode(${TABLE}.POSTALCODE) ;;
   }
 
   dimension: postalcode_attribute {

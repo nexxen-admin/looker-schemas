@@ -9,21 +9,20 @@ FROM
            (
                             SELECT         l.placement::integer as placement,
                                              l.keydate as keydate,
-                                             l.id,
+                                             l.value as id,
                                              l.requests as l_requests,
-                                             l.list,
-                                             l.list_size,
+                                             l.{% parameter list_type %}_{% parameter select_black_or_white %}_list as list,
+                                             l."col 1" as list_size,
                                              l.pdata1
                             FROM           (
-                                                      SELECT isblid.value::string  AS id,
-                                                      DATA:{% parameter list_type %}_{% parameter select_black_or_white %}_list AS list,
-                                                      IFNULL(array_size(DATA:{% parameter list_type %}_{% parameter select_black_or_white %}_list),0) AS list_size,
-                                                             r.*
-                                                      FROM   rawdb.hourly_requests_blacklist_whitelist AS r,
-                                                            lateral flatten(input =>DATA:{% parameter list_type %}_{% parameter select_black_or_white %}_list)  isblid
+                                                      SELECT EXPLODE(
+                                                      {% parameter list_type %}_{% parameter select_black_or_white %}_list,
+                                                      IFNULL(array_length({% parameter list_type %}_{% parameter select_black_or_white %}_list),0),
+                                                             r.*) OVER(PARTITION BEST)
+                                                      FROM   rawdb.hourly_requests_blacklist_whitelist AS r
 
                                                       WHERE
-                                                      DATA:{% parameter list_type %}_{% parameter select_black_or_white %}_list IS NOT NULL AND
+                                                      {% parameter list_type %}_{% parameter select_black_or_white %}_list IS NOT NULL AND
                                                        {% condition keydate_date %} r.keydate {% endcondition %}AND
                                                        {% condition keydate_hour %} r.keydate {% endcondition %}AND
                                                        {% condition keydate_month %} r.keydate {% endcondition %}AND
@@ -31,24 +30,24 @@ FROM
                                                        {% condition keydate_week %} r.keydate {% endcondition %}
                                                       AND
                                                          {% if dst_keydate_date._is_filtered %}
-                                                              r.keydate >= DATEADD('day', -1, {% date_start dst_keydate_date %}) AND
-                                                              r.keydate < DATEADD('day', 1, {% date_end dst_keydate_date %}) AND
+                                                              r.keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_date %}) AND
+                                                              r.keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_date %}) AND
                                                             {% endif %}
                                                             {% if dst_keydate_week._is_filtered %}
-                                                              r.keydate >= DATEADD('day', -1, {% date_start dst_keydate_week %}) AND
-                                                              r.keydate < DATEADD('day', 1, {% date_end dst_keydate_week %}) AND
+                                                              r.keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_week %}) AND
+                                                              r.keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_week %}) AND
                                                             {% endif %}
                                                             {% if dst_keydate_month._is_filtered %}
-                                                              r.keydate >= DATEADD('day', -1, {% date_start dst_keydate_month %}) AND
-                                                              r.keydate < DATEADD('day', 1, {% date_end dst_keydate_month %}) AND
+                                                              r.keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_month %}) AND
+                                                              r.keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_month %}) AND
                                                             {% endif %}
                                                             {% if dst_keydate_hour._is_filtered %}
-                                                              r.keydate >= DATEADD('day', -1, {% date_start dst_keydate_hour %}) AND
-                                                              r.keydate < DATEADD('day', 1, {% date_end dst_keydate_hour %}) AND
+                                                              r.keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_hour %}) AND
+                                                              r.keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_hour %}) AND
                                                             {% endif %}
                                                             {% if dst_keydate_year._is_filtered %}
-                                                              r.keydate >= DATEADD('day', -1, {% date_start dst_keydate_year %}) AND
-                                                              r.keydate < DATEADD('day', 1, {% date_end dst_keydate_year %}) AND
+                                                              r.keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_year %}) AND
+                                                              r.keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_year %}) AND
                                                             {% endif %}
                                                             1=1
                                                 ) l
@@ -56,7 +55,7 @@ FROM
 
                               )
                               AS t
-             join dim.placement_details_base p
+             join dim.placement_details_base_view p
 ON         p.placement_id = t.placement
       ;;
   }

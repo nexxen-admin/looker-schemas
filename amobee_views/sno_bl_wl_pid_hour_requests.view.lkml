@@ -6,31 +6,31 @@ view: sno_bl_wl_pid_hour_requests {
              placement,
              sum(requests) AS total_pid_requests
     FROM     rawdb.hourly_requests_blacklist_whitelist
-    WHERE DATA:{% parameter sno_blacklist_whitelist.list_type %}_{% parameter sno_blacklist_whitelist.select_black_or_white %}_list IS NOT NULL AND
+    WHERE {% parameter sno_blacklist_whitelist.list_type %}_{% parameter sno_blacklist_whitelist.select_black_or_white %}_list IS NOT NULL AND
           {% condition sno_blacklist_whitelist.keydate_date %} keydate {% endcondition %}AND
           {% condition sno_blacklist_whitelist.keydate_hour %} keydate {% endcondition %}AND
           {% condition sno_blacklist_whitelist.keydate_month %} keydate {% endcondition %}AND
           {% condition sno_blacklist_whitelist.keydate_year %} keydate {% endcondition %}AND
           {% condition sno_blacklist_whitelist.keydate_week %} keydate {% endcondition %}AND
           {% if sno_blacklist_whitelist.dst_keydate_date._is_filtered %}
-            keydate >= DATEADD('day', -1, {% date_start sno_blacklist_whitelist.dst_keydate_date %}) AND
-            keydate < DATEADD('day', 1, {% date_end sno_blacklist_whitelist.dst_keydate_date %}) AND
+            keydate >= TIMESTAMPADD('day', -1, {% date_start sno_blacklist_whitelist.dst_keydate_date %}) AND
+            keydate < TIMESTAMPADD('day', 1, {% date_end sno_blacklist_whitelist.dst_keydate_date %}) AND
           {% endif %}
           {% if sno_blacklist_whitelist.dst_keydate_week._is_filtered %}
-            keydate >= DATEADD('day', -1, {% date_start sno_blacklist_whitelist.dst_keydate_week %}) AND
-            keydate < DATEADD('day', 1, {% date_end sno_blacklist_whitelist.dst_keydate_week %}) AND
+            keydate >= TIMESTAMPADD('day', -1, {% date_start sno_blacklist_whitelist.dst_keydate_week %}) AND
+            keydate < TIMESTAMPADD('day', 1, {% date_end sno_blacklist_whitelist.dst_keydate_week %}) AND
           {% endif %}
           {% if sno_blacklist_whitelist.dst_keydate_month._is_filtered %}
-            keydate >= DATEADD('day', -1, {% date_start sno_blacklist_whitelist.dst_keydate_month %}) AND
-            keydate < DATEADD('day', 1, {% date_end sno_blacklist_whitelist.dst_keydate_month %}) AND
+            keydate >= TIMESTAMPADD('day', -1, {% date_start sno_blacklist_whitelist.dst_keydate_month %}) AND
+            keydate < TIMESTAMPADD('day', 1, {% date_end sno_blacklist_whitelist.dst_keydate_month %}) AND
           {% endif %}
           {% if sno_blacklist_whitelist.dst_keydate_hour._is_filtered %}
-            keydate >= DATEADD('day', -1, {% date_start sno_blacklist_whitelist.dst_keydate_hour %}) AND
-            keydate < DATEADD('day', 1, {% date_end sno_blacklist_whitelist.dst_keydate_hour %}) AND
+            keydate >= TIMESTAMPADD('day', -1, {% date_start sno_blacklist_whitelist.dst_keydate_hour %}) AND
+            keydate < TIMESTAMPADD('day', 1, {% date_end sno_blacklist_whitelist.dst_keydate_hour %}) AND
           {% endif %}
           {% if sno_blacklist_whitelist.dst_keydate_year._is_filtered %}
-            keydate >= DATEADD('day', -1, {% date_start sno_blacklist_whitelist.dst_keydate_year %}) AND
-            keydate < DATEADD('day', 1, {% date_end sno_blacklist_whitelist.dst_keydate_year %}) AND
+            keydate >= TIMESTAMPADD('day', -1, {% date_start sno_blacklist_whitelist.dst_keydate_year %}) AND
+            keydate < TIMESTAMPADD('day', 1, {% date_end sno_blacklist_whitelist.dst_keydate_year %}) AND
           {% endif %} 1=1
     GROUP BY keydate,
              placement

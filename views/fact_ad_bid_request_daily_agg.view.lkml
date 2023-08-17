@@ -239,45 +239,47 @@ view: fact_ad_bid_request_daily_agg {
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
   }
 
-  dimension: sum_of_media_requests_from_bidrequest {
-    type: number
+  measure: sum_of_media_requests_from_bidrequest {
+    type: sum
     sql: ${TABLE}.sum_of_media_requests_from_bidrequest ;;
 
   }
 
-  dimension: sum_of_moat_impressions_ivt_measurable_from_ad_data {
-    type: number
+  measure: sum_of_moat_impressions_ivt_measurable_from_ad_data {
+    type: sum
     sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable_from_ad_data ;;
     hidden: yes
   }
 
-  dimension: sum_of_moat_impressions_viewable_from_ad_data {
-    type: number
+  measure: sum_of_moat_impressions_viewable_from_ad_data {
+    type: sum
     sql: ${TABLE}.sum_of_moat_impressions_viewable_from_ad_data ;;
     hidden: yes
   }
 
-  dimension: sum_of_pub_cost_from_ad_data {
-    type: number
+  measure: sum_of_pub_cost_from_ad_data {
+    type: sum
     sql: ${TABLE}.sum_of_pub_cost_from_ad_data ;;
     hidden: yes
   }
 
-  dimension: sum_of_pub_platform_fee_from_ad_data {
-    type: number
+  measure: sum_of_pub_platform_fee_from_ad_data {
+    type: sum
+    label: "Pub Platform Fee"
     sql: ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
   }
 
-  dimension: sum_of_requests_from_ad_data {
-    type: number
+  measure: sum_of_requests_from_ad_data {
+    type: sum
     sql: ${TABLE}.sum_of_requests_from_ad_data ;;
     hidden: yes
   }
 
-  dimension: sum_of_requests_from_bidrequest {
-    type: number
+  measure: sum_of_requests_from_bidrequest {
+    type: sum
     sql: ${TABLE}.sum_of_requests_from_bidrequest ;;
-    hidden: yes
+    label: "Bid Requests"
+    #hidden: yes
   }
 
   measure: responses {
@@ -287,6 +289,15 @@ view: fact_ad_bid_request_daily_agg {
     value_format: "#,##0"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_responses_from_ad_data ;;
+  }
+
+  measure: Bid_Rate {
+    type: number
+    label: "Bid Rate"
+    description: "responses/requests"
+    value_format: "0.00\%"
+    group_label: "Daily Measures"
+    sql: (${responses}/NULLIF(${sum_of_requests_from_bidrequest},0))*100 ;;
   }
 
   measure: revenue

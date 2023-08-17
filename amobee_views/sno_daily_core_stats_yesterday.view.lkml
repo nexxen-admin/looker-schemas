@@ -23,7 +23,7 @@ view: daily_core_stats_yesterday {
       ,sum(dcs.completed_pct_impressions) as completed_pct_impressions
       ,sum(dcs.completion_pct_impressions) as completion_pct_impressions
       ,sum(dcs.units) as units
-    FROM demand_mart.daily_core_stats dcs
+    FROM rawdb.daily_core_stats_on_analytics dcs
     JOIN dim.flight_media_details_base fmd on fmd.flight_media_id = dcs.flight_media_id
     JOIN dim.campaign_details_base cd on fmd.campaign_id = cd.campaign_id
     JOIN dim.advertiser_brand_details abd on cd.advertiser_brand_id = abd.advertiser_brand_id
@@ -35,14 +35,11 @@ view: daily_core_stats_yesterday {
   FROM dim.day_dimension dd
   JOIN (
     SELECT max(load_through_date) AS yesterday
-      ,start_timezone
-    FROM demand_mart.load_tracking
-    WHERE schema_name = 'demand_mart'
-      AND table_name = 'daily_core_stats'
-    GROUP BY start_timezone
+     FROM dim.load_tracking
+    WHERE schema_name = 'rawdb'
+      AND table_name = 'daily_analytics'
     ) sub ON sub.yesterday = dd.date_value
   ) sub2 ON dcs.demand_date = sub2.date_value
-  AND fmd.starttimezone_id = sub2.start_timezone
 WHERE 1=1
 
   {% if flight_media_details_base.flight_media_id._in_query

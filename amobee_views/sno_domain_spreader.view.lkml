@@ -32,7 +32,7 @@ GROUP BY dds.DOMAIN_URL
   full outer join
   (SELECT fmd.campaign_id
   ,sum(dcs.IMPRESSIONS) as CAMPAIGN_IMPRESSIONS
-FROM demand_mart.DAILY_CORE_STATS dcs
+FROM rawdb.DAILY_CORE_STATS_ON_ANALYTICS dcs
 JOIN dim.FLIGHT_MEDIA_DETAILS fmd ON (dcs.FLIGHT_MEDIA_ID = fmd.FLIGHT_MEDIA_ID)
 JOIN dim.CAMPAIGN_DETAILS cd ON (fmd.campaign_id = cd.campaign_id)
 JOIN dim.INSERTION_ORDER_DETAILS io ON (cd.insertion_order_id = io.insertion_order_id)

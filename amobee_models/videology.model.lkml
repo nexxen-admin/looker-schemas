@@ -43,10 +43,10 @@ explore: hourly_analytics {
   }
 
   join: demand_mart_load_tracking {
+    from: load_tracking
     relationship: many_to_one
-    sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking.start_timezone} and
-      ${demand_mart_load_tracking.schema_name} = 'demand_mart' and
-      ${demand_mart_load_tracking.table_name} = 'daily_core_stats' ;;
+    sql_on: ${demand_mart_load_tracking.schema_name} = 'rawdb' and
+      ${demand_mart_load_tracking.table_name} = 'daily_analytics' ;;
   }
 
   join: flight_details {
@@ -329,14 +329,15 @@ explore: daily_core_stats {
   description: "This explore includes impression metrics along with the demand and supply dimensions they can be aggregated by.
   Data is available by-day, as far back as November 2015.  You will only find demand which has had delivery, campaigns which have yet to have
   any impressions delivered will not appear in this explore."
-  sql_always_where: ({% if daily_core_stats.demand_date._in_query or daily_core_stats.demand_week._in_query %}COALESCE(${daily_core_stats.demand_raw}, '9999-12-31') >= (SELECT MIN(DEMAND_DATE) FROM DEMAND_MART.DAILY_CORE_STATS)
-                      {% elsif daily_core_stats.EST_date._in_query or daily_core_stats.EST_week._in_query %}COALESCE(${daily_core_stats.EST_raw}, '9999-12-31') >= (SELECT MIN(EST_DATE) FROM DEMAND_MART.DAILY_CORE_STATS)
-                      {% elsif daily_core_stats.gmt_date._in_query or daily_core_stats.gmt_week._in_query %}COALESCE(${daily_core_stats.gmt_raw}, '9999-12-31') >= (SELECT MIN(GMT_DATE) FROM DEMAND_MART.DAILY_CORE_STATS)
-                      {% elsif daily_core_stats.region_date._in_query or daily_core_stats.region_week._in_query %}COALESCE(${daily_core_stats.region_raw}, '9999-12-31') >= (SELECT MIN(REGION_DATE) FROM DEMAND_MART.DAILY_CORE_STATS)
-                      {% else %}TRUE{% endif %}) AND
-                      ({% if _user_attributes['access_filter_office_id'] == '>=0, NULL' %} TRUE {% else %} (${platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }}) OR ${supply_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }})) {% endif %}) AND
+  sql_always_where: ({% if _user_attributes['access_filter_office_id'] == '>=0, NULL' %} TRUE {% else %} (${platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }}) OR ${supply_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }})) {% endif %}) AND
                       ({% if _user_attributes['access_filter_platform_client_id'] == '>=0, NULL' %} TRUE {% else %} (${campaign_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${platform_client.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) {% endif %}) AND
                       ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${campaign_details_base.platform_client_id} IS NULL OR ${campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) AND (${placement_details_base.platform_client_id} IS NULL OR ${placement_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+
+  join: bt_cost_attributes {
+    view_label: "Impression Metrics"
+    relationship: one_to_many
+    type: cross
+  }
 
   join: flight_media_details_base {
     relationship: many_to_one
@@ -354,15 +355,15 @@ explore: daily_core_stats {
   }
 
   join: demand_mart_load_tracking {
+    from: load_tracking
     relationship: many_to_one
-    sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking.start_timezone} and
-      ${demand_mart_load_tracking.schema_name} = 'demand_mart' and
-      ${demand_mart_load_tracking.table_name} = 'daily_core_stats' ;;
-  }
+    sql_on: ${demand_mart_load_tracking.schema_name} = 'rawdb' and
+      ${demand_mart_load_tracking.table_name} = 'daily_analytics' ;;
+ }
 
   join: demand_mart_load_tracking_start_timezone {
     relationship: many_to_one
-    sql_on: ${demand_mart_load_tracking.start_timezone} = ${demand_mart_load_tracking_start_timezone.timezone_id} ;;
+    sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking_start_timezone.timezone_id} ;;
   }
 
   join: flight_details {
@@ -567,10 +568,10 @@ explore: daily_data_usage {
   }
 
   join: demand_mart_load_tracking {
+    from: load_tracking
     relationship: many_to_one
-    sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking.start_timezone} and
-      ${demand_mart_load_tracking.schema_name} = 'demand_mart' and
-      ${demand_mart_load_tracking.table_name} = 'daily_core_stats' ;;
+    sql_on: ${demand_mart_load_tracking.schema_name} = 'rawdb' and
+      ${demand_mart_load_tracking.table_name} = 'daily_analytics' ;;
   }
 
   join: flight_details {
@@ -667,16 +668,17 @@ explore: demand_metrics {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if daily_core_stats.demand_date._in_query or daily_core_stats.demand_week._in_query %}COALESCE(${daily_core_stats.demand_raw}, '9999-12-31') >= (SELECT MIN(DEMAND_DATE) FROM DEMAND_MART.DAILY_CORE_STATS)
-                      {% elsif daily_core_stats.EST_date._in_query or daily_core_stats.EST_week._in_query %}COALESCE(${daily_core_stats.EST_raw}, '9999-12-31') >= (SELECT MIN(EST_DATE) FROM DEMAND_MART.DAILY_CORE_STATS)
-                      {% elsif daily_core_stats.gmt_date._in_query or daily_core_stats.gmt_week._in_query %}COALESCE(${daily_core_stats.gmt_raw}, '9999-12-31') >= (SELECT MIN(GMT_DATE) FROM DEMAND_MART.DAILY_CORE_STATS)
-                      {% elsif daily_core_stats.region_date._in_query or daily_core_stats.region_week._in_query %}COALESCE(${daily_core_stats.region_raw}, '9999-12-31') >= (SELECT MIN(REGION_DATE) FROM DEMAND_MART.DAILY_CORE_STATS)
-                      {% else %}TRUE{% endif %}) AND
-                      ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) AND (${platform_client.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) AND (${platform_client.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
   join: daily_core_stats_yesterday_demand {
     relationship: many_to_one
     sql_on: ${daily_core_stats.flight_media_id} = ${daily_core_stats_yesterday_demand.flight_media_id}
       and ${daily_core_stats.placement_id} = ${daily_core_stats_yesterday_demand.placement_id};;
+  }
+
+  join: bt_cost_attributes {
+    view_label: "Impression Metrics"
+    relationship: one_to_many
+    type: cross
   }
 
   join: mediaplanner_allocation_view {
@@ -707,15 +709,15 @@ explore: demand_metrics {
   }
 
   join: demand_mart_load_tracking {
+    from: load_tracking
     relationship: many_to_one
-    sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking.start_timezone} and
-      ${demand_mart_load_tracking.schema_name} = 'demand_mart' and
-      ${demand_mart_load_tracking.table_name} = 'daily_core_stats' ;;
+    sql_on: ${demand_mart_load_tracking.schema_name} = 'rawdb' and
+    ${demand_mart_load_tracking.table_name} = 'daily_analytics' ;;
   }
 
   join: demand_mart_load_tracking_start_timezone {
     relationship: many_to_one
-    sql_on: ${demand_mart_load_tracking.start_timezone} = ${demand_mart_load_tracking_start_timezone.timezone_id} ;;
+    sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking_start_timezone.timezone_id} ;;
   }
 
   join: flight_details {
@@ -861,10 +863,10 @@ explore: conversion_fact {
   }
 
   join: demand_mart_load_tracking {
+    from: load_tracking
     relationship: many_to_one
-    sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking.start_timezone} and
-      ${demand_mart_load_tracking.schema_name} = 'demand_mart' and
-      ${demand_mart_load_tracking.table_name} = 'daily_core_stats' ;;
+    sql_on: ${demand_mart_load_tracking.schema_name} = 'rawdb' and
+    ${demand_mart_load_tracking.table_name} = 'daily_analytics' ;;
   }
 
   join: flight_details {
@@ -939,10 +941,10 @@ explore: tpm_metrics {
   }
 
   join: demand_mart_load_tracking {
+    from: load_tracking
     relationship: many_to_one
-    sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking.start_timezone} and
-      ${demand_mart_load_tracking.schema_name} = 'demand_mart' and
-      ${demand_mart_load_tracking.table_name} = 'daily_core_stats' ;;
+    sql_on: ${demand_mart_load_tracking.schema_name} = 'rawdb' and
+    ${demand_mart_load_tracking.table_name} = 'daily_analytics' ;;
   }
 
   join: campaign_days {
@@ -990,10 +992,10 @@ explore: raw_impression {
   }
 
   join: demand_mart_load_tracking {
+    from: load_tracking
     relationship: many_to_one
-    sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking.start_timezone} and
-      ${demand_mart_load_tracking.schema_name} = 'demand_mart' and
-      ${demand_mart_load_tracking.table_name} = 'daily_core_stats' ;;
+    sql_on: ${demand_mart_load_tracking.schema_name} = 'rawdb' and
+    ${demand_mart_load_tracking.table_name} = 'daily_analytics' ;;
   }
 
   join: flight_details {

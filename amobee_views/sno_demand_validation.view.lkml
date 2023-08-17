@@ -14,7 +14,7 @@ view: sno_demand_validation {
           t.demand_date
         , fmd.starttimezone_id AS timezone_id
         , SUM(t.impressions) AS impressions
-      FROM demand_mart.daily_core_stats t
+      FROM rawdb.daily_core_stats_on_analytics t
       JOIN dim.flight_media_details fmd
         ON t.flight_media_id = fmd.flight_media_id
       WHERE {% condition sno_demand_raw_impression_validation.demand_date %} demand_date {% endcondition %}
@@ -22,10 +22,9 @@ view: sno_demand_validation {
           t.demand_date
         , fmd.starttimezone_id
     ) grouped
-    JOIN demand_mart.load_tracking lt
-      ON lt.schema_name = 'demand_mart'
-        AND lt.table_name = 'daily_core_stats'
-        AND grouped.timezone_id = lt.start_timezone
+    JOIN dim.load_tracking lt
+      ON lt.schema_name = 'rawdb'
+        AND lt.table_name = 'daily_analytics'
         AND grouped.demand_date <= lt.load_through_date
 
     UNION ALL

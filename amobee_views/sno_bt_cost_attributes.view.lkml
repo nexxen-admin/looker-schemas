@@ -5,7 +5,7 @@ view: bt_cost_attributes {
     type: string
     primary_key: yes
     hidden: yes
-    sql: CONCAT({{_explore._name}}.pk_id, ${bt_cost_attribute}, ${bt_provider}) ;;
+    sql: CONCAT({% if _explore._name == 'demand_metrics' %}daily_core_stats{% else %}{{_explore._name}}{% endif %}.pk_id, ${bt_cost_attribute}, ${bt_provider}) ;;
   }
 
   dimension: bt_cost_attribute {
@@ -13,14 +13,14 @@ view: bt_cost_attributes {
     label: "BT Cost Attribute"
     view_label: "Supplemental Facets"
     description: "The attribute used in determining the BT Costs."
-    sql: case when {{_explore._name}}.demand_date >= '2022-03-09' then value:bt_attribute_id else bt_cost_attribute end ;;
+    sql: case when {% if _explore._name == 'demand_metrics' %}daily_core_stats{% else %}{{_explore._name}}{% endif %}.demand_date >= '2022-03-09' then value:bt_attribute_id else bt_cost_attribute end ;;
     value_format_name: id
   }
 
   dimension: bt_cost_markup {
     type: number
     hidden: yes
-    sql: case when {{_explore._name}}.demand_date >= '2022-03-09' then value:demand_bt_markup / 100000 else bt_cost_markup end ;;
+    sql: case when {% if _explore._name == 'demand_metrics' %}daily_core_stats{% else %}{{_explore._name}}{% endif %}.demand_date >= '2022-03-09' then value:demand_bt_markup / 100000 else bt_cost_markup end ;;
   }
 
   measure: sum_bt_cost_markup {
@@ -34,7 +34,7 @@ view: bt_cost_attributes {
   dimension: bt_data_cost {
     type: number
     hidden: yes
-    sql: case when {{_explore._name}}.demand_date >= '2022-03-09' then value:supply_bt_cost / 100000 else bt_data_cost end ;;
+    sql: case when {% if _explore._name == 'demand_metrics' %}daily_core_stats{% else %}{{_explore._name}}{% endif %}.demand_date >= '2022-03-09' then value:supply_bt_cost / 100000 else bt_data_cost end ;;
   }
 
   measure: sum_bt_data_cost {
@@ -49,7 +49,7 @@ view: bt_cost_attributes {
     type: string
     label: "BT Data Cost Currency"
     description: "The currency of the BT data cost"
-    sql: case when {{_explore._name}}.demand_date >= '2022-03-09' then value:supply_bt_cost_currency else bt_data_cost_currency end ;;
+    sql: case when {% if _explore._name == 'demand_metrics' %}daily_core_stats{% else %}{{_explore._name}}{% endif %}.demand_date >= '2022-03-09' then value:supply_bt_cost_currency else bt_data_cost_currency end ;;
   }
 
   dimension: bt_provider {
@@ -57,14 +57,14 @@ view: bt_cost_attributes {
     view_label: "Supplemental Facets"
     hidden: yes
     description: "The Data Provider used in creating the BT data"
-    sql: case when {{_explore._name}}.demand_date >= '2022-03-09' then value:bt_provider_id else {% if _explore._name == 'raw_impression' %} bt_providerid {% elsif  _explore._name == 'hourly_analytics' or _explore._name == 'hourly_analytics_wopr_only' %} bt_provider {% endif %} end ;;
+    sql: case when {% if _explore._name == 'demand_metrics' %}daily_core_stats{% else %}{{_explore._name}}{% endif %}.demand_date >= '2022-03-09' then value:bt_provider_id else {% if _explore._name == 'raw_impression' %} bt_providerid {% elsif  _explore._name == 'hourly_analytics' or _explore._name == 'hourly_analytics_wopr_only' or _explore._name == 'daily_core_stats' or _explore._name == 'demand_metrics' %} bt_provider {% endif %} end ;;
     value_format_name: id
   }
 
   dimension: demand_bt_provider_cost {
     type: number
     hidden: yes
-    sql: case when {{_explore._name}}.demand_date >= '2022-03-09' then value:demand_provider_cost / 100000 else demand_bt_provider_cost end ;;
+    sql: case when {% if _explore._name == 'demand_metrics' %}daily_core_stats{% else %}{{_explore._name}}{% endif %}.demand_date >= '2022-03-09' then value:demand_provider_cost / 100000 else demand_bt_provider_cost end ;;
   }
 
   measure: sum_demand_bt_provider_cost {

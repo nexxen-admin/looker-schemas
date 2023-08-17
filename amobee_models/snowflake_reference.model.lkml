@@ -56,10 +56,10 @@ explore: campaign_details_base {
   }
 
   join: demand_mart_load_tracking {
+    from:  load_tracking
     relationship: many_to_one
-    sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking.start_timezone} and
-      ${demand_mart_load_tracking.schema_name} = 'demand_mart' and
-      ${demand_mart_load_tracking.table_name} = 'daily_core_stats' ;;
+    sql_on: ${demand_mart_load_tracking.schema_name} = 'rawdb' and
+    ${demand_mart_load_tracking.table_name} = 'daily_analytics' ;;
   }
 
   join: flight_media_url_tracking {
@@ -205,10 +205,10 @@ explore: tv_flights {
   }
 
   join: demand_mart_load_tracking {
+    from: load_tracking
     relationship: many_to_one
-    sql_on: ${campaign_details_base.timezone_id} = ${demand_mart_load_tracking.start_timezone} and
-      ${demand_mart_load_tracking.schema_name} = 'demand_mart' and
-      ${demand_mart_load_tracking.table_name} = 'daily_core_stats' ;;
+    sql_on:  ${demand_mart_load_tracking.schema_name} = 'rawdb' and
+      ${demand_mart_load_tracking.table_name} = 'daily_analytics' ;;
   }
 
   join: tv_economics {

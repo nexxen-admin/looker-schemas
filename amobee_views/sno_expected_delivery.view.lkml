@@ -12,10 +12,9 @@ view: expected_delivery {
               DIM.FLIGHT_MEDIA_DETAILS_BASE fmd
                 JOIN DIM.FLIGHT_DETAILS fd
                   ON fd.flight_id = fmd.flight_id
-                JOIN DEMAND_MART.LOAD_TRACKING lt
-                  ON fmd.STARTTIMEZONE_ID = lt.START_TIMEZONE AND
-                     lt.SCHEMA_NAME = 'demand_mart' AND
-                     lt.TABLE_NAME = 'daily_core_stats'
+                 JOIN DIM.LOAD_TRACKING lt
+                  ON lt.SCHEMA_NAME = 'rawdb' AND
+                     lt.TABLE_NAME = 'daily_analytics'
                 JOIN DIM.DEMAND_UNITS_BUDGET b
                   ON fmd.FLIGHT_ID = b.FLIGHT_ID AND
                      b.FLIGHT_MEDIA_ID IS NULL

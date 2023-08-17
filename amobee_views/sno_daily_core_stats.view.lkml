@@ -2,9 +2,9 @@ view: daily_core_stats {
   label: "Impression Metrics"
   sql_table_name:
   {% if _explore._name == 'demand_metrics' and campaign_bookings._in_query %}
-    (select * from DEMAND_MART.DAILY_CORE_STATS_EXTENDED as daily_core_stats
+    (select * from RAWDB.DAILY_CORE_STATS_ON_ANALYTICS as daily_core_stats
       where {% condition demand_date %} daily_core_stats.demand_date {% endcondition %})
-    {% else %} DEMAND_MART.DAILY_CORE_STATS_EXTENDED {% endif %} ;;
+    {% else %} RAWDB.DAILY_CORE_STATS_ON_ANALYTICS {% endif %} ;;
   suggestions: no
 
   dimension: primary_key {
@@ -284,58 +284,6 @@ view: daily_core_stats {
     sql: ${TABLE}.BT_CLUSTER_PROVIDER ;;
   }
 
-  dimension: bt_cost_markup {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.BT_COST_MARKUP ;;
-  }
-
-  measure: sum_bt_cost_markup {
-    type: sum
-    label: "BT Cost Markup"
-    description: "The total markup cost for Behavioral Targeting"
-    value_format_name: decimal_2
-    sql: ${bt_cost_markup} ;;
-  }
-
-  dimension: btcostcurrency {
-    type: string
-    label: "BT Cost Currency"
-    description: "The currency of the BT Cost"
-    sql: ${TABLE}.BTCOSTCURRENCY ;;
-  }
-
-  dimension: btcostcurrency_id {
-    type: number
-    label: "BT Cost Currency ID"
-    description: "The currency ID of the BT Cost"
-    sql: public.F_CURRENCYID_LOOKUP(${TABLE}.BTCOSTCURRENCY) ;;
-    value_format_name: id
-  }
-
-  dimension: btproviderdatacost {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.BTPROVIDERDATACOST ;;
-  }
-
-  measure: sum_btproviderdatacost {
-    type: sum
-    label: "BT Provider Data Cost"
-    description: "The total of data costs owed to the BT provider"
-    value_format_name: decimal_2
-    sql: ${btproviderdatacost} ;;
-  }
-
-  dimension: btproviderid {
-    type: string
-    hidden:  yes
-    view_label: "Impression Facets"
-    label: "BT Provider ID"
-    description: "The name of the behavioral targeting provider, if applicable."
-    sql: ${TABLE}.btproviderid ;;
-  }
-
   dimension: click_impressions {
     type: number
     hidden: yes
@@ -592,20 +540,6 @@ view: daily_core_stats {
     description: "The total BT Cluster costs converted from the native currency to the demand currency."
     value_format_name: decimal_2
     sql: ${demand_bt_cluster_cost};;
-  }
-
-  dimension: demand_bt_cost {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.DEMAND_BT_COST ;;
-  }
-
-  measure: sum_demand_bt_cost {
-    type: sum
-    label: "BT Costs - Demand"
-    description: "The total Behavioral Targeting costs converted from native currency to the demand currency."
-    value_format_name: decimal_2
-    sql: ${demand_bt_cost} ;;
   }
 
   dimension: demand_currency {
@@ -923,12 +857,6 @@ view: daily_core_stats {
     sql: ${TABLE}.FLIGHT_MEDIA_ID ;;
   }
 
-  dimension: import_config_id {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.IMPORT_CONFIG_ID ;;
-  }
-
   dimension: gbp_exchange_rate {
     type: string
     hidden: yes
@@ -947,12 +875,6 @@ view: daily_core_stats {
     description: "The total impressions"
     value_format_name: decimal_0
     sql: ${impressions} ;;
-  }
-
-  dimension: isselected {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.ISSELECTED ;;
   }
 
   dimension: is_viewability_measurable {

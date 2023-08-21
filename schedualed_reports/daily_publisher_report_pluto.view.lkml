@@ -32,7 +32,7 @@ view: daily_publisher_report_pluto {
       where-- add3.event_time >= :start_date
       --and add3.event_time < :end_date
       --and
-      pub_id in ('78614','104062')
+      pub_id in ('78614','104062','106369')
       and add3.rx_deal_id is not null
       and impression_pixel >0
       group by 1,2) as adv_cnt on add2.rx_deal_id = adv_cnt.rx_deal_id and add2.event_time = adv_cnt.event_time
@@ -42,7 +42,7 @@ view: daily_publisher_report_pluto {
       where --add2.event_time >=:start_date
       --and add2.event_time < :end_date
       --and
-      pub_id in ('78614','104062')
+      pub_id in ('78614','104062','106369')
       and add2.impression_pixel >0
       and add2.dsp_display_name <>'Tremor'
       group by 1,2,3,4,5,6,7,8,9,10,11
@@ -74,7 +74,7 @@ view: daily_publisher_report_pluto {
       where --add2.event_time >=:start_date
       --and add2.event_time < :end_date
       --and
-      pub_id in ('78614','104062')
+      pub_id in ('78614','104062','106369')
       and add2.impression_pixel >0
       and add2.rx_deal_id is null
       and add2.dsp_display_name <> 'Tremor'
@@ -107,7 +107,7 @@ view: daily_publisher_report_pluto {
       where --add2.event_time >=:start_date
       --and add2.event_time < :end_date
       --and
-      pub_id in ('78614','104062')
+      pub_id in ('78614','104062','106369')
       and add2.impression_pixel >0
       and add2.dsp_display_name = 'Tremor'
       and (add2.dsp_deal_type <>'pub' or add2.dsp_deal_type is null)
@@ -147,7 +147,7 @@ view: daily_publisher_report_pluto {
       where --add3.event_time >=:start_date
       --and add3.event_time < :end_date
       --and
-      pub_id in ('78614','104062')
+      pub_id in ('78614','104062','106369')
       and add3.rx_deal_id is not null
       and impression_pixel >0
       group by 1,2) as adv_cnt on add2.rx_deal_id = adv_cnt.rx_deal_id and add2.event_time = adv_cnt.event_time
@@ -157,7 +157,7 @@ view: daily_publisher_report_pluto {
       where --add2.event_time >=:start_date
       --and add2.event_time < :end_date
       --and
-      pub_id in ('78614','104062')
+      pub_id in ('78614','104062','106369')
       and add2.impression_pixel >0
       and add2.dsp_display_name = 'Tremor'
       and add2.dsp_deal_type ='pub'

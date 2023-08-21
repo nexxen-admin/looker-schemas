@@ -200,7 +200,7 @@ view: dim_deal {
     sql: ${TABLE}.daily_imp_cap ;;
   }
 
-dimension: deal_situation {
+dimension: deal_status {
   type: string
   sql: case when now()>${deal_end} then 'Finished' else 'Live Deal' end ;;
 }

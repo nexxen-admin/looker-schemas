@@ -17,7 +17,7 @@ view: brand_frequency_cap_violations {
               coalesce(max(fc.max_exposures),0) as max_exposures,
               coalesce(max(fc.exposure_minutes),0) as exposure_minutes,
               sum(r1.billable_units) as units_in_cap
-            FROM rawdb.raw_impression_v2 r1
+            FROM rawdb.raw_impression r1
             JOIN dim.campaign_details_view c ON c.campaign_id = r1.campaign_id
             LEFT JOIN dim.frequency_cap_view fc ON fc.level = 6 AND fc.ref_id = r1.placement_id AND r1.eventtime >= fc.start_time AND r1.eventtime < coalesce(fc.end_time, TO_TIMESTAMP('9999-12-12', 'YYYY-MM-DD'))
             LEFT JOIN (
@@ -31,7 +31,7 @@ view: brand_frequency_cap_violations {
                   r.userid,
                   r.billable_units,
                   c.advertiser_brand_id
-                FROM rawdb.raw_impression_v2 r
+                FROM rawdb.raw_impression r
                 JOIN dim.campaign_details_view c ON c.campaign_id = r.campaign_id
                 WHERE 1=1
                 {% if raw_impression.raw_demand_date._is_filtered %}

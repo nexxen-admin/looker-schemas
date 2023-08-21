@@ -17,7 +17,7 @@ view: plan_frequency_cap_violations {
               coalesce(max(fc.max_exposures),0) AS max_exposures,
               coalesce(max(fc.exposure_minutes),0) AS exposure_minutes,
               sum(r1.billable_units) as units_in_cap
-            FROM rawdb.raw_impression_v2 r1
+            FROM rawdb.raw_impression r1
             JOIN dim.campaign_details c ON c.campaign_id = r1.campaign_id
             LEFT JOIN dim.frequency_cap fc ON fc.level = 2 AND fc.ref_id = c.pl_plan_id AND r1.eventtime >= fc.start_time and r1.eventtime < coalesce(fc.end_time, to_date('9999-12-12'))
             LEFT JOIN (

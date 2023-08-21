@@ -2288,7 +2288,7 @@ view: hourly_analytics {
     label: "Postal Code"
     view_label: "Supplemental Facets"
     description: "The Postal Code of the viewer who saw the impression."
-    sql: ${TABLE}.POSTALCODE ;;
+    sql: RAWDB.DecryptPostalcode(${TABLE}.POSTALCODE) ;;
   }
 
   dimension: postalcode_attribute {

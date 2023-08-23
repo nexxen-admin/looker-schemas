@@ -10,6 +10,26 @@ view: fact_ad_bid_request_daily_agg {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Ad Size Height Key" in Explore.
 
+  parameter: publisher_or_deal{
+    type: unquoted
+    allowed_value: {
+      label: "Publisher"
+      value: "pub_id"
+    }
+    allowed_value: {
+      label: "Deal"
+      value: "deal_id"
+    }
+    hidden: yes
+  }
+
+  dimension: dynamic_pub_deal {
+    type: string
+    sql: {% parameter publisher_or_deal %} ;;
+    hidden: yes
+  }
+
+
   dimension: ad_size_height_key {
     type: number
     sql: ${TABLE}.Ad_Size_Height_Key ;;

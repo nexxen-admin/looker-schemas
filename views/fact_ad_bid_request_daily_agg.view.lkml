@@ -333,12 +333,12 @@ view: fact_ad_bid_request_daily_agg {
 
   measure: net_revenue
   {
-    type: sum
+    type: number
     label: "Net Revenue"
     #sql_distinct_key: ${deal_key} ;;
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data + ${TABLE}.sum_of_pub_platform_fee_from_ad_data;;
+    sql: ${revenue} - ${cogs} + ${sum_of_pub_platform_fee_from_ad_data};;
   }
 
 

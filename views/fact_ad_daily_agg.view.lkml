@@ -1268,7 +1268,7 @@ view: fact_ad_daily_agg {
     label: "Net Revenue"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${revenue} - ${cogs} ;;
+    sql: ${revenue} - ${cogs} + ${pub_platform_fee} ;;
   }
 
   filter: publisher_filter {
@@ -1632,7 +1632,7 @@ view: fact_ad_daily_agg {
     description: "The net revenue (difference between revenue and cogs) of 2 days ago"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs + ${TABLE}.sum_of_pub_platform_fee  ;;
     filters: [date_key_date: "2 days ago"]
 
   }
@@ -1643,7 +1643,7 @@ view: fact_ad_daily_agg {
     description: "The difference between revenue an cogs of 8 days ago"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs + ${TABLE}.sum_of_pub_platform_fee  ;;
     filters: [date_key_date: "8 days ago"]
 
   }
@@ -1826,7 +1826,7 @@ view: fact_ad_daily_agg {
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs + ${TABLE}.sum_of_pub_platform_fee;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 

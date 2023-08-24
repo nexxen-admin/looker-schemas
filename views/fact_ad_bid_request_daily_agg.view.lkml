@@ -330,6 +330,16 @@ view: fact_ad_bid_request_daily_agg {
     sql: ${TABLE}.sum_of_revenue_from_ad_data;;
   }
 
+  measure: net_revenue
+  {
+    type: sum
+    label: "Net Revenue"
+    #sql_distinct_key: ${deal_key} ;;
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data + ${TABLE}.sum_of_pub_platform_fee_from_ad_data;;
+  }
+
 
   dimension: sum_of_rmp_attempts_from_ad_data {
     type: number
@@ -945,7 +955,7 @@ view: fact_ad_bid_request_daily_agg {
     description: "The net revenue (difference between revenue and cogs) of 2 days ago"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data  ;;
+    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data + ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
     filters: [date_key_date: "2 days ago"]
 
   }
@@ -976,7 +986,7 @@ view: fact_ad_bid_request_daily_agg {
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data  ;;
+    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data + ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 

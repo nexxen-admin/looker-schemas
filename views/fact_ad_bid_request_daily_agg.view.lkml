@@ -286,6 +286,7 @@ view: fact_ad_bid_request_daily_agg {
   measure: sum_of_pub_platform_fee_from_ad_data {
     type: sum
     label: "Pub Platform Fee"
+    value_format: "$#,##0.00"
     sql: ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
   }
 

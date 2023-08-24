@@ -20,13 +20,13 @@ view: fact_ad_bid_request_daily_agg {
       label: "Deal"
       value: "deal_id"
     }
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: dynamic_pub_deal {
     type: string
-    sql: {% parameter publisher_or_deal %} ;;
-    hidden: yes
+    sql: ${TABLE}.{% parameter publisher_or_deal %} ;;
+    #hidden: yes
   }
 
 

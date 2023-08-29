@@ -1,7 +1,7 @@
 view: campaign_days {
   label: "Campaign"
   derived_table: {
-    sql_trigger_value: select hour(TIMESTAMPADD(m, 5, current_time())) ;;
+    sql_trigger_value: select EXTRACT(HOUR FROM TIMESTAMPADD (mi, 5, GETDATE())) ;;
     sql:
       SELECT
         fd.CAMPAIGN_ID,
@@ -13,8 +13,8 @@ view: campaign_days {
             ON fd.flight_id = fmd.flight_id
           JOIN DEMAND_MART.LOAD_TRACKING lt
             ON fmd.STARTTIMEZONE_ID = lt.START_TIMEZONE AND
-               lt.SCHEMA_NAME = 'demand_mart' AND
-               lt.TABLE_NAME = 'daily_core_stats'
+               lt.SCHEMA_NAME = 'DEMAND_MART' AND
+               lt.TABLE_NAME = 'DAILY_CORE_STATS'
           JOIN
           (
             SELECT

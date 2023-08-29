@@ -10,6 +10,26 @@ view: fact_ad_bid_request_daily_agg {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Ad Size Height Key" in Explore.
 
+  parameter: publisher_or_deal{
+    type: unquoted
+    allowed_value: {
+      label: "Publisher"
+      value: "pub_id"
+    }
+    allowed_value: {
+      label: "Deal"
+      value: "deal_id"
+    }
+    #hidden: yes
+  }
+
+  dimension: dynamic_pub_deal {
+    type: string
+    sql: ${TABLE}.{% parameter publisher_or_deal %} ;;
+    #hidden: yes
+  }
+
+
   dimension: ad_size_height_key {
     type: number
     sql: ${TABLE}.Ad_Size_Height_Key ;;
@@ -266,6 +286,7 @@ view: fact_ad_bid_request_daily_agg {
   measure: sum_of_pub_platform_fee_from_ad_data {
     type: sum
     label: "Pub Platform Fee"
+    value_format: "$#,##0.00"
     sql: ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
   }
 
@@ -279,7 +300,7 @@ view: fact_ad_bid_request_daily_agg {
     type: sum
     sql: ${TABLE}.sum_of_requests_from_bidrequest ;;
     label: "Bid Requests"
-    #hidden: yes
+    hidden: yes
   }
 
   measure: responses {
@@ -297,7 +318,7 @@ view: fact_ad_bid_request_daily_agg {
     description: "responses/requests"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: (${responses}/NULLIF(${sum_of_requests_from_bidrequest},0))*100 ;;
+    sql: (${responses}/NULLIF(${sum_of_requests_from_ad_data},0))*100 ;;
   }
 
   measure: revenue
@@ -308,6 +329,16 @@ view: fact_ad_bid_request_daily_agg {
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_revenue_from_ad_data;;
+  }
+
+  measure: net_revenue
+  {
+    type: number
+    label: "Net Revenue"
+    #sql_distinct_key: ${deal_key} ;;
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${revenue} - ${cogs} + ${sum_of_pub_platform_fee_from_ad_data};;
   }
 
 
@@ -925,7 +956,7 @@ view: fact_ad_bid_request_daily_agg {
     description: "The net revenue (difference between revenue and cogs) of 2 days ago"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data  ;;
+    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data + ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
     filters: [date_key_date: "2 days ago"]
 
   }
@@ -956,7 +987,7 @@ view: fact_ad_bid_request_daily_agg {
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data  ;;
+    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data + ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 

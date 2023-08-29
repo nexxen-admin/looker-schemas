@@ -280,6 +280,13 @@ view: unruly_player_demands {
     value_format: "$#,##0"
   }
 
+  measure: streamkey {
+    label: "Streamkey"
+    type: sum
+    sql: ${TABLE}.streamkey ;;
+    value_format: "$#,##0"
+  }
+
   dimension_group: current_date {
     type: time
     timeframes: [

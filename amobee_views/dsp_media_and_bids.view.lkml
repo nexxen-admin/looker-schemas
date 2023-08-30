@@ -25,6 +25,7 @@ view: dsp_media_and_bids {
     label: "Inv Cost Previous Day "
     type: sum
     sql: ${TABLE}.inv_cost ;;
+    description: "Cost from 2 days ago"
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [__time_date: "2 days ago"]
@@ -33,6 +34,7 @@ view: dsp_media_and_bids {
   measure:  last_day_cost {
     label: "Inv Cost Yesterday "
     type: sum
+    description: "Yesterday's cost"
     sql: ${TABLE}.inv_cost ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -42,6 +44,7 @@ view: dsp_media_and_bids {
   measure:  Previous_day_impression {
     label: "Impression Previous Day "
     type: sum
+    description: "Impressions from 2 days ago"
     sql: ${TABLE}.impression ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -51,6 +54,7 @@ view: dsp_media_and_bids {
   measure:  last_day_impression {
     label: "Impression Current Day "
     type: sum
+    description: "Yesterday's impressions"
     sql: ${TABLE}.impression ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -60,6 +64,7 @@ view: dsp_media_and_bids {
   measure:  unruly_previous_day_cost {
     label: "Inv Cost Nexxen Previous Day "
     type: sum
+    description: "Unruly's Cost from 2 days ago"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.inv_cost ELSE NULL END ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -69,6 +74,7 @@ view: dsp_media_and_bids {
   measure:  unruly_last_day_cost {
     label: "Inv Cost Nexxen - Yesterday "
     type: sum
+    description: "Unruly's yesterday's cost"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.inv_cost ELSE NULL END ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -78,6 +84,7 @@ view: dsp_media_and_bids {
   measure: unruly_previous_day_impression {
     label: "Impression Nexxen Previous Day "
     type: sum
+    description: "Unruly's impressions from 2 days ago"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.impression ELSE NULL END ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -87,6 +94,7 @@ view: dsp_media_and_bids {
   measure: unruly_last_day_impression {
     label: "Impression Nexxen Current Day "
     type: sum
+    description: "Unruly's yesterday's impressions"
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}.impression ELSE NULL END ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
@@ -96,6 +104,7 @@ view: dsp_media_and_bids {
   measure: Inv_Cost_Change {
     type: number
     #value_format: "0.0%"
+    description: "The inventort cost change from 2 days ago to yesterday"
     sql: case when ${last_day_cost} = 0 then 0 else
          (${last_day_cost}-${Previous_day_cost})/${last_day_cost} end;;
     value_format_name: percent_2
@@ -132,31 +141,37 @@ view: dsp_media_and_bids {
 
   measure: acc_100pct_vis_aud_sec {
     type: sum
+    description: "Number of cumulative seconds when 100% of the video ad's viewable area was in-view and volume was greater than zero (i.e., not muted)"
     sql: ${TABLE}."acc_100pct_vis_aud_sec" ;;
   }
 
   measure: acc_100pct_vis_sec {
     type: sum
+    description: "Number of cumulative seconds when 100% of the video ad's viewable area was in-view"
     sql: ${TABLE}."acc_100pct_vis_sec" ;;
   }
 
   measure: acc_50pct_vis_aud_sec {
     type: sum
+    description: "Number of cumulative seconds when 50% of the video ad's viewable area was in-view and volume was greater than zero (i.e., not muted)"
     sql: ${TABLE}."acc_50pct_vis_aud_sec" ;;
   }
 
   measure: acc_50pct_vis_sec {
     type: sum
+    description: "Number of cumulative seconds when 50% of the video ad's viewable area was in-view"
     sql: ${TABLE}."acc_50pct_vis_sec" ;;
   }
 
   measure: acc_aud_sec {
     type: sum
+    description: "Number of cumulative seconds when the video ad's volume was greater than zero (i.e., not muted)"
     sql: ${TABLE}."acc_aud_sec" ;;
   }
 
   measure: action {
     type: sum
+    description: "1 if this event was an action, 0 otherwise"
     sql: ${TABLE}."action" ;;
   }
 
@@ -168,6 +183,7 @@ view: dsp_media_and_bids {
 
   dimension: ad_format_id {
     type: number
+    description: "Ad format ID. Please see DataMine Analytics Reference Guide for the full list"
     sql: ${TABLE}."ad_format_id" ;;
     value_format_name: id
   }
@@ -180,22 +196,26 @@ view: dsp_media_and_bids {
 
   dimension: ad_id {
     type: number
+    description: "ID for an ad"
     sql: ${TABLE}."ad_id" ;;
     value_format_name: id
   }
 
   dimension: adstxt_seller_relationship {
     type: string
+    description: "The seller and inventory's relationship for this impression opportunity according to the site's ads.txt"
     sql: ${TABLE}."adstxt_seller_relationship" ;;
   }
 
   dimension: adstxt_seller_status {
     type: string
+    description: "The seller's authorization status for this impression opportunity according to the site's ads.txt"
     sql: ${TABLE}."adstxt_seller_status" ;;
   }
 
   dimension: advertiser_id {
     type: number
+    description: "Audience Suite Advertiser ID"
     sql: ${TABLE}."advertiser_id" ;;
     value_format_name: id
   }
@@ -208,26 +228,31 @@ view: dsp_media_and_bids {
 
   dimension: auction_type {
     type: number
+    description: "Type of auction. '2' is default. 1 - 1st Price; 2 - 2nd Price; -2 - Unrecognized"
     sql: ${TABLE}."auction_type" ;;
   }
 
   measure: audio_mute_events {
     type: sum
+    description: "1 for events that were muted"
     sql: ${TABLE}."audio_mute_events" ;;
   }
 
   dimension: audio_unmute_events {
     type: number
+    description: "1 for events that were unmuted"
     sql: ${TABLE}."audio_unmute_events" ;;
   }
 
   measure: avoc_imp {
     type: sum
+    description: "1 or 0, where 1 indicates the Video was Audible and Visible upon complete"
     sql: ${TABLE}."avoc_imp" ;;
   }
 
   dimension: beacon_id {
     type: number
+    description: "Id of the beacon"
     sql: ${TABLE}."beacon_id" ;;
     value_format_name: id
   }
@@ -239,26 +264,31 @@ view: dsp_media_and_bids {
 
   measure: bid_price {
     type: sum
+    description: "Internally determined worth of the impression"
     sql: ${TABLE}."bid_price" ;;
   }
 
   measure: bid_saving_calculated {
     type: sum
+    description: "Difference between original bid price vs discounted bid price if bid shading is enabled"
     sql: ${TABLE}."bid_saving_calculated" ;;
   }
 
   measure: bid_saving_fee {
     type: sum
+    description: "Charged fee for bid saving if bid shading is enabled"
     sql: ${TABLE}."bid_saving_fee" ;;
   }
 
   measure: brand_safety_data_cost {
     type: sum
+    description: "Data cost for brand safety data"
     sql: ${TABLE}."brand_safety_data_cost" ;;
   }
 
   dimension: browser_type {
     type: number
+    description: "0 - Unknown; 1 - IExplorer; 2 - Firefox; 3 - Chrome; 4 - Safari; 5 - Sleipnir; 6 - Opera; 7- Gecko; 8 - IAB Valid"
     sql: ${TABLE}."browser_type" ;;
   }
 
@@ -276,46 +306,55 @@ view: dsp_media_and_bids {
 
   measure: click {
     type: sum
+    description: "1 if this event was a click, 0 otherwise"
     sql: ${TABLE}."click" ;;
   }
 
   measure: click_through_action {
     type: sum
+    description: "1 for CTA, 0 for all other actions"
     sql: ${TABLE}."click_through_action" ;;
   }
 
   measure: cogs {
     type: sum
+    description: "Inventory cost plus third-party cost"
     sql: ${TABLE}."cogs" ;;
   }
 
   measure: collapse_events {
     type: sum
+    description: "1 for events that were collapsed"
     sql: ${TABLE}."collapse_events" ;;
   }
 
   measure: complete_events {
     type: sum
+    description: "1 for events that were completed"
     sql: ${TABLE}."complete_events" ;;
   }
 
   measure: concatenated_brand_intelligence_data_cost {
     type: sum
+    description: "Amount to charge for using this brand intelligence targeting"
     sql: ${TABLE}."concatenated_brand_intelligence_data_cost" ;;
   }
 
   measure: content_data_cost {
     type: sum
+    description: "Aggregate data cost of contextual data cost, brand safety cost, and page quality data cost"
     sql: ${TABLE}."content_data_cost" ;;
   }
 
   measure: contextual_data_cost {
     type: sum
+    description: "Data cost for contextual data"
     sql: ${TABLE}."contextual_data_cost" ;;
   }
 
   measure: cost {
     type: sum
+    description: "Cost of impression"
     sql: ${TABLE}."cost" ;;
   }
 
@@ -343,6 +382,7 @@ view: dsp_media_and_bids {
 
   dimension: creative_size {
     type: string
+    description: "Size of the creative"
     sql: ${TABLE}."creative_size" ;;
   }
 
@@ -358,54 +398,64 @@ view: dsp_media_and_bids {
 
   measure: cross_device_click_through_action {
     type: sum
+    description: "1 for cross device click-through action (CTA), 0 for all other actions"
     sql: ${TABLE}."cross_device_click_through_action" ;;
   }
 
   measure: cross_device_cta_value {
     type: sum
+    description: "Represents the value of a cross device click-through action If the action is associated to a shopping cart beacon type, then: cta_value = shopping cart value * maximum of (0, cta factor)"
     sql: ${TABLE}."cross_device_cta_value" ;;
   }
 
   measure: cross_device_view_through_action {
     type: sum
+    description: "1 for view-through cross device action (VTA), 0 for all other functions"
     sql: ${TABLE}."cross_device_view_through_action" ;;
   }
 
   measure: cross_device_vta_value {
     type: sum
+    description: "Represents the value of a cross device view-through action If the action is associated to a shopping cart beacon type, then: vta_value = shopping cart value * maximum of (0, vta factor) If it is another beacon type: vta_value = maximum of (0, vta value)"
     sql: ${TABLE}."cross_device_vta_value" ;;
   }
 
   measure: cta_value {
     type: sum
+    description: "Shopping cart value for the click-through-rate"
     sql: ${TABLE}."cta_value" ;;
   }
 
   dimension: deal_id {
     type: string
+    description: "String id for a deal id object"
     sql: ${TABLE}."deal_id" ;;
     value_format_name: id
   }
 
   dimension: dma_id {
     type: number
+    description: "DMA ID for the audience segment."
     sql: ${TABLE}."dma_id" ;;
     value_format_name: id
   }
 
   dimension: environment {
     type: string
+    description: "Media environment where ad is delivered - desktop web/ mobile web/ mobile app/ CTV app"
     sql: ${TABLE}."environment" ;;
   }
 
   dimension: environment_id {
     type: number
+    description: "1 - Desktop Web; 3 - Mobile Web; 4 - Mobile App; 5 - CTV App; -1 - Unknown"
     sql: ${TABLE}."environment_id" ;;
     value_format_name: id
   }
 
   dimension: event_type {
     type: string
+    description: "Campaign Impression Event type = Impression, Action, Click"
     sql: ${TABLE}."event_type" ;;
   }
 
@@ -421,26 +471,31 @@ view: dsp_media_and_bids {
 
   measure: expand_events {
     type: sum
+    description: "1 for events expanded"
     sql: ${TABLE}."expand_events" ;;
   }
 
   dimension: ext_app {
     type: number
+    description: "Ext_app = 0 implies web environment, Ext_app = 1 implies App Environment"
     sql: ${TABLE}."ext_app" ;;
   }
 
   measure: first_party_cost {
     type: sum
+    description: "Total first party cost aggregate"
     sql: ${TABLE}."first_party_cost" ;;
   }
 
   dimension: format {
     type: string
+    description: "Creative format on the campaign e.g. display or video"
     sql: ${TABLE}."format" ;;
   }
 
   measure: gross_video_ad_call {
     type: sum
+    description: "1 for gross video flag"
     sql: ${TABLE}."gross_video_ad_call" ;;
   }
 
@@ -471,6 +526,7 @@ view: dsp_media_and_bids {
 
   measure: household_person_id_sketch {
     type: sum
+    description: "Unique Identifier for a person in house hold"
     sql: ${TABLE}."household_person_id_sketch" ;;
   }
 
@@ -486,11 +542,13 @@ view: dsp_media_and_bids {
 
   dimension: iab_category_id {
     type: number
+    description: "IAB publisher content category ID. The DataMine Analytics Reference Guide includes the detailed list of values"
     sql: ${TABLE}."iab_category_id" ;;
   }
 
   dimension: iab_category_name {
     type: string
+    description: "Content category based on the IAB standard displayed as a string, for example, Arts & Entertainment, Automotive, etc"
     sql: ${TABLE}."iab_category_name" ;;
   }
 
@@ -513,6 +571,7 @@ view: dsp_media_and_bids {
 
   measure: margin_on_inventory {
     type: sum
+    description: "Amount set aside for an Amobee platform customer which is a percentage of all costs associated in acquiring inventory"
     sql: ${TABLE}."margin_on_inventory" ;;
   }
 
@@ -523,6 +582,7 @@ view: dsp_media_and_bids {
 
   dimension: market_id {
     type: number
+    description: "ID of the market to which the Advertiser belongs"
     sql: ${TABLE}."market_id" ;;
     value_format_name: id
   }
@@ -534,11 +594,13 @@ view: dsp_media_and_bids {
 
   measure: measurable_imp {
     type: sum
+    description: "Flag that specifies if the video ad impression was measurable by the viewability partner"
     sql: ${TABLE}."measurable_imp" ;;
   }
 
   dimension: media_channel_id {
     type: number
+    description: "1 - Display; 2 - Video; 3 - Social; 4 - Mobile"
     sql: ${TABLE}."media_channel_id" ;;
   }
 
@@ -549,22 +611,26 @@ view: dsp_media_and_bids {
 
   dimension: mobile_app_name {
     type: string
+    description: "1 - Display; 2 - Video; 3 - Social; 4 - Mobile"
     sql: ${TABLE}."mobile_app_name" ;;
   }
 
   dimension: mobile_device_type_id {
     type: number
+    description: "ID of Device type (that is, mobile phone, tablet, gaming console, e-reader, and other)"
     sql: ${TABLE}."mobile_device_type_id" ;;
     value_format_name: id
   }
 
   measure: non_ssl_ad_serving_fee {
     type: sum
+    description: "This is the fee that is CPM based fee that is charged typically when Turn Fee, Turn Rev Share or Turn Variable Margin are not used"
     sql: ${TABLE}."non_ssl_ad_serving_fee" ;;
   }
 
   dimension: os_type {
     type: number
+    description: "OS Type; 0 - Unknown; 1 - Windows; 2 - Linux; 3 - Mac; 4 - iPad; 5 - iPhone; 6 - Android"
     sql: ${TABLE}."os_type" ;;
   }
 
@@ -575,6 +641,7 @@ view: dsp_media_and_bids {
 
   measure: page_quality_data_cost {
     type: sum
+    description: "Data cost for page quality contract"
     sql: ${TABLE}."page_quality_data_cost" ;;
   }
 
@@ -595,21 +662,25 @@ view: dsp_media_and_bids {
 
   measure: pause_events {
     type: sum
+    description: "1 for paused events"
     sql: ${TABLE}."pause_events" ;;
   }
 
   measure: percent25_events {
     type: sum
+    description: "1 for 25% of events"
     sql: ${TABLE}."percent25_events" ;;
   }
 
   measure: percent50_events {
     type: sum
+    description: "1 for 50% of events"
     sql: ${TABLE}."percent50_events" ;;
   }
 
   measure: percent75_events {
     type: sum
+    description: "1 for 75% of events"
     sql: ${TABLE}."percent75_events" ;;
   }
 
@@ -625,11 +696,13 @@ view: dsp_media_and_bids {
 
   dimension: postal_code {
     type: string
+    description: "User-level postal code; zip_code in United States"
     sql: ${TABLE}."postal_code" ;;
   }
 
   dimension: publisher_deal_object_id {
     type: number
+    description: "deal id object primary key"
     sql: ${TABLE}."publisher_deal_object_id" ;;
     value_format_name: id
   }
@@ -648,16 +721,19 @@ view: dsp_media_and_bids {
 
   measure: resume_events {
     type: sum
+    description: "1 for events that were resumed"
     sql: ${TABLE}."resume_events" ;;
   }
 
   measure: rewind_events {
     type: sum
+    description: "1 for events that were rewound"
     sql: ${TABLE}."rewind_events" ;;
   }
 
   measure: shopping_cart_value {
     type: sum
+    description: "Dollar value of shopping cart passed via action pixel"
     sql: ${TABLE}."shopping_cart_value" ;;
   }
 
@@ -673,21 +749,25 @@ view: dsp_media_and_bids {
 
   measure: skip_events {
     type: sum
+    description: "1 for events that were skipped"
     sql: ${TABLE}."skip_events" ;;
   }
 
   measure: ssl_ad_serving_fee {
     type: sum
+    description: "This is the fee that is charged only when an SSL creative is served"
     sql: ${TABLE}."ssl_ad_serving_fee" ;;
   }
 
   measure: tac {
     type: sum
+    description: "Traffic acquisition cost (TAC). The amount paid out to the publisher that covers the inventory cost"
     sql: ${TABLE}."tac" ;;
   }
 
   dimension: targeted_segment_id {
     type: number
+    description: "Segment id targeted"
     sql: ${TABLE}."targeted_segment_id" ;;
     value_format_name: id
   }
@@ -705,11 +785,13 @@ view: dsp_media_and_bids {
 
   dimension: tld {
     type: string
+    description: "Top-level domain"
     sql: ${TABLE}."tld" ;;
   }
 
   measure: turn_ad_serving_charge {
     type: sum
+    description: "This is the fee that is charged only when Turn is the ad server of record"
     sql: ${TABLE}."turn_ad_serving_charge" ;;
   }
 
@@ -740,31 +822,37 @@ view: dsp_media_and_bids {
 
   measure: video_max_duration {
     type: sum
+    description: "Max duration of the video"
     sql: ${TABLE}."video_max_duration" ;;
   }
 
   measure: video_min_duration {
     type: sum
+    description: "Min duration of the video"
     sql: ${TABLE}."video_min_duration" ;;
   }
 
   dimension: video_playback_method {
     type: string
+    description: "Playback method used for the video ad"
     sql: ${TABLE}."video_playback_method" ;;
   }
 
   dimension: video_player_size {
     type: string
+    description: "Player size used for the video ad"
     sql: ${TABLE}."video_player_size" ;;
   }
 
   measure: view_through_action {
     type: sum
+    description: "1 for VTA, 0 for all other functions"
     sql: ${TABLE}."view_through_action" ;;
   }
 
   measure: viewability_video_duration {
     type: sum
+    description: "Length, in seconds, of the video ad"
     sql: ${TABLE}."viewability_video_duration" ;;
   }
 
@@ -775,6 +863,7 @@ view: dsp_media_and_bids {
 
   measure: vta_value {
     type: sum
+    description: "Shopping cart value for the view-through-action"
     sql: ${TABLE}."vta_value" ;;
   }
 
@@ -795,6 +884,7 @@ view: dsp_media_and_bids {
 
   dimension: zip_code {
     type: zipcode
+    description: "Zip Code (United States only. For rest of the world see postal_code"
     sql: ${TABLE}."zip_code" ;;
   }
 
@@ -808,10 +898,12 @@ dimension: advertiser_name {
 }
 dimension: external_advertiser_id {
   type: string
+  description: "The name of external advertiser_id"
   sql: LOOKUP(CONCAT(advertiser_id, ''), 'dsp_media_and_bids_external_advertiser_id') ;;
 }
 dimension: beacon_name {
   type: string
+  description: "Name of the beacon that tracks user's action. Usually named according to the desired action"
   sql: LOOKUP(CONCAT(beacon_id, ''), 'dsp_media_and_bids_beacon_name') ;;
 }
 dimension: content_contract_id {
@@ -828,10 +920,12 @@ dimension: provider_name {
 }
 dimension: brand_safety_category_name {
   type: string
+  description: "Safety Cateogry Name"
   sql: LOOKUP(CONCAT(contextual_category_id, ''), 'dsp_media_and_bids_brand_safety_category_name') ;;
 }
 dimension: contextual_category_name {
   type: string
+  description: "Contextual Category Name"
   sql: LOOKUP(CONCAT(contextual_category_id, ''), 'dsp_media_and_bids_contextual_category_name') ;;
 }
 dimension: page_quality_category_name {
@@ -848,26 +942,32 @@ dimension: tpa_external_id {
 }
 dimension: contract_name {
   type: string
+  description: "Name of the data contract"
   sql: LOOKUP(CONCAT(data_contract_id, ''), 'dsp_media_and_bids_contract_name') ;;
 }
 dimension: deal_name {
   type: string
+  description: "The name of a deal id object"
   sql: LOOKUP(CONCAT(publisher_deal_object_id, ''), 'dsp_media_and_bids_deal_name') ;;
 }
 dimension: deal_type_name {
   type: string
+  description: "The type of a deal id object"
   sql: LOOKUP(CONCAT(publisher_deal_object_id, ''), 'dsp_media_and_bids_deal_type_name') ;;
 }
 dimension: deal_floor_price {
   type: string
+  description: "The floor price of a deal id project"
   sql: LOOKUP(CONCAT(publisher_deal_object_id, ''), 'dsp_media_and_bids_deal_floor_price') ;;
 }
 dimension: segment_id {
   type: string
+  description: "Targeted segments"
   sql: LOOKUP(CONCAT(targeted_segment_id, ''), 'dsp_media_and_bids_segment_id') ;;
 }
 dimension: targeted_segment_name {
   type: string
+  description: "Segment name targeted"
   sql: LOOKUP(CONCAT(targeted_segment_id, ''), 'dsp_media_and_bids_targeted_segment_name') ;;
 }
 dimension: insertion_order_id {
@@ -880,10 +980,12 @@ dimension: insertion_order_name {
 }
 dimension: external_io_id {
   type: string
+  description: "external Insertion order ID"
   sql: LOOKUP(CONCAT(campaign_id, ''), 'dsp_media_and_bids_external_io_id') ;;
 }
 dimension: io_current_budget {
   type: string
+  description: "Budget for the IO"
   sql: LOOKUP(CONCAT(campaign_id, ''), 'dsp_media_and_bids_io_current_budget') ;;
 }
 dimension: io_cpa_goal {
@@ -896,10 +998,12 @@ dimension: io_cpc_goal {
 }
 dimension: io_start_date {
   type: string
+  description: "Date the IO begins at 12:01 am"
   sql: LOOKUP(CONCAT(campaign_id, ''), 'dsp_media_and_bids_io_start_date') ;;
 }
 dimension: io_end_date {
   type: string
+  description: "Date the IO ends"
   sql: LOOKUP(CONCAT(campaign_id, ''), 'dsp_media_and_bids_io_end_date') ;;
 }
 dimension: io_impression_cap_day {
@@ -984,6 +1088,7 @@ dimension: external_package_id {
 }
 dimension: packag_current_budget {
   type: string
+  description: "Overall budget for the package"
   sql: LOOKUP(CONCAT(campaign_id, ''), 'dsp_media_and_bids_packag_current_budget') ;;
 }
 dimension: packag_client_status {
@@ -1000,10 +1105,12 @@ dimension: packag_cpc_goal {
 }
 dimension: packag_start_date {
   type: string
+  description: "The date on which the package begins at 12:01 am"
   sql: LOOKUP(CONCAT(campaign_id, ''), 'dsp_media_and_bids_packag_start_date') ;;
 }
 dimension: packag_end_date {
   type: string
+  description: "The date on which the package ends at 11:59 pm"
   sql: LOOKUP(CONCAT(campaign_id, ''), 'dsp_media_and_bids_packag_end_date') ;;
 }
 dimension: impression_cap_value {
@@ -1043,6 +1150,7 @@ measure: ssp {
 
 dimension: publisher_name {
   type: string
+  description: "Name of a publisher"
   sql: LOOKUP(CONCAT(publisher_id, ''), 'dsp_media_and_bids_publisher_name') ;;
 }
 dimension: domain_name {
@@ -1055,18 +1163,22 @@ dimension: device_type_name {
 }
 dimension: country_name {
   type: string
+  description: "Country name for the audience segments"
   sql: LOOKUP(CONCAT(country_id, ''), 'dsp_media_and_bids_country_name') ;;
 }
 dimension: dma_name {
   type: string
+  description: "DMA name for the audience segment"
   sql: LOOKUP(CONCAT(dma_id, ''), 'dsp_media_and_bids_dma_name') ;;
 }
 dimension: city_name {
   type: string
+  description: "City name for the audience segment"
   sql: LOOKUP(CONCAT(city_id, ''), 'dsp_media_and_bids_city_name') ;;
 }
 dimension: region_name {
   type: string
+  description: "Region name for the audience segment"
   sql: LOOKUP(CONCAT(region_id, ''), 'dsp_media_and_bids_region_name') ;;
 }
 dimension: exchange_rate {
@@ -1115,10 +1227,12 @@ dimension: io_current_budget_mkt_ccy {
 }
 dimension: os_type_name {
   type: string
+  description: "Name of OS Type"
   sql: LOOKUP(CONCAT(os_type, ''), 'dsp_media_and_bids_os_type_name') ;;
 }
 dimension: browser_type_name {
   type: string
+  description: "Name of Browser Type"
   sql: LOOKUP(CONCAT(browser_type, ''), 'dsp_media_and_bids_browser_type_name') ;;
 }
 

@@ -293,7 +293,7 @@ view: fact_ad_bid_request_daily_agg {
   measure: sum_of_requests_from_ad_data {
     type: sum
     sql: ${TABLE}.sum_of_requests_from_ad_data ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: sum_of_requests_from_bidrequest {
@@ -319,7 +319,7 @@ view: fact_ad_bid_request_daily_agg {
     value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: (${responses}/NULLIF(${sum_of_requests_from_ad_data},0))*100 ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: revenue

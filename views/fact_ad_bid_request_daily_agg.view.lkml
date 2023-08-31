@@ -292,6 +292,8 @@ view: fact_ad_bid_request_daily_agg {
 
   measure: sum_of_requests_from_ad_data {
     type: sum
+    label: "Bid Requests"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_requests_from_ad_data ;;
     #hidden: yes
   }
@@ -299,7 +301,6 @@ view: fact_ad_bid_request_daily_agg {
   measure: sum_of_requests_from_bidrequest {
     type: sum
     sql: ${TABLE}.sum_of_requests_from_bidrequest ;;
-    label: "Bid Requests"
     hidden: yes
   }
 

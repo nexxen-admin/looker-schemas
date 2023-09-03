@@ -25,10 +25,39 @@ view: fact_ad_bid_request_daily_agg {
 
   dimension: dynamic_pub_deal {
     type: string
-    sql: ${TABLE}.{% parameter publisher_or_deal %} ;;
-    #hidden: yes
+    sql: {% if publisher_or_deal._parameter_value == 'pub_id' %}
+      ${dim_publisher.pub_id}
+    {% elsif publisher_or_deal._parameter_value == 'deal_id' %}
+      ${dim_deal.deal_id}
+    {% else %}
+      null
+    {% endif %};;
+    hidden: yes
   }
 
+dimension: dynamic_pub_deal_name {
+  type: string
+  sql: {% if publisher_or_deal._parameter_value == 'pub_id' %}
+      ${dim_publisher.pub_name}
+    {% elsif publisher_or_deal._parameter_value == 'deal_id' %}
+      ${dim_deal.deal_name}
+    {% else %}
+      null
+    {% endif %};;
+    hidden: yes
+}
+
+  dimension: dynamic_pub_deal_name_opposite {
+    type: string
+    sql: {% if publisher_or_deal._parameter_value == 'pub_id' %}
+      ${dim_deal.deal_name}
+    {% elsif publisher_or_deal._parameter_value == 'deal_id' %}
+      ${dim_publisher.pub_name}
+    {% else %}
+      null
+    {% endif %};;
+    hidden: yes
+  }
 
   dimension: ad_size_height_key {
     type: number

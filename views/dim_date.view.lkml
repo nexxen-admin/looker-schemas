@@ -23,7 +23,62 @@ view: dim_date {
     sql: month(${TABLE}.Date_Key);;
   }
 
+  parameter: time_to_date{
+    type: unquoted
+    allowed_value: {
+      label: "MTD"
+      value: "is_mtd"
+    }
+    allowed_value: {
+      label: "QTD"
+      value: "is_qtd"
+    }
+    allowed_value: {
+      label: "YTD"
+      value: "is_ytd"
+    }
+    hidden: yes
+  }
 
+  dimension: dynamic_time_to_date {
+    type: string
+    sql: {% parameter time_to_date %} ;;
+    hidden: yes
+  }
+
+dimension: is_qtd{
+  type: string
+  sql: CASE
+    WHEN
+      DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) = DATE_PART('YEAR', CURRENT_TIMESTAMP) AND
+      DATE_PART('QUARTER', ${date_key_raw}::TIMESTAMP) = DATE_PART('QUARTER', CURRENT_TIMESTAMP)
+    THEN 'Yes'
+    ELSE 'No'
+  END ;;
+}
+
+ dimension: is_mtd {
+   type: string
+  sql: CASE
+    WHEN
+      DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) = DATE_PART('YEAR', CURRENT_TIMESTAMP) AND
+      DATE_PART('MONTH', ${date_key_raw}::TIMESTAMP) = DATE_PART('MONTH', CURRENT_TIMESTAMP) AND
+      ${date_key_raw}::TIMESTAMP <= CURRENT_TIMESTAMP
+    THEN 'Yes'
+    ELSE 'No'
+  END ;;
+ }
+
+dimension: is_ytd {
+  type: string
+  sql: CASE
+    WHEN
+      DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) = DATE_PART('YEAR', CURRENT_TIMESTAMP) AND
+      ${date_key_raw}::TIMESTAMP <= CURRENT_TIMESTAMP
+    THEN 'Yes'
+    ELSE 'No'
+  END ;;
+}
 
   dimension: is_before_mtd {
     description: "should be used when comparing month to month while including the current not complited month -
@@ -33,7 +88,7 @@ view: dim_date {
                   the - Is Before Mtd will filter Jan to be 1-16 also "
     type: yesno
     sql: DATE_PART('DAY', ${date_key_raw}::TIMESTAMP) < DATE_PART('DAY', CURRENT_TIMESTAMP) ;;
-
+hidden: yes
   }
 
 
@@ -46,7 +101,7 @@ view: dim_date {
                   the - Is Before Ytd will filter 2022 to be Jan-Mar also"
     type: yesno
     sql: DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) < DATE_PART('YEAR', CURRENT_TIMESTAMP) ;;
-
+hidden: yes
   }
   #dimension: is_before_qtd {
 
@@ -60,8 +115,9 @@ view: dim_date {
     in this case the - Is Before Qtd,
     will filter the other years on exact quarters of the not complited year."
     type: yesno
-    sql: DATE_PART('QUARTER', ${date_key_raw}::TIMESTAMP) < DATE_PART('QUARTER', CURRENT_TIMESTAMP) ;;
-
+    sql: DATE_PART('QUARTER', ${date_key_raw}::TIMESTAMP) < DATE_PART('QUARTER', CURRENT_TIMESTAMP)
+    and date_trunc('Year',current_timestamp) = date_trunc('Year', ${date_key_raw}::timestamp);;
+hidden: yes
   }
 
   dimension: current_month_number_in_quarter{

@@ -1268,7 +1268,7 @@ view: fact_ad_daily_agg {
     label: "Net Revenue"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${revenue} - ${cogs} ;;
+    sql: ${revenue} - ${cogs} + ${pub_platform_fee} ;;
   }
 
   filter: publisher_filter {
@@ -1296,7 +1296,7 @@ view: fact_ad_daily_agg {
     description: "Difference between revenue and cogs out of total revenue"
     value_format: "0.00%"
     group_label: "Daily Measures"
-    sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0)) ;;
+    sql: (((${revenue} - ${cogs})+${pub_platform_fee})/NULLIF(${revenue},0)) ;;
   }
 
   measure: Pub_eCPM {
@@ -1632,7 +1632,7 @@ view: fact_ad_daily_agg {
     description: "The net revenue (difference between revenue and cogs) of 2 days ago"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs + ${TABLE}.sum_of_pub_platform_fee  ;;
     filters: [date_key_date: "2 days ago"]
 
   }
@@ -1643,7 +1643,7 @@ view: fact_ad_daily_agg {
     description: "The difference between revenue an cogs of 8 days ago"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs + ${TABLE}.sum_of_pub_platform_fee  ;;
     filters: [date_key_date: "8 days ago"]
 
   }
@@ -1826,7 +1826,7 @@ view: fact_ad_daily_agg {
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs  ;;
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs + ${TABLE}.sum_of_pub_platform_fee;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
@@ -2268,22 +2268,41 @@ view: fact_ad_daily_agg {
     label: "Current Period Margin  {{_filters['current_date_range']}} "
     type: number
     description: "Specifies the % of the net revenue out of the revenue of the current period we are looking at, using the filter 'current date range' which has to be applied"
-    sql: (${current_period_revenue}-${current_period_cost})/${current_period_revenue} ;;
+    sql: (${current_period_revenue}-${current_period_cost}+${current_period_pub_platform_fee})/${current_period_revenue} ;;
     value_format: "0%"
-
-
   }
+
+
   measure: previous_period_margin {
     view_label: ""
     label: " {{_filters['compare_to']}} "
     description: "Specifies the % of the net revenue out of the revenue of the previous period, using the filter 'compare to' which has to be applied"
     type: number
-    sql: (${previous_period_revenue}-${previous_period_cost})/${previous_period_revenue} ;;
+    sql: (${previous_period_revenue}-${previous_period_cost}+${previous_period_pub_platform_fee})/${previous_period_revenue} ;;
     value_format: "0%"
-
-
   }
 
+  measure: current_period_pub_platform_fee {
+    view_label: "PoP"
+    label: "Current Period Pub Plarform Fee  {{_filters['current_date_range']}} "
+    type: sum
+    description: "Specifies the tech fee a publisher is paying on using the ctrl, in the current period we are looking at, using the filter 'current date range' which has to be applied"
+    sql: ${TABLE}.sum_of_pub_platform_fee ;;
+    value_format: "$#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_pub_platform_fee {
+    view_label: ""
+    label: "previous period pub platform fee "
+    description: "Specifies the tech fee a publisher is paying on using the ctrl, in the previous period, using the filter 'compare to' which has to be applied"
+    type: sum
+    sql: ${TABLE}.sum_of_pub_platform_fee ;;
+    value_format: "$#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
 
   measure: margin_pop_change {
     view_label: "PoP"

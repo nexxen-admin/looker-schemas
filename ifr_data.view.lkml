@@ -48,7 +48,10 @@ view: ifr_data {
           "Rich Media" / total_billable as "Rich Media",
           "Propensity Scoring (BPO)" / total_billable as "Propensity Scoring (BPO)",
            "Lifestyles" / total_billable as "Lifestyles",
-           "All Others" / total_billable as "All Others"
+           "All Others" / total_billable as "All Others",
+          null as "TV Amplifier",
+          null as "Dynamic Localization",
+          null as "Lifestyles/Amobee Audiences"
 
       FROM rev LEFT JOIN  dem_Pivot_ord_4 pivottab ON
       rev.period_name = pivottab.period_name
@@ -127,6 +130,24 @@ view: ifr_data {
   measure: interests {
     type: sum
     sql: ${TABLE}."Interests" ;;
+  }
+
+  measure: TV_Amplifier {
+    type: sum
+    label: "TV Amplifier"
+    sql: ${TABLE}."TV Amplifier" ;;
+  }
+
+  measure: Dynamic_Localization {
+    type: sum
+    label: "Dynamic Localization"
+    sql: ${TABLE}."Dynamic Localization" ;;
+  }
+
+  measure: Lifestyles_Amobee_Audiences {
+    type: sum
+    label: "Lifestyles/Amobee Audiences"
+    sql: ${TABLE}."Lifestyles/Amobee Audiences" ;;
   }
 
   measure: ifo {

@@ -14,7 +14,12 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
+access_grant: ifr_data {
+  user_attribute: ifr_data
+  allowed_values: ["ifr_data"]
+}
+
 explore: ifr_data{
   label: "IFR Data"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [ifr_data]
 }

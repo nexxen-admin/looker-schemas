@@ -19,12 +19,12 @@ access_grant: can_view_all_tremor {
 #  allowed_values: ["ifrdata"]
 #}
 
-explore: ifr_data{
-  label: "IFR Data"
+#explore: ifr_data{
+#  label: "IFR Data"
 #  required_access_grants: [ifr_data]
-}
+#}
 
 explore: ifr_data_by_date{
   label: "IFR By Date"
-  required_access_grants: [ifr_data]
+  #required_access_grants: [ifr_data]
 }

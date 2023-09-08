@@ -1,14 +1,9 @@
 
 view: ifr_data_by_date {
   derived_table: {
-    sql: select * from financial.fact_programmatic_revenue_by_data_type
-      -- where  "Market ID" in ('141','861','927','999','1356','1379','1405','1472','1602','2048','2107','2139','2143','2147','2145','2149') ;;
+    sql: select * from financial.fact_programmatic_revenue_by_data_type ;;
   }
 
-  measure: count {
-    type: count
-    drill_fields: [detail*]
-  }
 
   dimension: period {
     type: string
@@ -156,33 +151,5 @@ view: ifr_data_by_date {
     sql: ${TABLE}."tac (% of Gross)" ;;
   }
 
-  set: detail {
-    fields: [
-        period,
-	impression_date,
-	market_id,
-	market_name,
-	advertiser_id,
-	advertiser,
-	total_billable,
-	total_net,
-	total_net_,
-	tech_fee,
-	tech_fee__of_gross,
-	brand_safety,
-	brand_safety__of_gross,
-	contextual_data,
-	contextual_data__of_gross,
-	cross_device,
-	cross_device__of_gross,
-	viewability,
-	viewability__of_gross,
-	audience_data,
-	audience__of_gross,
-	other_data,
-	other_data__of_gross,
-	publisher,
-	tac__of_gross
-    ]
-  }
+
 }

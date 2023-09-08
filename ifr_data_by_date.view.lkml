@@ -1,7 +1,7 @@
 
 view: ifr_data_by_date {
   derived_table: {
-    sql: select * from financial.fact_programmatic_revenue_by_data_type WHERE market_id IN (1379,1405,2147,2132,2107,927,1472,2139,2048,2145,1602,2101,999,1356,141,1532,2143,861) ;;
+    sql: select * from financial.fact_programmatic_revenue_by_data_type  ;;
   }
 
 

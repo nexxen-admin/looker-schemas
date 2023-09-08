@@ -23,3 +23,8 @@ explore: ifr_data{
   label: "IFR Data"
 #  required_access_grants: [ifr_data]
 }
+
+explore: ifr_data_by_date{
+  label: "IFR By Date"
+  required_access_grants: [ifr_data]
+}

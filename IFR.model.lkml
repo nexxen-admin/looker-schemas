@@ -27,4 +27,5 @@ access_grant: can_view_all_tremor {
 explore: ifr_data_by_date{
   label: "IFR By Date"
   #required_access_grants: [ifr_data]
+  hidden: yes
 }

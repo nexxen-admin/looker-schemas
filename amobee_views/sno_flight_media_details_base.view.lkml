@@ -22,7 +22,7 @@ view: flight_media_details_base {
     timeframes: [raw, time, hour]
     label: "[DST] FM Begin Date - Local"
     description: "The begin date of the Flight Media in the demand timezone accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, dateadd(h, -${timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL))
+    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, TIMESTAMPADD(hour, -${timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL))
       else ${TABLE}.BEGIN_DATETIME_LOCAL end ;;
   }
 
@@ -75,7 +75,7 @@ view: flight_media_details_base {
   dimension: flight_creative_id {
     type: number
     label: "Flight Creative ID"
-    sql: regexp_substr(${cdn_file_loc}, '/fcid=(\\d+)/', 1, 1, 'ie')::int ;;
+    sql: regexp_substr(${cdn_file_loc}, '/fcid=(\\d+)/', 1, 1, 'i')::int ;;
     value_format_name: id
   }
 
@@ -227,7 +227,7 @@ view: flight_media_details_base {
     timeframes: [raw, time, hour]
     label: "[DST] FM End Date - Local"
     description: "The end date of the Flight Media in the demand timezone accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, dateadd(h, -${timezone.utc_offset}, ${TABLE}.END_DATETIME_LOCAL))
+    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, TIMESTAMPADD(hour, (-${timezone.utc_offset}::Integer), ${TABLE}.END_DATETIME_LOCAL))
       else ${TABLE}.END_DATETIME_LOCAL end ;;
   }
 

@@ -1,5 +1,5 @@
 view: campaign_target_description {
-  sql_table_name: DIM.CAMPAIGN_TARGET_DESCRIPTION ;;
+  sql_table_name: DIM.CAMPAIGN_TARGET_DESCRIPTION_VIEW ;;
 
   dimension: campaign_id {
     type: number

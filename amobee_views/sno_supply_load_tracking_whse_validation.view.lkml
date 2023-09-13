@@ -1,6 +1,6 @@
 view: sno_supply_load_tracking_whse_validation {
 
-  sql_table_name: SUPPLY_MART.LOAD_TRACKING ;;
+  sql_table_name: RAWDB.LOAD_TRACKING ;;
 
   dimension: end_timezone {
     type: number
@@ -29,6 +29,6 @@ view: sno_supply_load_tracking_whse_validation {
 
   dimension: timedelta {
     type: number
-    sql: datediff(hour, dateadd(hour, 24, dateadd(hour, -${timezone.utc_offset}, ${load_through_date})), current_timestamp);;
+    sql: datediff(hour, TIMESTAMPADD(hour, 24, TIMESTAMPADD(hour, -${timezone.utc_offset}::INTEGER, ${load_through_date}::TIMESTAMP)), current_timestamp);;
   }
 }

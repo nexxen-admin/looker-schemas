@@ -40,8 +40,8 @@ FROM (
         THEN pricing_vendor_id
       ELSE NULL
       END AS secondary_objective_vendor
-  FROM dim.campaign_objective
-  )  GROUP BY campaign_id;;
+  FROM dim.campaign_objective_view
+  )cobj  GROUP BY campaign_id;;
   }
 
   dimension: campaign_id {

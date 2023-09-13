@@ -124,11 +124,11 @@ view: campaign_bookings {
     value_format_name: decimal_0
     sql: CASE WHEN ${end_datetime_measure} is null
                 THEN 0
-                WHEN ${last_rec_rev_date_measure} < ${io_begin_date}::date
+                WHEN ${last_rec_rev_date_measure} < ${io_begin_date}::TIMESTAMP
                 THEN 0
-               WHEN ${last_rec_rev_date_measure} > ${io_end_date}::date
+               WHEN ${last_rec_rev_date_measure} > ${io_end_date}::TIMESTAMP
                THEN ${total_io_days}
-                ELSE datediff(hour, ${io_begin_date}::date, ${last_rec_rev_date_measure}::date) / 24
+                ELSE datediff(hour, ${io_begin_date}::TIMESTAMP, ${last_rec_rev_date_measure}::TIMESTAMP) / 24
                 END ;;
   }
 
@@ -138,7 +138,7 @@ view: campaign_bookings {
     hidden :  no
     type : number
     value_format_name: decimal_0
-    sql: datediff(hour,${io_begin_date}::date, ${io_end_date}::date)/24  ;;
+    sql: datediff(hour,${io_begin_date}::TIMESTAMP, ${io_end_date}::TIMESTAMP)/24  ;;
 
   }
 
@@ -165,8 +165,8 @@ view: campaign_bookings {
     label: " IO Current Month Delivered Days"
     description: "Number of Days in Current month in which IO served"
     type: number
-    sql:  GREATEST(DATEDIFF(day, GREATEST(${io_begin_date}::date, DATE_TRUNC('MONTH', TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ))),
-                      LEAST(${io_end_date}::date, TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ))) + 1, 0) ;;
+    sql:  GREATEST(DATEDIFF(day, GREATEST(${io_begin_date}::TIMESTAMP, DATE_TRUNC('MONTH', TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ))),
+                      LEAST(${io_end_date}::TIMESTAMP, TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ))) + 1, 0) ;;
   }
 
   measure: io_current_month_days {
@@ -174,23 +174,23 @@ view: campaign_bookings {
     description: "Number of IO serving Days in Current month"
     type: number
     value_format_name:  decimal_0
-    sql:  GREATEST(datediff(hour, GREATEST(${io_begin_date}::date, DATE_TRUNC('MONTH', TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ))),
-                      LEAST(${io_end_date}::date, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ), 1)))) / 24, 0) ;;
+    sql:  GREATEST(datediff(hour, GREATEST(${io_begin_date}::TIMESTAMP, DATE_TRUNC('MONTH', TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ))),
+                      LEAST(${io_end_date}::TIMESTAMP, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ), 1)))) / 24, 0) ;;
   }
 
   measure: io_next_month_days {
     label: " IO Next Month Days"
     description: "Number of IO Serving Days in Next month"
     type: number
-    sql:  GREATEST(datediff(hour, GREATEST(${io_begin_date}::date, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ),1))),
-      LEAST(${io_end_date}::date, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ), 2)))) / 24, 0) ;;
+    sql:  GREATEST(datediff(hour, GREATEST(${io_begin_date}::TIMESTAMP, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ),1))),
+      LEAST(${io_end_date}::TIMESTAMP, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ), 2)))) / 24, 0) ;;
   }
 
   measure: io_following_month_days {
     label: " IO Following Month Days"
     description: "Number of IO Serving Days in Following month"
     type: number
-    sql:  GREATEST(datediff(hour, GREATEST(${io_begin_date}::date, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ),2))),
+    sql:  GREATEST(datediff(hour, GREATEST(${io_begin_date}::TIMESTAMP, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ),2))),
       LEAST(${io_end_date}::date, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ), 3)))) / 24, 0) ;;
   }
 
@@ -198,8 +198,8 @@ view: campaign_bookings {
     label: " IO Following Month plus One Days"
     description: "Number of IO Serving Days in Following month plus one "
     type: number
-    sql:  GREATEST(datediff(hour, GREATEST(${io_begin_date}::date, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ), 3))),
-                      LEAST(${io_end_date}::date, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ), 4)))) / 24, 0) ;;
+    sql:  GREATEST(datediff(hour, GREATEST(${io_begin_date}::TIMESTAMP, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ), 3))),
+                      LEAST(${io_end_date}::TIMESTAMP, DATE_TRUNC('MONTH', ADD_MONTHS(TO_TIMESTAMP(CURRENT_DATE()::varchar,'YYYY-MM-DD' ), 4)))) / 24, 0) ;;
   }
 
   measure: bookings_current_month {

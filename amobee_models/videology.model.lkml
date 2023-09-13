@@ -34,7 +34,7 @@ explore: hourly_analytics {
 
   join: load_tracking {
     relationship: many_to_one
-    sql_on: ${load_tracking.schema_name} = 'rawdb' and ${load_tracking.table_name} = 'hourly_analytics' ;;
+    sql_on: ${load_tracking.schema_name} = 'RAWDB' and ${load_tracking.table_name} = 'HOURLY_ANALYTICS' ;;
   }
 
   join: flight_media_details_base {
@@ -45,8 +45,8 @@ explore: hourly_analytics {
   join: demand_mart_load_tracking {
     relationship: many_to_one
     sql_on: ${flight_media_details_base.starttimezone_id} = ${demand_mart_load_tracking.start_timezone} and
-      ${demand_mart_load_tracking.schema_name} = 'demand_mart' and
-      ${demand_mart_load_tracking.table_name} = 'daily_core_stats' ;;
+      ${demand_mart_load_tracking.schema_name} = 'DEMAND_MART' and
+      ${demand_mart_load_tracking.table_name} = 'DAILY_CORE_STATS' ;;
   }
 
   join: flight_details {
@@ -153,6 +153,23 @@ explore: hourly_analytics {
     relationship: many_to_one
     sql_on: ${placement_details_base.preferred_currency_id} = ${plan_currency.currency_id} ;;
     fields: []
+  }
+
+  join: attribute_lookup_platformid{
+    relationship: many_to_one
+    sql_on: ${attribute_lookup_platformid.attr_id} = ${hourly_analytics.platformid} ;;
+
+  }
+
+  join: attribute_lookup_browserid{
+    relationship: many_to_one
+    sql_on: ${attribute_lookup_browserid.attr_id} = ${hourly_analytics.browserid} ;;
+
+  }
+
+  join: attribute_lookup_deviceid{
+    relationship: many_to_one
+    sql_on: ${attribute_lookup_deviceid.attr_id} =  ${hourly_analytics.deviceid} ;;
   }
 
 }

@@ -30,9 +30,9 @@ view: demand_warehouse_validation {
                        FROM demand_mart.load_tracking
                        WHERE schema_name = 'demand_mart'
                          AND table_name IN ('daily_core_stats', 'daily_domain_stats', 'daily_daypart_stats', 'daily_geo_stats')
-                       GROUP BY load_through_date)
+                       GROUP BY load_through_date) as ltd
                      WHERE count_tablename = 4)
-              )
+              ) as ltr
           ),
           -- latest hours filter
           latest_hour_filter AS (

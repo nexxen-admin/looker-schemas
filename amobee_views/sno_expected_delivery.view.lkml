@@ -5,18 +5,18 @@ view: expected_delivery {
               fd.CAMPAIGN_ID,
               fd.FLIGHT_ID,
               CAST(DATEDIFF('SECOND', MIN(fd.BEGIN_DATETIME_LOCAL), MAX(fd.END_DATETIME_LOCAL)) AS FLOAT) AS TOTAL_TIME,
-              CAST(GREATEST(0, DATEDIFF('SECOND', MIN(fd.BEGIN_DATETIME_LOCAL), LEAST(MAX(fd.END_DATETIME_LOCAL), DATEADD('DAY', 1, MAX(lt.LOAD_THROUGH_DATE))))) AS FLOAT) AS ELAPSED_TIME,
+              CAST(GREATEST(0, DATEDIFF('SECOND', MIN(fd.BEGIN_DATETIME_LOCAL), LEAST(MAX(fd.END_DATETIME_LOCAL), TIMESTAMPADD('DAY', 1, MAX(lt.LOAD_THROUGH_DATE))))) AS FLOAT) AS ELAPSED_TIME,
               CAST(MAX(b.BUDGET) * (1 + MAX(fmd.AGENCY_FEE)) AS FLOAT) AS TARGET_GROSS_SPEND,
               CAST(MAX(b.UNITS) AS FLOAT) AS TARGET_UNITS
             FROM
               DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW fmd
-                JOIN DIM.FLIGHT_DETAILS fd
+                JOIN DIM.FLIGHT_DETAILS_VIEW fd
                   ON fd.flight_id = fmd.flight_id
-                JOIN DEMAND_MART.LOAD_TRACKING lt
+                JOIN RAWDB.LOAD_TRACKING lt
                   ON fmd.STARTTIMEZONE_ID = lt.START_TIMEZONE AND
-                     lt.SCHEMA_NAME = 'demand_mart' AND
-                     lt.TABLE_NAME = 'daily_core_stats'
-                JOIN DIM.DEMAND_UNITS_BUDGET b
+                     lt.SCHEMA_NAME = 'DEMAND_MART' AND
+                     lt.TABLE_NAME = 'DAILY_CORE_STATS'
+                JOIN DIM.DEMAND_UNITS_BUDGET_VIEW b
                   ON fmd.FLIGHT_ID = b.FLIGHT_ID AND
                      b.FLIGHT_MEDIA_ID IS NULL
             WHERE

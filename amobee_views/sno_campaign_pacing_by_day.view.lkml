@@ -35,10 +35,10 @@ view: campaign_pacing_by_day {
                 ON fd.FLIGHT_ID = fmd.FLIGHT_ID
               JOIN DIM.CAMPAIGN_DETAILS_BASE_VIEW cd
                 ON fd.CAMPAIGN_ID = cd.CAMPAIGN_ID
-              JOIN DEMAND_MART.LOAD_TRACKING lt
+              JOIN RAWDB.LOAD_TRACKING lt
                 ON fmd.STARTTIMEZONE_ID = lt.START_TIMEZONE AND
-                   lt.SCHEMA_NAME = 'demand_mart' AND
-                   lt.TABLE_NAME = 'daily_core_stats'
+                   lt.SCHEMA_NAME = 'DEMAND_MART' AND
+                   lt.TABLE_NAME = 'DAILY_CORE_STATS'
               JOIN DIM.DEMAND_UNITS_BUDGET_VIEW b
                 ON fmd.FLIGHT_ID = b.FLIGHT_ID AND
                    b.FLIGHT_MEDIA_ID IS NULL

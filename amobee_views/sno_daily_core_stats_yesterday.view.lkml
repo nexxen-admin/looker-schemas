@@ -37,8 +37,8 @@ view: daily_core_stats_yesterday {
     SELECT max(load_through_date) AS yesterday
       ,start_timezone
     FROM demand_mart.load_tracking
-    WHERE schema_name = 'demand_mart'
-      AND table_name = 'daily_core_stats'
+    WHERE schema_name = 'DEMAND_MART'
+      AND table_name = 'DAILY_CORE_STATS'
     GROUP BY start_timezone
     ) sub ON sub.yesterday = dd.date_value
   ) sub2 ON dcs.demand_date = sub2.date_value

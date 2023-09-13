@@ -34,7 +34,7 @@ view: account_exec {
 }
 
 view: launched_by_userprofile {
-  sql_table_name: DIM.USER_PROFILE ;;
+  sql_table_name: DIM.USER_PROFILE_VIEW ;;
 
   dimension: id {
     primary_key: yes
@@ -68,7 +68,7 @@ view: launched_by_userprofile {
 }
 
 view: fm_createdby_userprofile {
-  sql_table_name: DIM.USER_PROFILE ;;
+  sql_table_name: DIM.USER_PROFILE_VIEW ;;
 
   dimension: id {
     primary_key: yes

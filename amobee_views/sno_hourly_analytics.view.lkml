@@ -614,7 +614,14 @@ view: hourly_analytics {
     type: string
     view_label: "Supplemental Facets"
     description: "The browser which was used to view the impression"
-    sql: prod.public.f_attr_lookup(${TABLE}.BROWSER) ;;
+    sql: ${attribute_lookup_browserid.description}  ;;
+  }
+
+  dimension: browserid {
+    type: number
+    hidden: yes
+    value_format_name: id
+    sql: ${TABLE}.BROWSER ;;
   }
 
   dimension: bt_cluster_cost {
@@ -1501,8 +1508,15 @@ view: hourly_analytics {
     view_label: "Supplemental Facets"
     label: "Device"
     description: "The name of the device where the impression was seen."
-    sql: prod.public.f_attr_lookup(${TABLE}.DEVICE_ID) ;;
+    sql: ${attribute_lookup_deviceid.description}  ;;
     suggestable: no
+  }
+
+  dimension: deviceid {
+    type: number
+    hidden: yes
+    value_format_name: id
+    sql: ${TABLE}.DEVICE_ID ;;
   }
 
   dimension: distinct_clicks {
@@ -2196,7 +2210,14 @@ view: hourly_analytics {
     label: "Platform"
     view_label: "Supplemental Facets"
     description: "The platform where the impression was seen examples include Android, iOS, Mac, Windows, etc."
-    sql: prod.public.f_attr_lookup(${TABLE}.PLATFORM)  ;;
+    sql: ${attribute_lookup_platformid.description} ;;
+  }
+
+  dimension: platformid {
+    type: number
+    hidden: yes
+    value_format_name: id
+    sql: ${TABLE}.PLATFORM ;;
   }
 
   dimension: platform_client_id {

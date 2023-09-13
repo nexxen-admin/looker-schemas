@@ -52,7 +52,7 @@ view: campaign_details_base {
     ]
     label: "[DST] Begin Time - Local"
     description: "The start time of the Campaign in the Campaign's timezone accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, TIMESTAMPADD(h, -${timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL))
+    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, TIMESTAMPADD(hour, -${timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL))
       else ${TABLE}.BEGIN_DATETIME_LOCAL end ;;
   }
 
@@ -117,7 +117,7 @@ view: campaign_details_base {
     ]
     label: "Campaign End"
     description: "The end date of the campaign in UTC."
-    sql: TIMESTAMPADD('M',-1,${TABLE}.CAMPAIGN_END_DATE) ;;
+    sql: TIMESTAMPADD('minute',-1,${TABLE}.CAMPAIGN_END_DATE) ;;
   }
 
   dimension_group: dst_campaign_end_date {
@@ -133,8 +133,8 @@ view: campaign_details_base {
     ]
     label: "[DST] Campaign Local End"
     description: "The end date of the campaign in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then TIMESTAMPADD('M', -1, ${TABLE}.CAMPAIGN_END_DATE) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
-      else TIMESTAMPADD('M',-1,${TABLE}.CAMPAIGN_END_DATE) end ;;
+    sql: case when ${platform_client.use_daylight_saving} then TIMESTAMPADD('minute', -1, ${TABLE}.CAMPAIGN_END_DATE) AT TIME ZONE 'UTC' AT TIME ZONE ${timezone.timezone_name}
+      else TIMESTAMPADD('minute',-1,${TABLE}.CAMPAIGN_END_DATE) end ;;
   }
 
   dimension: campaign_id {
@@ -497,7 +497,7 @@ END  ;;
     ]
     label: "End Time - Local"
     description: "The end time of the Campaign in the Campaign's timezone."
-    sql: TIMESTAMPADD('M',-1,${TABLE}.END_DATETIME_LOCAL) ;;
+    sql: TIMESTAMPADD('minute',-1,${TABLE}.END_DATETIME_LOCAL) ;;
   }
 
   dimension_group: dst_end_datetime_local {
@@ -513,8 +513,8 @@ END  ;;
     ]
     label: "[DST] End Time - Local"
     description: "The end time of the Campaign in the Campaign's timezone accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, TIMESTAMPADD(h, -${timezone.utc_offset}, TIMESTAMPADD('M',-1,${TABLE}.END_DATETIME_LOCAL)))
-      else TIMESTAMPADD('M',-1,${TABLE}.END_DATETIME_LOCAL) end ;;
+    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('GMT', ${timezone.timezone_name}, TIMESTAMPADD(hour, -${timezone.utc_offset}, TIMESTAMPADD('minute',-1,${TABLE}.END_DATETIME_LOCAL)))
+      else TIMESTAMPADD('minute',-1,${TABLE}.END_DATETIME_LOCAL) end ;;
   }
 
   dimension: format_type_description {
@@ -643,7 +643,7 @@ END  ;;
     label: "Plan End Date"
     view_label: "{% if _explore._name == 'auction_log' and _view._name == 'campaign_details_seller' %}Seller Deal Campaign{% elsif _explore._name == 'auction_log' and _view._name == 'campaign_details_buyer' %}Buyer Campaign{% else %}Plan{% endif %}"
     description: "The end date of the Plan in UTC."
-    sql: TIMESTAMPADD(m, -1, ${TABLE}.PLAN_END_DATE) ;;
+    sql: TIMESTAMPADD(minute, -1, ${TABLE}.PLAN_END_DATE) ;;
   }
 
   dimension: dst_plan_end_date {
@@ -651,8 +651,8 @@ END  ;;
     label: "[DST] Plan Local End Date"
     view_label: "{% if _explore._name == 'auction_log' and _view._name == 'campaign_details_seller' %}Seller Deal Campaign{% elsif _explore._name == 'auction_log' and _view._name == 'campaign_details_buyer' %}Buyer Campaign{% else %}Plan{% endif %}"
     description: "The end date of the Plan in local time accounting DST."
-    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, TIMESTAMPADD(m, -1, ${TABLE}.PLAN_END_DATE))
-      else TIMESTAMPADD(m, -1, ${TABLE}.PLAN_END_DATE) end ;;
+    sql: case when ${platform_client.use_daylight_saving} then convert_timezone('UTC', ${timezone.timezone_name}, TIMESTAMPADD(minute, -1, ${TABLE}.PLAN_END_DATE))
+      else TIMESTAMPADD(minute, -1, ${TABLE}.PLAN_END_DATE) end ;;
   }
 
   dimension: plan_start_date {
@@ -889,7 +889,13 @@ END  ;;
   dimension: is_amobee_served {
     type: yesno
     hidden: yes
-    sql: ${TABLE}.misc_is_amobee_served_value::boolean ;;
+    sql: ${TABLE}.misc_is_amobee_served::boolean ;;
+  }
+
+  dimension: is_amobee_served_string {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.misc_is_amobee_served::varchar ;;
   }
 
   dimension: is_amobee_served_changedon {
@@ -928,8 +934,8 @@ END  ;;
     label: "Plans Passed to ITV Yesterday"
     description: "Number of plans that were started to be served by ITV yesterday"
     filters: {
-      field: is_amobee_served
-      value: "false"
+      field: is_amobee_served_string
+      value: "f"
     }
     filters: {
       field: is_amobee_served_changedon
@@ -966,7 +972,7 @@ END  ;;
     ]
     label: "Ordered"
     description: "Launch time of the deal."
-    sql: ${TABLE}.misc_date_ordered::timestamp_ntz ;;
+    sql: ${TABLE}.misc_date_ordered ;;
   }
 
   # ----- Sets of fields for drilling ------

@@ -6,7 +6,7 @@ view: retargeting_attribute {
 
   dimension: retargeting_attribute_id {
     primary_key: yes
-    type: string
+    type: number
     description: "Videology’s ID to identify the segment"
     sql: ${TABLE}.RETARGETING_ATTRIBUTE_ID ;;
   }

@@ -16,10 +16,10 @@ view: reach_and_frequency {
                 DCS.DEMAND_DATE,
                 max(DCS.PK_ID) as pk_id,
                 sum(DCS.impressions) impressions
-            FROM DEMAND_MART.DAILY_CORE_STATS_VIEW DCS
-              JOIN DIM.FLIGHT_MEDIA_DETAILS FMD on DCS.flight_media_id = FMD.flight_media_id
-            {% if campaign_details_base._in_query %} JOIN DIM.CAMPAIGN_DETAILS_BASE CD on FMD.campaign_id = CD.campaign_id {% endif %}
-            {% if advertiser_brand_details._in_query %} JOIN DIM.ADVERTISER_BRAND_DETAILS ABD on CD.advertiser_brand_id = ABD.advertiser_brand_id {% endif %}
+            FROM DEMAND_MART.DAILY_CORE_STATS DCS
+              JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW FMD on DCS.flight_media_id = FMD.flight_media_id
+            {% if campaign_details_base._in_query %} JOIN DIM.CAMPAIGN_DETAILS_BASE_VIEW CD on FMD.campaign_id = CD.campaign_id {% endif %}
+            {% if advertiser_brand_details._in_query %} JOIN DIM.ADVERTISER_BRAND_DETAILS_VIEW ABD on CD.advertiser_brand_id = ABD.advertiser_brand_id {% endif %}
             WHERE {% condition daily_core_stats.demand_date %} DCS.DEMAND_DATE {% endcondition %} AND
               {% condition campaign_details_base.campaign_id %} FMD.CAMPAIGN_ID {% endcondition %} AND
               {% condition campaign_details_base.campaign_name %} CD.CAMPAIGN_NAME {% endcondition %} AND
@@ -40,9 +40,9 @@ view: reach_and_frequency {
             (sum(CUS.impressions) * 1.0) sample_imps,
             count(DISTINCT CUS.userid) count_users
         FROM DEMAND_MART.DAILY_CORE_USER_SAMPLE CUS
-          JOIN DIM.FLIGHT_MEDIA_DETAILS FMD on CUS.flight_media_id = FMD.flight_media_id
-        {% if campaign_details_base._in_query %} JOIN DIM.CAMPAIGN_DETAILS_BASE CD on FMD.campaign_id = CD.campaign_id {% endif %}
-        {% if advertiser_brand_details._in_query %} JOIN DIM.ADVERTISER_BRAND_DETAILS ABD on CD.advertiser_brand_id = ABD.advertiser_brand_id {% endif %}
+          JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW FMD on CUS.flight_media_id = FMD.flight_media_id
+        {% if campaign_details_base._in_query %} JOIN DIM.CAMPAIGN_DETAILS_BASE_VIEW CD on FMD.campaign_id = CD.campaign_id {% endif %}
+        {% if advertiser_brand_details._in_query %} JOIN DIM.ADVERTISER_BRAND_DETAILS_VIEW ABD on CD.advertiser_brand_id = ABD.advertiser_brand_id {% endif %}
         WHERE {% condition daily_core_stats.demand_date %} CUS.DEMAND_DATE {% endcondition %} AND
           {% condition campaign_details_base.campaign_id %} FMD.CAMPAIGN_ID {% endcondition %} AND
           {% condition campaign_details_base.campaign_name %} CD.CAMPAIGN_NAME {% endcondition %} AND

@@ -7,29 +7,29 @@ view: required_delivery_today {
       THEN 0
     ELSE (u.units - coalesce(b.billable_units, 0)) / (datediff(d, CURRENT_DATE (), d.end_datetm) + 1)
     END AS CCP_LOCAL
-FROM dim.flight_media_details d
+FROM dim.flight_media_details_base_view d
 JOIN (
   SELECT flight_media_id
     ,sum(units) AS units
-  FROM dim.demand_units_budget
+  FROM dim.demand_units_budget_view
   WHERE flight_media_id IS NOT NULL
     AND flight_media_id IN (
       SELECT flight_media_id
-      FROM dim.flight_media_details f
+      FROM dim.flight_media_details_base_view f
       WHERE CURRENT_DATE () BETWEEN f.begin_datetm
-          AND dateadd(d, 1, f.end_datetm)
+          AND TIMESTAMPADD(day, 1, f.end_datetm)
       )
   GROUP BY flight_media_id
   ) u ON d.flight_media_id = u.flight_media_id
 LEFT JOIN (
   SELECT s.flight_media_id
     ,sum(billable_units) AS billable_units
-  FROM demand_mart.monthly_core_stats s
+  FROM demand_mart.daily_core_stats s
   WHERE s.flight_media_id IN (
       SELECT flight_media_id
-      FROM dim.flight_media_details f
+      FROM dim.flight_media_details_base_view f
       WHERE CURRENT_DATE () BETWEEN f.begin_datetm
-          AND dateadd(d, 1, f.end_datetm)
+          AND TIMESTAMPADD(day, 1, f.end_datetm)
       )
   GROUP BY s.flight_media_id
   ) b ON d.flight_media_id = b.flight_media_id
@@ -38,9 +38,9 @@ UNION
 
 SELECT d.flight_media_id
   ,0
-FROM dim.flight_media_details d
+FROM dim.flight_media_details_base_view d
 WHERE CURRENT_DATE () NOT BETWEEN d.begin_datetm
-    AND dateadd(d, 1, d.end_datetm)
+    AND TIMESTAMPADD(day, 1, d.end_datetm)
       ;;
   }
 

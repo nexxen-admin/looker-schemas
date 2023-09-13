@@ -1,8 +1,9 @@
 view: bt_cost_attributes_analytics {
+
     derived_table: {
       sql: SELECT * FROM RAWDB.DAILY_ANALYTICS_BT_COST_ATTRIBUTES
-           UNION ALL
-           SELECT * FROM RAWDB.HOURLY_ANALYTICS_BT_COST_ATTRIBUTES;;
+          UNION ALL
+          SELECT * FROM RAWDB.HOURLY_ANALYTICS_BT_COST_ATTRIBUTES;;
     }
   dimension: pk {
     type: string

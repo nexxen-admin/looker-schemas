@@ -30,3 +30,9 @@ explore: ifr_data_by_date{
    required_access_grants: [ifr_data]
   hidden: yes
 }
+
+explore: ifr_data_margin{
+  label: "IFR Data Margin"
+  required_access_grants: [ifr_data]
+  #hidden: yes
+}

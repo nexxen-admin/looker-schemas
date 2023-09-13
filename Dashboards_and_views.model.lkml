@@ -338,5 +338,5 @@ explore: publishers_bids_breakdown {
 
 explore: fact_supply_chain {
   label: "Supply Chain Report"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_all_tremor]
 }

@@ -25,10 +25,39 @@ view: fact_ad_bid_request_daily_agg {
 
   dimension: dynamic_pub_deal {
     type: string
-    sql: ${TABLE}.{% parameter publisher_or_deal %} ;;
-    #hidden: yes
+    sql: {% if publisher_or_deal._parameter_value == 'pub_id' %}
+      ${dim_publisher.pub_id}
+    {% elsif publisher_or_deal._parameter_value == 'deal_id' %}
+      ${dim_deal.deal_id}
+    {% else %}
+      null
+    {% endif %};;
+    hidden: yes
   }
 
+dimension: dynamic_pub_deal_name {
+  type: string
+  sql: {% if publisher_or_deal._parameter_value == 'pub_id' %}
+      ${dim_publisher.pub_name}
+    {% elsif publisher_or_deal._parameter_value == 'deal_id' %}
+      ${dim_deal.deal_name}
+    {% else %}
+      null
+    {% endif %};;
+    hidden: yes
+}
+
+  dimension: dynamic_pub_deal_name_opposite {
+    type: string
+    sql: {% if publisher_or_deal._parameter_value == 'pub_id' %}
+      ${dim_deal.deal_name}
+    {% elsif publisher_or_deal._parameter_value == 'deal_id' %}
+      ${dim_publisher.pub_name}
+    {% else %}
+      null
+    {% endif %};;
+    hidden: yes
+  }
 
   dimension: ad_size_height_key {
     type: number
@@ -292,14 +321,15 @@ view: fact_ad_bid_request_daily_agg {
 
   measure: sum_of_requests_from_ad_data {
     type: sum
+    label: "Bid Requests"
+    group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_requests_from_ad_data ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: sum_of_requests_from_bidrequest {
     type: sum
     sql: ${TABLE}.sum_of_requests_from_bidrequest ;;
-    label: "Bid Requests"
     hidden: yes
   }
 
@@ -319,6 +349,7 @@ view: fact_ad_bid_request_daily_agg {
     value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: (${responses}/NULLIF(${sum_of_requests_from_ad_data},0))*100 ;;
+    #hidden: yes
   }
 
   measure: revenue
@@ -738,6 +769,41 @@ view: fact_ad_bid_request_daily_agg {
       ;;
   }
 
+  measure: Change_Render_Rate_PMP_OPS{
+    type: number
+    group_label: "Time Shifted Measures"
+    label:  "Render Rate PMP OPS Change Last Day"
+    description: "Change in the render rate for PMP OPS from yesterday"
+    sql: ${Render_Rate_PMP_OPS_lastday_change_parameter};;
+    value_format: "0.00%"
+    html:
+
+      {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+      {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
   measure: Change_CTR{
     type: number
     group_label: "Time Shifted Measures"
@@ -875,6 +941,17 @@ view: fact_ad_bid_request_daily_agg {
     hidden: yes
   }
 
+  measure: Render_Rate_PMP_OPS_lastday_change_parameter {
+    type: number
+    sql: coalesce((${Last_day_Render_Rate_PMP_OPS}-${Previous_day_Render_Rate_PMP_OPS})/ NULLIF(${Previous_day_Render_Rate_PMP_OPS},0),0) ;;
+    value_format: "0.00%"
+    html:
+    <ul>
+      <li> value: {{ value }} </li>
+    </ul> ;;
+    hidden: yes
+  }
+
   measure:  Previous_day_impressions {
     label: "Impressions Previous day "
     type: sum
@@ -1001,6 +1078,16 @@ view: fact_ad_bid_request_daily_agg {
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
+  measure: Last_day_wins {
+    type: sum
+    description: "The wins of the last day"
+    label: "Wins Last day"
+    value_format: "#,##0"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_impression_win_from_ad_data ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
   measure: Last_day_VCR {
     type: number
     description: "The VCR of the last day"
@@ -1078,6 +1165,16 @@ view: fact_ad_bid_request_daily_agg {
     #value_format: "0.00%"
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.sum_of_video_completes_from_ad_data  ;;
+    filters: [date_key_date: "2 days ago"]
+  }
+
+  measure: previous_day_wins {
+    type: sum
+    label: "wins Previous day"
+    description: "The wins of 2 days ago"
+    #value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_impression_win_from_ad_data  ;;
     filters: [date_key_date: "2 days ago"]
   }
 
@@ -1219,7 +1316,26 @@ view: fact_ad_bid_request_daily_agg {
     group_label: "Time Shifted Measures"
     value_format: "0.00%"
     #filters: [date_key_date: "2 days ago"]
+  }
 
+  measure:  Last_day_Render_Rate_PMP_OPS {
+    label: "Render Rate Last day PMP OPS "
+    type: number
+    description: "The last day Render Rate for PMP OPS"
+    sql: ${Last_day_impressions}/NULLIF(${Last_day_wins},0) ;;
+    group_label: "Time Shifted Measures"
+    value_format: "0.00%"
+    #filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure:  Previous_day_Render_Rate_PMP_OPS{
+    label: "Render Rate Previous day PMP OPD "
+    type: number
+    description: "The Render Rate of 2 days ago for PMP OPS"
+    sql: ${Previous_day_impressions}/NULLIF(${previous_day_wins},0) ;;
+    group_label: "Time Shifted Measures"
+    value_format: "0.00%"
+    #filters: [date_key_date: "2 days ago"]
   }
 
   measure: render_rate_lastday_change {
@@ -1231,6 +1347,14 @@ view: fact_ad_bid_request_daily_agg {
     hidden: yes
   }
 
+  measure: render_rate_PMP_OPS_lastday_change {
+    type: number
+    description: "Change in Render Rate for PMP OPS from 2 days ago to yesterday"
+    value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: (${Last_day_Render_Rate_PMP_OPS}/coalesce(${Previous_day_Render_Rate_PMP_OPS},0))-1 ;;
+    hidden: yes
+  }
 
   parameter: choose_measure {
     type: unquoted

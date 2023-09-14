@@ -11,7 +11,7 @@ view: campaign_days {
         DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW fmd
           JOIN DIM.FLIGHT_DETAILS_VIEW fd
             ON fd.flight_id = fmd.flight_id
-          JOIN DEMAND_MART.LOAD_TRACKING lt
+          JOIN RAWDB.LOAD_TRACKING lt
             ON fmd.STARTTIMEZONE_ID = lt.START_TIMEZONE AND
                lt.SCHEMA_NAME = 'DEMAND_MART' AND
                lt.TABLE_NAME = 'DAILY_CORE_STATS'

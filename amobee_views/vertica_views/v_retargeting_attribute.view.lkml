@@ -1,5 +1,6 @@
 view: v_retargeting_attribute {
   sql_table_name: DIM.RETARGETING_ATTRIBUTE_DETAILS_VIEW ;;
+  view_label: "Retargeting Attribute"
   suggestions: no
 
 #Note DIM.RETARGETING_ATTRIBUTE_DETAILS is a custom view. Read definition in Snowflake.*

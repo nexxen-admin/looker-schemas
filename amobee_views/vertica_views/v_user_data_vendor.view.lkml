@@ -1,5 +1,6 @@
 view: v_user_data_vendor {
   sql_table_name: DIM.USER_DATA_VENDOR_VIEW ;;
+  view_label: "User Data Vendor"
 
   dimension: user_data_vendor_id {
     primary_key: yes

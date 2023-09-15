@@ -491,7 +491,7 @@ explore: v_daily_core_stats {
   join: v_daily_core_stats_yesterday {
     relationship: many_to_one
     sql_on: ${v_flight_media_details_base.flight_media_id} = ${v_daily_core_stats_yesterday.flight_media_id}
-      {% if v_placement_details_base._in_query %} AND PLACEMENT_DETAILS_BASE.placement_id = ${v_daily_core_stats_yesterday.placement_id} {% endif %} ;;
+      {% if v_placement_details_base._in_query %} AND v_placement_details_base.placement_id = ${v_daily_core_stats_yesterday.placement_id} {% endif %} ;;
   }
 
   join: v_insertion_order_demand_units_budget {

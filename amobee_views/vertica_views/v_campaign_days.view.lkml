@@ -11,20 +11,19 @@ view: v_campaign_days {
         DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW fmd
           JOIN DIM.FLIGHT_DETAILS_VIEW fd
             ON fd.flight_id = fmd.flight_id
-          JOIN RAWDB.LOAD_TRACKING lt
-            ON fmd.STARTTIMEZONE_ID = lt.START_TIMEZONE AND
-               lt.SCHEMA_NAME = 'DEMAND_MART' AND
-               lt.TABLE_NAME = 'DAILY_CORE_STATS'
+
+          JOIN (select START_TIMEZONE, max(LOAD_THROUGH_DATE) as LOAD_THROUGH_DATE
+                      from   RAWDB.LOAD_TRACKING
+                      where SCHEMA_NAME = 'DEMAND_MART' AND
+                            TABLE_NAME = 'DAILY_CORE_STATS'
+                      group by START_TIMEZONE) lt
+            ON fmd.STARTTIMEZONE_ID = lt.START_TIMEZONE
           JOIN
-          (
-            SELECT
-              TIMESTAMPADD(hour, ROW_NUMBER() OVER (ORDER BY cd.CAMPAIGN_ID) - 1, (SELECT DATE_TRUNC('HOUR', MIN(fd2.BEGIN_DATETIME_LOCAL)) FROM DIM.FLIGHT_DETAILS_VIEW fd2 WHERE fd2.FLIGHT_ACTIVE = 1)) AS TIME
-            FROM
-              DIM.CAMPAIGN_DETAILS_BASE_VIEW cd
-            ORDER BY
-              TIME
-            LIMIT
-              150000 -- Snowflake does not allow to specify limit as a query, 150000 should be enough
+          ( SELECT KEYDATE FROM DIM.HOUR_DIMENSION hd join (
+                    SELECT DATE_TRUNC('HOUR', MIN(BEGIN_DATETIME_LOCAL)) as min_time,
+                           MAX(END_DATETIME_LOCAL) as max_time
+                    FROM DIM.FLIGHT_DETAILS_VIEW) lm
+                ON hd.KEYDATE>=lm.min_time AND hd.KEYDATE<=lm.max_time
           ) td
             ON td.TIME >= DATE_TRUNC('HOUR', fd.BEGIN_DATETIME_LOCAL) AND
                td.TIME < fd.END_DATETIME_LOCAL

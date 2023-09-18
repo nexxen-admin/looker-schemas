@@ -1,5 +1,6 @@
 view: v_campaign_addon_product {
   sql_table_name: DIM.CAMPAIGN_ADDON_PRODUCT_VIEW ;;
+  label: "Campaign Addon Product"
 
   dimension: campaign_addon_id {
     type: number

@@ -440,7 +440,7 @@ explore: v_daily_core_stats {
 
   join: v_customer_details {
     relationship: many_to_one
-    sql: {% if v_customer_details.future_customers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.CUSTOMER_DETAILS_VIEW  AS customer_details ON ${v_campaign_details_base.customer_id} = ${v_customer_details.customer_id} ;;
+    sql: {% if v_customer_details.future_customers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.CUSTOMER_DETAILS_VIEW  AS v_customer_details ON ${v_campaign_details_base.customer_id} = ${v_customer_details.customer_id} ;;
   }
 
   join: v_customer_country {
@@ -450,7 +450,7 @@ explore: v_daily_core_stats {
 
   join: v_advertiser_brand_details {
     relationship: many_to_one
-    sql: {% if v_advertiser_brand_details.future_advertisers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.ADVERTISER_BRAND_DETAILS_VIEW  AS advertiser_brand_details ON ${v_campaign_details_base.advertiser_brand_id} = ${v_advertiser_brand_details.advertiser_brand_id} ;;
+    sql: {% if v_advertiser_brand_details.future_advertisers._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.ADVERTISER_BRAND_DETAILS_VIEW  AS v_advertiser_brand_details ON ${v_campaign_details_base.advertiser_brand_id} = ${v_advertiser_brand_details.advertiser_brand_id} ;;
   }
 
   join:  v_insertion_order_details {
@@ -515,7 +515,7 @@ explore: v_daily_core_stats {
   }
 
   join: v_campaign_product_exchange_rates {
-    from: hourly_exchange_rates
+    from: v_hourly_exchange_rates
     relationship: many_to_one
     fields: []
     sql_on: ${v_platform_client.default_currency_id} = ${v_campaign_product_exchange_rates.currency_id_to}

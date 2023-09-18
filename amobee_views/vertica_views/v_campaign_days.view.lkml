@@ -4,34 +4,34 @@ view: v_campaign_days {
     sql_trigger_value: select EXTRACT(HOUR FROM TIMESTAMPADD (mi, 5, GETDATE())) ;;
     sql:
       SELECT
-        fd.CAMPAIGN_ID,
-        COUNT(DISTINCT td.TIME) / 24 AS CAMPAIGN_TOTAL_DAYS,
-        COUNT(DISTINCT CASE WHEN td.TIME >= TIMESTAMPADD(DAY, 1, lt.LOAD_THROUGH_DATE) THEN td.TIME END) / 24 AS CAMPAIGN_REMAINING_DAYS
-      FROM
-        DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW fmd
-          JOIN DIM.FLIGHT_DETAILS_VIEW fd
-            ON fd.flight_id = fmd.flight_id
-
-          JOIN (select START_TIMEZONE, max(LOAD_THROUGH_DATE) as LOAD_THROUGH_DATE
+         fd.CAMPAIGN_ID,
+        COUNT(DISTINCT td.KEYDATE) / 24 AS CAMPAIGN_TOTAL_DAYS,
+        COUNT(DISTINCT CASE WHEN td.KEYDATE >= TIMESTAMPADD(DAY, 1, fmd.LOAD_THROUGH_DATE) THEN td.KEYDATE END) / 24 AS CAMPAIGN_REMAINING_DAYS
+      FROM DIM.FLIGHT_DETAILS_VIEW fd
+      JOIN (SELECT flight_id, LOAD_THROUGH_DATE
+            FROM DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW f
+                JOIN (select START_TIMEZONE, max(LOAD_THROUGH_DATE) as LOAD_THROUGH_DATE
                       from   RAWDB.LOAD_TRACKING
                       where SCHEMA_NAME = 'DEMAND_MART' AND
                             TABLE_NAME = 'DAILY_CORE_STATS'
                       group by START_TIMEZONE) lt
-            ON fmd.STARTTIMEZONE_ID = lt.START_TIMEZONE
+                ON f.STARTTIMEZONE_ID = lt.START_TIMEZONE) fmd
+            ON fd.flight_id = fmd.flight_id
           JOIN
-          ( SELECT KEYDATE FROM DIM.HOUR_DIMENSION hd join (
+            (SELECT KEYDATE FROM DIM.HOUR_DIMENSION hd join (
                     SELECT DATE_TRUNC('HOUR', MIN(BEGIN_DATETIME_LOCAL)) as min_time,
                            MAX(END_DATETIME_LOCAL) as max_time
                     FROM DIM.FLIGHT_DETAILS_VIEW) lm
                 ON hd.KEYDATE>=lm.min_time AND hd.KEYDATE<=lm.max_time
-          ) td
-            ON td.TIME >= DATE_TRUNC('HOUR', fd.BEGIN_DATETIME_LOCAL) AND
-               td.TIME < fd.END_DATETIME_LOCAL
+                )
+                td
+            ON td.KEYDATE >= DATE_TRUNC('HOUR', fd.BEGIN_DATETIME_LOCAL) AND
+               td.KEYDATE < fd.END_DATETIME_LOCAL
       WHERE
         fd.BEGIN_DATETIME_LOCAL < fd.END_DATETIME_LOCAL AND
         fd.FLIGHT_ACTIVE = 1
       GROUP BY
-        fd.CAMPAIGN_ID ;;
+        fd.CAMPAIGN_ID; ;;
   }
 
   dimension: campaign_id  {

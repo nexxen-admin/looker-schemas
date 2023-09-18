@@ -1,5 +1,13 @@
 view: v_load_tracking {
-  sql_table_name: RAWDB.LOAD_TRACKING ;;
+  derived_table:{
+    sql: select
+                        START_TIMEZONE,END_TIMEZONE,SCHEMA_NAME,TABLE_NAME ,max(LOAD_THROUGH_DATE) as LOAD_THROUGH_DATE
+                from   RAWDB.LOAD_TRACKING
+                where
+                          SCHEMA_NAME = 'RAWDB' AND
+                         TABLE_NAME = 'HOURLY_ANALYTICS'
+          group by START_TIMEZONE,END_TIMEZONE,SCHEMA_NAME,TABLE_NAME
+      ;;}
 
   dimension: end_timezone {
     type: number

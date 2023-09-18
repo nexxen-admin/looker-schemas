@@ -140,11 +140,13 @@ view: ifr_data_margin {
 
   measure: turn_fee {
     type: sum
+    label: "value"
     sql: ${TABLE}."turn_fee" ;;
   }
 
-  measure: total_billable {
-    type: sum
+  dimension: total_billable {
+    type: number
+    label: "hidden field"
     sql: ${TABLE}."total_billable" ;;
   }
 

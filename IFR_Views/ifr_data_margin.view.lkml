@@ -166,324 +166,324 @@ view: ifr_data_margin {
     ]
   }
 
-  filter: current_date_range {
-    type: date
-    view_label: "PoP"
-    label: "Current Date Range"
-    description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
-    sql: ${period} IS NOT NULL ;;
+  # filter: current_date_range {
+  #   type: date
+  #   view_label: "PoP"
+  #   label: "Current Date Range"
+  #   description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
+  #   sql: ${period} IS NOT NULL ;;
 
 
-  }
-  dimension:  date_for_html {
-    type: date
-    view_label: "PoP"
-    sql: ${current_date_range} ;;
-    html:
-    <ul>
-         <li> value: {{ rendered_value }} </li>
-    </ul> ;;
+  # }
+  # dimension:  date_for_html {
+  #   type: date
+  #   view_label: "PoP"
+  #   sql: ${current_date_range} ;;
+  #   html:
+  #   <ul>
+  #       <li> value: {{ rendered_value }} </li>
+  #   </ul> ;;
 
-  }
+  # }
 
-  parameter: compare_to {
-    view_label: "PoP"
-    description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
-    label: "Compare To:"
-    type: unquoted
+  # parameter: compare_to {
+  #   view_label: "PoP"
+  #   description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
+  #   label: "Compare To:"
+  #   type: unquoted
 
-    allowed_value: {
-      label: "Previous Month"
-      value: "Month"
-    }
+  #   allowed_value: {
+  #     label: "Previous Month"
+  #     value: "Month"
+  #   }
 
-    allowed_value: {
-      label: "Previous Year"
-      value: "Year"
-    }
+  #   allowed_value: {
+  #     label: "Previous Year"
+  #     value: "Year"
+  #   }
 
-    allowed_value: {
-      label: "Previous Week"
-      value: "Week"
-    }
-    default_value: "Period"
-  }
+  #   allowed_value: {
+  #     label: "Previous Week"
+  #     value: "Week"
+  #   }
+  #   default_value: "Period"
+  # }
 
-  parameter: choose_breakdown {
-    label: "Choose Grouping"
-    view_label: "PoP"
-    type: unquoted
-    default_value: "day_of_month"
-    allowed_value: {label:"daily" value:"day_of_month"}
-    allowed_value: {label:"monthly" value: "month_name"}
-  }
+  # parameter: choose_breakdown {
+  #   label: "Choose Grouping"
+  #   view_label: "PoP"
+  #   type: unquoted
+  #   default_value: "day_of_month"
+  #   allowed_value: {label:"daily" value:"day_of_month"}
+  #   allowed_value: {label:"monthly" value: "month_name"}
+  # }
 
-  dimension: sort_by1 {
-    hidden: yes
-    type: number
-    sql:
-        {% if choose_breakdown._parameter_value == 'month_name' %} ${date_in_period_month_num}
-        {% elsif choose_breakdown._parameter_value == 'day_of_month' %} ${date_in_period_day_of_month}
-        {% elsif choose_breakdown._parameter_value == 'year' %} ${date_in_period_year}}
-        {% elsif choose_breakdown._parameter_value == 'quarter' %} ${date_in_period_quarter}
-        {% else %}NULL{% endif %} ;;
-  }
-  dimension: sort_by2 {
-    hidden: yes
-    type: string
-    sql:
-        {% if choose_comparison._parameter_value == 'year' %} ${date_in_period_year}
-        {% elsif choose_comparison._parameter_value =='month' %} ${date_in_period_month_num}
-        {% else %}NULL{% endif %} ;;
-  }
-  parameter: choose_comparison {
-    label: "Choose Comparison (Pivot)"
-    view_label: "PoP"
-    description: "Defines whether the comparison will be monthly or yearly"
-    type: unquoted
-    default_value: "month"
-    allowed_value: {value: "year" }
-    allowed_value: {value: "month"}
+  # dimension: sort_by1 {
+  #   hidden: yes
+  #   type: number
+  #   sql:
+  #       {% if choose_breakdown._parameter_value == 'month_name' %} ${date_in_period_month_num}
+  #       {% elsif choose_breakdown._parameter_value == 'day_of_month' %} ${date_in_period_day_of_month}
+  #       {% elsif choose_breakdown._parameter_value == 'year' %} ${date_in_period_year}}
+  #       {% elsif choose_breakdown._parameter_value == 'quarter' %} ${date_in_period_quarter}
+  #       {% else %}NULL{% endif %} ;;
+  # }
+  # dimension: sort_by2 {
+  #   hidden: yes
+  #   type: string
+  #   sql:
+  #       {% if choose_comparison._parameter_value == 'year' %} ${date_in_period_year}
+  #       {% elsif choose_comparison._parameter_value =='month' %} ${date_in_period_month_num}
+  #       {% else %}NULL{% endif %} ;;
+  # }
+  # parameter: choose_comparison {
+  #   label: "Choose Comparison (Pivot)"
+  #   view_label: "PoP"
+  #   description: "Defines whether the comparison will be monthly or yearly"
+  #   type: unquoted
+  #   default_value: "month"
+  #   allowed_value: {value: "year" }
+  #   allowed_value: {value: "month"}
 
-  }
-  dimension: pop_pivot {
-    view_label: "PoP"
-    description: "Takes the 'choose comparison' parameter and adds a suitable parameter to it"
-    label_from_parameter: choose_comparison
-    type: string
-    order_by_field: sort_by2 # Important
-    sql:
-        {% if choose_comparison._parameter_value == 'year' %} ${date_in_period_year}
-        {% elsif choose_comparison._parameter_value =='month' %} ${date_in_period_month}
-        {% else %}NULL{% endif %} ;;
-  }
+  # }
+  # dimension: pop_pivot {
+  #   view_label: "PoP"
+  #   description: "Takes the 'choose comparison' parameter and adds a suitable parameter to it"
+  #   label_from_parameter: choose_comparison
+  #   type: string
+  #   order_by_field: sort_by2 # Important
+  #   sql:
+  #       {% if choose_comparison._parameter_value == 'year' %} ${date_in_period_year}
+  #       {% elsif choose_comparison._parameter_value =='month' %} ${date_in_period_month}
+  #       {% else %}NULL{% endif %} ;;
+  # }
 
-  dimension: pop_row  {
-    view_label: "PoP"
-    label_from_parameter: choose_breakdown
-    type: string
-    order_by_field: sort_by1 # Important
-    sql:
-        {% if choose_breakdown._parameter_value == 'day_of_month' %} ${date_in_period_day_of_month}
-        {% elsif choose_breakdown._parameter_value == 'month_name' %} ${date_in_period_month_name}
-        {% else %}'2022-01-01'{% endif %} ;;
-  }
+  # dimension: pop_row  {
+  #   view_label: "PoP"
+  #   label_from_parameter: choose_breakdown
+  #   type: string
+  #   order_by_field: sort_by1 # Important
+  #   sql:
+  #       {% if choose_breakdown._parameter_value == 'day_of_month' %} ${date_in_period_day_of_month}
+  #       {% elsif choose_breakdown._parameter_value == 'month_name' %} ${date_in_period_month_name}
+  #       {% else %}'2022-01-01'{% endif %} ;;
+  # }
 
-  dimension: days_in_period {
-    hidden:  yes
-    view_label: "PoP"
-    description: "Gives the number of days in the current period date range"
-    type: number
-    sql: TIMESTAMPDIFF(DAY, CAST({% date_start current_date_range %} AS TIMESTAMP), CAST({% date_end current_date_range %} AS TIMESTAMP)) ;;
-  }
+  # dimension: days_in_period {
+  #   hidden:  yes
+  #   view_label: "PoP"
+  #   description: "Gives the number of days in the current period date range"
+  #   type: number
+  #   sql: TIMESTAMPDIFF(DAY, CAST({% date_start current_date_range %} AS TIMESTAMP), CAST({% date_end current_date_range %} AS TIMESTAMP)) ;;
+  # }
 
-  dimension: period_2_start {
-    hidden:  yes
-    view_label: "PoP"
-    description: "Calculates the start of the previous period"
-    type: date
-    sql:
-            {% if compare_to._parameter_value == "Period" %}
-           -- TIMESTAMPADD({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
-            date_trunc(DAY, -${days_in_period}, CAST({% date_start current_date_range %} AS TIMESTAMP) - INTERVAL '${days_in_period} days')
-            {% else %}
-            date_trunc({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP)- INTERVAL '1 day')
-            {% endif %};;
-  }
+  # dimension: period_2_start {
+  #   hidden:  yes
+  #   view_label: "PoP"
+  #   description: "Calculates the start of the previous period"
+  #   type: date
+  #   sql:
+  #           {% if compare_to._parameter_value == "Period" %}
+  #         -- TIMESTAMPADD({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
+  #           TIMESTAMPADD(DAY, -${days_in_period}, CAST({% date_start current_date_range %} AS TIMESTAMP))
+  #           {% else %}
+  #           TIMESTAMPADD({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
+  #           {% endif %};;
+  # }
 
-  dimension: period_2_end {
-    hidden:  yes
-    view_label: "PoP"
-    description: "Calculates the end of the previous period"
-    type: date
-    sql:
-            {% if compare_to._parameter_value == "Period" %}
-            TIMESTAMPADD(DAY, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
-            {% else %}
-            TIMESTAMPADD({% parameter compare_to %}, -1, TIMESTAMPADD(DAY, -1, CAST({% date_end current_date_range %} AS TIMESTAMP)))
-            {% endif %};;
-  }
+  # dimension: period_2_end {
+  #   hidden:  yes
+  #   view_label: "PoP"
+  #   description: "Calculates the end of the previous period"
+  #   type: date
+  #   sql:
+  #           {% if compare_to._parameter_value == "Period" %}
+  #           TIMESTAMPADD(DAY, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
+  #           {% else %}
+  #           TIMESTAMPADD({% parameter compare_to %}, -1, TIMESTAMPADD(DAY, -1, CAST({% date_end current_date_range %} AS TIMESTAMP)))
+  #           {% endif %};;
+  # }
 
-  dimension: day_in_period {
-    hidden: yes
-    description: "Gives the number of days since the start of each period. Use this to align the event dates onto the same axis, the axes will read 1,2,3, etc."
-    type: number
-    sql:
-        {% if current_date_range._is_filtered %}
-            CASE
-            WHEN {% condition current_date_range %} ${impression_date_raw} {% endcondition %}
-            THEN TIMESTAMPDIFF(DAY, CAST({% date_start current_date_range %} AS TIMESTAMP), ${impression_date_raw}) + 1
-            WHEN ${impression_date_raw} between ${period_2_start} and ${period_2_end}
-            THEN TIMESTAMPDIFF(DAY, ${period_2_start}, ${impression_date_raw}) + 1
-            END
-        {% else %} NULL
-        {% endif %}
-        ;;
-  }
+  # dimension: day_in_period {
+  #   hidden: yes
+  #   description: "Gives the number of days since the start of each period. Use this to align the event dates onto the same axis, the axes will read 1,2,3, etc."
+  #   type: number
+  #   sql:
+  #       {% if current_date_range._is_filtered %}
+  #           CASE
+  #           WHEN {% condition current_date_range %} ${impression_date_raw} {% endcondition %}
+  #           THEN TIMESTAMPDIFF(DAY, CAST({% date_start current_date_range %} AS TIMESTAMP), ${impression_date_raw}) + 1
+  #           WHEN ${impression_date_raw} between ${period_2_start} and ${period_2_end}
+  #           THEN TIMESTAMPDIFF(DAY, ${period_2_start}, ${impression_date_raw}) + 1
+  #           END
+  #       {% else %} NULL
+  #       {% endif %}
+  #       ;;
+  # }
 
-  dimension: mtd_only {
-    group_label: "To-Date Filters"
-    label: "MTD"
-    view_label: "PoP"
-    type: yesno
-    sql:  (EXTRACT(DAY FROM ${date_in_period_date}) < EXTRACT(DAY FROM GETDATE())
-                    OR
-                (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
-                EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
-                    OR
-                (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
-                EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
-                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
-  }
+  # dimension: mtd_only {
+  #   group_label: "To-Date Filters"
+  #   label: "MTD"
+  #   view_label: "PoP"
+  #   type: yesno
+  #   sql:  (EXTRACT(DAY FROM ${date_in_period_date}) < EXTRACT(DAY FROM GETDATE())
+  #                   OR
+  #               (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
+  #               EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
+  #                   OR
+  #               (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
+  #               EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
+  #               EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
+  # }
 
-  dimension: qtd_only {
-    group_label: "To-Date Filters"
-    label: "QTD"
-    view_label: "PoP"
-    type: yesno
-    sql: ${date_in_period_date} > TO_DATE(DATE_TRUNC('quarter', CURRENT_DATE())) AND ${date_in_period_date} <
-      (TO_DATE(DATEADD('month', 3, CAST(DATE_TRUNC('quarter', CAST(DATE_TRUNC('quarter', CURRENT_DATE()) AS DATE)) AS DATE)))) ;;
-  }
+  # dimension: qtd_only {
+  #   group_label: "To-Date Filters"
+  #   label: "QTD"
+  #   view_label: "PoP"
+  #   type: yesno
+  #   sql: ${date_in_period_date} > TO_DATE(DATE_TRUNC('quarter', CURRENT_DATE())) AND ${date_in_period_date} <
+  #     (TO_DATE(DATEADD('month', 3, CAST(DATE_TRUNC('quarter', CAST(DATE_TRUNC('quarter', CURRENT_DATE()) AS DATE)) AS DATE)))) ;;
+  # }
 
-  dimension: ytd_only {
-    group_label: "To-Date Filters"
-    label: "YTD"
-    view_label: "PoP"
-    type: yesno
-    sql:  (EXTRACT(DOY FROM ${date_in_period_date}) < EXTRACT(DOY FROM GETDATE())
-                    OR
-                (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
-                EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
-                    OR
-                (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
-                EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
-                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
-  }
+  # dimension: ytd_only {
+  #   group_label: "To-Date Filters"
+  #   label: "YTD"
+  #   view_label: "PoP"
+  #   type: yesno
+  #   sql:  (EXTRACT(DOY FROM ${date_in_period_date}) < EXTRACT(DOY FROM GETDATE())
+  #                   OR
+  #               (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
+  #               EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
+  #                   OR
+  #               (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
+  #               EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
+  #               EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
+  # }
 
-  dimension: order_for_period {
-    hidden: yes
-    type: number
-    sql:
-            {% if current_date_range._is_filtered %}
-                CASE
-                WHEN {% condition current_date_range %} ${impression_date_raw} {% endcondition %}
-                THEN 1
-                WHEN ${impression_date_raw} between ${period_2_start} and ${period_2_end}
-                THEN 2
-                END
-            {% else %}
-                NULL
-            {% endif %}
-            ;;
-  }
+  # dimension: order_for_period {
+  #   hidden: yes
+  #   type: number
+  #   sql:
+  #           {% if current_date_range._is_filtered %}
+  #               CASE
+  #               WHEN {% condition current_date_range %} ${impression_date_raw} {% endcondition %}
+  #               THEN 1
+  #               WHEN ${impression_date_raw} between ${period_2_start} and ${period_2_end}
+  #               THEN 2
+  #               END
+  #           {% else %}
+  #               NULL
+  #           {% endif %}
+  #           ;;
+  # }
 
-  ## ------- HIDING FIELDS  FROM ORIGINAL VIEW FILE  -------- ##
-
-
-  dimension: wtd_only {hidden:yes}
+  # ## ------- HIDING FIELDS  FROM ORIGINAL VIEW FILE  -------- ##
 
 
-  ## ------------------ DIMENSIONS TO PLOT ------------------ ##
-
-  dimension_group: date_in_period {
-    description: "Use this as your grouping dimension when comparing periods. Aligns the previous periods onto the current period"
-    label: "Current Period"
-    type: time
-    sql: TIMESTAMPADD(DAY, ${day_in_period} - 1, CAST({% date_start current_date_range %} AS TIMESTAMP)) ;;
-    view_label: "PoP"
-    timeframes: [
-      date,
-      hour_of_day,
-      day_of_week,
-      day_of_week_index,
-      day_of_month,
-      day_of_year,
-      week_of_year,
-      week,
-      month,
-      quarter,
-      month_name,
-      month_num,
-      year]
-
-  }
+  # dimension: wtd_only {hidden:yes}
 
 
-  dimension: period {
-    view_label: "PoP"
-    label: "Period"
-    description: "Pivot me! Returns the period the metric covers, i.e. either the 'This Period' or 'Previous Period'"
-    type: string
-    hidden: yes
-    order_by_field: order_for_period
-    sql:
-            {% if current_date_range._is_filtered %}
-                CASE
-                WHEN {% condition current_date_range %} ${impression_date_raw} {% endcondition %}
-                THEN 'This {% parameter compare_to %}'
-                WHEN ${impression_date_raw} between ${period_2_start} and ${period_2_end}
-                THEN 'Last {% parameter compare_to %}'
-                END
-            {% else %}
-                NULL
-            {% endif %}
-            ;;
-  }
+  # ## ------------------ DIMENSIONS TO PLOT ------------------ ##
+
+  # dimension_group: date_in_period {
+  #   description: "Use this as your grouping dimension when comparing periods. Aligns the previous periods onto the current period"
+  #   label: "Current Period"
+  #   type: time
+  #   sql: TIMESTAMPADD(DAY, ${day_in_period} - 1, CAST({% date_start current_date_range %} AS TIMESTAMP)) ;;
+  #   view_label: "PoP"
+  #   timeframes: [
+  #     date,
+  #     hour_of_day,
+  #     day_of_week,
+  #     day_of_week_index,
+  #     day_of_month,
+  #     day_of_year,
+  #     week_of_year,
+  #     week,
+  #     month,
+  #     quarter,
+  #     month_name,
+  #     month_num,
+  #     year]
+
+  # }
 
 
-  ## ---------------------- TO CREATE FILTERED MEASURES ---------------------------- ##
+  # dimension: period {
+  #   view_label: "PoP"
+  #   label: "Period"
+  #   description: "Pivot me! Returns the period the metric covers, i.e. either the 'This Period' or 'Previous Period'"
+  #   type: string
+  #   hidden: yes
+  #   order_by_field: order_for_period
+  #   sql:
+  #           {% if current_date_range._is_filtered %}
+  #               CASE
+  #               WHEN {% condition current_date_range %} ${impression_date_raw} {% endcondition %}
+  #               THEN 'This {% parameter compare_to %}'
+  #               WHEN ${impression_date_raw} between ${period_2_start} and ${period_2_end}
+  #               THEN 'Last {% parameter compare_to %}'
+  #               END
+  #           {% else %}
+  #               NULL
+  #           {% endif %}
+  #           ;;
+  # }
 
-  dimension: period_filtered_measures {
-    hidden: yes
-    description: "We are just using this for the filtered measures"
-    type: string
-    sql:
-            {% if current_date_range._is_filtered %}
-                CASE
-                WHEN {% condition current_date_range %} ${impression_date_raw} {% endcondition %} THEN 'this'
-                WHEN ${impression_date_raw} between ${period_2_start} and ${period_2_end} THEN 'last' END
-            {% else %} NULL {% endif %} ;;
-  }
 
-  # Filtered measures
+  # ## ---------------------- TO CREATE FILTERED MEASURES ---------------------------- ##
 
-  measure: current_period_turn_fee {
-    view_label: "PoP"
-    label: "Current Period turn fee  {{_filters['current_date_range']}} "
-    type: sum
-    description: "Specifies the turn of the current period we are looking at, using the filter 'current date range' which has to be applied"
-    sql: ${TABLE}."turn_fee" ;;
-    value_format: "$#,##0"
-    filters: [period_filtered_measures: "this"]
-  }
+  # dimension: period_filtered_measures {
+  #   hidden: yes
+  #   description: "We are just using this for the filtered measures"
+  #   type: string
+  #   sql:
+  #           {% if current_date_range._is_filtered %}
+  #               CASE
+  #               WHEN {% condition current_date_range %} ${impression_date_raw} {% endcondition %} THEN 'this'
+  #               WHEN ${impression_date_raw} between ${period_2_start} and ${period_2_end} THEN 'last' END
+  #           {% else %} NULL {% endif %} ;;
+  # }
 
-  measure: current_period_total_billable {
-    view_label: "PoP"
-    label: "Current Period total billable  {{_filters['current_date_range']}} "
-    type: sum
-    description: "Specifies the % of the net revenue out of the revenue of the current period we are looking at, using the filter 'current date range' which has to be applied"
-    sql: ${TABLE}."total_billable";;
-    value_format: "$#,##0"
-    filters: [period_filtered_measures: "this"]
-  }
+  # # Filtered measures
 
-  measure: previous_period_turn_fee{
-    view_label: "PoP"
-    description: "Specifies the turn fee of the previous period"
-    type: sum
-    sql: ${TABLE}."turn_fee" ;;
-    value_format: "$#,##0"
-    filters: [period_filtered_measures: "last"]
-  }
+  # measure: current_period_turn_fee {
+  #   view_label: "PoP"
+  #   label: "Current Period turn fee  {{_filters['current_date_range']}} "
+  #   type: sum
+  #   description: "Specifies the turn of the current period we are looking at, using the filter 'current date range' which has to be applied"
+  #   sql: ${TABLE}."turn_fee" ;;
+  #   value_format: "$#,##0"
+  #   filters: [period_filtered_measures: "this"]
+  # }
 
-  measure: previous_period_total_billable{
-    view_label: "PoP"
-    description: "Specifies the total billable of the previous period"
-    type: sum
-    sql: ${TABLE}."turn_fee" ;;
-    value_format: "$#,##0"
-    filters: [period_filtered_measures: "last"]
-  }
+  # measure: current_period_total_billable {
+  #   view_label: "PoP"
+  #   label: "Current Period total billable  {{_filters['current_date_range']}} "
+  #   type: sum
+  #   description: "Specifies the % of the net revenue out of the revenue of the current period we are looking at, using the filter 'current date range' which has to be applied"
+  #   sql: ${TABLE}."total_billable";;
+  #   value_format: "$#,##0"
+  #   filters: [period_filtered_measures: "this"]
+  # }
+
+  # measure: previous_period_turn_fee{
+  #   view_label: "PoP"
+  #   description: "Specifies the turn fee of the previous period"
+  #   type: sum
+  #   sql: ${TABLE}."turn_fee" ;;
+  #   value_format: "$#,##0"
+  #   filters: [period_filtered_measures: "last"]
+  # }
+
+  # measure: previous_period_total_billable{
+  #   view_label: "PoP"
+  #   description: "Specifies the total billable of the previous period"
+  #   type: sum
+  #   sql: ${TABLE}."turn_fee" ;;
+  #   value_format: "$#,##0"
+  #   filters: [period_filtered_measures: "last"]
+  # }
 
   # measure: current_period_cost {
   #   view_label: "PoP"

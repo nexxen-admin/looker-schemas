@@ -1,7 +1,7 @@
 connection: "amobee_prod"
 label: "Delivery"
 # include all the views
-include: "/**/*.view.lkml"
+include: "/**/vertica_views/*.view.lkml"
 case_sensitive: no
 
 # include all the dashboards

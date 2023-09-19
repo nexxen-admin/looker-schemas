@@ -2,7 +2,7 @@ connection: "amobee_prod"
 label: "Reference"
 case_sensitive: no
 
-include: "/**/*.view.lkml"
+include: "/**/vertica_views/*.view.lkml"
 #include: "*.dashboard.lookml"  # include all dashboards in this project
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }

@@ -1,7 +1,7 @@
 view: v_campaign_days {
   label: "Campaign"
   derived_table: {
-    # sql_trigger_value: select EXTRACT(HOUR FROM TIMESTAMPADD (mi, 5, GETDATE())) ;;
+    sql_trigger_value: select EXTRACT(HOUR FROM TIMESTAMPADD (mi, 5, GETDATE())) ;;
     sql:
       SELECT
          fd.CAMPAIGN_ID,

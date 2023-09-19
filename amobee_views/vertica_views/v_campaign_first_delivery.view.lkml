@@ -1,6 +1,6 @@
 view: v_campaign_first_delivery {
   derived_table: {
-    # sql_trigger_value: select  EXTRACT(HOUR FROM TIMESTAMPADD (mi, 5, GETDATE()))  ;;
+    sql_trigger_value: select  EXTRACT(HOUR FROM TIMESTAMPADD (mi, 5, GETDATE()))  ;;
     sql: SELECT campaign_id,first_delivery_date,last_delivery_date FROM(
            SELECT
               cd.campaign_id,

@@ -348,7 +348,7 @@ dimension: dynamic_pub_deal_name {
     description: "responses/requests"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: (${responses}/NULLIF(${sum_of_requests_from_ad_data},0))*100 ;;
+    sql: (${responses}/NULLIF(${sum_of_dsp_requests_from_bidrequest},0))*100 ;;
     #hidden: yes
   }
 

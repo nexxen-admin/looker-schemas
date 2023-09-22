@@ -876,7 +876,7 @@ view: v_daily_core_stats {
     ]
     convert_tz: no
     description: "The date/time of the impression in demand timezone"
-    sql: {% if _explore._name == "demand_metrics" and (mediaplanner_allocation_view._in_query or daily_ccp_metrics._in_query) %}COALESCE(${TABLE}.DEMAND_DATE{% if mediaplanner_allocation_view._in_query %}, mediaplanner_allocation_view.ALLOCATION_DATE{% endif %}{% if daily_ccp_metrics._in_query %}, daily_ccp_metrics.KEYDATE{% endif %}){% else %}${TABLE}.DEMAND_DATE{% endif %} ;;
+    sql: {% if _explore._name == "v_demand_metrics" and (v_mediaplanner_allocation_view._in_query or v_daily_ccp_metrics._in_query) %}COALESCE(${TABLE}.DEMAND_DATE{% if v_mediaplanner_allocation_view._in_query %}, v_mediaplanner_allocation_view.ALLOCATION_DATE{% endif %}{% if v_daily_ccp_metrics._in_query %}, v_daily_ccp_metrics.KEYDATE{% endif %}){% else %}${TABLE}.DEMAND_DATE{% endif %} ;;
   }
 
   dimension_group: local_demand {
@@ -894,7 +894,7 @@ view: v_daily_core_stats {
     ]
     convert_tz: no
     description: "The date/time of the impression in demand timezone in accordance with season clock shift"
-    sql: {% if _explore._name == "demand_metrics" and (mediaplanner_allocation_view._in_query or daily_ccp_metrics._in_query) %}COALESCE(${TABLE}.LOCAL_DEMAND_DATE{% if mediaplanner_allocation_view._in_query %}, mediaplanner_allocation_view.ALLOCATION_DATE{% endif %}{% if daily_ccp_metrics._in_query %}, daily_ccp_metrics.KEYDATE{% endif %}){% else %}${TABLE}.LOCAL_DEMAND_DATE{% endif %} ;;
+    sql: {% if _explore._name == "v_demand_metrics" and (v_mediaplanner_allocation_view._in_query or v_daily_ccp_metrics._in_query) %}COALESCE(${TABLE}.LOCAL_DEMAND_DATE{% if v_mediaplanner_allocation_view._in_query %}, v_mediaplanner_allocation_view.ALLOCATION_DATE{% endif %}{% if v_daily_ccp_metrics._in_query %}, v_daily_ccp_metrics.KEYDATE{% endif %}){% else %}${TABLE}.LOCAL_DEMAND_DATE{% endif %} ;;
   }
 
   dimension_group: region {

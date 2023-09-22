@@ -65,6 +65,12 @@ view: unruly_player_demands {
     sql: ${TABLE}.buying_channel ;;
   }
 
+  dimension: external_publisher_id {
+    type: string
+    label: "External Pub ID"
+    sql: ${TABLE}.external_publisher_id ;;
+  }
+
   #dimension: ts_display_name {
    # label: "Traffic Source"
     #type: string

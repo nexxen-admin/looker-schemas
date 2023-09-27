@@ -154,7 +154,7 @@ view: v_campaign_details_base {
     type: string
     label: "Campaign Name"
     sql: ${TABLE}.CAMPAIGN_NAME ;;
-    drill_fields: [flight_details.flight_description, flight_media_details_base.media_name, flight_media_details_base.flight_media_id]
+    drill_fields: [v_flight_details.flight_description, v_flight_media_details_base.media_name, v_flight_media_details_base.flight_media_id]
     suggest_explore: suggest_demand_ref
     suggest_dimension: suggest_demand_ref.campaign_name
 

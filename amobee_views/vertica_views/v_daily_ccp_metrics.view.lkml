@@ -151,7 +151,7 @@ view: v_daily_ccp_metrics {
     label: "Daily CCP Audit Yesterday"
     description: "Number of units to deliver by day to ensure complete delivery by the end of the flight / campaign, etc. Only use UTC Date dimension when displaying data by date."
     value_format_name: decimal_0
-    sql: case when ${keydate_raw} = case when ${v_demand_mart_load_tracking_start_timezone.utc_offset} > 0 then dateadd(d, -1, ${v_demand_mart_load_tracking.load_through_date}) else ${v_demand_mart_load_tracking.load_through_date} end then ${daily_ccp_eoc_audit} else 0 end ;;
+    sql: case when ${keydate_raw} = case when ${v_demand_mart_load_tracking_start_timezone.utc_offset} > 0 then TIMESTAMPADD(day, -1, ${v_demand_mart_load_tracking.load_through_date}) else ${v_demand_mart_load_tracking.load_through_date} end then ${daily_ccp_eoc_audit} else 0 end ;;
   }
 
   measure: daily_ccp_eoc_audit_diff_yesterday_gmt {

@@ -63,7 +63,7 @@ view: v_bt_cost_attributes {
     view_label: "Supplemental Facets"
     hidden: yes
     description: "The Data Provider used in creating the BT data"
-    sql: case when {{_explore._name}}.demand_date >= '2022-03-09' then ${TABLE}.bt_provider_id else {% if _explore._name == 'raw_impression' %} bt_providerid {% elsif  _explore._name == 'hourly_analytics' or _explore._name == 'hourly_analytics_wopr_only' %} bt_provider {% endif %} end ;;
+    sql: case when {{_explore._name}}.demand_date >= '2022-03-09' then ${TABLE}.bt_provider_id else {% if _explore._name == 'v_raw_impression' %} bt_providerid {% elsif  _explore._name == 'v_hourly_analytics' or _explore._name == 'v_hourly_analytics_wopr_only' %} bt_provider {% endif %} end ;;
     value_format_name: id
   }
 

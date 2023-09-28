@@ -35,7 +35,7 @@ view: v_daily_core_stats_yesterday_demand {
   JOIN (
     SELECT max(load_through_date) AS yesterday
       ,start_timezone
-    FROM demand_mart.load_tracking
+    FROM RAWDB.load_tracking
     WHERE schema_name = 'DEMAND_MART'
       AND table_name = 'DAILY_CORE_STATS'
     GROUP BY start_timezone

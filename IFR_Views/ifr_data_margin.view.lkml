@@ -138,16 +138,27 @@ view: ifr_data_margin {
     sql: ${TABLE}."product" ;;
   }
 
+  measure: impressions {
+    type: sum
+    sql: ${TABLE}.impressions ;;
+  }
+
   measure: turn_fee {
     type: sum
     label: "value"
-    sql: ${TABLE}."turn_fee" ;;
+    sql: ${TABLE}.value ;;
   }
+
+  dimension: product_type_id {
+    type: number
+    sql: ${TABLE}.product_type_id ;;
+  }
+
 
   dimension: total_billable {
     type: number
     label: "hidden field"
-    sql: ${TABLE}."total_billable" ;;
+    sql: ${TABLE}.hidden_field ;;
   }
 
   #   measure: data_margin_tmp {

@@ -159,7 +159,7 @@ view: v_insertion_order_details {
     type: date
     label: "IO End Date"
     description: "The end date of the Insertion Order"
-    sql: TIMESTAMPADD(m, -1, ${TABLE}.IO_END_DATE) ;;
+    sql: TIMESTAMPADD(minute, -1, ${TABLE}.IO_END_DATE) ;;
   }
 
   dimension: dst_io_end_date {
@@ -167,7 +167,7 @@ view: v_insertion_order_details {
     label: "[DST] IO Local End Date"
     description: "The end date of the Insertion Order in local time accounting DST"
     sql: case when ${v_platform_client.use_daylight_saving} then TIMESTAMPADD(minute, -1, ${TABLE}.IO_END_DATE) AT TIME ZONE 'UTC' AT TIME ZONE ${v_timezone.timezone_name}
-      else TIMESTAMPADD(m, -1, ${TABLE}.IO_END_DATE) end ;;
+      else TIMESTAMPADD(minute, -1, ${TABLE}.IO_END_DATE) end ;;
   }
 
   dimension: io_impressions {

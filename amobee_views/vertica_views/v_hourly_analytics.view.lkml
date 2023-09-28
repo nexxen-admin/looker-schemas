@@ -1,6 +1,37 @@
 view: v_hourly_analytics {
   label: "Request and Impression Metrics"
-  sql_table_name: RAWDB.analytics_view ;;
+
+  derived_table: {
+    sql: SELECT * FROM RAWDB.analytics_view
+          WHERE
+
+          {% if demand_date_date._is_filtered %}
+            PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start demand_date_date %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end demand_date_date %}), 'YYYYMMDDHH')::Integer AND
+          {% endif %}
+          {% if demand_date_hour._is_filtered %}
+            PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
+          {% endif %}
+          {% if demand_date_month._is_filtered %}
+            PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start demand_date_month %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end demand_date_month %}), 'YYYYMMDDHH')::Integer AND
+          {% endif %}
+          {% if demand_date_time._is_filtered %}
+            PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start demand_date_time %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end demand_date_time %}), 'YYYYMMDDHH')::Integer AND
+          {% endif %}
+          {% if demand_date_year._is_filtered %}
+            PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start demand_date_year %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end demand_date_year %}), 'YYYYMMDDHH')::Integer AND
+          {% endif %}
+          {% if raw_demand_date._is_filtered %}
+            PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start raw_demand_date %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end raw_demand_date %}), 'YYYYMMDDHH')::Integer AND
+          {% endif %}
+
+          1=1 ;;
+  }
   suggestions: no
 
   dimension: ad_buyer_id {
@@ -45,6 +76,12 @@ view: v_hourly_analytics {
     view_label: "Supplemental Facets"
     sql: public.f_awsregion(${TABLE}.AWS_REGION) ;;
     suggestable: no
+  }
+
+  dimension: source {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.SOURCE ;;
   }
 
   dimension: addon_product_cost {
@@ -3298,7 +3335,7 @@ view: v_hourly_analytics {
           ${total_addon_product_cost} +
           ${sum_demand_adserving_cost} +
           ${sum_demand_bt_cluster_cost} +
-          ${v_bt_cost_attributes_analytics.sum_demand_bt_provider_cost} +
+          ${v_bt_cost_attributes_hourly_analytics.sum_demand_bt_provider_cost} +
           ${sum_demo_provider_data_cost} +
           ${sum_demand_tracking_cost} ;;
   }

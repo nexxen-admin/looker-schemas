@@ -26,10 +26,10 @@ explore: v_hourly_analytics {
     -v_flight_media_details_base.demoaud, -v_hourly_analytics.sum_unserved_requests,
     -v_advertiser_brand_details.future_advertisers, -v_customer_details.future_customers]
 
-  join: v_bt_cost_attributes_analytics {
+  join: v_bt_cost_attributes_hourly_analytics {
     view_label: "Request and Impression Metrics"
     relationship: one_to_many
-    sql_on: ${v_bt_cost_attributes_analytics.bt_id} = ${v_hourly_analytics.bt_id};;
+    sql_on: ${v_bt_cost_attributes_hourly_analytics.pk_id} = ${v_hourly_analytics.pk_id} and ${v_hourly_analytics.source} = ${v_bt_cost_attributes_hourly_analytics.source};;
   }
 
   join: v_load_tracking {
@@ -100,7 +100,7 @@ explore: v_hourly_analytics {
 
   join: v_bt_data_provider_core {
     relationship: many_to_one
-    sql_on: ${v_bt_cost_attributes_analytics.bt_provider} = ${v_bt_data_provider_core.user_data_vendor_id} ;;
+    sql_on: ${v_bt_cost_attributes_hourly_analytics.bt_provider} = ${v_bt_data_provider_core.user_data_vendor_id}  ;;
   }
 
   join: v_bt_cluster_provider_core {
@@ -138,7 +138,7 @@ explore: v_hourly_analytics {
 
   join: v_retargeting_attribute {
     relationship: many_to_one
-    sql_on: ${v_bt_cost_attributes_analytics.bt_cost_attribute} = ${v_retargeting_attribute.retargeting_attribute_id} ;;
+    sql_on: ${v_bt_cost_attributes_hourly_analytics.bt_cost_attribute} = ${v_retargeting_attribute.retargeting_attribute_id}  ;;
   }
 
   join: v_hourly_analytics_derived {

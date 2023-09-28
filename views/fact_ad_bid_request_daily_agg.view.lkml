@@ -59,6 +59,18 @@ dimension: dynamic_pub_deal_name {
     hidden: yes
   }
 
+  dimension: dynamic_pub_deal_id_opposite {
+    type: string
+    sql: {% if publisher_or_deal._parameter_value == 'pub_id' %}
+      ${dim_deal.deal_id}
+    {% elsif publisher_or_deal._parameter_value == 'deal_id' %}
+      ${dim_publisher.pub_id}
+    {% else %}
+      null
+    {% endif %};;
+    #hidden: yes
+  }
+
   dimension: ad_size_height_key {
     type: number
     sql: ${TABLE}.Ad_Size_Height_Key ;;

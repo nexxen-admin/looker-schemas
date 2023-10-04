@@ -345,3 +345,18 @@ explore: fact_apac_1_data {
   label: "BD Comm APAC TS"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: fact_apac_2_data {
+  label: "BD Comm APAC"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: fact_apac_3_data {
+  label: "BD Comm APAC - BD out of APAC"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: fact_emea_data {
+  label: "BD Comm EMEA"
+  required_access_grants: [can_view_all_tremor]
+}

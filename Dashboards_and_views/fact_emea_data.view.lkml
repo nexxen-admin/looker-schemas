@@ -24,6 +24,7 @@ view: fact_emea_data {
   measure: current_achievement {
     type: sum
     sql: ${TABLE}.current_achievement ;;
+    value_format: "$0.00"
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -33,40 +34,52 @@ view: fact_emea_data {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: db_updated {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.db_updated_date ;;
-  }
+  # dimension_group: db_updated {
+  #   type: time
+  #   timeframes: [raw, time, date, week, month, quarter, year]
+  #   sql: ${TABLE}.db_updated_date ;;
+  # }
 
   measure: emea_net_rev {
     type: sum
     sql: ${TABLE}.emea_net_rev ;;
+    value_format: "$0.00"
+
   }
 
   measure: goal {
     type: sum
     sql: ${TABLE}.goal ;;
+    value_format: "$0"
+
   }
 
   measure: non_emea_cap {
     type: sum
     sql: ${TABLE}.non_emea_cap ;;
+    value_format: "$0.00"
+
   }
 
   measure: non_emea_net_rev {
     type: sum
     sql: ${TABLE}.non_emea_net_rev ;;
+    value_format: "$0.00"
+
   }
 
   measure: non_emea_rev_cap {
     type: sum
     sql: ${TABLE}.non_emea_rev_cap ;;
+    value_format: "$0.00"
+
   }
 
   measure: percent_to_goal {
     type: sum
     sql: ${TABLE}.percent_to_goal ;;
+    #value_format: "0\%"
+
   }
 
   dimension_group: quarter_start {

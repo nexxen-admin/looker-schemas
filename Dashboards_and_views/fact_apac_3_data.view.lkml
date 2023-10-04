@@ -34,15 +34,16 @@ view: fact_apac_3_data {
   measure: cogs {
     type: sum
     sql: ${TABLE}.COGS ;;
+    value_format: "$0.00"
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: db_updated {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.db_updated_date ;;
-  }
+  # dimension_group: db_updated {
+  #   type: time
+  #   timeframes: [raw, time, date, week, month, quarter, year]
+  #   sql: ${TABLE}.db_updated_date ;;
+  # }
 
   dimension_group: event_month {
     type: time
@@ -55,6 +56,7 @@ view: fact_apac_3_data {
   measure: impressions {
     type: sum
     sql: ${TABLE}.Impressions ;;
+    value_format: "0.00"
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -64,6 +66,7 @@ view: fact_apac_3_data {
   measure: profit {
     type: sum
     sql: ${TABLE}.profit ;;
+    value_format: "$0.00"
   }
 
   dimension: pub_id {
@@ -79,6 +82,7 @@ view: fact_apac_3_data {
   measure: revenue {
     type: string
     sql: ${TABLE}.revenue ;;
+    value_format: "$0.00"
   }
 
   dimension: sales_region {

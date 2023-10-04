@@ -21,8 +21,8 @@ view: fact_emea_data {
     sql: ${TABLE}.bizdev_owner ;;
   }
 
-  dimension: current_achievement {
-    type: number
+  measure: current_achievement {
+    type: sum
     sql: ${TABLE}.current_achievement ;;
   }
 
@@ -30,12 +30,6 @@ view: fact_emea_data {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_current_achievement {
-    type: sum
-    sql: ${current_achievement} ;;  }
-  measure: average_current_achievement {
-    type: average
-    sql: ${current_achievement} ;;  }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
@@ -45,33 +39,33 @@ view: fact_emea_data {
     sql: ${TABLE}.db_updated_date ;;
   }
 
-  dimension: emea_net_rev {
-    type: number
+  measure: emea_net_rev {
+    type: sum
     sql: ${TABLE}.emea_net_rev ;;
   }
 
-  dimension: goal {
-    type: number
+  measure: goal {
+    type: sum
     sql: ${TABLE}.goal ;;
   }
 
-  dimension: non_emea_cap {
-    type: number
+  measure: non_emea_cap {
+    type: sum
     sql: ${TABLE}.non_emea_cap ;;
   }
 
-  dimension: non_emea_net_rev {
-    type: number
+  measure: non_emea_net_rev {
+    type: sum
     sql: ${TABLE}.non_emea_net_rev ;;
   }
 
-  dimension: non_emea_rev_cap {
-    type: number
+  measure: non_emea_rev_cap {
+    type: sum
     sql: ${TABLE}.non_emea_rev_cap ;;
   }
 
-  dimension: percent_to_goal {
-    type: number
+  measure: percent_to_goal {
+    type: sum
     sql: ${TABLE}.percent_to_goal ;;
   }
 

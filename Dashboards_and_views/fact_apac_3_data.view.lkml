@@ -31,8 +31,8 @@ view: fact_apac_3_data {
     sql: ${TABLE}.bizdev_owner ;;
   }
 
-  dimension: cogs {
-    type: number
+  measure: cogs {
+    type: sum
     sql: ${TABLE}.COGS ;;
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
@@ -52,8 +52,8 @@ view: fact_apac_3_data {
     sql: ${TABLE}.Event_Month ;;
   }
 
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.Impressions ;;
   }
 
@@ -61,15 +61,8 @@ view: fact_apac_3_data {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_impressions {
+  measure: profit {
     type: sum
-    sql: ${impressions} ;;  }
-  measure: average_impressions {
-    type: average
-    sql: ${impressions} ;;  }
-
-  dimension: profit {
-    type: number
     sql: ${TABLE}.profit ;;
   }
 
@@ -83,8 +76,8 @@ view: fact_apac_3_data {
     sql: ${TABLE}.publisher_name ;;
   }
 
-  dimension: revenue {
-    type: number
+  measure: revenue {
+    type: string
     sql: ${TABLE}.revenue ;;
   }
 

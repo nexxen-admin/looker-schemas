@@ -126,6 +126,7 @@ view: dim_publisher {
     dimension: seller_type {
       type: string
       sql: ${TABLE}.seller_type ;;
+      hidden: yes
     }
 
     dimension: signup_step {

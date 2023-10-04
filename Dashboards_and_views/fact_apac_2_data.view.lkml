@@ -34,7 +34,7 @@ view: fact_apac_2_data {
   measure: cogs {
     type: sum
     sql: ${TABLE}.COGS ;;
-    value_format: "$0.00"
+    value_format: "$#,##0"
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
@@ -56,7 +56,7 @@ view: fact_apac_2_data {
   measure: impressions {
     type: sum
     sql: ${TABLE}.Impressions ;;
-    value_format: "0.00"
+    value_format: "#,##0"
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -66,7 +66,7 @@ view: fact_apac_2_data {
   measure: profit {
     type: sum
     sql: ${TABLE}.profit ;;
-    value_format: "$0.00"
+    value_format: "$#,##0"
   }
 
   dimension: pub_id {
@@ -82,7 +82,7 @@ view: fact_apac_2_data {
   measure: revenue {
     type: sum
     sql: ${TABLE}.revenue ;;
-    value_format: "$0.00"
+    value_format: "$#,##0"
   }
 
   dimension_group: start {

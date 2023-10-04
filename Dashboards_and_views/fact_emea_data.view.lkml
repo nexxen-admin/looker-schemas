@@ -43,42 +43,42 @@ view: fact_emea_data {
   measure: emea_net_rev {
     type: sum
     sql: ${TABLE}.emea_net_rev ;;
-    value_format: "$0.00"
+    value_format: "$#,##0"
 
   }
 
   measure: goal {
     type: sum
     sql: ${TABLE}.goal ;;
-    value_format: "$0"
+    value_format: "$#,##0"
 
   }
 
   measure: non_emea_cap {
     type: sum
     sql: ${TABLE}.non_emea_cap ;;
-    value_format: "$0.00"
+    value_format: "$#,##0"
 
   }
 
   measure: non_emea_net_rev {
     type: sum
     sql: ${TABLE}.non_emea_net_rev ;;
-    value_format: "$0.00"
+    value_format: "$#,##0"
 
   }
 
   measure: non_emea_rev_cap {
     type: sum
     sql: ${TABLE}.non_emea_rev_cap ;;
-    value_format: "$0.00"
+    value_format: "$#,##0"
 
   }
 
   measure: percent_to_goal {
     type: sum
     sql: ${TABLE}.percent_to_goal ;;
-    #value_format: "0\%"
+    value_format: "0.00%"
 
   }
 

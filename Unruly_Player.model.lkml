@@ -65,7 +65,7 @@ explore: extend_unruly_player_demands {
   extends: [unruly_player_demands]
   label: "Extend Unruly Player Demands"
   from: unruly_player_demands
-  hidden: yes
+  #hidden: yes
   required_access_grants: [can_view_aniview]
   access_filter: {
     field: dim_employee.employee_name

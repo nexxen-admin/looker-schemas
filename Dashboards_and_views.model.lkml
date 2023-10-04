@@ -340,3 +340,8 @@ explore: fact_supply_chain {
   label: "Supply Chain Report"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: fact_apac_1_data {
+  label: "BD Comm APAC TS"
+  required_access_grants: [can_view_all_tremor]
+}

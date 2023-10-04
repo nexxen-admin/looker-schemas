@@ -80,7 +80,7 @@ view: fact_apac_3_data {
   }
 
   measure: revenue {
-    type: string
+    type: sum
     sql: ${TABLE}.revenue ;;
     value_format: "$#,##0"
   }

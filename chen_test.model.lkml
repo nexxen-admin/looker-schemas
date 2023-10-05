@@ -400,6 +400,7 @@ explore: fact_ad_daily_agg{
   label: "Inbound Exchange"
   view_label: "Measures"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 
 
   join: dim_date {
@@ -1075,6 +1076,7 @@ explore: fact_ad_bid_request_daily_agg{
   label: "Outbound Exchange"
   view_label: "Measures"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 
   join: dim_dsp_data_center {
     type: inner

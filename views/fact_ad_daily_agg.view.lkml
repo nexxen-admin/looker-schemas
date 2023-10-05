@@ -2732,6 +2732,7 @@ view: fact_ad_daily_agg {
     description: "Shows only bid prices that are above 0.75 of the bid floor"
     type: number
     sql: case when ${TABLE}.avg_of_dsp_bid_price>${TABLE}.avg_of_ssp_bid_floor*0.75,${TABLE}.avg_of_dsp_bid_price else null end ;;
+    hidden: yes
   }
 
   measure: diff_bid_floor_bid_price{
@@ -2739,6 +2740,7 @@ view: fact_ad_daily_agg {
     description: "Shows the difference between the bid floor and the bid prices that are above 0.75 of the bid floor"
     type: number
     sql: case when ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc>0 then ${TABLE}.avg_of_ssp_bid_floor-${TABLE}.bid_price_top_25_perc else null end) ;;
+    hidden: yes
   }
 
   measure: Bucket {
@@ -2751,18 +2753,18 @@ view: fact_ad_daily_agg {
   }
 
 
-  parameter: choose_filter {
-    type: unquoted
-    allowed_value: {
-      label: "Revenue"
-      value: "revenue"
-    }
-    allowed_value: {
-      label: "Positive Change"
-      value: "positive_change"
-    }
+  # parameter: choose_filter {
+  #   type: unquoted
+  #   allowed_value: {
+  #     label: "Revenue"
+  #     value: "revenue"
+  #   }
+  #   allowed_value: {
+  #     label: "Positive Change"
+  #     value: "positive_change"
+  #   }
 
-  }
+  # }
 
   # measure: positive_change{
   #   type: sum

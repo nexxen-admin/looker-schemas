@@ -31,11 +31,19 @@ view: dim_o_domain {
     hidden: yes
   }
 
+
   dimension: o_domain {
     type: string
     description: "The domain that the ads are published in - site or app"
     sql: ${TABLE}.O_Domain ;;
     label: "Origin Domain"
+  }
+
+
+  dimension: top_level_domain {
+    type: string
+    sql: ${TABLE}.o_domain_top_level ;;
+    label: "Top Level Domain"
   }
 
   dimension: o_domain_key {

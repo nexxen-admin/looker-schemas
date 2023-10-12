@@ -363,15 +363,15 @@ explore: v_daily_core_stats {
     sql: {% if v_flight_media_details_base.future_flight_media._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW  AS v_flight_media_details_base ON ${v_flight_media_details_base.flight_media_id} = ${v_daily_core_stats.flight_media_id} ;;
   }
 
-  # join: v_deal_flight_media_details {
-  #   fields: [
-  #     v_deal_flight_media_details.external_buyer_media_id,
-  #     v_deal_flight_media_details.seller_customer_name,
-  #     v_deal_flight_media_details.seller_advertiser_name,
-  #     v_deal_flight_media_details.seller_brand_name]
-  #   relationship: one_to_one
-  #   sql_on: ${v_flight_media_details_base.flight_media_id} = ${v_deal_flight_media_details.seller_flight_media_id};;
-  # }
+  join: v_deal_flight_media_details {
+    fields: [
+      v_deal_flight_media_details.external_buyer_media_id,
+      v_deal_flight_media_details.seller_customer_name,
+      v_deal_flight_media_details.seller_advertiser_name,
+      v_deal_flight_media_details.seller_brand_name]
+    relationship: one_to_one
+    sql_on: ${v_flight_media_details_base.flight_media_id} = ${v_deal_flight_media_details.seller_flight_media_id};;
+  }
 
   join: v_demand_mart_load_tracking {
     relationship: many_to_one

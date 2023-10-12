@@ -1,4 +1,5 @@
 view: v_campaign_details_plan {
+  label: "Campaign Details Plan"
   derived_table: {
     sql: SELECT cd.campaign_id AS campaign_id
                 ,cd.pl_plan_id AS io_id

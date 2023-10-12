@@ -4,7 +4,7 @@ include: "/**/*.view.lkml"
 case_sensitive: no
 
 
-
+# not used
 
 explore: auction_log {
 

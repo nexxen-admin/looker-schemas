@@ -363,15 +363,15 @@ explore: v_daily_core_stats {
     sql: {% if v_flight_media_details_base.future_flight_media._in_query %}FULL{% else %}LEFT{% endif %} JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW  AS v_flight_media_details_base ON ${v_flight_media_details_base.flight_media_id} = ${v_daily_core_stats.flight_media_id} ;;
   }
 
-  # join: v_deal_flight_media_details {
-  #   fields: [
-  #     v_deal_flight_media_details.external_buyer_media_id,
-  #     v_deal_flight_media_details.seller_customer_name,
-  #     v_deal_flight_media_details.seller_advertiser_name,
-  #     v_deal_flight_media_details.seller_brand_name]
-  #   relationship: one_to_one
-  #   sql_on: ${v_flight_media_details_base.flight_media_id} = ${v_deal_flight_media_details.seller_flight_media_id};;
-  # }
+  join: v_deal_flight_media_details {
+    fields: [
+      v_deal_flight_media_details.external_buyer_media_id,
+      v_deal_flight_media_details.seller_customer_name,
+      v_deal_flight_media_details.seller_advertiser_name,
+      v_deal_flight_media_details.seller_brand_name]
+    relationship: one_to_one
+    sql_on: ${v_flight_media_details_base.flight_media_id} = ${v_deal_flight_media_details.seller_flight_media_id};;
+  }
 
   join: v_demand_mart_load_tracking {
     relationship: many_to_one
@@ -1109,7 +1109,7 @@ explore: v_raw_impression {
               AND ${v_hourly_exchange_rates.currency_to} = 'USD';;
   }
 
-  # join: v_conversion_fact {
+  # join: v_v_conversion_fact {
   #   relationship: many_to_many
   #   sql_on: ${v_raw_impression.adid} = ${v_conversion_fact.exposure_uniqueid} and
   #           ${v_raw_impression.flight_media} = ${v_conversion_fact.flight_media_id} and
@@ -1126,29 +1126,30 @@ explore: v_raw_impression {
     sql_on: ${v_raw_impression.pk_id} = ${v_brand_frequency_cap_violations.pk_id};;
   }
 
-  # join: v_placement_frequency_cap_violations {
-  #   relationship: one_to_one
-  #   sql_on: ${v_raw_impression.pk_id} = ${v_placement_frequency_cap_violations.pk_id};;
-  # }
+  join: v_placement_frequency_cap_violations {
+    relationship: one_to_one
+    sql_on: ${v_raw_impression.pk_id} = ${v_placement_frequency_cap_violations.pk_id};;
+  }
 
-  # join: v_flight_frequency_cap_violations {
-  #   relationship: one_to_one
-  #   sql_on: ${v_raw_impression.pk_idv_} = ${v_flight_frequency_cap_violations.pk_id};;
-  # }
+  join: v_flight_frequency_cap_violations {
+    relationship: one_to_one
+    sql_on: ${v_raw_impression.pk_id} = ${v_flight_frequency_cap_violations.pk_id};;
+  }
 
-  # join:v_flight_media_frequency_cap_violations {
-  #   relationship: one_to_one
-  #   sql_on: ${v_raw_impression.pk_id} = ${v_flight_media_frequency_cap_violations.pk_id};;
-  # }
-  # join: v_campaign_frequency_cap_violations {
-  #   relationship: one_to_one
-  #   sql_on: ${v_raw_impression.pk_id} = ${v_campaign_frequency_cap_violations.pk_id};;
-  # }
+  join:v_flight_media_frequency_cap_violations {
+    relationship: one_to_one
+    sql_on: ${v_raw_impression.pk_id} = ${v_flight_media_frequency_cap_violations.pk_id};;
+  }
 
-  # join: v_plan_frequency_cap_violations {
-  #   relationship: one_to_one
-  #   sql_on: ${v_raw_impression.pk_id} = $v_{plan_frequency_cap_violations.pk_id};;
-  # }
+  join: v_campaign_frequency_cap_violations {
+    relationship: one_to_one
+    sql_on: ${v_raw_impression.pk_id} = ${v_campaign_frequency_cap_violations.pk_id};;
+  }
+
+  join: v_plan_frequency_cap_violations {
+    relationship: one_to_one
+    sql_on: ${v_raw_impression.pk_id} = ${v_plan_frequency_cap_violations.pk_id};;
+  }
 
   join: v_insertion_order_demand_units_budget {
     relationship: many_to_one

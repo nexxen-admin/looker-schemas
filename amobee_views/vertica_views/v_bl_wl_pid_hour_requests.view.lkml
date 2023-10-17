@@ -2,7 +2,7 @@ view: v_bl_wl_pid_hour_requests {
   # You can specify the table name if it's different from the view name:
   derived_table: {
     sql:
-     SELECT   keydate,
+     SELECT   keydate ,
              placement,
              sum(requests) AS total_pid_requests
     FROM     rawdb.hourly_requests_blacklist_whitelist

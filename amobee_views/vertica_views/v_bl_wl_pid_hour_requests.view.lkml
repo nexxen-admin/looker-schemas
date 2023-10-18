@@ -2,37 +2,37 @@ view: v_bl_wl_pid_hour_requests {
   # You can specify the table name if it's different from the view name:
   derived_table: {
     sql:
-     SELECT   keydate ,
+     SELECT   TO_TIMESTAMP(processingid, 'YYYYMMDDHH') as keydate,
              placement,
              sum(requests) AS total_pid_requests
     FROM     rawdb.hourly_requests_blacklist_whitelist
     WHERE {% parameter v_blacklist_whitelist.list_type %}_{% parameter v_blacklist_whitelist.select_black_or_white %}_list IS NOT NULL AND
-          {% condition v_blacklist_whitelist.keydate_date %} keydate {% endcondition %}AND
-          {% condition v_blacklist_whitelist.keydate_hour %} keydate {% endcondition %}AND
-          {% condition v_blacklist_whitelist.keydate_month %} keydate {% endcondition %}AND
-          {% condition v_blacklist_whitelist.keydate_year %} keydate {% endcondition %}AND
-          {% condition v_blacklist_whitelist.keydate_week %} keydate {% endcondition %}AND
+          {% condition v_blacklist_whitelist.keydate_date %} TO_TIMESTAMP(processingid, 'YYYYMMDDHH') {% endcondition %}AND
+          {% condition v_blacklist_whitelist.keydate_hour %} TO_TIMESTAMP(processingid, 'YYYYMMDDHH') {% endcondition %}AND
+          {% condition v_blacklist_whitelist.keydate_month %} TO_TIMESTAMP(processingid, 'YYYYMMDDHH') {% endcondition %}AND
+          {% condition v_blacklist_whitelist.keydate_year %} TO_TIMESTAMP(processingid, 'YYYYMMDDHH') {% endcondition %}AND
+          {% condition v_blacklist_whitelist.keydate_week %} TO_TIMESTAMP(processingid, 'YYYYMMDDHH') {% endcondition %}AND
           {% if v_blacklist_whitelist.dst_keydate_date._is_filtered %}
-            keydate >= TIMESTAMPADD('day', -1, {% date_start v_blacklist_whitelist.dst_keydate_date %}) AND
-            keydate < TIMESTAMPADD('day', 1, {% date_end v_blacklist_whitelist.dst_keydate_date %}) AND
+            TO_TIMESTAMP(processingid, 'YYYYMMDDHH') >= TIMESTAMPADD('day', -1, {% date_start v_blacklist_whitelist.dst_keydate_date %}) AND
+            TO_TIMESTAMP(processingid, 'YYYYMMDDHH') < TIMESTAMPADD('day', 1, {% date_end v_blacklist_whitelist.dst_keydate_date %}) AND
           {% endif %}
           {% if v_blacklist_whitelist.dst_keydate_week._is_filtered %}
-            keydate >= TIMESTAMPADD('day', -1, {% date_start v_blacklist_whitelist.dst_keydate_week %}) AND
-            keydate < TIMESTAMPADD('day', 1, {% date_end v_blacklist_whitelist.dst_keydate_week %}) AND
+            TO_TIMESTAMP(processingid, 'YYYYMMDDHH') >= TIMESTAMPADD('day', -1, {% date_start v_blacklist_whitelist.dst_keydate_week %}) AND
+            TO_TIMESTAMP(processingid, 'YYYYMMDDHH') < TIMESTAMPADD('day', 1, {% date_end v_blacklist_whitelist.dst_keydate_week %}) AND
           {% endif %}
           {% if v_blacklist_whitelist.dst_keydate_month._is_filtered %}
-            keydate >= TIMESTAMPADD('day', -1, {% date_start v_blacklist_whitelist.dst_keydate_month %}) AND
-            keydate < TIMESTAMPADD('day', 1, {% date_end v_blacklist_whitelist.dst_keydate_month %}) AND
+            TO_TIMESTAMP(processingid, 'YYYYMMDDHH') >= TIMESTAMPADD('day', -1, {% date_start v_blacklist_whitelist.dst_keydate_month %}) AND
+            TO_TIMESTAMP(processingid, 'YYYYMMDDHH') < TIMESTAMPADD('day', 1, {% date_end v_blacklist_whitelist.dst_keydate_month %}) AND
           {% endif %}
           {% if v_blacklist_whitelist.dst_keydate_hour._is_filtered %}
-            keydate >= TIMESTAMPADD('day', -1, {% date_start v_blacklist_whitelist.dst_keydate_hour %}) AND
-            keydate < TIMESTAMPADD('day', 1, {% date_end v_blacklist_whitelist.dst_keydate_hour %}) AND
+            TO_TIMESTAMP(processingid, 'YYYYMMDDHH') >= TIMESTAMPADD('day', -1, {% date_start v_blacklist_whitelist.dst_keydate_hour %}) AND
+            TO_TIMESTAMP(processingid, 'YYYYMMDDHH') < TIMESTAMPADD('day', 1, {% date_end v_blacklist_whitelist.dst_keydate_hour %}) AND
           {% endif %}
           {% if v_blacklist_whitelist.dst_keydate_year._is_filtered %}
-            keydate >= TIMESTAMPADD('day', -1, {% date_start v_blacklist_whitelist.dst_keydate_year %}) AND
-            keydate < TIMESTAMPADD('day', 1, {% date_end v_blacklist_whitelist.dst_keydate_year %}) AND
+            TO_TIMESTAMP(processingid, 'YYYYMMDDHH') >= TIMESTAMPADD('day', -1, {% date_start v_blacklist_whitelist.dst_keydate_year %}) AND
+            TO_TIMESTAMP(processingid, 'YYYYMMDDHH') < TIMESTAMPADD('day', 1, {% date_end v_blacklist_whitelist.dst_keydate_year %}) AND
           {% endif %} 1=1
-    GROUP BY keydate,
+    GROUP BY processingid,
              placement
     ;;
   }

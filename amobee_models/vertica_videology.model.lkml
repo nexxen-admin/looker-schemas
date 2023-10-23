@@ -1236,7 +1236,7 @@ explore: v_raw_impression {
 #     user_attribute: access_filter_platform_client_id
 #   }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+#   sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${campaign_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 #   fields: [ALL_FIELDS*, -advertiser_brand_details.future_advertisers, -customer_details.future_customers]
 
@@ -1453,7 +1453,7 @@ explore: v_blacklist_whitelist{
 #     user_attribute: access_filter_platform_client_id
 #   }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_demand_ref.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+#   sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_demand_ref.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 #   hidden: yes
 # }
@@ -1469,7 +1469,7 @@ explore: v_blacklist_whitelist{
 #     user_attribute: access_filter_platform_client_id
 #   }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_supply_ref.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+#   sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_supply_ref.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 #   hidden: yes
 # }

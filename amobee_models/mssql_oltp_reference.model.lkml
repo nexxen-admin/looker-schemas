@@ -23,7 +23,7 @@ explore: placement {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${partner.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${partner.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 
   join: partner {
@@ -494,7 +494,7 @@ explore: hourly_filler_placement_stats_details {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${partner.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${partner.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 
   join: placement {
@@ -628,7 +628,7 @@ explore: creative_rejection_view {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${mssql_oltp_campaign.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${mssql_oltp_campaign.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 
   join: mssql_oltp_campaign {
@@ -1708,7 +1708,7 @@ explore: mssql_oltp_suggest_demand_ref {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${mssql_oltp_suggest_demand_ref.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${mssql_oltp_suggest_demand_ref.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
   hidden: yes
 }
@@ -1724,7 +1724,7 @@ explore: mssql_oltp_suggest_supply_ref {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${mssql_oltp_suggest_supply_ref.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${mssql_oltp_suggest_supply_ref.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
   hidden: yes
 }

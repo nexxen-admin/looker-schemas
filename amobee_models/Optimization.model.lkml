@@ -85,7 +85,7 @@ explore: scale_metric {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${scale_metric.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${scale_metric.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
   join: misallocation_house {
     relationship: many_to_one
@@ -124,7 +124,7 @@ explore: opt_misdelivery {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${opt_misdelivery.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${opt_misdelivery.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 
   join: opt_main_placement {
@@ -262,6 +262,6 @@ explore: opt_total_ccp {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${opt_total_ccp.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${opt_total_ccp.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 }

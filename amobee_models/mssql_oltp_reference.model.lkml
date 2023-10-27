@@ -933,6 +933,17 @@ explore: mssql_oltp_campaign {
   label: "Platform Demand Reference"
   description: "This explore includes reference data on the demand side concepts, as well as information within that hierarchy. Source is the Platform OLTP database."
   fields: [ALL_FIELDS*, -mssql_oltp_campaign_dates.tapl_campaign_end_datetm, -mssql_oltp_campaign_dates.tapl_campaign_start_datetm]
+  access_filter: {
+    field: demand_platform_client.office_id
+    user_attribute: access_filter_office_id
+  }
+  access_filter: {
+    field: mssql_oltp_customer.platform_client_id
+    user_attribute: access_filter_platform_client_id
+  }
+
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${mssql_oltp_customer.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
+
 
   join: mssql_oltp_campaign_status {
     relationship: many_to_one

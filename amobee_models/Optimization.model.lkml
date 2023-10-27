@@ -14,6 +14,13 @@ explore: rta_group_finder {
   view_name: opt_smart_converged_campaign
   fields: [ALL_FIELDS*]
   description: "This can be used to obtain the demo or strategic target audience of a campaign and then use it to check ad_exposure/reach_frequency"
+  access_filter: {
+    field: opt_smart_converged_campaign.platform_client_id
+    user_attribute: access_filter_platform_client_id
+  }
+
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${opt_smart_converged_campaign.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
+
 }
 
 
@@ -21,6 +28,13 @@ explore: opt_rpt_placement_at_glance_stats {
   required_access_grants: [can_use_explore]
   label: "Placement at a Glance"
   description: "This can be used to obtain to view pre-aggregated placement stats"
+  access_filter: {
+    field: opt_main_placement.platform_client_id
+    user_attribute: access_filter_platform_client_id
+  }
+
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${opt_main_placement.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
+
 
   join: opt_main_placement {
     relationship:  many_to_one
@@ -44,6 +58,14 @@ explore: opt_retargeting_attribute  {
   label: "RTA Reach and Usage"
   description: "This explore is used for pulling retargeting attributes, reach, usage and retargeting information"
 
+  access_filter: {
+    field: opt_retargeting_attribute.platform_client_id
+    user_attribute: access_filter_platform_client_id
+  }
+
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${opt_retargeting_attribute.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
+
+
   join: campaign_target{
     relationship: one_to_many
     sql_on: ${opt_retargeting_attribute.retargeting_attribute_id} = ${campaign_target.attribute_value_id};;
@@ -59,6 +81,14 @@ explore: daily_placement_attribute_value_eligibility_stats {
   required_access_grants: [can_use_explore]
   label: "Eligible Requests and Segments"
   description: "This explore includes retargeting segments request eligibility metrics."
+
+  access_filter: {
+    field: opt_retargeting_attribute.platform_client_id
+    user_attribute: access_filter_platform_client_id
+  }
+
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${opt_retargeting_attribute.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
+
 
   join: opt_retargeting_attribute {
     view_label: "Attribute Value Facets"
@@ -211,6 +241,14 @@ explore: cluster_kpi_performance {
   label: "Cluster KPI Performance"
   description: "Explore is used to pull segment with or without eligible requests"
   fields: [ALL_FIELDS*]
+
+  access_filter: {
+    field: opt_main_placement.platform_client_id
+    user_attribute: access_filter_platform_client_id
+  }
+
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} 1=1 {% else %} (${opt_main_placement.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
+
 
   join: opt_smart_cluster {
     relationship: one_to_many

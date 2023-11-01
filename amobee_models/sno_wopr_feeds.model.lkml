@@ -2,7 +2,7 @@
 connection: "snowflake"
 include: "/**/*.view.lkml"
 
-
+# not used
 
 access_grant: can_use_explore { user_attribute: is_itv_user allowed_values: ["no"] }
 

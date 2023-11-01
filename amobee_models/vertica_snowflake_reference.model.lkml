@@ -24,7 +24,7 @@ explore: v_campaign_details_base {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 
   join: v_timezone {
@@ -80,10 +80,10 @@ explore: v_campaign_details_base {
     sql_on: ${v_campaign_target_description.campaign_id} = ${v_campaign_details_base.campaign_id} ;;
   }
 
-  # join: v_original_fm_created_by {
-  #   relationship: one_to_one
-  #   sql_on: ${v_original_fm_created_by.campaign_id} = ${v_campaign_details_base.campaign_id} ;;
-  # }
+  join: v_original_fm_created_by {
+    relationship: one_to_one
+    sql_on: ${v_original_fm_created_by.campaign_id} = ${v_campaign_details_base.campaign_id} ;;
+  }
 
   # join: v_campaign_url_tracking {
   #   relationship: one_to_many
@@ -243,29 +243,29 @@ explore: v_campaign_details_base {
 #   }
 # }
 
-# explore: v_placement_details_base {
+explore: v_placement_details_base {
 
-#   label: "Vertica Snowflake Supply Reference"
-#   description: "This explore includes reference data on the supply side concepts, as well as information within that hierarchy.  This explore
-#   is designed to get any supply side information even if the placement has no delivery."
-#   access_filter: {
-#     field: v_platform_client.office_id
-#     user_attribute: access_filter_office_id
-#   }
-#   access_filter: {
-#     field: v_placement_details_base.platform_client_id
-#     user_attribute: access_filter_platform_client_id
-#   }
+  label: "Vertica Snowflake Supply Reference"
+  description: "This explore includes reference data on the supply side concepts, as well as information within that hierarchy.  This explore
+  is designed to get any supply side information even if the placement has no delivery."
+  access_filter: {
+    field: v_platform_client.office_id
+    user_attribute: access_filter_office_id
+  }
+  access_filter: {
+    field: v_placement_details_base.platform_client_id
+    user_attribute: access_filter_platform_client_id
+  }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_placement_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
-#   join: v_platform_client {
-#     relationship: many_to_one
-#     view_label: "Supply Platform Client"
-#     sql_on: ${v_placement_details_base.platform_client_id} = ${v_platform_client.platform_client_id} ;;
-#   }
+  join: v_platform_client {
+    relationship: many_to_one
+    view_label: "Supply Platform Client"
+    sql_on: ${v_placement_details_base.platform_client_id} = ${v_platform_client.platform_client_id} ;;
+  }
 
-# }
+}
 
 # explore: marketplace_login_history_view {
 #   required_access_grants: [can_use_explore]
@@ -280,7 +280,7 @@ explore: v_campaign_details_base {
 #     user_attribute: access_filter_country_id
 #   }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_demand_ref.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+#   sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_demand_ref.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 #   hidden: yes
 # }
@@ -291,7 +291,7 @@ explore: v_campaign_details_base {
 #     user_attribute: access_filter_country_id
 #   }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_supply_ref.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+#   sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_supply_ref.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 #   hidden: yes
 # }

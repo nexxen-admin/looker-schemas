@@ -22,13 +22,11 @@ view: v_bt_cost_attributes_hourly_analytics {
             bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.demand_date_date %}), 'YYYYMMDDHH')::Integer AND
             bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.demand_date_date %}), 'YYYYMMDDHH')::Integer AND
       {% endif %}
-
       {% if v_hourly_analytics.demand_date_hour._is_filtered %}
             ha.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
             ha.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
             bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
             bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
-
       {% endif %}
       {% if v_hourly_analytics.demand_date_month._is_filtered %}
             ha.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.demand_date_month %}), 'YYYYMMDDHH')::Integer AND
@@ -54,6 +52,45 @@ view: v_bt_cost_attributes_hourly_analytics {
             bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.raw_demand_date %}), 'YYYYMMDDHH')::Integer AND
             bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.raw_demand_date %}), 'YYYYMMDDHH')::Integer AND
       {% endif %}
+
+
+      {% if v_hourly_analytics.supply_date_date._is_filtered %}
+            ha.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_date %}), 'YYYYMMDDHH')::Integer AND
+            ha.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_date %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_date %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_date %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+      {% if v_hourly_analytics.supply_date_hour._is_filtered %}
+            ha.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            ha.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+      {% if v_hourly_analytics.supply_date_month._is_filtered %}
+            ha.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_month %}), 'YYYYMMDDHH')::Integer AND
+            ha.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_month %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_month %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_month %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+      {% if v_hourly_analytics.supply_date_time._is_filtered %}
+            ha.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_time %}), 'YYYYMMDDHH')::Integer AND
+            ha.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_time %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_time %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_time %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+      {% if v_hourly_analytics.supply_date_year._is_filtered %}
+            ha.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_year %}), 'YYYYMMDDHH')::Integer AND
+            ha.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_year %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_year %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_year %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+      {% if v_hourly_analytics.raw_supply_date._is_filtered %}
+            ha.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.raw_supply_date %}), 'YYYYMMDDHH')::Integer AND
+            ha.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.raw_supply_date %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.raw_supply_date %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.raw_supply_date %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+
     1=1
     AND  ("datediff"('DAY'::varchar(3), ha.GMT_DATE, (now())::date)<= 7)
 
@@ -79,13 +116,11 @@ view: v_bt_cost_attributes_hourly_analytics {
             bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.demand_date_date %}), 'YYYYMMDDHH')::Integer AND
             bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.demand_date_date %}), 'YYYYMMDDHH')::Integer AND
       {% endif %}
-
       {% if v_hourly_analytics.demand_date_hour._is_filtered %}
             da.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
             da.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
             bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
             bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
-
       {% endif %}
       {% if v_hourly_analytics.demand_date_month._is_filtered %}
             da.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.demand_date_month %}), 'YYYYMMDDHH')::Integer AND
@@ -110,6 +145,44 @@ view: v_bt_cost_attributes_hourly_analytics {
             da.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.raw_demand_date %}), 'YYYYMMDDHH')::Integer AND
             bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.raw_demand_date %}), 'YYYYMMDDHH')::Integer AND
             bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.raw_demand_date %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+
+
+        {% if v_hourly_analytics.supply_date_date._is_filtered %}
+            da.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_date %}), 'YYYYMMDDHH')::Integer AND
+            da.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_date %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_date %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_date %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+      {% if v_hourly_analytics.supply_date_hour._is_filtered %}
+            da.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            da.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+      {% if v_hourly_analytics.supply_date_month._is_filtered %}
+            da.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_month %}), 'YYYYMMDDHH')::Integer AND
+            da.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_month %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_month %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_month %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+      {% if v_hourly_analytics.supply_date_time._is_filtered %}
+            da.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_time %}), 'YYYYMMDDHH')::Integer AND
+            da.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_time %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_time %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_time %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+      {% if v_hourly_analytics.supply_date_year._is_filtered %}
+            da.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_year %}), 'YYYYMMDDHH')::Integer AND
+            da.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_year %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.supply_date_year %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.supply_date_year %}), 'YYYYMMDDHH')::Integer AND
+      {% endif %}
+      {% if v_hourly_analytics.raw_supply_date._is_filtered %}
+            da.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.raw_supply_date %}), 'YYYYMMDDHH')::Integer AND
+            da.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.raw_supply_date %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start v_hourly_analytics.raw_supply_date %}), 'YYYYMMDDHH')::Integer AND
+            bt.PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end v_hourly_analytics.raw_supply_date %}), 'YYYYMMDDHH')::Integer AND
       {% endif %}
       1=1
     AND  ("datediff"('DAY'::varchar(3), da.GMT_DATE, (now())::date)  > 7) ;;

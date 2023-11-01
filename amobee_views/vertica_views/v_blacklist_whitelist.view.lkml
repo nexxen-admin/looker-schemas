@@ -8,7 +8,7 @@ view: v_blacklist_whitelist {
 FROM
            (
                             SELECT         l.placement::integer as placement,
-                                             l.keydate as keydate,
+                                             TO_TIMESTAMP(l.processingid, 'YYYYMMDDHH') as keydate,
                                              l.value as id,
                                              l.requests as l_requests,
                                              l.{% parameter list_type %}_{% parameter select_black_or_white %}_list as list,
@@ -23,31 +23,31 @@ FROM
 
       WHERE
       {% parameter list_type %}_{% parameter select_black_or_white %}_list IS NOT NULL AND
-      {% condition keydate_date %} r.keydate {% endcondition %}AND
-      {% condition keydate_hour %} r.keydate {% endcondition %}AND
-      {% condition keydate_month %} r.keydate {% endcondition %}AND
-      {% condition keydate_year %} r.keydate {% endcondition %}AND
-      {% condition keydate_week %} r.keydate {% endcondition %}
+      {% condition keydate_date %} TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') {% endcondition %}AND
+      {% condition keydate_hour %} TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') {% endcondition %}AND
+      {% condition keydate_month %} TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') {% endcondition %}AND
+      {% condition keydate_year %} TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') {% endcondition %}AND
+      {% condition keydate_week %} TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') {% endcondition %}
       AND
       {% if dst_keydate_date._is_filtered %}
-      r.keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_date %}) AND
-      r.keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_date %}) AND
+      TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_date %}) AND
+      TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') < TIMESTAMPADD('day', 1, {% date_end dst_keydate_date %}) AND
       {% endif %}
       {% if dst_keydate_week._is_filtered %}
-      r.keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_week %}) AND
-      r.keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_week %}) AND
+      TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_week %}) AND
+      TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') < TIMESTAMPADD('day', 1, {% date_end dst_keydate_week %}) AND
       {% endif %}
       {% if dst_keydate_month._is_filtered %}
-      r.keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_month %}) AND
-      r.keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_month %}) AND
+      TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_month %}) AND
+      TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') < TIMESTAMPADD('day', 1, {% date_end dst_keydate_month %}) AND
       {% endif %}
       {% if dst_keydate_hour._is_filtered %}
-      r.keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_hour %}) AND
-      r.keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_hour %}) AND
+      TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_hour %}) AND
+      TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') < TIMESTAMPADD('day', 1, {% date_end dst_keydate_hour %}) AND
       {% endif %}
       {% if dst_keydate_year._is_filtered %}
-      r.keydate >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_year %}) AND
-      r.keydate < TIMESTAMPADD('day', 1, {% date_end dst_keydate_year %}) AND
+      TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') >= TIMESTAMPADD('day', -1, {% date_start dst_keydate_year %}) AND
+      TO_TIMESTAMP(r.processingid, 'YYYYMMDDHH') < TIMESTAMPADD('day', 1, {% date_end dst_keydate_year %}) AND
       {% endif %}
       1=1
       ) l

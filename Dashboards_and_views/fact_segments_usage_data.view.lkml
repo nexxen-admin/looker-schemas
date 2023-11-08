@@ -41,6 +41,20 @@ view: fact_segments_usage_data {
     sql: ${TABLE}.ams_partner_id ;;
   }
 
+  dimension: partner_name {
+    type: string
+    sql: case when ${ams_partner_id}='15' then 'Adobe'
+              when ${ams_partner_id}='7' then 'Bluekai'
+              when ${ams_partner_id}='23' then 'Eyeota'
+              when ${ams_partner_id}='31' then 'Liveramp'
+              when ${ams_partner_id}='161' then 'Nielsen'
+              when ${ams_partner_id}='162' then 'Audigent'
+              when ${ams_partner_id}='163' then 'Comscore'
+              when ${ams_partner_id}='N/A' then 'Other'
+              else 'Other'
+end;;
+  }
+
   dimension: ams_partner_segment_id {
     type: string
     sql: ${TABLE}.ams_partner_segment_id ;;
@@ -129,6 +143,11 @@ view: fact_segments_usage_data {
   dimension: segment_type {
     type: string
     sql: ${TABLE}.segment_type ;;
+  }
+
+  dimension: category_id {
+    type: string
+    sql: ${TABLE}.category_id ;;
   }
   measure: count {
     type: count

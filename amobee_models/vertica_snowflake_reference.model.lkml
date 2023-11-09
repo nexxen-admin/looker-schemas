@@ -24,7 +24,7 @@ explore: v_campaign_details_base {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 
   join: v_timezone {
@@ -257,7 +257,7 @@ explore: v_placement_details_base {
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_placement_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
   join: v_platform_client {
     relationship: many_to_one
@@ -280,7 +280,7 @@ explore: v_placement_details_base {
 #     user_attribute: access_filter_country_id
 #   }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_demand_ref.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+#   sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_demand_ref.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 #   hidden: yes
 # }
@@ -291,7 +291,7 @@ explore: v_placement_details_base {
 #     user_attribute: access_filter_country_id
 #   }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_supply_ref.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+#   sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_supply_ref.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 #   hidden: yes
 # }

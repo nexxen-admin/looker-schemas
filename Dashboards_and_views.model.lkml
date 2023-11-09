@@ -360,3 +360,8 @@ explore: fact_emea_data {
   label: "BD Comm EMEA"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: fact_segments_usage_data {
+  label: "Segment Usage Data"
+  required_access_grants: [can_view_all_tremor]
+}

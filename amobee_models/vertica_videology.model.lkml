@@ -20,7 +20,7 @@ explore: v_hourly_analytics {
   and by-hour for the last seven days."
   sql_always_where: ({% if _user_attributes['access_filter_office_id'] == '>=0, NULL' %} TRUE {% else %} (${v_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }}) OR ${v_supply_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }})) {% endif %}) AND
                     ({% if _user_attributes['access_filter_platform_client_id'] == '>=0, NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${v_placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${v_platform_client.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) {% endif %}) AND
-                    ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} IS NULL OR ${v_campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) AND (${v_placement_details_base.platform_client_id} IS NULL OR ${v_placement_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+                    ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} ( ${v_campaign_details_base.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) AND ( ${v_placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
   fields: [ALL_FIELDS*, -v_hourly_analytics.sum_floor_price,-v_hourly_analytics.sum_revenue,
     -v_flight_media_details_base.demoaud, -v_hourly_analytics.sum_unserved_requests,
@@ -356,7 +356,7 @@ explore: v_daily_core_stats {
                       {% else %}TRUE{% endif %}) AND
                       ({% if _user_attributes['access_filter_office_id'] == '>=0, NULL' %} TRUE {% else %} (${v_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }}) OR ${v_supply_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }})) {% endif %}) AND
                       ({% if _user_attributes['access_filter_platform_client_id'] == '>=0, NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${v_placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${v_platform_client.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) {% endif %}) AND
-                      ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} IS NULL OR ${v_campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) AND (${v_placement_details_base.platform_client_id} IS NULL OR ${v_placement_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+                      ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} ( ${v_campaign_details_base.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) AND ( ${v_placement_details_base.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
   join: v_flight_media_details_base {
     relationship: many_to_one
@@ -576,7 +576,7 @@ explore: v_daily_data_usage {
                     {% else %}TRUE{% endif %}) AND
                     ({% if _user_attributes['access_filter_office_id'] == '>=0, NULL' %} TRUE {% else %} (${v_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }}) OR ${v_supply_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }})) {% endif %}) AND
                     ({% if _user_attributes['access_filter_platform_client_id'] == '>=0, NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${v_placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${v_platform_client.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) {% endif %}) AND
-                    ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} IS NULL OR ${v_campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) AND (${v_placement_details_base.platform_client_id} IS NULL OR ${v_placement_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+                    ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} ( ${v_campaign_details_base.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) AND ( ${v_placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
   fields: [ALL_FIELDS*, -v_advertiser_brand_details.future_advertisers, -v_customer_details.future_customers]
 
   join: v_flight_media_details_base {
@@ -689,7 +689,7 @@ explore: v_demand_metrics {
                       {% elsif v_daily_core_stats.gmt_date._in_query or v_daily_core_stats.gmt_week._in_query %}COALESCE(${v_daily_core_stats.gmt_raw}, '9999-12-31') >= (SELECT MIN(GMT_DATE) FROM DEMAND_MART.DAILY_CORE_STATS)
                       {% elsif v_daily_core_stats.region_date._in_query or v_daily_core_stats.region_week._in_query %}COALESCE(${v_daily_core_stats.region_raw}, '9999-12-31') >= (SELECT MIN(REGION_DATE) FROM DEMAND_MART.DAILY_CORE_STATS)
                       {% else %}TRUE{% endif %}) AND
-                      ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) AND (${v_platform_client.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+                      ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) AND (${v_platform_client.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
   join: v_daily_core_stats_yesterday_demand {
     relationship: many_to_one
     sql_on: ${v_daily_core_stats.flight_media_id} = ${v_daily_core_stats_yesterday_demand.flight_media_id}
@@ -998,7 +998,7 @@ explore: v_raw_impression {
   This data is only available for the last seven days."
   sql_always_where: ({% if _user_attributes['access_filter_office_id'] == '>=0, NULL' %} TRUE {% else %} (${v_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }}) OR ${v_supply_platform_client.office_id} IN ({{ _user_attributes['access_filter_office_id'] }})) {% endif %}) AND
                     ({% if _user_attributes['access_filter_platform_client_id'] == '>=0, NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${v_placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) OR (${v_platform_client.platform_client_id} IN ({{ _user_attributes['access_filter_platform_client_id'] }})) {% endif %}) AND
-                    ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_campaign_details_base.platform_client_id} IS NULL OR ${v_campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) AND (${v_placement_details_base.platform_client_id} IS NULL OR ${v_placement_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+                    ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} ( ${v_campaign_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) AND ( ${v_placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
   fields: [ALL_FIELDS*, -v_advertiser_brand_details.future_advertisers, -v_customer_details.future_customers, -v_daily_ccp_metrics.exp_rev, -v_daily_ccp_metrics.sum_daily_ccp_eoc_audit_yesterday, -v_daily_ccp_metrics.daily_ccp_eoc_audit_diff_yesterday_gmt]
 
   join: v_bt_cost_attributes {
@@ -1236,7 +1236,7 @@ explore: v_raw_impression {
 #     user_attribute: access_filter_platform_client_id
 #   }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${campaign_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+#   sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${campaign_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 #   fields: [ALL_FIELDS*, -advertiser_brand_details.future_advertisers, -customer_details.future_customers]
 
@@ -1408,7 +1408,7 @@ explore: v_blacklist_whitelist{
     user_attribute: access_filter_platform_client_id
   }
 
-  sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_placement_details_base.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+  sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${v_placement_details_base.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
   join: v_bl_wl_pid_hour_requests {
     relationship: many_to_one
@@ -1453,7 +1453,7 @@ explore: v_blacklist_whitelist{
 #     user_attribute: access_filter_platform_client_id
 #   }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_demand_ref.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+#   sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_demand_ref.platform_client_id} IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 #   hidden: yes
 # }
@@ -1469,7 +1469,7 @@ explore: v_blacklist_whitelist{
 #     user_attribute: access_filter_platform_client_id
 #   }
 
-#   sql_always_where: ({% if _user_attributes['access_filter_exclude_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_supply_ref.platform_client_id} NOT IN ({{ _user_attributes['access_filter_exclude_platform_client_id'] }})) {% endif %}) ;;
+#   sql_always_where: ({% if _user_attributes['access_filter_include_platform_client_id'] == 'NULL' %} TRUE {% else %} (${suggest_supply_ref.platform_client_id}  IN ({{ _user_attributes['access_filter_include_platform_client_id'] }})) {% endif %}) ;;
 
 #   hidden: yes
 # }

@@ -29,18 +29,18 @@ view: bid_details_in_app {
     sql: ${bid_price_bucket} ;;
   }
 
-  dimension: bids_auction_lost {
-    type: number
+  measure: bids_auction_lost {
+    type: sum
     sql: ${TABLE}.Bids_Auction_lost ;;
   }
 
-  dimension: bids_ssp_filtered {
-    type: number
+  measure: bids_ssp_filtered {
+    type: sum
     sql: ${TABLE}.Bids_SSP_Filtered ;;
   }
 
-  dimension: bids_valid {
-    type: number
+  measure: bids_valid {
+    type: sum
     value_format_name: id
     sql: ${TABLE}.Bids_Valid ;;
   }
@@ -93,8 +93,8 @@ view: bid_details_in_app {
     sql: ${TABLE}.Imp_Type ;;
   }
 
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.Impressions ;;
   }
 
@@ -123,8 +123,8 @@ view: bid_details_in_app {
     sql: ${TABLE}.Publisher_Name ;;
   }
 
-  dimension: wins {
-    type: number
+  measure: wins {
+    type: sum
     sql: ${TABLE}.Wins ;;
   }
 

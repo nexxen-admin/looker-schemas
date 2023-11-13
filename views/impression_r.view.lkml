@@ -10,9 +10,11 @@ view: impression_r {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Adomain" in Explore.
 
+
   dimension: adomain {
     type: string
     sql: ${TABLE}.adomain ;;
+    required_access_grants: [can_view_pub_come_looker]
   }
 
   dimension: adsize {
@@ -51,87 +53,87 @@ view: impression_r {
     hidden: yes
   }
 
-  parameter: choose_dimension{
-    type: unquoted
-    allowed_value: {
-      label: "dsp_deal_id"
-      value: "dspdealid"
-    }
-    allowed_value: {
-      label: "Content Series"
-      value: "cntseries"
-    }
-    allowed_value: {
-      label: "Content titles"
-      value: "cnttitle"
-    }
-    allowed_value: {
-      label: "Content episodes"
-      value: "cntepisode"
-    }
-    allowed_value: {
-      label: "Content Season"
-      value: "cntseason"
-    }
-    allowed_value: {
-      label: "Source"
-      value: "Source"
-    }
-    allowed_value: {
-      label: "isbillable"
-      value: "isbillable"
-    }
-    #hidden: yes
-  }
+  # parameter: choose_dimension{
+  #   type: unquoted
+  #   allowed_value: {
+  #     label: "dsp_deal_id"
+  #     value: "dspdealid"
+  #   }
+  #   allowed_value: {
+  #     label: "Content Series"
+  #     value: "cntseries"
+  #   }
+  #   allowed_value: {
+  #     label: "Content titles"
+  #     value: "cnttitle"
+  #   }
+  #   allowed_value: {
+  #     label: "Content episodes"
+  #     value: "cntepisode"
+  #   }
+  #   allowed_value: {
+  #     label: "Content Season"
+  #     value: "cntseason"
+  #   }
+  #   allowed_value: {
+  #     label: "Source"
+  #     value: "Source"
+  #   }
+  #   allowed_value: {
+  #     label: "isbillable"
+  #     value: "isbillable"
+  #   }
+  #   #hidden: yes
+  # }
 
-  dimension: dynamic_dimension {
-    type: string
-    label_from_parameter: choose_dimension
-    sql: {% if choose_dimension._parameter_value == 'dspdealid' %}
-      ${impression_r.dspdealid}
-    {% elsif choose_dimension._parameter_value == 'cntseries' %}
-      ${cntseries}
-    {% elsif choose_dimension._parameter_value == 'cnttitle' %}
-      ${cnttitle}
-    {% elsif choose_dimension._parameter_value == 'cntepisode' %}
-      ${cntepisode}
-    {% elsif choose_dimension._parameter_value == 'cntseason' %}
-      ${cntseason}
-    {% elsif choose_dimension._parameter_value == 'Source' %}
-      ${source}
-    {% elsif choose_dimension._parameter_value == 'isbillable' %}
-      ${isbillable}
-    {% else %}
-      null
-    {% endif %};;
-    #hidden: yes
-  }
+  # dimension: dynamic_dimension {
+  #   type: string
+  #   label_from_parameter: choose_dimension
+  #   sql: {% if choose_dimension._parameter_value == 'dspdealid' %}
+  #     ${impression_r.dspdealid}
+  #   {% elsif choose_dimension._parameter_value == 'cntseries' %}
+  #     ${cntseries}
+  #   {% elsif choose_dimension._parameter_value == 'cnttitle' %}
+  #     ${cnttitle}
+  #   {% elsif choose_dimension._parameter_value == 'cntepisode' %}
+  #     ${cntepisode}
+  #   {% elsif choose_dimension._parameter_value == 'cntseason' %}
+  #     ${cntseason}
+  #   {% elsif choose_dimension._parameter_value == 'Source' %}
+  #     ${source}
+  #   {% elsif choose_dimension._parameter_value == 'isbillable' %}
+  #     ${isbillable}
+  #   {% else %}
+  #     null
+  #   {% endif %};;
+  #   #hidden: yes
+  # }
 
-  parameter: choose_measure{
-    type: unquoted
-    allowed_value: {
-      label: "impressions"
-      value: "impressions"
-    }
-    allowed_value: {
-      label: "user_id"
-      value: "user_id"
-    }
-    #hidden: yes
-  }
+  # parameter: choose_measure{
+  #   type: unquoted
+  #   allowed_value: {
+  #     label: "impressions"
+  #     value: "impressions"
+  #   }
+  #   allowed_value: {
+  #     label: "user_id"
+  #     value: "user_id"
+  #   }
+  #   #hidden: yes
+  # }
 
-  measure: dynamic_measure {
-    type: sum
-    label_from_parameter: choose_measure
-    sql: {% if choose_measure._parameter_value == 'impressions' %}
-      case when ${TABLE}.isbillable then 1 else 0 end
-    {% elsif choose_measure._parameter_value == 'user_id' %}
-      coalesce(${TABLE}.ifa,${TABLE}.ip)
-    {% else %}
-      null
-    {% endif %};;
-    #hidden: yes
-    }
+  # measure: dynamic_measure {
+  #   type: sum
+  #   label_from_parameter: choose_measure
+  #   sql: {% if choose_measure._parameter_value == 'impressions' %}
+  #     case when ${TABLE}.isbillable then 1 else 0 end
+  #   {% elsif choose_measure._parameter_value == 'user_id' %}
+  #     coalesce(${TABLE}.ifa,${TABLE}.ip)
+  #   {% else %}
+  #     null
+  #   {% endif %};;
+  #   #hidden: yes
+  #   }
 
     measure: impressions {
       type: sum

@@ -51,21 +51,96 @@ view: impression_r {
     hidden: yes
   }
 
+  parameter: choose_dimension{
+    type: unquoted
+    allowed_value: {
+      label: "dsp_deal_id"
+      value: "dspdealid"
+    }
+    allowed_value: {
+      label: "Content Series"
+      value: "cntseries"
+    }
+    allowed_value: {
+      label: "Content titles"
+      value: "cnttitle"
+    }
+    allowed_value: {
+      label: "Content episodes"
+      value: "cntepisode"
+    }
+    allowed_value: {
+      label: "Content Season"
+      value: "cntseason"
+    }
+    allowed_value: {
+      label: "Source"
+      value: "Source"
+    }
+    allowed_value: {
+      label: "isbillable"
+      value: "isbillable"
+    }
+    #hidden: yes
+  }
+
+  dimension: dynamic_dimension {
+    type: string
+    label_from_parameter: choose_dimension
+    sql: {% if choose_dimension._parameter_value == 'dspdealid' %}
+      ${impression_r.dspdealid}
+    {% elsif choose_dimension._parameter_value == 'cntseries' %}
+      ${cntseries}
+    {% elsif choose_dimension._parameter_value == 'cnttitle' %}
+      ${cnttitle}
+    {% elsif choose_dimension._parameter_value == 'cntepisode' %}
+      ${cntepisode}
+    {% elsif choose_dimension._parameter_value == 'cntseason' %}
+      ${cntseason}
+    {% elsif choose_dimension._parameter_value == 'Source' %}
+      ${source}
+    {% elsif choose_dimension._parameter_value == 'isbillable' %}
+      ${isbillable}
+    {% else %}
+      null
+    {% endif %};;
+    #hidden: yes
+  }
+
+  parameter: choose_measure{
+    type: unquoted
+    allowed_value: {
+      label: "impressions"
+      value: "impressions"
+    }
+    allowed_value: {
+      label: "user_id"
+      value: "user_id"
+    }
+    #hidden: yes
+  }
+
+  measure: dynamic_measure {
+    type: sum
+    label_from_parameter: choose_measure
+    sql: {% if choose_measure._parameter_value == 'impressions' %}
+      case when ${TABLE}.isbillable then 1 else 0 end
+    {% elsif choose_measure._parameter_value == 'user_id' %}
+      coalesce(${TABLE}.ifa,${TABLE}.ip)
+    {% else %}
+      null
+    {% endif %};;
+    #hidden: yes
+    }
+
+    measure: impressions {
+      type: sum
+      sql: case when ${TABLE}.is_billable then 1 else 0 end ;;
+    }
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_auctionprice {
-    type: sum
-    sql: ${auctionprice} ;;
-    hidden: yes
-  }
-
-  measure: average_auctionprice {
-    type: average
-    sql: ${auctionprice} ;;
-    hidden: yes
-  }
 
   dimension: battr {
     type: string
@@ -146,7 +221,7 @@ view: impression_r {
   dimension: cntepisode {
     type: number
     sql: ${TABLE}.cntepisode ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntgenre {
@@ -182,19 +257,19 @@ view: impression_r {
   dimension: cntseason {
     type: string
     sql: ${TABLE}.cntseason ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntseries {
     type: string
     sql: ${TABLE}.cntseries ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cnttitle {
     type: string
     sql: ${TABLE}.cnttitle ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: commissionconfig_mean {
@@ -400,6 +475,11 @@ view: impression_r {
     type: string
     sql: ${TABLE}.ip ;;
     hidden: yes
+  }
+
+  measure: user_id {
+    type: count_distinct
+    sql: coalesce(${TABLE}.ifa,${TABLE}.ip) ;;
   }
 
   dimension: isbillable {
@@ -846,7 +926,6 @@ view: impression_r {
     type: sum
     label: "Win Price"
     sql: ${TABLE}.winprice ;;
-
   }
 
   dimension: hour {

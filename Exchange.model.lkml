@@ -31,6 +31,10 @@ access_grant: can_view_imp_r {
   user_attribute: ds
   allowed_values: ["DS"]
 }
+access_grant: Mitzi {
+  user_attribute: mitzi
+  allowed_values: ["DS"]
+}
 access_grant: can_view_candidates {
   user_attribute: candidates
   allowed_values: ["candidates"]
@@ -50,10 +54,10 @@ explore: ani_view_data {
   label: "Aniview"
   required_access_grants: [can_view_aniview]
 }
+
 explore: impression_r {
   label: "Impression Raw Data"
-  required_access_grants: [can_view_imp_r]
-
+  required_access_grants: [Mitzi]
 }
 
 explore: appsflyer{

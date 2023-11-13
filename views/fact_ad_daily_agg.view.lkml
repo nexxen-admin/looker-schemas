@@ -990,6 +990,34 @@ view: fact_ad_daily_agg {
     #hidden: yes
   }
 
+  measure: video_first_quartiles {
+    type: sum
+    label: "Video first quartiles"
+    description: "Video reaches 25% of its length"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_video_first_quartiles ;;
+    #hidden: yes
+  }
+
+  measure: video_midpoints {
+    type: sum
+    label: "Video midpoints"
+    description: "Video reaches 50% of its length"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_video_midpoints ;;
+    #hidden: yes
+  }
+
+  measure: video_third_quartiles {
+    type: sum
+    label: "Video third quartiles"
+    description: "Video reaches 75% of its length"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_video_third_quartiles ;;
+    #hidden: yes
+  }
+
+
   measure: slot_requests {
     type: sum
     label: "Slot Requests"

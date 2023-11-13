@@ -14,7 +14,7 @@ view: impression_r {
   dimension: adomain {
     type: string
     sql: ${TABLE}.adomain ;;
-    required_access_grants: [can_view_pub_come_looker]
+    required_access_grants: [can_view_imp_r]
   }
 
   dimension: adsize {
@@ -25,6 +25,7 @@ view: impression_r {
   dimension: api {
     type: string
     sql: ${TABLE}.api ;;
+    required_access_grants: [can_view_imp_r]
   }
 
   dimension: appbundle {

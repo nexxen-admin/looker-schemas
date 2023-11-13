@@ -57,7 +57,7 @@ explore: ani_view_data {
 
 explore: impression_r {
   label: "Impression Raw Data"
-  required_access_grants: [Mitzi]
+  required_access_grants: [Mitzi,can_view_imp_r]
 }
 
 explore: appsflyer{

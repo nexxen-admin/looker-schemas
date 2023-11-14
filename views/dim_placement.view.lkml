@@ -4,7 +4,7 @@ view: dim_placement {
   dimension: bcat {
     type: string
     sql: ${TABLE}.Bcat ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: bidfloor_opti {

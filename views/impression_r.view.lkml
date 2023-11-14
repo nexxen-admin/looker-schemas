@@ -14,7 +14,7 @@ view: impression_r {
   dimension: adomain {
     type: string
     sql: ${TABLE}.adomain ;;
-    required_access_grants: [can_view_imp_r]
+    #required_access_grants: [can_view_imp_r]
   }
 
   dimension: adsize {
@@ -25,7 +25,7 @@ view: impression_r {
   dimension: api {
     type: string
     sql: ${TABLE}.api ;;
-    required_access_grants: [can_view_imp_r]
+    #required_access_grants: [can_view_imp_r]
   }
 
   dimension: appbundle {
@@ -138,7 +138,7 @@ view: impression_r {
 
     measure: impressions {
       type: sum
-      sql: case when ${TABLE}.is_billable then 1 else 0 end ;;
+      sql: case when ${TABLE}.isbillable=1 then 1 else 0 end ;;
     }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -453,7 +453,7 @@ view: impression_r {
   dimension: ifa {
     type: string
     sql: ${TABLE}.ifa ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: impsubtype {
@@ -465,7 +465,7 @@ view: impression_r {
   dimension: imptype {
     type: string
     sql: ${TABLE}.imptype ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: inview {
@@ -477,12 +477,18 @@ view: impression_r {
   dimension: ip {
     type: string
     sql: ${TABLE}.ip ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: user_id {
     type: count_distinct
+    label: "user_id's"
     sql: coalesce(${TABLE}.ifa,${TABLE}.ip) ;;
+  }
+
+  measure: Unique_Reach {
+    type: count_distinct
+    sql: coalesce(${TABLE}.ifa,${TABLE}.ip,${TABLE}.userid) ;;
   }
 
   dimension: isbillable {

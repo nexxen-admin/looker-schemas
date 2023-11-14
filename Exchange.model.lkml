@@ -59,6 +59,9 @@ explore: impression_r {
   label: "Impression Raw Data"
   required_access_grants: [Mitzi]
   hidden: yes
+  always_filter: {
+    filters:[impression_r.dspdealid: ""]
+  }
 }
 
 explore: appsflyer{

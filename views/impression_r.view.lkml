@@ -10,7 +10,6 @@ view: impression_r {
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Adomain" in Explore.
 
-
   dimension: adomain {
     type: string
     sql: ${TABLE}.adomain ;;

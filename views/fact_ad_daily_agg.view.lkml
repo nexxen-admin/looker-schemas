@@ -788,6 +788,12 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: crid {
+    type: string
+    label: "Creative ID"
+    sql: ${TABLE}.crid  ;;
+  }
+
   dimension: a_domain_key {
     type: number
     sql: ${TABLE}.A_Domain_Key ;;

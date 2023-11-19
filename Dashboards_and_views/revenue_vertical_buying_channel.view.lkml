@@ -15,6 +15,16 @@ view: revenue_vertical_buying_channel {
     sql: ${TABLE}.advertiser_category ;;
   }
 
+  dimension: agency {
+    type: string
+    sql: ${TABLE}.agency ;;
+  }
+
+  dimension: advertiser {
+    type: string
+    sql: ${TABLE}.advertiser ;;
+  }
+
 # measure: partition {
 #  type: number
  # sql:  ;;

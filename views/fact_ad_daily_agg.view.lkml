@@ -790,6 +790,7 @@ view: fact_ad_daily_agg {
 
   dimension: crid {
     type: string
+    group_label: "Creatives"
     label: "Creative ID"
     sql: ${TABLE}.crid  ;;
   }

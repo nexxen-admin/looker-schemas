@@ -795,6 +795,13 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.crid  ;;
   }
 
+  dimension: ssp_crid {
+    type: string
+    group_label: "Creatives"
+    label: "SSP Creative ID"
+    sql: ${TABLE}.ssp_crid  ;;
+  }
+
   dimension: a_domain_key {
     type: number
     sql: ${TABLE}.A_Domain_Key ;;

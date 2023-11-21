@@ -149,3 +149,10 @@ explore: peerlogix_Weekly_device_distribution_over_apps {
   required_access_grants: [can_view_acr_group]
   hidden: no
 }
+
+
+explore: peerlogix_weekly_genre_device_ip {
+  label: "peerlogix weekly genre device ip"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}

@@ -9,7 +9,7 @@
         ON AA.tv_program_tremor_id=program_genre.tv_program_tremor_id
         left JOIN dragon.genre
         ON genre.genre_tremor_id=program_genre.genre_tremor_id
-        group by week_date,title
+        group by week_date,genre_name
                  ;;
     }
 

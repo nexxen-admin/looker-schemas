@@ -375,3 +375,8 @@ explore: consolidated_revenue {
   label: "Consolidated Revenue"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: consolidated_graph_data {
+  label: "Consolidated Graph Data"
+  required_access_grants: [can_view_all_tremor]
+}

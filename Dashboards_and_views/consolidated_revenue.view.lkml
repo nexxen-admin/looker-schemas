@@ -174,6 +174,7 @@ view: consolidated_revenue {
   measure: yesterday_revenue {
     type: sum
     sql: ${TABLE}.YESTERDAY_REVENUE ;;
+    label: "Gross Revenue"
     value_format: "$#,##0.00"
   }
 

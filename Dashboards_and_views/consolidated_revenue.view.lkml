@@ -153,7 +153,6 @@ view: consolidated_revenue {
   dimension: subcategory {
     type: string
     sql: ${TABLE}.Subcategory ;;
-    value_format: "$#,##0.00"
   }
 
   measure: yesterday_cost {

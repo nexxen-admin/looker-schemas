@@ -365,3 +365,8 @@ explore: fact_segments_usage_data {
   label: "Segment Usage Data"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: pub_deals_performance {
+  label: "Pub Deals Performance"
+  required_access_grants: [can_view_all_tremor]
+}

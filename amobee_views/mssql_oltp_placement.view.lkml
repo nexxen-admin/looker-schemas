@@ -628,7 +628,7 @@ view: placement {
     type: string
     label: "Placement Status"
     description: "The status of placement (Active, Paused, Inactive)."
-    sql: CASE WHEN NOT ${active} THEN 'Inactive'
+    sql: CASE WHEN NOT ${active} OR ${active} IS NULL THEN 'Inactive'
               ELSE CASE WHEN ${placement_is_paused} THEN 'Paused'
                    ELSE 'Active'
               END

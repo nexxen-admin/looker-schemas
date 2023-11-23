@@ -19,6 +19,7 @@ view: pub_deals_performance {
   measure: cogs {
     type: sum
     sql: ${TABLE}.COGS ;;
+    value_format: "$#,##0.00"
   }
 
   dimension: deal_id {
@@ -83,6 +84,7 @@ view: pub_deals_performance {
   measure: revenue {
     type: sum
     sql: ${TABLE}.Revenue ;;
+    value_format: "$#,##0.00"
   }
 
   measure: wins {

@@ -94,7 +94,7 @@ view: monthly_revenue_dsp_classification_deal {
   measure: split_deal_cogs {
     type: sum
     sql: ${TABLE}.Split_Deal_COGS ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
   }
 
   measure: split_deal_impressions {
@@ -110,13 +110,13 @@ view: monthly_revenue_dsp_classification_deal {
   measure: split_deal_revenue {
     type: sum
     sql: ${TABLE}.Split_Deal_Revenue ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
   }
 
   measure: total_cogs {
     type: sum
     sql: ${TABLE}.Total_COGS ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
   }
 
   measure: total_impressions {

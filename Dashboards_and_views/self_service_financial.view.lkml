@@ -86,6 +86,15 @@ view: self_service_financial {
     type: sum
     sql: ${TABLE}.tremor_video_dsp_fee_pct ;;
   }
+
+  measure: Platform_Fee{
+    type: sum
+    sql: case when ${TABLE}.tremor_video_dsp_fee_base_type='GROSS' THEN (${TABLE}.CostInventory+
+    ${TABLE}.CostData)*${TABLE}.tremor_video_dsp_fee_pct/100
+    when ${TABLE}.tremor_video_dsp_fee_base_type='NET' then ${TABLE}.CostInventory*${TABLE}.tremor_video_dsp_fee_pct/100
+    else 0 END ;;
+    value_format: "$#,##0"
+  }
   measure: count {
     type: count
     drill_fields: [agency_name, advertiser_name]

@@ -26,9 +26,11 @@ view: self_service_financial {
     sql: ${TABLE}.buy_type ;;
   }
 
-  dimension: cost_data {
-    type: number
+  measure: cost_data {
+    type: sum
+    label: "Data Cost"
     sql: ${TABLE}.CostData ;;
+    value_format: "$#,##0"
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -37,7 +39,15 @@ view: self_service_financial {
 
   measure: cost_partner {
     type: sum
+    label: "Partner Cost"
     sql: ${TABLE}.CostPartner ;;
+    value_format: "$#,##0"
+  }
+
+  measure: CostInventory {
+    type: sum
+    label: "Inventory Cost"
+    sql: ${TABLE}.CostInventory ;;
     value_format: "$#,##0"
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.

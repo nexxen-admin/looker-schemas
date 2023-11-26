@@ -385,3 +385,8 @@ explore: self_service_financial {
   label: "Self Service Financial Report"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: monthly_revenue_dsp_classification_deal {
+  label: "Monthly Revenue by DSP, Classification and Deal"
+  required_access_grants: [can_view_all_tremor]
+}

@@ -14,7 +14,7 @@ view: v_timezone {
     type: number
     label: "UTC Offset"
     description: "The number of hours offset from UTC"
-    sql: ${TABLE}.UTC_OFFSET ;;
+    sql: CAST(${TABLE}.UTC_OFFSET AS INT);;
   }
 
   dimension: timezone_description {

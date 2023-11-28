@@ -18,7 +18,6 @@ view: dim_date {
   }
 
   dimension: month_year {
-
     type: string
     sql: month(${TABLE}.Date_Key);;
   }
@@ -48,6 +47,7 @@ view: dim_date {
 
 dimension: is_qtd{
   type: string
+  description: "filter that Specifies timeframe to be quarter to date"
   sql: CASE
     WHEN
       DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) = DATE_PART('YEAR', CURRENT_TIMESTAMP) AND
@@ -59,6 +59,7 @@ dimension: is_qtd{
 
  dimension: is_mtd {
    type: string
+  description: "filter that Specifies timeframe to be month to date"
   sql: CASE
     WHEN
       DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) = DATE_PART('YEAR', CURRENT_TIMESTAMP) AND
@@ -71,6 +72,7 @@ dimension: is_qtd{
 
 dimension: is_ytd {
   type: string
+  description: "filter that Specifies timeframe to be month to date"
   sql: CASE
     WHEN
       DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) = DATE_PART('YEAR', CURRENT_TIMESTAMP) AND
@@ -121,10 +123,9 @@ hidden: yes
   }
 
   dimension: current_month_number_in_quarter{
-
     type: number
     sql: case when ${month_number_in_quarter} = ${is_before_qtd} then ${month_number_in_quarter} end;;
-
+    hidden: yes
   }
 
   dimension: day_number_in_month {
@@ -133,6 +134,7 @@ hidden: yes
   }
 
   dimension: month_number_in_quarter {
+    description: "month number in quarter - jan,apr,jul,oct - 1, feb,may,aug,nov - 2, mar,jun,sep,dec -3"
     type: number
     sql: case when ${month_number} in ('1','4','7','10') then 1
          when ${month_number} in ('2','5','8','11') then 2
@@ -153,41 +155,49 @@ hidden: yes
 
   dimension: day_of_week_name {
     type: string
+    description: "Name of day"
     sql: ${TABLE}.Day_Of_Week_Name ;;
   }
 
   dimension: day_suffix {
     type: string
+    description: "Day number with suffix"
     sql: ${TABLE}.Day_Suffix ;;
   }
 
   dimension: holiday_text {
     type: string
+    description: "Holidays Names"
     sql: ${TABLE}.Holiday_Text ;;
   }
 
   dimension: last_120_days_flag {
     type: number
+    description: "Marks if the data was in the past 120 days"
     sql: ${TABLE}.Last_120_Days_Flag ;;
   }
 
   dimension: last_14_days_flag {
     type: number
+    description: "Marks if the data was in the past 14 days"
     sql: ${TABLE}.Last_14_Days_Flag ;;
   }
 
   dimension: last_180_days_flag {
     type: number
+    description: "Marks if the data was in the past 180 days"
     sql: ${TABLE}.Last_180_Days_Flag ;;
   }
 
   dimension: last_30_days_flag {
     type: number
+    description: "Marks if the data was in the past 30 days"
     sql: ${TABLE}.Last_30_Days_Flag ;;
   }
 
   dimension: last_90_days_flag {
     type: number
+    description: "Marks if the data was in the past 90 days"
     sql: ${TABLE}.Last_90_Days_Flag ;;
   }
 
@@ -208,6 +218,7 @@ hidden: yes
 
   dimension: quarter_name_short {
     type: string
+    description: "Shorten quarter name"
     sql: ${TABLE}.Quarter_Name_Short ;;
   }
 
@@ -244,6 +255,7 @@ hidden: yes
 
   dimension:  Week_Frame {
     label: "Week_Frame"
+    description: "Indicates if date frame is last week, 2 weeks ago or 4 weeks ago"
     type: string
     sql:  CASE WHEN ${TABLE}.Date_Key >= current_date()-28 and ${TABLE}.Date_Key < current_date()-21 THEN '4 Weeks Ago'
            WHEN ${TABLE}.Date_Key >= current_date()-14 and ${TABLE}.Date_Key < current_date()-7 THEN '2 Weeks Ago'

@@ -1938,6 +1938,13 @@ view: fact_ad_daily_agg {
     # hidden: yes
   }
 
+  dimension: win_price {
+    type: number
+    label: "Win Price"
+    sql: ${TABLE}.avg_of_win_price ;;
+    # hidden: yes
+  }
+
   dimension: Genre_Norm_Key {
     type: number
     label: "Genre Norm Key"

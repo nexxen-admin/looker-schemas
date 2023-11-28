@@ -13,6 +13,7 @@ view: dim_buying_channel {
   dimension: buying_channel {
     type: string
     label: "Buying Channel"
+    description: "A platform through which advertisers purchase and manage their digital advertising inventory"
     sql: ${TABLE}.Buying_Channel ;;
   }
 

@@ -334,6 +334,7 @@ explore: new_money_unruly_player_ctrl{
 explore: publishers_bids_breakdown {
   label: "Publishers Bids Breakdown"
   required_access_grants: [can_view_pub_come_looker]
+  hidden: yes
 }
 
 explore: fact_supply_chain {
@@ -344,49 +345,59 @@ explore: fact_supply_chain {
 explore: fact_apac_1_data {
   label: "BD Comm APAC TS"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: fact_apac_2_data {
   label: "BD Comm APAC"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: fact_apac_3_data {
   label: "BD Comm APAC - BD out of APAC"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: fact_emea_data {
   label: "BD Comm EMEA"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: fact_segments_usage_data {
   label: "Segment Usage Data"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: pub_deals_performance {
   label: "Pub Deals Performance"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: consolidated_revenue {
   label: "Consolidated Revenue"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: consolidated_graph_data {
   label: "Consolidated Graph Data"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: self_service_financial {
   label: "Self Service Financial Report"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: monthly_revenue_dsp_classification_deal {
   label: "Monthly Revenue by DSP, Classification and Deal"
   required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }

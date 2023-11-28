@@ -138,6 +138,7 @@ view: dim_deal {
 
   dimension: deal_time {
     type: number
+    description: "Time period of deal"
     sql: datediff(day, ${deal_start}, ${deal_end}) ;;
   }
 
@@ -204,6 +205,7 @@ view: dim_deal {
 
 dimension: deal_status {
   type: string
+  description: "Indicated if the deal is live or finished"
   sql: case when now()>${deal_end} then 'Finished' else 'Live Deal' end ;;
 }
 

@@ -24,14 +24,14 @@ view: v_daily_core_stats_yesterday_demand {
       ,sum(dcs.completion_pct_impressions) as completion_pct_impressions
       ,sum(dcs.units) as units
     FROM demand_mart.daily_core_stats dcs
-    JOIN dim.flight_media_details_base fmd on fmd.flight_media_id = dcs.flight_media_id
-    JOIN dim.campaign_details_base cd on fmd.campaign_id = cd.campaign_id
-    JOIN dim.advertiser_brand_details abd on cd.advertiser_brand_id = abd.advertiser_brand_id
-    JOIN dim.customer_details cud on cd.customer_id = cud.customer_id
+    JOIN dim.flight_media_details_base_view fmd on fmd.flight_media_id = dcs.flight_media_id
+    JOIN dim.campaign_details_base_view cd on fmd.campaign_id = cd.campaign_id
+    JOIN dim.advertiser_brand_details_view abd on cd.advertiser_brand_id = abd.advertiser_brand_id
+    JOIN dim.customer_details_view cud on cd.customer_id = cud.customer_id
     JOIN (
   SELECT dd.date_value
     ,sub.start_timezone
-  FROM dim.day_dimension dd
+  FROM dim.date_dimension dd
   JOIN (
     SELECT max(load_through_date) AS yesterday
       ,start_timezone

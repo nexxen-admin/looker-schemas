@@ -497,6 +497,14 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_media_type.media_type_key}=${fact_ad_daily_agg.media_type_key};;
     relationship: many_to_one
   }
+
+  join: dim_media_name {
+    type: inner
+    view_label: "Request Attributes"
+    sql_on: ${dim_media_name.media_name_key}=${fact_ad_daily_agg.media_name_key};;
+    relationship: many_to_one
+  }
+
   join: dim_rg_blocked {
     type: inner
     view_label: "Impression Attributes"

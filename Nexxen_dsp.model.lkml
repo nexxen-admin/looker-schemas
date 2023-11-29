@@ -1,0 +1,98 @@
+connection: "vertica_amobee"
+
+include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
+ include: "/**/*.view.lkml"                 # include all views in this project
+# include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
+datagroup: CleanCash_datagroup {
+  sql_trigger: SELECT max(date_key) FROM BI_DSP.fact_nexxen_dsp  ;;
+  max_cache_age: "15 hours"
+  label: "Clean Cash Trigger"
+  description: "Triggered when new date is added to ETL"
+}
+
+
+
+explore: fact_nexxen_dsp  {
+    view_name: fact_nexxen_dsp
+    persist_with: CleanCash_datagroup
+    label: "Nexxen DSP"
+    view_label: "Measures"
+
+    join: dim_dsp_creative {
+      type: inner
+      view_label: "Creative"
+      sql_on: ${dim_dsp_creative.creative_id_key}=${fact_nexxen_dsp.creative_id_key} ;;
+      relationship: many_to_one
+    }
+
+    join: dim_dsp_account {
+      type: inner
+      view_label: "Account"
+      sql_on: ${dim_dsp_account.dsp_account_key} = ${fact_nexxen_dsp.account_id_key};;
+      relationship: many_to_one
+
+    }
+
+    join: dim_dsp_advertiser {
+
+      type: inner
+      view_label: "Advertiser"
+      sql_on: ${dim_dsp_advertiser.advertiser_id_key} = ${fact_nexxen_dsp.advertiser_id_key} ;;
+      relationship: many_to_one
+    }
+
+    join: dim_dsp_market {
+      type: inner
+      view_label: "Market"
+      sql_on: ${dim_dsp_market.market_id_key} = ${fact_nexxen_dsp.market_id_key};;
+      relationship: many_to_one
+    }
+
+    join: dim_dsp_package_budget_schedule {
+       type: inner
+       view_label: "Flight & Package"
+       sql_on:${dim_dsp_package_budget_schedule.package_budget_schedule_key}=${fact_nexxen_dsp.package_budget_schedule_key};;
+       relationship: many_to_one
+    }
+
+    join: dim_sfdb_account {
+       type: inner
+      view_label: "Account"
+      sql_on: ${dim_sfdb_account.account_id_key} = ${fact_nexxen_dsp.account_id_key};;
+      relationship: many_to_one
+
+    }
+
+    join: dim_sfdb_opportunity {
+      type: inner
+      view_label: "Opportunity"
+      sql_on: ${dim_sfdb_opportunity.opportunity_id_key} = ${fact_nexxen_dsp.opportunity_id_key} ;;
+      relationship: many_to_one
+    }
+
+    join: dim_sfdb_opportunitylineitemschedule {
+      type: inner
+      view_label: "Opportunity"
+      sql_on: ${dim_sfdb_opportunitylineitemschedule.opportunitylineitemschedule_key} = ${fact_nexxen_dsp.opportunitylineitemschedule_key} ;;
+      relationship: many_to_one
+
+    }
+
+    join:  dim_sfdb_opportunitylineitem {
+      type: inner
+      view_label: "Opportunity"
+      sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
+      relationship: many_to_one
+
+
+    }
+
+    join: dim_sfdb_user {
+
+      type: inner
+      view_label: "Employee"
+      sql_on: ${dim_sfdb_user.user_key_id}=${fact_nexxen_dsp.user_key_id};;
+      relationship: many_to_one
+
+    }
+  }

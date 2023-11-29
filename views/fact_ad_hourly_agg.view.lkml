@@ -550,6 +550,15 @@ view: fact_ad_hourly_agg {
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
   }
 
+  measure: Ad_eCPM{
+    type: number
+    description: "revenue/impressions"
+    label: "Ad eCPM"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${revenue}/NULLIF((${impression_pixel}/1000),0) ;;
+  }
+
   measure: Render_Rate {
     type: number
     label: "Render Rate"

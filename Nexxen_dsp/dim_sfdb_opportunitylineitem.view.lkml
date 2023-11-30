@@ -12,6 +12,7 @@ view: dim_sfdb_opportunitylineitem {
     primary_key: yes
     type: string
     sql: ${TABLE}.id ;;
+    hidden: yes
   }
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.
@@ -25,86 +26,91 @@ view: dim_sfdb_opportunitylineitem {
   dimension: affects_net_of_related_line_items__c {
     type: number
     sql: ${TABLE}.affects_net_of_related_line_items__c ;;
+    hidden: yes
   }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_affects_net_of_related_line_items__c {
-    type: sum
-    sql: ${affects_net_of_related_line_items__c} ;;  }
-  measure: average_affects_net_of_related_line_items__c {
-    type: average
-    sql: ${affects_net_of_related_line_items__c} ;;  }
 
   dimension: cloned_from_line_item__c {
     type: string
     sql: ${TABLE}.cloned_from_line_item__c ;;
+    hidden: yes
   }
 
   dimension: configured_3rd_party_services__c {
     type: string
     sql: ${TABLE}.configured_3rd_party_services__c ;;
+    hidden: yes
   }
 
   dimension: configured_brand_safety__c {
     type: string
     sql: ${TABLE}.configured_brand_safety__c ;;
+    hidden: yes
   }
 
   dimension: configured_creative_format__c {
     type: string
     sql: ${TABLE}.configured_creative_format__c ;;
+    hidden: yes
   }
 
   dimension: configured_creative_size__c {
     type: string
     sql: ${TABLE}.configured_creative_size__c ;;
+    hidden: yes
   }
 
   dimension: configured_creative_type__c {
     type: string
     sql: ${TABLE}.configured_creative_type__c ;;
+    hidden: yes
   }
 
   dimension: configured_device__c {
     type: string
     sql: ${TABLE}.configured_device__c ;;
+    hidden: yes
   }
 
   dimension: configured_product_name__c {
     type: string
+    label: "Configured Product Name"
     sql: ${TABLE}.configured_product_name__c ;;
   }
 
   dimension: configured_retargeting__c {
     type: string
     sql: ${TABLE}.configured_retargeting__c ;;
+    hidden: yes
   }
 
   dimension: configured_sales_packages__c {
     type: string
     sql: ${TABLE}.configured_sales_packages__c ;;
+    hidden: yes
   }
 
   dimension: configured_supply_mandates__c {
     type: string
     sql: ${TABLE}.configured_supply_mandates__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_ages__c {
     type: string
+    label: "Configured Targeting Ages"
     sql: ${TABLE}.configured_targeting_ages__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_behavioral__c {
     type: string
+    label: "Configure Targeting Behavioral"
     sql: ${TABLE}.configured_targeting_behavioral__c ;;
   }
 
   dimension: configured_targeting_cities__c {
     type: string
+    label: "Configured Targeting Cities"
     sql: ${TABLE}.configured_targeting_cities__c ;;
   }
 
@@ -115,51 +121,61 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: configured_targeting_countries__c {
     type: string
+    label: "Configured Targeting Country"
     sql: ${TABLE}.configured_targeting_countries__c ;;
   }
 
   dimension: configured_targeting_dma_al__c {
     type: string
+    label: "Configured Targeting Dma AL"
     sql: ${TABLE}.configured_targeting_dma_al__c ;;
   }
 
   dimension: configured_targeting_dma_mz__c {
     type: string
+    label: "Configures Targeting DMA MZ"
     sql: ${TABLE}.configured_targeting_dma_mz__c ;;
   }
 
   dimension: configured_targeting_ethnicity__c {
     type: string
+    label: "Configures Targeting Ethnicity"
     sql: ${TABLE}.configured_targeting_ethnicity__c ;;
   }
 
   dimension: configured_targeting_exclude__c {
     type: string
+    label: "Configured Targeting Exclude"
     sql: ${TABLE}.configured_targeting_exclude__c ;;
   }
 
   dimension: configured_targeting_gender__c {
     type: string
+    label: "Configured Targeting Gender"
     sql: ${TABLE}.configured_targeting_gender__c ;;
   }
 
   dimension: configured_targeting_household_income__c {
     type: string
+    label: "Configured Targeting Household income"
     sql: ${TABLE}.configured_targeting_household_income__c ;;
   }
 
   dimension: configured_targeting_language__c {
     type: string
+    label: "Configured Targeting language"
     sql: ${TABLE}.configured_targeting_language__c ;;
   }
 
   dimension: configured_targeting_locations__c {
     type: string
+    label: "Configured Targeting Location"
     sql: ${TABLE}.configured_targeting_locations__c ;;
   }
 
   dimension: configured_targeting_region__c {
     type: string
+
     sql: ${TABLE}.configured_targeting_region__c ;;
   }
 
@@ -412,97 +428,117 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: primary_kpi_metric__c {
     type: string
+
     sql: ${TABLE}.primary_kpi_metric__c ;;
   }
 
   dimension: product_configuration__c {
     type: string
     sql: ${TABLE}.product_configuration__c ;;
+    hidden: yes
   }
 
   dimension: product_level_i__c {
     type: string
+    label: "Product Level 1"
     sql: ${TABLE}.product_level_i__c ;;
   }
 
   dimension: quantity {
     type: number
+    label: "Quantity"
     sql: ${TABLE}.quantity ;;
   }
 
   dimension: rate__c {
     type: number
+    label: "Rare"
     sql: ${TABLE}.rate__c ;;
   }
 
   dimension: recovered_record_id__c {
     type: string
     sql: ${TABLE}.recovered_record_id__c ;;
+    hidden: yes
   }
 
   dimension: related_adjustments__c {
     type: number
+    label: "Related Adjustment"
     sql: ${TABLE}.related_adjustments__c ;;
   }
 
   dimension: related_line_items__c {
     type: string
     sql: ${TABLE}.related_line_items__c ;;
+    hidden: yes
   }
 
   dimension: reporting__c {
     type: string
+    label: "Server Reporting"
     sql: ${TABLE}.reporting__c ;;
   }
 
   dimension: sales_engineer__c {
     type: string
     sql: ${TABLE}.sales_engineer__c ;;
+    hidden: yes
   }
 
   dimension: sales_rep__c {
     type: string
     sql: ${TABLE}.sales_rep__c ;;
+    hidden: yes
   }
 
   dimension: secondary_kpi__c {
     type: string
+    label: "Secondary KPI "
     sql: ${TABLE}.secondary_kpi__c ;;
   }
 
   dimension: secondary_kpi_metric__c {
     type: string
+    label: "Secondary KPI Metric"
     sql: ${TABLE}.secondary_kpi_metric__c ;;
   }
 
   dimension: service_type__c {
     type: string
+    label: "Serivce Type"
     sql: ${TABLE}.service_type__c ;;
+
   }
 
   dimension_group: servicedate {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.servicedate ;;
+    hidden: yes
   }
 
   dimension: sortorder {
     type: number
     sql: ${TABLE}.sortorder ;;
+    hidden: yes
   }
 
   dimension: spend__c {
     type: number
+    label: "Line Item Spend"
     sql: ${TABLE}.spend__c ;;
   }
 
   dimension: spend_adjusted__c {
     type: number
+    label: "Line Item Spend Adjusted"
     sql: ${TABLE}.spend_adjusted__c ;;
   }
 
   dimension_group: start_date__c {
     type: time
+    label: "Line Item Start Date"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.start_date__c ;;
   }
@@ -511,26 +547,31 @@ view: dim_sfdb_opportunitylineitem {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.systemmodstamp ;;
+    hidden: yes
   }
 
   dimension: totalprice {
     type: number
+    label: "Total Proce"
     sql: ${TABLE}.totalprice ;;
   }
 
   dimension: unitprice {
     type: number
+    label: "Unit Price"
     sql: ${TABLE}.unitprice ;;
   }
 
   dimension: units__c {
     type: number
+    label: "Booked Units"
     sql: ${TABLE}.units__c ;;
   }
 
   dimension: vat_tax__c {
     type: number
     sql: ${TABLE}.vat_tax__c ;;
+    hidden: yes
   }
   measure: count {
     type: count

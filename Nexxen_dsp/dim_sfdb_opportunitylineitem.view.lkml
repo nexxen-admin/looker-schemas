@@ -236,6 +236,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension_group: end_date__c {
     type: time
+    label: "Line iTEM End Date"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.end_date__c ;;
   }

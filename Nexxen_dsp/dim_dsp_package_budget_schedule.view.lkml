@@ -34,7 +34,7 @@ view: dim_dsp_package_budget_schedule {
 
   dimension: end {
     type:date
-    label: "Date"
+    label: "End Date"
     sql: ${TABLE}.end_date ;;
   }
 
@@ -113,7 +113,7 @@ view: dim_dsp_package_budget_schedule {
 
   dimension: start {
     type: date
-    label: "Date"
+    label: "Start Date"
     sql: ${TABLE}.start_date ;;
   }
 

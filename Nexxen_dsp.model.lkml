@@ -25,14 +25,6 @@ explore: fact_nexxen_dsp  {
       relationship: many_to_one
     }
 
-    join: dim_dsp_account {
-      type: inner
-      view_label: "Account"
-      sql_on: ${dim_dsp_account.dsp_account_key} = ${fact_nexxen_dsp.account_id_key};;
-      relationship: many_to_one
-
-    }
-
     join: dim_dsp_advertiser {
 
       type: inner

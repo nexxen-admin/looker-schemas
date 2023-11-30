@@ -10,9 +10,14 @@ datagroup: CleanCash_datagroup {
   description: "Triggered when new date is added to ETL"
 }
 
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
 
 
 explore: fact_nexxen_dsp  {
+  required_access_grants: [can_view_pub_come_looker]
     view_name: fact_nexxen_dsp
     persist_with: CleanCash_datagroup
     label: "Nexxen DSP"

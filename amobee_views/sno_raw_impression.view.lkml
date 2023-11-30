@@ -1364,7 +1364,7 @@ measure: sum_demand_revenue {
     label: "Impressions"
     description: "The total impressions"
     value_format_name: decimal_0
-    sql: IFNULL(${impressions}, 0) ;;
+    sql: IFNULL(${impressions}, -1) ;;
   }
 
   dimension: inferred_age {
@@ -2012,7 +2012,7 @@ measure: IBMM_Amount{
     label: "Publisher Requests"
     description: "The total number of all requests"
     value_format_name: decimal_0
-    sql: IFNULL(${requests}, 0) ;;
+    sql: IFNULL(${requests}, -1) ;;
   }
 
   dimension: response_format {

@@ -1359,6 +1359,13 @@ measure: sum_demand_revenue {
     sql: ${TABLE}.IMPRESSIONS ;;
   }
 
+  dimension: impressions_is_null {
+    label: "Impression Is Null"
+    description: "The flag that indicates that the impression is empty."
+    type: string
+    sql: CASE WHEN ${impressions} IS NULL THEN 'true' ELSE 'false' END;;
+  }
+
   measure: sum_impressions {
     type: sum
     label: "Impressions"
@@ -2003,6 +2010,13 @@ measure: IBMM_Amount{
     type: number
     hidden: yes
     sql: ${TABLE}.REQUESTS ;;
+  }
+
+  dimension: requests_is_null {
+    label: "Requests Is Null"
+    description: "The flag that indicates that the request is empty."
+    type: string
+    sql: CASE WHEN ${requests} IS NULL THEN 'true' ELSE 'false' END;;
   }
 
 

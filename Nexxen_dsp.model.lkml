@@ -25,6 +25,15 @@ explore: fact_nexxen_dsp  {
       relationship: many_to_one
     }
 
+    join: v_dim_dsp_date {
+      type: inner
+      view_label: "Time Frame"
+      sql_on: ${v_dim_dsp_date.date_key_raw} = ${fact_nexxen_dsp.date_key_raw} ;;
+      relationship: many_to_one
+
+
+    }
+
     join: dim_dsp_advertiser {
 
       type: inner

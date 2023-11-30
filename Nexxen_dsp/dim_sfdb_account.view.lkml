@@ -12,6 +12,7 @@ view: dim_sfdb_account {
     primary_key: yes
     type: string
     sql: ${TABLE}.id ;;
+    # not sure if this is the account id
 
   }
     # Here's what a typical dimension looks like in LookML.
@@ -21,6 +22,8 @@ view: dim_sfdb_account {
   dimension: account_aid__c {
     type: string
     sql: ${TABLE}.account_aid__c ;;
+    hidden: yes
+    # not sure if this is the account id
   }
 
   dimension: account_classification__c {

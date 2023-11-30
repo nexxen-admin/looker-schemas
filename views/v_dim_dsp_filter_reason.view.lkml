@@ -47,20 +47,20 @@ view: v_dim_dsp_filter_reason {
     type: string
     label: "DSP Filter Reason"
     description: "⁃ displayFilter = DSP isn't configured for Display Traffic
-⁃ videoFilter = DSP isn't configured for Video Traffic
-⁃ sspExclude = SSP is in that DSPs exclude list
-⁃ trafficMgt = DSP is currently exceeding QPS configured limits, not current accepting requests
-⁃ sspInclude = SSP isn't in that DSPs include list
-⁃ isSiteFilter = Site is in that DSPs blacklist
-⁃ trafficUserMatch = RX does not have DSPs UserID
-⁃ trafficMgt = DSP is currently exceeding QPS configured limits, not current accepting requests
-⁃ siteIDBlacklist = SiteID is in that DSPs blacklist
-⁃ countryInclude = Country isn't on the DSPs Country Include List
-⁃ rgUserSuspicious = RG is blacklisting that UserID
-⁃ videoSizeExclude = Video Size is on the DSPs exclude list
-⁃ rgSourceRating = DSP is configured for a higher SourceRating than RG noted for that BidRequest
-⁃ blacklist = Global Black list
-⁃ trafficMgmtListLowRPM = QPS by RPM algorithm is throttling that supply bucket to that DSP because of low performance (in order to not exceed QPS limits overall)
+⁃ [videoFilter] = DSP isn't configured for Video Traffic
+⁃ [sspExclude] = SSP is in that DSPs exclude list
+⁃ [trafficMgt] = DSP is currently exceeding QPS configured limits, not current accepting requests
+⁃ [sspInclude] = SSP isn't in that DSPs include list
+⁃ [isSiteFilter] = Site is in that DSPs blacklist
+⁃ [trafficUserMatch] = RX does not have DSPs UserID
+⁃ [trafficMgt] = DSP is currently exceeding QPS configured limits, not current accepting requests
+⁃ [siteIDBlacklist] = SiteID is in that DSPs blacklist
+⁃ [countryInclude] = Country isn't on the DSPs Country Include List
+⁃ [rgUserSuspicious] = RG is blacklisting that UserID
+⁃ [videoSizeExclude] = Video Size is on the DSPs exclude list
+⁃ [rgSourceRating] = DSP is configured for a higher SourceRating than RG noted for that BidRequest
+⁃ [blacklist] = Global Black list
+⁃ [trafficMgmtListLowRPM] = QPS by RPM algorithm is throttling that supply bucket to that DSP because of low performance (in order to not exceed QPS limits overall)
 
 "
     sql: ${TABLE}.DSP_Filter_Reason ;;
@@ -68,6 +68,7 @@ view: v_dim_dsp_filter_reason {
 
   dimension: is_valid_request {
     label: "Is Valid Requests"
+    description: "Requests that aren't filtered out"
     sql: case when ${TABLE}.DSP_Filter_Reason = 'not-filtered'
      then 'True' else 'False' End ;;
 

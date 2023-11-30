@@ -48,7 +48,7 @@ view: dim_publisher {
   }
 
 
-  dimension: dapartment {
+  dimension: department {
     type: string
     description: "Specifies whether the department is BizDev or PubOps"
     label_from_parameter: department_granularity
@@ -68,6 +68,7 @@ view: dim_publisher {
   dimension: office {
     type: string
     label_from_parameter: department_granularity
+    description: "Office of employee"
     sql:
         {% if department_granularity._parameter_value == 'Biz_Dev' %}
                  ${v_dim_employee_biz_dev.employee_office}
@@ -133,13 +134,13 @@ view: dim_publisher {
       type: string
       description: "The status of a publisher in the approval queue in CTRL.
                     values:
-                    New - The publisher filled an online signup form and is waiting to be reviewed.
-                    Content OK - The publishers business details have been validated by business and finance teams.
-                    Content Declined - The publishers business details have been rejected.
-                    Payment Ready - All publisher's payment details in the online form are complete.
-                    Payment Hold - Some of the publisher's payment details in the online form are incomplete or the the finance
+                    [New] - The publisher filled an online signup form and is waiting to be reviewed.
+                    [Content OK] - The publishers business details have been validated by business and finance teams.
+                    [Content Declined] - The publishers business details have been rejected.
+                    [Payment Ready] - All publisher's payment details in the online form are complete.
+                    [Payment Hold] - Some of the publisher's payment details in the online form are incomplete or the the finance
                     teams reviwed the payment details and documents and decided to reject them.
-                    Payment Approved - The finance teams reviews the payment details and documents and decides to approve them.
+                    [Payment Approved] - The finance teams reviews the payment details and documents and decides to approve them.
                     "
       sql: ${TABLE}.signup_step ;;
     }

@@ -1359,12 +1359,19 @@ measure: sum_demand_revenue {
     sql: ${TABLE}.IMPRESSIONS ;;
   }
 
+  dimension: impressions_is_null {
+    label: "Impression Is Null"
+    description: "The flag that indicates that the impression is empty."
+    type: string
+    sql: CASE WHEN ${impressions} IS NULL THEN 'true' ELSE 'false' END;;
+  }
+
   measure: sum_impressions {
     type: sum
     label: "Impressions"
     description: "The total impressions"
     value_format_name: decimal_0
-    sql: IFNULL(${impressions}, -1) ;;
+    sql: ${impressions} ;;
   }
 
   dimension: inferred_age {
@@ -2005,6 +2012,13 @@ measure: IBMM_Amount{
     sql: ${TABLE}.REQUESTS ;;
   }
 
+  dimension: requests_is_null {
+    label: "Requests Is Null"
+    description: "The flag that indicates that the request is empty."
+    type: string
+    sql: CASE WHEN ${requests} IS NULL THEN 'true' ELSE 'false' END;;
+  }
+
 
   measure: sum_publisher_requests {
     type: sum
@@ -2012,7 +2026,7 @@ measure: IBMM_Amount{
     label: "Publisher Requests"
     description: "The total number of all requests"
     value_format_name: decimal_0
-    sql: IFNULL(${requests}, -1) ;;
+    sql: ${requests} ;;
   }
 
   dimension: response_format {

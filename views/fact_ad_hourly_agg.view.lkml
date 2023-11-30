@@ -240,6 +240,7 @@ view: fact_ad_hourly_agg {
 
   measure: click_count {
     type: sum
+    description: "Amount of clicks"
     label: "Clicks"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_click_count ;;

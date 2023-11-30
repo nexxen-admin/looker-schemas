@@ -45,6 +45,7 @@ view: dim_media_name {
 
   dimension: media_name {
     type: string
+    description: "Site or App name depending on the media type"
     sql: ${TABLE}.Media_Name ;;
   }
 

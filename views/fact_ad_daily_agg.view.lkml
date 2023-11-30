@@ -776,6 +776,7 @@ view: fact_ad_daily_agg {
 
   dimension: classification {
     type: string
+    description: "If is first party demand, then 1st party demand, if deal type name = unknown then OMP, else PMP"
     sql: case when ${dim_dsp_seat.Is_1st_Party_Demand}= 'Yes' then '1st_Party_Demand'
               when ${dim_deal_type.deal_type_name} ='unknown' then 'OMP'
               else 'PMP' end ;;
@@ -792,6 +793,7 @@ view: fact_ad_daily_agg {
     type: string
     group_label: "Creatives"
     label: "Creative ID"
+    description: "Unique identifier for creative"
     sql: ${TABLE}.crid  ;;
   }
 
@@ -799,6 +801,7 @@ view: fact_ad_daily_agg {
     type: string
     group_label: "Creatives"
     label: "SSP Creative ID"
+    description: "Unique identifier for ssp creative"
     sql: ${TABLE}.ssp_crid  ;;
   }
 
@@ -851,11 +854,12 @@ view: fact_ad_daily_agg {
     label: "IAS Measurable Impressions"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_ias_measurable_impression ;;
+    description: "Measurable impressions from ias"
   }
 
   measure:: ias_viewability {
     type: number
-    description: "Analyses the video views amount"
+    description: "Analyzes the video views amount"
     value_format: "0.00\%"
     label: "IAS Viewability"
     group_label: "Daily Measures"
@@ -941,6 +945,7 @@ view: fact_ad_daily_agg {
     type: sum
     label: "IAS Total Impression"
     group_label: "Daily Measures"
+    description: "Sum of all impressions from ias"
     sql: ${TABLE}.sum_of_ias_total_impression ;;
 
   }
@@ -948,6 +953,7 @@ view: fact_ad_daily_agg {
     type: sum
     label: "IAS IVT Impressions"
     group_label: "Daily Measures"
+    description: "Sum of ivt impressions from ias"
     sql: ${TABLE}.sum_of_ias_ivt_impression ;;
 
   }
@@ -955,6 +961,7 @@ view: fact_ad_daily_agg {
     type: number
     label: "IAS IVT Rate"
     group_label: "Daily Measures"
+    description: "ias ivt impressions / ias total impressions"
     value_format: "0.00\%"
     sql: (${ias_ivt_impression}/NULLIF(${ias_total_impression},0))*100 ;;
 
@@ -973,6 +980,7 @@ view: fact_ad_daily_agg {
   measure:: ias_viewable_impression {
     type: sum
     label: "IAS Viewable Impressions"
+    description: "Sum of viewable impressions from ias"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_ias_viewable_impression ;;
   }
@@ -1037,7 +1045,6 @@ view: fact_ad_daily_agg {
     label: "Slot Requests"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_slot_requests ;;
-
   }
 
 
@@ -1093,7 +1100,7 @@ view: fact_ad_daily_agg {
     group_label: "Time Frame"
     sql:  min(${TABLE}.Date_Key) ;;
 
-    #hidden: yes
+    hidden: yes
   }
 
 
@@ -1466,6 +1473,7 @@ view: fact_ad_daily_agg {
     group_label: "Daily Measures"
     sql: case when ${dsp_key} in ('3900006','4600005') then ${TABLE}.sum_of_revenue
       else '0' end;;
+      hidden: yes
   }
 
   measure: MediaMath_Rebate_value {
@@ -1475,6 +1483,7 @@ view: fact_ad_daily_agg {
     group_label: "Daily Measures"
     sql: case when ${dsp_key} in ('3900006','4600005') then ((${MediaMath_Revenue})-1000000)*0.5
       else '0' end;;
+    hidden: yes
   }
 
   measure: MediaMath_Rebate_Percent {
@@ -1484,6 +1493,7 @@ view: fact_ad_daily_agg {
     group_label: "Daily Measures"
     sql:  ((${MediaMath_Revenue}-1000000)*0.5)/${MediaMath_Revenue}
       ;;
+    hidden: yes
   }
 
   measure: MM_NC_Rebate {
@@ -1497,6 +1507,7 @@ view: fact_ad_daily_agg {
                      or (ssp_key in ('3000003','3400010','3500005','3600004','3800001','3800002','4000002','4000003','4100003','4100004','4500005','5000003','5600006','5600008','434400001') and ${TABLE}.Placement_Key
                        in ('8980315','13780125','16881034','3000164','29381285','42581092','16881035','16881036'))
                          then 1 else 0 end) =1 then ${revenue} else 0 end) * 0.0335259539604279 * -1;;
+    hidden: yes
   }
 
   measure: revenue_test
@@ -1767,6 +1778,7 @@ view: fact_ad_daily_agg {
   measure: pub_platform_fee {
     type: sum
     label: "pub_platform_fee"
+    description: "A fee the publisher pays to use our platform"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_pub_platform_fee ;;
@@ -1942,6 +1954,7 @@ view: fact_ad_daily_agg {
     type: number
     label: "Win Price"
     sql: ${TABLE}.avg_of_win_price ;;
+    description: "The price in which a bid has won"
     # hidden: yes
   }
 
@@ -2069,6 +2082,7 @@ view: fact_ad_daily_agg {
 
   dimension: pop_row  {
     view_label: "PoP"
+    description: "Takes the 'choose breakdown' parameter and adds a suitable parameter to it"
     label_from_parameter: choose_breakdown
     type: string
     order_by_field: sort_by1 # Important
@@ -2143,12 +2157,14 @@ view: fact_ad_daily_agg {
                 (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
                 EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
                 EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
+    description: "Filters the data to be only month to date"
   }
 
   dimension: qtd_only {
     group_label: "To-Date Filters"
     label: "QTD"
     view_label: "PoP"
+    description: "Filters the data to be only quarter to date"
     type: yesno
     sql: ${date_in_period_date} > TO_DATE(DATE_TRUNC('quarter', CURRENT_DATE())) AND ${date_in_period_date} <
       (TO_DATE(DATEADD('month', 3, CAST(DATE_TRUNC('quarter', CAST(DATE_TRUNC('quarter', CURRENT_DATE()) AS DATE)) AS DATE)))) ;;
@@ -2157,6 +2173,7 @@ view: fact_ad_daily_agg {
   dimension: ytd_only {
     group_label: "To-Date Filters"
     label: "YTD"
+    description: "Filters the data to be only year to date"
     view_label: "PoP"
     type: yesno
     sql:  (EXTRACT(DOY FROM ${date_in_period_date}) < EXTRACT(DOY FROM GETDATE())

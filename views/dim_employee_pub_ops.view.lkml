@@ -48,6 +48,7 @@ view: v_dim_employee_pub_ops {
   dimension: employee_id {
   label: "PubOps ID"
    type: number
+  description: "Unique identifier for employee"
     sql: ${TABLE}.Employee_ID ;;
 
   }

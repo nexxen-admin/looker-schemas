@@ -45,24 +45,24 @@ view: dim_request_status {
     label: "Request Status"
     description: "The Status of the bid request sent by the publisher.
                   Values:
-                  nodspbids - we sent the request to dsp, but the dsp didn’t bid.
-                  nodsp - we don’t have any dsps that we could send this request to.
-                  sspreqthrottled - indicates an internal config problem.
-                  rg-block-user - Rhythm Guard blocked this request.
-                  rg-block-source - Rhythm Guard blocked this request.
-                  bidresponse - we received a response from one or more dsps, but we filtered out the bids due to a bad crid (either not in the whitelist if that DSP has a crid whitelist or in the blacklist) or secure reasons (impression is secure, but the bidresponse adm has 'http' urls instead of 'https'.
-                  blacklist-domainglobal - url blocked due to appearance in global blacklist.
-                  requestdata - the request came from an SSP that’s not active in the system.
-                  rg-block-source-user - Rhythm Guard blocked this request .
-                  buildrequest-missingua - No User Agent.
-                  buildrequest-missingdeviceip - device object needs an ip or ipv6 field.
-                  buildrequest-badpmpreq - a deal that is a private auction but non of the deals in it were set up in our system.
-                  buildrequest-missingsitepage - we require a page in the site object.
-                  buildrequest-blockedglobalcountry - a business decision to excluded inventory from several countries.
-                  buildrequest-impbannernodimensions - Banner inventory requires dimensions like 728x90 or 300x600.
-                  buildrequest-impinvaliddimensions - 0/not a number/out of boundaries dimensions.
-                  buildrequest-impnativenonativerequest - request without video, banner or native object.
-                  buildrequest-impvideonomimes - Mimes is a required field for video (at least for CTRL)."
+                  [nodspbids] - we sent the request to dsp, but the dsp didn’t bid.
+                  [nodsp] - we don’t have any dsps that we could send this request to.
+                  [sspreqthrottled] - indicates an internal config problem.
+                  [rg-block-user] - Rhythm Guard blocked this request.
+                  [rg-block-source] - Rhythm Guard blocked this request.
+                  [bidresponse] - we received a response from one or more dsps, but we filtered out the bids due to a bad crid (either not in the whitelist if that DSP has a crid whitelist or in the blacklist) or secure reasons (impression is secure, but the bidresponse adm has 'http' urls instead of 'https'.
+                  [blacklist-domainglobal] - url blocked due to appearance in global blacklist.
+                  [requestdata] - the request came from an SSP that’s not active in the system.
+                  [rg-block-source-user] - Rhythm Guard blocked this request .
+                  [buildrequest-missingua] - No User Agent.
+                  [buildrequest-missingdeviceip] - device object needs an ip or ipv6 field.
+                  [buildrequest-badpmpreq] - a deal that is a private auction but non of the deals in it were set up in our system.
+                  [buildrequest-missingsitepage] - we require a page in the site object.
+                  [buildrequest-blockedglobalcountry] - a business decision to excluded inventory from several countries.
+                  [buildrequest-impbannernodimensions] - Banner inventory requires dimensions like 728x90 or 300x600.
+                  [buildrequest-impinvaliddimensions] - 0/not a number/out of boundaries dimensions.
+                  [buildrequest-impnativenonativerequest] - request without video, banner or native object.
+                  [buildrequest-impvideonomimes] - Mimes is a required field for video (at least for CTRL)."
     type: string
     sql: case
     when ${TABLE}.Request_Status in ('unknown','nodsp','nodspbids','bidresponse','pass') then 'Admissible'

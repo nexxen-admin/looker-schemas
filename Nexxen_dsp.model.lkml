@@ -25,14 +25,6 @@ explore: fact_nexxen_dsp  {
       relationship: many_to_one
     }
 
-    join: dim_dsp_account {
-      type: inner
-      view_label: "Account"
-      sql_on: ${dim_dsp_account.dsp_account_key} = ${fact_nexxen_dsp.account_id_key};;
-      relationship: many_to_one
-
-    }
-
     join: dim_dsp_advertiser {
 
       type: inner
@@ -57,7 +49,7 @@ explore: fact_nexxen_dsp  {
 
     join: dim_sfdb_account {
        type: inner
-      view_label: "Account"
+      view_label: "Salsforce Account"
       sql_on: ${dim_sfdb_account.account_id_key} = ${fact_nexxen_dsp.account_id_key};;
       relationship: many_to_one
 
@@ -65,14 +57,14 @@ explore: fact_nexxen_dsp  {
 
     join: dim_sfdb_opportunity {
       type: inner
-      view_label: "Opportunity"
+      view_label: "Salsforce Opportunity 1"
       sql_on: ${dim_sfdb_opportunity.opportunity_id_key} = ${fact_nexxen_dsp.opportunity_id_key} ;;
       relationship: many_to_one
     }
 
     join: dim_sfdb_opportunitylineitemschedule {
       type: inner
-      view_label: "Opportunity"
+      view_label: "Salsforce Opportunity 2"
       sql_on: ${dim_sfdb_opportunitylineitemschedule.opportunitylineitemschedule_key} = ${fact_nexxen_dsp.opportunitylineitemschedule_key} ;;
       relationship: many_to_one
 
@@ -80,7 +72,7 @@ explore: fact_nexxen_dsp  {
 
     join:  dim_sfdb_opportunitylineitem {
       type: inner
-      view_label: "Opportunity"
+      view_label: "Salsforce Opportunity 3"
       sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
       relationship: many_to_one
 

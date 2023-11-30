@@ -28,7 +28,7 @@ explore: fact_nexxen_dsp  {
     join: v_dim_dsp_date {
       type: inner
       view_label: "Time Frame"
-      sql_on: ${v_dim_dsp_date.date_key_raw} = ${fact_nexxen_dsp.date_key_raw} ;;
+      sql_on: ${v_dim_dsp_date.date_key_raw} = ${fact_nexxen_dsp.date_key_in_timezone_raw} ;;
       relationship: many_to_one
 
 

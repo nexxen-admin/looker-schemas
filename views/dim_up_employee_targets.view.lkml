@@ -11,6 +11,7 @@ view: dim_up_employee_targets {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+    description: "Unique identifier for employee"
   }
 
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
@@ -37,15 +38,18 @@ view: dim_up_employee_targets {
   dimension: employee_key {
     type: number
     sql: ${TABLE}.employee_key ;;
+    hidden: yes
   }
 
   dimension: team {
     type: string
     sql: ${TABLE}.team ;;
+    description: "Which team the employee if part of - OLV or InApp"
   }
 
   measure: target_amount {
     type: sum
+    description: "The target the employee needs to reach every month"
     sql: ${TABLE}.target_amount ;;
   }
 
@@ -71,6 +75,7 @@ view: dim_up_employee_targets {
 
   dimension: target_type {
     type: string
+    description: "Monthly Target"
     sql: ${TABLE}.target_type ;;
   }
 

@@ -22,22 +22,6 @@ view: dim_dsp_data_center {
     hidden: yes
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_data_center_key {
-    type: sum
-    sql: ${data_center_key} ;;
-    hidden: yes
-  }
-
-  measure: average_data_center_key {
-    type: average
-    sql: ${data_center_key} ;;
-    hidden: yes
-  }
-
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 

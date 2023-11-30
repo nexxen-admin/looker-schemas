@@ -59,17 +59,6 @@ view: dim_deal_brand {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_deal_brand_key {
-    type: sum
-    sql: ${deal_brand_key} ;;
-    hidden: yes
-  }
-
-  measure: average_deal_brand_key {
-    type: average
-    sql: ${deal_brand_key} ;;
-    hidden: yes
-  }
 
   dimension: deal_brand_name {
     type: string

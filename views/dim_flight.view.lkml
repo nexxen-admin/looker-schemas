@@ -9,6 +9,7 @@ view: dim_flight {
 
   dimension: advertiser_id {
     label: "Advertiser ID"
+    description: "Unique identifier for advertiser"
     type: number
     sql: ${TABLE}.Advertiser_ID ;;
   }
@@ -21,6 +22,7 @@ view: dim_flight {
 
   dimension: agency_id {
     label: "Agency ID"
+    description: "Unique identifier for agency"
     type: number
     sql: ${TABLE}.Agency_ID ;;
   }
@@ -45,6 +47,7 @@ view: dim_flight {
 
   dimension: brand_id {
     label: "Brand ID"
+    description: "Unique identifier for brand"
     type: number
     sql: ${TABLE}.Brand_ID ;;
   }
@@ -57,6 +60,7 @@ view: dim_flight {
 
   dimension: budget {
     label: "Budget"
+    description: "Flight budget"
     type: number
     sql: ${TABLE}.Budget ;;
   }

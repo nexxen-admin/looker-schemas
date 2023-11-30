@@ -11,6 +11,7 @@ view: fact_ad_bid_request_daily_agg {
   # This dimension will be called "Ad Size Height Key" in Explore.
 
   parameter: publisher_or_deal{
+    description: "Choose publisher or Deal"
     type: unquoted
     allowed_value: {
       label: "Publisher"
@@ -61,6 +62,7 @@ dimension: dynamic_pub_deal_name {
 
   dimension: dynamic_pub_deal_id_opposite {
     type: string
+    description: "If you choose deal, you will see publisher, and the other way around"
     sql: {% if publisher_or_deal._parameter_value == 'pub_id' %}
       ${dim_deal.deal_id}
     {% elsif publisher_or_deal._parameter_value == 'deal_id' %}
@@ -201,6 +203,7 @@ dimension: dynamic_pub_deal_name {
   measure: click_count {
     type: sum
     label: "Clicks"
+    description: "Number of clicks"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_click_count_from_ad_data ;;
     #hidden: yes
@@ -218,6 +221,7 @@ dimension: dynamic_pub_deal_name {
 
   measure:: cost {
     label: "Cost"
+    description: "Cogs"
     type: sum
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
@@ -226,6 +230,7 @@ dimension: dynamic_pub_deal_name {
 
   measure: sum_of_deal_requests_from_bidrequest {
     type: sum
+    description: "Sum of Deal requests"
     label: "Deal Requests"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_deal_requests_from_bidrequest ;;
@@ -242,6 +247,7 @@ dimension: dynamic_pub_deal_name {
     type: sum
     label: "Outbound Requests"
     group_label: "Daily Measures"
+    description: "Sum of DSP requests"
     sql: ${TABLE}.sum_of_dsp_requests_from_bidrequest ;;
   }
 
@@ -255,18 +261,20 @@ dimension: dynamic_pub_deal_name {
     label: "IAS Measurable Impressions"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_ias_measurable_impression_from_ad_data  ;;
+    description: "Measurable impressions from ias"
   }
 
   measure:: ias_viewable_impression {
     type: sum
     label: "IAS Viewable Impressions"
     group_label: "Daily Measures"
+    description: "Viewable impressions from ias"
     sql:  ${TABLE}.sum_of_ias_viewable_impression_from_ad_data ;;
   }
 
   measure:: ias_viewability {
     type: number
-    description: "Analyses the video views amount"
+    description: "Analyzes the video views amount"
     value_format: "0.00\%"
     label: "IAS Viewability"
     group_label: "Daily Measures"
@@ -276,7 +284,7 @@ dimension: dynamic_pub_deal_name {
   measure: impression_pixel {
     type: sum
     label: "Impressions"
-    description: "Successfully delivered ad impression.   Billable event. ."
+    description: "Successfully delivered ad impression. Billable event."
     #value_format: "#,##0.0,,\"\""
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_impression_pixel_from_ad_data ;;
@@ -327,6 +335,7 @@ dimension: dynamic_pub_deal_name {
   measure: sum_of_pub_platform_fee_from_ad_data {
     type: sum
     label: "Pub Platform Fee"
+    description: "Publisher's platform fee"
     value_format: "$#,##0.00"
     sql: ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
   }
@@ -334,6 +343,7 @@ dimension: dynamic_pub_deal_name {
   measure: sum_of_requests_from_ad_data {
     type: sum
     label: "Bid Requests"
+    description: "Sum of bid requests"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_requests_from_ad_data ;;
     #hidden: yes
@@ -380,6 +390,7 @@ dimension: dynamic_pub_deal_name {
     label: "Net Revenue"
     #sql_distinct_key: ${deal_key} ;;
     value_format: "$#,##0.00"
+    description: "Revenue - Cogs + pub platform fee"
     group_label: "Daily Measures"
     sql: ${revenue} - ${cogs} + ${sum_of_pub_platform_fee_from_ad_data};;
   }
@@ -413,15 +424,18 @@ dimension: dynamic_pub_deal_name {
   measure:: video_completes {
     type: sum
     label: "Video Completes"
+    description: "Sum of videos that were completed"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_completes_from_ad_data ;;
     #hidden: yes
   }
+
   measure:CTR {
     type: number
     label: "CTR"
     value_format: "0.00\%"
     group_label: "Daily Measures"
+    description: "Click count / Impressions"
     sql: (${click_count}/NULLIF(${impression_pixel},0))*100;;
   }
 
@@ -438,6 +452,7 @@ dimension: dynamic_pub_deal_name {
     label: "VCR"
     value_format: "0.00\%"
     group_label: "Daily Measures"
+    description: "Video completes / video starts"
     sql: (${video_completes}/NULLIF(${video_starts},0))*100;;
 
   }
@@ -446,6 +461,7 @@ dimension: dynamic_pub_deal_name {
     type: sum
     label: "Video Starts"
     group_label: "Daily Measures"
+    description: "Sum of videos that have been started"
     sql: ${TABLE}.sum_of_video_starts_from_ad_data ;;
     #hidden: yes
   }
@@ -453,6 +469,7 @@ dimension: dynamic_pub_deal_name {
   measure: video_creative_views {
     type: sum
     label: "Video Creative Views"
+    description: "Sum of video creative views"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_creative_views_from_ad_data ;;
     #hidden: yes
@@ -461,6 +478,7 @@ dimension: dynamic_pub_deal_name {
   measure: video_errors {
     type: sum
     label: "Video Errors"
+    description: "Sum of video errors"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_video_errors_from_ad_data ;;
     #hidden: yes
@@ -1216,6 +1234,7 @@ dimension: dynamic_pub_deal_name {
     type: string
     sql: CASE WHEN ${revenue_lastday_change} > 0.15 THEN "positive"
               WHEN ${revenue_lastday_change} < -0.15 THEN 'negative' ELSE 'none' END ;;
+    description: "Indicates if revenue last day is negative (<-0.15) or positive (>0.15)"
   }
 
 
@@ -1230,7 +1249,7 @@ dimension: dynamic_pub_deal_name {
       label: "Positive Change"
       value: "positive_change"
     }
-
+    hidden: yes
   }
 
   # measure: positive_change{
@@ -1294,11 +1313,13 @@ dimension: dynamic_pub_deal_name {
   measure: deal_stopped {
     type: string
     sql: case when ${Last_day_Revenue}=0 and ${Previous_day_Revenue}>0 then 'Yes' else 'No' end ;;
+    description: "Indicates if the deal had stopped from previous day to last day"
   }
 
   measure: deal_launched {
     type: string
     sql: case when ${Last_day_Revenue}>0 and ${Previous_day_Revenue}=0 then 'Yes' else 'No' end ;;
+    description: "Indicates if the deal was launched since previous day to last day"
   }
 
   measure: revenue_change_from_yesterday_pivot {
@@ -1378,22 +1399,9 @@ dimension: dynamic_pub_deal_name {
       label: "Positive Change"
       value: "positive_change"
     }
+    hidden: yes
 
   }
-
-  # dimension: test {
-
-  #   type: yesno
-  #   sql:  case when ${revenue_lastday_change} > 0.15 then yes else no end ;;
-
-  #   }
-
-
-#   measure: positive_change {
-#     type: sum
-#     filters: [test: "yes"]
-#     sql:  ${TABLE}.sum_of_revenue_from_ad_data;;
-# }
 
 
   dimension: user_matched_key {

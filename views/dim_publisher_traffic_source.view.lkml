@@ -80,7 +80,7 @@ view: dim_publisher_traffic_source {
   dimension: pub_ts_id {
     type: number
     label: "Publisher Traffic Source ID."
-
+    description: "Unique identifier for publisher traffic source"
     sql: ${TABLE}.PUB_TS_ID ;;
     #hidden: yes
   }

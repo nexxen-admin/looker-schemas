@@ -57,14 +57,14 @@ explore: fact_nexxen_dsp  {
 
     join: dim_sfdb_opportunity {
       type: inner
-      view_label: "Salsforce Opportunity 1"
+      view_label: "Salsforce Opportunity"
       sql_on: ${dim_sfdb_opportunity.opportunity_id_key} = ${fact_nexxen_dsp.opportunity_id_key} ;;
       relationship: many_to_one
     }
 
     join: dim_sfdb_opportunitylineitemschedule {
       type: inner
-      view_label: "Salsforce Opportunity 2"
+      view_label: "Salsforce Opportunity"
       sql_on: ${dim_sfdb_opportunitylineitemschedule.opportunitylineitemschedule_key} = ${fact_nexxen_dsp.opportunitylineitemschedule_key} ;;
       relationship: many_to_one
 
@@ -72,7 +72,7 @@ explore: fact_nexxen_dsp  {
 
     join:  dim_sfdb_opportunitylineitem {
       type: inner
-      view_label: "Salsforce Opportunity 3"
+      view_label: "Salsforce Opportunity"
       sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
       relationship: many_to_one
 

@@ -71,18 +71,6 @@ view: v_dim_employee_pub_ops {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_employee_key {
-    type: sum
-    sql: ${employee_key} ;;
-    hidden: yes
-  }
-
-  measure: average_employee_key {
-    type: average
-    sql: ${employee_key} ;;
-    hidden: yes
-  }
-
   dimension: employee_name {
     label: "PubOps Name"
     description: "Name of the PubOps employee"
@@ -124,6 +112,7 @@ view: v_dim_employee_pub_ops {
 
   dimension: employee_office {
     label: "PubOps Office"
+    description: "PubOps office"
     type: string
     sql: ${TABLE}.Employee_Office ;;
 

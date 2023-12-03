@@ -43,10 +43,10 @@ view: dim_sfdb_opportunitylineitemschedule {
 
   dimension_group: end_date__c {
     type: time
-    label: "SF Line Item End Date"
+    label: "SF Line Item End"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.end_date__c ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: is_deleted {
@@ -93,7 +93,7 @@ view: dim_sfdb_opportunitylineitemschedule {
 
   dimension_group: scheduledate {
     type: time
-    label: "SF Line Item Start Date"
+    label: "SF Line Item Start"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.scheduledate ;;
     hidden: yes

@@ -108,6 +108,7 @@ view: v_dim_employee_biz_dev {
 
   dimension: employee_office {
     label: "BizDev Office"
+    description: "BizDev Office"
     type: string
     sql: ${TABLE}.Employee_Office ;;
 

@@ -43,6 +43,7 @@ view: dim_o_domain {
   dimension: top_level_domain {
     type: string
     sql: ${TABLE}.o_domain_top_level ;;
+    description: "highest level in the hierarchical Domain Name System (DNS) structure of the internet"
     label: "Top Level Domain"
   }
 

@@ -73,6 +73,7 @@ view: dim_dsp_seat {
     type: string
     label: "1st Party Demand Desc"
     sql: case when  ${TABLE}.Is_1st_Party_Demand=true then 'Yes' else 'No' end;;
+    hidden: yes
 
   }
 

@@ -12,6 +12,7 @@ view: dim_sfdb_opportunity {
     primary_key: yes
     type: string
     sql: ${TABLE}.id ;;
+    hidden: yes
   }
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.
@@ -20,114 +21,123 @@ view: dim_sfdb_opportunity {
   dimension: account_manager__c {
     type: string
     sql: ${TABLE}.account_manager__c ;;
+    hidden: yes
   }
 
   dimension: account_owner__c {
     type: string
+    label: "Account Manager Name"
     sql: ${TABLE}.account_owner__c ;;
   }
 
   dimension: account_type__c {
     type: string
     sql: ${TABLE}.account_type__c ;;
+    hidden: yes
   }
 
   dimension: accountid {
     type: string
     sql: ${TABLE}.accountid ;;
+    hidden: yes
+
   }
 
   dimension: active_owner__c {
     type: number
     sql: ${TABLE}.active_owner__c ;;
+    hidden: yes
   }
 
   dimension: ae_bet__c {
     type: number
     sql: ${TABLE}.ae_bet__c ;;
+    hidden: yes
   }
 
   dimension: amount {
     type: number
+    label: "Amount"
     sql: ${TABLE}.amount ;;
-  }
-
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_amount {
-    type: sum
-    sql: ${amount} ;;  }
-  measure: average_amount {
-    type: average
-    sql: ${amount} ;;  }
+   }
 
   dimension: approved_by_account_manager__c {
     type: number
     sql: ${TABLE}.approved_by_account_manager__c ;;
+    hidden: yes
   }
 
   dimension: approved_by_client_services_manager__c {
     type: number
     sql: ${TABLE}.approved_by_client_services_manager__c ;;
+    hidden: yes
   }
 
   dimension: approved_by_sales_planner__c {
     type: number
     sql: ${TABLE}.approved_by_sales_planner__c ;;
+    hidden: yes
   }
 
   dimension: approved_quotes__c {
     type: number
     sql: ${TABLE}.approved_quotes__c ;;
+    hidden: yes
   }
 
   dimension: billing_account__c {
     type: string
     sql: ${TABLE}.billing_account__c ;;
+    hidden: yes
   }
 
   dimension: brand_classification__c {
     type: string
+    label: "Brand Clasification"
     sql: ${TABLE}.brand_classification__c ;;
   }
 
   dimension: campaign_manager__c {
     type: string
     sql: ${TABLE}.campaign_manager__c ;;
+    hidden: yes
   }
 
   dimension: campaign_objectives__c {
     type: string
     sql: ${TABLE}.campaign_objectives__c ;;
+    hidden: yes
   }
 
   dimension: cancellation_clause__c {
     type: string
     sql: ${TABLE}.cancellation_clause__c ;;
+    hidden: yes
   }
 
   dimension: change_reason__c {
     type: string
     sql: ${TABLE}.change_reason__c ;;
+    hidden: yes
   }
 
   dimension: client_paperwork__c {
     type: string
     sql: ${TABLE}.client_paperwork__c ;;
+    hidden: yes
   }
 
   dimension: client_services_manager__c {
     type: string
     sql: ${TABLE}.client_services_manager__c ;;
+    hidden: yes
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: closed_date__c {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+  dimension: closed_date__c {
+    type: date
+    label: "Closed Date"
     sql: ${TABLE}.closed_date__c ;;
   }
 
@@ -135,530 +145,636 @@ view: dim_sfdb_opportunity {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.closedate ;;
+    hidden: yes
   }
 
   dimension: confidence_level__c {
     type: string
     sql: ${TABLE}.confidence_level__c ;;
+    hidden: yes
   }
 
   dimension: corp_entity__c {
     type: string
     sql: ${TABLE}.corp_entity__c ;;
+    hidden: yes
   }
 
   dimension: createdbyid {
     type: string
     sql: ${TABLE}.createdbyid ;;
+    hidden: yes
   }
 
-  dimension_group: createddate {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+  dimension: createddate {
+    type: date
+    label: "Created Date"
     sql: ${TABLE}.createddate ;;
   }
 
   dimension: credit_review__c {
     type: string
     sql: ${TABLE}.credit_review__c ;;
+    hidden: yes
   }
 
   dimension: currencyisocode {
     type: string
     sql: ${TABLE}.currencyisocode ;;
+    hidden: yes
   }
 
   dimension: customer_signed_by__c {
     type: string
     sql: ${TABLE}.customer_signed_by__c ;;
+    hidden: yes
   }
 
   dimension_group: db_created {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_created_date ;;
+    hidden: yes
   }
 
   dimension_group: db_updated {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_updated_date ;;
+    hidden: yes
   }
 
   dimension: deal_review_approved__c {
     type: number
     sql: ${TABLE}.deal_review_approved__c ;;
+    hidden: yes
   }
 
   dimension: deal_review_manager__c {
     type: string
     sql: ${TABLE}.deal_review_manager__c ;;
+    hidden: yes
   }
 
   dimension: deal_review_required__c {
     type: string
     sql: ${TABLE}.deal_review_required__c ;;
+    hidden: yes
   }
 
   dimension: deal_review_slide_attachment__c {
     type: string
     sql: ${TABLE}.deal_review_slide_attachment__c ;;
+    hidden: yes
   }
 
   dimension: deal_reviewer_2__c {
     type: string
     sql: ${TABLE}.deal_reviewer_2__c ;;
+    hidden: yes
   }
 
   dimension: deal_reviewer_3__c {
     type: string
     sql: ${TABLE}.deal_reviewer_3__c ;;
+    hidden: yes
   }
 
   dimension: deal_reviewer_4__c {
     type: string
     sql: ${TABLE}.deal_reviewer_4__c ;;
+    hidden: yes
   }
 
   dimension: deal_type__c {
     type: string
+    label: "Opportunity Deal Type"
     sql: ${TABLE}.deal_type__c ;;
   }
 
   dimension: delivery_manager__c {
     type: string
     sql: ${TABLE}.delivery_manager__c ;;
+    hidden: yes
   }
 
   dimension: description {
     type: string
     sql: ${TABLE}.description ;;
+    hidden: yes
+    # no data
   }
 
-  dimension_group: end_date__c {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+  dimension: end_date__c {
+    type: date
+    label: "Opportunity End Date"
     sql: ${TABLE}.end_date__c ;;
   }
 
   dimension: expected_revenue__c {
     type: number
     sql: ${TABLE}.expected_revenue__c ;;
+    hidden: yes
   }
 
   dimension: expectedrevenue {
     type: number
+    label: "Expected Revenue"
     sql: ${TABLE}.expectedrevenue ;;
   }
 
   dimension: expedited_market_request__c {
     type: number
     sql: ${TABLE}.expedited_market_request__c ;;
+    hidden: yes
   }
 
   dimension: external_reference_id__c {
     type: string
     sql: ${TABLE}.external_reference_id__c ;;
+    hidden: yes
   }
 
   dimension: fdw_billing__c {
     type: string
     sql: ${TABLE}.fdw_billing__c ;;
+    hidden: yes
   }
 
   dimension: finance_approved__c {
     type: number
     sql: ${TABLE}.finance_approved__c ;;
+    hidden: yes
   }
 
   dimension: fiscal {
     type: string
     sql: ${TABLE}.fiscal ;;
+    hidden: yes
   }
 
   dimension: fiscalquarter {
     type: number
     sql: ${TABLE}.fiscalquarter ;;
+    hidden: yes
   }
 
   dimension: fiscalyear {
     type: number
     sql: ${TABLE}.fiscalyear ;;
+    hidden: yes
   }
 
   dimension: forecast_opp__c {
     type: number
     sql: ${TABLE}.forecast_opp__c ;;
+    hidden: yes
   }
 
   dimension: forecastcategory {
     type: string
+    label: "Forecast Category"
     sql: ${TABLE}.forecastcategory ;;
   }
 
   dimension: gross_profit__c {
     type: number
     sql: ${TABLE}.gross_profit__c ;;
+    hidden: yes
   }
 
   dimension: has_msa__c {
     type: number
     sql: ${TABLE}.has_msa__c ;;
+    hidden: yes
   }
 
   dimension: hasopportunitylineitem {
     type: number
+    label: "Has Opp Line item?"
     sql: ${TABLE}.hasopportunitylineitem ;;
   }
 
   dimension: is_deleted {
     type: number
     sql: ${TABLE}.is_deleted ;;
+    hidden: yes
   }
 
   dimension: is_it_a_purchase__c {
     type: string
     sql: ${TABLE}.is_it_a_purchase__c ;;
+    hidden: yes
   }
 
   dimension: isclosed {
     type: number
     sql: ${TABLE}.isclosed ;;
+    hidden: yes
   }
 
   dimension: isdeleted {
     type: number
     sql: ${TABLE}.isdeleted ;;
+    hidden: yes
   }
 
   dimension: iswon {
     type: number
     sql: ${TABLE}.iswon ;;
+    hidden: yes
   }
 
   dimension: last_line_item_num__c {
     type: number
     sql: ${TABLE}.last_line_item_num__c ;;
+    hidden: yes
   }
 
   dimension_group: lastactivitydate {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.lastactivitydate ;;
+    hidden: yes
   }
 
   dimension: lastmodifiedbyid {
     type: string
     sql: ${TABLE}.lastmodifiedbyid ;;
+    hidden: yes
   }
 
   dimension_group: lastmodifieddate {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.lastmodifieddate ;;
+    hidden: yes
   }
 
   dimension: leadsource {
     type: string
     sql: ${TABLE}.leadsource ;;
+    hidden: yes
   }
 
   dimension: legacy_amobee_ids__c {
     type: string
     sql: ${TABLE}.legacy_amobee_ids__c ;;
+    hidden: yes
   }
 
   dimension: legacy_turn_ids__c {
     type: string
     sql: ${TABLE}.legacy_turn_ids__c ;;
+    hidden: yes
   }
 
   dimension: line_item_count__c {
     type: number
     sql: ${TABLE}.line_item_count__c ;;
+    hidden: yes
   }
 
   dimension: lob__c {
     type: string
+    label: "Opportunity LOB"
     sql: ${TABLE}.lob__c ;;
   }
 
   dimension: loss_reason__c {
     type: string
     sql: ${TABLE}.loss_reason__c ;;
+    hidden: yes
   }
 
   dimension: loss_reason_details__c {
     type: string
     sql: ${TABLE}.loss_reason_details__c ;;
+    hidden: yes
   }
 
   dimension: market__c {
     type: string
     sql: ${TABLE}.market__c ;;
+    hidden: yes
   }
 
   dimension: market_id__c {
     type: string
     sql: ${TABLE}.market_id__c ;;
+    hidden: yes
   }
 
   dimension: monthly_budget_approved__c {
     type: number
     sql: ${TABLE}.monthly_budget_approved__c ;;
+    hidden: yes
   }
 
   dimension: msa_margin__c {
     type: number
     sql: ${TABLE}.msa_margin__c ;;
+    hidden: yes
   }
 
   dimension: name {
     type: string
+    label: "Opportunity Name"
     sql: ${TABLE}."name" ;;
+
   }
 
   dimension: new_market__c {
     type: number
     sql: ${TABLE}.new_market__c ;;
+    hidden: yes
   }
 
   dimension: new_msa__c {
     type: number
     sql: ${TABLE}.new_msa__c ;;
+    hidden: yes
   }
 
   dimension: new_msa_market__c {
     type: string
     sql: ${TABLE}.new_msa_market__c ;;
+    hidden: yes
   }
 
   dimension: new_msa_market_status__c {
     type: string
     sql: ${TABLE}.new_msa_market_status__c ;;
+    hidden: yes
   }
 
   dimension: nextstep {
     type: string
     sql: ${TABLE}.nextstep ;;
+    hidden: yes
   }
 
   dimension: opportunity_aid__c {
     type: string
     sql: ${TABLE}.opportunity_aid__c ;;
+    hidden: yes
   }
 
   dimension: opportunity_console_id__c {
     type: string
     sql: ${TABLE}.opportunity_console_id__c ;;
+    hidden: yes
   }
 
   dimension: opportunity_id_key {
     type: number
     value_format_name: id
     sql: ${TABLE}.opportunity_id_key ;;
+    hidden: yes
   }
 
   dimension: opportunity_margin__c {
     type: number
     sql: ${TABLE}.opportunity_margin__c ;;
+    hidden: yes
   }
 
   dimension: opportunity_number__c {
     type: string
+    label: "Opportunity Number"
     sql: ${TABLE}.opportunity_number__c ;;
+
   }
 
   dimension: order__c {
     type: string
     sql: ${TABLE}.order__c ;;
+    hidden: yes
   }
 
   dimension: order_generated__c {
     type: number
     sql: ${TABLE}.order_generated__c ;;
+    hidden: yes
   }
 
   dimension: original_record_type__c {
     type: string
     sql: ${TABLE}.original_record_type__c ;;
+    hidden: yes
   }
 
   dimension: owner_code__c {
     type: string
     sql: ${TABLE}.owner_code__c ;;
+    hidden: yes
   }
 
   dimension: ownerid {
     type: string
     sql: ${TABLE}.ownerid ;;
+    hidden: yes
   }
 
   dimension: payment_terms__c {
     type: string
     sql: ${TABLE}.payment_terms__c ;;
+    hidden: yes
   }
 
   dimension: political_advertiser__c {
     type: string
+    label: "Is Political Advertiser?"
     sql: ${TABLE}.political_advertiser__c ;;
   }
 
   dimension: populate_end_date__c {
     type: number
     sql: ${TABLE}.populate_end_date__c ;;
+    hidden: yes
   }
 
   dimension: populate_start_date__c {
     type: number
     sql: ${TABLE}.populate_start_date__c ;;
+    hidden: yes
   }
 
   dimension: pricebook2id {
     type: string
+
     sql: ${TABLE}.pricebook2id ;;
+    hidden: yes
   }
 
   dimension: probability {
     type: number
     sql: ${TABLE}.probability ;;
+    hidden: yes
   }
 
   dimension: products_sold__c {
     type: string
+    label: "Product Sold"
     sql: ${TABLE}.products_sold__c ;;
   }
 
   dimension: proposed_spend__c {
     type: number
+    label: "Proposed Spend"
     sql: ${TABLE}.proposed_spend__c ;;
   }
 
   dimension: record_type__c {
     type: string
     sql: ${TABLE}.record_type__c ;;
+    hidden: yes
   }
 
   dimension: recordtypeid {
     type: string
     sql: ${TABLE}.recordtypeid ;;
+    hidden: yes
   }
 
   dimension: recovered_record_id__c {
     type: string
     sql: ${TABLE}.recovered_record_id__c ;;
+    hidden: yes
   }
 
   dimension: region__c {
     type: string
     sql: ${TABLE}.region__c ;;
+    hidden: yes
   }
 
   dimension: related_account__c {
     type: string
     sql: ${TABLE}.related_account__c ;;
+    hidden: yes
   }
 
   dimension: related_account_aid__c {
     type: string
     sql: ${TABLE}.related_account_aid__c ;;
+    hidden: yes
   }
 
-  dimension_group: rfp_due_date__c {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
+  dimension: rfp_due_date__c {
+    type: date
+    label: "RFP Due Date"
     sql: ${TABLE}.rfp_due_date__c ;;
+    hidden: yes
   }
 
   dimension: rfp_required__c {
     type: number
     sql: ${TABLE}.rfp_required__c ;;
+    hidden: yes
   }
 
   dimension: rfp_rfi_request_attachment__c {
     type: string
     sql: ${TABLE}.rfp_rfi_request_attachment__c ;;
+    hidden: yes
   }
 
   dimension: rfp_rfi_response_attachment__c {
     type: string
     sql: ${TABLE}.rfp_rfi_response_attachment__c ;;
+    hidden: yes
   }
 
   dimension: sales_engineer__c {
     type: string
     sql: ${TABLE}.sales_engineer__c ;;
+    hidden: yes
   }
 
   dimension: sales_planner__c {
     type: string
     sql: ${TABLE}.sales_planner__c ;;
+    hidden: yes
   }
 
   dimension: sales_rep__c {
     type: string
     sql: ${TABLE}.sales_rep__c ;;
+    hidden: yes
   }
 
   dimension: sales_team__c {
     type: string
     sql: ${TABLE}.sales_team__c ;;
+    hidden: yes
   }
 
   dimension: signed_io_attachment__c {
     type: string
     sql: ${TABLE}.signed_io_attachment__c ;;
+    hidden: yes
   }
 
   dimension: signed_msa_attachment__c {
     type: string
     sql: ${TABLE}.signed_msa_attachment__c ;;
+    hidden: yes
   }
 
   dimension: signed_msa_review_case__c {
     type: string
     sql: ${TABLE}.signed_msa_review_case__c ;;
+    hidden: yes
   }
 
   dimension: signed_nda_attachment__c {
     type: string
     sql: ${TABLE}.signed_nda_attachment__c ;;
+    hidden: yes
   }
 
   dimension: special_deal_notes__c {
     type: string
     sql: ${TABLE}.special_deal_notes__c ;;
+    hidden: yes
   }
 
   dimension: special_terms__c {
     type: string
     sql: ${TABLE}.special_terms__c ;;
+    hidden: yes
   }
 
   dimension: stagename {
     type: string
+    label: "Stage Name"
     sql: ${TABLE}.stagename ;;
   }
 
   dimension_group: start_date__c {
     type: time
+    label: "Opportunity Start Date"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.start_date__c ;;
   }
 
   dimension: status__c {
     type: string
+    label: "Status"
     sql: ${TABLE}.status__c ;;
   }
 
   dimension: status_reason__c {
     type: string
     sql: ${TABLE}.status_reason__c ;;
+    hidden: yes
   }
 
   dimension: super_region__c {
     type: string
     sql: ${TABLE}.super_region__c ;;
+    hidden: yes
   }
 
   dimension_group: systemmodstamp {
@@ -669,21 +785,26 @@ view: dim_sfdb_opportunity {
 
   dimension: total_adjusted_spend__c {
     type: number
+    label: "Total Adjusted Spend"
     sql: ${TABLE}.total_adjusted_spend__c ;;
   }
 
   dimension: total_amount__c {
     type: number
+    label: "Total Amount"
     sql: ${TABLE}.total_amount__c ;;
+    hidden: yes
   }
 
   dimension: total_gross_spend__c {
     type: number
+    label: "Total Gross Spand"
     sql: ${TABLE}.total_gross_spend__c ;;
   }
 
   dimension: total_units__c {
     type: number
+    label: "Booked Units"
     sql: ${TABLE}.total_units__c ;;
   }
 
@@ -695,24 +816,29 @@ view: dim_sfdb_opportunity {
   dimension: valid_conversions__c {
     type: string
     sql: ${TABLE}.valid_conversions__c ;;
+    hidden: yes
   }
 
   dimension: vat_tax__c {
     type: number
     sql: ${TABLE}.vat_tax__c ;;
+    hidden: yes
   }
 
   dimension: win_reason__c {
     type: string
+    label: "Win Reason"
     sql: ${TABLE}.win_reason__c ;;
   }
 
   dimension: win_reason_details__c {
     type: string
+    label: "Win Reason dETAILS"
     sql: ${TABLE}.win_reason_details__c ;;
   }
   measure: count {
     type: count
     drill_fields: [id, name, stagename]
+    hidden: yes
   }
 }

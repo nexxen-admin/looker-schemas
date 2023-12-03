@@ -10,9 +10,14 @@ datagroup: CleanCash_datagroup {
   description: "Triggered when new date is added to ETL"
 }
 
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
 
 
 explore: fact_nexxen_dsp  {
+  required_access_grants: [can_view_pub_come_looker]
     view_name: fact_nexxen_dsp
     persist_with: CleanCash_datagroup
     label: "Nexxen DSP"
@@ -23,6 +28,15 @@ explore: fact_nexxen_dsp  {
       view_label: "Creative"
       sql_on: ${dim_dsp_creative.creative_id_key}=${fact_nexxen_dsp.creative_id_key} ;;
       relationship: many_to_one
+    }
+
+    join: v_dim_dsp_date {
+      type: inner
+      view_label: "Time Frame"
+      sql_on: ${v_dim_dsp_date.date_key_raw} = ${fact_nexxen_dsp.date_key_in_timezone_raw} ;;
+      relationship: many_to_one
+
+
     }
 
     join: dim_dsp_advertiser {
@@ -57,14 +71,14 @@ explore: fact_nexxen_dsp  {
 
     join: dim_sfdb_opportunity {
       type: inner
-      view_label: "Salsforce Opportunity 1"
+      view_label: "Salsforce Opportunity"
       sql_on: ${dim_sfdb_opportunity.opportunity_id_key} = ${fact_nexxen_dsp.opportunity_id_key} ;;
       relationship: many_to_one
     }
 
     join: dim_sfdb_opportunitylineitemschedule {
       type: inner
-      view_label: "Salsforce Opportunity 2"
+      view_label: "Salsforce Opportunity"
       sql_on: ${dim_sfdb_opportunitylineitemschedule.opportunitylineitemschedule_key} = ${fact_nexxen_dsp.opportunitylineitemschedule_key} ;;
       relationship: many_to_one
 
@@ -72,7 +86,7 @@ explore: fact_nexxen_dsp  {
 
     join:  dim_sfdb_opportunitylineitem {
       type: inner
-      view_label: "Salsforce Opportunity 3"
+      view_label: "Salsforce Opportunity"
       sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
       relationship: many_to_one
 

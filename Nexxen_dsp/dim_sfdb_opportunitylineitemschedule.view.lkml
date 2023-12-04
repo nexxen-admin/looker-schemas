@@ -12,6 +12,7 @@ view: dim_sfdb_opportunitylineitemschedule {
     primary_key: yes
     type: string
     sql: ${TABLE}.id ;;
+    hidden: yes
   }
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.
@@ -20,6 +21,7 @@ view: dim_sfdb_opportunitylineitemschedule {
   dimension: actualized__c {
     type: number
     sql: ${TABLE}.actualized__c ;;
+    hidden: yes
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
@@ -28,17 +30,21 @@ view: dim_sfdb_opportunitylineitemschedule {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_created_date ;;
+    hidden: yes
   }
 
   dimension_group: db_updated {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_updated_date ;;
+    hidden: yes
   }
+
 
   dimension: description {
     type: string
     sql: ${TABLE}.description ;;
+    hidden: yes
   }
 
   dimension_group: end_date__c {
@@ -52,27 +58,32 @@ view: dim_sfdb_opportunitylineitemschedule {
   dimension: is_deleted {
     type: number
     sql: ${TABLE}.is_deleted ;;
+    hidden: yes
   }
 
   dimension: is_free__c {
     type: number
     sql: ${TABLE}.is_free__c ;;
+    hidden: yes
   }
 
   dimension_group: lastmodifieddate {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.lastmodifieddate ;;
+    hidden: yes
   }
 
   dimension: opportunitylineitemid {
     type: string
+    label: "Salaforce Line Item ID"
     sql: ${TABLE}.opportunitylineitemid ;;
   }
 
   dimension: opportunitylineitemschedule_key {
     type: number
     sql: ${TABLE}.opportunitylineitemschedule_key ;;
+    hidden: yes
   }
 
   dimension: revenue {
@@ -80,34 +91,26 @@ view: dim_sfdb_opportunitylineitemschedule {
     sql: ${TABLE}.revenue ;;
   }
 
-  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
-  # measures for this dimension, but you can also add measures of many different aggregates.
-  # Click on the type parameter to see all the options in the Quick Help panel on the right.
-
-  measure: total_revenue {
-    type: sum
-    sql: ${revenue} ;;  }
-  measure: average_revenue {
-    type: average
-    sql: ${revenue} ;;  }
 
   dimension_group: scheduledate {
     type: time
     label: "SF Line Item Start"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.scheduledate ;;
-    hidden: yes
+   # hidden: yes
   }
 
   dimension_group: systemmodstamp {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.systemmodstamp ;;
+    hidden: yes
   }
 
   dimension: useredits__c {
     type: number
     sql: ${TABLE}.useredits__c ;;
+    hidden: yes
   }
   measure: count {
     type: count

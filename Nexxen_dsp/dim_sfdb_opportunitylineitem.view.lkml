@@ -205,38 +205,44 @@ view: dim_sfdb_opportunitylineitem {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.createddate ;;
+    hidden: yes
   }
 
   dimension: currencyisocode {
     type: string
     sql: ${TABLE}.currencyisocode ;;
+    hidden: yes
   }
 
   dimension_group: db_created {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_created_date ;;
+    hidden: yes
   }
 
   dimension_group: db_updated {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_updated_date ;;
+    hidden: yes
   }
 
   dimension: delivery_manager__c {
     type: string
     sql: ${TABLE}.delivery_manager__c ;;
+    hidden: yes
   }
 
   dimension: description {
     type: string
     sql: ${TABLE}.description ;;
+    hidden: yes
   }
 
   dimension_group: end_date__c {
     type: time
-    label: "Line iTEM End Date"
+    label: "Line Item End Date"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.end_date__c ;;
   }
@@ -249,181 +255,217 @@ view: dim_sfdb_opportunitylineitem {
   dimension: free__c {
     type: string
     sql: ${TABLE}.free__c ;;
+    hidden: yes
   }
 
   dimension: free_reason__c {
     type: string
     sql: ${TABLE}.free_reason__c ;;
+    hidden: yes
   }
 
   dimension: free_reason_other__c {
     type: string
     sql: ${TABLE}.free_reason_other__c ;;
+    hidden: yes
   }
 
   dimension: gross_billable__c {
     type: number
     sql: ${TABLE}.gross_billable__c ;;
+    hidden: yes
   }
 
   dimension: has_product_config__c {
     type: number
     sql: ${TABLE}.has_product_config__c ;;
+    hidden: yes
   }
 
   dimension: hasquantityschedule {
     type: number
     sql: ${TABLE}.hasquantityschedule ;;
+    hidden: yes
   }
 
   dimension: hasrevenueschedule {
     type: number
     sql: ${TABLE}.hasrevenueschedule ;;
+    hidden: yes
   }
 
   dimension: hasschedule {
     type: number
     sql: ${TABLE}.hasschedule ;;
+    hidden: yes
   }
 
   dimension: incremental_amount__c {
     type: number
     sql: ${TABLE}.incremental_amount__c ;;
+    hidden: yes
   }
 
   dimension: io_currency__c {
     type: string
     sql: ${TABLE}.io_currency__c ;;
+    hidden: yes
   }
 
   dimension: is_deleted {
     type: number
     sql: ${TABLE}.is_deleted ;;
+    hidden: yes
   }
 
   dimension: is_free__c {
     type: number
     sql: ${TABLE}.is_free__c ;;
+    hidden: yes
   }
 
   dimension: is_hidden__c {
     type: number
     sql: ${TABLE}.is_hidden__c ;;
+    hidden: yes
   }
 
   dimension: isdeleted {
     type: number
     sql: ${TABLE}.isdeleted ;;
+    hidden: yes
   }
 
   dimension: item_type__c {
     type: string
     sql: ${TABLE}.item_type__c ;;
+    hidden: yes
   }
 
   dimension: lastmodifiedbyid {
     type: string
     sql: ${TABLE}.lastmodifiedbyid ;;
+    hidden: yes
   }
 
   dimension_group: lastmodifieddate {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.lastmodifieddate ;;
+    hidden: yes
   }
 
   dimension: legacy_amobee_ids__c {
     type: string
     sql: ${TABLE}.legacy_amobee_ids__c ;;
+    hidden: yes
   }
 
   dimension: line_item_name__c {
     type: string
+    label: "Line Item Name"
     sql: ${TABLE}.line_item_name__c ;;
   }
 
   dimension: line_item_number__c {
     type: number
+    label: "Line Item Number"
     sql: ${TABLE}.line_item_number__c ;;
   }
 
   dimension: listprice {
     type: number
     sql: ${TABLE}.listprice ;;
+    hidden: yes
   }
 
   dimension: live_status__c {
     type: string
     sql: ${TABLE}.live_status__c ;;
+    hidden: yes
   }
 
   dimension: margin_type__c {
     type: string
     sql: ${TABLE}.margin_type__c ;;
+    hidden: yes
   }
 
   dimension: market__c {
     type: string
     sql: ${TABLE}.market__c ;;
+    hidden: yes
   }
 
   dimension: market_in_effect__c {
     type: number
     sql: ${TABLE}.market_in_effect__c ;;
+    hidden: yes
   }
 
   dimension: net__c {
     type: number
     sql: ${TABLE}.net__c ;;
+    hidden: yes
   }
 
   dimension: opportunity_owner__c {
     type: string
     sql: ${TABLE}.opportunity_owner__c ;;
+    hidden: yes
   }
 
   dimension: opportunityid {
     type: string
     sql: ${TABLE}.opportunityid ;;
+    hidden: yes
   }
 
   dimension: opportunitylineitem_aid__c {
     type: string
     sql: ${TABLE}.opportunitylineitem_aid__c ;;
+    hidden: yes
   }
 
   dimension: opportunitylineitem_key {
     type: number
     sql: ${TABLE}.opportunitylineitem_key ;;
+    hidden: yes
   }
 
   dimension: owner_code__c {
     type: string
     sql: ${TABLE}.owner_code__c ;;
+    hidden: yes
   }
 
   dimension: price_type__c {
     type: string
     sql: ${TABLE}.price_type__c ;;
+    hidden: yes
   }
 
   dimension: price_type_name__c {
     type: string
     sql: ${TABLE}.price_type_name__c ;;
+    hidden: yes
   }
 
   dimension: price_type_select__c {
     type: string
     sql: ${TABLE}.price_type_select__c ;;
+    hidden: yes
   }
 
   dimension: pricebookentryid {
     type: string
     sql: ${TABLE}.pricebookentryid ;;
+    hidden: yes
   }
 
   dimension: primary_kpi__c {
     type: string
+    label: "Primary KPI"
     sql: ${TABLE}.primary_kpi__c ;;
   }
 
@@ -431,6 +473,7 @@ view: dim_sfdb_opportunitylineitem {
     type: string
 
     sql: ${TABLE}.primary_kpi_metric__c ;;
+    hidden: yes
   }
 
   dimension: product_configuration__c {
@@ -443,12 +486,14 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Product Level 1"
     sql: ${TABLE}.product_level_i__c ;;
+    hidden: yes
   }
 
   dimension: quantity {
     type: number
     label: "Quantity"
     sql: ${TABLE}.quantity ;;
+    hidden: yes
   }
 
   dimension: rate__c {
@@ -467,6 +512,7 @@ view: dim_sfdb_opportunitylineitem {
     type: number
     label: "Related Adjustment"
     sql: ${TABLE}.related_adjustments__c ;;
+    hidden: yes
   }
 
   dimension: related_line_items__c {
@@ -577,5 +623,6 @@ view: dim_sfdb_opportunitylineitem {
   measure: count {
     type: count
     drill_fields: [id]
+    hidden: yes
   }
 }

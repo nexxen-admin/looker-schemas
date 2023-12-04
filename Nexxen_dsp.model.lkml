@@ -78,7 +78,7 @@ explore: fact_nexxen_dsp  {
 
     join: dim_sfdb_opportunitylineitemschedule {
       type: inner
-      view_label: "Salsforce Opportunity"
+      view_label: "Salsforce Opportunity Line Item"
       sql_on: ${dim_sfdb_opportunitylineitemschedule.opportunitylineitemschedule_key} = ${fact_nexxen_dsp.opportunitylineitemschedule_key} ;;
       relationship: many_to_one
 
@@ -86,7 +86,7 @@ explore: fact_nexxen_dsp  {
 
     join:  dim_sfdb_opportunitylineitem {
       type: inner
-      view_label: "Salsforce Opportunity"
+      view_label: "Salsforce Opportunity Line Item"
       sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
       relationship: many_to_one
 

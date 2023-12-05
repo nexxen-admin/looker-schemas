@@ -52,7 +52,7 @@ view: v_campaign_details_base {
     ]
     label: "[DST] Begin Time - Local"
     description: "The start time of the Campaign in the Campaign's timezone accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('GMT', ${v_timezone.timezone_name}, TIMESTAMPADD(hour, -${v_timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL))
+    sql: case when ${v_platform_client.use_daylight_saving} then TIMESTAMPADD(hour, -${v_timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL)
       else ${TABLE}.BEGIN_DATETIME_LOCAL end ;;
   }
 
@@ -513,7 +513,7 @@ view: v_campaign_details_base {
     ]
     label: "[DST] End Time - Local"
     description: "The end time of the Campaign in the Campaign's timezone accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('GMT', ${v_timezone.timezone_name}, TIMESTAMPADD(hour, -${v_timezone.utc_offset}, TIMESTAMPADD('minute',-1,${TABLE}.END_DATETIME_LOCAL)))
+    sql: case when ${v_platform_client.use_daylight_saving} then TIMESTAMPADD(hour, -${v_timezone.utc_offset}, TIMESTAMPADD('minute',-1,${TABLE}.END_DATETIME_LOCAL))
       else TIMESTAMPADD('minute',-1,${TABLE}.END_DATETIME_LOCAL) end ;;
   }
 

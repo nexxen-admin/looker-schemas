@@ -452,7 +452,7 @@ view: impression_r {
   dimension: ifa {
     type: string
     sql: ${TABLE}.ifa ;;
-    #hidden: yes
+    hidden: yes
   }
 
   dimension: impsubtype {
@@ -476,7 +476,7 @@ view: impression_r {
   dimension: ip {
     type: string
     sql: ${TABLE}.ip ;;
-    #hidden: yes
+    hidden: yes
   }
 
   measure: user_id {
@@ -644,6 +644,7 @@ view: impression_r {
     type: string
     label: "Orig User ID"
     sql: ${TABLE}.origuserid ;;
+    hidden: yes
   }
 
   dimension: os {
@@ -892,6 +893,7 @@ view: impression_r {
     type: string
     label: "USER ID"
     sql: ${TABLE}.userid ;;
+    hidden: yes
   }
 
   dimension: vastservemethod {

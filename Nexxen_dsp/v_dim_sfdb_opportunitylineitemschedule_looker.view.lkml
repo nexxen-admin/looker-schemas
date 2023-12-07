@@ -17,7 +17,7 @@ view: v_dim_sfdb_opportunitylineitemschedule_looker {
   dimension: is_mismatch{
     type: string
     sql: case when ${id} = 'Unknown' then 'Mismatch' else 'Valid' end ;;
-
+    hidden: yes
   }
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.
@@ -55,8 +55,8 @@ view: v_dim_sfdb_opportunitylineitemschedule_looker {
 
   dimension: opportunitylineitemid {
     type: string
-    label: "Sf_id_new"
     sql: ${TABLE}.opportunitylineitemid ;;
+    hidden: yes
 
   }
 

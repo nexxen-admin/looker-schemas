@@ -60,7 +60,7 @@ explore: fact_nexxen_dsp  {
 
   join: dim_dsp_package_budget_schedule {
     type: inner
-    view_label: "Flight & Package"
+    view_label: "DSP Flight & Package"
     sql_on:${dim_dsp_package_budget_schedule.package_budget_schedule_key}=${fact_nexxen_dsp.package_budget_schedule_key};;
     relationship: many_to_one
   }

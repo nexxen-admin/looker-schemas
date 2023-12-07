@@ -240,7 +240,7 @@ view: fact_ad_hourly_agg {
 
   measure: click_count {
     type: sum
-    description: "Amount of clicks"
+    description: "Number of clicks on the video"
     label: "Clicks"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_click_count ;;
@@ -250,6 +250,7 @@ view: fact_ad_hourly_agg {
   measure:: cogs {
     label: "Cogs"
     type: sum
+    description: "Media Cost (3rd Party SSP or Publisher Cost) - align to cost in CTRL platform"
     value_format: "$#,##0.00"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_cogs ;;
@@ -266,6 +267,7 @@ view: fact_ad_hourly_agg {
   measure: deal_count {
     type: sum
     label: "Deal Count"
+    description: "Count of deals made with a publisher"
     value_format: "$#,##0.00"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_deal_count ;;
@@ -290,6 +292,7 @@ view: fact_ad_hourly_agg {
   measure:: ias_measurable_impression {
     type: sum
     label: "IAS Measurable Impressions"
+    description: "Measurable impressions from ias"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_ias_measurable_impression ;;
   }
@@ -297,6 +300,7 @@ view: fact_ad_hourly_agg {
   measure:: ias_viewability {
     type: number
     value_format: "0.00\%"
+    description: "Analyzes the video views amount"
     label: "IAS Viewability"
     group_label: "Hourly Measures"
     sql: ${ias_viewable_impression}/NULLIF(${ias_measurable_impression},0);;
@@ -306,6 +310,7 @@ view: fact_ad_hourly_agg {
     type: sum
     label: "Total IAS Count"
     group_label: "Hourly Measures"
+    description: "Sum of all impressions from ias"
     sql: ${TABLE}.sum_of_ias_total_impression ;;
     hidden: yes
   }
@@ -321,6 +326,7 @@ view: fact_ad_hourly_agg {
   measure:: ias_viewable_impression {
     type: sum
     label: "IAS Viewable Impressions"
+    description: "Sum of viewable impressions from ias"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_ias_viewable_impression ;;
   }
@@ -328,6 +334,7 @@ view: fact_ad_hourly_agg {
   measure: impression_pixel {
     type: sum
     label: "Impressions"
+    description: "Successfully delivered ad impression. Billable event"
     #value_format: "#,##0.0,,\"\""
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_impression_pixel ;;
@@ -336,6 +343,7 @@ view: fact_ad_hourly_agg {
   measure: impression_win {
     type: sum
     label: "Wins"
+    description: "The win event posts our bid response back to the publisher/ssp, indicating that we have won the bid in their auction"
     #value_format: "#,##0.0,,\"\""
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_impression_win ;;
@@ -354,6 +362,7 @@ view: fact_ad_hourly_agg {
     label: "Moat Impressions IVT"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt ;;
+    description: "The impressions invalid traffic measured by Moat vendor"
     #hidden: yes
   }
 
@@ -362,6 +371,7 @@ view: fact_ad_hourly_agg {
     label: "Moat Measurable Impressions IVT"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable ;;
+    description: "The inventory was blocked due to the inability to measure IVT"
     #hidden: yes
   }
 
@@ -369,6 +379,7 @@ view: fact_ad_hourly_agg {
     type: sum
     label: "Moat Impressions Viewable"
     group_label: "Hourly Measures"
+    description:"The inventory was blocked due to the Viewability threshold"
     sql: ${TABLE}.sum_of_moat_impressions_viewable ;;
     hidden: yes
   }
@@ -377,6 +388,7 @@ view: fact_ad_hourly_agg {
     type: sum
     label: "Moat Impressions Viewable Measurable"
     group_label: "Hourly Measures"
+    description: "The inventory was blocked due to the inability to measure viewability"
     sql: ${TABLE}.sum_of_moat_impressions_viewable_measurable ;;
     #hidden: yes
   }
@@ -385,6 +397,7 @@ view: fact_ad_hourly_agg {
     type: number
     value_format: "0.00\%"
     label: "Moat Viewability"
+    description: "Moat vendor analyses the video views amount"
     group_label: "Hourly Measures"
     sql: ${moat_impressions_viewable}/NULLIF(${moat_impressions_viewable_measurable},0);;
     hidden: yes
@@ -399,6 +412,7 @@ view: fact_ad_hourly_agg {
   measure: requests {
     type: sum
     label: "Inbound Requests"
+    description: "Requests sent to us from the publisher / ssp to the exchange. This count is prior to any filtering and determination of which DSPs the requests are sent to and which Deals are attached to the request"
     #value_format: "#,##0.0,,\"\""
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_requests ;;
@@ -407,14 +421,15 @@ view: fact_ad_hourly_agg {
   measure: responses {
     type: sum
     label: "Bids"
+    description: "Bid responses returned from dsps. There may be more than one bid response per bid request"
     value_format: "#,##0"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_responses ;;
   }
 
-  measure: revenue
-  {
+  measure: revenue {
     type: sum
+    description: "Amount of money we earned"
     label: "Revenue"
     value_format: "$#,##0.00"
     group_label: "Hourly Measures"
@@ -424,6 +439,7 @@ view: fact_ad_hourly_agg {
   measure: rmp_attempts {
     type: sum
     label: "RMP Attempts"
+    description: "When the SSP sends back the bid response to the publisher"
     value_format: "$#,##0.00"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_rmp_attempts ;;
@@ -436,16 +452,19 @@ view: fact_ad_hourly_agg {
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_pub_platform_fee ;;
   }
+
   measure: rmp_requests {
     type: sum
     label: "Pub Requests"
     #value_format: "#,##0.0,,\"\""
+    description: "Requests sent to us from the publisher only to the exchange. This count is prior to any filtering and determination of which DSPs the requests are sent to and which Deals are attached to the request"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_rmp_requests ;;
   }
 
   measure: slot_attempts {
     type: sum
+    description: "The actual amount of attempts each placement trying to play an ad tag"
     label: "Slot Attempts"
     #value_format: "#,##0.0,,\"\""
     group_label: "Hourly Measures"
@@ -470,6 +489,7 @@ view: fact_ad_hourly_agg {
   measure:: video_completes {
     type: sum
     label: "Video Completes"
+    description: "Number of times the video has been completed"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_video_completes ;;
     #hidden: yes
@@ -479,6 +499,7 @@ view: fact_ad_hourly_agg {
     type: sum
     label: "Video Creative Views"
     group_label: "Hourly Measures"
+    description: "Number of times the video creative had been watched"
     sql: ${TABLE}.sum_of_video_creative_views ;;
     #hidden: yes
   }
@@ -487,6 +508,7 @@ view: fact_ad_hourly_agg {
     type: sum
     label: "Video Errors"
     group_label: "Hourly Measures"
+    description: "Number of errors that appeared"
     sql: ${TABLE}.sum_of_video_errors ;;
     #hidden: yes
   }
@@ -506,6 +528,7 @@ view: fact_ad_hourly_agg {
   measure:: video_starts {
     type: sum
     label: "Video Starts"
+    description: "Number of times the video has been started"
     group_label: "Hourly Measures"
     sql: ${TABLE}.sum_of_video_starts ;;
     #hidden: yes
@@ -514,6 +537,7 @@ view: fact_ad_hourly_agg {
   measure: Bid_Rate {
     type: number
     label: "Bid Rate"
+    description: "responses/requests"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
     sql: (${responses}/NULLIF(${requests},0))*100 ;;
@@ -522,6 +546,7 @@ view: fact_ad_hourly_agg {
   measure: Fill_Rate {
     type: number
     label: "Fill Rate"
+    description: "Number of impressions out of the requests"
     value_format: "0.00%"
     group_label: "Hourly Measures"
     sql: (${impression_pixel}/NULLIF(${requests},0))*100 ;;
@@ -530,6 +555,7 @@ view: fact_ad_hourly_agg {
   measure: Net_Revenue {
     type: number
     label: "Net Revenue"
+    description: "Difference between revenue and cogs"
     value_format: "$#,##0.00"
     group_label: "Hourly Measures"
     sql: ${revenue} - ${cogs} ;;
@@ -538,6 +564,7 @@ view: fact_ad_hourly_agg {
   measure: Margin {
     type: number
     label: "Margin%"
+    description: "Difference between revenue and cogs out of total revenue"
     value_format: "0.00"
     group_label: "Hourly Measures"
     sql: ((${revenue} - ${cogs})/NULLIF(${revenue},0))*100 ;;
@@ -545,6 +572,7 @@ view: fact_ad_hourly_agg {
 
   measure: Pub_eCPM {
     type: number
+    description: "Cogs/Impressions"
     label: "Pub eCPM"
     value_format: "$#,##0.00"
     group_label: "Hourly Measures"
@@ -563,6 +591,7 @@ view: fact_ad_hourly_agg {
   measure: Render_Rate {
     type: number
     label: "Render Rate"
+    description: "Impressions/Wins"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
     sql: (${impression_pixel}/NULLIF(${impression_win},0))*100 ;;
@@ -571,6 +600,7 @@ view: fact_ad_hourly_agg {
   measure: Response_Rate {
     type: number
     label: "Response Rate"
+    description: "Responses/Requests"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
     sql: (${responses}/NULLIF(${requests},0))*100 ;;
@@ -578,6 +608,7 @@ view: fact_ad_hourly_agg {
 
   measure: RPM {
     type: number
+    description: "Revenue/Requests"
     label: "RPM"
     value_format: "$#,##0.00"
     group_label: "Hourly Measures"
@@ -587,6 +618,7 @@ view: fact_ad_hourly_agg {
   measure: VTR {
     type: number
     label: "VTR"
+    description: "Number of times the video has been completed out of all the impressions it had"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
     sql: (${video_completes}/NULLIF(${impression_pixel},0))*100;;
@@ -595,6 +627,7 @@ view: fact_ad_hourly_agg {
   measure: VCR {
     type: number
     label: "VCR"
+    description: "Number of times the video has been completed out of the times it has started"
     value_format: "0.00\%"
     group_label: "Hourly Measures"
     sql: (${video_completes}/NULLIF(${video_starts},0))*100;;

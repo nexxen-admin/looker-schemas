@@ -52,7 +52,7 @@ view: v_campaign_details_base {
     ]
     label: "[DST] Begin Time - Local"
     description: "The start time of the Campaign in the Campaign's timezone accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('GMT', ${v_timezone.timezone_name}, TIMESTAMPADD(hour, -${v_timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL))
+    sql: case when ${v_platform_client.use_daylight_saving} then TIMESTAMPADD(hour, -${v_timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.BEGIN_DATETIME_LOCAL end ;;
   }
 
@@ -513,7 +513,7 @@ view: v_campaign_details_base {
     ]
     label: "[DST] End Time - Local"
     description: "The end time of the Campaign in the Campaign's timezone accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('GMT', ${v_timezone.timezone_name}, TIMESTAMPADD(hour, -${v_timezone.utc_offset}, TIMESTAMPADD('minute',-1,${TABLE}.END_DATETIME_LOCAL)))
+    sql: case when ${v_platform_client.use_daylight_saving} then TIMESTAMPADD(hour, -${v_timezone.utc_offset}, TIMESTAMPADD('minute',-1,${TABLE}.END_DATETIME_LOCAL)) AT TIMEZONE ${v_timezone.timezone_name}
       else TIMESTAMPADD('minute',-1,${TABLE}.END_DATETIME_LOCAL) end ;;
   }
 
@@ -651,7 +651,7 @@ view: v_campaign_details_base {
     label: "[DST] Plan Local End Date"
     view_label: "{% if _explore._name == 'auction_log' and _view._name == 'campaign_details_seller' %}Seller Deal Campaign{% elsif _explore._name == 'auction_log' and _view._name == 'campaign_details_buyer' %}Buyer Campaign{% else %}Plan{% endif %}"
     description: "The end date of the Plan in local time accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name}, TIMESTAMPADD(minute, -1, ${TABLE}.PLAN_END_DATE))
+    sql: case when ${v_platform_client.use_daylight_saving} then TIMESTAMPADD(minute, -1, ${TABLE}.PLAN_END_DATE) AT TIMEZONE ${v_timezone.timezone_name}
       else TIMESTAMPADD(minute, -1, ${TABLE}.PLAN_END_DATE) end ;;
   }
 
@@ -668,7 +668,7 @@ view: v_campaign_details_base {
     view_label: "{% if _explore._name == 'auction_log' and _view._name == 'campaign_details_seller' %}Seller Deal Campaign{% elsif _explore._name == 'auction_log' and _view._name == 'campaign_details_buyer' %}Buyer Campaign{% else %}Plan{% endif %}"
     label: "[DST] Plan Local Start Date"
     description: "The start date of the plan in local time accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name}, ${TABLE}.PLAN_START_DATE)
+    sql: case when ${v_platform_client.use_daylight_saving} then ${TABLE}.PLAN_START_DATE AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.PLAN_START_DATE end ;;
   }
 

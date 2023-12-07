@@ -14,10 +14,14 @@ access_grant: can_view_pub_come_looker {
   user_attribute: admins
   allowed_values: ["Looker_Admins"]
 }
+access_grant: can_view_all_tremor {
+  user_attribute: all_tremor
+  allowed_values: ["all_tremor"]
+}
 
 
 explore: fact_nexxen_dsp  {
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_all_tremor]
   view_name: fact_nexxen_dsp
   persist_with: CleanCash_datagroup
   label: "Nexxen DSP"

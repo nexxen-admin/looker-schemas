@@ -39,6 +39,12 @@ view: dim_dsp_package_budget_schedule {
     hidden: yes
   }
 
+  dimension: rpm {
+    type: number
+    label: "RPM"
+    sql: ${TABLE}.rpm ;;
+  }
+
   dimension: flight_impressions {
     type: number
     sql: ${TABLE}.flight_impressions ;;

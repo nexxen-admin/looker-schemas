@@ -1,8 +1,8 @@
-# The name of this view in Looker is "Dim Sfdb Opportunitylineitemschedule"
-view: dim_sfdb_opportunitylineitemschedule {
+# The name of this view in Looker is "V Dim Sfdb Opportunitylineitemschedule Looker"
+view: v_dim_sfdb_opportunitylineitemschedule_looker {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_DSP.v_dim_sfdb_opportunitylineitemschedule ;;
+  sql_table_name: BI_DSP.v_dim_sfdb_opportunitylineitemschedule_looker ;;
   drill_fields: [id]
 
   # This primary key is the unique key for this table in the underlying database.
@@ -12,9 +12,7 @@ view: dim_sfdb_opportunitylineitemschedule {
     primary_key: yes
     type: string
     sql: ${TABLE}.id ;;
-   # hidden: yes
   }
-
 
   dimension: is_mismatch{
     type: string
@@ -30,22 +28,6 @@ view: dim_sfdb_opportunitylineitemschedule {
     sql: ${TABLE}.actualized__c ;;
     hidden: yes
   }
-  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
-  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
-
-  dimension_group: db_created {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.db_created_date ;;
-    hidden: yes
-  }
-
-  dimension_group: db_updated {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.db_updated_date ;;
-    hidden: yes
-  }
 
 
   dimension: description {
@@ -53,19 +35,16 @@ view: dim_sfdb_opportunitylineitemschedule {
     sql: ${TABLE}.description ;;
     hidden: yes
   }
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: end_date__c {
     type: time
-    label: "SF Line Item End"
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    label: "SF line Item End"
+    datatype: date
     sql: ${TABLE}.end_date__c ;;
-    #hidden: yes
-  }
-
-  dimension: is_deleted {
-    type: number
-    sql: ${TABLE}.is_deleted ;;
-    hidden: yes
   }
 
   dimension: is_free__c {
@@ -74,17 +53,11 @@ view: dim_sfdb_opportunitylineitemschedule {
     hidden: yes
   }
 
-  dimension_group: lastmodifieddate {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.lastmodifieddate ;;
-    hidden: yes
-  }
-
   dimension: opportunitylineitemid {
     type: string
-    label: "Salaforce Line Item ID"
+    label: "Sf_id_new"
     sql: ${TABLE}.opportunitylineitemid ;;
+
   }
 
   dimension: opportunitylineitemschedule_key {
@@ -93,18 +66,31 @@ view: dim_sfdb_opportunitylineitemschedule {
     hidden: yes
   }
 
-  dimension: revenue {
+
+  dimension: opportunitylineitem_key{
     type: number
-    sql: ${TABLE}.revenue ;;
+    sql: ${TABLE}.opportunitylineitem_key ;;
+    hidden: yes
+  }
+
+  dimension_group: scheduledate_new {
+    type: time
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    label: "SF Line Item Start"
+    sql: ${TABLE}.scheduledate_new ;;
   }
 
 
   dimension_group: scheduledate {
     type: time
-    label: "SF Line Item Start"
-    timeframes: [raw, time, date, week, month, quarter, year]
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    label: "Start new"
     sql: ${TABLE}.scheduledate ;;
-   # hidden: yes
+    hidden: yes
   }
 
   dimension_group: systemmodstamp {
@@ -122,5 +108,6 @@ view: dim_sfdb_opportunitylineitemschedule {
   measure: count {
     type: count
     drill_fields: [id]
+    hidden: yes
   }
 }

@@ -720,7 +720,7 @@ view: fact_ad_daily_agg {
             <tr>
                 <td style = "padding: 2px">
                   <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound/ep_01_static.png?csf=1&web=1&e=s35gUG">
-                  <source src="https://tremorinternational.sharepoint.com/sites/BIDevelopment/_layouts/15/stream.aspx?id=%2Fsites%2FBIDevelopment%2FShared%20Documents%2FLooker%20Academy%2FOpener%20with%20Sound%2FEp01%5FBuilding%20My%20First%20Report%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview" type="video/mp4">
+                  <source src="https://youtu.be/zCCeO83MiuU?si=Jr2SBesJ6BEpYHGt" type="video/mp4">
                   </video>
                 </td>
 

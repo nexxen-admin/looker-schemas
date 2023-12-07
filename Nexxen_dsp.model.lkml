@@ -10,10 +10,7 @@ datagroup: CleanCash_datagroup {
   description: "Triggered when new date is added to ETL"
 }
 
-access_grant: can_view_pub_come_looker {
-  user_attribute: admins
-  allowed_values: ["Looker_Admins"]
-}
+
 access_grant: can_view_all_tremor {
   user_attribute: all_tremor
   allowed_values: ["all_tremor"]

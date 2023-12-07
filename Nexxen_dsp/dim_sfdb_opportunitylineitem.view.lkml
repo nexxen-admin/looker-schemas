@@ -465,7 +465,7 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Price Type"
     sql: ${TABLE}.price_type__c ;;
-
+   hidden: yes
   }
 
   dimension: price_type_name__c {

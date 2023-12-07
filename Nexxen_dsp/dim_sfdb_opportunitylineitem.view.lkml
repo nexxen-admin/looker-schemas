@@ -260,7 +260,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension_group: end_date__c {
     type: time
-    label: "Line Item End Date"
+    label: "Line Item End"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.end_date__c ;;
   }
@@ -465,14 +465,14 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Price Type"
     sql: ${TABLE}.price_type__c ;;
-    hidden: yes
+
   }
 
   dimension: price_type_name__c {
     type: string
     label: "Price Type Name"
     sql: ${TABLE}.price_type_name__c ;;
-    hidden: yes
+
   }
 
   dimension: price_type_select__c {
@@ -609,7 +609,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension_group: start_date__c {
     type: time
-    label: "Line Item Start Date"
+    label: "Line Item Start"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.start_date__c ;;
   }

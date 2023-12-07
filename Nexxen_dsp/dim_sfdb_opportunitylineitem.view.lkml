@@ -11,8 +11,9 @@ view: dim_sfdb_opportunitylineitem {
   dimension: id {
     primary_key: yes
     type: string
+    label: "opp id"
     sql: ${TABLE}.id ;;
-    hidden: yes
+    #hidden: yes
   }
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.
@@ -255,7 +256,7 @@ view: dim_sfdb_opportunitylineitem {
   dimension: free__c {
     type: string
     sql: ${TABLE}.free__c ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: free_reason__c {

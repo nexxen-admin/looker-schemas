@@ -24,7 +24,7 @@ explore: fact_nexxen_dsp  {
   required_access_grants: [can_view_all_tremor]
   view_name: fact_nexxen_dsp
   persist_with: CleanCash_datagroup
-  label: "Nexxen DSP"
+  label: "TVDSP"
   view_label: "Measures"
 
   join: dim_dsp_creative {

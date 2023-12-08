@@ -794,7 +794,7 @@ view: dim_sfdb_opportunity {
     type: number
     label: "Total Amount"
     sql: ${TABLE}.total_amount__c ;;
-    hidden: yes
+
   }
 
   dimension: total_gross_spend__c {

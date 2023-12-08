@@ -781,6 +781,7 @@ view: dim_sfdb_opportunity {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.systemmodstamp ;;
+    hidden: yes
   }
 
   dimension: total_adjusted_spend__c {

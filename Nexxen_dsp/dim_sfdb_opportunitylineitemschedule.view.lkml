@@ -12,13 +12,14 @@ view: dim_sfdb_opportunitylineitemschedule {
     primary_key: yes
     type: string
     sql: ${TABLE}.id ;;
-   # hidden: yes
+    hidden: yes
   }
 
 
   dimension: is_mismatch{
     type: string
     sql: case when ${id} = 'Unknown' then 'Mismatch' else 'Valid' end ;;
+    hidden: yes
 
   }
     # Here's what a typical dimension looks like in LookML.
@@ -59,7 +60,7 @@ view: dim_sfdb_opportunitylineitemschedule {
     label: "SF Line Item End"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.end_date__c ;;
-    #hidden: yes
+    hidden: yes
   }
 
   dimension: is_deleted {
@@ -85,6 +86,7 @@ view: dim_sfdb_opportunitylineitemschedule {
     type: string
     label: "Salaforce Line Item ID"
     sql: ${TABLE}.opportunitylineitemid ;;
+
   }
 
   dimension: opportunitylineitemschedule_key {
@@ -96,6 +98,7 @@ view: dim_sfdb_opportunitylineitemschedule {
   dimension: revenue {
     type: number
     sql: ${TABLE}.revenue ;;
+    hidden: yes
   }
 
 
@@ -104,7 +107,7 @@ view: dim_sfdb_opportunitylineitemschedule {
     label: "SF Line Item Start"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.scheduledate ;;
-   # hidden: yes
+    hidden: yes
   }
 
   dimension_group: systemmodstamp {
@@ -122,5 +125,7 @@ view: dim_sfdb_opportunitylineitemschedule {
   measure: count {
     type: count
     drill_fields: [id]
+    hidden: yes
   }
+
 }

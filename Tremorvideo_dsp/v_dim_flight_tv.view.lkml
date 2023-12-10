@@ -543,7 +543,7 @@ view: v_dim_flight_tv {
   dimension: tremor_video_dsp_fee_base_type {
     type: string
     sql: ${TABLE}.Tremor_Video_DSP_Fee_Base_Type ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: tremor_video_dsp_fee_base_type_key {

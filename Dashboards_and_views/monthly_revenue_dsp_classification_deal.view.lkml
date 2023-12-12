@@ -2,7 +2,7 @@
 view: monthly_revenue_dsp_classification_deal {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_New.monthly_revenue_dsp_classification_deal ;;
+  sql_table_name: BI_New.monthly_revenue_dsp_classification_deal_new ;;
 
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.

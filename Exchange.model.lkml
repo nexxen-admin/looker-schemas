@@ -82,7 +82,7 @@ explore: publishers_report_monthly_for_finance {
 }
 
 explore: v_fact_ad_daily {
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_all_tremor]
   label: "Fact Ad Daily Exchange"
 
 
@@ -117,6 +117,7 @@ join: v_dim_employee_biz_dev {
     sql_on: ${dim_dsp.dsp_key}=${v_fact_ad_daily.dsp_key} ;;
     relationship: many_to_one
   }
+  hidden: yes
 }
 
 

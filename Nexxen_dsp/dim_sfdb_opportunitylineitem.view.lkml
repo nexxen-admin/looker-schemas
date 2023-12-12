@@ -522,7 +522,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: rate__c {
     type: number
-    label: "Rare"
+    label: "Rate"
     sql: ${TABLE}.rate__c ;;
   }
 

@@ -645,8 +645,9 @@ view: dim_sfdb_opportunity {
 
   dimension: region__c {
     type: string
+    label: "Opportunity Region"
     sql: ${TABLE}.region__c ;;
-    hidden: yes
+
   }
 
   dimension: related_account__c {

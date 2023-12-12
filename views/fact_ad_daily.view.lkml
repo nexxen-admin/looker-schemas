@@ -436,6 +436,12 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.ssp_win_price ;;
   }
 
+  measure: ssp_rev {
+    type: sum
+    sql: ${TABLE}.ssp_bid_price * ${TABLE}.impression_pixel /1000 ;;
+    value_format: "$#,##0.00"
+  }
+
   dimension: usermatched {
     type: number
     sql: ${TABLE}.usermatched ;;

@@ -377,6 +377,15 @@ view: v_fact_ad_daily {
     value_format: "$#,##0"
   }
 
+  measure: Pub_eCPM {
+    type: number
+    label: "Pub eCPM"
+    description: "Cogs/Impressions"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
+  }
+
   dimension: revenue_type {
     type: string
     sql: ${TABLE}.revenue_type ;;
@@ -475,6 +484,11 @@ view: v_fact_ad_daily {
   dimension: diff_floor_price {
     type: number
     sql: ${greatest_bid_floor}-${dsp_bid_price} ;;
+  }
+
+  measure: ssp_bid_price {
+    type: sum
+    sql: ${TABLE}.ssp_bid_price ;;
   }
 
   dimension: range_from_bid_floor{

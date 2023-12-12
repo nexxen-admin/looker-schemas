@@ -53,35 +53,6 @@ view: new_money_unruly_player_ctrl {
   }
 
 
-  measure: AV_impressions {
-    type: sum
-    sql: ${TABLE}.AV_Impressions ;;
-  }
-
-  measure: AV_SF {
-    type: sum
-    sql: ${TABLE}.AV_SF ;;
-  }
-
-  measure: AV_MP_total_rev {
-    type: sum
-    sql: ${TABLE}.AV_MP_total_rev ;;
-  }
-
-  measure: AV_MP_10_CUT {
-    type: sum
-    sql: ${TABLE}.AV_MP_10_cut ;;
-  }
-
-  measure: Pubs_MP {
-    type: sum
-    sql: ${TABLE}.Pubs_MP ;;
-  }
-
-  measure: unruly_5_from_pub_mp {
-    type: sum
-    sql: ${TABLE}.Unruly_5_from_Pub_MP ;;
-  }
 
   dimension: month_year {
     type: string
@@ -101,14 +72,8 @@ view: new_money_unruly_player_ctrl {
 
   dimension: ctrl_publisher_name {
     type: string
-    sql: ${TABLE}.Ctrl_Publisher_Name ;;
+    sql: ${TABLE}.Publisher_Name ;;
   }
-
-  dimension: aniview_publisher_name {
-    type: string
-    sql: ${TABLE}.Aniview_Publisher_Name ;;
-  }
-
 
   measure: requests {
     type: sum
@@ -138,7 +103,5 @@ view: new_money_unruly_player_ctrl {
     type: sum
     sql: ${TABLE}.Wins ;;
   }
-
-
 
 }

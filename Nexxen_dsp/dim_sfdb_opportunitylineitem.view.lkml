@@ -510,7 +510,7 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Product Level 1"
     sql: ${TABLE}.product_level_i__c ;;
-    hidden: yes
+
   }
 
   dimension: quantity {

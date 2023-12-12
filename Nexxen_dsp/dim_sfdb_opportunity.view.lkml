@@ -180,8 +180,9 @@ view: dim_sfdb_opportunity {
 
   dimension: currencyisocode {
     type: string
+    label: " Opportunity Currency"
     sql: ${TABLE}.currencyisocode ;;
-    hidden: yes
+
   }
 
   dimension: customer_signed_by__c {
@@ -261,7 +262,7 @@ view: dim_sfdb_opportunity {
   dimension: description {
     type: string
     sql: ${TABLE}.description ;;
-    hidden: yes
+
     # no data
   }
 

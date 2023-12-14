@@ -274,6 +274,11 @@ view: impression_r {
     #hidden: yes
   }
 
+  dimension: cntchannel {
+    type: string
+    sql: ${TABLE}.cntchannel ;;
+  }
+
   measure: commissionconfig_mean {
     type: number
     sql: ${TABLE}.commissionconfig_mean ;;

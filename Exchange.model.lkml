@@ -61,6 +61,13 @@ explore: impression_r {
   always_filter: {
     filters:[impression_r.dspdealid: ""]
   }
+
+  join: dim_publisher_ssp {
+    type: left_outer
+    view_label: "SSP"
+    sql_on: ${dim_publisher_ssp.pub_id}=${impression_r.pubid} ;;
+    relationship: many_to_one
+  }
 }
 
 explore: appsflyer{

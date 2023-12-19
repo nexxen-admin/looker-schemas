@@ -642,7 +642,7 @@ view: impression_r {
   dimension: origdomain {
     type: string
     sql: ${TABLE}.origdomain ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: origuserid {

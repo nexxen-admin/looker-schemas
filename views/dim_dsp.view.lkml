@@ -69,7 +69,7 @@ view: dim_dsp {
     label: "RX_DSP_Name"
     type: string
     sql: ${TABLE}.DSP_Name ;;
-    hidden: yes
+    #hidden: yes
   }
 
 

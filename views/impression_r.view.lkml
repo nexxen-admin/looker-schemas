@@ -703,7 +703,7 @@ view: impression_r {
   dimension: pubid {
     type: string
     sql: ${TABLE}.pubid ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: publishercost {

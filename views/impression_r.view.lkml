@@ -217,7 +217,7 @@ view: impression_r {
   dimension: cntcontentrating {
     type: string
     sql: ${TABLE}.cntcontentrating ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntepisode {
@@ -229,19 +229,19 @@ view: impression_r {
   dimension: cntgenre {
     type: string
     sql: ${TABLE}.cntgenre ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntlanguage {
     type: string
     sql: ${TABLE}.cntlanguage ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntlanguagenorm {
     type: string
     sql: ${TABLE}.cntlanguagenorm ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntlivestream {
@@ -253,7 +253,7 @@ view: impression_r {
   dimension: cntnetwork {
     type: string
     sql: ${TABLE}.cntnetwork ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntseason {
@@ -451,7 +451,7 @@ view: impression_r {
   dimension: genrenorm {
     type: string
     sql: ${TABLE}.genrenorm ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: ifa {

@@ -260,7 +260,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension_group: end_date__c {
     type: time
-    label: "Line Item End"
+    label: "OPP Line Item End"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.end_date__c ;;
   }
@@ -445,8 +445,9 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: opportunitylineitem_aid__c {
     type: string
+    label: "Case Safe OPP line item ID"
     sql: ${TABLE}.opportunitylineitem_aid__c ;;
-    hidden: yes
+
   }
 
   dimension: opportunitylineitem_key {
@@ -609,7 +610,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension_group: start_date__c {
     type: time
-    label: "Line Item Start"
+    label: "OPP Line Item Start"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.start_date__c ;;
   }

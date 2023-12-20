@@ -306,7 +306,7 @@ view: impression_r {
   dimension: contentratingnorm {
     type: string
     sql: ${TABLE}.contentratingnorm ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: country {

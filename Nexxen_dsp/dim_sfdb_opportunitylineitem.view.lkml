@@ -432,8 +432,9 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: opportunity_owner__c {
     type: string
+    label: "Opportunity Owner"
     sql: ${TABLE}.opportunity_owner__c ;;
-    hidden: yes
+
   }
 
   dimension: opportunityid {

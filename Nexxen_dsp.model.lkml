@@ -76,12 +76,6 @@ explore: fact_nexxen_dsp  {
     sql_on: ${dim_sfdb_opportunity.opportunity_id_key} = ${fact_nexxen_dsp.opportunity_id_key} ;;
     relationship: many_to_one
   }
-  join: dim_sfdb_opportunitylineitemschedule {
-    type: inner
-    view_label: "Salsforce Opportunity Line Item Flight"
-    sql_on: ${dim_sfdb_opportunitylineitemschedule.opportunitylineitemschedule_key} = ${fact_nexxen_dsp.opportunitylineitemschedule_key} ;;
-    relationship: many_to_one
-  }
 
   join: v_dim_sfdb_opportunitylineitemschedule_looker {
     type: inner

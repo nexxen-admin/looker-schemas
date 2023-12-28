@@ -30,6 +30,7 @@ view: fact_nexxen_dsp {
 
   measure: cost {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.cost ;;
   }
 
@@ -74,6 +75,7 @@ view: fact_nexxen_dsp {
 
   measure: impressions {
     type: sum
+    value_format: "#,##0.00"
     sql: ${TABLE}.impressions ;;
   }
 
@@ -107,6 +109,49 @@ view: fact_nexxen_dsp {
   dimension: package_id {
     type: number
     sql: ${TABLE}.package_id ;;
+
+
+  }
+   measure: inventory_cost {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.inventory_cost ;;
+  }
+  measure: inv_cost {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.inv_cost ;;
+  }
+  measure:   brand_safety_data_cost {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.brand_safety_data_cost ;;
+  }
+  measure: first_party_cost {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.first_party_cost ;;
+  }
+  measure: turn_third_party_cost {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.turn_third_party_cost ;;
+  }
+  measure: turn_audience_data_cost {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.turn_audience_data_cost ;;
+  }
+
+  measure: concatenated_brand_intelligence_data_cost {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.  concatenated_brand_intelligence_data_cost ;;
+  }
+  measure: complete_events  {
+    type: sum
+    value_format: "#,##0.00"
+    sql: ${TABLE}.complete_events  ;;
   }
 
   dimension: time_zone_code {

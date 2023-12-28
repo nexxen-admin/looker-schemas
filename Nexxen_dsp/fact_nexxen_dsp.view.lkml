@@ -171,6 +171,7 @@ view: fact_nexxen_dsp {
   dimension: time_zone_code {
     type: string
     sql: ${TABLE}.time_zone_code ;;
+    hidden: yes
   }
 
   dimension: user_key_id {

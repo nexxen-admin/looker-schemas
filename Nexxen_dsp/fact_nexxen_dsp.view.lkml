@@ -15,23 +15,27 @@ view: fact_nexxen_dsp {
     type: number
     value_format_name: id
     sql: ${TABLE}.account_id_key ;;
+    hidden: yes
   }
 
   dimension: advertiser_id_key {
     type: number
     value_format_name: id
     sql: ${TABLE}.advertiser_id_key ;;
+    hidden: yes
   }
 
   measure: clicks {
     type: sum
     sql: ${TABLE}.clicks ;;
+
   }
 
   measure: cost {
     type: sum
     value_format: "$#,##0.00"
     sql: ${TABLE}.cost ;;
+
   }
 
 
@@ -39,6 +43,7 @@ view: fact_nexxen_dsp {
     type: number
     value_format_name: id
     sql: ${TABLE}.creative_id_key ;;
+    hidden: yes
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
@@ -49,6 +54,7 @@ view: fact_nexxen_dsp {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.date_key ;;
+    hidden: yes
   }
 
   dimension_group: date_key_in_timezone {
@@ -56,6 +62,7 @@ view: fact_nexxen_dsp {
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
     datatype: date
+    label: "Date IN Timezona"
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 
@@ -83,32 +90,39 @@ view: fact_nexxen_dsp {
     type: number
     value_format_name: id
     sql: ${TABLE}.market_id_key ;;
+    hidden: yes
   }
 
   dimension: opportunity_id_key {
     type: number
     value_format_name: id
     sql: ${TABLE}.opportunity_id_key ;;
+    hidden: yes
   }
 
   dimension: opportunitylineitem_key {
     type: number
     sql: ${TABLE}.opportunitylineitem_key ;;
+    hidden: yes
   }
 
   dimension: opportunitylineitemschedule_key {
     type: number
     sql: ${TABLE}.opportunitylineitemschedule_key ;;
+    hidden: yes
+
   }
 
   dimension: package_budget_schedule_key {
     type: number
     sql: ${TABLE}.package_budget_schedule_key ;;
+    hidden: yes
   }
 
   dimension: package_id {
     type: number
     sql: ${TABLE}.package_id ;;
+    hidden: yes
 
 
   }
@@ -162,8 +176,10 @@ view: fact_nexxen_dsp {
   dimension: user_key_id {
     type: number
     sql: ${TABLE}.user_key_id ;;
+    hidden: yes
   }
   measure: count {
     type: count
+    hidden: yes
   }
 }

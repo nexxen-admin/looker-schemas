@@ -327,8 +327,9 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: io_currency__c {
     type: string
+    label: "IO Currency"
     sql: ${TABLE}.io_currency__c ;;
-    hidden: yes
+
   }
 
   dimension: is_deleted {

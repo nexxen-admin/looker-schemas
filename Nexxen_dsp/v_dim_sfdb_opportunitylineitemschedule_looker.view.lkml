@@ -56,7 +56,7 @@ view: v_dim_sfdb_opportunitylineitemschedule_looker {
   dimension: opportunitylineitemid {
     type: string
     sql: ${TABLE}.opportunitylineitemid ;;
-    hidden: yes
+
 
   }
 

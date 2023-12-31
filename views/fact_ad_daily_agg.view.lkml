@@ -808,10 +808,19 @@ view: fact_ad_daily_agg {
 
   dimension: ssp_crid {
     type: string
-    group_label: "Creatives"
-    label: "SSP Creative ID"
-    description: "Unique identifier for ssp creative"
     sql: ${TABLE}.ssp_crid  ;;
+  }
+
+  dimension: bizdev_owner_key {
+    type: number
+    sql: ${TABLE}.Bizdev_Owner_Key  ;;
+    hidden: yes
+  }
+
+  dimension: operations_owner_key {
+    type: number
+    sql: ${TABLE}.Operations_Owner_Key  ;;
+    hidden: yes
   }
 
   dimension: a_domain_key {

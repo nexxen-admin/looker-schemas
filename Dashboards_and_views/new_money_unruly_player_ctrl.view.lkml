@@ -33,19 +33,10 @@ view: new_money_unruly_player_ctrl {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: end {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.End_Date ;;
-  }
+  # measure: end_date {
+  #   type: date
+  #   sql: max(${event_date}) ;;
+  # }
 
   measure: impressions {
     type: sum
@@ -98,6 +89,26 @@ view: new_money_unruly_player_ctrl {
     ]
     sql: ${TABLE}.start_date ;;
   }
+
+  dimension_group: end {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.end_date ;;
+  }
+
+# measure: start_date {
+#   type: date
+#   sql: min(event_time) ;;
+# }
+
 
   measure: wins {
     type: sum

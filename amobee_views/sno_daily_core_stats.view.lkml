@@ -2,9 +2,9 @@ view: daily_core_stats {
   label: "Impression Metrics"
   sql_table_name:
   {% if _explore._name == 'demand_metrics' and campaign_bookings._in_query %}
-    (select * from DEMAND_MART.DAILY_CORE_STATS_EXTENDED as daily_core_stats
+    (select * from rawdb.daily_core_stats_on_analytics as daily_core_stats
       where {% condition demand_date %} daily_core_stats.demand_date {% endcondition %})
-    {% else %} DEMAND_MART.DAILY_CORE_STATS_EXTENDED {% endif %} ;;
+    {% else %} rawdb.daily_core_stats_on_analytics {% endif %} ;;
   suggestions: no
 
   dimension: primary_key {

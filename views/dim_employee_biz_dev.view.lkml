@@ -67,18 +67,6 @@ view: v_dim_employee_biz_dev {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_employee_key {
-    type: sum
-    sql: ${employee_key} ;;
-    hidden: yes
-  }
-
-  measure: average_employee_key {
-    type: average
-    sql: ${employee_key} ;;
-    hidden: yes
-  }
-
   dimension: employee_name {
     label: "BizDev Name"
     description: "Name of the BizDev employee"

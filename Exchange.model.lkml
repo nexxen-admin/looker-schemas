@@ -1,4 +1,4 @@
-connection: "bi_prod"
+connection: "vertica_iad"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"                   # include all views in this project
@@ -61,6 +61,13 @@ explore: impression_r {
   always_filter: {
     filters:[impression_r.dspdealid: ""]
   }
+
+  # join: dim_publisher_ssp {
+  #   type: left_outer
+  #   view_label: "SSP"
+  #   sql_on: ${dim_publisher_ssp.pub_id}=${impression_r.pubid} ;;
+  #   relationship: many_to_one
+  # }
 }
 
 explore: appsflyer{
@@ -82,7 +89,7 @@ explore: publishers_report_monthly_for_finance {
 }
 
 explore: v_fact_ad_daily {
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_all_tremor]
   label: "Fact Ad Daily Exchange"
 
 
@@ -117,6 +124,7 @@ join: v_dim_employee_biz_dev {
     sql_on: ${dim_dsp.dsp_key}=${v_fact_ad_daily.dsp_key} ;;
     relationship: many_to_one
   }
+  hidden: yes
 }
 
 

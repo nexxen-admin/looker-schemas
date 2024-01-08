@@ -241,7 +241,7 @@ view: v_fact_ad_daily {
 
   measure: impression_pixel {
     type: sum
-    label: "daily"
+    label: "Impressions"
     sql: ${TABLE}.impression_pixel ;;
   }
 
@@ -374,6 +374,16 @@ view: v_fact_ad_daily {
   measure: revenue {
     type: sum
     sql: ${TABLE}.revenue ;;
+    value_format: "$#,##0"
+  }
+
+  measure: Pub_eCPM {
+    type: number
+    label: "Pub eCPM"
+    description: "Cogs/Impressions"
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
   }
 
   dimension: revenue_type {
@@ -426,6 +436,12 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.ssp_win_price ;;
   }
 
+  measure: ssp_rev {
+    type: sum
+    sql: ${TABLE}.ssp_bid_price * ${TABLE}.impression_pixel /1000 ;;
+    value_format: "$#,##0.00"
+  }
+
   dimension: usermatched {
     type: number
     sql: ${TABLE}.usermatched ;;
@@ -461,8 +477,8 @@ view: v_fact_ad_daily {
     sql: ${TABLE}.video_starts ;;
   }
 
-  measure: win_price {
-    type: sum
+  dimension: win_price {
+    type: number
     sql: ${TABLE}.win_price ;;
   }
 
@@ -474,6 +490,11 @@ view: v_fact_ad_daily {
   dimension: diff_floor_price {
     type: number
     sql: ${greatest_bid_floor}-${dsp_bid_price} ;;
+  }
+
+  measure: ssp_bid_price {
+    type: sum
+    sql: ${TABLE}.ssp_bid_price ;;
   }
 
   dimension: range_from_bid_floor{
@@ -531,6 +552,60 @@ view: v_fact_ad_daily {
       ELSE 'Open Market' END;;
   }
 
+  measure: 26_and_above {
+    type: sum
+    sql: case when ${TABLE}.win_price >=26 then ${TABLE}.impression_pixel end;;
+  }
+
+  measure: 24_to_26 {
+    type: sum
+    sql: case when ${TABLE}.win_price >=24 and ${TABLE}.win_price <= 26 then ${TABLE}.impression_pixel end;;
+  }
+
+  measure: 22_to_24 {
+    type: sum
+    sql: case when ${TABLE}.win_price >=22 and ${TABLE}.win_price <= 24 then ${TABLE}.impression_pixel end;;
+  }
+
+  measure: 20_to_22 {
+    type: sum
+    sql: case when ${TABLE}.win_price >=20 and ${TABLE}.win_price <= 22 then ${TABLE}.impression_pixel end;;
+  }
+
+  measure: 18_to_20 {
+    type: sum
+    sql: case when ${TABLE}.win_price >=18 and ${TABLE}.win_price <= 20 then ${TABLE}.impression_pixel end;;
+  }
+
+  measure: 16_to_18 {
+    type: sum
+    sql: case when ${TABLE}.win_price >=18 and ${TABLE}.win_price <= 18 then ${TABLE}.impression_pixel end;;
+  }
+
+  measure: 14_to_16 {
+    type: sum
+    sql: case when ${TABLE}.win_price >=14 and ${TABLE}.win_price <= 16 then ${TABLE}.impression_pixel end;;
+  }
+
+  measure: 12_to_14 {
+    type: sum
+    sql: case when ${TABLE}.win_price >=12 and ${TABLE}.win_price <= 14 then ${TABLE}.impression_pixel end;;
+  }
+
+  measure: 10_to_12 {
+    type: sum
+    sql: case when ${TABLE}.win_price >=10 and ${TABLE}.win_price <= 12 then ${TABLE}.impression_pixel end;;
+  }
+
+  measure: 8_to_10 {
+    type: sum
+    sql: case when ${TABLE}.win_price >= 8 and ${TABLE}.win_price <= 10 then ${TABLE}.impression_pixel end;;
+  }
+
+  measure: 8_and_below {
+    type: sum
+    sql: case when ${TABLE}.win_price < 8 then ${TABLE}.impression_pixel end;;
+  }
 
   measure: count {
     type: count

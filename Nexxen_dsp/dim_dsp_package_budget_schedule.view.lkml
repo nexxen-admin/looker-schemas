@@ -2,7 +2,7 @@
 view: dim_dsp_package_budget_schedule {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_DSP.dim_dsp_package_budget_schedule ;;
+  sql_table_name: BI_DSP.v_dim_dsp_package_budget_schedule ;;
 
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
@@ -36,6 +36,13 @@ view: dim_dsp_package_budget_schedule {
     type:date
     label: "End Date"
     sql: ${TABLE}.end_date ;;
+    hidden: yes
+  }
+
+  dimension: rpm {
+    type: number
+    label: "RPM"
+    sql: ${TABLE}.rpm ;;
   }
 
   dimension: flight_impressions {
@@ -115,6 +122,19 @@ view: dim_dsp_package_budget_schedule {
     type: date
     label: "Start Date"
     sql: ${TABLE}.start_date ;;
+    hidden: yes
+  }
+
+  dimension: end_date_in_timezone {
+    type: date
+    label: "DSP SF End Date"
+    sql: ${TABLE}.end_date_in_timezone ;;
+  }
+
+  dimension: start_date_in_timezone {
+    type: date
+    label: "DSP SF Start Date "
+    sql: ${TABLE}.start_date_in_timezone ;;
   }
 
 }

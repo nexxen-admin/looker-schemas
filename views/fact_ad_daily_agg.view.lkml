@@ -719,8 +719,8 @@ view: fact_ad_daily_agg {
     <table>
             <tr>
                 <td style = "padding: 2px">
-                  <video controls width="480" poster = "https://tremorinternational.sharepoint.com/:i:/r/sites/BIDevelopment/Shared%20Documents/Looker%20Academy/Opener%20with%20Sound/ep_01_static.png?csf=1&web=1&e=s35gUG">
-                  <source src="https://tremorinternational.sharepoint.com/sites/BIDevelopment/_layouts/15/stream.aspx?id=%2Fsites%2FBIDevelopment%2FShared%20Documents%2FLooker%20Academy%2FOpener%20with%20Sound%2FEp01%5FBuilding%20My%20First%20Report%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview" type="video/mp4">
+                  <video controls width="480">
+                  <source src="https://tremorinternational.sharepoint.com/sites/BIDevelopment/_layouts/15/embed.aspx?UniqueId=77a83130-b015-4715-952a-7902a0138681&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" type="video/mp4">
                   </video>
                 </td>
 
@@ -774,6 +774,15 @@ view: fact_ad_daily_agg {
 
   }
 
+  measure: video_5 {
+    type: count
+    html: <iframe> <video controls width="480">
+      <source src="https://www.youtube.com/embed/zCCeO83MiuU?si=Jr2SBesJ6BEpYHGt" type="video/mp4">
+      </video> </iframe>;;
+      hidden: yes
+  }
+
+
   dimension: classification {
     type: string
     description: "If is first party demand, then 1st party demand, if deal type name = unknown then OMP, else PMP"
@@ -799,10 +808,19 @@ view: fact_ad_daily_agg {
 
   dimension: ssp_crid {
     type: string
-    group_label: "Creatives"
-    label: "SSP Creative ID"
-    description: "Unique identifier for ssp creative"
     sql: ${TABLE}.ssp_crid  ;;
+  }
+
+  dimension: bizdev_owner_key {
+    type: number
+    sql: ${TABLE}.Bizdev_Owner_Key  ;;
+    hidden: yes
+  }
+
+  dimension: operations_owner_key {
+    type: number
+    sql: ${TABLE}.Operations_Owner_Key  ;;
+    hidden: yes
   }
 
   dimension: a_domain_key {

@@ -65,11 +65,11 @@ view: dim_dsp {
   }
 
   dimension: dsp_name {
-    description: "DSP Name"
-    label: "DSP"
+    description: "RX_DSP_Name"
+    label: "RX_DSP_Name"
     type: string
     sql: ${TABLE}.DSP_Name ;;
-    hidden: yes
+    #hidden: yes
   }
 
 

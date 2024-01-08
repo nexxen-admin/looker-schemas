@@ -251,6 +251,26 @@ dimension: dynamic_pub_deal_name {
     sql: ${TABLE}.sum_of_dsp_requests_from_bidrequest ;;
   }
 
+  measure:  Previous_day_Outbound_Requests {
+    label: "Outbound Requests Previous day "
+    type: sum
+    description: "The dsp requests of 2 days ago"
+    sql: ${TABLE}.sum_of_dsp_requests_from_bidrequest ;;
+    value_format: "#,##0"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "2 days ago"]
+  }
+
+  measure:  Last_day_Outbound_Requests {
+    label: "Outbound Requests Last day "
+    type: sum
+    description: "The dsp requests of the last day"
+    sql: ${TABLE}.sum_of_dsp_requests_from_bidrequest ;;
+    value_format: "#,##0"
+    group_label: "Time Shifted Measures"
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
   dimension: sum_of_ias_ivt_impression_from_ad_data {
     type: number
     sql: ${TABLE}.sum_of_ias_ivt_impression_from_ad_data ;;

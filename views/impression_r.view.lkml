@@ -217,7 +217,7 @@ view: impression_r {
   dimension: cntcontentrating {
     type: string
     sql: ${TABLE}.cntcontentrating ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntepisode {
@@ -229,19 +229,19 @@ view: impression_r {
   dimension: cntgenre {
     type: string
     sql: ${TABLE}.cntgenre ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntlanguage {
     type: string
     sql: ${TABLE}.cntlanguage ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntlanguagenorm {
     type: string
     sql: ${TABLE}.cntlanguagenorm ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntlivestream {
@@ -253,7 +253,7 @@ view: impression_r {
   dimension: cntnetwork {
     type: string
     sql: ${TABLE}.cntnetwork ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cntseason {
@@ -272,6 +272,11 @@ view: impression_r {
     type: string
     sql: ${TABLE}.cnttitle ;;
     #hidden: yes
+  }
+
+  dimension: cntchannel {
+    type: string
+    sql: ${TABLE}.cntchannel ;;
   }
 
   measure: commissionconfig_mean {
@@ -301,7 +306,7 @@ view: impression_r {
   dimension: contentratingnorm {
     type: string
     sql: ${TABLE}.contentratingnorm ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: country {
@@ -446,13 +451,13 @@ view: impression_r {
   dimension: genrenorm {
     type: string
     sql: ${TABLE}.genrenorm ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: ifa {
     type: string
     sql: ${TABLE}.ifa ;;
-    #hidden: yes
+    hidden: yes
   }
 
   dimension: impsubtype {
@@ -476,7 +481,7 @@ view: impression_r {
   dimension: ip {
     type: string
     sql: ${TABLE}.ip ;;
-    #hidden: yes
+    hidden: yes
   }
 
   measure: user_id {
@@ -637,13 +642,14 @@ view: impression_r {
   dimension: origdomain {
     type: string
     sql: ${TABLE}.origdomain ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: origuserid {
     type: string
     label: "Orig User ID"
     sql: ${TABLE}.origuserid ;;
+    hidden: yes
   }
 
   dimension: os {
@@ -697,7 +703,7 @@ view: impression_r {
   dimension: pubid {
     type: string
     sql: ${TABLE}.pubid ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: publishercost {
@@ -892,6 +898,7 @@ view: impression_r {
     type: string
     label: "USER ID"
     sql: ${TABLE}.userid ;;
+    hidden: yes
   }
 
   dimension: vastservemethod {

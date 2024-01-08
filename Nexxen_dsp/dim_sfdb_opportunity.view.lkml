@@ -180,8 +180,9 @@ view: dim_sfdb_opportunity {
 
   dimension: currencyisocode {
     type: string
+    label: " Opportunity Currency"
     sql: ${TABLE}.currencyisocode ;;
-    hidden: yes
+
   }
 
   dimension: customer_signed_by__c {
@@ -261,7 +262,7 @@ view: dim_sfdb_opportunity {
   dimension: description {
     type: string
     sql: ${TABLE}.description ;;
-    hidden: yes
+
     # no data
   }
 
@@ -645,8 +646,9 @@ view: dim_sfdb_opportunity {
 
   dimension: region__c {
     type: string
+    label: "Opportunity Region"
     sql: ${TABLE}.region__c ;;
-    hidden: yes
+
   }
 
   dimension: related_account__c {
@@ -781,6 +783,7 @@ view: dim_sfdb_opportunity {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.systemmodstamp ;;
+    hidden: yes
   }
 
   dimension: total_adjusted_spend__c {
@@ -793,7 +796,7 @@ view: dim_sfdb_opportunity {
     type: number
     label: "Total Amount"
     sql: ${TABLE}.total_amount__c ;;
-    hidden: yes
+
   }
 
   dimension: total_gross_spend__c {

@@ -28,6 +28,14 @@ view: fact_ad_hourly_agg {
     hidden: yes
   }
 
+  dimension: dsp_bid_price {
+    type: number
+    description: "The bid price every advertiser is willing to pay on an ad"
+    label: "Bid Price"
+    sql: ${TABLE}.dsp_bid_price ;;
+    # hidden: yes
+  }
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.

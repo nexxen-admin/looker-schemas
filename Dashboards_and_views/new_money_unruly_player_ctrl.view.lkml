@@ -33,19 +33,10 @@ view: new_money_unruly_player_ctrl {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  dimension_group: end {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.End_Date ;;
-  }
+  # measure: end_date {
+  #   type: date
+  #   sql: max(${event_date}) ;;
+  # }
 
   measure: impressions {
     type: sum
@@ -53,35 +44,6 @@ view: new_money_unruly_player_ctrl {
   }
 
 
-  measure: AV_impressions {
-    type: sum
-    sql: ${TABLE}.AV_Impressions ;;
-  }
-
-  measure: AV_SF {
-    type: sum
-    sql: ${TABLE}.AV_SF ;;
-  }
-
-  measure: AV_MP_total_rev {
-    type: sum
-    sql: ${TABLE}.AV_MP_total_rev ;;
-  }
-
-  measure: AV_MP_10_CUT {
-    type: sum
-    sql: ${TABLE}.AV_MP_10_cut ;;
-  }
-
-  measure: Pubs_MP {
-    type: sum
-    sql: ${TABLE}.Pubs_MP ;;
-  }
-
-  measure: unruly_5_from_pub_mp {
-    type: sum
-    sql: ${TABLE}.Unruly_5_from_Pub_MP ;;
-  }
 
   dimension: month_year {
     type: string
@@ -101,14 +63,8 @@ view: new_money_unruly_player_ctrl {
 
   dimension: ctrl_publisher_name {
     type: string
-    sql: ${TABLE}.Ctrl_Publisher_Name ;;
+    sql: ${TABLE}.Publisher_Name ;;
   }
-
-  dimension: aniview_publisher_name {
-    type: string
-    sql: ${TABLE}.Aniview_Publisher_Name ;;
-  }
-
 
   measure: requests {
     type: sum
@@ -134,11 +90,29 @@ view: new_money_unruly_player_ctrl {
     sql: ${TABLE}.start_date ;;
   }
 
+  dimension_group: end {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.end_date ;;
+  }
+
+# measure: start_date {
+#   type: date
+#   sql: min(event_time) ;;
+# }
+
+
   measure: wins {
     type: sum
     sql: ${TABLE}.Wins ;;
   }
-
-
 
 }

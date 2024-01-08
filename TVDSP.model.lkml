@@ -1,4 +1,4 @@
-connection: "bi_prod"
+connection: "vertica_iad"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"                 # include all views in this project
@@ -552,5 +552,5 @@ explore: v_fact_ad_events_daily_agg {
     sql_on: ${v_dim_sf_opportunity.sf_opportunity_key} = ${dim_sf_flight.sf_opportunity_key} ;;
     relationship: many_to_one
   }
-   hidden: yes
+   #hidden: yes
 }

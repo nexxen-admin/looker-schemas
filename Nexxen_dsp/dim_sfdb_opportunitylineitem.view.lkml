@@ -11,8 +11,9 @@ view: dim_sfdb_opportunitylineitem {
   dimension: id {
     primary_key: yes
     type: string
+    label: "opp id"
     sql: ${TABLE}.id ;;
-    hidden: yes
+    #hidden: yes
   }
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.
@@ -106,97 +107,114 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Configure Targeting Behavioral"
     sql: ${TABLE}.configured_targeting_behavioral__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_cities__c {
     type: string
     label: "Configured Targeting Cities"
     sql: ${TABLE}.configured_targeting_cities__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_contextual__c {
     type: string
     sql: ${TABLE}.configured_targeting_contextual__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_countries__c {
     type: string
     label: "Configured Targeting Country"
     sql: ${TABLE}.configured_targeting_countries__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_dma_al__c {
     type: string
     label: "Configured Targeting Dma AL"
     sql: ${TABLE}.configured_targeting_dma_al__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_dma_mz__c {
     type: string
     label: "Configures Targeting DMA MZ"
     sql: ${TABLE}.configured_targeting_dma_mz__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_ethnicity__c {
     type: string
     label: "Configures Targeting Ethnicity"
     sql: ${TABLE}.configured_targeting_ethnicity__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_exclude__c {
     type: string
     label: "Configured Targeting Exclude"
     sql: ${TABLE}.configured_targeting_exclude__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_gender__c {
     type: string
     label: "Configured Targeting Gender"
     sql: ${TABLE}.configured_targeting_gender__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_household_income__c {
     type: string
     label: "Configured Targeting Household income"
     sql: ${TABLE}.configured_targeting_household_income__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_language__c {
     type: string
     label: "Configured Targeting language"
     sql: ${TABLE}.configured_targeting_language__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_locations__c {
     type: string
     label: "Configured Targeting Location"
     sql: ${TABLE}.configured_targeting_locations__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_region__c {
     type: string
 
     sql: ${TABLE}.configured_targeting_region__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_state__c {
     type: string
     sql: ${TABLE}.configured_targeting_state__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_viewership__c {
     type: string
     sql: ${TABLE}.configured_targeting_viewership__c ;;
+    hidden: yes
   }
 
   dimension: configured_targeting_zip__c {
     type: string
     sql: ${TABLE}.configured_targeting_zip__c ;;
+    hidden: yes
   }
 
   dimension: createdbyid {
     type: string
     sql: ${TABLE}.createdbyid ;;
+    hidden: yes
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
@@ -242,7 +260,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension_group: end_date__c {
     type: time
-    label: "Line Item End Date"
+    label: "OPP Line Item End"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.end_date__c ;;
   }
@@ -254,8 +272,9 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: free__c {
     type: string
+    label: "Line Item Status"
     sql: ${TABLE}.free__c ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: free_reason__c {
@@ -393,6 +412,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: market__c {
     type: string
+    label: "Salsforce Market"
     sql: ${TABLE}.market__c ;;
     hidden: yes
   }
@@ -405,26 +425,30 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: net__c {
     type: number
+    label: "Net"
     sql: ${TABLE}.net__c ;;
     hidden: yes
   }
 
   dimension: opportunity_owner__c {
     type: string
+    label: "Opportunity Owner"
     sql: ${TABLE}.opportunity_owner__c ;;
-    hidden: yes
+
   }
 
   dimension: opportunityid {
     type: string
+    label: "Opportunity ID"
     sql: ${TABLE}.opportunityid ;;
-    hidden: yes
+
   }
 
   dimension: opportunitylineitem_aid__c {
     type: string
+    label: "Case Safe OPP line item ID"
     sql: ${TABLE}.opportunitylineitem_aid__c ;;
-    hidden: yes
+
   }
 
   dimension: opportunitylineitem_key {
@@ -441,14 +465,16 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: price_type__c {
     type: string
+    label: "Price Type"
     sql: ${TABLE}.price_type__c ;;
-    hidden: yes
+   hidden: yes
   }
 
   dimension: price_type_name__c {
     type: string
+    label: "Price Type Name"
     sql: ${TABLE}.price_type_name__c ;;
-    hidden: yes
+
   }
 
   dimension: price_type_select__c {
@@ -486,7 +512,7 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Product Level 1"
     sql: ${TABLE}.product_level_i__c ;;
-    hidden: yes
+
   }
 
   dimension: quantity {
@@ -498,7 +524,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: rate__c {
     type: number
-    label: "Rare"
+    label: "Rate"
     sql: ${TABLE}.rate__c ;;
   }
 
@@ -585,7 +611,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension_group: start_date__c {
     type: time
-    label: "Line Item Start Date"
+    label: "OPP Line Item Start"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.start_date__c ;;
   }

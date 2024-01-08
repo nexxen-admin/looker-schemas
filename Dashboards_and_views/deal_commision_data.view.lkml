@@ -21,6 +21,16 @@ view: deal_commision_data {
     sql: ${TABLE}.AMSplitCogs ;;
   }
 
+  dimension: deal_start {
+    type: date
+    sql: ${TABLE}.deal_start ;;
+  }
+
+  dimension: deal_end {
+    type: date
+    sql: ${TABLE}.deal_end ;;
+  }
+
   measure: amsplit_net_revenue {
     type: sum
     value_format: "$#,##0.00"

@@ -923,11 +923,11 @@ view: daily_core_stats {
     sql: ${TABLE}.FLIGHT_MEDIA_ID ;;
   }
 
-  dimension: import_config_id {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.IMPORT_CONFIG_ID ;;
-  }
+  # dimension: import_config_id {
+  #   type: string
+  #   hidden: yes
+  #   sql: ${TABLE}.IMPORT_CONFIG_ID ;;
+  # }
 
   dimension: gbp_exchange_rate {
     type: string
@@ -949,11 +949,11 @@ view: daily_core_stats {
     sql: ${impressions} ;;
   }
 
-  dimension: isselected {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.ISSELECTED ;;
-  }
+  # dimension: isselected {
+  #   type: string
+  #   hidden: yes
+  #   sql: ${TABLE}.ISSELECTED ;;
+  # }
 
   dimension: is_viewability_measurable {
     type: number
@@ -1201,19 +1201,19 @@ view: daily_core_stats {
     value_format_name: id
   }
 
-  dimension: pc_impressions {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.PC_IMPRESSIONS ;;
-  }
+  # dimension: pc_impressions {
+  #   type: string
+  #   hidden: yes
+  #   sql: ${TABLE}.PC_IMPRESSIONS ;;
+  # }
 
-  measure: sum_pc_impressions {
-    type: sum
-    label: "PC Impressions"
-    description: "Total PC Impressions"
-    value_format_name: decimal_0
-    sql: ${TABLE}.PC_IMPRESSIONS ;;
-  }
+  # measure: sum_pc_impressions {
+  #   type: sum
+  #   label: "PC Impressions"
+  #   description: "Total PC Impressions"
+  #   value_format_name: decimal_0
+  #   sql: ${TABLE}.PC_IMPRESSIONS ;;
+  # }
 
   dimension: placement_id {
     type: string

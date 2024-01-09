@@ -2,9 +2,9 @@ view: daily_core_stats {
   label: "Impression Metrics"
   sql_table_name:
   {% if _explore._name == 'demand_metrics' and campaign_bookings._in_query %}
-    (select * from rawdb.daily_core_stats_on_analytics as daily_core_stats
+    (select * from DEMAND_MART.DAILY_CORE_STATS_EXTENDED as daily_core_stats
       where {% condition demand_date %} daily_core_stats.demand_date {% endcondition %})
-    {% else %} rawdb.daily_core_stats_on_analytics {% endif %} ;;
+    {% else %} DEMAND_MART.DAILY_CORE_STATS_EXTENDED {% endif %} ;;
   suggestions: no
 
   dimension: primary_key {
@@ -923,11 +923,11 @@ view: daily_core_stats {
     sql: ${TABLE}.FLIGHT_MEDIA_ID ;;
   }
 
-  # dimension: import_config_id {
-  #   type: string
-  #   hidden: yes
-  #   sql: ${TABLE}.IMPORT_CONFIG_ID ;;
-  # }
+  dimension: import_config_id {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.IMPORT_CONFIG_ID ;;
+  }
 
   dimension: gbp_exchange_rate {
     type: string
@@ -949,11 +949,11 @@ view: daily_core_stats {
     sql: ${impressions} ;;
   }
 
-  # dimension: isselected {
-  #   type: string
-  #   hidden: yes
-  #   sql: ${TABLE}.ISSELECTED ;;
-  # }
+  dimension: isselected {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.ISSELECTED ;;
+  }
 
   dimension: is_viewability_measurable {
     type: number
@@ -1201,19 +1201,19 @@ view: daily_core_stats {
     value_format_name: id
   }
 
-  # dimension: pc_impressions {
-  #   type: string
-  #   hidden: yes
-  #   sql: ${TABLE}.PC_IMPRESSIONS ;;
-  # }
+  dimension: pc_impressions {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.PC_IMPRESSIONS ;;
+  }
 
-  # measure: sum_pc_impressions {
-  #   type: sum
-  #   label: "PC Impressions"
-  #   description: "Total PC Impressions"
-  #   value_format_name: decimal_0
-  #   sql: ${TABLE}.PC_IMPRESSIONS ;;
-  # }
+  measure: sum_pc_impressions {
+    type: sum
+    label: "PC Impressions"
+    description: "Total PC Impressions"
+    value_format_name: decimal_0
+    sql: ${TABLE}.PC_IMPRESSIONS ;;
+  }
 
   dimension: placement_id {
     type: string

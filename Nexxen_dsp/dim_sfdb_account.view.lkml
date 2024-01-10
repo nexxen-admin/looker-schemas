@@ -10,6 +10,7 @@ view: dim_sfdb_account {
 
   dimension: id {
     type: string
+    label: "Account ID"
     sql: ${TABLE}.id ;;
     # not sure if this is the account id
 

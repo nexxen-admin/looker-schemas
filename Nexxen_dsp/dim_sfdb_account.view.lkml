@@ -350,8 +350,9 @@ view: dim_sfdb_account {
 
   dimension: legal_entity__c {
     type: string
+    label: "Legal Entity"
     sql: ${TABLE}.legal_entity__c ;;
-    hidden: yes
+
     #
   }
 

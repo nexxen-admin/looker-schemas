@@ -297,7 +297,7 @@ explore: v_fact_ad_events_daily_agg {
 
   #persist_with: CleanCash_datagroup
   label: "TVDSP Daily"
-  view_label: "Measures"
+  #view_label: "Measures"
 
   join: v_dim_ad_orientation {
     type: inner

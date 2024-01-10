@@ -302,7 +302,7 @@ view: daily_core_stats {
     type: string
     label: "BT Cost Currency"
     description: "The currency of the BT Cost"
-    sql: ${TABLE}.BT_DATA_COST_CURRENCY ;;
+    sql: ${TABLE}.BTCOSTCURRENCY ;;
   }
 
   dimension: btcostcurrency_id {
@@ -316,7 +316,7 @@ view: daily_core_stats {
   dimension: btproviderdatacost {
     type: number
     hidden: yes
-    sql: ${TABLE}.BT_DATA_COST ;;
+    sql: ${TABLE}.BTPROVIDERDATACOST ;;
   }
 
   measure: sum_btproviderdatacost {
@@ -333,7 +333,7 @@ view: daily_core_stats {
     view_label: "Impression Facets"
     label: "BT Provider ID"
     description: "The name of the behavioral targeting provider, if applicable."
-    sql: ${TABLE}.BT_PROVIDER ;;
+    sql: ${TABLE}.BTPROVIDERID ;;
   }
 
   dimension: click_impressions {

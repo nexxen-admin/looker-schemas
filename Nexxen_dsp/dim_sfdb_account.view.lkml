@@ -9,7 +9,6 @@ view: dim_sfdb_account {
   # You need to define a primary key in a view in order to join to other views.
 
   dimension: id {
-    primary_key: yes
     type: string
     sql: ${TABLE}.id ;;
     # not sure if this is the account id

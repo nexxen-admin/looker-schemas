@@ -9,10 +9,25 @@ GROUP BY 1
   }
 
 
-  dimension: date {
-    type: date
+
+
+  dimension_group: date {
+    label: " "
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
     sql: ${TABLE}."date" ;;
   }
+
+
 
 
   measure: distinct_ip_count {
@@ -26,6 +41,6 @@ GROUP BY 1
   }
 
   set: detail {
-    fields: [date, distinct_ip_count,distinct_device_count]
+    fields: [distinct_ip_count,distinct_device_count]
   }
 }

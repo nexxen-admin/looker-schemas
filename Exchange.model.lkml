@@ -403,12 +403,12 @@ explore: extend_Inbound_Exchange {
     relationship: many_to_one
   }
 
-  join: dim_flight {
-    type: inner
-    view_label: "Flight"
-    sql_on: ${dim_flight.flight_key}=${dim_dsp_flight.flight_key};;
-    relationship: many_to_one
-  }
+  # join: dim_flight {
+  #   type: inner
+  #   view_label: "Flight"
+  #   sql_on: ${dim_flight.flight_key}=${dim_dsp_flight.flight_key};;
+  #   relationship: many_to_one
+  # }
   join: dim_dsp {
     type: inner
     view_label: "DSP"
@@ -746,12 +746,12 @@ explore: fact_ad_daily_agg{
     relationship: many_to_one
   }
 
-  join: dim_flight {
-    type: inner
-    view_label: "Flight"
-    sql_on: ${dim_flight.flight_key}=${dim_dsp_flight.flight_key};;
-    relationship: many_to_one
-  }
+  # join: dim_flight {
+  #   type: inner
+  #   view_label: "Flight"
+  #   sql_on: ${dim_flight.flight_key}=${dim_dsp_flight.flight_key};;
+  #   relationship: many_to_one
+  # }
   join: dim_dsp {
     type: inner
     view_label: "DSP"
@@ -1086,12 +1086,12 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
   }
 
-  join: dim_flight {
-    type: inner
-    view_label: "Flight"
-    sql_on: ${dim_flight.flight_key}=${dim_dsp_flight.flight_key};;
-    relationship: many_to_one
-  }
+  # join: dim_flight {
+  #   type: inner
+  #   view_label: "Flight"
+  #   sql_on: ${dim_flight.flight_key}=${dim_dsp_flight.flight_key};;
+  #   relationship: many_to_one
+  # }
   join: dim_dsp {
     type: inner
     view_label: "DSP"

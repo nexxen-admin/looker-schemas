@@ -31,6 +31,22 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_creative_file {
+    type: inner
+    view_label: "Creative"
+    sql_on: ${dim_dsp_creative_file.creative_id} = ${dim_dsp_creative.creative_id};;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_creative_file_tracking_url {
+    type: inner
+    view_label: "Creative"
+    sql_on: ${dim_dsp_creative_file_tracking_url.creative_file_id} = ${dim_dsp_creative_file.creative_file_id}
+    and ${dim_dsp_creative_file_tracking_url.platform_id} = ${dim_dsp_creative_file.platform_id};;
+    relationship: many_to_one
+  }
+
+
   join: v_dim_dsp_date {
     type: inner
     view_label: "Time Frame"
@@ -54,6 +70,7 @@ explore: fact_nexxen_dsp  {
     sql_on: ${dim_dsp_market.market_id_key} = ${fact_nexxen_dsp.market_id_key};;
     relationship: many_to_one
   }
+
 
   join: dim_dsp_package_budget_schedule {
     type: inner

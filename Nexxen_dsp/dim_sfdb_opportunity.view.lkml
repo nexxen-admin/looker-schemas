@@ -739,7 +739,7 @@ view: dim_sfdb_opportunity {
   dimension: special_deal_notes__c {
     type: string
     sql: ${TABLE}.special_deal_notes__c ;;
-    hidden: yes
+
   }
 
   dimension: special_terms__c {

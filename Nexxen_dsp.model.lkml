@@ -32,14 +32,14 @@ explore: fact_nexxen_dsp  {
   }
 
   join: dim_dsp_creative_file {
-    type: inner
+    type:left_outer
     view_label: "Creative"
     sql_on: ${dim_dsp_creative_file.creative_id} = ${dim_dsp_creative.creative_id};;
     relationship: many_to_one
   }
 
   join: dim_dsp_creative_file_tracking_url {
-    type: inner
+    type: left_outer
     view_label: "Creative"
     sql_on: ${dim_dsp_creative_file_tracking_url.creative_file_id} = ${dim_dsp_creative_file.creative_file_id}
     and ${dim_dsp_creative_file_tracking_url.platform_id} = ${dim_dsp_creative_file.platform_id};;

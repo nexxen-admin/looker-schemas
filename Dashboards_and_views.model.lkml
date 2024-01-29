@@ -150,7 +150,11 @@ explore: bd_comm {
 
 explore: bd_comm_intl {
   label: "BD Comm Intl"
-  required_access_grants: [allowed_users_sam_lt]
+  #required_access_grants: [can_view_all_tremor]
+  access_filter: {
+    field: bd_comm_intl.bizdev_owner
+    user_attribute: allowed_users_sam_lt
+  }
   hidden: yes
 }
 

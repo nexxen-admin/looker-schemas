@@ -49,6 +49,7 @@ access_grant: can_view_aniview {
   user_attribute: aniview
   allowed_values: ["Aniview"]
 }
+
 #access_grant: can_view_pub_come_looker {
 # user_attribute: allowed_users
 #allowed_values: ["Looker_Admins"]
@@ -149,7 +150,7 @@ explore: bd_comm {
 
 explore: bd_comm_intl {
   label: "BD Comm Intl"
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [allowed_users_sam_lt]
   hidden: yes
 }
 

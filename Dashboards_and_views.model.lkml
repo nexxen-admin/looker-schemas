@@ -50,6 +50,7 @@ access_grant: can_view_aniview {
   allowed_values: ["Aniview"]
 }
 
+
 #access_grant: can_view_pub_come_looker {
 # user_attribute: allowed_users
 #allowed_values: ["Looker_Admins"]
@@ -325,7 +326,7 @@ explore: tremor_to_unruly{
 
 explore: deal_commision_data {
   label: "Deal Commision Data"
-  #required_access_grants: [can_view_pub_come_looker]
+  #required_access_grants: [allowed_users_sam_lt]
   hidden: yes
 }
 

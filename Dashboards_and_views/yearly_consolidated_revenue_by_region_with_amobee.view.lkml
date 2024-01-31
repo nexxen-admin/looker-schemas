@@ -98,6 +98,18 @@ From BI.SVC_DRR_Google_SOW  d
 Where event_date >= '2023-01-01'
   and event_date < CURRENT_DATE()
 Group by 1, 2, 3, 4
+Union
+Select year(event_date) as Year,
+  quarter(event_date) as Quarter,
+  case when region not in ('Unknown','APAC','EMEA','Americas') then 'Other'
+        else region end as region,
+  Subcategory as Category,
+  sum(Revenue) as Revenue,
+  sum(cost) as Cost
+From BI.SVC_DRR_Data_Allocation_MCvI
+Where event_date >= '2023-01-01'
+  and event_date < CURRENT_DATE()
+Group by 1, 2, 3, 4
 Order by 1, 2, 3, 4
 
 

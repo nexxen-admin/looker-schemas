@@ -271,6 +271,29 @@ dimension: dynamic_pub_deal_name {
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
+
+  measure: outbound_requests_change {
+    type: number
+    sql: (${last_7_days_outbound_requests}-${previous_7_days_outbound_requests})/nullif(${previous_7_days_outbound_requests},0);;
+    value_format: "0.00%"
+  }
+
+  measure: last_7_days_outbound_requests {
+    type: sum
+    sql: ${TABLE}.sum_of_dsp_requests_from_bidrequest  ;;
+    filters: [date_key_date: "7 days ago for 7 days"]
+    value_format: "#,##0"
+    group_label: "Time Shifted Measures"
+}
+
+  measure: previous_7_days_outbound_requests {
+    type: sum
+    sql: ${TABLE}.sum_of_dsp_requests_from_bidrequest  ;;
+    filters: [date_key_date: "14 days ago for 7 days"]
+    value_format: "#,##0"
+    group_label: "Time Shifted Measures"
+  }
+
   dimension: sum_of_ias_ivt_impression_from_ad_data {
     type: number
     sql: ${TABLE}.sum_of_ias_ivt_impression_from_ad_data ;;
@@ -1299,6 +1322,7 @@ dimension: dynamic_pub_deal_name {
     </ul> ;;
     hidden: yes
   }
+
 
   measure:  Last_day_Revenue {
     label: "Revenue Last day "

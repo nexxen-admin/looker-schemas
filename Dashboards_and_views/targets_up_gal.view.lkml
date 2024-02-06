@@ -16,6 +16,16 @@ view: targets_up_gal {
     sql: ${TABLE}.month_year ;;
   }
 
+  dimension: month {
+    type: string
+    sql: ${TABLE}.month ;;
+  }
+
+  dimension: year {
+    type: string
+    sql: ${TABLE}.year ;;
+  }
+
   dimension: population {
     type: string
     sql: ${TABLE}.population ;;

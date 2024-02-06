@@ -412,3 +412,9 @@ explore: monthly_revenue_dsp_classification_deal {
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
+explore: targets_up_gal {
+  label: "Targets For Gal Team UP"
+  required_access_grants: [can_view_pub_come_looker]
+  hidden: no
+}

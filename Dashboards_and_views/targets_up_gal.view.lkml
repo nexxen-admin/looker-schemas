@@ -24,11 +24,13 @@ view: targets_up_gal {
   measure: net_revenue {
     type: sum
     sql: ${TABLE}.Net_Revenue ;;
+    value_format: "$#,##0"
   }
 
   measure: target {
     type: sum
     sql: ${TABLE}.target ;;
+    value_format: "$#,##0"
   }
   measure: count {
     type: count

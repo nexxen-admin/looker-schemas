@@ -42,6 +42,14 @@ view: targets_up_gal {
     sql: ${TABLE}.target ;;
     value_format: "$#,##0"
   }
+
+  measure: net_emea {
+    label: "Net EMEA Pub"
+    type: sum
+    sql: ${TABLE}.net_emea ;;
+    value_format: "$#,##0"
+  }
+
   measure: count {
     type: count
   }

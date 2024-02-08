@@ -421,5 +421,6 @@ explore: targets_up_gal {
 
 explore: billing_dragon_data {
   label: "Billing Dragon Data for Dennis"
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }

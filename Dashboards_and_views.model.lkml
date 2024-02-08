@@ -418,3 +418,8 @@ explore: targets_up_gal {
   required_access_grants: [can_view_pub_come_looker]
   hidden: no
 }
+
+explore: billing_dragon_data {
+  label: "Billing Dragon Data for Dennis"
+  required_access_grants: [can_view_pub_come_looker]
+}

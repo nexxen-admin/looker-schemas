@@ -71,6 +71,7 @@ view: dim_dsp_creative_file_tracking_url {
 
   dimension: url {
     type: string
+    label: "Tracking URL"
     sql: ${TABLE}.url ;;
   }
   measure: count {

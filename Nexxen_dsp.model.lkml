@@ -34,7 +34,7 @@ explore: fact_nexxen_dsp  {
   join: dim_dsp_creative_file {
     type:left_outer
     view_label: "Creative"
-    sql_on: ${dim_dsp_creative_file.creative_id} = ${dim_dsp_creative.creative_id};;
+    sql_on: ${dim_dsp_creative_file.creative_file_key} = ${fact_nexxen_dsp.creative_file_key};;
     relationship: many_to_one
   }
 

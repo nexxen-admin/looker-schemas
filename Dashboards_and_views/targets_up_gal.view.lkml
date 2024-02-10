@@ -11,18 +11,29 @@ view: targets_up_gal {
     # A dimension is a groupable field that can be used to filter query results.
     # This dimension will be called "Month Year" in Explore.
 
-  dimension: month_year {
-    type: string
-    sql: ${TABLE}.month_year ;;
-  }
+    dimension_group: month_year {
+      type: time
+      timeframes: [
+        raw,
+        date,
+        week,
+        month,
+        quarter,
+        year
+      ]
+      convert_tz: no
+      datatype: date
+      sql: ${TABLE}.month_year ;;
+    }
+
 
   dimension: month {
-    type: string
+    type: number
     sql: ${TABLE}.month ;;
   }
 
   dimension: year {
-    type: string
+    type: number
     sql: ${TABLE}.year ;;
   }
 

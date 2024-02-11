@@ -12,7 +12,7 @@ ON AA.tv_program_tremor_id=BB.tv_program_tremor_id
 RIGHT JOIN dragon.program CC
 ON AA.tv_program_tremor_id=CC.tv_program_tremor_id
 where AA.viewing_start_utc>current_date - INTERVAL '1 month'
-GROUP BY 1
+GROUP BY 1,2
 ORDER BY 1
  ;;
   }

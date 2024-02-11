@@ -90,7 +90,7 @@ group by 1,2
 
   dimension: country {
     type: string
-    label: "Time range"
+    label: "country"
     sql: ${TABLE}.country ;;
   }
 

@@ -25,6 +25,23 @@ view: revenue_vertical_buying_channel {
     sql: ${TABLE}.advertiser ;;
   }
 
+  dimension: New_Vertical {
+    type: string
+    label: "Vertical"
+    sql: ${TABLE}.New_Vertical ;;
+  }
+
+  dimension: vertical {
+    type: string
+    label: "Sub Vertical"
+    sql: ${TABLE}.vertical ;;
+    #   drill_fields: [advertiser_category]
+    #   link: {
+    #     label: "Open Grouped Others Trend Line"
+    #   url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=PiSY2FLCizHclhE9Km8kt9&origin_space=249&toggle=vis"
+    # }
+  }
+
 # measure: partition {
 #  type: number
  # sql:  ;;
@@ -44,15 +61,15 @@ view: revenue_vertical_buying_channel {
   #   url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=zuC1YfhN6SY5reOE3Iemiq&origin_space=249&toggle=dat,fil,vis"}
   # }
 
-  dimension: vertical {
-    type: string
-    sql: ${TABLE}.vertical ;;
-    drill_fields: [advertiser_category]
-       link: {
-         label: "Open Grouped Others Trend Line"
-       url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=PiSY2FLCizHclhE9Km8kt9&origin_space=249&toggle=vis"
-     }
-  }
+  # dimension: vertical {
+  #   type: string
+  #   sql: ${TABLE}.vertical ;;
+  #   drill_fields: [advertiser_category]
+  #     link: {
+  #       label: "Open Grouped Others Trend Line"
+  #     url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=PiSY2FLCizHclhE9Km8kt9&origin_space=249&toggle=vis"
+  #   }
+  # }
 
   # measure: dense_rank_measure {
   #   type: number

@@ -4,7 +4,7 @@ view: monthly_ip_stability {
 
 
 select '1 Month' as 'Time_period',
-       country
+       country,
        round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
        round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
        round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
@@ -19,7 +19,7 @@ from (
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -1) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
       group by 1,2
       ) BB
-
+group by 1,2
 UNION ALL
 select '2 Month' as 'Time period',
        country,
@@ -37,7 +37,7 @@ from (
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -2) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
       group by 1,2
       ) BB
-
+group by 1,2
 UNION ALL
 select '3 Month' as 'Time period',
        country,
@@ -55,7 +55,7 @@ from (
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
       group by 1,2
       ) BB
-
+group by 1,2
 UNION ALL
 select '4 Month' as 'Time period',
        country,
@@ -73,6 +73,7 @@ from (
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
       group by 1,2
       ) BB
+group by 1,2
 
 
 

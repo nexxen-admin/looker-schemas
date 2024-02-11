@@ -1,12 +1,19 @@
 view: acr_count_device_id_per_os {
   derived_table: {
-    sql: SELECT date(AA.viewing_start_utc) as date,
-       BB.os as os,
-       AA.device_id as device_id,
-      AA.country as country
+    sql:
+
+
+SELECT date(AA.viewing_start_utc) as date,
+      aa.country,
+      bb.os,
+      COUNT(DISTINCT aa.device_id) AS "count_of_device_id"
 FROM dragon.viewership_content_sessions_combined_daily AA
 LEFT JOIN dragon.device_info_r BB
 ON AA.device_id = BB.device_id
+where AA.viewing_start_utc>current_date - INTERVAL '1 month'
+GROUP BY 1,2,3
+
+
  ;;
   }
 
@@ -30,13 +37,13 @@ ON AA.device_id = BB.device_id
     sql: ${TABLE}."country" ;;
   }
 
-  dimension: device_id {
-    type: string
-    sql: ${TABLE}."device_id" ;;
+  measure: count_of_device_id {
+    type: sum
+    sql: ${TABLE}."count_of_device_id" ;;
   }
 
 
   set: detail {
-    fields: [date, os,device_id,country]
+    fields: [date, os,count_of_device_id,country]
   }
 }

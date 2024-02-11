@@ -156,3 +156,9 @@ explore: peerlogix_weekly_genre_device_ip {
   required_access_grants: [can_view_acr_group]
   hidden: no
 }
+
+explore: acr_count_device_id {
+  label: "acr count device id"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}

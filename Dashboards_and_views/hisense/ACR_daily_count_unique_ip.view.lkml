@@ -17,7 +17,7 @@ GROUP BY 1,2
 
   dimension: country {
     type: string
-    sql: ${TABLE}."country" ;;
+    sql: ${TABLE}.country ;;
   }
 
   measure: distinct_ip_count {

@@ -29,7 +29,7 @@ ORDER BY 1
 
   dimension: country {
     type: string
-    sql: ${TABLE}."country" ;;
+    sql: ${TABLE}.country ;;
   }
 
   dimension: count_events_with_episode_numbers {

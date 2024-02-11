@@ -4,11 +4,13 @@ view: acr_weekly_title_device_by_vod_linear {
       sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
                PP.title,
               source,
+              aa.country,
                COUNT(DISTINCT device_id) as count_devices
         FROM dragon.viewership_content_sessions_combined_daily AA
         LEFT JOIN dragon.program PP
         ON AA.tv_program_tremor_id=PP.tv_program_tremor_id
-        GROUP BY 1,2,3
+        where AA.viewing_start_utc>current_date - INTERVAL '1 month'
+        GROUP BY 1,2,3,4
         ORDER BY 1 DESC
          ;;
     }
@@ -34,6 +36,10 @@ view: acr_weekly_title_device_by_vod_linear {
     sql: ${TABLE}.source ;;
   }
 
+  dimension: country {
+    type: string
+    sql: ${TABLE}.country ;;
+  }
 
     measure: count_devices {
       type: average
@@ -41,6 +47,6 @@ view: acr_weekly_title_device_by_vod_linear {
     }
 
     set: detail {
-      fields: [week_date, title, count_devices,source]
+      fields: [week_date, title,country, count_devices,source]
     }
   }

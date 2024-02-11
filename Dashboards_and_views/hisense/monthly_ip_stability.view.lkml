@@ -4,6 +4,7 @@ view: monthly_ip_stability {
 
 
 select '1 Month' as 'Time_period',
+       country
        round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
        round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
        round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
@@ -13,14 +14,15 @@ select '1 Month' as 'Time_period',
        round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
        round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
 from (
-      select device_id,count(distinct ip) as ip_count
+      select device_id,country,count(distinct ip) as ip_count
       from dragon.viewership_content_sessions_combined_daily AA
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -1) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
-      group by 1
+      group by 1,2
       ) BB
 
 UNION ALL
 select '2 Month' as 'Time period',
+       country,
        round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
        round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
        round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
@@ -30,14 +32,15 @@ select '2 Month' as 'Time period',
        round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
        round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
 from (
-      select device_id,count(distinct ip) as ip_count
+      select device_id,country,count(distinct ip) as ip_count
       from dragon.viewership_content_sessions_combined_daily AA
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -2) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
-      group by 1
+      group by 1,2
       ) BB
 
 UNION ALL
 select '3 Month' as 'Time period',
+       country,
        round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
        round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
        round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
@@ -47,14 +50,15 @@ select '3 Month' as 'Time period',
        round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
        round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
 from (
-      select device_id,count(distinct ip) as ip_count
+      select device_id,country,count(distinct ip) as ip_count
       from dragon.viewership_content_sessions_combined_daily AA
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
-      group by 1
+      group by 1,2
       ) BB
 
 UNION ALL
 select '4 Month' as 'Time period',
+       country,
        round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
        round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
        round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
@@ -64,10 +68,10 @@ select '4 Month' as 'Time period',
        round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
        round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
 from (
-      select device_id,count(distinct ip) as ip_count
+      select device_id,country,count(distinct ip) as ip_count
       from dragon.viewership_content_sessions_combined_daily AA
       where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
-      group by 1
+      group by 1,2
       ) BB
 
 
@@ -81,6 +85,12 @@ from (
     type: string
     label: "Time range"
     sql: ${TABLE}.Time_period ;;
+  }
+
+  dimension: country {
+    type: string
+    label: "Time range"
+    sql: ${TABLE}.country ;;
   }
 
   measure: ip1 {
@@ -137,6 +147,7 @@ from (
   set: detail {
     fields: [
       Time_period,
+      country,
       ip1,
       ip2,
       ip3,

@@ -34,8 +34,9 @@ GROUP BY 1,2,3
 
   dimension: country {
     type: string
-    sql: ${TABLE}."country" ;;
+    sql: ${TABLE}.country ;;
   }
+
 
   measure: count_of_device_id {
     type: sum

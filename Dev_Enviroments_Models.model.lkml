@@ -39,37 +39,37 @@ access_grant: can_view_acr_group {
 explore: acr_count_device_id_per_os {
   label: "acr count device id per os"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: ACR_daily_count_unique_ip {
   label: "ACR daily count unique_ip"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: daily_null_count_all_col {
   label: "daily null count all col"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: all_coumns_is_null_chart {
   label: "all coumns is null chart"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: acr_weekly_ip_apps {
   label: "acr weekly ip apps"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: acr_weekly_app_os_device_count {
   label: "acr weekly app os device count"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: acr_weekly_title_device {
@@ -81,7 +81,7 @@ explore: acr_weekly_title_device {
 explore: acr_weekly_app_count_title {
   label: "acr weekly app count title"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: acr_weekly_title_device_by_vod_linear {
@@ -93,19 +93,19 @@ explore: acr_weekly_title_device_by_vod_linear {
 explore: acr_weekly_unique_program_over_networks_linear {
   label: "acr weekly unique program over networks linear"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: monthly_ip_stability {
   label: "monthly ip stability"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: monthly_device_count {
   label: "monthly device count"
   required_access_grants: [can_view_acr_group]
-  hidden: yes
+  hidden: no
 }
 
 explore: monthly_device_count_60_days_segments {

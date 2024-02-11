@@ -1,9 +1,11 @@
 view: ACR_daily_count_unique_ip {
   derived_table: {
     sql: SELECT date(AA.viewing_start_utc) as date,
+    country,
        COUNT(DISTINCT AA.ip) as distinct_ip_count
 FROM dragon.viewership_content_sessions_combined_daily AA
-GROUP BY 1
+where AA.viewing_start_utc>current_date - INTERVAL '1 month'
+GROUP BY 1,2
  ;;
   }
 
@@ -13,6 +15,10 @@ GROUP BY 1
     sql: ${TABLE}."date" ;;
   }
 
+  dimension: country {
+    type: string
+    sql: ${TABLE}."country" ;;
+  }
 
   measure: distinct_ip_count {
     type: average
@@ -21,6 +27,6 @@ GROUP BY 1
 
 
   set: detail {
-    fields: [date, distinct_ip_count]
+    fields: [date,country, distinct_ip_count]
   }
 }

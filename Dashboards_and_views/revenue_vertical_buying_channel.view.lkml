@@ -29,6 +29,7 @@ view: revenue_vertical_buying_channel {
     type: string
     label: "Vertical"
     sql: ${TABLE}.New_Vertical ;;
+    drill_fields: [vertical]
   }
 
   dimension: vertical {
@@ -41,6 +42,8 @@ view: revenue_vertical_buying_channel {
     #   url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=PiSY2FLCizHclhE9Km8kt9&origin_space=249&toggle=vis"
     # }
   }
+
+
 
 # measure: partition {
 #  type: number

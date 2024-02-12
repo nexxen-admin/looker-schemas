@@ -9,9 +9,9 @@ LEFT JOIN dragon.airing BB
 ON AA.airing_tremor_id = BB.airing_tremor_id
 LEFT JOIN dragon.program PP
 ON AA.tv_program_tremor_id=PP.tv_program_tremor_id
-where source='linear' and AA.viewing_start_utc>current_date - INTERVAL '1 month'
+where source='linear' and AA.viewing_start_utc>current_date - INTERVAL '2 month'
 GROUP BY 1,2,3
-ORDER BY 1 DESC
+ORDER BY 4 DESC
  ;;
   }
 

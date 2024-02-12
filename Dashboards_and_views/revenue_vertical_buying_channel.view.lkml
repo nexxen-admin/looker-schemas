@@ -36,7 +36,7 @@ view: revenue_vertical_buying_channel {
     type: string
     label: "Sub Vertical"
     sql: ${TABLE}.vertical ;;
-    #   drill_fields: [advertiser_category]
+       drill_fields: [advertiser]
     #   link: {
     #     label: "Open Grouped Others Trend Line"
     #   url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=PiSY2FLCizHclhE9Km8kt9&origin_space=249&toggle=vis"

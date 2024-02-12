@@ -32,6 +32,7 @@ view: dim_dsp_creative_file {
   dimension: click_url {
     type: string
     sql: ${TABLE}.click_url ;;
+    hidden: yes
   }
 
   dimension: codec_name {

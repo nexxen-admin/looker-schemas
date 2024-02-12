@@ -7,10 +7,12 @@ view: monthly_device_count {
                              WHEN AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP, -3) THEN 'between_90_to_120_days'
                              ELSE null
                              END AS date_segment,
+                            country,
        COUNT(DISTINCT AA.device_id) as count_devices,
        COUNT(DISTINCT AA.ip) as count_ip
 FROM dragon.viewership_content_sessions_combined_daily AA
-GROUP BY 1
+where AA.viewing_start_utc>current_date - INTERVAL '4 month'
+GROUP BY 1,2
 ORDER BY 1 DESC
  ;;
   }
@@ -23,6 +25,11 @@ ORDER BY 1 DESC
   dimension: date_segment {
     type: string
     sql: ${TABLE}.date_segment ;;
+  }
+
+  dimension: country {
+    type: string
+    sql: ${TABLE}.country ;;
   }
 
 
@@ -39,6 +46,6 @@ ORDER BY 1 DESC
 
 
   set: detail {
-    fields: [date_segment, count_devices,count_ip]
+    fields: [date_segment, country,count_devices,count_ip]
   }
 }

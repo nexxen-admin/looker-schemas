@@ -25,6 +25,13 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: creative_file_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.creative_file_key ;;
+    hidden: yes
+  }
+
   measure: clicks {
     type: sum
     sql: ${TABLE}.clicks ;;

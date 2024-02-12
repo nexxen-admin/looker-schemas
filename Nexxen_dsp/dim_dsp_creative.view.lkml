@@ -31,7 +31,7 @@ view: dim_dsp_creative {
 
   dimension: click_url {
     type: string
-    label: "Category ID"
+    label: "Click URL"
     sql: ${TABLE}.click_url ;;
   }
 
@@ -42,7 +42,7 @@ view: dim_dsp_creative {
   }
 
   dimension: creative_id {
-    type: number
+    type: string
     label: "Creative ID"
     sql: ${TABLE}.creative_id ;;
   }
@@ -93,6 +93,7 @@ view: dim_dsp_creative {
     type: date
     label: "Date"
     sql: ${TABLE}.end_date ;;
+    hidden: yes
   }
 
   dimension: is_deleted {
@@ -126,6 +127,7 @@ view: dim_dsp_creative {
     type: date
     label: "Date"
     sql: ${TABLE}.start_date ;;
+    hidden: yes
   }
 
   dimension: title {

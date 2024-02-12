@@ -1,6 +1,7 @@
 view: daily_null_count_all_col {
   derived_table: {
     sql: SELECT date(AA.viewing_start_utc),
+    country,
        SUM(CASE WHEN CC.episode_number is not null THEN 1 ELSE 0 END)/count(*) as count_events_with_episode_numbers,
        SUM(CASE WHEN CC.season_number is not null THEN 1 ELSE 0 END)/count(*) as count_events_with_season_number,
        SUM(CASE WHEN BB.genre_tremor_id is not null THEN 1 ELSE 0 END)/count(*) as count_events_with_genre_tremor_id,
@@ -10,7 +11,8 @@ RIGHT JOIN dragon.program_genre BB
 ON AA.tv_program_tremor_id=BB.tv_program_tremor_id
 RIGHT JOIN dragon.program CC
 ON AA.tv_program_tremor_id=CC.tv_program_tremor_id
-GROUP BY 1
+where AA.viewing_start_utc>current_date - INTERVAL '1 month'
+GROUP BY 1,2
 ORDER BY 1
  ;;
   }
@@ -23,6 +25,11 @@ ORDER BY 1
   dimension: date {
     type: date
     sql: ${TABLE}."date" ;;
+  }
+
+  dimension: country {
+    type: string
+    sql: ${TABLE}.country ;;
   }
 
   dimension: count_events_with_episode_numbers {
@@ -46,6 +53,6 @@ ORDER BY 1
   }
 
   set: detail {
-    fields: [date, count_events_with_episode_numbers, count_events_with_season_number, count_events_with_genre_tremor_id, tv_program_tremor_id]
+    fields: [date,country, count_events_with_episode_numbers, count_events_with_season_number, count_events_with_genre_tremor_id, tv_program_tremor_id]
   }
 }

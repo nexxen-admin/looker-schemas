@@ -2,12 +2,14 @@ view: acr_weekly_app_os_device_count {
   derived_table: {
     sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
        BB.os,
+      aa.country,
        AA.tv_app_name,
        COUNT(DISTINCT AA.device_id) AS distinct_ip_count
 FROM dragon.viewership_content_sessions_combined_daily AA
 LEFT JOIN dragon.device_info_r BB
 ON AA.device_id = BB.device_id
-GROUP BY 1,2,3
+where AA.viewing_start_utc>current_date - INTERVAL '1 month'
+GROUP BY 1,2,3,4
 ORDER BY 1,2
  ;;
   }
@@ -27,6 +29,11 @@ ORDER BY 1,2
     sql: ${TABLE}.os ;;
   }
 
+  dimension: country {
+    type: string
+    sql: ${TABLE}.country ;;
+  }
+
   dimension: tv_app_name {
     type: string
     sql: ${TABLE}.tv_app_name ;;
@@ -38,6 +45,6 @@ ORDER BY 1,2
   }
 
   set: detail {
-    fields: [week_date, os, tv_app_name, distinct_ip_count]
+    fields: [week_date, os,country, tv_app_name, distinct_ip_count]
   }
 }

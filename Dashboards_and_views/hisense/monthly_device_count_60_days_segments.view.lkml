@@ -9,7 +9,7 @@ view: monthly_device_count_60_days_segments {
   COUNT(DISTINCT CASE WHEN viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -2) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN ip END) AS ip_between_0_to_60_days,
   COUNT(DISTINCT CASE WHEN viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP, 0) THEN ip END) AS ip_between_0_to_90_days
 FROM dragon.viewership_content_sessions_combined_daily AA
-where AA.viewing_start_utc>current_date - INTERVAL '1 month'
+where AA.viewing_start_utc>current_date - INTERVAL '3 month'
 group by 1
 
  ;;

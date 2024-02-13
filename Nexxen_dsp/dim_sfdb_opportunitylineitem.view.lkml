@@ -74,7 +74,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: configured_product_name__c {
     type: string
-    label: "Configured Product Name"
+    label: "Product Level 2"
     sql: ${TABLE}.configured_product_name__c ;;
   }
 

@@ -27,16 +27,6 @@ view: targets_up_gal {
     }
 
 
-  dimension: month {
-    type: number
-    sql: ${TABLE}.month ;;
-  }
-
-  dimension: year {
-    type: number
-    sql: ${TABLE}.year ;;
-  }
-
   dimension: population {
     type: string
     sql: ${TABLE}.population ;;

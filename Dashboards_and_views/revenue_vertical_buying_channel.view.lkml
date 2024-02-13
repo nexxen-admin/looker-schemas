@@ -44,7 +44,6 @@ view: revenue_vertical_buying_channel {
   }
 
 
-
 # measure: partition {
 #  type: number
  # sql:  ;;

@@ -147,7 +147,8 @@ view: v_dim_employee_pub_ops {
     type: string
     required_access_grants: [can_view_aniview]
     sql: case when ${TABLE}.Employee_Name='Itamar Bilu' OR ${TABLE}.Employee_Name='Stav Ezer' OR ${TABLE}.Employee_Name='Ashleigh Fisher' then 'In App'
-              when ${TABLE}.Employee_Name='Itzik Vaknin' OR ${TABLE}.Employee_Name='Yovel Modlin' OR ${TABLE}.Employee_Name='Bar Wolkowiski' or ${TABLE}.Employee_Name='Noa Karako' then 'Web'
+              when ${TABLE}.Employee_Name='Itzik Vaknin' OR ${TABLE}.Employee_Name='Yovel Modlin' OR ${TABLE}.Employee_Name='Bar Wolkowiski' or ${TABLE}.Employee_Name='Noa Karako'
+              or ${TABLE}.Employee_Name='Shir Elzam' then 'Web'
               else 'null' end
  ;;
   }

@@ -653,14 +653,16 @@ view: dim_sfdb_opportunity {
 
   dimension: related_account__c {
     type: string
+    label: "Related Brand ID"
     sql: ${TABLE}.related_account__c ;;
-    hidden: yes
+
   }
 
   dimension: related_account_aid__c {
     type: string
     sql: ${TABLE}.related_account_aid__c ;;
     hidden: yes
+
   }
 
   dimension: rfp_due_date__c {

@@ -1,5 +1,5 @@
 # The name of this view in Looker is "Dim Sfdb Legal Entity C"
-view: dim_sfdb_legal_entity__c {
+view: dim_sfdb_legal_entity {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
   sql_table_name: BI_DSP.dim_sfdb_legal_entity__c ;;

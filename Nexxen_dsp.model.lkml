@@ -54,11 +54,10 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
 
   }
-  join: dim_sfdb_legal_entity__c {
-
+  join: dim_sfdb_legal_entity {
     type: inner
     view_label: "Legal Entity"
-    sql: ${dim_sfdb_legal_entity__c.id} = ${dim_sfdb_account.legal_entity__c} ;;
+    sql_on: ${dim_sfdb_legal_entity.id} = ${dim_sfdb_account.legal_entity__c} ;;
     relationship: many_to_one
 
   }

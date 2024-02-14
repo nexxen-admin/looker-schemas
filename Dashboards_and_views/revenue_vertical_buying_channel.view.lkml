@@ -12,7 +12,9 @@ view: revenue_vertical_buying_channel {
 
   dimension: advertiser_category {
     type: string
+    label: "Sub Vertical"
     sql: ${TABLE}.advertiser_category ;;
+    drill_fields: [advertiser]
   }
 
   dimension: agency {
@@ -28,20 +30,21 @@ view: revenue_vertical_buying_channel {
   dimension: New_Vertical {
     type: string
     label: "Vertical"
-    sql: ${TABLE}.New_Vertical ;;
-    drill_fields: [vertical]
+    sql: case when ${TABLE}.New_Vertical = 'PERSONAL_FINANCE' then 'FINANCE'
+              when ${TABLE}.New_Vertical = 'REAL_ESTATE' then 'REAL ESTATE' else ${TABLE}.New_Vertical end;;
+    drill_fields: [advertiser_category]
   }
 
-  dimension: vertical {
-    type: string
-    label: "Sub Vertical"
-    sql: ${TABLE}.vertical ;;
-       drill_fields: [advertiser]
-    #   link: {
-    #     label: "Open Grouped Others Trend Line"
-    #   url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=PiSY2FLCizHclhE9Km8kt9&origin_space=249&toggle=vis"
-    # }
-  }
+  # dimension: vertical {
+  #   type: string
+  #   label: "Sub Vertical"
+  #   sql: ${TABLE}.vertical ;;
+  #     drill_fields: [advertiser]
+  #   #   link: {
+  #   #     label: "Open Grouped Others Trend Line"
+  #   #   url:"https://tremor.cloud.looker.com/explore/Dashboards_and_views/revenue_vertical_buying_channel?qid=PiSY2FLCizHclhE9Km8kt9&origin_space=249&toggle=vis"
+  #   # }
+  # }
 
 
 # measure: partition {

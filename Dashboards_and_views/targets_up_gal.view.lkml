@@ -38,6 +38,13 @@ view: targets_up_gal {
     value_format: "$#,##0"
   }
 
+  measure: revenue {
+    type: sum
+    label: "Gross Revenue"
+    sql: ${TABLE}.revenue ;;
+    value_format: "$#,##0"
+  }
+
   measure: target {
     type: sum
     sql: ${TABLE}.target ;;

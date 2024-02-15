@@ -40,6 +40,7 @@ view: fact_nexxen_dsp {
 
   measure: cost {
     type: sum
+    label: "Adv Invoice"
     value_format: "$#,##0.00"
     sql: ${TABLE}.cost ;;
 

@@ -12,7 +12,7 @@ view: dim_dsp_advertiser {
     # This dimension will be called "Advertiser ID" in Explore.
 
   dimension: advertiser_id {
-    type: number
+    type: string
     label: "Advertiser ID"
     sql: ${TABLE}.advertiser_id ;;
   }

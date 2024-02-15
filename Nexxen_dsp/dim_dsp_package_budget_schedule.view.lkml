@@ -15,7 +15,7 @@ view: dim_dsp_package_budget_schedule {
     type: number
     sql: ${TABLE}.daily_cap ;;
   }
-  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.pack
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: db_created {
@@ -87,7 +87,7 @@ view: dim_dsp_package_budget_schedule {
   }
 
   dimension: package_id {
-    type: number
+    type: string
 
     sql: ${TABLE}.package_id ;;
   }

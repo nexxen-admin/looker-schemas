@@ -129,7 +129,7 @@ explore: fact_nexxen_dsp  {
   }
 
   join: datorama_dsp_third_party {
-    type: inner
+    type: full_outer
     view_label: "3rd Party Data"
     sql_on: ${datorama_dsp_third_party.media_buy_key}=${dim_dsp_creative.tpa_external_id} ;;
     relationship: many_to_one

@@ -189,4 +189,9 @@ view: raw_metric_minute {
     sql:  ${TABLE}.metric_value  ;;
   }
 
+  measure: metric_tag_sum {
+    type: sum
+    sql: try_cast(${TABLE}."METRIC_TAG" as int) ;;
+  }
+
 }

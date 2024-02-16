@@ -194,4 +194,7 @@ view: raw_metric_minute {
     sql: try_cast(${TABLE}."METRIC_TAG" as int) ;;
   }
 
+ measure: total_requests {
+   sql: ${metric_tag_sum}/2 ;;
+ }
 }

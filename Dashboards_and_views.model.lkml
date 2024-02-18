@@ -424,3 +424,9 @@ explore: billing_dragon_data {
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
+explore: pmp_stats_hourly {
+  label: "PMP Stats Hourly"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}

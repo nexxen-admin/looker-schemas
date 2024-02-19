@@ -58,6 +58,14 @@ view: targets_up_gal {
     value_format: "$#,##0"
   }
 
+  measure: net_net {
+    label: "Net Net"
+    type: sum
+    sql: case when ${TABLE}.population ='Team Shir In App' or ${TABLE}.population='Team Shir Web' then ${TABLE}.Net_Revenue
+    else ${TABLE}.Net_Revenue + ${TABLE}.net_emea end;;
+    value_format: "$#,##0"
+  }
+
   measure: count {
     type: count
   }

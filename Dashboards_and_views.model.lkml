@@ -430,3 +430,9 @@ explore: pmp_stats_hourly {
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
+explore: rupi_datamine {
+  label: "Custom Events Datamine"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}

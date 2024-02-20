@@ -66,6 +66,18 @@ view: targets_up_gal {
     value_format: "$#,##0"
   }
 
+  measure: cogs {
+    type: sum
+    sql: ${TABLE}.cogs ;;
+    value_format: "$#,##0"
+  }
+
+  measure: tech_fee {
+    type: sum
+    sql: ${TABLE}.tech_fee ;;
+    hidden: yes
+  }
+
   measure: count {
     type: count
   }

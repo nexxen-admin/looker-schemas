@@ -356,6 +356,7 @@ view: dsp_media_and_bids {
     type: sum
     description: "Cost of impression"
     sql: ${TABLE}."cost" ;;
+    value_format: "$#,##0.00"
   }
 
   dimension: country_id {

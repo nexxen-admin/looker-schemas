@@ -1,4 +1,4 @@
-connection: "druid"
+connection: "druid_iad_prod"
 
 include: "/**/*.view.lkml"
 

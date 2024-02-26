@@ -72,6 +72,13 @@ view: targets_up_gal {
     value_format: "$#,##0"
   }
 
+  measure: completion_rate{
+    type: number
+    label: "% Goal"
+    sql: ${net_net}/${target} ;;
+    value_format: "0.00%"
+  }
+
   measure: tech_fee {
     type: sum
     sql: ${TABLE}.tech_fee ;;

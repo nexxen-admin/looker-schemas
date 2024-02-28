@@ -35,19 +35,14 @@ view: dim_dsp_netsuite_invoice {
 
   dimension: monthly_budget_amount {
     type: number
-    sql: ${TABLE}.monthly_budget_amount ;;
+    label: "Passed Bill Amount"
+    sql: COALESCE(${TABLE}.monthly_budget_amount,0) ;;
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_monthly_budget_amount {
-    type: sum
-    sql: ${monthly_budget_amount} ;;  }
-  measure: average_monthly_budget_amount {
-    type: average
-    sql: ${monthly_budget_amount} ;;  }
 
   dimension: netsuite_invoice_key {
     type: number

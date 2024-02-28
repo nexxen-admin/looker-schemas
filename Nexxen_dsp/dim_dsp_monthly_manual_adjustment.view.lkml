@@ -35,7 +35,8 @@ view: dim_dsp_monthly_manual_adjustment {
 
   dimension: manual_adjustment {
     type: number
-    sql: ${TABLE}.manual_adjustment ;;
+    label: "Adjustment Billable Revenue"
+    sql: COALESCE(${TABLE}.manual_adjustment , 0) ;;
   }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average

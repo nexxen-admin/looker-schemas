@@ -2,7 +2,7 @@
 view: fact_nexxen_dsp {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_DSP.fact_nexxen_dsp ;;
+  sql_table_name: BI_DSP.fact_nexxen_dsp_temp ;;
 
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
@@ -38,6 +38,7 @@ view: fact_nexxen_dsp {
 
   }
 
+
   measure: cost {
     type: sum
     label: "Adv Invoice"
@@ -72,6 +73,19 @@ view: fact_nexxen_dsp {
     datatype: date
     label: "Date IN Timezona"
     sql: ${TABLE}.date_key_in_timezone ;;
+  }
+
+
+  dimension: manual_adjustment_key {
+    type: number
+    sql: ${TABLE}.manual_adjustment_key ;;
+    hidden: yes
+  }
+
+  dimension: netsuite_invoice_key {
+    type: number
+    sql: ${TABLE}.Netsuite_invoice_key ;;
+    hidden: yes
   }
 
   dimension_group: db_created {

@@ -38,6 +38,20 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_monthly_manual_adjustment {
+    type:left_outer
+    view_label: "Manual Billing ADJ"
+    sql_on: ${dim_dsp_monthly_manual_adjustment.manual_adjustment_key} = ${fact_nexxen_dsp.manual_adjustment_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_netsuite_invoice{
+    type:left_outer
+    view_label: "Netsuite Billing Fields"
+    sql_on: ${dim_dsp_netsuite_invoice.netsuite_invoice_key} = ${fact_nexxen_dsp.netsuite_invoice_key};;
+    relationship: many_to_one
+  }
+
   join: dim_dsp_creative_file_tracking_url {
     type: left_outer
     view_label: "Creative"

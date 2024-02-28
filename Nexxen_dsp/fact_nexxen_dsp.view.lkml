@@ -37,7 +37,80 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.clicks ;;
 
   }
+  measure: units_before_adjustment {
+    type: sum
+    sql: ${TABLE}.units_before_adjustment ;;
 
+  }
+  measure: total_billable_units {
+    type: sum
+    sql: ${TABLE}.total_billable_units ;;
+
+  }
+  measure: over_delivery_units {
+    type: sum
+    sql: ${TABLE}.over_delivery_units ;;
+
+  }
+  measure: final_billable_units {
+    type: sum
+    sql: ${TABLE}.final_billable_unit, ;;
+
+  }
+  measure: units_adjustment {
+    type: sum
+    sql: ${TABLE}.units_adjustment ;;
+
+  }
+
+  measure: first_party_revenue {
+    type: sum
+    sql: ${TABLE}.first_party_revenue ;;
+
+  }
+
+  measure: first_party_in_usd {
+    type: sum
+    sql: ${TABLE}.first_party_in_usd ;;
+
+  }
+
+  measure: uncapped_revenue {
+    type: sum
+    sql: ${TABLE}.uncapped_revenue ;;
+
+  }
+
+  measure: capped {
+    type: sum
+    sql: ${TABLE}.capped ;;
+
+  }
+  measure: over_delivery_amount {
+    type: sum
+    sql: ${TABLE}.over_delivery_amount ;;
+
+  }
+  measure: revenue_adjustment {
+    type: sum
+    sql: ${TABLE}.revenue_adjustment ;;
+
+  }
+  measure: final_billable_revenue_after_adjustment {
+    type: sum
+    sql: ${TABLE}.final_billable_revenue_after_adjustment ;;
+
+  }
+  measure: check_completeness {
+    type: sum
+    sql: ${TABLE}.check_completeness ;;
+
+  }
+  measure: under_delivery_budget {
+    type: sum
+    sql: ${TABLE}.under_delivery_budget ;;
+
+  }
 
   measure: cost {
     type: sum

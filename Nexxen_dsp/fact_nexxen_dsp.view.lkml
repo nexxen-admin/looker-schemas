@@ -104,8 +104,15 @@ view: fact_nexxen_dsp {
 
   measure: impressions {
     type: sum
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     sql: ${TABLE}.impressions ;;
+  }
+
+  dimension: third_fix {
+    type: number
+    label: "3RD Party Impressions"
+    value_format: "#,##0"
+    sql: ${TABLE}.third_fix ;;
   }
 
   dimension: market_id_key {

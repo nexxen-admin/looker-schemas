@@ -2,7 +2,7 @@
 view: fact_nexxen_dsp {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_DSP.fact_nexxen_dsp ;;
+  sql_table_name: BI_DSP.v_fact_nexxen_dsp ;;
 
   # No primary key is defined for this view. In order to join this view in an Explore,
   # define primary_key: yes on a dimension that has no repeated values.
@@ -36,10 +36,10 @@ view: fact_nexxen_dsp {
     type: sum
     sql: ${TABLE}.clicks ;;
 
-  }
-  measure: units_before_adjustment {
-    type: sum
-    sql: ${TABLE}.units_before_adjustment ;;
+#  }
+#  measure: units_before_adjustment {
+ #   type: sum
+ #   sql: ${TABLE}.units_before_adjustment ;;
 
   }
   measure: total_billable_units {

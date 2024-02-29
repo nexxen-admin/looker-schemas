@@ -2039,6 +2039,12 @@ view: v_raw_impression {
     sql: ${TABLE}.REQUESTS ;;
   }
 
+  dimension: requests_is_null {
+    label: "Requests Is Null"
+    description: "The flag that indicates that the request is empty."
+    type: string
+    sql: CASE WHEN ${requests} IS NULL THEN 'true' ELSE 'false' END;;
+  }
 
   measure: sum_publisher_requests {
     type: sum

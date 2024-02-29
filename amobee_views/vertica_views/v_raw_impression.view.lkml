@@ -1379,6 +1379,13 @@ view: v_raw_impression {
     sql: ${TABLE}.IMPRESSIONS ;;
   }
 
+  dimension: impressions_is_null {
+    label: "Impression Is Null"
+    description: "The flag that indicates that the impression is empty."
+    type: string
+    sql: CASE WHEN ${impressions} IS NULL THEN 'true' ELSE 'false' END;;
+  }
+
   measure: sum_impressions {
     type: sum
     label: "Impressions"

@@ -36,10 +36,10 @@ view: fact_nexxen_dsp {
     type: sum
     sql: ${TABLE}.clicks ;;
 
-#  }
-#  measure: units_before_adjustment {
- #   type: sum
- #   sql: ${TABLE}.units_before_adjustment ;;
+ }
+  measure: units_before_adjustments {
+    type: sum
+    sql: ${TABLE}.units_before_adjustments ;;
 
   }
   measure: total_billable_units {
@@ -57,9 +57,9 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.final_billable_unit, ;;
 
   }
-  measure: units_adjustment {
+  measure: units_adjustments {
     type: sum
-    sql: ${TABLE}.units_adjustment ;;
+    sql: ${TABLE}.units_adjustments ;;
 
   }
 
@@ -69,9 +69,9 @@ view: fact_nexxen_dsp {
 
   }
 
-  measure: first_party_in_usd {
+  measure: first_party_revenue_in_usd {
     type: sum
-    sql: ${TABLE}.first_party_in_usd ;;
+    sql: ${TABLE}.first_party_revenue_in_usd ;;
 
   }
 
@@ -91,21 +91,27 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.over_delivery_amount ;;
 
   }
-  measure: revenue_adjustment {
+  measure: revenue_adjustments {
     type: sum
-    sql: ${TABLE}.revenue_adjustment ;;
+    sql: ${TABLE}.revenue_adjustments ;;
 
   }
-  measure: final_billable_revenue_after_adjustment {
+  measure: total_billable_revenue_after_adjustments {
     type: sum
-    sql: ${TABLE}.final_billable_revenue_after_adjustment ;;
+    sql: ${TABLE}.total_billable_revenue_after_adjustments ;;
 
   }
-  measure: check_completeness {
+
+  measure: under_delivery_units {
     type: sum
-    sql: ${TABLE}.check_completeness ;;
+    sql: ${TABLE}.under_delivery_units ;;
 
   }
+#  measure: check_completeness {
+#    type: sum
+#    sql: ${TABLE}.check_completeness ;;
+
+ # }
   measure: under_delivery_budget {
     type: sum
     sql: ${TABLE}.under_delivery_budget ;;

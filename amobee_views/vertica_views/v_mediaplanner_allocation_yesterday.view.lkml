@@ -32,7 +32,7 @@ view: v_mediaplanner_allocation_yesterday {
           (
             SELECT
               t.TIMEZONE_ID,
-              DATE_TRUNC(day, TIMESTAMPADD(hour, t.UTC_OFFSET - 24, CURRENT_TIMESTAMP())) AS YESTERDAY
+              DATE_TRUNC('day', TIMESTAMPADD(hour, (t.UTC_OFFSET - 24)::int, CURRENT_TIMESTAMP(1))) AS YESTERDAY
             FROM
               DIM.TIMEZONE t
           ) t2

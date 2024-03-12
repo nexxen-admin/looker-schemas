@@ -149,6 +149,8 @@ view: v_dim_employee_pub_ops {
     sql: case when ${TABLE}.Employee_Name='Itamar Bilu' OR ${TABLE}.Employee_Name='Stav Ezer' OR ${TABLE}.Employee_Name='Ashleigh Fisher' then 'In App'
               when ${TABLE}.Employee_Name='Itzik Vaknin' OR ${TABLE}.Employee_Name='Yovel Modlin' OR ${TABLE}.Employee_Name='Bar Wolkowiski' or ${TABLE}.Employee_Name='Noa Karako'
               or ${TABLE}.Employee_Name='Shir Elzam' then 'Web'
+              when ${TABLE}.Employee_name='Mikayla Skarzynski' or ${TABLE}.Employee_name='Rachel Gargett'
+              or ${TABLE}.Employee_name='Hannah Quigley' then 'UK'
               else 'null' end
  ;;
   }

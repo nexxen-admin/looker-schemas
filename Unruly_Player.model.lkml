@@ -94,5 +94,5 @@ explore: extend_unruly_player_demands {
 explore: unruly_exco_aniview_ctrl {
   label: "Unruly for SF"
   required_access_grants: [can_view_aniview]
-  hidden: yes
+  #hidden: yes
 }

@@ -2811,6 +2811,20 @@ view: fact_ad_daily_agg {
       ;;
   }
 
+  measure: barter_fee {
+    type: sum
+    sql: case when dim_deal_agency.deal_agency_name like '%iNvolved%' then ${TABLE}.sum_of_revenue*0.2
+              when dim_deal_agency.deal_agency_name like '%Orion%' then ${TABLE}.sum_of_revenue*0.15
+              when dim_deal_agency.deal_agency_name like '%ICON%' then ${TABLE}.sum_of_revenue*0.2
+              when dim_deal_agency.deal_agency_name like '%Agyle%' then ${TABLE}.sum_of_revenue*0.15
+              when dim_deal_agency.deal_agency_name like '%Evergreen%' then ${TABLE}.sum_of_revenue*0.2
+              when dim_deal_agency.deal_agency_name like '%Anchor%' then ${TABLE}.sum_of_revenue*0.15
+              when dim_deal_agency.deal_agency_name like '%UM Tech%' then ${TABLE}.sum_of_revenue*0.1
+              when dim_deal_agency.deal_agency_name like '%NYIAX%' then ${TABLE}.sum_of_revenue*0.1
+              end;;
+    value_format: "$#,##0.00"
+  }
+
   measure: bid_price_top_25_perc {
     label: "bid price top 25%"
     description: "Shows only bid prices that are above 0.75 of the bid floor"

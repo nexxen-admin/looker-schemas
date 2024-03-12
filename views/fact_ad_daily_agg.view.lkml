@@ -1375,13 +1375,13 @@ view: fact_ad_daily_agg {
     sql: (${cogs}/NULLIF(${impression_pixel},0))*1000 ;;
   }
 
-  measure: Pub_RPM {
+  measure: request_CPM {
     type: number
-    label: "Pub RPM"
-    description: "Revenue/Impressions"
+    label: "Request CPM"
+    description: "Cogs/Requests"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: (${revenue}/NULLIF(${impression_pixel},0))*1000 ;;
+    sql: (${cogs}/NULLIF(${requests},0))*1000 ;;
   }
 
 

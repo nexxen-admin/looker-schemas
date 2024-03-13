@@ -217,7 +217,7 @@ view: fact_nexxen_dsp {
 
   measure: third_party_complete_events {
     type: sum
-    label: "3RD Party Impressions"
+    label: "3RD Party Complete Events"
     value_format: "#,##0"
     sql: ${TABLE}.third_party_complete_events ;;
   }

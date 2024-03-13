@@ -40,71 +40,84 @@ view: fact_nexxen_dsp {
   measure: units_before_adjustments {
     type: sum
     sql: ${TABLE}.units_before_adjustments ;;
+    hidden: yes # not in use to remove
 
   }
   measure: total_billable_units {
     type: sum
     sql: ${TABLE}.total_billable_units ;;
+    hidden: yes # not in use to remove
 
   }
   measure: over_delivery_units {
     type: sum
     sql: ${TABLE}.over_delivery_units ;;
+    hidden: yes # not in use to remove
 
   }
   measure: final_billable_units {
     type: sum
     sql: ${TABLE}.final_billable_unit, ;;
+    hidden: yes # not in use to remove
 
   }
   measure: units_adjustments {
     type: sum
     sql: ${TABLE}.units_adjustments ;;
+    hidden: yes # not in use to remove
 
   }
 
   measure: first_party_revenue {
     type: sum
     sql: ${TABLE}.first_party_revenue ;;
+    hidden: yes # not in use to remove
 
   }
 
   measure: first_party_revenue_in_usd {
     type: sum
     sql: ${TABLE}.first_party_revenue_in_usd ;;
+    hidden: yes # not in use to remove
 
   }
 
   measure: uncapped_revenue {
     type: sum
     sql: ${TABLE}.uncapped_revenue ;;
+    hidden: yes # not in use to remove
 
   }
 
   measure: capped {
     type: sum
     sql: ${TABLE}.capped ;;
+    hidden: yes # not in use to remove
 
   }
   measure: over_delivery_amount {
     type: sum
     sql: ${TABLE}.over_delivery_amount ;;
+    hidden: yes # not in use to remove
 
   }
   measure: revenue_adjustments {
     type: sum
     sql: ${TABLE}.revenue_adjustments ;;
+    hidden: yes # not in use to remove
 
   }
   measure: total_billable_revenue_after_adjustments {
     type: sum
     sql: ${TABLE}.total_billable_revenue_after_adjustments ;;
+    hidden: yes # not in use to remove
 
   }
 
   measure: under_delivery_units {
     type: sum
     sql: ${TABLE}.under_delivery_units ;;
+    hidden: yes # not in use to remove
 
   }
 #  measure: check_completeness {
@@ -115,6 +128,7 @@ view: fact_nexxen_dsp {
   measure: under_delivery_budget {
     type: sum
     sql: ${TABLE}.under_delivery_budget ;;
+    hidden: yes # not in use to remove
 
   }
 
@@ -187,11 +201,25 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.impressions ;;
   }
 
-  dimension: third_fix {
-    type: number
+  measure: third_party_impressions {
+    type: sum
     label: "3RD Party Impressions"
     value_format: "#,##0"
-    sql: ${TABLE}.third_fix ;;
+    sql: ${TABLE}.third_party_impressions ;;
+  }
+
+  measure: third_party_clicks {
+    type: sum
+    label: "3RD Party Clicks"
+    value_format: "#,##0"
+    sql: ${TABLE}.third_party_clicks ;;
+  }
+
+  measure: third_party_complete_events {
+    type: sum
+    label: "3RD Party Impressions"
+    value_format: "#,##0"
+    sql: ${TABLE}.third_party_complete_events ;;
   }
 
   dimension: market_id_key {

@@ -28,13 +28,15 @@ view: unruly_exco_aniview_ctrl {
               round(((sum(CASE WHEN ((MRR_AniView_Data.Activity_Date >= '2023-06-01'::date) AND (ac.account_name = 'MyCast_Twist'::varchar(12)) AND (MRR_AniView_Data.Advertiser_Name <> 'Aniview Marketplace'::varchar(19)) AND (MRR_AniView_Data.Publisher_Name <> 'Unruly'::varchar(6))) THEN MRR_AniView_Data.Impression ELSE NULL::int END) * 0.15) / 1000::numeric(18,0)), 0) AS TW_SF,
               round(((sum(CASE WHEN ((MRR_AniView_Data.Advertiser_Name <> 'Aniview Marketplace'::varchar(19)) AND (MRR_AniView_Data.Publisher_Name = 'Unruly'::varchar(6))) THEN MRR_AniView_Data.Impression ELSE NULL::int END) * CASE WHEN (MRR_AniView_Data.Activity_Date < '2023-06-01'::date) THEN 0.15 ELSE 0.18 END) / 1000::numeric(18,0)), 0) AS OS_SF,
               (sum(CASE WHEN (MRR_AniView_Data.Advertiser_Name = 'Aniview Marketplace'::varchar(19)) THEN MRR_AniView_Data.Revenue ELSE NULL::float END))::int AS AV_MP_Total_Rev,
-              (sum(CASE WHEN ((MRR_AniView_Data.Activity_Date < '2023-05-01'::date) AND (MRR_AniView_Data.Advertiser_Name = 'Aniview Marketplace'::varchar(19))) THEN round(((MRR_AniView_Data.Revenue / 0.7::float) * 0.1::float), 1) WHEN ((MRR_AniView_Data.Activity_Date >= '2023-05-01'::date) AND (MRR_AniView_Data.Advertiser_Name = 'Aniview Marketplace'::varchar(19))) THEN round(((MRR_AniView_Data.Revenue / 0.5::float) * 0.3::float), 1) ELSE NULL::float END))::int AS AV_MP_Net,
+              --(sum(CASE WHEN ((MRR_AniView_Data.Activity_Date < '2023-05-01'::date) AND (MRR_AniView_Data.Advertiser_Name = 'Aniview Marketplace'::varchar(19))) THEN round(((MRR_AniView_Data.Revenue / 0.7::float) * 0.1::float), 1) WHEN ((MRR_AniView_Data.Activity_Date >= '2023-05-01'::date) AND (MRR_AniView_Data.Advertiser_Name = 'Aniview Marketplace'::varchar(19))) THEN round(((MRR_AniView_Data.Revenue / 0.5::float) * 0.3::float), 1) ELSE NULL::float END))::int AS AV_MP_Net,
+              sum(case when MRR_AniView_Data.Advertiser_Name = 'Aniview Marketplace'::varchar(19) then MRR_AniView_Data.Revenue end) as AV_MP_Net,
               (sum(CASE WHEN ((MRR_AniView_Data.Advertiser_Name <> 'Aniview Marketplace'::varchar(19)) AND (MRR_AniView_Data.Advertiser_Name <> 'Unruly'::varchar(6))) THEN MRR_AniView_Data.Revenue ELSE NULL::float END))::int AS Pub_MP_Total_Rev,
               (sum(CASE WHEN ((MRR_AniView_Data.Advertiser_Name <> 'Aniview Marketplace'::varchar(19)) AND (MRR_AniView_Data.Advertiser_Name <> 'Unruly'::varchar(6))) THEN (MRR_AniView_Data.Revenue * 0.05::float) ELSE NULL::float END))::int AS Pub_MP_Net,
               0 AS Player_Total_Rev,
-              0 AS MyCast_20_precent,
+              0 AS MyCast,
               0 AS Widgets_AI,
-              0 AS Wiseroll_LTD_Yeda
+              0 AS Wiseroll_LTD_Yeda,
+              0 as Streamkey
        FROM ((BI_New.MRR_AniView_Data JOIN BI_New.dim_AniView_Accounts ac ON ((MRR_AniView_Data.Account_ID = ac.account_id))) LEFT  JOIN BI_New.Dim_Publisher p ON ((p.external_publisher_id = MRR_AniView_Data.publisher_id)))
        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
 
@@ -74,9 +76,11 @@ view: unruly_exco_aniview_ctrl {
               CASE WHEN (lower(Fact_cedato_demands.demand_partner) ~~* 'unruly%'::varchar(7)) THEN NULL::numeric(1,0) ELSE sum(Fact_cedato_demands.revenue) END AS Pub_MP_Total_Rev,
               CASE WHEN (lower(Fact_cedato_demands.demand_partner) ~~* 'unruly%'::varchar(7)) THEN NULL::numeric(1,0) ELSE CASE WHEN (Fact_cedato_demands.day < '2023-06-01'::date) THEN (sum(Fact_cedato_demands.revenue) * 0.2) WHEN (Fact_cedato_demands.day >= '2023-06-01'::date) THEN (sum(Fact_cedato_demands.revenue) * 0.15) ELSE NULL::numeric(1,0) END END AS Pub_MP_Net,
               sum(Fact_cedato_demands.revenue) AS Player_Total_Rev,
-              sum(CASE WHEN ((Fact_cedato_demands.day < '2023-06-01'::date) AND (lower(Fact_cedato_demands.demand_partner) !~~* 'unruly%'::varchar(7)) AND (Fact_cedato_demands.seat_name ~~* '%MC%'::varchar(4))) THEN (Fact_cedato_demands.revenue * 0.2) WHEN ((Fact_cedato_demands.day >= '2023-06-01'::date) AND (lower(Fact_cedato_demands.demand_partner) !~~* 'unruly%'::varchar(7)) AND (Fact_cedato_demands.seat_name ~~* '%MC%'::varchar(4))) THEN (Fact_cedato_demands.revenue * 0.15) ELSE NULL::numeric(1,0) END) AS MyCast,
+              --sum(CASE WHEN ((Fact_cedato_demands.day < '2023-06-01'::date) AND (lower(Fact_cedato_demands.demand_partner) !~~* 'unruly%'::varchar(7)) AND (Fact_cedato_demands.seat_name ~~* '%MC%'::varchar(4))) THEN (Fact_cedato_demands.revenue * 0.2) WHEN ((Fact_cedato_demands.day >= '2023-06-01'::date) AND (lower(Fact_cedato_demands.demand_partner) !~~* 'unruly%'::varchar(7)) AND (Fact_cedato_demands.seat_name ~~* '%MC%'::varchar(4))) THEN (Fact_cedato_demands.revenue * 0.15) ELSE NULL::numeric(1,0) END) AS MyCast,
+              sum(case when lower(Fact_cedato_demands.demand_partner) != 'unruly mycast' and Fact_cedato_demands.seat_name = 'Unruly_publisher_MC' then Fact_cedato_demands.revenue * 0.15 end) as MyCast,
               0 AS Widgets_AI,
-              0 AS Wiseroll_LTD_Yeda
+              0 AS Wiseroll_LTD_Yeda,
+              0 AS Streamkey
        FROM BI_New.Fact_cedato_demands
        GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
 
@@ -123,78 +127,29 @@ view: unruly_exco_aniview_ctrl {
           0                                           AS Pub_MP_Total_Rev,
           0                                           AS Pub_MP_Net,
           0                                           AS Player_Total_Rev,
-          0                                           AS MyCast_20_precent,
+          0                                           AS MyCast,
           CASE
-              WHEN d.date_key >= '2023-06-01'
-              AND p.PUB_ID = '105705'
-              AND lower(device_type_id) != lower('ctv')
-              THEN
-                  CASE
-                      WHEN SUM(agg.sum_of_cogs) <= 450000
-                      THEN SUM(agg.sum_of_cogs) * 0.09
-                      WHEN SUM(agg.sum_of_cogs) > 450000
-                      AND SUM(agg.sum_of_cogs) <= 600000
-                      THEN (40500 + ((SUM(agg.sum_of_cogs) - 450000) * 0.07))
-                      WHEN (
-                              (
-                                  SUM(agg.sum_of_cogs) > 600000 )
-                          AND (
-                                  SUM(agg.sum_of_cogs) <= 7500000 ) )
-                      THEN ((4050000 + ((SUM(agg.sum_of_cogs) - 450000) * 0.07)) + ((SUM(agg.sum_of_cogs)
-                          - 600000) * 0.05))
-                      ELSE (((4050000 + ((SUM(agg.sum_of_cogs) - 450000) * 0.07)) + ((SUM(agg.sum_of_cogs
-                          ) - 600000) * 0.05)) + ((SUM(agg.sum_of_cogs) - 750000) * 0.03))
-                  END
-              WHEN d.date_key < '2023-06-01'
-              AND p.PUB_ID = '105705'
-              THEN
-                  CASE
-                      WHEN SUM(agg.sum_of_cogs) <= 450000
-                      THEN SUM(agg.sum_of_cogs) * 0.09
-                      WHEN SUM(agg.sum_of_cogs) > 450000
-                      AND SUM(agg.sum_of_cogs) <= 600000
-                      THEN (40500 + ((SUM(agg.sum_of_cogs) - 450000) * 0.07))
-                      WHEN (
-                              (
-                                  SUM(agg.sum_of_cogs) > 600000 )
-                          AND (
-                                  SUM(agg.sum_of_cogs) <= 7500000 ) )
-                      THEN ((4050000 + ((SUM(agg.sum_of_cogs) - 450000) * 0.07)) + ((SUM(agg.sum_of_cogs)
-                          - 600000) * 0.05))
-                      ELSE (((4050000 + ((SUM(agg.sum_of_cogs) - 450000) * 0.07)) + ((SUM(agg.sum_of_cogs
-                          ) - 600000) * 0.05)) + ((SUM(agg.sum_of_cogs) - 750000) * 0.03))
-                  END
-              ELSE NULL
-          END AS Widgets_AI,
-          CASE
-              WHEN (
-                      (
-                          p.PUB_ID = ANY (ARRAY['105587', '106126']))
-                  AND (
-                          d.Date_Key >= DATE('2023-04-01')))
-              THEN
-                  CASE
-                      WHEN (
-                              SUM(agg.sum_of_cogs) <= 450000)
-                      THEN (SUM(agg.sum_of_cogs) * 0.09)
-                      WHEN (
-                              (
-                                  SUM(agg.sum_of_cogs) > 450000)
-                          AND (
-                                  SUM(agg.sum_of_cogs) <= 600000))
-                      THEN (40500 + ((SUM(agg.sum_of_cogs) - 450000) * 0.07))
-                      WHEN (
-                              (
-                                  SUM(agg.sum_of_cogs) > 600000)
-                          AND (
-                                  SUM(agg.sum_of_cogs) <= 7500000))
-                      THEN ((4050000 + ((SUM(agg.sum_of_cogs) - 450000) * 0.07)) + ((SUM(agg.sum_of_cogs)
-                          - 600000) * 0.05))
-                      ELSE (((4050000 + ((SUM(agg.sum_of_cogs) - 450000) * 0.07)) + ((SUM(agg.sum_of_cogs
-                          ) - 600000) * 0.05)) + ((SUM(agg.sum_of_cogs) - 750000) * 0.03))
-                  END
-              ELSE NULL
-          END         AS Wiseroll_LTD_Yeda
+        WHEN d.date_key >= '2023-06-01'
+        AND p.PUB_ID = '105705'
+        AND lower(device_type_id) != lower('ctv')
+        and lower(imp_type) = 'video'
+        THEN
+            SUM(agg.sum_of_cogs) * 0.07
+
+    END AS Widgets_AI,
+    CASE
+        WHEN p.PUB_ID = ANY (ARRAY['105587', '106126'])
+        and d.Date_Key >= DATE('2023-04-01')
+        and lower(imp_type) = 'video'
+        THEN
+           SUM(agg.sum_of_cogs) * 0.07
+
+    END         AS Wiseroll_LTD_Yeda,
+    CASE
+        WHEN p.PUB_ID='106894'
+        THEN
+            SUM(agg.sum_of_cogs) *0.09
+        END AS Streamkey
       FROM
           BI_New.Fact_Ad_Daily_Agg agg
       INNER JOIN
@@ -245,6 +200,10 @@ view: unruly_exco_aniview_ctrl {
           bi_new.Dim_Device_Type dt
       ON
           agg.Device_Type_key = dt.Device_Type_key
+      LEFT JOIN
+          bi_new.Dim_Imp_Type it
+      ON
+          agg.Imp_Type_key = it.Imp_Type_key
       WHERE
           d.Date_Key >='2024-01-01'
       AND
@@ -280,7 +239,8 @@ view: unruly_exco_aniview_ctrl {
           origin_domain,
           Buying_Channel,
           p.pub_name,
-          dt.device_type_id ;;
+          dt.device_type_id,
+          it.imp_type;;
   }
 
   measure: count {
@@ -455,9 +415,9 @@ view: unruly_exco_aniview_ctrl {
     sql: ${TABLE}.Player_Total_Rev ;;
   }
 
-  measure: my_cast_20_precent {
+  measure: my_cast {
     type: sum
-    sql: ${TABLE}.MyCast_20_precent ;;
+    sql: ${TABLE}.MyCast ;;
   }
 
   measure: widgets_ai {
@@ -468,6 +428,11 @@ view: unruly_exco_aniview_ctrl {
   measure: wiseroll_ltd_yeda {
     type: sum
     sql: ${TABLE}.Wiseroll_LTD_Yeda ;;
+  }
+
+  measure: streamkey {
+    type: sum
+    sql: ${TABLE}.Streamkey ;;
   }
 
   set: detail {
@@ -502,9 +467,10 @@ view: unruly_exco_aniview_ctrl {
   pub_mp_total_rev,
   pub_mp_net,
   player_total_rev,
-  my_cast_20_precent,
+  my_cast,
   widgets_ai,
-  wiseroll_ltd_yeda
+  wiseroll_ltd_yeda,
+  streamkey
     ]
   }
 }

@@ -1317,7 +1317,8 @@ view: fact_ad_daily_agg {
     description: "responses/requests"
     value_format: "0.00\%"
     group_label: "Daily Measures"
-    sql: (${responses}/NULLIF(${requests},0))*100 ;;
+    sql: (${responses}/NULLIF(${requests},0))*100--/100000
+    ;;
   }
 
   measure: Fill_Rate {

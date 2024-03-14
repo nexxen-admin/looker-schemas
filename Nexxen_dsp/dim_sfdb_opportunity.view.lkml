@@ -841,6 +841,13 @@ view: dim_sfdb_opportunity {
     label: "Win Reason dETAILS"
     sql: ${TABLE}.win_reason_details__c ;;
   }
+
+  dimension: billing_instructions__c {
+    type: string
+    label: "Billing Instruction"
+    sql: ${TABLE}.billing_instructions__c ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id, name, stagename]

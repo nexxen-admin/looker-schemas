@@ -431,6 +431,24 @@ view: dim_sfdb_opportunitylineitem {
     hidden: yes
   }
 
+  dimension: rate_cart_discount__c {
+    type: number
+    label: "Rate Card Discount"
+    sql: ${TABLE}.rate_card_discount__c ;;
+  }
+
+  dimension: overall_discount__c {
+    type: number
+    label: "Overall Discount"
+    sql: ${TABLE}.overall_discount__c ;;
+  }
+
+  dimension: discount__c {
+    type: number
+    label: "Manual Discount"
+    sql: ${TABLE}.discount__c ;;
+  }
+
   dimension: opportunity_owner__c {
     type: string
     label: "Opportunity Owner"

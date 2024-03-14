@@ -323,6 +323,26 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  measure: tac {
+    type: sum
+    sql: ${TABLE}.tac ;;
+  }
+
+  measure: percent25_events {
+    type: number
+    sql: ${TABLE}.percent25_events ;;
+  }
+
+  measure: percent50_events {
+    type: number
+    sql: ${TABLE}.percent50_events ;;
+  }
+
+  measure: percent75_events {
+    type: number
+    sql: ${TABLE}.percent75_events ;;
+  }
+
   measure: count {
     type: count
     hidden: yes

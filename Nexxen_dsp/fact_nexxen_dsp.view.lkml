@@ -329,17 +329,17 @@ view: fact_nexxen_dsp {
   }
 
   measure: percent25_events {
-    type: number
+    type: sum
     sql: ${TABLE}.percent25_events ;;
   }
 
   measure: percent50_events {
-    type: number
+    type: sum
     sql: ${TABLE}.percent50_events ;;
   }
 
   measure: percent75_events {
-    type: number
+    type: sum
     sql: ${TABLE}.percent75_events ;;
   }
 

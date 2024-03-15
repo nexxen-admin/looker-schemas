@@ -145,7 +145,7 @@ explore: fact_nexxen_dsp  {
   join: datorama_dsp_third_party {
     type: full_outer
     view_label: "3rd Party Data"
-    sql_on: ${datorama_dsp_third_party.media_buy_key}=${dim_dsp_creative.tpa_external_id} ;;
+    sql_on: ${datorama_dsp_third_party.third_party_key}=${fact_nexxen_dsp.third_party_key} ;;
     relationship: many_to_one
   }
 

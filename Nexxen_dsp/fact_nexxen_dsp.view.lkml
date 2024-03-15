@@ -181,6 +181,12 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: third_party_key {
+    type: number
+    sql: ${TABLE}.third_party_key ;;
+    hidden: yes
+  }
+
   dimension_group: db_created {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
@@ -194,6 +200,8 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.db_updated_date ;;
     hidden: yes
   }
+
+
 
   measure: impressions {
     type: sum

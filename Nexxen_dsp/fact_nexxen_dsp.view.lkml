@@ -32,6 +32,20 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: exchange_rate_to_target_currency_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.exchange_rate_to_target_currency_key ;;
+    hidden: yes
+  }
+
+  dimension: exchange_rate_to_usd_currency_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.exchange_rate_to_usd_currency_key ;;
+    hidden: yes
+  }
+
   measure: clicks {
     type: sum
     sql: ${TABLE}.clicks ;;
@@ -355,4 +369,5 @@ view: fact_nexxen_dsp {
     type: count
     hidden: yes
   }
+
 }

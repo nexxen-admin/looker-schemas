@@ -149,5 +149,19 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: v_dim_netsuite_daily_exchange_rate_target_currency {
+    type: inner
+    view_label: "Netsuite Target Currency"
+    sql: ${v_dim_netsuite_daily_exchange_rate_target_currency.exchange_rate}=${fact_nexxen_dsp.exchange_rate_to_target_currency_key} ;;
+    relationship: many_to_one
+  }
+
+  join: v_dim_netsuite_daily_exchange_rate_usd_currency {
+    type: inner
+    view_label: "Netsuite USD Currency"
+    sql: ${v_dim_netsuite_daily_exchange_rate_usd_currency.exchange_rate}=${fact_nexxen_dsp.exchange_rate_to_usd_currency_key} ;;
+    relationship: many_to_one
+  }
+
 
 }

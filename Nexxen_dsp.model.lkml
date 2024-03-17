@@ -107,6 +107,14 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
 
   }
+  join: dim_sfdb_po__c {
+
+    type: left_outer
+    view_label: "Salsforce Purchase Order"
+    sql_on: ${dim_sfdb_po__c.po_aid__c} = ${dim_sfdb_account.id} ;;
+    relationship: many_to_one
+
+  }
 
   join: dim_sfdb_opportunity {
     type: inner

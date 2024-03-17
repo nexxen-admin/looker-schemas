@@ -33,22 +33,41 @@ view: dim_dsp_monthly_manual_adjustment {
     # A dimension is a groupable field that can be used to filter query results.
     # This dimension will be called "Manual Adjustment" in Explore.
 
-  dimension: manual_adjustment {
+  dimension: monthly_adjustable_billable_revenue {
     type: number
     label: "Adjustment Billable Revenue"
-    sql: COALESCE(${TABLE}.manual_adjustment , 0) ;;
+    sql: COALESCE(${TABLE}.monthly_adjustable_billable_revenue , 0) ;;
   }
+
+  dimension: monthly_adjustable_billable_impressions {
+    type: number
+    label: "Adjustment Billable Impressions"
+    sql: COALESCE(${TABLE}.monthly_adjustable_billable_impressions , 0) ;;
+  }
+
+  dimension: monthly_adjustable_billable_clicks {
+    type: number
+    label: "Adjustment Billable Clicks"
+    sql: COALESCE(${TABLE}.monthly_adjustable_billable_clicks , 0) ;;
+  }
+
+  dimension: monthly_adjustable_billable_actions {
+    type: number
+    label: "Adjustment Billable Actions"
+    sql: COALESCE(${TABLE}.monthly_adjustable_billable_actions , 0) ;;
+  }
+
+  dimension: monthly_adjustable_billable_video_completes {
+    type: number
+    label: "Adjustment Billable Video Completes"
+    sql: COALESCE(${TABLE}.monthly_adjustable_billable_video_completes , 0) ;;
+  }
+
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: total_manual_adjustment {
-    type: sum
-    sql: ${manual_adjustment} ;;  }
-  measure: average_manual_adjustment {
-    type: average
-    sql: ${manual_adjustment} ;;  }
 
   dimension: manual_adjustment_key {
     type: number

@@ -844,7 +844,7 @@ view: dim_sfdb_opportunity {
 
   dimension: billing_instructions__c {
     type: string
-    label: "Billing Instruction"
+    label: "Billing Instructions"
     sql: ${TABLE}.billing_instructions__c ;;
   }
 

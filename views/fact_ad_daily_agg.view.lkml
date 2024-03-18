@@ -1380,7 +1380,7 @@ view: fact_ad_daily_agg {
     type: number
     label: "Request CPM"
     description: "Cogs/Requests"
-    value_format: "$#,##0.00"
+    value_format: "$#,##0.0000"
     group_label: "Daily Measures"
     sql: (${cogs}/NULLIF(${requests},0))*1000 ;;
   }

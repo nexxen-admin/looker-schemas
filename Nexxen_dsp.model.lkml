@@ -171,5 +171,12 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_sfdb_related_accounts {
+    type: left_outer
+    view_label: "Salsforce Account"
+    sql_on: ${dim_sfdb_related_accounts.id}=${dim_sfdb_opportunity.related_account__c} ;;
+    relationship: many_to_one
+  }
+
 
 }

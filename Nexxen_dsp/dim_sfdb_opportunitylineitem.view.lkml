@@ -267,6 +267,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: expected_amount__c {
     type: number
+    label: "Total Booked Budget"
     sql: ${TABLE}.expected_amount__c ;;
   }
 

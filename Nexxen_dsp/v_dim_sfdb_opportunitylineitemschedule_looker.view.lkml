@@ -47,6 +47,8 @@ view: v_dim_sfdb_opportunitylineitemschedule_looker {
     sql: ${TABLE}.end_date__c ;;
   }
 
+
+
   dimension: is_free__c {
     type: number
     sql: ${TABLE}.is_free__c ;;
@@ -58,6 +60,12 @@ view: v_dim_sfdb_opportunitylineitemschedule_looker {
     sql: ${TABLE}.opportunitylineitemid ;;
 
 
+  }
+
+  dimension: revenue {
+    type: string
+  label: "Spend"
+    sql: ${TABLE}.revenue ;;
   }
 
   dimension: opportunitylineitemschedule_key {

@@ -123,14 +123,21 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
-  join: v_dim_sfdb_opportunitylineitemschedule_looker {
-    type: inner
-    view_label: "Salsforce Opportunity Line Item Flight"
-    sql_on: ${v_dim_sfdb_opportunitylineitemschedule_looker.opportunitylineitem_key} = ${fact_nexxen_dsp.opportunitylineitem_key}
-    and ${fact_nexxen_dsp.date_key_in_timezone_raw}>= ${v_dim_sfdb_opportunitylineitemschedule_looker.scheduledate_raw} and
-    ${fact_nexxen_dsp.date_key_in_timezone_raw} <= ${v_dim_sfdb_opportunitylineitemschedule_looker.end_date__c_raw};;
-    relationship: many_to_one
+  # join: v_dim_sfdb_opportunitylineitemschedule_looker {
+  #   type: inner
+  #   view_label: "Salsforce Opportunity Line Item Flight"
+  #   sql_on: ${v_dim_sfdb_opportunitylineitemschedule_looker.opportunitylineitem_key} = ${fact_nexxen_dsp.opportunitylineitem_key}
+  #   and ${fact_nexxen_dsp.date_key_in_timezone_raw}>= ${v_dim_sfdb_opportunitylineitemschedule_looker.scheduledate_raw} and
+  #   ${fact_nexxen_dsp.date_key_in_timezone_raw} <= ${v_dim_sfdb_opportunitylineitemschedule_looker.end_date__c_raw};;
+  #   relationship: many_to_one
 
+  # }
+
+  join: dim_sfdb_opportunitylineitemschedule {
+    type: inner
+    view_label: "Salesforce Opportunity Line Item Flight"
+    sql_on: ${dim_sfdb_opportunitylineitemschedule.opportunitylineitemschedule_key}=${fact_nexxen_dsp.opportunitylineitemschedule_key} ;;
+    relationship: many_to_one
   }
   join:  dim_sfdb_opportunitylineitem {
     type: inner

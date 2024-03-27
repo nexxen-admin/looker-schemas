@@ -97,8 +97,9 @@ view: dim_sfdb_opportunitylineitemschedule {
 
   dimension: revenue {
     type: number
+    label: "Spend"
     sql: ${TABLE}.revenue ;;
-    hidden: yes
+    #hidden: yes
   }
 
 

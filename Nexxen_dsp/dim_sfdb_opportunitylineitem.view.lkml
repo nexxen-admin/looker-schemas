@@ -336,7 +336,7 @@ view: dim_sfdb_opportunitylineitem {
   dimension: is_deleted {
     type: number
     sql: ${TABLE}.is_deleted ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: is_free__c {

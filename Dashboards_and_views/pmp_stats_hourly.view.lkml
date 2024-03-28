@@ -2,7 +2,7 @@ view: pmp_stats_hourly {
   derived_table: {
     sql: select event_time,rx_deal_id, sum(REVENUE) as revenue, sum(deal_data_fee) as datafee, sum(COST) as mediacost
 from Andromeda.pmp_stats_hourly psh
-where event_time >='2024-01-01'
+where event_time >='2023-01-01'
 --and rx_deal_id in ('xxxx')
 group by 1,2 ;;
   }

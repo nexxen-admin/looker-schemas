@@ -267,7 +267,6 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: expected_amount__c {
     type: number
-    label: "Total Booked Budget"
     sql: ${TABLE}.expected_amount__c ;;
   }
 
@@ -293,7 +292,8 @@ view: dim_sfdb_opportunitylineitem {
   dimension: gross_billable__c {
     type: number
     sql: ${TABLE}.gross_billable__c ;;
-    hidden: yes
+    label: "Total Booked Budget"
+    #hidden: yes
   }
 
   dimension: has_product_config__c {

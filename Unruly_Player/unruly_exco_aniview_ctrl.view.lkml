@@ -98,11 +98,11 @@ view: unruly_exco_aniview_ctrl {
           'CTRL'::varchar(4) AS DATABASE,
           CASE
               WHEN (
-                      e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Rachel Gargett','Hannah Quigley')
+                      e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Shachar Laufer', 'Rachel Gargett','Hannah Quigley')
                   AND mt.Media_Type = 'site'::varchar(4))
               THEN 'OLV'::varchar(3)
               WHEN (
-                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher')
+                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher', 'Noa Krashniak', 'Gonni Kern')
                   AND mt.Media_Type = 'app'::varchar(3))
               THEN 'IA'::varchar(2)
               ELSE NULL
@@ -209,11 +209,11 @@ view: unruly_exco_aniview_ctrl {
       AND
           CASE
               WHEN (
-                  e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Rachel Gargett','Hannah Quigley')
+                  e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Shachar Laufer', 'Rachel Gargett','Hannah Quigley')
                   AND mt.Media_Type = 'site'::varchar(4))
               THEN 'OLV'::varchar(3)
               WHEN (
-                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher')
+                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher', 'Noa Krashniak', 'Gonni Kern')
                   AND mt.Media_Type = 'app'::varchar(3))
               THEN 'IA'::varchar(2)
               ELSE NULL
@@ -226,11 +226,11 @@ view: unruly_exco_aniview_ctrl {
           Is_1st_Party_demand,
           CASE
               WHEN (
-                  e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Rachel Gargett','Hannah Quigley')
+                  e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Shachar Laufer', 'Rachel Gargett','Hannah Quigley')
                   AND mt.Media_Type = 'site'::varchar(4))
               THEN 'OLV'::varchar(3)
               WHEN (
-                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher')
+                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher', 'Noa Krashniak', 'Gonni Kern')
                   AND mt.Media_Type = 'app'::varchar(3))
               THEN 'IA'::varchar(2)
               ELSE NULL

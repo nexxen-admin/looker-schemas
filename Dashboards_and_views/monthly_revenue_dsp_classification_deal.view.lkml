@@ -121,7 +121,7 @@ view: monthly_revenue_dsp_classification_deal {
 
   measure: split_deal_cogs_rx {
     type: sum
-    sql: ${TABLE}.split_deal_revenue_rx ;;
+    sql: ${TABLE}.split_deal_cogs_rx ;;
     value_format: "$#,##0.00"
   }
 

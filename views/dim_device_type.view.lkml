@@ -37,6 +37,7 @@ view: dim_device_type {
     type: string
     sql: ${TABLE}.Device_Type_ID ;;
     drill_fields: [dim_buying_channel.buying_channel, dim_dsp.dsp_display_name, dim_o_domain.o_domain]
+
   }
 
   dimension: device_type_key {

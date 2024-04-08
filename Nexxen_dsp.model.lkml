@@ -185,5 +185,12 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_sfdb_user_opportunity_owner {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${dim_sfdb_user_opportunity_owner.opp_owner_id}=${dim_sfdb_opportunity.ownerid} ;;
+    relationship: many_to_one
+  }
+
 
 }

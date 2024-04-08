@@ -454,6 +454,7 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Opportunity Owner"
     sql: ${TABLE}.opportunity_owner__c ;;
+    hidden: yes
 
   }
 

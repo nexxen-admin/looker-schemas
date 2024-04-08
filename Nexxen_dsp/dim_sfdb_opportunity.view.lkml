@@ -28,6 +28,7 @@ view: dim_sfdb_opportunity {
     type: string
     label: "Account Manager Name"
     sql: ${TABLE}.account_owner__c ;;
+    hidden: yes
   }
 
   dimension: account_type__c {

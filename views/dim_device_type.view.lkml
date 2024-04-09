@@ -36,7 +36,7 @@ view: dim_device_type {
     description: "The device type in which the ad was displayed"
     type: string
     sql: ${TABLE}.Device_Type_ID ;;
-    drill_fields: [dim_buying_channel.buying_channel, dim_dsp.dsp_display_name, dim_o_domain.o_domain]
+    drill_fields: [dim_buying_channel.buying_channel, dim_dsp.dsp_display_name, dim_a_domain.a_domain]
 
   }
 

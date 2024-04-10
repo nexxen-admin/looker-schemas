@@ -1164,6 +1164,7 @@ dimension: device_type_name {
 }
 dimension: country_name {
   type: string
+  map_layer_name: countries
   description: "Country name for the audience segments"
   sql: LOOKUP(CONCAT(country_id, ''), 'dsp_media_and_bids_country_name') ;;
 }

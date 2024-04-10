@@ -30,6 +30,7 @@ view: unruly_exco_aniview_ctrl {
               (sum(CASE WHEN (MRR_AniView_Data.Advertiser_Name = 'Aniview Marketplace'::varchar(19)) THEN MRR_AniView_Data.Revenue ELSE NULL::float END))::int AS AV_MP_Total_Rev,
               --(sum(CASE WHEN ((MRR_AniView_Data.Activity_Date < '2023-05-01'::date) AND (MRR_AniView_Data.Advertiser_Name = 'Aniview Marketplace'::varchar(19))) THEN round(((MRR_AniView_Data.Revenue / 0.7::float) * 0.1::float), 1) WHEN ((MRR_AniView_Data.Activity_Date >= '2023-05-01'::date) AND (MRR_AniView_Data.Advertiser_Name = 'Aniview Marketplace'::varchar(19))) THEN round(((MRR_AniView_Data.Revenue / 0.5::float) * 0.3::float), 1) ELSE NULL::float END))::int AS AV_MP_Net,
               sum(case when MRR_AniView_Data.Advertiser_Name = 'Aniview Marketplace'::varchar(19) then MRR_AniView_Data.Revenue end) as AV_MP_Net,
+              sum(CASE WHEN (MRR_AniView_Data.Advertiser_Name <> 'Aniview Marketplace'::varchar(19)) AND (MRR_AniView_Data.Advertiser_Name <> 'Unruly'::varchar(19)) AND (MRR_AniView_Data.Publisher_Name ilike '%System1 LLC (UP)%'::varchar(20)) THEN MRR_AniView_Data.Revenue ELSE NULL::int END * 0.05) AS AV_Data_Instream,
               (sum(CASE WHEN ((MRR_AniView_Data.Advertiser_Name <> 'Aniview Marketplace'::varchar(19)) AND (MRR_AniView_Data.Advertiser_Name <> 'Unruly'::varchar(6))) THEN MRR_AniView_Data.Revenue ELSE NULL::float END))::int AS Pub_MP_Total_Rev,
               (sum(CASE WHEN ((MRR_AniView_Data.Advertiser_Name <> 'Aniview Marketplace'::varchar(19)) AND (MRR_AniView_Data.Advertiser_Name <> 'Unruly'::varchar(6))) THEN (MRR_AniView_Data.Revenue * 0.05::float) ELSE NULL::float END))::int AS Pub_MP_Net,
               0 AS Player_Total_Rev,
@@ -73,6 +74,7 @@ view: unruly_exco_aniview_ctrl {
               0 AS OS_SF,
               NULL AS AV_MP_Total_Rev,
               NULL AS AV_MP_Net,
+              NULL AS AV_Data_Instream,
               CASE WHEN (lower(Fact_cedato_demands.demand_partner) ~~* 'unruly%'::varchar(7)) THEN NULL::numeric(1,0) ELSE sum(Fact_cedato_demands.revenue) END AS Pub_MP_Total_Rev,
               CASE WHEN (lower(Fact_cedato_demands.demand_partner) ~~* 'unruly%'::varchar(7)) THEN NULL::numeric(1,0) ELSE CASE WHEN (Fact_cedato_demands.day < '2023-06-01'::date) THEN (sum(Fact_cedato_demands.revenue) * 0.2) WHEN (Fact_cedato_demands.day >= '2023-06-01'::date) THEN (sum(Fact_cedato_demands.revenue) * 0.15) ELSE NULL::numeric(1,0) END END AS Pub_MP_Net,
               sum(Fact_cedato_demands.revenue) AS Player_Total_Rev,
@@ -119,11 +121,12 @@ view: unruly_exco_aniview_ctrl {
           0                                           AS inventory,
           0                                           AS IA_SF,
           0                                           AS IS_SF,
-                  0 AS KO_SF,
-              0 AS TW_SF,
+          0                                           AS KO_SF,
+          0                                           AS TW_SF,
           0                                           AS OS_SF,
           0                                           AS AV_MP_Total_Rev,
           0                                           AS AV_MP_Net,
+          0                                           AS AV_Data_Instream,
           0                                           AS Pub_MP_Total_Rev,
           0                                           AS Pub_MP_Net,
           0                                           AS Player_Total_Rev,
@@ -147,6 +150,7 @@ view: unruly_exco_aniview_ctrl {
     END         AS Wiseroll_LTD_Yeda,
     CASE
         WHEN p.PUB_ID='106894'
+        and lower(imp_type) = 'video'
         THEN
             SUM(agg.sum_of_cogs) *0.09
         END AS Streamkey
@@ -398,6 +402,11 @@ view: unruly_exco_aniview_ctrl {
   measure: av_mp_net {
     type: sum
     sql: ${TABLE}.AV_MP_Net ;;
+  }
+
+  measure: av_data_instream {
+    type: sum
+    sql: ${TABLE}.AV_Data_Instream ;;
   }
 
   measure: pub_mp_total_rev {

@@ -463,7 +463,7 @@ explore: fact_ad_daily_agg{
   }
 
   join: exchange_rev_ops_targets {
-    type: left_outer
+    type: full_outer
     view_label: "Exchange RevOps Targets"
     sql_on: ${dim_date.date_key_raw}=${exchange_rev_ops_targets.date_key_raw} ;;
     relationship: many_to_one

@@ -2826,6 +2826,13 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0.00"
   }
 
+  # measure: sum_user_matched {
+  #   type: sum
+  #   sql: case when dim_user_matched.user_matched = 1 then dim_user_matched.user_matched else 0 end;;
+  #   label: "sum of user matched"
+  #   group_label: "Daily Measures"
+  # }
+
   measure: bid_price_top_25_perc {
     label: "bid price top 25%"
     description: "Shows only bid prices that are above 0.75 of the bid floor"

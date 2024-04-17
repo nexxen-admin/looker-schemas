@@ -15,7 +15,7 @@ view: dim_buying_channel {
     label: "Buying Channel"
     description: "A platform through which advertisers purchase and manage their digital advertising inventory"
     sql: ${TABLE}.Buying_Channel ;;
-    drill_fields: [dim_dsp.dsp_display_name, dim_a_domain.a_domain]
+    drill_fields: [dim_dsp.dsp_display_name, dim_a_domain.a_domain, dim_o_domain.o_domain]
   }
 
   dimension: buying_channel_key {

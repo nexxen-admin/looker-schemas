@@ -21,5 +21,5 @@ include: "/**/*.view.lkml"                 # include all views in this project
 
 explore: iiq{
   label: "IIQ"
-
+hidden: yes
 }

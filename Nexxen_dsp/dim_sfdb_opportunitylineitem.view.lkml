@@ -662,6 +662,18 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.units__c ;;
   }
 
+  dimension: rate_card_discount_applies_to__c {
+    type: string
+    label: "Rate Card Discount Applies To"
+    sql: ${TABLE}.rate_card_discount_applies_to__c ;;
+  }
+
+  dimension: undiscounted_spend__c {
+    type: number
+    label: "Undiscounted Spend"
+    sql: ${TABLE}.undiscounted_spend__c ;;
+  }
+
   dimension: vat_tax__c {
     type: number
     sql: ${TABLE}.vat_tax__c ;;

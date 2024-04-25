@@ -89,7 +89,7 @@ explore: appsflyer_agg{
 
 
 explore: publishers_report_monthly_for_finance {
-  required_access_grants: [allowed_users_sam_lt]
+  required_access_grants: [can_view_all_tremor]
   label: "publishers report monthly for finance"
 }
 

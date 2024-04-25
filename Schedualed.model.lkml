@@ -23,8 +23,13 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
+access_grant: allowed_users_sam_lt {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["allowed_users_sam_lt"]
+}
+
 explore: publishers_report_monthly_for_finance {
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_pub_come_looker,allowed_users_sam_lt]
   label: "publishers report monthly for finance"
   hidden: yes
 }

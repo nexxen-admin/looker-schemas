@@ -37,7 +37,7 @@ access_grant: can_view_all_tremor {
 explore: publishers_report_monthly_for_finance {
   required_access_grants: [allowed_users_sam_lt]
   label: "publishers report monthly for finance"
-  #hidden: yes
+  hidden: yes
 }
 
 explore: daily_publisher_report_pluto {

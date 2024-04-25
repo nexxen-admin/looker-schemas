@@ -27,6 +27,11 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
+access_grant: allowed_users_sam_lt {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["allowed_users_sam_lt"]
+}
+
 access_grant: can_view_imp_r {
   user_attribute: ds
   allowed_values: ["DS"]
@@ -84,7 +89,7 @@ explore: appsflyer_agg{
 
 
 explore: publishers_report_monthly_for_finance {
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [allowed_users_sam_lt]
   label: "publishers report monthly for finance"
 }
 

@@ -29,7 +29,7 @@ access_grant: allowed_users_sam_lt {
 }
 
 explore: publishers_report_monthly_for_finance {
-  required_access_grants: [can_view_pub_come_looker,allowed_users_sam_lt]
+  required_access_grants: [allowed_users_sam_lt]
   label: "publishers report monthly for finance"
   hidden: yes
 }

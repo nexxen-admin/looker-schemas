@@ -28,8 +28,14 @@ access_grant: allowed_users_sam_lt {
   allowed_values: ["allowed_users_sam_lt"]
 }
 
+access_grant: can_view_all_tremor {
+  user_attribute: all_tremor
+  allowed_values: ["all_tremor"]
+}
+
+
 explore: publishers_report_monthly_for_finance {
-  required_access_grants: [allowed_users_sam_lt]
+  required_access_grants: [can_view_all_tremor]
   label: "publishers report monthly for finance"
   hidden: yes
 }

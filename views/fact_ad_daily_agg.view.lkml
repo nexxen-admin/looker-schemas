@@ -1712,7 +1712,7 @@ view: fact_ad_daily_agg {
     description: "The responses of 2 days ago"
     value_format: "#,##0"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.dim_of_responses  ;;
+    sql: ${TABLE}.sum_of_responses  ;;
     filters: [date_key_date: "2 days ago"]
 
   }

@@ -1,5 +1,4 @@
 view: publishers_report_monthly_for_finance {
-  required_access_grants: [can_view_pub_come_looker]
   derived_table: {
     sql: select year(ssd.event_time) as year,
        month(ssd.event_time) as month,--DATE_PART('YEAR', ssd.event_time)||'-0'||DATE_PART('MONTH', ssd.event_time) as 'month',

@@ -32,7 +32,7 @@ access_grant: can_view_pub_come_looker {
 
 access_grant: allowed_users_sam_lt {
   user_attribute: allowed_users_sam_lt
-  allowed_values: ["Finance Reports All Access","Kendall Krieger", "Gokce Saatcioglu", "Chris Chandler", "Jas Dedovic", "Ellen Rogan"]
+  allowed_values: ["Finance Reports All Access"]
 }
 
 access_grant: can_view_all_tremor {
@@ -88,7 +88,7 @@ explore: sam_lt_comm {
   #   user_attribute: allowed_users_sam_lt
   # }
   label: "SAM LT Commision"
-  required_access_grants: [allowed_users_sam_lt]
+  required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
 

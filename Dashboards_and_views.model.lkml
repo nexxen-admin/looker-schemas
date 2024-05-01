@@ -32,7 +32,7 @@ access_grant: can_view_pub_come_looker {
 
 access_grant: allowed_users_sam_lt {
   user_attribute: allowed_users_sam_lt
-  allowed_values: ["Finance Reports All Access","Chris Chandler Group"]
+  allowed_values: ["Finance Reports All Access","Kendall Krieger", "Gokce Saatcioglu", "Chris Chandler", "Jas Dedovic", "Ellen Rogan"]
 }
 
 access_grant: can_view_all_tremor {

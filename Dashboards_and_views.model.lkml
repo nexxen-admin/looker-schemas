@@ -419,6 +419,11 @@ explore: targets_up_gal {
   hidden: no
 }
 
+explore: net_emea_publisher {
+  label: "Net Revenue EMEA by Publisher"
+  required_access_grants: [can_view_aniview]
+}
+
 explore: billing_dragon_data {
   label: "Billing Dragon Data for Dennis"
   required_access_grants: [can_view_all_tremor]

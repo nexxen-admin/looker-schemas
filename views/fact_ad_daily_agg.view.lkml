@@ -1325,7 +1325,7 @@ view: fact_ad_daily_agg {
     type: number
     description: "Number of impressions out of the requests"
     label: "Fill Rate"
-    value_format: "0.00%"
+    value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: (${impression_pixel}/NULLIF(${requests},0))*100 ;;
   }

@@ -450,3 +450,9 @@ explore: rupi_datamine {
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
+explore: segment_syndication {
+  label: "Segment Syndication"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}

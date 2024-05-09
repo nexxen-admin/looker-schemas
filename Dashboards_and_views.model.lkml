@@ -35,6 +35,11 @@ access_grant: allowed_users_sam_lt {
   allowed_values: ["Finance Reports All Access"]
 }
 
+access_grant: allowed_mike {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["Mike Padula Group"]
+}
+
 access_grant: can_view_all_tremor {
   user_attribute: all_tremor
   allowed_values: ["all_tremor"]
@@ -88,7 +93,7 @@ explore: sam_lt_comm {
   #   user_attribute: allowed_users_sam_lt
   # }
   label: "SAM LT Commision"
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [allowed_users_sam_lt,allowed_mike]
   hidden: yes
 }
 

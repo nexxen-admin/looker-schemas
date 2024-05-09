@@ -37,7 +37,7 @@ access_grant: allowed_users_sam_lt {
 
 access_grant: allowed_mike {
   user_attribute: allowed_users_sam_lt
-  allowed_values: ["Mike Padula Group"]
+  allowed_values: ["Mike Padula", "Josh Rogers", "Justin Kim", "Jacob Comanse","Bonnie Klopfer"]
 }
 
 access_grant: can_view_all_tremor {

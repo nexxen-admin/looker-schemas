@@ -3,6 +3,7 @@ view: net_emea_publisher {
   derived_table: {
     sql: select Date_trunc('month', date_key)::date  as Month_Year,
       p.pub_id,
+      p.pub_name,
       --(TO_CHAR(DATE_TRUNC('month', Date_Key), 'YYYY-MM')) AS Month_Year,
       sum(sum_of_revenue) as revenue_uk,
       sum(sum_of_cogs) as cogs_uk
@@ -12,7 +13,7 @@ view: net_emea_publisher {
           INNER JOIN bi_new.Dim_Publisher_SSP ssp ON agg.PUB_SSP_Key = ssp.PUB_SSP_Key
           INNER JOIN bi_new.Dim_Publisher p ON ssp.PUB_Key = p.PUB_Key
       where date_key>='2024-01-01' and p.pub_id in ('101188','103354','81409','101593','103661','103022','105847','84996','76872','103149','103281','78223') and region ilike 'EMEA'
-      group by 1,2 ;;
+      group by 1,2,3 ;;
   }
 
   measure: count {
@@ -20,14 +21,29 @@ view: net_emea_publisher {
     drill_fields: [detail*]
   }
 
-  dimension: month_year {
-    type: date
-    sql: ${TABLE}.Month_Year ;;
+  dimension_group: Month_Year {
+        type: time
+        timeframes: [
+          raw,
+          date,
+          week,
+          month,
+          quarter,
+          year
+        ]
+        convert_tz: no
+        datatype: date
+        sql: ${TABLE}.Month_Year ;;
   }
 
   dimension: pub_id {
     type: string
     sql: ${TABLE}.pub_id ;;
+  }
+
+  dimension: pub_name {
+    type: string
+    sql: ${TABLE}.pub_name ;;
   }
 
   measure: revenue_uk {
@@ -50,7 +66,7 @@ view: net_emea_publisher {
 
   set: detail {
     fields: [
-        month_year,
+  Month_Year_raw,
   pub_id,
   revenue_uk,
   cogs_uk

@@ -26,18 +26,18 @@ view: marc_bill_v2 {
     sql: ${TABLE}.account_name ;;
   }
 
-  measure: adjustment_billable_actions {
-    type: sum
+  dimension: adjustment_billable_actions {
+    type: number
     sql: ${TABLE}.adjustment_billable_actions ;;
   }
 
-  measure: adjustment_billable_clicks {
-    type: sum
+  dimension: adjustment_billable_clicks {
+    type: number
     sql: ${TABLE}.adjustment_billable_clicks ;;
   }
 
-  measure: adjustment_billable_impressions {
-    type: sum
+  dimension: adjustment_billable_impressions {
+    type: number
     sql: ${TABLE}.adjustment_billable_impressions ;;
   }
 
@@ -45,13 +45,13 @@ view: marc_bill_v2 {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
-  measure: adjustment_billable_revenue {
-    type: sum
+  dimension: adjustment_billable_revenue {
+    type: number
     sql: ${TABLE}.adjustment_billable_revenue ;;
   }
 
-  measure: adjustment_billable_video_completes {
-    type: sum
+  dimension: adjustment_billable_video_completes {
+    type: number
     sql: ${TABLE}.adjustment_billable_video_completes ;;
   }
 

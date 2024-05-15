@@ -25,6 +25,11 @@ explore: marc_bill_v2 {
   label: "March bill V2"
 }
 
+explore: billing_us_v1 {
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Billing US V1"
+}
+
 
 explore: fact_nexxen_dsp  {
   required_access_grants: [can_view_all_tremor]

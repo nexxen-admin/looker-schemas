@@ -91,7 +91,7 @@ view: segment_syndication {
   }
 
   dimension: rate {
-    type: string
+    type: number
     sql: ${TABLE}.RATE ;;
   }
 

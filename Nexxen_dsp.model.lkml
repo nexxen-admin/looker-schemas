@@ -16,8 +16,8 @@ access_grant: can_view_pub_come_looker {
 }
 
 access_grant: billing_report_group {
-  user_attribute: all_tremor
-  allowed_values: ["Billing_Reporting"]
+  user_attribute: billing_group
+  allowed_values: ["yes"]
 }
 
 

@@ -37,7 +37,7 @@ explore: billing_us_v1 {
 }
 
 explore: v_monthly_billing_report_diff_live_locked {
-  required_access_grants: [can_view_pub_come_looker, billing_report_group]
+  required_access_grants: [billing_report_group]
   label: "Monthly Billing Report Diff Live Locked"
 }
 

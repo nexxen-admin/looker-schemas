@@ -15,6 +15,12 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
+access_grant: billing_report_group {
+  user_attribute: billing_group
+  allowed_values: ["yes"]
+}
+
+
 access_grant: can_view_all_tremor {
   user_attribute: all_tremor
   allowed_values: ["all_tremor"]
@@ -31,7 +37,7 @@ explore: billing_us_v1 {
 }
 
 explore: v_monthly_billing_report_diff_live_locked {
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [billing_report_group]
   label: "Monthly Billing Report Diff Live Locked"
 }
 

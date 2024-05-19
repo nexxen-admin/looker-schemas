@@ -249,7 +249,7 @@ view: dim_sfdb_opportunitylineitem {
   dimension: delivery_manager__c {
     type: string
     sql: ${TABLE}.delivery_manager__c ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: description {
@@ -518,9 +518,9 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: primary_kpi_metric__c {
     type: string
-
+    label: "Primary KPI Value"
     sql: ${TABLE}.primary_kpi_metric__c ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: product_configuration__c {

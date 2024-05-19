@@ -383,6 +383,25 @@ view: fact_nexxen_dsp {
               ;;
   }
 
+  measure: hybrid_impressions_delivered {
+    type: sum
+    value_format: "#,##0"
+    sql: case when dim_sfdb_opportunitylineitem.reporting__c = 'Amobee' then ${TABLE}.impressions else
+    ${TABLE}.third_party_impressions end;;
+    hidden: yes
+  }
+
+  measure: remaining_budget {
+    type: number
+    sql: dim_sfdb_opportunitylineitem.gross_billable__c - ${hybrid_impressions_delivered}*dim_sfdb_opportunitylineitem.rate__c
+    /1000 ;;
+  }
+
+  measure: impressions_discrepancy {
+    type: sum
+    sql: (${TABLE}.third_party_impressions-${TABLE}.impressions)/${TABLE}.impressions ;;
+  }
+
   measure: count {
     type: count
     hidden: yes

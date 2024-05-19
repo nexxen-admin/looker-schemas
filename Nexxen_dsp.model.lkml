@@ -27,12 +27,12 @@ access_grant: can_view_all_tremor {
 }
 
 explore: marc_bill_v2 {
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [billing_report_group]
   label: "March bill V2"
 }
 
 explore: billing_us_v1 {
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [billing_report_group]
   label: "Billing US V1"
 }
 

@@ -365,6 +365,24 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.percent75_events ;;
   }
 
+  measure: cogs {
+    type: sum
+    sql: ${TABLE}.cogs ;;
+  }
+
+  measure: pacing {
+    type: sum
+    value_format: "#,##0.00"
+    sql: case when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM' then ${TABLE}.impressions
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPR' then ${TABLE}.inv_cost
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM' then ${TABLE}.inv_cost
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV' then ${TABLE}.complete_events
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC' then ${TABLE}.clicks
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPC' then ${TABLE}.cogs*1.2
+              end
+              ;;
+  }
+
   measure: count {
     type: count
     hidden: yes

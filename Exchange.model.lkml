@@ -30,7 +30,6 @@ access_grant: can_view_all_tremor {
 access_grant: allowed_users_sam_lt {
   user_attribute: allowed_users_sam_lt
   allowed_values: ["allowed_users_sam_lt"]
-
 }
 
 access_grant: can_view_imp_r {

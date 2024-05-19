@@ -98,8 +98,9 @@ explore: sam_lt_comm {
   #   user_attribute: allowed_users_sam_lt
   # }
   label: "SAM LT Commision"
-  required_access_grants: [allowed_users_sam_lt,allowed_sales]
-  hidden: yes
+  #required_access_grants: [allowed_users_sam_lt,allowed_sales]
+  required_access_grants: [allowed_sales]
+  #hidden: yes
 }
 
 

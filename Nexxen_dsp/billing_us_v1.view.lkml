@@ -45,6 +45,7 @@ view: billing_us_v1 {
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
+
   dimension: adjustment_billable_revenue {
     type: number
     sql: ${TABLE}.adjustment_billable_revenue ;;
@@ -86,33 +87,39 @@ view: billing_us_v1 {
   }
 
   measure: complete_events {
-    type: number
+    type: sum
     sql: ${TABLE}.complete_events ;;
   }
 
   measure: cost {
     type: sum
+    label: "Adv Invoice"
     sql: ${TABLE}.cost ;;
+    value_format: "#,##0.00"
   }
 
   measure: discrepancy_between_1_p_and_final_billable_revenue_after_adj {
     type: sum
     sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj ;;
+    value_format: "#,##0.00"
   }
 
   measure: discrepancy_between_1_p_and_final_billable_revenue_after_adj_percent {
     type: sum
     sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj_percent ;;
+    value_format: "#,##0.00"
   }
 
   measure: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd {
     type: sum
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd ;;
+    value_format: "#,##0.00"
   }
 
   measure: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent {
     type: sum
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent ;;
+    value_format: "0.00%"
   }
 
   dimension: exchange_rate {
@@ -138,16 +145,19 @@ view: billing_us_v1 {
   measure: final_billable_revenue_after_adj {
     type: sum
     sql: ${TABLE}.final_billable_revenue_after_adj ;;
+    value_format: "#,##0.00"
   }
 
   measure: final_billable_revenue_after_adj_usd {
     type: sum
     sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
+    value_format: "#,##0.00"
   }
 
   measure: final_billable_units_after_adj {
     type: sum
     sql: ${TABLE}.final_billable_units_after_adj ;;
+    value_format: "#,##0.00"
   }
 
   measure: impressions {
@@ -163,6 +173,7 @@ view: billing_us_v1 {
   measure: inv_cost {
     type: sum
     sql: ${TABLE}.inv_cost ;;
+    value_format: "#,##0.00"
   }
 
   dimension: io_currency {
@@ -193,21 +204,25 @@ view: billing_us_v1 {
   measure: margin_amount {
     type: sum
     sql: ${TABLE}.Margin_amount ;;
+    value_format: "#,##0.00"
   }
 
   measure: margin_amount_percent {
     type: sum
     sql: ${TABLE}.Margin_amount_percent ;;
+    value_format: "0.00%"
   }
 
   measure: margin_amount_percent_usd {
     type: sum
     sql: ${TABLE}.Margin_amount_percent_USD ;;
+    value_format: "0.00%"
   }
 
   measure: margin_amount_usd {
     type: sum
     sql: ${TABLE}.margin_amount_usd ;;
+    value_format: "#,##0.00"
   }
 
   dimension: modified_case_safe {
@@ -218,16 +233,19 @@ view: billing_us_v1 {
   measure: ns_remaining_amount {
     type: sum
     sql: ${TABLE}.ns_remaining_amount ;;
+    value_format: "#,##0.00"
   }
 
   measure: ns_remaining_units {
     type: sum
     sql: ${TABLE}.ns_remaining_units ;;
+    value_format: "#,##0.00"
   }
 
   measure: od_delivery_units {
     type: sum
     sql: ${TABLE}.OD_Delivery_Units ;;
+    value_format: "#,##0.00"
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
@@ -271,23 +289,27 @@ view: billing_us_v1 {
   measure: over_delivery_amount {
     type: sum
     sql: ${TABLE}.Over_delivery_Amount ;;
+    value_format: "#,##0.00"
   }
 
   measure: over_delivery_amount_usd {
     type: sum
     sql: ${TABLE}.Over_Delivery_Amount_USD ;;
+    value_format: "#,##0.00"
   }
 
   measure: p_rev {
     type: sum
-    label: "1P Rev"
     sql: ${TABLE}.p_rev ;;
+    label: "1P Rev"
+    value_format: "#,##0.00"
   }
 
   measure: p_rev_usd {
     type: sum
     label: "1P Rev USD"
     sql: ${TABLE}.p_rev_usd ;;
+    value_format: "#,##0.00"
   }
 
   dimension: passed_bill_amount {
@@ -358,16 +380,19 @@ view: billing_us_v1 {
   measure: remaining_diff_between_1_p_to_billing_3_p_vs_1_p_discrepancy_local_currency {
     type: sum
     sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy_local_currency ;;
+    value_format: "#,##0.00"
   }
 
   measure: remaining_diff_between_1_p_to_billing_3_p_vs_1_p_discrepancy_usd {
     type: sum
     sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy_usd ;;
+    value_format: "#,##0.00"
   }
 
   measure: revenue_adj {
     type: sum
     sql: ${TABLE}.revenue_adj ;;
+    value_format: "#,##0.00"
   }
 
   dimension: sales_team {
@@ -388,6 +413,7 @@ view: billing_us_v1 {
   measure: tac {
     type: sum
     sql: ${TABLE}.tac ;;
+    value_format: "#,##0.00"
   }
 
   measure: third_party_clicks {
@@ -408,46 +434,54 @@ view: billing_us_v1 {
   measure: total_billable_units_before_adj {
     type: sum
     sql: ${TABLE}.total_billable_units_before_adj ;;
+    value_format: "#,##0.00"
   }
 
-  dimension: total_booked_budget {
-    type: number
+  measure: total_booked_budget {
+    type: sum
     sql: ${TABLE}.total_booked_budget ;;
   }
 
   measure: uncapped_revenue {
     type: sum
     sql: ${TABLE}.uncapped_revenue ;;
+    value_format: "#,##0.00"
   }
 
   measure: under_delivery_budget {
     type: sum
     sql: ${TABLE}.under_delivery_budget ;;
+    value_format: "#,##0.00"
   }
 
   measure: under_delivery_budget_usd {
     type: sum
     sql: ${TABLE}.Under_Delivery_budget_USD ;;
+    value_format: "#,##0.00"
   }
 
   measure: under_delivery_units {
     type: sum
     sql: ${TABLE}.Under_Delivery_Units ;;
+    value_format: "#,##0.00"
   }
 
   measure: units_adj {
     type: sum
     sql: ${TABLE}.Units_ADJ ;;
+    value_format: "#,##0.00"
   }
 
   measure: units_before_adj {
     type: sum
     sql: ${TABLE}.units_before_adj ;;
+    value_format: "#,##0.00"
   }
 
-  dimension: v_dim_dsp_date_date_key_month {
-    type: string
-    sql: ${TABLE}."v_dim_dsp_date.date_key_month" ;;
+  dimension_group: v_dim_dsp_date_date_key {
+    type: time
+    timeframes: [raw, time, date, week, month, quarter, year]
+    sql: ${TABLE}."v_dim_dsp_date.Date_Key" ;;
   }
   measure: count {
     type: count
@@ -457,10 +491,10 @@ view: billing_us_v1 {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
+  account_manager_name,
   related_brand_name,
   line_item_name,
   opportunity_name,
-  account_manager_name,
   account_name,
   price_type_name,
   opportunity_owner_name

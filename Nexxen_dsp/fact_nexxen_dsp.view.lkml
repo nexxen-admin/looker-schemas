@@ -404,8 +404,8 @@ view: fact_nexxen_dsp {
 
   measure: days_left {
     type: sum
-    sql: case when DATEDIFF('d',DATEADD('d',-1,TODAY()),dim_sfdb_opportunitylineitem.end_date__c_date)<0
-    then 0 else DATEDIFF('d',DATEADD('d',-1,TODAY()),dim_sfdb_opportunitylineitem.end_date__c_date) end;;
+    sql: case when DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c)<0
+    then 0 else DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c) end;;
   }
 
   measure: count {

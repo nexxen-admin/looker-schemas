@@ -402,6 +402,12 @@ view: fact_nexxen_dsp {
     sql: (${TABLE}.third_party_impressions-${TABLE}.impressions)/${TABLE}.impressions ;;
   }
 
+  measure: days_left {
+    type: sum
+    sql: case when DATEDIFF('d',DATEADD('d',-1,TODAY()),dim_sfdb_opportunitylineitem.end_date__c_date)<0
+    then 0 else DATEDIFF('d',DATEADD('d',-1,TODAY()),dim_sfdb_opportunitylineitem.end_date__c_date) end;;
+  }
+
   measure: count {
     type: count
     hidden: yes

@@ -480,6 +480,7 @@ view: billing_us_v1 {
 
   dimension_group: v_dim_dsp_date_date_key {
     type: time
+    label: "Date Key"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}."v_dim_dsp_date.Date_Key" ;;
   }

@@ -69,6 +69,7 @@ view: billing_us_v1 {
   measure: capped_revenue_before_adj {
     type: sum
     sql: ${TABLE}.capped_revenue_before_adj ;;
+    value_format: "#,##0.00"
   }
 
   dimension: case_safe_opp_line_item_id {
@@ -79,6 +80,7 @@ view: billing_us_v1 {
   measure: check_completeness_revenue_adj {
     type: sum
     sql: ${TABLE}.Check_completeness_Revenue_ADJ ;;
+    value_format: "#,##0.00"
   }
 
   measure: clicks {

@@ -212,9 +212,9 @@ view: monthly_billing_locked_report {
     value_format: "0.00%"
   }
 
-  measure: mergin_amount_usd {
+  measure: margin_amount_usd {
     type: sum
-    sql: ${TABLE}.mergin_amount_usd ;;
+    sql: ${TABLE}.margin_amount_usd ;;
     value_format: "#,##0.00"
   }
 

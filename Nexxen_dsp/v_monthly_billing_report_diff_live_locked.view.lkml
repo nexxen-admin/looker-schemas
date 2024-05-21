@@ -99,13 +99,13 @@ view: v_monthly_billing_report_diff_live_locked {
   measure: p_rev_from_live_report {
     type: sum
     label: "1P rev from live report"
-    sql: ${TABLE}.p_rev_from_live_report ;;
+    sql: ${TABLE}.one_p_rev_from_live_report ;;
   }
 
   measure: p_rev_from_locked_report {
     type: sum
     label: "1P rev from locked report"
-    sql: ${TABLE}.p_rev_from_locked_report ;;
+    sql: ${TABLE}.one_p_rev_from_locked_report ;;
   }
 
   dimension: passed_bill_amount_from_live_report {

@@ -26,6 +26,11 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
+explore: monthly_billing_locked_report {
+  required_access_grants: [billing_report_group]
+  label: "Locked Report Billing US"
+}
+
 explore: marc_bill_v2 {
   required_access_grants: [billing_report_group]
   label: "March bill V2"

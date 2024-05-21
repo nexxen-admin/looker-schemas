@@ -439,8 +439,8 @@ view: billing_us_v1 {
     value_format: "#,##0"
   }
 
-  measure: total_booked_budget {
-    type: sum
+  dimension: total_booked_budget {
+    type: number
     sql: ${TABLE}.total_booked_budget ;;
   }
 

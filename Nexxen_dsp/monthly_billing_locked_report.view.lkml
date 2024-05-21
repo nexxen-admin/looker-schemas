@@ -266,6 +266,7 @@ view: monthly_billing_locked_report {
   dimension: opportunity_owner {
     type: string
     sql: ${TABLE}.opportunity_owner ;;
+    label: "Opportunity Owner Name"
   }
 
   dimension: opportunity_region {

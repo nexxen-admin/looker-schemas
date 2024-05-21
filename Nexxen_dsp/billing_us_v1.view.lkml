@@ -157,7 +157,7 @@ view: billing_us_v1 {
   measure: final_billable_units_after_adj {
     type: sum
     sql: ${TABLE}.final_billable_units_after_adj ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: impressions {
@@ -239,13 +239,13 @@ view: billing_us_v1 {
   measure: ns_remaining_units {
     type: sum
     sql: ${TABLE}.ns_remaining_units ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: od_delivery_units {
     type: sum
     sql: ${TABLE}.OD_Delivery_Units ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
@@ -434,7 +434,7 @@ view: billing_us_v1 {
   measure: total_billable_units_before_adj {
     type: sum
     sql: ${TABLE}.total_billable_units_before_adj ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: total_booked_budget {
@@ -463,19 +463,19 @@ view: billing_us_v1 {
   measure: under_delivery_units {
     type: sum
     sql: ${TABLE}.Under_Delivery_Units ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: units_adj {
     type: sum
     sql: ${TABLE}.Units_ADJ ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: units_before_adj {
     type: sum
     sql: ${TABLE}.units_before_adj ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   dimension_group: v_dim_dsp_date_date_key {

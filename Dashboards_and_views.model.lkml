@@ -98,9 +98,10 @@ explore: sam_lt_comm {
   #   user_attribute: allowed_users_sam_lt
   # }
   label: "SAM LT Commision"
+  #affecting bd comm - global, monthly metrics by ops owner
   #required_access_grants: [allowed_users_sam_lt,allowed_sales]
   #required_access_grants: [allowed_sales]
-  required_access_grants: [allowed_users_sam_lt]
+  required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
 

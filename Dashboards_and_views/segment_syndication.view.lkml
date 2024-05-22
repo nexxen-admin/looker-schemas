@@ -93,6 +93,7 @@ view: segment_syndication {
   dimension: rate {
     type: number
     sql: ${TABLE}.RATE ;;
+    value_format: "$#,##0.00"
   }
 
   dimension: always_on {
@@ -119,6 +120,7 @@ view: segment_syndication {
   dimension: rx_cpm {
     type: number
     sql: ${TABLE}.RX_CPM ;;
+    value_format: "$#,##0.00"
   }
 
   dimension: rx_targeting_type {
@@ -134,6 +136,11 @@ view: segment_syndication {
   dimension: rx_status {
     type: string
     sql: ${TABLE}.RX_Status ;;
+  }
+
+  measure: pricing_discrepancy {
+    type: string
+    sql: case when ${TABLE}.rate=${TABLE}.RX_CPM then 'False' else 'True' end;;
   }
 
   set: detail {

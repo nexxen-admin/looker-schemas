@@ -402,6 +402,11 @@ view: fact_nexxen_dsp {
     sql: (${TABLE}.third_party_impressions-${TABLE}.impressions)/${TABLE}.impressions ;;
   }
 
+  measure: clicks_discrepancy {
+    type: sum
+    sql: (${TABLE}.third_party_clicks-${TABLE}.clicks)/${TABLE}.clicks ;;
+  }
+
   measure: days_left {
     type: sum
     sql: case when DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c)<0

@@ -408,6 +408,11 @@ view: fact_nexxen_dsp {
     then 0 else DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c) end;;
   }
 
+  measure: opp_name_shortcut {
+    type: string
+    sql: SUBSTRING(name FROM (POSITION('F-' IN name) + 1) FOR 8) ;;
+  }
+
   measure: count {
     type: count
     hidden: yes

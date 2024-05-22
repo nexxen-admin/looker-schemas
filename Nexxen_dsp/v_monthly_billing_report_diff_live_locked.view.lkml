@@ -12,22 +12,22 @@ view: v_monthly_billing_report_diff_live_locked {
     # This dimension will be called "Booked Budget From Live Report" in Explore.
 
   dimension: booked_budget_from_live_report {
-    type: string
+    type: number
     sql: ${TABLE}.Booked_Budget_from_live_report ;;
   }
 
   dimension: booked_budget_locked_report {
-    type: string
+    type: number
     sql: ${TABLE}.Booked_Budget_locked_report ;;
   }
 
   dimension: booked_units_from_live_report {
-    type: string
+    type: number
     sql: ${TABLE}.Booked_Units_from_live_report ;;
   }
 
   dimension: booked_units_from_locked_report {
-    type: string
+    type: number
     sql: ${TABLE}.Booked_Units_from_locked_report ;;
   }
 
@@ -109,22 +109,22 @@ view: v_monthly_billing_report_diff_live_locked {
   }
 
   dimension: passed_bill_amount_from_live_report {
-    type: string
+    type: number
     sql: ${TABLE}.Passed_Bill_Amount_from_live_report ;;
   }
 
   dimension: passed_bill_amount_locked_report {
-    type: string
+    type: number
     sql: ${TABLE}.Passed_Bill_Amount_locked_report ;;
   }
 
   dimension: rate_from_live_report {
-    type: string
+    type: number
     sql: ${TABLE}.Rate_from_live_report ;;
   }
 
   dimension: rate_from_locked_report {
-    type: string
+    type: number
     sql: ${TABLE}.Rate_from_locked_report ;;
   }
 

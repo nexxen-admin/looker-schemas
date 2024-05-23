@@ -96,18 +96,18 @@ view: monthly_billing_locked_report {
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
-  # dimension_group: date_key {
-  #   type: time
-  #   timeframes: [raw, date, week, month, quarter, year]
-  #   convert_tz: no
-  #   datatype: date
-  #   sql: ${TABLE}.date_key ;;
-  # }
-
-  dimension: date_key_month {
-    type: string
-    sql: ${TABLE}.date_key_month ;;
+  dimension_group: date_key {
+    type: time
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.date_key ;;
   }
+
+  # dimension: date_key_month {
+  #   type: date
+  #   sql: ${TABLE}.date_key_month ;;
+  # }
 
   dimension_group: db_updated {
     type: time

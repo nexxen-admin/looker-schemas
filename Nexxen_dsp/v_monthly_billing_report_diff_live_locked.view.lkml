@@ -14,11 +14,13 @@ view: v_monthly_billing_report_diff_live_locked {
   dimension: booked_budget_from_live_report {
     type: number
     sql: ${TABLE}.Booked_Budget_from_live_report ;;
+    value_format: "#,##0.00"
   }
 
   dimension: booked_budget_locked_report {
     type: number
     sql: ${TABLE}.Booked_Budget_locked_report ;;
+    value_format: "#,##0.00"
   }
 
   dimension: booked_units_from_live_report {
@@ -34,11 +36,13 @@ view: v_monthly_billing_report_diff_live_locked {
   measure: capped_revenue_before_adj_from_live_report {
     type: sum
     sql: ${TABLE}.capped_revenue_before_adj_from_live_report ;;
+    value_format: "#,##0.00"
   }
 
   measure: capped_revenue_before_adj_locked_report {
     type: sum
     sql: ${TABLE}.capped_revenue_before_adj_locked_report ;;
+    value_format: "#,##0.00"
   }
 
   dimension: case_safe_opp_line_item_id {
@@ -79,11 +83,13 @@ view: v_monthly_billing_report_diff_live_locked {
   measure: final_billable_revenue_after_adj_from_live_report {
     type: sum
     sql: ${TABLE}.final_billable_revenue_after_adj_from_live_report ;;
+    value_format: "#,##0.00"
   }
 
   measure: final_billable_revenue_after_adj_from_locked_report {
     type: sum
     sql: ${TABLE}.final_billable_revenue_after_adj_from_locked_report ;;
+    value_format: "#,##0.00"
   }
 
   measure: impressions_from_live_report {
@@ -100,32 +106,38 @@ view: v_monthly_billing_report_diff_live_locked {
     type: sum
     label: "1P rev from live report"
     sql: ${TABLE}.one_p_rev_from_live_report ;;
+    value_format: "#,##0.00"
   }
 
   measure: p_rev_from_locked_report {
     type: sum
     label: "1P rev from locked report"
     sql: ${TABLE}.one_p_rev_from_locked_report ;;
+    value_format: "#,##0.00"
   }
 
   dimension: passed_bill_amount_from_live_report {
     type: number
     sql: ${TABLE}.Passed_Bill_Amount_from_live_report ;;
+    value_format: "#,##0.00"
   }
 
   dimension: passed_bill_amount_locked_report {
     type: number
     sql: ${TABLE}.Passed_Bill_Amount_locked_report ;;
+    value_format: "#,##0.00"
   }
 
   dimension: rate_from_live_report {
     type: number
     sql: ${TABLE}.Rate_from_live_report ;;
+    value_format: "#,##0.00"
   }
 
   dimension: rate_from_locked_report {
     type: number
     sql: ${TABLE}.Rate_from_locked_report ;;
+    value_format: "#,##0.00"
   }
 
   measure: third_party_impressions_from_live_report {
@@ -141,11 +153,13 @@ view: v_monthly_billing_report_diff_live_locked {
   measure: uncapped_revenue_from_live_report {
     type: sum
     sql: ${TABLE}.uncapped_revenue_from_live_report ;;
+    value_format: "#,##0.00"
   }
 
   measure: uncapped_revenue_locked_report {
     type: sum
     sql: ${TABLE}.uncapped_revenue_locked_report ;;
+    value_format: "#,##0.00"
   }
   measure: count {
     type: count

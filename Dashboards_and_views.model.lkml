@@ -33,6 +33,7 @@ access_grant: can_view_pub_come_looker {
 access_grant: allowed_users_sam_lt {
   user_attribute: allowed_users_sam_lt
   allowed_values: ["Finance Reports All Access"]
+  #allowed_values: ["mike padula group","Finance Reports All Access"]
 }
 
 access_grant: allowed_mike {

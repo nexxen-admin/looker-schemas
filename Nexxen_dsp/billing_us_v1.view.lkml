@@ -484,7 +484,7 @@ view: billing_us_v1 {
     type: time
     label: "Date Key"
     timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}."v_dim_dsp_date.Date_Key" ;;
+    sql: ${TABLE}.date_key ;;
   }
   measure: count {
     type: count

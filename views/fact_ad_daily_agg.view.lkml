@@ -1325,7 +1325,7 @@ view: fact_ad_daily_agg {
     type: number
     description: "Number of impressions out of the requests"
     label: "Fill Rate"
-    value_format: "0.00%"
+    value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: (${impression_pixel}/NULLIF(${requests},0))*100 ;;
   }
@@ -1579,13 +1579,29 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "2 days ago"]
   }
 
+  measure: three_days_ago_revenue {
+    label: "Revenue of 3 days ago"
+    type: sum
+    sql: ${TABLE}.sum_of_revenue ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "3 days ago"]
+  }
+
   measure: revenue_lastday_change {
     type: number
     description: "Change in revenue from 2 days ago to yesterday"
     value_format: "0.00%"
     group_label: "Time Shifted Measures"
     sql: (${Last_day_Revenue}/${Previous_day_Revenue})-1 ;;
+  }
 
+  measure: revenue_prev_day_change {
+    type: number
+    description: "Change in revenue from 3 days ago to 2 days ago"
+    value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: (${Previous_day_Revenue}/${three_days_ago_revenue})-1 ;;
   }
 
   measure:  Previous_week_Revenue {

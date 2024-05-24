@@ -60,6 +60,7 @@ view: dim_user_matched {
 
   measure: total_user_matched {
     type: sum
+    label: "Total Matched"
     sql: ${user_matched} ;;
     hidden: yes
   }

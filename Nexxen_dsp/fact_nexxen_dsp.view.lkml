@@ -365,6 +365,59 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.percent75_events ;;
   }
 
+  measure: cogs {
+    type: sum
+    sql: ${TABLE}.cogs ;;
+  }
+
+  measure: pacing {
+    type: sum
+    value_format: "#,##0.00"
+    sql: case when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM' then ${TABLE}.impressions
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPR' then ${TABLE}.inv_cost
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM' then ${TABLE}.inv_cost
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV' then ${TABLE}.complete_events
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC' then ${TABLE}.clicks
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPC' then ${TABLE}.cogs*1.2
+              end
+              ;;
+  }
+
+  measure: hybrid_impressions_delivered {
+    type: sum
+    value_format: "#,##0"
+    sql: case when dim_sfdb_opportunitylineitem.reporting__c = 'Amobee' then ${TABLE}.impressions else
+    ${TABLE}.third_party_impressions end;;
+    hidden: yes
+  }
+
+  measure: remaining_budget {
+    type: number
+    sql: dim_sfdb_opportunitylineitem.gross_billable__c - ${hybrid_impressions_delivered}*dim_sfdb_opportunitylineitem.rate__c
+    /1000 ;;
+  }
+
+  measure: impressions_discrepancy {
+    type: sum
+    sql: (${TABLE}.third_party_impressions-${TABLE}.impressions)/${TABLE}.impressions ;;
+  }
+
+  measure: clicks_discrepancy {
+    type: sum
+    sql: (${TABLE}.third_party_clicks-${TABLE}.clicks)/${TABLE}.clicks ;;
+  }
+
+  measure: days_left {
+    type: sum
+    sql: case when DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c)<0
+    then 0 else DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c) end;;
+  }
+
+  measure: opp_name_shortcut {
+    type: string
+    sql: SUBSTRING(name FROM (POSITION('F-' IN name) + 1) FOR 8) ;;
+  }
+
   measure: count {
     type: count
     hidden: yes

@@ -10,10 +10,40 @@ datagroup: CleanCash_datagroup {
   description: "Triggered when new date is added to ETL"
 }
 
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
+access_grant: billing_report_group {
+  user_attribute: billing_group
+  allowed_values: ["yes"]
+}
+
 
 access_grant: can_view_all_tremor {
   user_attribute: all_tremor
   allowed_values: ["all_tremor"]
+}
+
+explore: monthly_billing_locked_report {
+  required_access_grants: [billing_report_group]
+  label: "Locked Report Billing US"
+}
+
+explore: marc_bill_v2 {
+  required_access_grants: [billing_report_group]
+  label: "March bill V2"
+}
+
+explore: billing_us_v1 {
+  required_access_grants: [billing_report_group]
+  label: "Billing US V1"
+}
+
+explore: v_monthly_billing_report_diff_live_locked {
+  required_access_grants: [billing_report_group]
+  label: "Monthly Billing Report Diff Live Locked"
 }
 
 

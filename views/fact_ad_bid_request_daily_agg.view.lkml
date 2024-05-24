@@ -357,6 +357,11 @@ dimension: dynamic_pub_deal_name {
 
   }
 
+  measure: sum_of_user_matched {
+    type: sum
+    sql: case when ${dim_user_matched.user_matched}=1 then 1 else 0 end ;;
+  }
+
   measure: sum_of_moat_impressions_ivt_measurable_from_ad_data {
     type: sum
     sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable_from_ad_data ;;

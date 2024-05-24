@@ -32,7 +32,18 @@ access_grant: can_view_pub_come_looker {
 
 access_grant: allowed_users_sam_lt {
   user_attribute: allowed_users_sam_lt
-  allowed_values: ["allowed_users_sam_lt"]
+  allowed_values: ["Finance Reports All Access"]
+  #allowed_values: ["mike padula group","Finance Reports All Access"]
+}
+
+access_grant: allowed_mike {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["Mike Padula Group"]
+}
+
+access_grant: allowed_sales {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["SalesOps"]
 }
 
 access_grant: can_view_all_tremor {
@@ -83,12 +94,15 @@ explore: sam {
 }
 
 explore: sam_lt_comm {
-  access_filter: {
-    field: sam_lt_comm.operations_owner
-    user_attribute: allowed_users_sam_lt
-  }
+  # access_filter: {
+  #   field: sam_lt_comm.operations_owner
+  #   user_attribute: allowed_users_sam_lt
+  # }
   label: "SAM LT Commision"
-  #required_access_grants: [can_view_all_tremor]
+  #affecting bd comm - global, monthly metrics by ops owner
+  #required_access_grants: [allowed_users_sam_lt,allowed_sales]
+  #required_access_grants: [allowed_sales]
+  required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
 
@@ -145,7 +159,11 @@ explore: fifa_dsp_metrics {
 
 explore: bd_comm {
   label: "BD Comm US"
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [allowed_users_sam_lt]
+  # access_filter: {
+  #   field: bd_comm.bizdev_owner
+  #   user_attribute: allowed_users_sam_lt
+  # }
   hidden: yes
 }
 
@@ -419,6 +437,11 @@ explore: targets_up_gal {
   hidden: no
 }
 
+explore: net_emea_publisher {
+  label: "Net Revenue EMEA by Publisher"
+  required_access_grants: [can_view_aniview]
+}
+
 explore: billing_dragon_data {
   label: "Billing Dragon Data for Dennis"
   required_access_grants: [can_view_all_tremor]
@@ -433,6 +456,12 @@ explore: pmp_stats_hourly {
 
 explore: rupi_datamine {
   label: "Custom Events Datamine"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: segment_syndication {
+  label: "Segment Syndication"
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }

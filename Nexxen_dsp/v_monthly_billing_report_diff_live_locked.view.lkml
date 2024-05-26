@@ -162,17 +162,17 @@ view: v_monthly_billing_report_diff_live_locked {
     value_format: "#,##0.00"
   }
 
-  measure: cost_locked {
+  measure: adv_invoice_locked {
     type: sum
     label: "Adv Invoice Locked"
-    sql: ${TABLE}.cost_from_locked_report ;;
+    sql: ${TABLE}.adv_invoice_from_locked_report ;;
     value_format: "#,##0.00"
   }
 
-  measure: cost_live {
+  measure: adv_invoice_live {
     type: sum
     label: "Adv Invoice Live"
-    sql: ${TABLE}.cost_from_live_report ;;
+    sql: ${TABLE}.adv_invoice_from_live_report ;;
     value_format: "#,##0.00"
   }
 

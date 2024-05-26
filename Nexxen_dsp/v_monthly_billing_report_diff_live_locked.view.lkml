@@ -164,7 +164,7 @@ view: v_monthly_billing_report_diff_live_locked {
 
   measure: cost_locked {
     type: sum
-    label: "Adv Invoice from Locked Report"
+    label: "Adv Invoice Locked"
     sql: ${TABLE}.cost_from_locked_report ;;
     value_format: "#,##0.00"
   }
@@ -178,42 +178,42 @@ view: v_monthly_billing_report_diff_live_locked {
 
   measure: complete_events_locked {
     type: sum
-    label: "Complete Events from Locked Report"
+    label: "Complete Events Locked"
     sql: ${TABLE}.complete_events_from_locked_report ;;
     value_format: "#,##0"
   }
 
   measure: complete_events_live {
     type: sum
-    label: "Complete Events from Live Report"
+    label: "Complete Events Live"
     sql: ${TABLE}.complete_events_from_live_report ;;
     value_format: "#,##0"
   }
 
   measure: third_party_complete_events_locked {
     type: sum
-    label: "Third Party Complete Events from Locked Report"
+    label: "Third Party Complete Events Locked"
     sql: ${TABLE}.third_party_complete_events_from_locked_report ;;
     value_format: "#,##0"
   }
 
   measure: third_party_complete_events_live {
     type: sum
-    label: "Third Party Complete Events from Live Report"
+    label: "Third Party Complete Events Live"
     sql: ${TABLE}.third_party_complete_events_from_live_report ;;
     value_format: "#,##0"
   }
 
   measure: third_party_clicks_locked {
     type: sum
-    label: "Third Party Clicks from Locked Report"
+    label: "Third Party Clicks Locked"
     sql: ${TABLE}.third_party_clicks_from_locked_report ;;
     value_format: "#,##0"
   }
 
   measure: third_party_clicks_live {
     type: sum
-    label: "Third Party Clicks from Live Report"
+    label: "Third Party Clicks Live"
     sql: ${TABLE}.third_party_clicks_from_live_report ;;
     value_format: "#,##0"
   }

@@ -109,7 +109,7 @@ view: billing_us_v1 {
   measure: discrepancy_between_1_p_and_final_billable_revenue_after_adj_percent {
     type: sum
     sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj_percent ;;
-    value_format: "#,##0.00"
+    value_format: "0.00%"
   }
 
   measure: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd {

@@ -483,7 +483,11 @@ view: dim_sfdb_opportunity {
     type: string
     label: "Opportunity Name"
     sql: ${TABLE}."name" ;;
+  }
 
+  dimension: opp_name_shortcut {
+    type: string
+    sql: SUBSTRING(name FROM (POSITION('F-' IN name) + 1) FOR 8) ;;
   }
 
   dimension: new_market__c {

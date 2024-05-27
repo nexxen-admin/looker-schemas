@@ -96,3 +96,8 @@ explore: unruly_exco_aniview_ctrl {
   required_access_grants: [can_view_aniview]
   #hidden: yes
 }
+
+explore: connatix_report {
+  label: "Connatix Data"
+  required_access_grants: [can_view_aniview]
+}

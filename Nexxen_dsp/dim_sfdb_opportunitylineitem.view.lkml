@@ -265,6 +265,12 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.end_date__c ;;
   }
 
+  dimension:  live_campaign_filter{
+    type: string
+    label: "Is Campaign Live"
+    sql: CASE WHEN DATEDIFF('day', NOW(),end_date__c)>=0 and DATEDIFF('day', NOW(),start_date__c)<=0 THEN 'Live'ELSE 'Not Live' END ;;
+  }
+
   dimension: expected_amount__c {
     type: number
     sql: ${TABLE}.expected_amount__c ;;

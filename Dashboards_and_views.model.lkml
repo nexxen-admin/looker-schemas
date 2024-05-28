@@ -102,7 +102,7 @@ explore: sam_lt_comm {
   #affecting bd comm - global, monthly metrics by ops owner
   #required_access_grants: [allowed_users_sam_lt,allowed_sales]
   #required_access_grants: [allowed_sales]
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [allowed_mike, allowed_users_sam_lt]
   hidden: yes
 }
 

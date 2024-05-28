@@ -52,11 +52,13 @@ view: v_monthly_billing_report_diff_live_locked {
 
   measure: clicks_live {
     type: sum
+    label: "1P Clicks Live"
     sql: ${TABLE}.Clicks_from_live_report ;;
   }
 
   measure: clicks_locked {
     type: sum
+    label: "1P Clicks Locked"
     sql: ${TABLE}.Clicks_locked_report ;;
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
@@ -94,11 +96,13 @@ view: v_monthly_billing_report_diff_live_locked {
 
   measure: impressions_live {
     type: sum
+    label: "1P Impressions Live"
     sql: ${TABLE}.impressions_from_live_report ;;
   }
 
   measure: impressions_locked {
     type: sum
+    label: "1P Impressions Locked"
     sql: ${TABLE}.impressions_from_locked_report ;;
   }
 
@@ -142,11 +146,13 @@ view: v_monthly_billing_report_diff_live_locked {
 
   measure: third_party_impressions_live {
     type: sum
+    label: "3P Impressions Live"
     sql: ${TABLE}.third_party_impressions_from_live_report ;;
   }
 
   measure: third_party_impressions_locked {
     type: sum
+    label: "3P Impressions Locked"
     sql: ${TABLE}.third_party_impressions_locked_report ;;
   }
 
@@ -178,42 +184,42 @@ view: v_monthly_billing_report_diff_live_locked {
 
   measure: complete_events_locked {
     type: sum
-    label: "Complete Events Locked"
+    label: "1P Complete Events Locked"
     sql: ${TABLE}.complete_events_from_locked_report ;;
     value_format: "#,##0"
   }
 
   measure: complete_events_live {
     type: sum
-    label: "Complete Events Live"
+    label: "1P Complete Events Live"
     sql: ${TABLE}.complete_events_from_live_report ;;
     value_format: "#,##0"
   }
 
   measure: third_party_complete_events_locked {
     type: sum
-    label: "Third Party Complete Events Locked"
+    label: "3P Complete Events Locked"
     sql: ${TABLE}.third_party_complete_events_from_locked_report ;;
     value_format: "#,##0"
   }
 
   measure: third_party_complete_events_live {
     type: sum
-    label: "Third Party Complete Events Live"
+    label: "3P Complete Events Live"
     sql: ${TABLE}.third_party_complete_events_from_live_report ;;
     value_format: "#,##0"
   }
 
   measure: third_party_clicks_locked {
     type: sum
-    label: "Third Party Clicks Locked"
+    label: "3P Clicks Locked"
     sql: ${TABLE}.third_party_clicks_from_locked_report ;;
     value_format: "#,##0"
   }
 
   measure: third_party_clicks_live {
     type: sum
-    label: "Third Party Clicks Live"
+    label: "3P Clicks Live"
     sql: ${TABLE}.third_party_clicks_from_live_report ;;
     value_format: "#,##0"
   }

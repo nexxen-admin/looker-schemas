@@ -392,6 +392,7 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Line Item Name"
     sql: ${TABLE}.line_item_name__c ;;
+    drill_fields: [datorama_dsp_third_party.media_buy_key, v_dim_dsp_date.date_key_date]
   }
 
   dimension: line_item_number__c {

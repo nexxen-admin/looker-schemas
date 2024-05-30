@@ -32,7 +32,7 @@ access_grant: can_view_pub_come_looker {
 
 access_grant: allowed_users_sam_lt {
   user_attribute: allowed_users_sam_lt
-  allowed_values: ["Finance Reports All Access"]
+  allowed_values: ["Finance Reports All Access", "Chris Chandler Group"]
   #allowed_values: ["Finance Reports All Access", "Mike Padula Group"]
   #allowed_values: ["mike padula group","Finance Reports All Access"]
 }
@@ -103,7 +103,7 @@ explore: sam_lt_comm {
   #affecting bd comm - global, monthly metrics by ops owner
   #required_access_grants: [allowed_users_sam_lt,allowed_sales]
   #required_access_grants: [allowed_sales]
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [allowed_users_sam_lt]
   hidden: yes
 }
 

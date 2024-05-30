@@ -90,15 +90,32 @@ view: segment_syndication {
     sql: ${TABLE}.DATA_CONTRACT_PRICING_TYPE ;;
   }
 
-  dimension: rate {
-    type: number
-    sql: ${TABLE}.RATE ;;
+  measure: contract_cpm {
+    type: sum
+    sql: ${TABLE}.contract_cpm ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: estimated_cpm {
+    type: sum
+    sql: ${TABLE}.estimated_cpm ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: rate_cpm {
+    type: sum
+    sql: ${TABLE}.rate_cpm ;;
     value_format: "$#,##0.00"
   }
 
   dimension: always_on {
     type: string
     sql: ${TABLE}.ALWAYS_ON ;;
+  }
+
+  dimension: is_active {
+    type: string
+    sql: ${TABLE}.is_active ;;
   }
 
   dimension: full_path_name {
@@ -111,14 +128,24 @@ view: segment_syndication {
     sql: ${TABLE}.IS_UNIQUE ;;
   }
 
+  dimension: first_syndication {
+    type: date
+    sql: ${TABLE}.first_syndication ;;
+  }
+
+  dimension: last_syndication {
+    type: date
+    sql: ${TABLE}.last_syndication ;;
+  }
+
   dimension_group: db_updated_date {
     type: time
     sql: ${TABLE}.db_updated_date ;;
     hidden: yes
   }
 
-  dimension: rx_cpm {
-    type: number
+  measure: rx_cpm {
+    type: sum
     sql: ${TABLE}.RX_CPM ;;
     value_format: "$#,##0.00"
   }
@@ -138,9 +165,9 @@ view: segment_syndication {
     sql: ${TABLE}.RX_Status ;;
   }
 
-  measure: pricing_discrepancy {
+  dimension: pricing_discrepancy {
     type: string
-    sql: case when ${TABLE}.rate=${TABLE}.RX_CPM then 'False' else 'True' end;;
+    sql: case when ${TABLE}.contract_cpm=${TABLE}.RX_CPM then 'False' else 'True' end;;
   }
 
   set: detail {
@@ -159,7 +186,7 @@ view: segment_syndication {
   category_name,
   data_contract_pricing_type_id,
   data_contract_pricing_type,
-  rate,
+  contract_cpm,
   always_on,
   full_path_name,
   is_unique,

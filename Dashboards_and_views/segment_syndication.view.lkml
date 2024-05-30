@@ -99,6 +99,7 @@ view: segment_syndication {
   measure: estimated_cpm {
     type: sum
     sql: ${TABLE}.estimated_cpm ;;
+    label: "AVG Est. CPM"
     value_format: "$#,##0.00"
   }
 
@@ -115,7 +116,8 @@ view: segment_syndication {
 
   dimension: is_active {
     type: string
-    sql: ${TABLE}.is_active ;;
+    label: "DMP Status"
+    sql: case when ${TABLE}.is_active='true' then 'Active' when ${TABLE}.is_active = 'false' then 'Inactive' else 'Null' end;;
   }
 
   dimension: full_path_name {

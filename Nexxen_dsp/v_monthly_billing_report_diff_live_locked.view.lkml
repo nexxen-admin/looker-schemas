@@ -294,6 +294,16 @@ view: v_monthly_billing_report_diff_live_locked {
     sql: ${TABLE}.account_manager_name_from_live_report ;;
   }
 
+  dimension: opportunity_trader_live {
+    type: string
+    sql: ${TABLE}.opportunity_trader_from_live_report ;;
+  }
+
+  dimension: opportunity_trader_locked{
+    type: string
+    sql: ${TABLE}.opportunity_trader_from_locked_report ;;
+  }
+
   dimension: opportunity_region_live {
     type: string
     sql: ${TABLE}.opportunity_region_from_live_report ;;

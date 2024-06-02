@@ -21,6 +21,11 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.account_manager_name ;;
   }
 
+  dimension: opportunity_trader {
+    type: string
+    sql: ${TABLE}.opportunity_trader ;;
+  }
+
   dimension: account_name {
     type: string
     sql: ${TABLE}.account_name ;;

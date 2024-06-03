@@ -55,6 +55,16 @@ view: v_monthly_billing_report_diff_live_locked {
     sql: ${TABLE}.case_safe_opp_line_item_id_live ;;
   }
 
+  dimension: modified_case_safe_live {
+    type: string
+    sql: ${TABLE}.modified_case_safe_from_live_report ;;
+  }
+
+  dimension: modified_case_safe_locked {
+    type: string
+    sql: ${TABLE}.modified_case_safe_from_locked_report ;;
+  }
+
   measure: clicks_live {
     type: sum
     label: "1P Clicks Live"

@@ -45,9 +45,14 @@ view: v_monthly_billing_report_diff_live_locked {
     value_format: "#,##0.00"
   }
 
-  dimension: case_safe_opp_line_item_id {
+  dimension: case_safe_opp_line_item_id_locked {
     type: string
-    sql: ${TABLE}.case_safe_opp_line_item_id ;;
+    sql: ${TABLE}.case_safe_opp_line_item_id_locked ;;
+  }
+
+  dimension: case_safe_opp_line_item_id_live {
+    type: string
+    sql: ${TABLE}.case_safe_opp_line_item_id_live ;;
   }
 
   measure: clicks_live {

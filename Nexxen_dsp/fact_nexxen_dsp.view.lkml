@@ -289,6 +289,19 @@ view: fact_nexxen_dsp {
               ;;
   }
 
+  measure: delivered_units {
+    type: sum
+    value_format: "#,##0.00"
+    sql: case when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM' then ${TABLE}.third_party_impressions
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPR' then ${TABLE}.inv_cost
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM' then ${TABLE}.inv_cost
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV' then ${TABLE}.complete_events
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC' then ${TABLE}.third_party_clicks
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPC' then ${TABLE}.cogs*1.2
+              end
+              ;;
+  }
+
   measure: hybrid_impressions_delivered {
     type: sum
     value_format: "#,##0"

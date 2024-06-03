@@ -265,6 +265,20 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.end_date__c ;;
   }
 
+  dimension: item_days {
+    type: number
+    description: "The difference in days between the io start and end date."
+    sql: DATEDIFF(day, start_date__c, end_date__c) ;;
+    hidden: yes
+  }
+
+  dimension: item_days_left {
+    type: number
+    description: "The difference in days between the io end date and current date."
+    sql: DATEDIFF(day, now(), end_date__c) ;;
+    hidden: yes
+  }
+
   dimension:  live_campaign_filter{
     type: string
     label: "Is Campaign Live"

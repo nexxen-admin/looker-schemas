@@ -100,11 +100,11 @@ view: unruly_exco_aniview_ctrl {
           'CTRL'::varchar(4) AS DATABASE,
           CASE
               WHEN (
-                      e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Shachar Laufer', 'Rachel Gargett','Hannah Quigley')
+                      e.employee_id in ('90','91','87','93','85','94','73','65','67','97')
                   AND mt.Media_Type = 'site'::varchar(4))
               THEN 'OLV'::varchar(3)
               WHEN (
-                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher', 'Noa Krashniak', 'Gonni Kern')
+                     e.employee_id in ('84','88','72','95','96')
                   AND mt.Media_Type = 'app'::varchar(3))
               THEN 'IA'::varchar(2)
               ELSE NULL
@@ -132,20 +132,31 @@ view: unruly_exco_aniview_ctrl {
           0                                           AS Player_Total_Rev,
           0                                           AS MyCast,
           CASE
-        WHEN d.date_key >= '2023-06-01'
+        WHEN d.date_key >= '2023-06-01' and d.date_key < '2024-05-01'
         AND p.PUB_ID = '105705'
         AND lower(device_type_id) != lower('ctv')
         and lower(imp_type) = 'video'
         THEN
             SUM(agg.sum_of_cogs) * 0.07
+        WHEN d.date_key >= '2024-05-01'
+        AND p.PUB_ID = '105705'
+        AND lower(device_type_id) != lower('ctv')
+        and lower(imp_type) = 'video'
+        THEN
+            SUM(agg.sum_of_cogs) * 0.09
 
     END AS Widgets_AI,
     CASE
         WHEN p.PUB_ID = ANY (ARRAY['105587', '106126'])
-        and d.Date_Key >= DATE('2023-04-01')
+        and d.Date_Key >= DATE('2023-04-01') and d.Date_Key < DATE('2024-06-01')
         and lower(imp_type) = 'video'
         THEN
            SUM(agg.sum_of_cogs) * 0.07
+        WHEN p.PUB_ID = ANY (ARRAY['105587', '106126'])
+        and d.Date_Key >= DATE('2024-06-01')
+        and lower(imp_type) = 'video'
+        THEN
+           SUM(agg.sum_of_cogs) * 0.09
 
     END         AS Wiseroll_LTD_Yeda,
     CASE
@@ -213,11 +224,11 @@ view: unruly_exco_aniview_ctrl {
       AND
           CASE
               WHEN (
-                  e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Shachar Laufer', 'Rachel Gargett','Hannah Quigley')
+                  e.employee_id in ('90','91','87','93','85','94','73','65','67','97')
                   AND mt.Media_Type = 'site'::varchar(4))
               THEN 'OLV'::varchar(3)
               WHEN (
-                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher', 'Noa Krashniak', 'Gonni Kern')
+                     e.employee_id in ('84','88','72','95','96')
                   AND mt.Media_Type = 'app'::varchar(3))
               THEN 'IA'::varchar(2)
               ELSE NULL
@@ -230,11 +241,11 @@ view: unruly_exco_aniview_ctrl {
           Is_1st_Party_demand,
           CASE
               WHEN (
-                  e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Shachar Laufer', 'Rachel Gargett','Hannah Quigley')
+                  e.employee_id in ('90','91','87','93','85','94','73','65','67','97')
                   AND mt.Media_Type = 'site'::varchar(4))
               THEN 'OLV'::varchar(3)
               WHEN (
-                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher', 'Noa Krashniak', 'Gonni Kern')
+                     e.employee_id in ('84','88','72','95','96')
                   AND mt.Media_Type = 'app'::varchar(3))
               THEN 'IA'::varchar(2)
               ELSE NULL

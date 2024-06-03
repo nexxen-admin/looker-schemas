@@ -12,7 +12,9 @@ view: net_emea_publisher {
           INNER JOIN bi_new.Dim_Country c ON agg.Country_Key = c.Country_Key
           INNER JOIN bi_new.Dim_Publisher_SSP ssp ON agg.PUB_SSP_Key = ssp.PUB_SSP_Key
           INNER JOIN bi_new.Dim_Publisher p ON ssp.PUB_Key = p.PUB_Key
-      where date_key>='2024-01-01' and p.pub_id in ('101188','103354','81409','101593','103661','103022','105847','84996','76872','103149','103281','78223') and region ilike 'EMEA'
+      where continent ilike 'Europe' and ((date_key>='2024-01-01' and p.pub_id in ('101188','103354','81409','101593','103661','103022','105847','84996','76872','103149','103281','78223'))
+                                     or (date_key>='2024-06-01' and p.pub_id in ('107247', '104215', '102822', '108104'))
+                                     or (date_key>='2024-07-01' and p.pub_id in ('103250', '102716', '105415')))
       group by 1,2,3 ;;
   }
 

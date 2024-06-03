@@ -273,6 +273,22 @@ view: billing_us_v1 {
     sql: ${TABLE}.opp_line_item_start_date ;;
   }
 
+  dimension_group: dsp_start {
+    type: time
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.dsp_start_date ;;
+  }
+
+  dimension_group: dsp_end {
+    type: time
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.dsp_end_date ;;
+  }
+
   dimension: opportunity_name {
     type: string
     sql: ${TABLE}.opportunity_name ;;

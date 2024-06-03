@@ -263,6 +263,11 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.opportunity_end_date ;;
   }
 
+  dimension: dsp_end_date {
+    type: string
+    sql: ${TABLE}.dsp_end_date ;;
+  }
+
   dimension: opportunity_name {
     type: string
     sql: ${TABLE}.opportunity_name ;;
@@ -287,6 +292,11 @@ view: monthly_billing_locked_report {
   dimension: opportunity_start_date {
     type: string
     sql: ${TABLE}.opportunity_start_date ;;
+  }
+
+  dimension: dsp_start_date {
+    type: string
+    sql: ${TABLE}.dsp_start_date ;;
   }
 
   measure: over_delivery_amount {

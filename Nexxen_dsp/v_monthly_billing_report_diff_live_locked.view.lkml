@@ -259,6 +259,26 @@ view: v_monthly_billing_report_diff_live_locked {
     sql: ${TABLE}.opportunity_end_date_from_live_report;;
   }
 
+  dimension: dsp_start_date_locked {
+    type: string
+    sql: ${TABLE}.dsp_start_date_from_locked_report;;
+  }
+
+  dimension: dsp_start_date_live {
+    type: string
+    sql: ${TABLE}.dsp_start_date_from_live_report;;
+  }
+
+  dimension: dsp_end_date_locked {
+    type: string
+    sql: ${TABLE}.dsp_end_date_from_locked_report;;
+  }
+
+  dimension: dsp_end_date_live {
+    type: string
+    sql: ${TABLE}.dsp_end_date_from_live_report;;
+  }
+
   dimension: line_item_name_locked {
     type: string
     sql: ${TABLE}.line_item_name_from_locked_report ;;

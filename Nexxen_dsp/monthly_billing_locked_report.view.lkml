@@ -83,6 +83,11 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.case_safe_opp_line_item_id ;;
   }
 
+  dimension: modified_case_safe {
+    type: string
+    sql: ${TABLE}.modified_case_safe ;;
+  }
+
   measure: check_completeness_revenue_adj {
     type: sum
     sql: ${TABLE}.check_completeness_revenue_adj ;;

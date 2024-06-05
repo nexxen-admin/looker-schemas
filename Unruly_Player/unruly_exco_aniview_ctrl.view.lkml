@@ -67,7 +67,7 @@ view: unruly_exco_aniview_ctrl {
               0 AS cost,
               0 AS net_revenue,
               0 AS inventory,
-              (round(((sum(Fact_cedato_demands.impressions) / 1000::numeric(18,0)) * 0.18), 1))::int AS IA_SF,
+              round(sum(case when day>='2024-05-01' and seat_name = 'Unruly_publisher_MC' then Fact_cedato_demands.impressions / 1000 * 0.16 else Fact_cedato_demands.impressions / 1000 * 0.18 end))::int AS IA_SF,
               0 AS IS_SF,
               0 AS KO_SF,
               0 AS TW_SF,
@@ -79,7 +79,8 @@ view: unruly_exco_aniview_ctrl {
               CASE WHEN (lower(Fact_cedato_demands.demand_partner) ~~* 'unruly%'::varchar(7)) THEN NULL::numeric(1,0) ELSE CASE WHEN (Fact_cedato_demands.day < '2023-06-01'::date) THEN (sum(Fact_cedato_demands.revenue) * 0.2) WHEN (Fact_cedato_demands.day >= '2023-06-01'::date) THEN (sum(Fact_cedato_demands.revenue) * 0.15) ELSE NULL::numeric(1,0) END END AS Pub_MP_Net,
               sum(Fact_cedato_demands.revenue) AS Player_Total_Rev,
               --sum(CASE WHEN ((Fact_cedato_demands.day < '2023-06-01'::date) AND (lower(Fact_cedato_demands.demand_partner) !~~* 'unruly%'::varchar(7)) AND (Fact_cedato_demands.seat_name ~~* '%MC%'::varchar(4))) THEN (Fact_cedato_demands.revenue * 0.2) WHEN ((Fact_cedato_demands.day >= '2023-06-01'::date) AND (lower(Fact_cedato_demands.demand_partner) !~~* 'unruly%'::varchar(7)) AND (Fact_cedato_demands.seat_name ~~* '%MC%'::varchar(4))) THEN (Fact_cedato_demands.revenue * 0.15) ELSE NULL::numeric(1,0) END) AS MyCast,
-              sum(case when lower(Fact_cedato_demands.demand_partner) != 'unruly mycast' and Fact_cedato_demands.seat_name = 'Unruly_publisher_MC' then Fact_cedato_demands.revenue * 0.15 end) as MyCast,
+              sum(case when lower(Fact_cedato_demands.demand_partner) != 'unruly mycast' and Fact_cedato_demands.seat_name = 'Unruly_publisher_MC' and activity_date <'2024-05-01' then Fact_cedato_demands.revenue * 0.15
+                       when lower(Fact_cedato_demands.demand_partner) != 'unruly mycast' and Fact_cedato_demands.seat_name = 'Unruly_publisher_MC' and activity_date >='2024-05-01' then Fact_cedato_demands.revenue * 0.2 end) as MyCast,
               0 AS Widgets_AI,
               0 AS Wiseroll_LTD_Yeda,
               0 AS Streamkey
@@ -100,11 +101,11 @@ view: unruly_exco_aniview_ctrl {
           'CTRL'::varchar(4) AS DATABASE,
           CASE
               WHEN (
-                      e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Shachar Laufer', 'Rachel Gargett','Hannah Quigley')
+                      e.employee_id in ('90','91','87','93','85','94','73','65','67','97')
                   AND mt.Media_Type = 'site'::varchar(4))
               THEN 'OLV'::varchar(3)
               WHEN (
-                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher', 'Noa Krashniak', 'Gonni Kern')
+                     e.employee_id in ('84','88','72','95','96')
                   AND mt.Media_Type = 'app'::varchar(3))
               THEN 'IA'::varchar(2)
               ELSE NULL
@@ -132,20 +133,31 @@ view: unruly_exco_aniview_ctrl {
           0                                           AS Player_Total_Rev,
           0                                           AS MyCast,
           CASE
-        WHEN d.date_key >= '2023-06-01'
+        WHEN d.date_key >= '2023-06-01' and d.date_key < '2024-05-01'
         AND p.PUB_ID = '105705'
         AND lower(device_type_id) != lower('ctv')
         and lower(imp_type) = 'video'
         THEN
             SUM(agg.sum_of_cogs) * 0.07
+        WHEN d.date_key >= '2024-05-01'
+        AND p.PUB_ID = '105705'
+        AND lower(device_type_id) != lower('ctv')
+        and lower(imp_type) = 'video'
+        THEN
+            SUM(agg.sum_of_cogs) * 0.09
 
     END AS Widgets_AI,
     CASE
         WHEN p.PUB_ID = ANY (ARRAY['105587', '106126'])
-        and d.Date_Key >= DATE('2023-04-01')
+        and d.Date_Key >= DATE('2023-04-01') and d.Date_Key < DATE('2024-06-01')
         and lower(imp_type) = 'video'
         THEN
            SUM(agg.sum_of_cogs) * 0.07
+        WHEN p.PUB_ID = ANY (ARRAY['105587', '106126'])
+        and d.Date_Key >= DATE('2024-06-01')
+        and lower(imp_type) = 'video'
+        THEN
+           SUM(agg.sum_of_cogs) * 0.09
 
     END         AS Wiseroll_LTD_Yeda,
     CASE
@@ -213,11 +225,11 @@ view: unruly_exco_aniview_ctrl {
       AND
           CASE
               WHEN (
-                  e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Shachar Laufer', 'Rachel Gargett','Hannah Quigley')
+                  e.employee_id in ('90','91','87','93','85','94','73','65','67','97')
                   AND mt.Media_Type = 'site'::varchar(4))
               THEN 'OLV'::varchar(3)
               WHEN (
-                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher', 'Noa Krashniak', 'Gonni Kern')
+                     e.employee_id in ('84','88','72','95','96')
                   AND mt.Media_Type = 'app'::varchar(3))
               THEN 'IA'::varchar(2)
               ELSE NULL
@@ -230,11 +242,11 @@ view: unruly_exco_aniview_ctrl {
           Is_1st_Party_demand,
           CASE
               WHEN (
-                  e.employee_name in ('Bar Wolkowiski','Yovel Modlin','Itzik Vaknin','Noa Karako','Shir Elzam','Mikayla Skarzynski', 'Shachar Laufer', 'Rachel Gargett','Hannah Quigley')
+                  e.employee_id in ('90','91','87','93','85','94','73','65','67','97')
                   AND mt.Media_Type = 'site'::varchar(4))
               THEN 'OLV'::varchar(3)
               WHEN (
-                     e.employee_name in ('Itamar Bilu','Stav Ezer','Ashleigh Fisher', 'Noa Krashniak', 'Gonni Kern')
+                     e.employee_id in ('84','88','72','95','96')
                   AND mt.Media_Type = 'app'::varchar(3))
               THEN 'IA'::varchar(2)
               ELSE NULL

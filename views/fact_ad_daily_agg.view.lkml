@@ -2381,18 +2381,16 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_pub_platform_fee ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
-    hidden: yes
   }
 
   measure: previous_period_pub_platform_fee {
-    view_label: ""
-    label: "previous period pub platform fee "
+    view_label: "PoP"
+    label: "Previous Period Pub Platform Fee "
     description: "Specifies the tech fee a publisher is paying on using the ctrl, in the previous period, using the filter 'compare to' which has to be applied"
     type: sum
     sql: ${TABLE}.sum_of_pub_platform_fee ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
-    hidden: yes
   }
 
   measure: margin_pop_change {

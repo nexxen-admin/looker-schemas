@@ -67,7 +67,7 @@ view: unruly_exco_aniview_ctrl {
               0 AS cost,
               0 AS net_revenue,
               0 AS inventory,
-              (round(((sum(Fact_cedato_demands.impressions) / 1000::numeric(18,0)) * 0.18), 1))::int AS IA_SF,
+              round(sum(case when day>='2024-05-01' and seat_name = 'Unruly_publisher_MC' then Fact_cedato_demands.impressions / 1000 * 0.16 else Fact_cedato_demands.impressions / 1000 * 0.18 end))::int AS IA_SF,
               0 AS IS_SF,
               0 AS KO_SF,
               0 AS TW_SF,
@@ -79,7 +79,8 @@ view: unruly_exco_aniview_ctrl {
               CASE WHEN (lower(Fact_cedato_demands.demand_partner) ~~* 'unruly%'::varchar(7)) THEN NULL::numeric(1,0) ELSE CASE WHEN (Fact_cedato_demands.day < '2023-06-01'::date) THEN (sum(Fact_cedato_demands.revenue) * 0.2) WHEN (Fact_cedato_demands.day >= '2023-06-01'::date) THEN (sum(Fact_cedato_demands.revenue) * 0.15) ELSE NULL::numeric(1,0) END END AS Pub_MP_Net,
               sum(Fact_cedato_demands.revenue) AS Player_Total_Rev,
               --sum(CASE WHEN ((Fact_cedato_demands.day < '2023-06-01'::date) AND (lower(Fact_cedato_demands.demand_partner) !~~* 'unruly%'::varchar(7)) AND (Fact_cedato_demands.seat_name ~~* '%MC%'::varchar(4))) THEN (Fact_cedato_demands.revenue * 0.2) WHEN ((Fact_cedato_demands.day >= '2023-06-01'::date) AND (lower(Fact_cedato_demands.demand_partner) !~~* 'unruly%'::varchar(7)) AND (Fact_cedato_demands.seat_name ~~* '%MC%'::varchar(4))) THEN (Fact_cedato_demands.revenue * 0.15) ELSE NULL::numeric(1,0) END) AS MyCast,
-              sum(case when lower(Fact_cedato_demands.demand_partner) != 'unruly mycast' and Fact_cedato_demands.seat_name = 'Unruly_publisher_MC' then Fact_cedato_demands.revenue * 0.15 end) as MyCast,
+              sum(case when lower(Fact_cedato_demands.demand_partner) != 'unruly mycast' and Fact_cedato_demands.seat_name = 'Unruly_publisher_MC' and activity_date <'2024-05-01' then Fact_cedato_demands.revenue * 0.15
+                       when lower(Fact_cedato_demands.demand_partner) != 'unruly mycast' and Fact_cedato_demands.seat_name = 'Unruly_publisher_MC' and activity_date >='2024-05-01' then Fact_cedato_demands.revenue * 0.2 end) as MyCast,
               0 AS Widgets_AI,
               0 AS Wiseroll_LTD_Yeda,
               0 AS Streamkey

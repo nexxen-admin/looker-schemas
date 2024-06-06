@@ -645,6 +645,13 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.spend__c ;;
   }
 
+  measure: budgeted_spend{
+    type: sum
+    description: "Shows the same number as dimension 'Line Item Spend', but is a measure, so will show total"
+    label: "Budgeted Spend"
+    sql: ${TABLE}.spend__c ;;
+  }
+
   dimension: spend_adjusted__c {
     type: number
     label: "Line Item Spend Adjusted"
@@ -667,7 +674,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: totalprice {
     type: number
-    label: "Total Proce"
+    label: "Total Price"
     sql: ${TABLE}.totalprice ;;
   }
 
@@ -680,6 +687,13 @@ view: dim_sfdb_opportunitylineitem {
   dimension: units__c {
     type: number
     label: "Booked Units"
+    sql: ${TABLE}.units__c ;;
+  }
+
+  measure: budgeted_units {
+    type: sum
+    description: "Shows the same number as dimension 'Booked Units', but is a measure, so will show total"
+    label: "Budgeted Units"
     sql: ${TABLE}.units__c ;;
   }
 

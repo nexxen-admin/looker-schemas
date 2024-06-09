@@ -282,7 +282,7 @@ view: dim_sfdb_opportunitylineitem {
   dimension:  live_campaign_filter{
     type: string
     label: "Is Campaign Live"
-    sql: CASE WHEN DATEDIFF('day', NOW(),end_date__c)>=0 and DATEDIFF('day', NOW(),start_date__c)<=0 THEN 'Live'ELSE 'Not Live' END ;;
+    sql: CASE WHEN DATEDIFF('day', NOW(),dim_sfdb_opportunitylineitem.end_date__c)>=0 and DATEDIFF('day', NOW(),dim_sfdb_opportunitylineitem.start_date__c)<=0 THEN 'Live'ELSE 'Not Live' END ;;
   }
 
   dimension: expected_amount__c {
@@ -645,6 +645,13 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.spend__c ;;
   }
 
+  measure: budgeted_spend{
+    type: sum
+    description: "Shows the same number as dimension 'Line Item Spend', but is a measure, so will show total"
+    label: "Budgeted Spend"
+    sql: ${TABLE}.spend__c ;;
+  }
+
   dimension: spend_adjusted__c {
     type: number
     label: "Line Item Spend Adjusted"
@@ -667,7 +674,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: totalprice {
     type: number
-    label: "Total Proce"
+    label: "Total Price"
     sql: ${TABLE}.totalprice ;;
   }
 
@@ -680,6 +687,13 @@ view: dim_sfdb_opportunitylineitem {
   dimension: units__c {
     type: number
     label: "Booked Units"
+    sql: ${TABLE}.units__c ;;
+  }
+
+  measure: budgeted_units {
+    type: sum
+    description: "Shows the same number as dimension 'Booked Units', but is a measure, so will show total"
+    label: "Budgeted Units"
     sql: ${TABLE}.units__c ;;
   }
 

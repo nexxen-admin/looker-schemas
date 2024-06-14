@@ -466,3 +466,8 @@ explore: segment_syndication {
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }
+
+explore: rx_fact_segments_usage_data {
+  label: "Segments Usage Data"
+  required_access_grants: [can_view_pub_come_looker]
+}

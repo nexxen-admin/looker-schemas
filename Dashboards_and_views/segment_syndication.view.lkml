@@ -39,6 +39,7 @@ view: segment_syndication {
   dimension: market_name {
     type: string
     sql: ${TABLE}.MARKET_NAME ;;
+    case_sensitive: no
   }
 
   dimension: data_provider_id {
@@ -54,6 +55,7 @@ view: segment_syndication {
   dimension: data_provider_name {
     type: string
     sql: ${TABLE}.DATA_PROVIDER_NAME ;;
+    case_sensitive: no
   }
 
   dimension: data_contract_id {
@@ -64,6 +66,7 @@ view: segment_syndication {
   dimension: data_contract_name {
     type: string
     sql: ${TABLE}.DATA_CONTRACT_NAME ;;
+    case_sensitive: no
   }
 
   dimension: internal_category_id {
@@ -124,6 +127,7 @@ view: segment_syndication {
   dimension: full_path_name {
     type: string
     sql: ${TABLE}.FULL_PATH_NAME ;;
+    case_sensitive: no
   }
 
   dimension: is_unique {

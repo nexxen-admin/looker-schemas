@@ -21,87 +21,87 @@ view: segment_syndication {
   }
 
   dimension: segment_id {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.SEGMENT_ID ;;
-    case_sensitive: no
   }
 
   dimension: segment_name {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.SEGMENT_NAME ;;
-    case_sensitive: no
   }
 
   dimension: market_id {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.MARKET_ID ;;
-    case_sensitive: no
   }
 
   dimension: market_name {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.MARKET_NAME ;;
-    case_sensitive: no
   }
 
   dimension: data_provider_id {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_PROVIDER_ID ;;
-    case_sensitive: no
   }
 
   dimension: parent_data_provider_id {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.PARENT_DATA_PROVIDER_ID ;;
-    case_sensitive: no
   }
 
   dimension: data_provider_name {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_PROVIDER_NAME ;;
-    case_sensitive: no
   }
 
   dimension: data_contract_id {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_CONTRACT_ID ;;
-    case_sensitive: no
   }
 
   dimension: data_contract_name {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_CONTRACT_NAME ;;
-    case_sensitive: no
   }
 
   dimension: internal_category_id {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.INTERNAL_CATEGORY_ID ;;
-    case_sensitive: no
   }
 
   dimension: external_category_id {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.EXTERNAL_CATEGORY_ID ;;
-    case_sensitive: no
   }
 
   dimension: category_name {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.CATEGORY_NAME ;;
-    case_sensitive: no
   }
 
   dimension: data_contract_pricing_type_id {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_CONTRACT_PRICING_TYPE_ID ;;
-    case_sensitive: no
   }
 
   dimension: data_contract_pricing_type {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_CONTRACT_PRICING_TYPE ;;
-    case_sensitive: no
   }
 
   measure: contract_cpm {
@@ -124,28 +124,28 @@ view: segment_syndication {
   }
 
   dimension: always_on {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.ALWAYS_ON ;;
-    case_sensitive: no
   }
 
   dimension: is_active {
+    case_sensitive: no
     type: string
     label: "DMP Status"
     sql: case when ${TABLE}.is_active='true' then 'Active' when ${TABLE}.is_active = 'false' then 'Inactive' else 'Null' end;;
-    case_sensitive: no
   }
 
   dimension: full_path_name {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.FULL_PATH_NAME ;;
-    case_sensitive: no
   }
 
   dimension: is_unique {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.IS_UNIQUE ;;
-    case_sensitive: no
   }
 
   dimension: first_syndication {
@@ -171,27 +171,27 @@ view: segment_syndication {
   }
 
   dimension: rx_targeting_type {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.RX_Targeting_Type ;;
-    case_sensitive: no
   }
 
   dimension: rx_disabled {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.RX_Disabled ;;
-    case_sensitive: no
   }
 
   dimension: rx_status {
+    case_sensitive: no
     type: string
     sql: ${TABLE}.RX_Status ;;
-    case_sensitive: no
   }
 
   dimension: pricing_discrepancy {
+    case_sensitive: no
     type: string
     sql: case when ${TABLE}.contract_cpm=${TABLE}.RX_CPM then 'False' else 'True' end;;
-    case_sensitive: no
   }
 
   set: detail {

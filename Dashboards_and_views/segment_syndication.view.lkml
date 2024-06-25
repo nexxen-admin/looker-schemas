@@ -21,85 +21,71 @@ view: segment_syndication {
   }
 
   dimension: segment_id {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.SEGMENT_ID ;;
   }
 
   dimension: segment_name {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.SEGMENT_NAME ;;
   }
 
   dimension: market_id {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.MARKET_ID ;;
   }
 
   dimension: market_name {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.MARKET_NAME ;;
   }
 
   dimension: data_provider_id {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_PROVIDER_ID ;;
   }
 
   dimension: parent_data_provider_id {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.PARENT_DATA_PROVIDER_ID ;;
   }
 
   dimension: data_provider_name {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_PROVIDER_NAME ;;
   }
 
   dimension: data_contract_id {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_CONTRACT_ID ;;
   }
 
   dimension: data_contract_name {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_CONTRACT_NAME ;;
   }
 
   dimension: internal_category_id {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.INTERNAL_CATEGORY_ID ;;
   }
 
   dimension: external_category_id {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.EXTERNAL_CATEGORY_ID ;;
   }
 
   dimension: category_name {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.CATEGORY_NAME ;;
   }
 
   dimension: data_contract_pricing_type_id {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_CONTRACT_PRICING_TYPE_ID ;;
   }
 
   dimension: data_contract_pricing_type {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.DATA_CONTRACT_PRICING_TYPE ;;
   }
@@ -124,26 +110,22 @@ view: segment_syndication {
   }
 
   dimension: always_on {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.ALWAYS_ON ;;
   }
 
   dimension: is_active {
-    case_sensitive: no
     type: string
     label: "DMP Status"
     sql: case when ${TABLE}.is_active='true' then 'Active' when ${TABLE}.is_active = 'false' then 'Inactive' else 'Null' end;;
   }
 
   dimension: full_path_name {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.FULL_PATH_NAME ;;
   }
 
   dimension: is_unique {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.IS_UNIQUE ;;
   }
@@ -171,25 +153,21 @@ view: segment_syndication {
   }
 
   dimension: rx_targeting_type {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.RX_Targeting_Type ;;
   }
 
   dimension: rx_disabled {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.RX_Disabled ;;
   }
 
   dimension: rx_status {
-    case_sensitive: no
     type: string
     sql: ${TABLE}.RX_Status ;;
   }
 
   dimension: pricing_discrepancy {
-    case_sensitive: no
     type: string
     sql: case when ${TABLE}.contract_cpm=${TABLE}.RX_CPM then 'False' else 'True' end;;
   }

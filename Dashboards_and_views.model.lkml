@@ -462,6 +462,7 @@ explore: rupi_datamine {
 }
 
 explore: segment_syndication {
+  case_sensitive: no
   label: "Segment Syndication"
   required_access_grants: [can_view_all_tremor]
   hidden: yes

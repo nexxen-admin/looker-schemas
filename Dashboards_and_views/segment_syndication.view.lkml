@@ -28,6 +28,7 @@ view: segment_syndication {
   dimension: segment_name {
     type: string
     sql: ${TABLE}.SEGMENT_NAME ;;
+    case_sensitive: no
   }
 
   dimension: market_id {

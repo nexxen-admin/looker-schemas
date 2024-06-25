@@ -58,7 +58,7 @@ explore: fact_nexxen_dsp  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp STG"
   view_label: "Measures"
-  hidden: yes
+  #hidden: yes
 
   join: dim_dsp_creative {
     type: inner

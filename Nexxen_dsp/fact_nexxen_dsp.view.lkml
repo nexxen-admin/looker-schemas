@@ -276,6 +276,31 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.cogs ;;
   }
 
+  measure: 3p_in_view_impressions {
+    type: sum
+    sql: ${TABLE}.third_party_in_view_impressions ;;
+  }
+
+  measure: 3p_in_view_measurable {
+    type: sum
+    sql: ${TABLE}.third_party_in_view_measurable ;;
+  }
+
+  measure: 3p_rich_media_impressions {
+    type: sum
+    sql: ${TABLE}.third_party_rich_media_impressions ;;
+  }
+
+  measure: 3p_adj_engagements {
+    type: sum
+    sql: ${TABLE}.third_party_adj_engagements ;;
+  }
+
+  measure: 3p_total_conversions {
+    type: sum
+    sql: ${TABLE}.third_party_total_conversions ;;
+  }
+
   measure: pacing {
     type: sum
     value_format: "#,##0.00"

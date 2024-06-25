@@ -29,21 +29,25 @@ access_grant: can_view_all_tremor {
 explore: monthly_billing_locked_report {
   required_access_grants: [billing_report_group]
   label: "Locked Report Billing US"
+  hidden: yes
 }
 
 explore: marc_bill_v2 {
   required_access_grants: [billing_report_group]
   label: "March bill V2"
+  hidden: yes
 }
 
 explore: billing_us_v1 {
   required_access_grants: [billing_report_group]
   label: "Billing US V1"
+  hidden: yes
 }
 
 explore: v_monthly_billing_report_diff_live_locked {
   required_access_grants: [billing_report_group]
   label: "Monthly Billing Report Diff Live Locked"
+  hidden: yes
 }
 
 

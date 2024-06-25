@@ -30,30 +30,35 @@ access_grant: can_view_all_tremor {
 explore: monthly_billing_locked_report {
   required_access_grants: [can_view_pub_come_looker]
   label: "Locked Report Billing US STG"
+  hidden: yes
 }
 
 explore: marc_bill_v2 {
   required_access_grants: [can_view_pub_come_looker]
   label: "March bill V2 STG"
+  hidden: yes
 }
 
 explore: billing_us_v1 {
   required_access_grants: [can_view_pub_come_looker]
   label: "Billing US V1 STG"
+  hidden: yes
 }
 
 explore: v_monthly_billing_report_diff_live_locked {
   required_access_grants: [can_view_pub_come_looker]
   label: "Monthly Billing Report Diff Live Locked STG"
+  hidden: yes
 }
 
 
 explore: fact_nexxen_dsp  {
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [billing_report_group]
   view_name: fact_nexxen_dsp
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp STG"
   view_label: "Measures"
+  hidden: yes
 
   join: dim_dsp_creative {
     type: inner

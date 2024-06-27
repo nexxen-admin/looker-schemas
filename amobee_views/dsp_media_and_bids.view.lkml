@@ -126,6 +126,7 @@ view: dsp_media_and_bids {
     type: string
     label: "App or Site"
     sql: case when ${app_id} is not null then "App" else "Site" end ;;
+    hidden: yes
   }
 
     dimension: dynamic_domain_app {

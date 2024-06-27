@@ -125,7 +125,7 @@ view: dsp_media_and_bids {
   dimension: app_or_site {
     type: string
     label: "App or Site"
-    sql: case when ${app_id} is not null then "App" else "Site" end ;;
+    sql: case when ${TABLE}.app_id is not null then "App" else "Site" end ;;
     hidden: yes
   }
 

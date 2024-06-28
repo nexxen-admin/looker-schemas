@@ -2,32 +2,33 @@
 view: segments_with_0_cost_in_rx {
   derived_table: {
     sql: SELECT date_trunc('month',sud.event_time)::date AS event_month,
-             sud.export_name AS segment_id,
-             CASE WHEN sud.segment_type = 'comscore' OR sud.segment_type = 'grapeshot' then sud.export_name ELSE dsda.SEGMENT_NAME END AS segment_name,
-             sud.segment_type,
-             dsda.EXTERNAL_CATEGORY_ID as category_id,
-           dsda.FULL_PATH_NAME as category_name,
-           CASE WHEN dsda.DATA_PROVIDER_NAME IS NOT Null THEN dsda.DATA_PROVIDER_NAME ELSE 'Comscore/Grapeshot RX Integration' END AS Vendor,
-           CASE WHEN dsda.DATA_PROVIDER_NAME ilike '%Liveramp CustomLoad' OR dsda.DATA_PROVIDER_NAME ilike '%Liveramp CustomData' AND dsda.FULL_PATH_NAME ilike '%1P%' OR dsda.FULL_PATH_NAME ilike '%2P%' THEN 'True' ELSE 'FALSE' END AS "IsValid Zero CPM",
-           CASE WHEN segment_type = 'grapeshot' OR segment_type = 'comscore' THEN 'N/A' ELSE 'AlwaysOn' END AS is_always_on,
-             dsda.ESTIMATED_CPM as rx_segment_cpm,
-             dsda.RATE_CPM as DMP_CPM,
-             rds.cpm as grapeshot_cpm,
-             SUM(sud.impressions) as impressions,
-           (SUM(sud.cost) / SUM(sud.impressions))*1000 AS eCPM,
-           CASE WHEN sud.segment_type ilike 'grapeshot%' THEN (SUM(sud.impressions)/1000) * rds.CPM
-              WHEN sud.segment_type = 'audience' THEN (SUM(sud.impressions)/1000) * dsda.RATE_CPM
-              ELSE SUM(sud.cost) END AS Calculated_Cost,
-             SUM(sud.cost) AS rx_cost
-      FROM andromeda.segment_usage_daily sud
-      LEFT OUTER JOIN BI_NEW.dim_segment_data_apprdb dsda on sud.export_name = dsda.SEGMENT_ID
-      LEFT OUTER JOIN andromeda.rx_dim_segment rds on sud.export_name = rds.segment_name AND status = 'active'
-      WHERE sud.event_time >= '2024-01-01'
-        and sud.event_time < CURRENT_DATE()
-        AND sud.charged = 1
-        AND sud.cost = 0
-      GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
-      ORDER BY 1 ;;
+       sud.export_name AS segment_id,
+       CASE WHEN sud.segment_type = 'comscore' OR sud.segment_type = 'grapeshot' then sud.export_name ELSE dsda.SEGMENT_NAME END AS segment_name,
+       sud.segment_type,
+       dsda.EXTERNAL_CATEGORY_ID as category_id,
+     dsda.FULL_PATH_NAME as category_name,
+     CASE WHEN dsda.DATA_PROVIDER_NAME IS NOT Null THEN dsda.DATA_PROVIDER_NAME ELSE 'Comscore/Grapeshot RX Integration' END AS Vendor,
+     CASE WHEN (dsda.DATA_PROVIDER_NAME ilike '%Liveramp CustomLoad' OR dsda.DATA_PROVIDER_NAME ilike '%Liveramp CustomData') AND (dsda.FULL_PATH_NAME ilike '%1P%' OR dsda.FULL_PATH_NAME ilike '%2P%') THEN 'True' ELSE 'FALSE' END AS "IsValid Zero CPM",
+       CASE WHEN sud.segment_type = 'audience' and dsda.ALWAYS_ON = 'True' THEN 'AlwaysOn' ELSE 'N/A' END AS is_always_on,
+     CASE WHEN sud.segment_type = 'audience' THEN dsar.cpm ELSE rds.cpm END as rx_segment_cpm,
+       dsda.RATE_CPM as DMP_CPM,
+       rds.cpm as grapeshot_cpm,
+       SUM(sud.impressions) as impressions,
+     (SUM(sud.cost) / SUM(sud.impressions))*1000 AS eCPM,
+     CASE WHEN sud.segment_type ilike 'grapeshot%' THEN (SUM(sud.impressions)/1000) * rds.CPM
+        WHEN sud.segment_type = 'audience' THEN (SUM(sud.impressions)/1000) * dsda.RATE_CPM
+        ELSE SUM(sud.cost) END AS Calculated_Cost,
+       SUM(sud.cost) AS rx_cost
+FROM andromeda.segment_usage_daily sud
+LEFT OUTER JOIN BI_NEW.dim_segment_data_apprdb dsda on sud.export_name = dsda.SEGMENT_ID
+LEFT OUTER JOIN andromeda.rx_dim_segment rds on sud.export_name = rds.segment_name AND status = 'active'
+LEFT OUTER JOIN andromeda.rx_dim_segment_audience_r dsar on sud.export_name = dsar.dmp_audience_id and sud.segment_type = 'audience'
+WHERE sud.event_time >= '2024-01-01'
+  and sud.event_time < CURRENT_DATE()
+  AND sud.charged = 1
+  AND sud.cost = 0
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
+ORDER BY 1  ;;
   }
 
   measure: count {

@@ -81,7 +81,7 @@ view: segments_with_0_cost_in_rx {
     sql: ${TABLE}.is_always_on ;;
   }
 
-  measure: rx_segment_cpm {
+  dimension: rx_segment_cpm {
     type: number
     sql: ${TABLE}.rx_segment_cpm ;;
   }

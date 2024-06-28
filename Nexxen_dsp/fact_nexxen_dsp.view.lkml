@@ -312,6 +312,7 @@ view: fact_nexxen_dsp {
               when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPC' then ${TABLE}.cogs*1.2
               end
               ;;
+  hidden: yes
   }
 
   measure: delivered_units {
@@ -325,6 +326,7 @@ view: fact_nexxen_dsp {
               when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPC' then ${TABLE}.cogs*1.2
               end
               ;;
+  hidden: yes
   }
 
   measure: hybrid_impressions_delivered {

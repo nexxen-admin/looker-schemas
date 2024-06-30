@@ -281,9 +281,9 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.third_party_in_view_impressions ;;
   }
 
-  measure: 3p_in_view_measurable {
+  measure: 3p_in_view_measurable_impressions {
     type: sum
-    sql: ${TABLE}.third_party_in_view_measurable ;;
+    sql: ${TABLE}.third_party_in_view_measurable_impressions ;;
   }
 
   measure: 3p_rich_media_impressions {

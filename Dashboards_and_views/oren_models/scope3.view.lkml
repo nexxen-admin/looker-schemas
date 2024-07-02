@@ -97,6 +97,6 @@ view: scope3 {
 
 
     set: detail {
-      fields: [a_datetime,atp,country,seller_id,inventory_id,is_app,seller_placement_id,max_placement_size,ad_opportunities,ad_opportunities_processed]
+      fields: [a_datetime,atp,country,seller_id,inventory_id,is_app,seller_placement_id,max_placement_size,ad_opportunities,ad_opportunities_processed,device_type]
     }
   }

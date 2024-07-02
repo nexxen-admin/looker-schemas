@@ -79,25 +79,25 @@ view: targets_up_gal {
     value_format: "0.00%"
   }
 
-  dimension: days {
+  dimension: quarter {
     type: number
     sql: quarter(${month_year_date});;
   }
 
   dimension: days_passed {
     type: number
-    sql: case when ${days}='1' and month(current_date)='1' then day(current_date)
-              when ${days}='1' and month(current_date)='2' then 31+day(current_date)
-              when ${days}='1' and month(current_date)='3' then 58+day(current_date)
-              when ${days}='2' and month(current_date)='4' then 30+day(current_date)
-              when ${days}='2' and month(current_date)='5' then 61+day(current_date)
-              when ${days}='2' and month(current_date)='6' then 91+day(current_date)
-              when ${days}='3' and month(current_date)='7' then 31+day(current_date)
-              when ${days}='3' and month(current_date)='8' then 62+day(current_date)
-              when ${days}='3' and month(current_date)='9' then 92+day(current_date)
-              when ${days}='4' and month(current_date)='10' then 30+day(current_date)
-              when ${days}='4' and month(current_date)='11' then 61+day(current_date)
-              when ${days}='4' and month(current_date)='12' then 92+day(current_date)
+    sql: case when ${quarter}='1' and month(current_date)='1' then day(current_date)
+              when ${quarter}='1' and month(current_date)='2' then 31+day(current_date)
+              when ${quarter}='1' and month(current_date)='3' then 59+day(current_date)
+              when ${quarter}='2' and month(current_date)='4' then day(current_date)
+              when ${quarter}='2' and month(current_date)='5' then 30+day(current_date)
+              when ${quarter}='2' and month(current_date)='6' then 61+day(current_date)
+              when ${quarter}='3' and month(current_date)='7' then day(current_date)
+              when ${quarter}='3' and month(current_date)='8' then 31+day(current_date)
+              when ${quarter}='3' and month(current_date)='9' then 62+day(current_date)
+              when ${quarter}='4' and month(current_date)='10' then day(current_date)
+              when ${quarter}='4' and month(current_date)='11' then 31+day(current_date)
+              when ${quarter}='4' and month(current_date)='12' then 61+day(current_date)
               end ;;
   }
 

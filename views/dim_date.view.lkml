@@ -269,8 +269,38 @@ hidden: yes
     label: "Current Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
     sql: ${date_key_raw} IS NOT NULL ;;
+  }
+
+  dimension: quarter {
+    type: number
+    sql: quarter(${date_key_date});;
+    hidden: yes
+  }
 
 
+  dimension: days_passed_in_quarter {
+    type: number
+    sql: case when ${quarter}='1' and month(current_date)='1' then day(current_date)
+              when ${quarter}='1' and month(current_date)='2' then 31+day(current_date)
+              when ${quarter}='1' and month(current_date)='3' then 59+day(current_date)
+              when ${quarter}='2' and month(current_date)='4' then day(current_date)
+              when ${quarter}='2' and month(current_date)='5' then 30+day(current_date)
+              when ${quarter}='2' and month(current_date)='6' then 61+day(current_date)
+              when ${quarter}='3' and month(current_date)='7' then day(current_date)
+              when ${quarter}='3' and month(current_date)='8' then 31+day(current_date)
+              when ${quarter}='3' and month(current_date)='9' then 62+day(current_date)
+              when ${quarter}='4' and month(current_date)='10' then day(current_date)
+              when ${quarter}='4' and month(current_date)='11' then 31+day(current_date)
+              when ${quarter}='4' and month(current_date)='12' then 61+day(current_date)
+              end ;;
+  }
+
+  dimension: quarter_length {
+    type: number
+    sql: case
+              when month(${date_key_month})='1' OR month(${date_key_month})='2' OR month(${date_key_month})='3' then '90'
+              when month(${date_key_month})='4' OR month(${date_key_month})='5' OR month(${date_key_month})='6' then '91'
+              else '92' end;;
   }
   # parameter: chosen_date {
   #   type: date

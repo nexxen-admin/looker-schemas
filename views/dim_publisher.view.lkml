@@ -248,7 +248,7 @@ view: dim_publisher {
       type: string
       description: "The name of the entity that operates one or more sites"
       sql: ${TABLE}.PUB_Name;;
-      drill_fields: [new_revenue.publisher_name,dim_imp_type.imp_type,dim_buying_channel.buying_channel]
+      drill_fields: [new_revenue.publisher_name,dim_imp_type.imp_type,dim_buying_channel.buying_channel, dim_dsp.dsp_display_name, dim_a_domain.a_domain, dim_o_domain.o_domain]
       link: {
         label: "Drill To New Publishers"
         url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"

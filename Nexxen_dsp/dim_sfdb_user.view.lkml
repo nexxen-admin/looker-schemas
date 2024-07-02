@@ -106,6 +106,7 @@ view: dim_sfdb_user {
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
+    hidden: yes
 
   }
 
@@ -144,6 +145,13 @@ view: dim_sfdb_user {
     type: string
     label: "First Name"
     sql: ${TABLE}.firstname ;;
+    hidden: yes
+  }
+
+  dimension: account_manager_name {
+    type: string
+    label: "Account Manager Name"
+    sql: ${TABLE}.firstname||' '||${TABLE}.lastname;;
   }
 
   dimension: forecastenabled {
@@ -168,6 +176,7 @@ view: dim_sfdb_user {
     type: number
     label: "Is Active?"
     sql: ${TABLE}.isactive ;;
+    hidden: yes
   }
 
   dimension: languagelocalekey {
@@ -200,12 +209,14 @@ view: dim_sfdb_user {
     type: string
     label: "Last Name"
     sql: ${TABLE}.lastname ;;
+    hidden: yes
   }
 
   dimension: lob__c {
     type: string
     label: "LOB C"
     sql: ${TABLE}.lob__c ;;
+    hidden: yes
   }
 
   dimension: localesidkey {

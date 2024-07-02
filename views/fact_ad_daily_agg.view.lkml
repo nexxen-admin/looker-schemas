@@ -1325,7 +1325,7 @@ view: fact_ad_daily_agg {
     type: number
     description: "Number of impressions out of the requests"
     label: "Fill Rate"
-    value_format: "0.00%"
+    value_format: "0.00\%"
     group_label: "Daily Measures"
     sql: (${impression_pixel}/NULLIF(${requests},0))*100 ;;
   }
@@ -1557,7 +1557,35 @@ view: fact_ad_daily_agg {
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [date_key_date: "2 days ago"]
+  }
 
+  measure:  Previous_day_Cogs{
+    label: "Cogs Previous day "
+    type: sum
+    description: "The cogs of 2 days ago"
+    sql: ${TABLE}.sum_of_cogs ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "2 days ago"]
+  }
+
+  measure:  Previous_day_Pub_Platform_Fee {
+    label: "Pub Platform Fee Previous day "
+    type: sum
+    description: "The pub platform fee of 2 days ago"
+    sql: ${TABLE}.sum_of_pub_platform_fee ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "2 days ago"]
+  }
+
+  measure: three_days_ago_revenue {
+    label: "Revenue of 3 days ago"
+    type: sum
+    sql: ${TABLE}.sum_of_revenue ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "3 days ago"]
   }
 
   measure: revenue_lastday_change {
@@ -1566,7 +1594,14 @@ view: fact_ad_daily_agg {
     value_format: "0.00%"
     group_label: "Time Shifted Measures"
     sql: (${Last_day_Revenue}/${Previous_day_Revenue})-1 ;;
+  }
 
+  measure: revenue_prev_day_change {
+    type: number
+    description: "Change in revenue from 3 days ago to 2 days ago"
+    value_format: "0.00%"
+    group_label: "Time Shifted Measures"
+    sql: (${Previous_day_Revenue}/${three_days_ago_revenue})-1 ;;
   }
 
   measure:  Previous_week_Revenue {
@@ -1693,20 +1728,18 @@ view: fact_ad_daily_agg {
     description: "The responses of 2 days ago"
     value_format: "#,##0"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.dim_of_responses  ;;
+    sql: ${TABLE}.sum_of_responses  ;;
     filters: [date_key_date: "2 days ago"]
 
   }
 
   measure: prev_Day_net_Revenue {
-    type: sum
+    type: number
     label: "Net Revenue prev Day"
     description: "The net revenue (difference between revenue and cogs) of 2 days ago"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs + ${TABLE}.sum_of_pub_platform_fee  ;;
-    filters: [date_key_date: "2 days ago"]
-
+    sql: ${Previous_day_Revenue}-${Previous_day_Cogs}+${Previous_day_Pub_Platform_Fee}  ;;
   }
 
   measure: last_week_net_Revenue {
@@ -1894,12 +1927,21 @@ view: fact_ad_daily_agg {
   }
 
   measure: Last_Day_net_Revenue {
-    type: sum
+    type: number
     description: "The difference between revenue and cogs of the last day"
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs + ${TABLE}.sum_of_pub_platform_fee;;
+    sql: ${Last_day_Revenue}-${Last_day_cogs}+${Last_Day_pub_platform_fee};;
+  }
+
+
+  measure: Last_Day_pub_platform_fee {
+    type: sum
+    label: "pub_platform_fee Last Day"
+    value_format: "$#,##0.00"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_pub_platform_fee;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
@@ -2044,6 +2086,11 @@ view: fact_ad_daily_agg {
     allowed_value: {
       label: "Previous Week"
       value: "Week"
+    }
+
+    allowed_value: {
+      label: "Previous Quarter"
+      value: "Quarter"
     }
     default_value: "Period"
   }
@@ -2339,18 +2386,16 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_pub_platform_fee ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
-    hidden: yes
   }
 
   measure: previous_period_pub_platform_fee {
-    view_label: ""
-    label: "previous period pub platform fee "
+    view_label: "PoP"
+    label: "Previous Period Pub Platform Fee "
     description: "Specifies the tech fee a publisher is paying on using the ctrl, in the previous period, using the filter 'compare to' which has to be applied"
     type: sum
     sql: ${TABLE}.sum_of_pub_platform_fee ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
-    hidden: yes
   }
 
   measure: margin_pop_change {
@@ -2825,6 +2870,13 @@ view: fact_ad_daily_agg {
               end;;
     value_format: "$#,##0.00"
   }
+
+  # measure: sum_user_matched {
+  #   type: sum
+  #   sql: case when dim_user_matched.user_matched = 1 then dim_user_matched.user_matched else 0 end;;
+  #   label: "sum of user matched"
+  #   group_label: "Daily Measures"
+  # }
 
   measure: bid_price_top_25_perc {
     label: "bid price top 25%"

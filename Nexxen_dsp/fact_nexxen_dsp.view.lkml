@@ -51,100 +51,6 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.clicks ;;
 
  }
-  measure: units_before_adjustments {
-    type: sum
-    sql: ${TABLE}.units_before_adjustments ;;
-    hidden: yes # not in use to remove
-
-  }
-  measure: total_billable_units {
-    type: sum
-    sql: ${TABLE}.total_billable_units ;;
-    hidden: yes # not in use to remove
-
-  }
-  measure: over_delivery_units {
-    type: sum
-    sql: ${TABLE}.over_delivery_units ;;
-    hidden: yes # not in use to remove
-
-  }
-  measure: final_billable_units {
-    type: sum
-    sql: ${TABLE}.final_billable_unit, ;;
-    hidden: yes # not in use to remove
-
-  }
-  measure: units_adjustments {
-    type: sum
-    sql: ${TABLE}.units_adjustments ;;
-    hidden: yes # not in use to remove
-
-  }
-
-  measure: first_party_revenue {
-    type: sum
-    sql: ${TABLE}.first_party_revenue ;;
-    hidden: yes # not in use to remove
-
-  }
-
-  measure: first_party_revenue_in_usd {
-    type: sum
-    sql: ${TABLE}.first_party_revenue_in_usd ;;
-    hidden: yes # not in use to remove
-
-  }
-
-  measure: uncapped_revenue {
-    type: sum
-    sql: ${TABLE}.uncapped_revenue ;;
-    hidden: yes # not in use to remove
-
-  }
-
-  measure: capped {
-    type: sum
-    sql: ${TABLE}.capped ;;
-    hidden: yes # not in use to remove
-
-  }
-  measure: over_delivery_amount {
-    type: sum
-    sql: ${TABLE}.over_delivery_amount ;;
-    hidden: yes # not in use to remove
-
-  }
-  measure: revenue_adjustments {
-    type: sum
-    sql: ${TABLE}.revenue_adjustments ;;
-    hidden: yes # not in use to remove
-
-  }
-  measure: total_billable_revenue_after_adjustments {
-    type: sum
-    sql: ${TABLE}.total_billable_revenue_after_adjustments ;;
-    hidden: yes # not in use to remove
-
-  }
-
-  measure: under_delivery_units {
-    type: sum
-    sql: ${TABLE}.under_delivery_units ;;
-    hidden: yes # not in use to remove
-
-  }
-#  measure: check_completeness {
-#    type: sum
-#    sql: ${TABLE}.check_completeness ;;
-
- # }
-  measure: under_delivery_budget {
-    type: sum
-    sql: ${TABLE}.under_delivery_budget ;;
-    hidden: yes # not in use to remove
-
-  }
 
   measure: cost {
     type: sum
@@ -363,6 +269,240 @@ view: fact_nexxen_dsp {
   measure: percent75_events {
     type: sum
     sql: ${TABLE}.percent75_events ;;
+  }
+
+  measure: cogs {
+    type: sum
+    sql: ${TABLE}.cogs ;;
+  }
+
+  measure: 3p_in_view_impressions {
+    type: sum
+    sql: ${TABLE}.third_party_in_view_impressions ;;
+  }
+
+  measure: 3p_in_view_measurable_impressions {
+    type: sum
+    sql: ${TABLE}.third_party_in_view_measurable_impressions ;;
+  }
+
+  measure: 3p_rich_media_impressions {
+    type: sum
+    sql: ${TABLE}.third_party_rich_media_impressions ;;
+  }
+
+  measure: 3p_adj_engagements {
+    type: sum
+    sql: ${TABLE}.third_party_adj_engagements ;;
+  }
+
+  measure: 3p_total_conversions {
+    type: sum
+    sql: ${TABLE}.third_party_total_conversions ;;
+  }
+
+  measure: pacing {
+    type: sum
+    value_format: "#,##0.00"
+    sql: case when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM' then ${TABLE}.impressions
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPR' then ${TABLE}.inv_cost
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM' then ${TABLE}.inv_cost
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV' then ${TABLE}.complete_events
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC' then ${TABLE}.clicks
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPC' then ${TABLE}.cogs*1.2
+              end
+              ;;
+  hidden: yes
+  }
+
+  measure: delivered_units {
+    type: sum
+    value_format: "#,##0.00"
+    sql: case when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM' then ${TABLE}.third_party_impressions
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPR' then ${TABLE}.inv_cost
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM' then ${TABLE}.inv_cost
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV' then ${TABLE}.complete_events
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC' then ${TABLE}.third_party_clicks
+              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPC' then ${TABLE}.cogs*1.2
+              end
+              ;;
+  hidden: yes
+  }
+
+  measure: hybrid_impressions_delivered {
+    type: sum
+    value_format: "#,##0"
+    sql: case when dim_sfdb_opportunitylineitem.reporting__c = 'Amobee' then ${TABLE}.impressions else
+    ${TABLE}.third_party_impressions end;;
+    hidden: yes
+  }
+
+  measure: remaining_budget {
+    type: number
+    sql: dim_sfdb_opportunitylineitem.gross_billable__c - ${hybrid_impressions_delivered}*dim_sfdb_opportunitylineitem.rate__c
+    /1000 ;;
+  }
+
+  measure: impressions_discrepancy {
+    type: sum
+    sql: (${TABLE}.third_party_impressions-${TABLE}.impressions)/NULLIF(${TABLE}.impressions,0) ;;
+  }
+
+  measure: clicks_discrepancy {
+    type: sum
+    sql: (${TABLE}.third_party_clicks-${TABLE}.clicks)/nullif(${TABLE}.clicks,0) ;;
+  }
+
+  measure: days_left {
+    type: sum
+    sql: case when DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c)<0
+    then 0 else DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c) end;;
+  }
+
+  measure: uncapped_revenue {
+    type: number
+    sql: CASE WHEN ((dim_sfdb_opportunitylineitem.free__c = 'Added Value') OR
+                    (dim_sfdb_opportunitylineitem.free__c = 'Make Good') OR
+                    (dim_sfdb_opportunitylineitem.free__c = 'Canceled') OR
+                    (dim_sfdb_opportunitylineitem.free__c = 'Bonus')) THEN 0
+              WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM') THEN
+                    CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+                            THEN ${TABLE}.impressions ELSE ${TABLE}.third_party_impressions END
+                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+                            THEN ${TABLE}.complete_events ELSE ${TABLE}.third_party_complete_events END
+                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+                            THEN ${TABLE}.clicks ELSE ${TABLE}.third_party_clicks END
+                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+                            THEN ${TABLE}.impressions ELSE 0 END * dim_sfdb_opportunitylineitem.rate__c / 1000
+              WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV') THEN
+                    CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+                            THEN ${TABLE}.impressions ELSE ${TABLE}.third_party_impressions END
+                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+                            THEN ${TABLE}.complete_events ELSE ${TABLE}.third_party_complete_events END
+                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+                            THEN ${TABLE}.clicks ELSE ${TABLE}.third_party_clicks END
+                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+                            THEN ${TABLE}.impressions ELSE 0 END * dim_sfdb_opportunitylineitem.rate__c
+              WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC') THEN
+                    CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+                            THEN ${TABLE}.impressions ELSE ${TABLE}.third_party_impressions END
+                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+                            THEN ${TABLE}.complete_events ELSE ${TABLE}.third_party_complete_events END
+                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+                            THEN ${TABLE}.clicks ELSE ${TABLE}.third_party_clicks END
+                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+                            THEN ${TABLE}.impressions ELSE 0 END * dim_sfdb_opportunitylineitem.rate__c
+              WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+                            THEN ${TABLE}.cost ELSE 0 END
+ ;;
+hidden: yes
+  }
+
+  measure: capped_revenue {
+    type: sum
+    sql: CASE WHEN ((dim_sfdb_opportunitylineitem.gross_billable__c - v_dim_dsp_Netsuite_invoice_quantity.monthly_budget_amount)
+    < CASE WHEN ((dim_sfdb_opportunitylineitem.free__c = 'Added Value')
+    OR (dim_sfdb_opportunitylineitem.free__c = 'Make Good')
+    OR (dim_sfdb_opportunitylineitem.free__c = 'Canceled')
+    OR (dim_sfdb_opportunitylineitem.free__c = 'Bonus'))
+    THEN 0 WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+    THEN ((sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c) / 1000)
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+    THEN (sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c)
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+    THEN (sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c)
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+    THEN sum(fact_nexxen_dsp.cost) ELSE 0 END)
+    THEN (dim_sfdb_opportunitylineitem.gross_billable__c - v_dim_dsp_Netsuite_invoice_quantity.monthly_budget_amount)
+    ELSE CASE WHEN ((dim_sfdb_opportunitylineitem.free__c = 'Added Value')
+    OR (dim_sfdb_opportunitylineitem.free__c = 'Make Good')
+    OR (dim_sfdb_opportunitylineitem.free__c = 'Canceled')
+    OR (dim_sfdb_opportunitylineitem.free__c = 'Bonus'))
+    THEN 0 WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+    THEN ((sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c) / 1000)
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+    THEN (sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c)
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+    THEN (sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
+    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
+    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c)
+    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
+    THEN sum(fact_nexxen_dsp.cost) ELSE 0 END END
+ ;;
+hidden: yes
+  }
+
+  measure: CTR {
+    type: sum
+    value_format: "0.00\%"
+    sql: ${TABLE}.clicks/nullif(${TABLE}.impressions,0) ;;
   }
 
   measure: count {

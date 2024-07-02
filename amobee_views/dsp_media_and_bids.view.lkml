@@ -125,7 +125,8 @@ view: dsp_media_and_bids {
   dimension: app_or_site {
     type: string
     label: "App or Site"
-    sql: case when ${app_id} is not null then "App" else "Site" end ;;
+    sql: case when ${TABLE}.app_id is not null then "App" else "Site" end ;;
+    hidden: yes
   }
 
     dimension: dynamic_domain_app {
@@ -1164,6 +1165,7 @@ dimension: device_type_name {
 }
 dimension: country_name {
   type: string
+  map_layer_name: countries
   description: "Country name for the audience segments"
   sql: LOOKUP(CONCAT(country_id, ''), 'dsp_media_and_bids_country_name') ;;
 }

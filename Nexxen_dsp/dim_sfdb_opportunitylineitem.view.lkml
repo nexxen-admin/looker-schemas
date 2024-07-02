@@ -249,7 +249,7 @@ view: dim_sfdb_opportunitylineitem {
   dimension: delivery_manager__c {
     type: string
     sql: ${TABLE}.delivery_manager__c ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: description {
@@ -263,6 +263,26 @@ view: dim_sfdb_opportunitylineitem {
     label: "OPP Line Item End"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.end_date__c ;;
+  }
+
+  dimension: item_days {
+    type: number
+    description: "The difference in days between the io start and end date."
+    sql: DATEDIFF(day, start_date__c, end_date__c) ;;
+    hidden: yes
+  }
+
+  dimension: item_days_left {
+    type: number
+    description: "The difference in days between the io end date and current date."
+    sql: DATEDIFF(day, now(), end_date__c) ;;
+    hidden: yes
+  }
+
+  dimension:  live_campaign_filter{
+    type: string
+    label: "Is Campaign Live"
+    sql: CASE WHEN DATEDIFF('day', NOW(),dim_sfdb_opportunitylineitem.end_date__c)>=0 and DATEDIFF('day', NOW(),dim_sfdb_opportunitylineitem.start_date__c)<=0 THEN 'Live'ELSE 'Not Live' END ;;
   }
 
   dimension: expected_amount__c {
@@ -386,6 +406,7 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Line Item Name"
     sql: ${TABLE}.line_item_name__c ;;
+    drill_fields: [datorama_dsp_third_party.media_buy_key, v_dim_dsp_date.date_key_date]
   }
 
   dimension: line_item_number__c {
@@ -454,6 +475,7 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Opportunity Owner"
     sql: ${TABLE}.opportunity_owner__c ;;
+    hidden: yes
 
   }
 
@@ -517,9 +539,9 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: primary_kpi_metric__c {
     type: string
-
+    label: "Primary KPI Value"
     sql: ${TABLE}.primary_kpi_metric__c ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: product_configuration__c {
@@ -623,6 +645,13 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.spend__c ;;
   }
 
+  measure: budgeted_spend{
+    type: sum
+    description: "Shows the same number as dimension 'Line Item Spend', but is a measure, so will show total"
+    label: "Budgeted Spend"
+    sql: ${TABLE}.spend__c ;;
+  }
+
   dimension: spend_adjusted__c {
     type: number
     label: "Line Item Spend Adjusted"
@@ -645,7 +674,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: totalprice {
     type: number
-    label: "Total Proce"
+    label: "Total Price"
     sql: ${TABLE}.totalprice ;;
   }
 
@@ -659,6 +688,25 @@ view: dim_sfdb_opportunitylineitem {
     type: number
     label: "Booked Units"
     sql: ${TABLE}.units__c ;;
+  }
+
+  measure: budgeted_units {
+    type: sum
+    description: "Shows the same number as dimension 'Booked Units', but is a measure, so will show total"
+    label: "Budgeted Units"
+    sql: ${TABLE}.units__c ;;
+  }
+
+  dimension: rate_card_discount_applies_to__c {
+    type: string
+    label: "Rate Card Discount Applies To"
+    sql: ${TABLE}.rate_card_discount_applies_to__c ;;
+  }
+
+  dimension: undiscounted_spend__c {
+    type: number
+    label: "Undiscounted Spend"
+    sql: ${TABLE}.undiscounted_spend__c ;;
   }
 
   dimension: vat_tax__c {

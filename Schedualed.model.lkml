@@ -23,16 +23,27 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
-explore: publishers_report_monthly_for_finance {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "publishers report monthly for finance"
-  hidden: yes
+access_grant: allowed_users_sam_lt {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["allowed_users_sam_lt"]
 }
+
+access_grant: can_view_all_tremor {
+  user_attribute: all_tremor
+  allowed_values: ["all_tremor"]
+}
+
+
+# explore: publishers_report_monthly_for_finance {
+#   required_access_grants: [allowed_users_sam_lt]
+#   label: "publishers report monthly for finance"
+#   # hidden: yes
+# }
 
 explore: daily_publisher_report_pluto {
   #required_access_grants: [can_view_pub_come_looker]
   label: "Daily_Publisher_Reports"
-  #hidden: yes
+  hidden: yes
 }
 
 explore: temp_di_pub_com_looker_test {

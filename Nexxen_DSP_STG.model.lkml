@@ -1,8 +1,9 @@
-connection: "vertica_iad"
+connection: "bi_stby"
 
-include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
-include: "/**/*.view.lkml"                 # include all views in this project
+#include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
+ include: "/**/*.view.lkml"                 # include all views in this project
 # include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
+
 datagroup: CleanCash_datagroup {
   sql_trigger: SELECT max(date_key) FROM BI_DSP.fact_nexxen_dsp  ;;
   max_cache_age: "15 hours"
@@ -27,36 +28,37 @@ access_grant: can_view_all_tremor {
 }
 
 explore: monthly_billing_locked_report {
-  required_access_grants: [billing_report_group]
-  label: "Locked Report Billing US"
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Locked Report Billing US STG"
   hidden: yes
 }
 
 explore: marc_bill_v2 {
-  required_access_grants: [billing_report_group]
-  label: "March bill V2"
+  required_access_grants: [can_view_pub_come_looker]
+  label: "March bill V2 STG"
   hidden: yes
 }
 
 explore: billing_us_v1 {
-  required_access_grants: [billing_report_group]
-  label: "Billing US V1"
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Billing US V1 STG"
   hidden: yes
 }
 
 explore: v_monthly_billing_report_diff_live_locked {
-  required_access_grants: [billing_report_group]
-  label: "Monthly Billing Report Diff Live Locked"
+  required_access_grants: [can_view_pub_come_looker]
+  label: "Monthly Billing Report Diff Live Locked STG"
   hidden: yes
 }
 
 
 explore: fact_nexxen_dsp  {
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [billing_report_group]
   view_name: fact_nexxen_dsp
   persist_with: CleanCash_datagroup
-  label: "Nexxen dsp"
+  label: "Nexxen dsp STG"
   view_label: "Measures"
+  #hidden: yes
 
   join: dim_dsp_creative {
     type: inner
@@ -90,7 +92,7 @@ explore: fact_nexxen_dsp  {
     type: left_outer
     view_label: "Creative"
     sql_on: ${dim_dsp_creative_file_tracking_url.creative_file_id} = ${dim_dsp_creative_file.creative_file_id}
-    and ${dim_dsp_creative_file_tracking_url.platform_id} = ${dim_dsp_creative_file.platform_id};;
+      and ${dim_dsp_creative_file_tracking_url.platform_id} = ${dim_dsp_creative_file.platform_id};;
     relationship: many_to_one
   }
 

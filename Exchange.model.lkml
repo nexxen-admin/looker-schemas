@@ -27,6 +27,12 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
+access_grant: allowed_users_sam_lt {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["allowed_users_sam_lt"]
+
+}
+
 access_grant: can_view_imp_r {
   user_attribute: ds
   allowed_values: ["DS"]
@@ -84,8 +90,9 @@ explore: appsflyer_agg{
 
 
 explore: publishers_report_monthly_for_finance {
-  required_access_grants: [can_view_pub_come_looker]
+  required_access_grants: [can_view_all_tremor]
   label: "publishers report monthly for finance"
+  hidden: yes
 }
 
 explore: v_fact_ad_daily {
@@ -463,7 +470,7 @@ explore: fact_ad_daily_agg{
   }
 
   join: exchange_rev_ops_targets {
-    type: left_outer
+    type: full_outer
     view_label: "Exchange RevOps Targets"
     sql_on: ${dim_date.date_key_raw}=${exchange_rev_ops_targets.date_key_raw} ;;
     relationship: many_to_one

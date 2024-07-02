@@ -357,6 +357,11 @@ dimension: dynamic_pub_deal_name {
 
   }
 
+  measure: sum_of_user_matched {
+    type: sum
+    sql: case when ${dim_user_matched.user_matched}=1 then 1 else 0 end ;;
+  }
+
   measure: sum_of_moat_impressions_ivt_measurable_from_ad_data {
     type: sum
     sql: ${TABLE}.sum_of_moat_impressions_ivt_measurable_from_ad_data ;;
@@ -1101,14 +1106,12 @@ dimension: dynamic_pub_deal_name {
   }
 
   measure: prev_Day_net_Revenue {
-    type: sum
+    type: number
     label: "Net Revenue prev Day"
     description: "The net revenue (difference between revenue and cogs) of 2 days ago"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data + ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
-    filters: [date_key_date: "2 days ago"]
-
+    sql: ${Previous_day_Revenue} - ${Previous_day_cogs} + ${Previous_day_Pub_Platform_Fee} ;;
   }
 
   measure:  Last_day_cogs {
@@ -1121,6 +1124,26 @@ dimension: dynamic_pub_deal_name {
     filters: [date_key_date: "last 1 day ago for 1 day"]
   }
 
+  measure:  Previous_day_Pub_Platform_Fee {
+    label: "Pub Platform Fee Previous day "
+    type: sum
+    description: "The pub platform fee of 2 days ago"
+    sql: ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_date: "2 days ago"]
+  }
+
+  measure: Last_Day_pub_platform_fee {
+    type: sum
+    label: "pub_platform_fee Last Day"
+    value_format: "$#,##0.00"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_pub_platform_fee_from_ad_data;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+
   measure:  Last_day_impressions {
     label: "Impressions Last day "
     type: sum
@@ -1132,13 +1155,12 @@ dimension: dynamic_pub_deal_name {
   }
 
   measure: Last_Day_net_Revenue {
-    type: sum
+    type: number
     description: "The difference between revenue and cogs of the last day"
     label: "Net Revenue Last Day"
     value_format: "$#,##0.00"
     group_label: "Time Shifted Measures"
-    sql: ${TABLE}.sum_of_revenue_from_ad_data - ${TABLE}.sum_of_cogs_from_ad_data + ${TABLE}.sum_of_pub_platform_fee_from_ad_data ;;
-    filters: [date_key_date: "last 1 day ago for 1 day"]
+    sql: ${Last_day_Revenue} - ${Last_day_cogs} + ${Last_Day_pub_platform_fee} ;;
   }
 
   measure: Last_day_bids {

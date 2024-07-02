@@ -7,91 +7,91 @@ view: v_hourly_analytics {
 
           {% if demand_date_date._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start demand_date_date %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end demand_date_date %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end demand_date_date %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if demand_date_hour._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end demand_date_hour %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if demand_date_month._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start demand_date_month %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end demand_date_month %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end demand_date_month %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if demand_date_time._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start demand_date_time %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end demand_date_time %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end demand_date_time %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if demand_date_year._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start demand_date_year %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end demand_date_year %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end demand_date_year %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if raw_demand_date._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start raw_demand_date %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end raw_demand_date %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end raw_demand_date %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
 
 
           {% if local_demand_date_date._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start local_demand_date_date %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end local_demand_date_date %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end local_demand_date_date %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if local_demand_date_hour._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start local_demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end local_demand_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end local_demand_date_hour %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if local_demand_date_month._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start local_demand_date_month %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end local_demand_date_month %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end local_demand_date_month %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if local_demand_date_time._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start local_demand_date_time %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end local_demand_date_time %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end local_demand_date_time %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if local_demand_date_year._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start local_demand_date_year %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end local_demand_date_year %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end local_demand_date_year %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
 
           {% if supply_date_date._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start supply_date_date %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end supply_date_date %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end supply_date_date %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if supply_date_hour._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end supply_date_hour %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if supply_date_month._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start supply_date_month %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end supply_date_month %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end supply_date_month %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if supply_date_time._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start supply_date_time %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end supply_date_time %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end supply_date_time %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if supply_date_year._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start supply_date_year %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end supply_date_year %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end supply_date_year %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
 
           {% if local_supply_date_date._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start local_supply_date_date %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end local_supply_date_date %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end local_supply_date_date %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if local_supply_date_hour._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start local_supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end local_supply_date_hour %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end local_supply_date_hour %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if local_supply_date_month._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start local_supply_date_month %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end local_supply_date_month %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end local_supply_date_month %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if local_supply_date_time._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start local_supply_date_time %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end local_supply_date_time %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end local_supply_date_time %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
           {% if local_supply_date_year._is_filtered %}
             PROCESSINGID >= TO_CHAR(TIMESTAMPADD('day', -1, {% date_start local_supply_date_year %}), 'YYYYMMDDHH')::Integer AND
-            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, {% date_end local_supply_date_year %}), 'YYYYMMDDHH')::Integer AND
+            PROCESSINGID < TO_CHAR(TIMESTAMPADD('day', 1, IFNULL({% date_end local_supply_date_year %}, DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'))), 'YYYYMMDDHH')::Integer AND
           {% endif %}
 
           1=1 ;;

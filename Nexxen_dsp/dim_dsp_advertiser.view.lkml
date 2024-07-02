@@ -28,6 +28,11 @@ view: dim_dsp_advertiser {
     type: string
     label: "Advertiser Name"
     sql: ${TABLE}.advertiser_name ;;
+    drill_fields: [dim_dsp_creative.creative_name]
+    link: {
+      label: "Drill down to channels"
+      url: "https://tremor.cloud.looker.com/dashboards/1538"
+    }
   }
 
   dimension: category_id {

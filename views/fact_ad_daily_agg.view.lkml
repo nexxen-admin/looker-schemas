@@ -2087,6 +2087,11 @@ view: fact_ad_daily_agg {
       label: "Previous Week"
       value: "Week"
     }
+
+    allowed_value: {
+      label: "Previous Quarter"
+      value: "Quarter"
+    }
     default_value: "Period"
   }
 

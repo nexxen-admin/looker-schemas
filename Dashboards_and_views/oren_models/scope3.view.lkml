@@ -34,10 +34,7 @@ view: scope3 {
         ;;
     }
 
-    dimension: count {
-      type: number
-      drill_fields: [detail*]
-    }
+
 
     dimension: a_datetime {
       type: date_time
@@ -75,6 +72,10 @@ view: scope3 {
     sql: ${TABLE}."seller_placement_id" ;;
   }
 
+  dimension: device_type {
+    type: string
+    sql: ${TABLE}."device_type" ;;
+  }
 
 
   dimension: max_placement_size {

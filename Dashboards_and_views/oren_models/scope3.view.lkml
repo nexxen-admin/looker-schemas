@@ -11,7 +11,7 @@ view: scope3 {
              CASE WHEN rx_media_type='app' THEN True ELSE False END as is_app, --is_app
              media_id as seller_placement_id,
              MAX(ad_size) as max_placement_size, --max_placement_size !! do you want max or all of them, better if we do a lot of data !!
-             rx_device_type as device_type,
+             rtb_device_type as device_type,
              SUM(requests) as ad_opportunities,
              SUM(CASE WHEN (aa.rx_request_status in ('nodsp','nodspbids','bidresponse') or aa.rx_request_status is NULL) THEN requests ELSE 0 END) as ad_opportunities_processed
       FROM Andromeda.ad_data_daily AA

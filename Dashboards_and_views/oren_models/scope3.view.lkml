@@ -77,21 +77,22 @@ view: scope3 {
 
 
 
-  measure: max_placement_size {
-    type: max
+  dimension: max_placement_size {
+    type: string
     sql: ${TABLE}."max_placement_size" ;;
   }
 
-
-  measure: ad_opportunities {
-    type: sum
+  dimension: ad_opportunities {
+    type: string
     sql: ${TABLE}."ad_opportunities" ;;
   }
 
-    measure: ad_opportunities_processed {
-      type: sum
-      sql: ${TABLE}."ad_opportunities_processed" ;;
-    }
+  dimension: ad_opportunities_processed {
+    type: string
+    sql: ${TABLE}."ad_opportunities_processed" ;;
+  }
+
+
 
 
     set: detail {

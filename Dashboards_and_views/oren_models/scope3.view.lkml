@@ -3,7 +3,7 @@ view: scope3 {
       sql:
 
 
-      SELECT AA.event_time as a_datetime, -- should be utc?
+      SELECT AA.event_time as est_datetime, -- should be utc?
              'NEXXEN.SSP' as atp,
              country_code as country,
              CASE WHEN rx_ssp_name ilike 'rmp%' THEN sps.seller_id ELSE CC.adstxt_hash::varchar END as seller_id,

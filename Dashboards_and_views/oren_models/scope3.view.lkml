@@ -3,7 +3,7 @@ view: scope3 {
       sql:
 
 
-      SELECT AA.event_time as est_datetime, -- should be utc?
+      SELECT AA.event_time as est_datetime,
              'NEXXEN.SSP' as atp,
              country_code as country,
              CASE WHEN rx_ssp_name ilike 'rmp%' THEN sps.seller_id ELSE CC.adstxt_hash::varchar END as seller_id,
@@ -36,9 +36,9 @@ view: scope3 {
 
 
 
-    dimension: a_datetime {
+    dimension: est_datetime {
       type: date_time
-      sql: ${TABLE}."a_datetime" ;;
+      sql: ${TABLE}."est_datetime" ;;
     }
 
 
@@ -97,6 +97,6 @@ view: scope3 {
 
 
     set: detail {
-      fields: [a_datetime,atp,country,seller_id,inventory_id,is_app,seller_placement_id,max_placement_size,ad_opportunities,ad_opportunities_processed,device_type]
+      fields: [est_datetime,atp,country,seller_id,inventory_id,is_app,seller_placement_id,max_placement_size,ad_opportunities,ad_opportunities_processed,device_type]
     }
   }

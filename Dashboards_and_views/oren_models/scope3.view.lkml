@@ -3,7 +3,7 @@ view: scope3 {
       sql:
 
 
-      SELECT AA.event_time as est_datetime,
+      SELECT AA.event_time::date as est_datetime,
              'NEXXEN.SSP' as atp,
              country_code as country,
              CASE WHEN rx_ssp_name ilike 'rmp%' THEN sps.seller_id ELSE CC.adstxt_hash::varchar END as seller_id,
@@ -37,7 +37,7 @@ view: scope3 {
 
 
     dimension: est_datetime {
-      type: date_time
+      type: string
       sql: ${TABLE}."est_datetime" ;;
     }
 

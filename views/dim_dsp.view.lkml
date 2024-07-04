@@ -49,7 +49,7 @@ view: dim_dsp {
     description: "DSP seat Name - the gateway in which a speficic inventory is sent to the DSP"
     type: string
     sql: ${TABLE}.DSP_DISPLAY_NAME ;;
-    drill_fields: [dim_device_type.device_type, dim_buying_channel.buying_channel, dim_publisher.pub_name, dim_a_domain.a_domain]
+    drill_fields: [dim_device_type.device_type, dim_buying_channel.buying_channel, dim_publisher.pub_name, dim_a_domain.a_domain, dim_placement.media_type, dim_imp_type.imp_type]
   }
 
   dimension: dsp_id {

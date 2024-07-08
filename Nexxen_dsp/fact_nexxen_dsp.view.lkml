@@ -301,6 +301,16 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.third_party_total_conversions ;;
   }
 
+  measure: 3p_iv_ia_billable_impressions{
+    type: sum
+    sql: ${TABLE}.third_party_IV_IA_Billable_Impressions ;;
+  }
+
+  measure: 3p_impressions_analyzed {
+    type: sum
+    sql: ${TABLE}.third_party_impressions_analyzed ;;
+  }
+
   measure: pacing {
     type: sum
     value_format: "#,##0.00"

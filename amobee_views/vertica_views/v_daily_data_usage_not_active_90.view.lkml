@@ -33,8 +33,8 @@ view: v_daily_data_usage_not_active_90 {
       GROUP BY 1, 2, 3, 4
       )
       SELECT all_at.*
-      FROM all_at LEFT JOIN active ON all_at.provider_name=active.provider_name AND all_at.industry_segment=active.industry_segment AND all_at.retargeting_attribute=active.retargeting_attribute
-      WHERE active.provider_name IS NULL ;;
+      FROM all_at LEFT JOIN active ON ISNULL(all_at.provider_name, 'NA')=ISNULL(active.provider_name, 'NA') AND all_at.industry_segment=active.industry_segment AND all_at.retargeting_attribute=active.retargeting_attribute
+      WHERE active.provider_name IS NULL AND active.retargeting_attribute IS NULL;;
   }
   label: "Vertica Data Usage - Not Active Attributes 90 days"
 

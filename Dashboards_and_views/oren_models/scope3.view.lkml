@@ -13,11 +13,11 @@ view: scope3 {
              MAX(ad_size) as max_placement_size, --max_placement_size !! do you want max or all of them, better if we do a lot of data !!
              CASE WHEN rtb_device_type=1 THEN 'phone'
                   WHEN rtb_device_type=2 THEN 'pc'
-                  WHEN rtb_device_type=3 THEN 'smart-speaker'
+                  WHEN rtb_device_type=3 THEN 'tv'
                   WHEN rtb_device_type=4 THEN 'phone'
                   WHEN rtb_device_type=5 THEN 'tablet'
-                  WHEN rtb_device_type=6 THEN 'smart-speaker'
-                  WHEN rtb_device_type=7 THEN 'smart-speaker' END
+                  WHEN rtb_device_type=6 THEN 'tv'
+                  WHEN rtb_device_type=7 THEN 'tv' ELSE '' END
                   as device_type,
              SUM(requests) as ad_opportunities,
              SUM(CASE WHEN (aa.rx_request_status in ('nodsp','nodspbids','bidresponse') or aa.rx_request_status is NULL) THEN requests ELSE 0 END) as ad_opportunities_processed

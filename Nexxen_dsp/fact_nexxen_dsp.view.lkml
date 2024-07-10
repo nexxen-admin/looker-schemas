@@ -254,6 +254,7 @@ view: fact_nexxen_dsp {
   measure: tac {
     type: sum
     sql: ${TABLE}.tac ;;
+    value_format: "$#,##0.00"
   }
 
   measure: percent25_events {
@@ -274,41 +275,49 @@ view: fact_nexxen_dsp {
   measure: cogs {
     type: sum
     sql: ${TABLE}.cogs ;;
+    value_format: "$#,##0.00"
   }
 
   measure: 3p_in_view_impressions {
     type: sum
     sql: ${TABLE}.third_party_in_view_impressions ;;
+    value_format: "#,##0"
   }
 
   measure: 3p_in_view_measurable_impressions {
     type: sum
     sql: ${TABLE}.third_party_in_view_measurable_impressions ;;
+    value_format: "#,##0"
   }
 
   measure: 3p_rich_media_impressions {
     type: sum
     sql: ${TABLE}.third_party_rich_media_impressions ;;
+    value_format: "#,##0"
   }
 
   measure: 3p_adj_engagements {
     type: sum
     sql: ${TABLE}.third_party_adj_engagements ;;
+    value_format: "#,##0"
   }
 
   measure: 3p_total_conversions {
     type: sum
     sql: ${TABLE}.third_party_total_conversions ;;
+    value_format: "#,##0"
   }
 
   measure: 3p_iv_ia_billable_impressions{
     type: sum
     sql: ${TABLE}.third_party_IV_IA_Billable_Impressions ;;
+    value_format: "#,##0"
   }
 
   measure: 3p_impressions_analyzed {
     type: sum
     sql: ${TABLE}.third_party_impressions_analyzed ;;
+    value_format: "#,##0"
   }
 
   measure: pacing {

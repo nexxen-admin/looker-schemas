@@ -84,7 +84,7 @@ view: dim_sfdb_opportunitylineitemschedule {
 
   dimension: opportunitylineitemid {
     type: string
-    label: "Salaforce Line Item ID"
+    label: "Salesforce Line Item ID"
     sql: ${TABLE}.opportunitylineitemid ;;
 
   }

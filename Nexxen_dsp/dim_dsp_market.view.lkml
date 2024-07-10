@@ -57,6 +57,7 @@ view: dim_dsp_market {
     type: number
     label: "Market ID"
     sql: ${TABLE}.market_id ;;
+    description: "DSP market"
 
   }
 
@@ -69,8 +70,10 @@ view: dim_dsp_market {
 
   dimension: market_name {
     type: string
-    label: "Market Namer"
+    label: "Market Name"
     sql: ${TABLE}.market_name ;;
+    description: "DSP market name"
+
   }
 
   dimension: ri_info {
@@ -83,6 +86,7 @@ view: dim_dsp_market {
     type: string
     label: "Market Timezone"
     sql: ${TABLE}.time_zone_code ;;
+    description: "Timezone the market is running at"
   }
 
   dimension: workflow_status_id {

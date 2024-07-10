@@ -808,7 +808,7 @@ view: dim_sfdb_opportunity {
 
   dimension: total_gross_spend__c {
     type: number
-    label: "Total Gross Spand"
+    label: "Total Gross Spend"
     sql: ${TABLE}.total_gross_spend__c ;;
   }
 

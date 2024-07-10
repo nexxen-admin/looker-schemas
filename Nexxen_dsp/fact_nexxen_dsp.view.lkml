@@ -84,7 +84,7 @@ view: fact_nexxen_dsp {
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
     datatype: date
-    label: "Date IN Timezona"
+    label: "Date IN Timezone"
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 
@@ -203,7 +203,7 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.inv_cost ;;
   }
 
-  measure:   brand_safety_data_cost {
+  measure: brand_safety_data_cost {
     type: sum
     value_format: "$#,##0.00"
     sql: ${TABLE}.brand_safety_data_cost ;;
@@ -255,6 +255,7 @@ view: fact_nexxen_dsp {
     type: sum
     sql: ${TABLE}.tac ;;
     value_format: "$#,##0.00"
+    description: "Traffic acquisition cost"
   }
 
   measure: percent25_events {

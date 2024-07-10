@@ -106,6 +106,7 @@ view: dim_dsp_package_budget_schedule {
   dimension: salesforce_line_item_id {
     type: string
     sql: ${TABLE}.salesforce_line_item_id ;;
+    description: "Line item ID from DSP"
   }
 
   dimension: spending_cap {
@@ -129,12 +130,14 @@ view: dim_dsp_package_budget_schedule {
     type: date
     label: "DSP SF End Date"
     sql: ${TABLE}.end_date_in_timezone ;;
+    description: "End date from DSP"
   }
 
   dimension: start_date_in_timezone {
     type: date
     label: "DSP SF Start Date "
     sql: ${TABLE}.start_date_in_timezone ;;
+    description: "Start date from DSP"
   }
 
 }

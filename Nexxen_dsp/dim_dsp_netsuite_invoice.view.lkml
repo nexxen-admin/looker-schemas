@@ -2,25 +2,8 @@
 view: dim_dsp_netsuite_invoice {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_DSP.dim_dsp_Netsuite_invoice ;;
+  sql_table_name: BI_DSP.v_dim_dsp_Netsuite_invoice_quantity ;;
 
-  # No primary key is defined for this view. In order to join this view in an Explore,
-  # define primary_key: yes on a dimension that has no repeated values.
-
-  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
-  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
-
-  dimension_group: db_created {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.db_created_date ;;
-  }
-
-  dimension_group: db_updated {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.db_updated_date ;;
-  }
 
   dimension_group: event_month {
     type: time
@@ -47,16 +30,19 @@ view: dim_dsp_netsuite_invoice {
   dimension: netsuite_invoice_key {
     type: number
     sql: ${TABLE}.Netsuite_invoice_key ;;
+    hidden: yes
   }
 
   dimension: opportunitylineitem {
     type: string
     sql: ${TABLE}.opportunitylineitem ;;
+    hidden: yes
   }
 
   dimension: opportunitylineitem_key {
     type: number
     sql: ${TABLE}.opportunitylineitem_key ;;
+    hidden: yes
   }
 
   dimension: quantity {
@@ -67,6 +53,7 @@ view: dim_dsp_netsuite_invoice {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.ri_info ;;
+    hidden: yes
   }
   measure: count {
     type: count

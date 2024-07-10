@@ -263,6 +263,7 @@ view: dim_sfdb_opportunitylineitem {
     label: "OPP Line Item End"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.end_date__c ;;
+    description: "End date of line item in salesforce"
   }
 
   dimension: item_days {
@@ -313,6 +314,7 @@ view: dim_sfdb_opportunitylineitem {
     type: number
     sql: ${TABLE}.gross_billable__c ;;
     label: "Total Booked Budget"
+    description: "Gross Billable times the Opp's Probability"
     #hidden: yes
   }
 
@@ -457,6 +459,7 @@ view: dim_sfdb_opportunitylineitem {
     type: number
     label: "Rate Card Discount"
     sql: ${TABLE}.rate_card_discount__c ;;
+    description: "The Discount Rate applied from the Rate Card listed on the Product Configuration"
   }
 
   dimension: overall_discount__c {
@@ -469,6 +472,7 @@ view: dim_sfdb_opportunitylineitem {
     type: number
     label: "Manual Discount"
     sql: ${TABLE}.discount__c ;;
+    description: "In addition to any discount from the Rate Card. This percentage will be combined with the Rate Card Discount to yield the Overall Discount percentage. (This is not for rebates.)"
   }
 
   dimension: opportunity_owner__c {
@@ -490,6 +494,7 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Case Safe OPP line item ID"
     sql: ${TABLE}.opportunitylineitem_aid__c ;;
+    description: "Line item from salesforce"
 
   }
 
@@ -516,6 +521,7 @@ view: dim_sfdb_opportunitylineitem {
     type: string
     label: "Price Type Name"
     sql: ${TABLE}.price_type_name__c ;;
+    description: "How do we measure the revenue"
 
   }
 
@@ -663,6 +669,7 @@ view: dim_sfdb_opportunitylineitem {
     label: "OPP Line Item Start"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.start_date__c ;;
+    description: "Start date of line item from salesforce"
   }
 
   dimension_group: systemmodstamp {

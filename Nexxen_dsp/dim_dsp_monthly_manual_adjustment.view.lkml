@@ -14,12 +14,14 @@ view: dim_dsp_monthly_manual_adjustment {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_created_date ;;
+    hidden: yes
   }
 
   dimension_group: db_updated {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_updated_date ;;
+    hidden: yes
   }
 
   dimension_group: event_month {
@@ -37,30 +39,35 @@ view: dim_dsp_monthly_manual_adjustment {
     type: number
     label: "Adjustment Billable Revenue"
     sql: COALESCE(${TABLE}.monthly_adjustable_billable_revenue , 0) ;;
+    description: "Manual adjustment that need to be done before billing - the billing team uploads through appsmith"
   }
 
   dimension: monthly_adjustable_billable_impressions {
     type: number
     label: "Adjustment Billable Impressions"
     sql: COALESCE(${TABLE}.monthly_adjustable_billable_impressions , 0) ;;
+    description: "Manual adjustment that need to be done before billing - the billing team uploads through appsmith"
   }
 
   dimension: monthly_adjustable_billable_clicks {
     type: number
     label: "Adjustment Billable Clicks"
     sql: COALESCE(${TABLE}.monthly_adjustable_billable_clicks , 0) ;;
+    description: "Manual adjustment that need to be done before billing - the billing team uploads through appsmith"
   }
 
   dimension: monthly_adjustable_billable_actions {
     type: number
     label: "Adjustment Billable Actions"
     sql: COALESCE(${TABLE}.monthly_adjustable_billable_actions , 0) ;;
+    description: "Manual adjustment that need to be done before billing - the billing team uploads through appsmith"
   }
 
   dimension: monthly_adjustable_billable_video_completes {
     type: number
     label: "Adjustment Billable Video Completes"
     sql: COALESCE(${TABLE}.monthly_adjustable_billable_video_completes , 0) ;;
+    description: "Manual adjustment that need to be done before billing - the billing team uploads through appsmith"
   }
 
 
@@ -72,21 +79,25 @@ view: dim_dsp_monthly_manual_adjustment {
   dimension: manual_adjustment_key {
     type: number
     sql: ${TABLE}.manual_adjustment_key ;;
+    hidden: yes
   }
 
   dimension: opportunitylineitem {
     type: string
     sql: ${TABLE}.opportunitylineitem ;;
+    hidden: yes
   }
 
   dimension: opportunitylineitem_key {
     type: number
     sql: ${TABLE}.opportunitylineitem_key ;;
+    hidden: yes
   }
 
   dimension: ri_info {
     type: string
     sql: ${TABLE}.ri_info ;;
+    hidden: yes
   }
   measure: count {
     type: count

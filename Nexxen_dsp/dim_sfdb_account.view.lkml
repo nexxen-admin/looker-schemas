@@ -353,6 +353,7 @@ view: dim_sfdb_account {
     type: string
     label: "Legal Entity"
     sql: ${TABLE}.legal_entity__c ;;
+    hidden: yes
 
     #
   }

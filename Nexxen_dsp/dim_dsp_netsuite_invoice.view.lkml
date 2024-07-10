@@ -2,7 +2,7 @@
 view: dim_dsp_netsuite_invoice {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
-  sql_table_name: BI_DSP.v_dim_dsp_Netsuite_invoice_quantity ;;
+  sql_table_name: BI_DSP.dim_dsp_Netsuite_invoice ;;
 
 
   dimension_group: event_month {

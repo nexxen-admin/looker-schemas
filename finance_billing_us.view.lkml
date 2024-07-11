@@ -38,7 +38,7 @@ view: finance_billing_us {
 
   dimension: opportunity_trader {
     type: string
-    sql: COALESCE(${TABLE}.opportunity_trader,"Unknown") ;;
+    sql: ${TABLE}.opportunity_trader ;;
   }
 
   dimension: sales_team {

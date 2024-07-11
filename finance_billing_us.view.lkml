@@ -246,8 +246,9 @@ view: finance_billing_us {
     sql: ${TABLE}.third_party_complete_events ;;
   }
 
-  dimension: third_party_impressions {
-    type: number
+  measure: third_party_impressions {
+    type: sum
+    value_format: "#,##0.00"
     sql: ${TABLE}.third_party_impressions ;;
   }
 

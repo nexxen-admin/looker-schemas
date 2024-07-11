@@ -389,7 +389,7 @@ view: finance_billing_us {
   }
 
   measure: discrepancy_between_1_p_and_final_billable_revenue_after_adj {
-    type: number
+    type: sum
     value_format: "#,##0.00"
     sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj ;;
   }

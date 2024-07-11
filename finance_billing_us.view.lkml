@@ -5,8 +5,9 @@ view: finance_billing_us {
   }
 
 
-  dimension: date_key {
-    type: date
+  dimension_group: date_key {
+    type: time
+    timeframes: [raw, time, date, week, month, quarter, year]
     label: "Month"
     sql: ${TABLE}.Date_Key ;;
   }

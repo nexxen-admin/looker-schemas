@@ -44,6 +44,12 @@ explore: billing_us_v1 {
   hidden: yes
 }
 
+explore: finance_billing_us {
+  required_access_grants: [billing_report_group]
+  label: "Billing US Final"
+ # hidden: yes
+}
+
 explore: v_monthly_billing_report_diff_live_locked {
   required_access_grants: [billing_report_group]
   label: "Monthly Billing Report Diff Live Locked"

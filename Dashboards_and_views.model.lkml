@@ -476,3 +476,8 @@ explore: segments_with_0_cost_in_rx {
   label: "Zero Cost Segments"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: bid_opti_version {
+  label: "Bid Opti Version"
+  required_access_grants: [can_view_all_tremor]
+}

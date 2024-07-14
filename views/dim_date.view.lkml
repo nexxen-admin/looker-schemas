@@ -15,11 +15,13 @@ view: dim_date {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.Date_Key ;;
+    description: "Main Date Dimension - use this field as your main date metric"
   }
 
   dimension: month_year {
     type: string
     sql: month(${TABLE}.Date_Key);;
+    description: "Month of date (for example - may 2024 will be 2024-04-01)"
   }
 
   parameter: time_to_date{

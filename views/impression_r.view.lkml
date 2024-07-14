@@ -135,9 +135,14 @@ view: impression_r {
   #   #hidden: yes
   #   }
 
-    measure: impressions {
+    measure: impressions_billable {
       type: sum
       sql: case when ${TABLE}.isbillable=1 then 1 else 0 end ;;
+    }
+
+    measure: impressions {
+      type: count_distinct
+      sql: ${TABLE}.requestid ;;
     }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average

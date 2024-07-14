@@ -161,7 +161,7 @@ view: finance_billing_us {
 
   dimension: rate {
     type: number
-    value_format: "0.####"
+    #value_format: "0.####"
     sql: ${TABLE}.rate ;;
   }
 

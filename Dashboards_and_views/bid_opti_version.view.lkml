@@ -15,7 +15,7 @@ view: bid_opti_version {
   ad.bidfloor_opti_version,
   ad.rx_bid_floor as bid_floor,
   sum(case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) as requests,
-  sum(ad.slot_requests) as Attempts,
+  sum(ad.slot_attempts) as Attempts,
   sum(ad.responses) as Bids,
   sum(ad.impression_pixel) as Impressions,
   sum(ad.revenue) as revenue,

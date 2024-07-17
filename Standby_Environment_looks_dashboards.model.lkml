@@ -34,3 +34,7 @@ explore: bid_opti_version {
   label: "Bid Opti Version"
   required_access_grants: [can_view_pub_come_looker]
 }
+
+explore: sam_lt_comm {
+  required_access_grants: [can_view_pub_come_looker]
+}

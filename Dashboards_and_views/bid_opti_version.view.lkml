@@ -2,33 +2,34 @@
 view: bid_opti_version {
   derived_table: {
     sql: Select ad.event_time::date as event_date,
-        sp.publisher_id,
-        sp.publisher_name,
-        ad.media_id as placement_id,
-        spl.placement_name as placement_name,
-        ad.rx_imp_type,
-        ad.rx_device_type,
-          case when ad.bidfloor_opti_version != 'no_opti'
-            then 'opti'
-            else ad.bidfloor_opti_version
-            end as Opti_Status,
-        ad.bidfloor_opti_version,
-        sum(case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) as requests,
-        sum(ad.slot_requests) as Attempts,
-        sum(ad.responses) as Bids,
-        sum(ad.impression_pixel) as Impressions,
-        sum(ad.revenue) as revenue,
-        sum(ad.cogs) as COGS
-      From andromeda.ad_data_daily ad
-        inner join sandbox.opti_placements op on op.placementid::varchar = ad.media_id::varchar
-                            and ad.rx_ssp_name ilike 'rmp%'
-        left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id::varchar = ad.media_id
-        left outer join andromeda.rx_dim_supply_publisher_traffic_source spts on spts.pub_ts_id = spl.pub_ts_id
-        left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
-      where ad.event_time >= current_date()-3
-        and ad.event_time < current_date()
-      Group by 1, 2, 3, 4, 5, 6, 7, 8, 9
-      Order by 1, 2, 3, 4, 5, 6, 7, 8, 9 ;;
+  sp.publisher_id,
+  sp.publisher_name,
+  ad.media_id as placement_id,
+  spl.placement_name as placement_name,
+  ad.rx_imp_type,
+  ad.rx_device_type,
+    case when ad.bidfloor_opti_version != 'no_opti'
+      then 'opti'
+      else ad.bidfloor_opti_version
+      end as Opti_Status,
+  ad.bidfloor_opti_version,
+  ad.rx_bid_floor as bid_floor,
+  sum(case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) as requests,
+  sum(ad.slot_requests) as Attempts,
+  sum(ad.responses) as Bids,
+  sum(ad.impression_pixel) as Impressions,
+  sum(ad.revenue) as revenue,
+  sum(ad.cogs) as COGS
+From andromeda.ad_data_daily ad
+  inner join sandbox.opti_placements op on op.placementid::varchar = ad.media_id::varchar
+                      and ad.rx_ssp_name ilike 'rmp%'
+  left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id::varchar = ad.media_id
+  left outer join andromeda.rx_dim_supply_publisher_traffic_source spts on spts.pub_ts_id = spl.pub_ts_id
+  left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
+where ad.event_time >= current_date()-3
+  and ad.event_time < current_date()
+Group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+Order by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ;;
   }
 
   measure: count {
@@ -88,6 +89,11 @@ view: bid_opti_version {
   dimension: bidfloor_opti_version {
     type: string
     sql: ${TABLE}.bidfloor_opti_version ;;
+  }
+
+  measure: bid_floor {
+    type: sum
+    sql: ${TABLE}.bid_floor ;;
   }
 
   measure: requests {

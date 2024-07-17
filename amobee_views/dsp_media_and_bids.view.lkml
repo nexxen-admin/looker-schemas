@@ -1478,6 +1478,30 @@ dimension: browser_type_name {
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."cost"  ELSE NULL END ;;
   }
 
+  measure: nexxen_impressions_test {
+    type: number
+    label: "unruly_impressions_test"
+    sql: ${unruly_impression};;
+  }
+
+  measure: impressions_test {
+    type: number
+    label: "impressions_test"
+    sql: ${impression};;
+  }
+
+  measure: nexxen_imp_test {
+    type: number
+    sql: ${nexxen_impressions_test}/${impressions_test} ;;
+  }
+
+  measure: nexxen_inv_cost_percent {
+    type: number
+    label: "Nexxen_inv_cost_%"
+    sql: ${unruly_inv_cost}/nullif(${inv_cost},0)  ;;
+    value_format: "0.00%"
+  }
+
   measure: count {
     type: count
     drill_fields: [iab_category_name, media_channel_name, mobile_app_name]

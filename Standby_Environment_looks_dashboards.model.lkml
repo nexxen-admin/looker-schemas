@@ -29,3 +29,8 @@ explore: pub_req_content_attributes_report{
   #required_access_grants: [can_view_pub_come_looker]
   hidden: yes
 }
+
+explore: bid_opti_version {
+  label: "Bid Opti Version"
+  required_access_grants: [can_view_pub_come_looker]
+}

@@ -11,7 +11,7 @@ FROM "BI_New"."Deal_commission_data"
 where personnel_role='AdOps'
 ),
 acc AS (
-SELECT event_date, agency, brand, deal_id, deal_start, deal_end, rebate_percent, deal_description, office, personnel_name, dsp_name, buy_type, totalrevenue, cogs, barter_rebate, gross_revenue, net_revenue, AMSplitRevenue, AMSplitNetRevenue
+SELECT event_date, agency, brand, deal_id, deal_start, deal_end, rebate_percent, deal_description, office, personnel_name, dsp_name, buy_type, deal_type, totalrevenue, cogs, barter_rebate, gross_revenue, net_revenue, AMSplitRevenue, AMSplitNetRevenue
 FROM "BI_New"."Deal_commission_data"
 where personnel_role='Account Manager'
 ),
@@ -20,7 +20,7 @@ SELECT deal_id, event_date, totalrevenue, SUM(totalrevenue) as totalrev, SUM(CAS
 FROM "BI_New"."Deal_commission_data"
 group by deal_id, event_date, totalrevenue
 )
-SELECT acc.event_date, agency, brand, acc.deal_id, deal_start, deal_end, rebate_percent, deal_description, office, dsp_name, buy_type,
+SELECT acc.event_date, agency, brand, acc.deal_id, deal_start, deal_end, rebate_percent, deal_description, office, dsp_name, buy_type, deal_type,
         s.personnel_name as sales, adops.personnel_name AS adops, acc.personnel_name AS account_manager,
         totalrev/cnt as total_revenue, netrev/cnt as net_revenue,
         SalesSplitRevenue, OpsSplitRevenue/cnt as OpsSplitRevenue, AMSplitRevenue/cnt as AMSplitRevenue,
@@ -57,6 +57,11 @@ FROM acc LEFT JOIN adops ON acc.deal_id=adops.deal_id AND acc.event_date=adops.e
   dimension: buy_type {
     type: string
     sql: ${TABLE}.Buy_Type ;;
+  }
+
+  dimension: deal_type {
+    type: string
+    sql: ${TABLE}.deal_type ;;
   }
 
 

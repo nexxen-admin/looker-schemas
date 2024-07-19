@@ -349,6 +349,12 @@ explore: deal_commision_data {
   hidden: yes
 }
 
+explore: deal_commission_data_pivot {
+  label: "Deal Commision Data - Pivot"
+  #required_access_grants: [allowed_users_sam_lt]
+  hidden: yes
+}
+
 explore: new_money_unruly_player_aniview {
   label: "New Money Unruly Player Aniview"
   #required_access_grants: [can_view_pub_come_looker]

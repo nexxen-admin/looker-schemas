@@ -217,7 +217,7 @@ From base_data bd
     type: sum
     sql: ${TABLE}."Supply Margin $ /M Requests" ;;
     value_format: "$#,##0.00"
-  }
+    }
 
   set: detail {
     fields: [

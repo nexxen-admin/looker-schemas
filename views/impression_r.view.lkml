@@ -490,7 +490,7 @@ view: impression_r {
   }
 
   measure: user_id {
-    type: sum
+    type: count_distinct
     label: "user_id's"
     sql: ${TABLE}.userid ;;
   }

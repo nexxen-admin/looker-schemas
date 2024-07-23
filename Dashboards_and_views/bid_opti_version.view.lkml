@@ -142,6 +142,12 @@ From base_data bd
     value_format: "$#,##0.00"
   }
 
+  measure: bid_floor_avg {
+    type: average
+    sql: ${TABLE}.bid_floor ;;
+    value_format: "$#,##0.00"
+  }
+
   measure: requests {
     type: sum
     sql: ${TABLE}.requests ;;
@@ -184,13 +190,30 @@ From base_data bd
     value_format: "$#,##0.00"
   }
 
+  measure: supply_margin_dollar_avg {
+    type: average
+    sql: ${TABLE}."Supply Margin $" ;;
+    value_format: "$#,##0.00"
+  }
+
   measure: attempt_rate {
     type: sum
     sql: ${TABLE}."Attempt Rate" ;;
   }
 
+  measure: attempt_rate_avg {
+    type: average
+    sql: ${TABLE}."Attempt Rate" ;;
+  }
+
   measure: bid_rate {
     type: sum
+    sql: ${TABLE}."Bid Rate" ;;
+    value_format:"0.00\%"
+  }
+
+  measure: bid_rate_avg {
+    type: average
     sql: ${TABLE}."Bid Rate" ;;
     value_format:"0.00\%"
   }
@@ -201,8 +224,20 @@ From base_data bd
     value_format: "0.00%"
   }
 
+  measure: fill_rate_avg {
+    type: average
+    sql: ${TABLE}."Fill Rate" ;;
+    value_format: "0.00%"
+  }
+
   measure: ecpm {
     type: sum
+    sql: ${TABLE}.'eCPM' ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: ecpm_avg {
+    type: average
     sql: ${TABLE}.'eCPM' ;;
     value_format: "$#,##0.00"
   }
@@ -213,11 +248,24 @@ From base_data bd
     value_format: "0.00\%"
   }
 
+  measure: supply_margin_percent_avg {
+    type: average
+    sql: ${TABLE}."Supply Margin %" ;;
+    value_format: "0.00\%"
+  }
+
   measure: supply_margin_dollar_per_M_requests{
     type: sum
     sql: ${TABLE}."Supply Margin $ /M Requests" ;;
     value_format: "$#,##0.00"
     }
+
+  measure: supply_margin_dollar_per_M_requests_avg{
+    type: average
+    sql: ${TABLE}."Supply Margin $ /M Requests" ;;
+    value_format: "$#,##0.00"
+  }
+
 
   set: detail {
     fields: [

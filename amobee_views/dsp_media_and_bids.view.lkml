@@ -1466,10 +1466,16 @@ dimension: browser_type_name {
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."inv_cost"  ELSE NULL END ;;
   }
 
+  # measure: unruly_impression {
+  #   type: sum
+  #   label: "Nexxen Impressions"
+  #   sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."impression"  ELSE NULL END ;;
+  # }
+
   measure: unruly_impression {
-    type: sum
+    type: number
     label: "Nexxen Impressions"
-    sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."impression"  ELSE NULL END ;;
+    sql: SUM(CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."impression"  ELSE 0 END) ;;
   }
 
   measure: unruly_adv_spend {
@@ -1484,15 +1490,21 @@ dimension: browser_type_name {
     sql: ${unruly_impression};;
   }
 
+  # measure: impressions_test {
+  #   type: number
+  #   label: "impressions_test"
+  #   sql: ${impression};;
+  # }
+
   measure: impressions_test {
     type: number
-    label: "impressions_test"
-    sql: ${impression};;
+    #value_format: "#,##0,,,\"B\""
+    sql: SUM(${TABLE}."impression") ;;
   }
 
   measure: nexxen_imp_test {
     type: number
-    sql: ${nexxen_impressions_test}/${impressions_test} ;;
+    sql: ${unruly_impression}/${impressions_test} ;;
   }
 
   measure: nexxen_inv_cost_percent {
@@ -1663,17 +1675,7 @@ dimension: browser_type_name {
     sql: TIMESTAMPADD(DAY, ${day_in_period} - 1, CAST({% date_start current_date_range %} AS TIMESTAMP)) ;;
     view_label: "PoP"
     timeframes: [
-      date,
-      hour_of_day,
-      day_of_week,
-      day_of_week_index,
-      day_of_month,
-      day_of_year,
-      week_of_year,
-      month,
-      month_name,
-      month_num,
-      year]
+      date]
   }
 
 

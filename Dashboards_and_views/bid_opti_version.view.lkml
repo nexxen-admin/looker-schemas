@@ -142,6 +142,18 @@ From base_data bd
     value_format: "$#,##0.00"
   }
 
+  measure: bid_floor_imp {
+    type: number
+    sql: ${bid_floor}*${impressions} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: bid_floor_new {
+    type: number
+    sql: ${bid_floor_imp}/${impressions} ;;
+    value_format: "$#,##0.00"
+  }
+
   measure: bid_floor_avg {
     type: average
     sql: ${TABLE}.bid_floor ;;
@@ -185,8 +197,8 @@ From base_data bd
   }
 
   measure: supply_margin_dollar {
-    type: sum
-    sql: ${TABLE}."Supply Margin $" ;;
+    type: number
+    sql: ${cost}-${cogs} ;;
     value_format: "$#,##0.00"
   }
 
@@ -197,8 +209,8 @@ From base_data bd
   }
 
   measure: attempt_rate {
-    type: sum
-    sql: ${TABLE}."Attempt Rate" ;;
+    type: number
+    sql: ${attempts}/nullif(${requests},0) ;;
   }
 
   measure: attempt_rate_avg {
@@ -207,8 +219,8 @@ From base_data bd
   }
 
   measure: bid_rate {
-    type: sum
-    sql: ${TABLE}."Bid Rate" ;;
+    type: number
+    sql: ${bids}/nullif(${requests},0) ;;
     value_format:"0.00\%"
   }
 
@@ -219,8 +231,8 @@ From base_data bd
   }
 
   measure: fill_rate {
-    type: sum
-    sql: ${TABLE}."Fill Rate" ;;
+    type: number
+    sql: ${impressions}/nullif(${requests},0) ;;
     value_format: "0.00%"
   }
 
@@ -231,8 +243,8 @@ From base_data bd
   }
 
   measure: ecpm {
-    type: sum
-    sql: ${TABLE}.'eCPM' ;;
+    type: number
+    sql: ${cost}/nullif(${impressions},0)*1000 ;;
     value_format: "$#,##0.00"
   }
 
@@ -243,8 +255,8 @@ From base_data bd
   }
 
   measure: supply_margin_percent {
-    type: sum
-    sql: ${TABLE}."Supply Margin %" ;;
+    type: number
+    sql: (${cost}-${cogs})/nullif(${cost},0) ;;
     value_format: "0.00\%"
   }
 
@@ -255,8 +267,8 @@ From base_data bd
   }
 
   measure: supply_margin_dollar_per_M_requests{
-    type: sum
-    sql: ${TABLE}."Supply Margin $ /M Requests" ;;
+    type: number
+    sql: (${cost}-${cogs})/nullif((${requests}/1000000),0);;
     value_format: "$#,##0.00"
     }
 

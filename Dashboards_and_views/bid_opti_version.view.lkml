@@ -143,15 +143,15 @@ From base_data bd
     value_format: "$#,##0.00"
   }
 
-  measure: bid_floor_imp {
+  measure: bid_floor_imp_tmp {
     type: sum
     sql: ${TABLE}."Bid Floor Imp" ;;
     value_format: "$#,##0.00"
   }
 
-  measure: bid_floor_new {
+  measure: bid_floor_imp {
     type: number
-    sql: ${bid_floor_imp}/${impressions} ;;
+    sql: ${bid_floor_imp_tmp}/${impressions} ;;
     value_format: "$#,##0.00"
   }
 

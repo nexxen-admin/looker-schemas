@@ -337,7 +337,7 @@ view: fact_nexxen_dsp {
 
   measure: delivered_units {
     type: sum
-    sql: ${TABLE}.delivered_units ;;
+    sql: ${TABLE}.delivery_units ;;
   }
 
   measure: hybrid_impressions_delivered {
@@ -386,11 +386,49 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.final_clicks ;;
   }
 
+  measure: final_complete_events {
+    type: sum
+    sql: ${TABLE}.final_complete_events ;;
+  }
 
   measure: CTR {
+    type: number
+    value_format: "0.00%"
+    sql: ${clicks}/nullif(${impressions},0) ;;
+  }
+
+  measure: VCR {
+    type: number
+    sql: ${final_complete_events}/nullif(${final_impressions},0) ;;
+    value_format: "0.00%"
+  }
+
+  measure: IV {
+    type: number
+    label: "IV %"
+    sql: ${3p_in_view_impressions}/${3p_in_view_measurable_impressions} ;;
+    value_format: "0.00%"
+  }
+
+  measure: Yesterday_inv_cost {
     type: sum
-    value_format: "0.00\%"
-    sql: ${TABLE}.clicks/nullif(${TABLE}.impressions,0) ;;
+    sql: ${TABLE}.inv_cost ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+    value_format: "$#,##0.00"
+  }
+
+  measure: daily_units_needed_tmp {
+    type: sum
+    sql: case when dim_sfdb_opportunitylineitem.price_type_name__c in ('dCPM', 'CPR') then
+    (dim_sfdb_opportunitylineitem.gross_billable__c - ${TABLE}.delivery_units) else
+    (dim_sfdb_opportunitylineitem.units__c-${TABLE}.delivery_units) end;;
+    hidden: yes
+  }
+
+  measure: daily_units_needed {
+    type: number
+    sql: ${daily_units_needed_tmp}/${days_left} ;;
+    hidden: yes
   }
 
   measure: count {

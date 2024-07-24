@@ -151,6 +151,24 @@ view: sam_lt_comm {
     sql: ${TABLE}.Demand_Source ;;
   }
 
+  measure: revenue_demand_adjustment {
+    type: sum
+    sql: ${TABLE}.Revenue_Demand_Adjustment ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: cogs_demand_adjustment {
+    type: sum
+    sql: ${TABLE}.Cogs_Demand_Adjustment ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: traffic_source_fee {
+    type: sum
+    sql: ${TABLE}.Traffic_Source_Fee ;;
+    value_format: "$#,##0.00"
+  }
+
   #dimension: is_gam {
   #  type: string
    # sql:

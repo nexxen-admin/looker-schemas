@@ -222,13 +222,13 @@ From base_data bd
   measure: bid_rate {
     type: number
     sql: ${bids}/nullif(${requests},0) ;;
-    value_format:"0.00\%"
+    value_format:"0.00%"
   }
 
   measure: bid_rate_avg {
     type: average
     sql: ${TABLE}."Bid Rate" ;;
-    value_format:"0.00\%"
+    value_format:"0.00%"
   }
 
   measure: fill_rate {
@@ -258,13 +258,13 @@ From base_data bd
   measure: supply_margin_percent {
     type: number
     sql: (${cost}-${cogs})/nullif(${cost},0) ;;
-    value_format: "0.00\%"
+    value_format: "0.00%"
   }
 
   measure: supply_margin_percent_avg {
     type: average
     sql: ${TABLE}."Supply Margin %" ;;
-    value_format: "0.00\%"
+    value_format: "0.00%"
   }
 
   measure: supply_margin_dollar_per_M_requests{

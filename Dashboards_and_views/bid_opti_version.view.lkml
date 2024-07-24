@@ -70,7 +70,8 @@ Select bd.event_date,
   bd.Impressions / nullif(bd.Requests,0) as "Fill Rate",
   (bd.Cost / nullif(bd.Impressions,0)) * 1000 as 'eCPM',
   (bd.Cost - bd.COGS)/nullif(bd.Cost,0) as "Supply Margin %",
-  (bd.Cost- bd.COGS) / nullif((bd.Requests/1000000),0) as "Supply Margin $ /M Requests"
+  (bd.Cost- bd.COGS) / nullif((bd.Requests/1000000),0) as "Supply Margin $ /M Requests",
+  bd.Bid_Floor*bd.Impressions as "Bid Floor Imp"
 From base_data bd
   inner join Placement_Limiter pl on pl.event_date = bd.event_date
                   and pl.placement_id = bd.placement_id
@@ -143,8 +144,8 @@ From base_data bd
   }
 
   measure: bid_floor_imp {
-    type: number
-    sql: ${bid_floor}*${impressions} ;;
+    type: sum
+    sql: ${TABLE}."Bid Floor Imp" ;;
     value_format: "$#,##0.00"
   }
 

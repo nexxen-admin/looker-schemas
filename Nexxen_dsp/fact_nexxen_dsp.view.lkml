@@ -364,11 +364,11 @@ view: fact_nexxen_dsp {
     sql: (${clicks}-${third_party_clicks})/nullif(${clicks},0) ;;
   }
 
-  measure: days_left {
-    type: sum
-    sql: case when DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c)<0
-    then 0 else DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c) end;;
-  }
+  # measure: days_left {
+  #   type: sum
+  #   sql: case when DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c)<0
+  #   then 0 else DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c) end;;
+  # }
 
   measure: uncapped_revenue {
     type: sum
@@ -424,17 +424,11 @@ view: fact_nexxen_dsp {
     value_format: "#,##0"
   }
 
-  measure: daily_units_needed_tmp {
+  measure: daily_units_needed {
     type: sum
     sql: case when dim_sfdb_opportunitylineitem.price_type_name__c in ('dCPM', 'CPR') then
-    (dim_sfdb_opportunitylineitem.gross_billable__c - ${TABLE}.delivery_units) else
-    (dim_sfdb_opportunitylineitem.units__c-${TABLE}.delivery_units) end;;
-    hidden: yes
-  }
-
-  measure: daily_units_needed {
-    type: number
-    sql: ${daily_units_needed_tmp}/${days_left} ;;
+    (dim_sfdb_opportunitylineitem.gross_billable__c - ${TABLE}.delivery_units)/v_dim_sfdb_opportunitylineitemschedule_new.total_days_in_sl else
+    (dim_sfdb_opportunitylineitem.units__c-${TABLE}.delivery_units)/v_dim_sfdb_opportunitylineitemschedule_new.total_days_in_sl end;;
     hidden: yes
   }
 

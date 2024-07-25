@@ -232,5 +232,12 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  # join: v_dim_sfdb_opportunitylineitemschedule_new {
+  #   type: inner
+  #   view_label: "Salesforce Opportunity Line Item Schedule"
+  #   sql_on: ${v_dim_sfdb_opportunitylineitemschedule_new.opportunitylineitem_key}=${fact_nexxen_dsp.opportunitylineitem_key} ;;
+  #   relationship: many_to_one
+  # }
+
 
 }

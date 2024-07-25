@@ -429,7 +429,7 @@ view: fact_nexxen_dsp {
     sql: case when dim_sfdb_opportunitylineitem.price_type_name__c in ('dCPM', 'CPR') then
     (dim_sfdb_opportunitylineitem.gross_billable__c - ${TABLE}.delivery_units)/v_dim_sfdb_opportunitylineitemschedule_new.total_days_in_sl else
     (dim_sfdb_opportunitylineitem.units__c-${TABLE}.delivery_units)/v_dim_sfdb_opportunitylineitemschedule_new.total_days_in_sl end;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: count {

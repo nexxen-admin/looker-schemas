@@ -355,13 +355,13 @@ view: fact_nexxen_dsp {
   }
 
   measure: impressions_discrepancy {
-    type: sum
-    sql: (${TABLE}.third_party_impressions-${TABLE}.impressions)/NULLIF(${TABLE}.impressions,0) ;;
+    type: number
+    sql: (${impressions}-${third_party_impressions})/NULLIF(${impressions},0) ;;
   }
 
   measure: clicks_discrepancy {
-    type: sum
-    sql: (${TABLE}.third_party_clicks-${TABLE}.clicks)/nullif(${TABLE}.clicks,0) ;;
+    type: number
+    sql: (${clicks}-${third_party_clicks})/nullif(${clicks},0) ;;
   }
 
   measure: days_left {
@@ -410,11 +410,18 @@ view: fact_nexxen_dsp {
     value_format: "0.00%"
   }
 
-  measure: Yesterday_inv_cost {
+  measure: yesterday_inv_cost {
     type: sum
     sql: ${TABLE}.inv_cost ;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
     value_format: "$#,##0.00"
+  }
+
+  measure: yesterday_units {
+    type: sum
+    sql: ${TABLE}.delivery_units ;;
+    filters: [date_key_date: "last 1 day ago for 1 day"]
+    value_format: "#,##0"
   }
 
   measure: daily_units_needed_tmp {

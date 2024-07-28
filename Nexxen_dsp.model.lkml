@@ -50,6 +50,12 @@ explore: finance_billing_us {
  # hidden: yes
 }
 
+explore: billing_media_io {
+  required_access_grants: [billing_report_group]
+  label: "Billing INTL Final"
+  # hidden: yes
+}
+
 explore: v_monthly_billing_report_diff_live_locked {
   required_access_grants: [billing_report_group]
   label: "Monthly Billing Report Diff Live Locked"

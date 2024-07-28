@@ -824,6 +824,13 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_deal_personnel.deal_id}=${dim_deal.internal_deal_id} ;;
     relationship: many_to_one
   }
+
+  join: dim_bidfloor_opti_version {
+    type: inner
+    view_label: "Bid Floor Opti Version"
+    sql_on: ${dim_bidfloor_opti_version.bidfloor_opti_version_key}=${fact_ad_daily_agg.bidfloor_opti_version_key} ;;
+    relationship: many_to_one
+  }
 }
 
 

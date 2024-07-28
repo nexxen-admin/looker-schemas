@@ -811,6 +811,12 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.ssp_crid  ;;
   }
 
+  dimension: bidfloor_opti_version_key {
+    type: number
+    sql: ${TABLE}.bidfloor_opti_version_key ;;
+    hidden: yes
+  }
+
   dimension: bizdev_owner_key {
     type: number
     sql: ${TABLE}.Bizdev_Owner_Key  ;;

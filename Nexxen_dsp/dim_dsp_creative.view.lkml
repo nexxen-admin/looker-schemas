@@ -73,7 +73,7 @@ view: dim_dsp_creative {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_created_date ;;
-    hidden: yes
+   # hidden: yes
   }
 
   dimension_group: db_updated {
@@ -127,7 +127,7 @@ view: dim_dsp_creative {
     type: date
     label: "Creative Start Date"
     sql: ${TABLE}.start_date ;;
-    #hidden: yes
+    hidden: yes
   }
 
   dimension: title {

@@ -16,6 +16,11 @@ view: dim_bidfloor_opti_version {
     sql: ${TABLE}.Bidfloor_Opti_Version ;;
   }
 
+  dimension: bidfloor_opti_status {
+    type: string
+    sql: case when ${TABLE}.Bidfloor_Opti_Version != 'no_opti' then 'opti' else ${TABLE}.Bidfloor_Opti_Version end ;;
+  }
+
   dimension: bidfloor_opti_version_key {
     type: number
     sql: ${TABLE}.Bidfloor_Opti_Version_key ;;

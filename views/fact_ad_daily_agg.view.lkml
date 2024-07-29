@@ -813,7 +813,7 @@ view: fact_ad_daily_agg {
 
   dimension: bidfloor_opti_version_key {
     type: number
-    sql: ${TABLE}.bidfloor_opti_version_key ;;
+    sql: ${TABLE}.Bidfloor_Opti_Version_Key ;;
     hidden: yes
   }
 

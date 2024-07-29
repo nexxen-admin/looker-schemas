@@ -125,9 +125,9 @@ view: dim_dsp_creative {
 
   dimension: start {
     type: date
-    label: "Date"
+    label: "Creative Start Date"
     sql: ${TABLE}.start_date ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: title {

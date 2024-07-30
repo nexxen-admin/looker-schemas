@@ -394,15 +394,27 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.final_complete_events ;;
   }
 
-  measure: CTR {
+  measure: CTR_1P {
     type: number
     value_format: "0.00%"
-    sql: ${final_clicks}/nullif(${final_impressions},0) ;;
+    sql: ${clicks}/nullif(${impressions},0) ;;
   }
 
-  measure: VCR {
+  measure: CTR_3P {
     type: number
-    sql: ${final_complete_events}/nullif(${final_impressions},0) ;;
+    value_format: "0.00%"
+    sql: ${third_party_clicks}/nullif(${third_party_impressions},0) ;;
+  }
+
+  measure: VCR_1P {
+    type: number
+    sql: ${complete_events}/nullif(${impressions},0) ;;
+    value_format: "0.00%"
+  }
+
+  measure: VCR_3P {
+    type: number
+    sql: ${third_party_complete_events}/nullif(${third_party_impressions},0) ;;
     value_format: "0.00%"
   }
 

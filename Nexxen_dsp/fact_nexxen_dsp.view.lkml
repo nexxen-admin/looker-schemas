@@ -338,6 +338,7 @@ view: fact_nexxen_dsp {
   measure: delivered_units {
     type: sum
     sql: ${TABLE}.delivery_units ;;
+    value_format: "#,##0"
   }
 
   measure: hybrid_impressions_delivered {
@@ -412,17 +413,18 @@ view: fact_nexxen_dsp {
     value_format: "0.00%"
   }
 
-  measure: yesterday_inv_cost {
+  measure:  Last_day_inv_cost {
+    label: "Yesterday Inv Cost"
     type: sum
     sql: ${TABLE}.inv_cost ;;
-    filters: [date_key_date: "last 1 day ago for 1 day"]
     value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "yesterday"]
   }
 
   measure: yesterday_units {
     type: sum
     sql: ${TABLE}.delivery_units ;;
-    filters: [date_key_date: "last 1 day ago for 1 day"]
+    filters: [date_key_in_timezone_date: "yesterday"]
     value_format: "#,##0"
   }
 

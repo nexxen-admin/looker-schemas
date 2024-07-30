@@ -835,10 +835,10 @@ explore: fact_ad_daily_agg{
 
 
 explore: fact_ad_hourly_agg{
-  always_filter: {
-    filters: [dim_date_hourly.date_time_key_date: "last 10 days "]
+  # # always_filter: {
+  # #   filters: [dim_date_hourly.date_time_key_date: "last 10 days "]
 
-  }
+  # }
   required_access_grants: [can_view_all_tremor]
 
   persist_with: CleanCash_datagroup

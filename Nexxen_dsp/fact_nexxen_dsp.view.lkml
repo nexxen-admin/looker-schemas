@@ -357,11 +357,13 @@ view: fact_nexxen_dsp {
   measure: impressions_discrepancy {
     type: number
     sql: (${impressions}-${third_party_impressions})/NULLIF(${impressions},0) ;;
+    value_format: "0.00%"
   }
 
   measure: clicks_discrepancy {
     type: number
     sql: (${clicks}-${third_party_clicks})/nullif(${clicks},0) ;;
+    value_format: "0.00%"
   }
 
   # measure: days_left {
@@ -394,7 +396,7 @@ view: fact_nexxen_dsp {
   measure: CTR {
     type: number
     value_format: "0.00%"
-    sql: ${clicks}/nullif(${impressions},0) ;;
+    sql: ${final_clicks}/nullif(${final_impressions},0) ;;
   }
 
   measure: VCR {
@@ -406,7 +408,7 @@ view: fact_nexxen_dsp {
   measure: IV {
     type: number
     label: "IV %"
-    sql: ${3p_in_view_impressions}/${3p_in_view_measurable_impressions} ;;
+    sql: ${3p_in_view_impressions}/nullif(${3p_in_view_measurable_impressions},0) ;;
     value_format: "0.00%"
   }
 

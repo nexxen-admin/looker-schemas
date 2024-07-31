@@ -84,7 +84,7 @@ view: fact_nexxen_dsp {
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
     datatype: date
-    label: "Date IN Timezone"
+    label: "Date in Timezone"
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 

@@ -324,15 +324,14 @@ view: fact_nexxen_dsp {
   measure: pacing {
     type: sum
     value_format: "#,##0.00"
-    sql: case when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM' then ${TABLE}.impressions
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPR' then ${TABLE}.inv_cost
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM' then ${TABLE}.inv_cost
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV' then ${TABLE}.complete_events
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC' then ${TABLE}.clicks
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPC' then ${TABLE}.cogs*1.2
-              end
-              ;;
-  hidden: yes
+    sql: ${TABLE}.pacing ;;
+  }
+
+  measure: yesterday_pacing {
+    type: sum
+    value_format: "#,##0.00"
+    sql: ${TABLE}.pacing ;;
+    filters: [date_key_in_timezone_date: "yesterday"]
   }
 
   measure: delivered_units {
@@ -376,6 +375,12 @@ view: fact_nexxen_dsp {
   measure: uncapped_revenue {
     type: sum
     sql: ${TABLE}.uncapped_revenue ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: capped_revenue {
+    type: sum
+    sql: ${TABLE}.capped_revenue ;;
     value_format: "$#,##0.00"
   }
 
@@ -438,6 +443,17 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.delivery_units ;;
     filters: [date_key_in_timezone_date: "yesterday"]
     value_format: "#,##0"
+  }
+
+  measure: distinct_package_id {
+    type: count_distinct
+    sql: ${dim_dsp_package_budget_schedule.package_id} ;;
+  }
+
+  measure: internal_ecpm {
+    type: sum
+    sql: ${TABLE}.internal_ecpm ;;
+    value_format: "$#,##0.00"
   }
 
   measure: daily_units_needed {

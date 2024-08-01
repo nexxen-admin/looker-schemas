@@ -671,6 +671,11 @@ explore: v_daily_data_usage_not_active_30 {
   hidden: yes
 }
 
+explore: v_daily_data_usage_not_active_90 {
+  label: "Vertica Data Usage - Not Active Attributes 90 days"
+  hidden: yes
+}
+
 explore: v_demand_metrics {
 
   view_name: v_daily_core_stats

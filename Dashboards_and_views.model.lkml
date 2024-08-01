@@ -349,6 +349,12 @@ explore: deal_commision_data {
   hidden: yes
 }
 
+explore: deal_commission_data_pivot {
+  label: "Deal Commision Data - Pivot"
+  #required_access_grants: [allowed_users_sam_lt]
+  hidden: yes
+}
+
 explore: new_money_unruly_player_aniview {
   label: "New Money Unruly Player Aniview"
   #required_access_grants: [can_view_pub_come_looker]
@@ -474,5 +480,10 @@ explore: rx_fact_segments_usage_data {
 
 explore: segments_with_0_cost_in_rx {
   label: "Zero Cost Segments"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_version {
+  label: "Bid Opti Version"
   required_access_grants: [can_view_all_tremor]
 }

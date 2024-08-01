@@ -16,6 +16,7 @@ view: v_dim_netsuite_daily_exchange_rate_target_currency {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.date_key ;;
+    hidden: yes
   }
 
   dimension_group: db_created {

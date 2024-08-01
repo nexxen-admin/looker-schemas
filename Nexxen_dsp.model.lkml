@@ -44,6 +44,18 @@ explore: billing_us_v1 {
   hidden: yes
 }
 
+explore: finance_billing_us {
+  required_access_grants: [billing_report_group]
+  label: "Billing US Final"
+ # hidden: yes
+}
+
+explore: billing_media_io {
+  required_access_grants: [billing_report_group]
+  label: "Billing INTL Final"
+  # hidden: yes
+}
+
 explore: v_monthly_billing_report_diff_live_locked {
   required_access_grants: [billing_report_group]
   label: "Monthly Billing Report Diff Live Locked"
@@ -223,6 +235,14 @@ explore: fact_nexxen_dsp  {
     type: inner
     view_label: "Employee"
     sql_on: ${dim_sfdb_user_opportunity_owner.opp_owner_id}=${dim_sfdb_opportunity.ownerid} ;;
+    relationship: many_to_one
+  }
+
+  join: v_dim_sfdb_opportunitylineitemschedule_new {
+    type: inner
+    view_label: "Salesforce Opportunity Line Item Schedule"
+    sql_on: ${v_dim_sfdb_opportunitylineitemschedule_new.opportunitylineitem_key}=${fact_nexxen_dsp.opportunitylineitem_key}
+      and ${fact_nexxen_dsp.date_key_month}=${v_dim_sfdb_opportunitylineitemschedule_new.event_month_month};;
     relationship: many_to_one
   }
 

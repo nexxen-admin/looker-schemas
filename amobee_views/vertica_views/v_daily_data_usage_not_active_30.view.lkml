@@ -19,6 +19,7 @@ SELECT
     v_retargeting_attribute.PROVIDER_NAME  AS "provider_name",
     v_advertiser_brand_details.INDUSTRY_SEGMENT_DESCRIPTION  AS "industry_segment",
     v_retargeting_attribute.DESCRIPTION  AS "retargeting_attribute",
+    (CASE WHEN v_retargeting_attribute.RETARGETING_ATTRIBUTE_ACTIVE  THEN 'Yes' ELSE 'No' END) AS "is_active",
         (DATE(max(v_daily_data_usage.GMT_DATE) )) AS "max_gmt_date"
 FROM RAWDB.DAILY_DATA_USAGE  AS v_daily_data_usage
 LEFT JOIN DIM.FLIGHT_MEDIA_DETAILS_BASE_VIEW  AS v_flight_media_details_base ON v_flight_media_details_base.FLIGHT_MEDIA_ID = v_daily_data_usage.FLIGHT_MEDIA_ID
@@ -29,11 +30,11 @@ LEFT JOIN DIM.PLACEMENT_DETAILS_BASE_VIEW  AS v_placement_details_base ON v_plac
 LEFT JOIN DIM.RETARGETING_ATTRIBUTE_DETAILS_VIEW  AS v_retargeting_attribute ON v_daily_data_usage.COST_ATTRIBUTE_ID = v_retargeting_attribute.RETARGETING_ATTRIBUTE_ID
 LEFT JOIN DIM.PLATFORM_CLIENT_VIEW  AS v_platform_client ON v_platform_client.PLATFORM_CLIENT_ID = v_campaign_details_base.PLATFORM_CLIENT_ID
 LEFT JOIN DIM.PLATFORM_CLIENT_VIEW  AS v_supply_platform_client ON v_placement_details_base.PLATFORM_CLIENT_ID = v_supply_platform_client.PLATFORM_CLIENT_ID
-GROUP BY 1, 2, 3
+GROUP BY 1, 2, 3, 4
 )
 SELECT all_at.*
-FROM all_at LEFT JOIN active ON all_at.provider_name=active.provider_name AND all_at.industry_segment=active.industry_segment AND all_at.retargeting_attribute=active.retargeting_attribute
-WHERE active.provider_name IS NULL ;;
+FROM all_at LEFT JOIN active ON ISNULL(all_at.provider_name, 'NA')=ISNULL(active.provider_name, 'NA') AND all_at.industry_segment=active.industry_segment AND all_at.retargeting_attribute=active.retargeting_attribute
+WHERE active.provider_name IS NULL AND active.retargeting_attribute IS NULL ;;
   }
 label: "Vertica Data Usage - Not Active Attributes 30 days"
 
@@ -54,7 +55,13 @@ dimension: retargeting_attribute {
 
 dimension: last_date {
   type: date
-  label: "Last active day"
+  label: "Last Active Day"
   sql: ${TABLE}.max_gmt_date ;;
+}
+
+dimension: is_active {
+  type: string
+  label: "Is Attribute Active"
+  sql: ${TABLE}.is_active ;;
 }
 }

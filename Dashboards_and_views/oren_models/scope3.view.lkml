@@ -2,7 +2,8 @@ view: scope3 {
     derived_table: {
       sql:
 
-
+      SELECT *
+      FROM (
       SELECT AA.event_time::date as est_datetime,
              'NEXXEN.SSP' as atp,
              country_code as country,
@@ -13,11 +14,11 @@ view: scope3 {
              MAX(ad_size) as max_placement_size, --max_placement_size !! do you want max or all of them, better if we do a lot of data !!
              CASE WHEN rtb_device_type=1 THEN 'phone'
                   WHEN rtb_device_type=2 THEN 'pc'
-                  WHEN rtb_device_type=3 THEN 'smart-speaker'
+                  WHEN rtb_device_type=3 THEN 'tv'
                   WHEN rtb_device_type=4 THEN 'phone'
                   WHEN rtb_device_type=5 THEN 'tablet'
-                  WHEN rtb_device_type=6 THEN 'smart-speaker'
-                  WHEN rtb_device_type=7 THEN 'smart-speaker' END
+                  WHEN rtb_device_type=6 THEN 'tv'
+                  WHEN rtb_device_type=7 THEN 'tv' ELSE '' END
                   as device_type,
              SUM(requests) as ad_opportunities,
              SUM(CASE WHEN (aa.rx_request_status in ('nodsp','nodspbids','bidresponse') or aa.rx_request_status is NULL) THEN requests ELSE 0 END) as ad_opportunities_processed
@@ -32,10 +33,12 @@ view: scope3 {
       left outer join andromeda.rx_dim_ssp_r CC
       ON AA.rx_ssp_name = CC.name
 
-      WHERE AA.event_time >= (CURRENT_DATE - INTERVAL '1 day')  AND AA.event_time < CURRENT_DATE
+      WHERE AA.event_time >= (CURRENT_DATE - INTERVAL '1 day')
+            AND AA.event_time < CURRENT_DATE
             AND requests>0
 
-      GROUP BY 1,2,3,4,5,6,7,9
+      GROUP BY 1,2,3,4,5,6,7,9) AA
+      WHERE ad_opportunities>10000
 
 
         ;;

@@ -135,9 +135,14 @@ view: impression_r {
   #   #hidden: yes
   #   }
 
-    measure: impressions {
+    measure: impressions_billable {
       type: sum
       sql: case when ${TABLE}.isbillable=1 then 1 else 0 end ;;
+    }
+
+    measure: impressions {
+      type: count_distinct
+      sql: ${TABLE}.requestid ;;
     }
 
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
@@ -487,12 +492,13 @@ view: impression_r {
   measure: user_id {
     type: count_distinct
     label: "user_id's"
-    sql: coalesce(${TABLE}.ifa,${TABLE}.ip) ;;
+    sql: ${TABLE}.userid ;;
   }
 
   measure: Unique_Reach {
     type: count_distinct
-    sql: coalesce(${TABLE}.ifa,${TABLE}.ip,${TABLE}.userid) ;;
+    sql: coalesce(${TABLE}.userid,${TABLE}.ifa,${TABLE}.ip) ;;
+    description: "Takes the first id type that is not null - userid, ifa or ip, according to this order"
   }
 
   dimension: isbillable {

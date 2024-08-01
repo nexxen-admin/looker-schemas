@@ -33,7 +33,8 @@ view: scope3 {
       left outer join andromeda.rx_dim_ssp_r CC
       ON AA.rx_ssp_name = CC.name
 
-      WHERE date(AA.event_time) >= (CURRENT_DATE - INTERVAL '1 day')  AND AA.event_time < CURRENT_DATE
+      WHERE AA.event_time >= (CURRENT_DATE - INTERVAL '1 day')
+            AND AA.event_time < CURRENT_DATE
             AND requests>0
 
       GROUP BY 1,2,3,4,5,6,7,9) AA

@@ -152,4 +152,33 @@ view: dim_dsp_creative {
     drill_fields: [creative_name]
     hidden: yes
   }
+  measure: creative_id_measure {
+    type: number
+    sql: ${TABLE}.creative_id ;;
+  }
+  measure: count_creative {
+    type: number
+    sql: count(${creative_id}) ;;
+    hidden: no
+  }
+
+  measure: prev_creative_id_measure {
+    type: number
+    sql: LAG(${creative_id}) OVER (ORDER BY ${creative_id}) ;;
+  }
+
+  measure: next_creative_id_measure {
+    type: number
+    sql: LEAD(${creative_id}) OVER (ORDER BY ${creative_id}) ;;
+  }
+
+  measure: error_status {
+    type: string
+    sql: CASE
+           WHEN ${creative_id_measure} / ${prev_creative_id_measure} > 1 and
+          ${next_creative_id_measure}/${creative_id_measure}>1
+          THEN 'ok'
+           ELSE 'Error'
+         END ;;
+  }
 }

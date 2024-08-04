@@ -147,9 +147,6 @@ view: dim_dsp_creative {
     sql: ${TABLE}.workflow_status_id ;;
     hidden: yes
   }
-  measure: count {
-    type: count
-    drill_fields: [creative_name]
-    hidden: yes
-  }
+
+
 }

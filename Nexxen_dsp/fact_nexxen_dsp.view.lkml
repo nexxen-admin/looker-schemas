@@ -378,6 +378,13 @@ view: fact_nexxen_dsp {
     value_format: "$#,##0.00"
   }
 
+  measure: prev_month_uncapped_revenue {
+    type: sum
+    sql: ${TABLE}.uncapped_revenue ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "last month"]
+  }
+
   measure: capped_revenue {
     type: sum
     sql: ${TABLE}.capped_revenue ;;
@@ -456,12 +463,29 @@ view: fact_nexxen_dsp {
     value_format: "$#,##0.00"
   }
 
+  measure: media_margin {
+    type: number
+    sql: (${capped_revenue}-${cost})/nullif(${capped_revenue},0) ;;
+  }
+
+  measure: monthly_budget_breakout {
+    type: sum
+    sql: case when ${dim_sfdb_opportunitylineitem.gross_billable__c}-${TABLE}.uncapped_revenue<0
+      then 0 else ${dim_sfdb_opportunitylineitem.gross_billable__c}-${TABLE}.uncapped_revenue end;;
+    filters: [date_key_in_timezone_date: "last month"]
+    hidden: yes
+    #incorrect - might need to be calculated in the back
+    }
+
+
   measure: daily_units_needed {
     type: sum
     sql: case when ${dim_sfdb_opportunitylineitem.price_type_name__c} in ('dCPM', 'CPR') then
     (${dim_sfdb_opportunitylineitem.gross_billable__c} - ${TABLE}.delivery_units)/nullif(${v_dim_sfdb_opportunitylineitemschedule_new.total_days_left_in_sl},0) else
     (${dim_sfdb_opportunitylineitem.units__c}-${TABLE}.delivery_units)/nullif(${v_dim_sfdb_opportunitylineitemschedule_new.total_days_left_in_sl},0) end;;
-    #hidden: yes
+    hidden: yes
+    #incorrect - might need to be calculated in the back
+
   }
 
   measure: count {

@@ -2,7 +2,8 @@ view: scope3 {
     derived_table: {
       sql:
 
-
+      SELECT *
+      FROM (
       SELECT AA.event_time::date as est_datetime,
              'NEXXEN.SSP' as atp,
              country_code as country,
@@ -32,10 +33,12 @@ view: scope3 {
       left outer join andromeda.rx_dim_ssp_r CC
       ON AA.rx_ssp_name = CC.name
 
-      WHERE AA.event_time >= (CURRENT_DATE - INTERVAL '1 day')  AND AA.event_time < CURRENT_DATE
+      WHERE AA.event_time >= (CURRENT_DATE - INTERVAL '1 day')
+            AND AA.event_time < CURRENT_DATE
             AND requests>0
 
-      GROUP BY 1,2,3,4,5,6,7,9
+      GROUP BY 1,2,3,4,5,6,7,9) AA
+      WHERE ad_opportunities>10000
 
 
         ;;

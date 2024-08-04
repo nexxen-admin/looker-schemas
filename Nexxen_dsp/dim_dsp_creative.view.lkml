@@ -147,6 +147,4 @@ view: dim_dsp_creative {
     sql: ${TABLE}.workflow_status_id ;;
     hidden: yes
   }
-
-
 }

@@ -187,9 +187,14 @@ view: fact_nexxen_dsp {
     type: number
     sql: ${TABLE}.package_id ;;
     hidden: yes
-
-
   }
+
+  dimension: package_id_key {
+    type: number
+    sql: ${TABLE}.package_id_key ;;
+    hidden: yes
+  }
+
    measure: inventory_cost {
     type: sum
     value_format: "$#,##0.00"

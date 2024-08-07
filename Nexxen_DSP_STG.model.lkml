@@ -236,5 +236,12 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_package {
+    type: inner
+    view_label: "Package"
+    sql_on: ${dim_dsp_package.package_id_key}=${fact_nexxen_dsp.package_id_key} ;;
+    relationship: many_to_one
+  }
+
 
 }

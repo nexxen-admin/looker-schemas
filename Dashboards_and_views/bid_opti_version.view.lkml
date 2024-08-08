@@ -279,7 +279,6 @@ From base_data bd
     value_format: "$#,##0.00"
   }
 
-
   set: detail {
     fields: [
   publisher_id,

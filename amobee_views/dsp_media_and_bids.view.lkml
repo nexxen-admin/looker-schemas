@@ -1738,9 +1738,62 @@ dimension: browser_type_name {
     label: "Total Inv Cost period-over-period % change"
     type: number
     sql: CASE WHEN ${current_period_inv_cost} = 0
-                THEN NULL
-                ELSE (1.0 * ${current_period_inv_cost} / NULLIF(${previous_period_inv_cost} ,0)) - 1 END ;;
-    value_format_name: percent_2
-  }
+                 THEN NULL
+                 ELSE (1.0 * ${current_period_inv_cost} / NULLIF(${previous_period_inv_cost} ,0)) - 1 END ;;
+     value_format_name: percent_2
+   }
+
+  # measure: current_period_cogs {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.cogs ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "this"]
+  # }
+
+  # measure: previous_period_cogs {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.cogs ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "last"]
+  # }
+
+  # measure: cogs_pop_change {
+  #   view_label: "PoP"
+  #   label: "Total Cogs period-over-period % change"
+  #   type: number
+  #   sql: CASE WHEN ${current_period_cogs} = 0
+  #               THEN NULL
+  #               ELSE (1.0 * ${current_period_cogs} / NULLIF(${previous_period_cogs} ,0)) - 1 END ;;
+  #   value_format_name: percent_2
+  # }
+
+  # measure: current_period_clicks {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.clicks ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "this"]
+  # }
+
+  # measure: previous_period_clicks {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.clicks ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "last"]
+  # }
+
+  # measure: clicks_pop_change {
+  #   view_label: "PoP"
+  #   label: "Total Clicks period-over-period % change"
+  #   type: number
+  #   sql: CASE WHEN ${current_period_clicks} = 0
+  #               THEN NULL
+  #               ELSE (1.0 * ${current_period_clicks} / NULLIF(${previous_period_clicks} ,0)) - 1 END ;;
+  #   value_format_name: percent_2
+  # }
+
 
 }

@@ -463,7 +463,7 @@ view: fact_nexxen_dsp {
   }
 
   measure: internal_ecpm {
-    type: sum
+    type: average
     sql: ${TABLE}.internal_ecpm ;;
     value_format: "$#,##0.00"
   }

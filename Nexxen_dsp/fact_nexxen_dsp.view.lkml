@@ -462,9 +462,16 @@ view: fact_nexxen_dsp {
     sql: ${dim_dsp_package_budget_schedule.package_id} ;;
   }
 
-  measure: internal_ecpm {
+  measure: internal_ecpm_vertica {
     type: average
     sql: ${TABLE}.internal_ecpm ;;
+    value_format: "$#,##0.00"
+    hidden: yes
+  }
+
+  measure: internal_ecpm {
+    type: number
+    sql: (${cost}/nullif(${impressions},0))*1000 ;;
     value_format: "$#,##0.00"
   }
 

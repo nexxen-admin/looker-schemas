@@ -23,7 +23,7 @@ view: bid_opti_v1 {
         sum(ad.cost) as Cost,
         sum(ad.cogs) as COGS
       From andromeda.ad_data_daily ad
-        inner join sandbox.opti_placements op on op.placementid::varchar = ad.media_id::varchar
+        inner join Andromeda.rx_dim_supply_placement_margin_opti_split_override_r op on op.placement_id::varchar = ad.media_id::varchar
                             and ad.rx_ssp_name ilike 'rmp%'
         left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id::varchar = ad.media_id
         left outer join andromeda.rx_dim_supply_publisher_traffic_source spts on spts.pub_ts_id = spl.pub_ts_id

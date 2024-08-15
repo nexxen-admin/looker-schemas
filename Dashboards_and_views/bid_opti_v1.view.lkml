@@ -169,9 +169,9 @@ view: bid_opti_v1 {
   }
 
   measure: req_ratio {
-    type: sum
+    type: number
     sql: ${TABLE}.req_ratio ;;
-    value_format: "#,##0"
+    value_format:"0.00%"
   }
 
   measure: attempts {

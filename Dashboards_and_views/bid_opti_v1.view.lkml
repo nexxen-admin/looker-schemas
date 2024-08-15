@@ -59,6 +59,7 @@ view: bid_opti_v1 {
       bd.Opti_Status,
       bd.Bid_Floor,
       bd.Requests,
+      bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type)) as req_ratio,
       bd.Attempts,
       bd.Bids,
       bd.Impressions,
@@ -164,6 +165,12 @@ view: bid_opti_v1 {
   measure: requests {
     type: sum
     sql: ${TABLE}.requests ;;
+    value_format: "#,##0"
+  }
+
+  measure: req_ratio {
+    type: sum
+    sql: ${TABLE}.req_ratio ;;
     value_format: "#,##0"
   }
 
@@ -289,6 +296,7 @@ view: bid_opti_v1 {
       device_type,
       opti_status,
       requests,
+      req_ratio,
       attempts,
       bids,
       impressions,

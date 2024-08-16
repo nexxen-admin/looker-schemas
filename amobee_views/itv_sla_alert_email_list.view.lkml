@@ -1,5 +1,5 @@
 view: sla_alert_email_list {
-    sql_table_name: "SLA"."SLA_ALERT_EMAIL_LIST"
+    sql_table_name: "SLA_ALERT_EMAIL_LIST"
       ;;
 
     dimension: sla_alert_email_list_id {

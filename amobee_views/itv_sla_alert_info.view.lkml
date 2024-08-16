@@ -1,5 +1,5 @@
 view: sla_alert_info {
-  sql_table_name: "SLA"."SLA_ALERT_INFO"
+  sql_table_name: "SLA_ALERT_INFO"
     ;;
   drill_fields: [sla_alert_info_id]
 

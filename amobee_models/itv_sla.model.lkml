@@ -1,4 +1,4 @@
-connection: "snowflake"
+connection: "mssql-oltp-sla"
 
 include: "/**/*.view.lkml"                     # include all views in this project
 
@@ -13,14 +13,6 @@ persist_with: itv_sla_metric_default_datagroup
 
 
 
-explore: daily_gw_report_snapshot {
-
-  join: sla_report_info {
-    type: inner
-    sql_on: ${daily_gw_report_snapshot.sla_report_info_id} = ${sla_report_info.sla_report_info_id} ;;
-    relationship: many_to_one
-  }
-}
 
 explore: daily_report_snapshot {
 
@@ -36,14 +28,7 @@ explore: daily_report_snapshot {
   }
 }
 
-explore: derived_gw_metric_daily {
 
-  join: golden_window {
-    type: inner
-    sql_on: ${derived_gw_metric_daily.golden_window_id} = ${golden_window.golden_window_id} ;;
-    relationship: many_to_one
-  }
-}
 
 explore: derived_metric_daily {
 
@@ -54,30 +39,16 @@ explore: derived_metric_daily {
   }
 }
 
-explore: golden_window {}
 
 explore: metric_info {}
 
-explore: monthly_gw_report_snapshot {
 
-  join: sla_report_info {
-    type: inner
-    sql_on: ${monthly_gw_report_snapshot.sla_report_info_id} = ${sla_report_info.sla_report_info_id} ;;
-    relationship: many_to_one
-  }
-}
 
 explore: monthly_report_snapshot {
 
   join: sla_report_info {
     type: inner
     sql_on: ${sla_report_info_id} = ${sla_report_info.sla_report_info_id} ;;
-    relationship: many_to_one
-  }
-  join: monthly_report_info {
-    type: left_outer
-    sql_on: ${sla_report_info_id} = ${monthly_report_info.sla_report_info_id} and
-      ${report_date} = ${monthly_report_info.report_date} ;;
     relationship: many_to_one
   }
   join: sla_lookup {
@@ -107,14 +78,7 @@ explore: raw_metric_minute {
 
 explore: sla_report_info {}
 
-explore: monthly_report_info {
 
-  join: sla_report_info {
-    type: inner
-    sql_on: ${sla_report_info_id} = ${sla_report_info.sla_report_info_id} ;;
-    relationship: many_to_one
-  }
-}
 
 explore: sla_false_positive {
 

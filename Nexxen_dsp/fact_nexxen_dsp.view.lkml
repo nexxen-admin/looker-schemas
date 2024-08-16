@@ -84,7 +84,7 @@ view: fact_nexxen_dsp {
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
     datatype: date
-    label: "Date IN Timezone"
+    label: "Date in Timezone"
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 
@@ -187,9 +187,14 @@ view: fact_nexxen_dsp {
     type: number
     sql: ${TABLE}.package_id ;;
     hidden: yes
-
-
   }
+
+  dimension: package_id_key {
+    type: number
+    sql: ${TABLE}.package_id_key ;;
+    hidden: yes
+  }
+
    measure: inventory_cost {
     type: sum
     value_format: "$#,##0.00"
@@ -322,31 +327,22 @@ view: fact_nexxen_dsp {
   }
 
   measure: pacing {
-    type: sum
-    value_format: "#,##0.00"
-    sql: case when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM' then ${TABLE}.impressions
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPR' then ${TABLE}.inv_cost
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM' then ${TABLE}.inv_cost
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV' then ${TABLE}.complete_events
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC' then ${TABLE}.clicks
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPC' then ${TABLE}.cogs*1.2
-              end
-              ;;
-  hidden: yes
+    type: average
+    value_format: "0.00\%"
+    sql: ${TABLE}.pacing ;;
+  }
+
+  measure: yesterday_pacing {
+    type: average
+    value_format: "0.00\%"
+    sql: ${TABLE}.pacing ;;
+    filters: [date_key_in_timezone_date: "yesterday"]
   }
 
   measure: delivered_units {
     type: sum
-    value_format: "#,##0.00"
-    sql: case when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM' then ${TABLE}.third_party_impressions
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPR' then ${TABLE}.inv_cost
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM' then ${TABLE}.inv_cost
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV' then ${TABLE}.complete_events
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC' then ${TABLE}.third_party_clicks
-              when dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPC' then ${TABLE}.cogs*1.2
-              end
-              ;;
-  hidden: yes
+    sql: ${TABLE}.delivery_units ;;
+    value_format: "#,##0"
   }
 
   measure: hybrid_impressions_delivered {
@@ -364,170 +360,555 @@ view: fact_nexxen_dsp {
   }
 
   measure: impressions_discrepancy {
-    type: sum
-    sql: (${TABLE}.third_party_impressions-${TABLE}.impressions)/NULLIF(${TABLE}.impressions,0) ;;
+    type: number
+    sql: (${impressions}-${third_party_impressions})/NULLIF(${impressions},0) ;;
+    value_format: "0.00%"
   }
 
   measure: clicks_discrepancy {
-    type: sum
-    sql: (${TABLE}.third_party_clicks-${TABLE}.clicks)/nullif(${TABLE}.clicks,0) ;;
+    type: number
+    sql: (${clicks}-${third_party_clicks})/nullif(${clicks},0) ;;
+    value_format: "0.00%"
   }
 
-  measure: days_left {
-    type: sum
-    sql: case when DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c)<0
-    then 0 else DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c) end;;
-  }
+  # measure: days_left {
+  #   type: sum
+  #   sql: case when DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c)<0
+  #   then 0 else DATEDIFF('day',current_date - INTERVAL '1' day ,dim_sfdb_opportunitylineitem.end_date__c) end;;
+  # }
 
   measure: uncapped_revenue {
-    type: number
-    sql: CASE WHEN ((dim_sfdb_opportunitylineitem.free__c = 'Added Value') OR
-                    (dim_sfdb_opportunitylineitem.free__c = 'Make Good') OR
-                    (dim_sfdb_opportunitylineitem.free__c = 'Canceled') OR
-                    (dim_sfdb_opportunitylineitem.free__c = 'Bonus')) THEN 0
-              WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM') THEN
-                    CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-                            THEN ${TABLE}.impressions ELSE ${TABLE}.third_party_impressions END
-                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-                            THEN ${TABLE}.complete_events ELSE ${TABLE}.third_party_complete_events END
-                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-                            THEN ${TABLE}.clicks ELSE ${TABLE}.third_party_clicks END
-                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-                            THEN ${TABLE}.impressions ELSE 0 END * dim_sfdb_opportunitylineitem.rate__c / 1000
-              WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV') THEN
-                    CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-                            THEN ${TABLE}.impressions ELSE ${TABLE}.third_party_impressions END
-                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-                            THEN ${TABLE}.complete_events ELSE ${TABLE}.third_party_complete_events END
-                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-                            THEN ${TABLE}.clicks ELSE ${TABLE}.third_party_clicks END
-                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-                            THEN ${TABLE}.impressions ELSE 0 END * dim_sfdb_opportunitylineitem.rate__c
-              WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC') THEN
-                    CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-                            THEN ${TABLE}.impressions ELSE ${TABLE}.third_party_impressions END
-                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-                            THEN ${TABLE}.complete_events ELSE ${TABLE}.third_party_complete_events END
-                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-                            THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-                            THEN ${TABLE}.clicks ELSE ${TABLE}.third_party_clicks END
-                         WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-                            THEN ${TABLE}.impressions ELSE 0 END * dim_sfdb_opportunitylineitem.rate__c
-              WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-                            THEN ${TABLE}.cost ELSE 0 END
- ;;
-hidden: yes
+    type: sum
+    sql: ${TABLE}.uncapped_revenue ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: prev_month_uncapped_revenue {
+    type: sum
+    sql: ${TABLE}.uncapped_revenue ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "last month"]
   }
 
   measure: capped_revenue {
     type: sum
-    sql: CASE WHEN ((dim_sfdb_opportunitylineitem.gross_billable__c - v_dim_dsp_Netsuite_invoice_quantity.monthly_budget_amount)
-    < CASE WHEN ((dim_sfdb_opportunitylineitem.free__c = 'Added Value')
-    OR (dim_sfdb_opportunitylineitem.free__c = 'Make Good')
-    OR (dim_sfdb_opportunitylineitem.free__c = 'Canceled')
-    OR (dim_sfdb_opportunitylineitem.free__c = 'Bonus'))
-    THEN 0 WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-    THEN ((sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c) / 1000)
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-    THEN (sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c)
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-    THEN (sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c)
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-    THEN sum(fact_nexxen_dsp.cost) ELSE 0 END)
-    THEN (dim_sfdb_opportunitylineitem.gross_billable__c - v_dim_dsp_Netsuite_invoice_quantity.monthly_budget_amount)
-    ELSE CASE WHEN ((dim_sfdb_opportunitylineitem.free__c = 'Added Value')
-    OR (dim_sfdb_opportunitylineitem.free__c = 'Make Good')
-    OR (dim_sfdb_opportunitylineitem.free__c = 'Canceled')
-    OR (dim_sfdb_opportunitylineitem.free__c = 'Bonus'))
-    THEN 0 WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-    THEN ((sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c) / 1000)
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-    THEN (sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c)
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-    THEN (sum(CASE WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPM')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.impressions ELSE fact_nexxen_dsp.third_party_impressions END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPCV')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.complete_events ELSE fact_nexxen_dsp.third_party_complete_events END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'CPC')
-    THEN CASE WHEN (dim_sfdb_opportunitylineitem.reporting__c = 'Amobee')
-    THEN fact_nexxen_dsp.clicks ELSE fact_nexxen_dsp.third_party_clicks END
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-    THEN fact_nexxen_dsp.impressions ELSE 0 END) * dim_sfdb_opportunitylineitem.rate__c)
-    WHEN (dim_sfdb_opportunitylineitem.price_type_name__c = 'dCPM')
-    THEN sum(fact_nexxen_dsp.cost) ELSE 0 END END
- ;;
-hidden: yes
+    sql: ${TABLE}.capped_revenue ;;
+    value_format: "$#,##0.00"
   }
 
-  measure: CTR {
+  measure: final_impressions {
     type: sum
-    value_format: "0.00\%"
-    sql: ${TABLE}.clicks/nullif(${TABLE}.impressions,0) ;;
+    sql: ${TABLE}.final_impressions ;;
+  }
+
+  measure: final_clicks {
+    type: sum
+    sql: ${TABLE}.final_clicks ;;
+  }
+
+  measure: final_complete_events {
+    type: sum
+    sql: ${TABLE}.final_complete_events ;;
+  }
+
+  measure: CTR_1P {
+    type: number
+    value_format: "0.00%"
+    sql: ${clicks}/nullif(${impressions},0) ;;
+  }
+
+  measure: CTR_3P {
+    type: number
+    value_format: "0.00%"
+    sql: ${third_party_clicks}/nullif(${third_party_impressions},0) ;;
+  }
+
+  measure: VCR_1P {
+    type: number
+    sql: ${complete_events}/nullif(${impressions},0) ;;
+    value_format: "0.00%"
+  }
+
+  measure: VCR_3P {
+    type: number
+    sql: ${third_party_complete_events}/nullif(${third_party_impressions},0) ;;
+    value_format: "0.00%"
+  }
+
+  measure: IV {
+    type: number
+    label: "IV %"
+    sql: ${3p_in_view_impressions}/nullif(${3p_in_view_measurable_impressions},0) ;;
+    value_format: "0.00%"
+  }
+
+  measure:  Last_day_inv_cost {
+    label: "Yesterday Inv Cost"
+    type: sum
+    sql: ${TABLE}.inv_cost ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "yesterday"]
+  }
+
+  measure: yesterday_units {
+    type: sum
+    sql: ${TABLE}.delivery_units ;;
+    filters: [date_key_in_timezone_date: "yesterday"]
+    value_format: "#,##0"
+  }
+
+  measure: distinct_package_id {
+    type: count_distinct
+    sql: ${dim_dsp_package_budget_schedule.package_id} ;;
+  }
+
+  measure: internal_ecpm_vertica {
+    type: average
+    sql: ${TABLE}.internal_ecpm ;;
+    value_format: "$#,##0.00"
+    hidden: yes
+  }
+
+  measure: internal_ecpm {
+    type: number
+    sql: (${cost}/nullif(${impressions},0))*1000 ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: media_margin {
+    type: number
+    sql: (${capped_revenue}-${cost})/nullif(${capped_revenue},0) ;;
+  }
+
+  measure: monthly_budget_breakout {
+    type: sum
+    sql: case when ${dim_sfdb_opportunitylineitem.gross_billable__c}-${TABLE}.uncapped_revenue<0
+      then 0 else ${dim_sfdb_opportunitylineitem.gross_billable__c}-${TABLE}.uncapped_revenue end;;
+    filters: [date_key_in_timezone_date: "last month"]
+    hidden: yes
+    #incorrect - might need to be calculated in the back
+    }
+
+
+  measure: daily_units_needed {
+    type: sum
+    sql: case when ${dim_sfdb_opportunitylineitem.price_type_name__c} in ('dCPM', 'CPR') then
+    (${dim_sfdb_opportunitylineitem.gross_billable__c} - ${TABLE}.delivery_units)/nullif(${v_dim_sfdb_opportunitylineitemschedule_new.total_days_left_in_sl},0) else
+    (${dim_sfdb_opportunitylineitem.units__c}-${TABLE}.delivery_units)/nullif(${v_dim_sfdb_opportunitylineitemschedule_new.total_days_left_in_sl},0) end;;
+    hidden: yes
+    #incorrect - might need to be calculated in the back
+
   }
 
   measure: count {
     type: count
     hidden: yes
+  }
+
+  #--------------------------------------------------pop-------------------------------------------------------
+  filter: current_date_range {
+    type: date
+    view_label: "PoP"
+    label: "Current Date Range"
+    description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
+    sql: ${period} IS NOT NULL ;;
+
+
+  }
+  dimension:  date_for_html {
+    type: date
+    view_label: "PoP"
+    sql: ${current_date_range} ;;
+    html:
+    <ul>
+         <li> value: {{ rendered_value }} </li>
+    </ul> ;;
+
+  }
+
+
+
+  parameter: compare_to {
+    view_label: "PoP"
+    description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
+    label: "Compare To:"
+    type: unquoted
+
+    allowed_value: {
+      label: "Previous Month"
+      value: "Month"
+    }
+
+    allowed_value: {
+      label: "Previous Year"
+      value: "Year"
+    }
+
+    allowed_value: {
+      label: "Previous Week"
+      value: "Week"
+    }
+
+    allowed_value: {
+      label: "Previous Quarter"
+      value: "Quarter"
+    }
+    default_value: "Period"
+  }
+
+  parameter: choose_breakdown {
+    label: "Choose Grouping"
+    view_label: "PoP"
+    type: unquoted
+    default_value: "day_of_month"
+    allowed_value: {label:"daily" value:"day_of_month"}
+    allowed_value: {label:"monthly" value: "month_name"}
+  }
+
+
+## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##
+  dimension: sort_by1 {
+    hidden: yes
+    type: number
+    sql:
+        {% if choose_breakdown._parameter_value == 'month_name' %} ${date_in_period_month_num}
+        {% elsif choose_breakdown._parameter_value == 'day_of_month' %} ${date_in_period_day_of_month}
+        {% elsif choose_breakdown._parameter_value == 'year' %} ${date_in_period_year}}
+        {% elsif choose_breakdown._parameter_value == 'quarter' %} ${date_in_period_quarter}
+        {% else %}NULL{% endif %} ;;
+  }
+  dimension: sort_by2 {
+    hidden: yes
+    type: string
+    sql:
+        {% if choose_comparison._parameter_value == 'year' %} ${date_in_period_year}
+        {% elsif choose_comparison._parameter_value =='month' %} ${date_in_period_month_num}
+        {% else %}NULL{% endif %} ;;
+  }
+  parameter: choose_comparison {
+    label: "Choose Comparison (Pivot)"
+    view_label: "PoP"
+    description: "Defines whether the comparison will be monthly or yearly"
+    type: unquoted
+    default_value: "month"
+    allowed_value: {value: "year" }
+    allowed_value: {value: "month"}
+
+  }
+  dimension: pop_pivot {
+    view_label: "PoP"
+    description: "Takes the 'choose comparison' parameter and adds a suitable parameter to it"
+    label_from_parameter: choose_comparison
+    type: string
+    order_by_field: sort_by2 # Important
+    sql:
+        {% if choose_comparison._parameter_value == 'year' %} ${date_in_period_year}
+        {% elsif choose_comparison._parameter_value =='month' %} ${date_in_period_month}
+        {% else %}NULL{% endif %} ;;
+  }
+
+  dimension: pop_row  {
+    view_label: "PoP"
+    description: "Takes the 'choose breakdown' parameter and adds a suitable parameter to it"
+    label_from_parameter: choose_breakdown
+    type: string
+    order_by_field: sort_by1 # Important
+    sql:
+        {% if choose_breakdown._parameter_value == 'day_of_month' %} ${date_in_period_day_of_month}
+        {% elsif choose_breakdown._parameter_value == 'month_name' %} ${date_in_period_month_name}
+        {% else %}'2022-01-01'{% endif %} ;;
+  }
+
+  dimension: days_in_period {
+    hidden:  yes
+    view_label: "PoP"
+    description: "Gives the number of days in the current period date range"
+    type: number
+    sql: TIMESTAMPDIFF(DAY, CAST({% date_start current_date_range %} AS TIMESTAMP), CAST({% date_end current_date_range %} AS TIMESTAMP)) ;;
+  }
+
+  dimension: period_2_start {
+    hidden:  yes
+    view_label: "PoP"
+    description: "Calculates the start of the previous period"
+    type: date
+    sql:
+            {% if compare_to._parameter_value == "Period" %}
+           -- TIMESTAMPADD({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
+            TIMESTAMPADD(DAY, -${days_in_period}, CAST({% date_start current_date_range %} AS TIMESTAMP))
+            {% else %}
+            TIMESTAMPADD({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
+            {% endif %};;
+  }
+
+  dimension: period_2_end {
+    hidden:  yes
+    view_label: "PoP"
+    description: "Calculates the end of the previous period"
+    type: date
+    sql:
+            {% if compare_to._parameter_value == "Period" %}
+            TIMESTAMPADD(DAY, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
+            {% else %}
+            TIMESTAMPADD({% parameter compare_to %}, -1, TIMESTAMPADD(DAY, -1, CAST({% date_end current_date_range %} AS TIMESTAMP)))
+            {% endif %};;
+  }
+
+  dimension: day_in_period {
+    hidden: yes
+    description: "Gives the number of days since the start of each period. Use this to align the event dates onto the same axis, the axes will read 1,2,3, etc."
+    type: number
+    sql:
+        {% if current_date_range._is_filtered %}
+            CASE
+            WHEN {% condition current_date_range %} ${date_key_in_timezone_raw} {% endcondition %}
+            THEN TIMESTAMPDIFF(DAY, CAST({% date_start current_date_range %} AS TIMESTAMP), ${date_key_in_timezone_raw}) + 1
+            WHEN ${date_key_in_timezone_raw} between ${period_2_start} and ${period_2_end}
+            THEN TIMESTAMPDIFF(DAY, ${period_2_start}, ${date_key_in_timezone_raw}) + 1
+            END
+        {% else %} NULL
+        {% endif %}
+        ;;
+  }
+
+  dimension: mtd_only {
+    group_label: "To-Date Filters"
+    label: "MTD"
+    view_label: "PoP"
+    type: yesno
+    sql:  (EXTRACT(DAY FROM ${date_in_period_date}) < EXTRACT(DAY FROM GETDATE())
+                    OR
+                (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
+                EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
+                    OR
+                (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
+                EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
+                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
+    description: "Filters the data to be only month to date"
+  }
+
+  dimension: qtd_only {
+    group_label: "To-Date Filters"
+    label: "QTD"
+    view_label: "PoP"
+    description: "Filters the data to be only quarter to date"
+    type: yesno
+    sql: ${date_in_period_date} > TO_DATE(DATE_TRUNC('quarter', CURRENT_DATE())) AND ${date_in_period_date} <
+      (TO_DATE(DATEADD('month', 3, CAST(DATE_TRUNC('quarter', CAST(DATE_TRUNC('quarter', CURRENT_DATE()) AS DATE)) AS DATE)))) ;;
+  }
+
+  dimension: ytd_only {
+    group_label: "To-Date Filters"
+    label: "YTD"
+    description: "Filters the data to be only year to date"
+    view_label: "PoP"
+    type: yesno
+    sql:  (EXTRACT(DOY FROM ${date_in_period_date}) < EXTRACT(DOY FROM GETDATE())
+                    OR
+                (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
+                EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
+                    OR
+                (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
+                EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
+                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
+  }
+
+  dimension: order_for_period {
+    hidden: yes
+    type: number
+    sql:
+            {% if current_date_range._is_filtered %}
+                CASE
+                WHEN {% condition current_date_range %} ${date_key_in_timezone_raw} {% endcondition %}
+                THEN 1
+                WHEN ${date_key_in_timezone_raw} between ${period_2_start} and ${period_2_end}
+                THEN 2
+                END
+            {% else %}
+                NULL
+            {% endif %}
+            ;;
+  }
+
+  ## ------- HIDING FIELDS  FROM ORIGINAL VIEW FILE  -------- ##
+
+
+  dimension: wtd_only {hidden:yes}
+
+
+  ## ------------------ DIMENSIONS TO PLOT ------------------ ##
+
+  dimension_group: date_in_period {
+    description: "Use this as your grouping dimension when comparing periods. Aligns the previous periods onto the current period"
+    label: "Current Period"
+    type: time
+    sql: TIMESTAMPADD(DAY, ${day_in_period} - 1, CAST({% date_start current_date_range %} AS TIMESTAMP)) ;;
+    view_label: "PoP"
+    timeframes: [
+      date,
+      hour_of_day,
+      day_of_week,
+      day_of_week_index,
+      day_of_month,
+      day_of_year,
+      week_of_year,
+      week,
+      month,
+      quarter,
+      month_name,
+      month_num,
+      year]
+
+  }
+
+
+  dimension: period {
+    view_label: "PoP"
+    label: "Period"
+    description: "Pivot me! Returns the period the metric covers, i.e. either the 'This Period' or 'Previous Period'"
+    type: string
+    hidden: yes
+    order_by_field: order_for_period
+    sql:
+            {% if current_date_range._is_filtered %}
+                CASE
+                WHEN {% condition current_date_range %} ${date_key_in_timezone_raw} {% endcondition %}
+                THEN 'This {% parameter compare_to %}'
+                WHEN ${date_key_in_timezone_raw} between ${period_2_start} and ${period_2_end}
+                THEN 'Last {% parameter compare_to %}'
+                END
+            {% else %}
+                NULL
+            {% endif %}
+            ;;
+  }
+
+
+  ## ---------------------- TO CREATE FILTERED MEASURES ---------------------------- ##
+
+  dimension: period_filtered_measures {
+    hidden: yes
+    description: "We are just using this for the filtered measures"
+    type: string
+    sql:
+            {% if current_date_range._is_filtered %}
+                CASE
+                WHEN {% condition current_date_range %} ${date_key_in_timezone_raw} {% endcondition %} THEN 'this'
+                WHEN ${date_key_in_timezone_raw} between ${period_2_start} and ${period_2_end} THEN 'last' END
+            {% else %} NULL {% endif %} ;;
+  }
+
+  # Filtered measures
+
+  measure: current_period_cost {
+    view_label: "PoP"
+    type: sum
+    description: "The current period's cost"
+    sql: ${TABLE}.cogs ;;
+    value_format: "$#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_cost{
+    view_label: "PoP"
+    type: sum
+    description: "The previous period's cost"
+    sql: ${TABLE}.cogs ;;
+    value_format: "$#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: cost_pop_change {
+    view_label: "PoP"
+    label: "Total cost period-over-period % change"
+    description: "Cost change from previous period to current"
+    type: number
+    sql: CASE WHEN ${current_period_cost} = 0
+                THEN NULL
+                ELSE (1.0 * ${current_period_cost} / NULLIF(${previous_period_cost} ,0)) - 1 END ;;
+    value_format_name: percent_2
+
+    html:
+    {% if value > 0 %}
+    {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+
+      {% assign indicator = "red,▼" | split: ',' %}
+
+      {% else %}
+
+      {% assign indicator = "black,▬" | split: ',' %}
+
+      {% endif %}
+      <font color="{{indicator[0]}}">
+
+      {% if value == 99999.12345 %} &infin
+
+      {% else %}{{indicator[1]}}
+
+      {% endif %}
+
+      </font>
+      {{rendered_value}}
+
+
+      ;;
+  }
+
+
+  measure: current_period_impressions {
+    view_label: "PoP"
+    type: sum
+    description: "Current period impressions"
+    sql:  ${TABLE}.impressions ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: current_period_clicks {
+    view_label: "PoP"
+    type: sum
+    description: "Current period clicks"
+    sql: ${TABLE}.clicks  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_clicks {
+    view_label: "PoP"
+    type: sum
+    description: "Previous period clicks"
+    sql: ${TABLE}.clicks  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
+
+  measure: current_period_ctr {
+    view_label: "PoP"
+    type: number
+    description: "Current period CTR"
+    sql:  ${current_period_clicks}/nullif(${current_period_impressions},0);;
+    value_format: "0.00%"
+    # filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_ctr {
+    view_label: "PoP"
+    type: number
+    description: "Previous period CTR"
+    sql:  ${previous_period_clicks}/nullif(${previous_period_impressions},0);;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "last"]
+  }
+
+  measure: previous_period_impressions{
+    view_label: "PoP"
+    type: sum
+    description: "Previous period impressions"
+    sql: ${TABLE}.impressions ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
   }
 
 }

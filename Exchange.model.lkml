@@ -824,14 +824,21 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_deal_personnel.deal_id}=${dim_deal.internal_deal_id} ;;
     relationship: many_to_one
   }
+
+  join: dim_bidfloor_opti_version {
+    type: inner
+    view_label: "Bid Floor Opti Version"
+    sql_on: ${dim_bidfloor_opti_version.bidfloor_opti_version_key}=${fact_ad_daily_agg.bidfloor_opti_version_key} ;;
+    relationship: many_to_one
+  }
 }
 
 
 explore: fact_ad_hourly_agg{
-  always_filter: {
-    filters: [dim_date_hourly.date_time_key_date: "last 10 days "]
+  # # always_filter: {
+  # #   filters: [dim_date_hourly.date_time_key_date: "last 10 days "]
 
-  }
+  # }
   required_access_grants: [can_view_all_tremor]
 
   persist_with: CleanCash_datagroup

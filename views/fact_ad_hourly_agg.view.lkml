@@ -563,10 +563,10 @@ view: fact_ad_hourly_agg {
   measure: Net_Revenue {
     type: number
     label: "Net Revenue"
-    description: "Difference between revenue and cogs"
+    description: "Difference between revenue and cogs + pub platfrom fee"
     value_format: "$#,##0.00"
     group_label: "Hourly Measures"
-    sql: ${revenue} - ${cogs} ;;
+    sql: ${revenue} - ${cogs}+${pub_platform_fee} ;;
   }
 
   measure: Margin {

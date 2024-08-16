@@ -487,3 +487,12 @@ explore: bid_opti_version {
   label: "Bid Opti Version"
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: bid_opti_v1 {
+  label: "Bid Opti v1"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: creative_package_overlap_dates {
+  required_access_grants: [can_view_pub_come_looker]
+}

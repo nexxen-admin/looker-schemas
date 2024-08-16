@@ -492,12 +492,13 @@ view: impression_r {
   measure: user_id {
     type: count_distinct
     label: "user_id's"
-    sql: coalesce(${TABLE}.ifa,${TABLE}.ip) ;;
+    sql: ${TABLE}.userid ;;
   }
 
   measure: Unique_Reach {
     type: count_distinct
-    sql: coalesce(${TABLE}.ifa,${TABLE}.ip,${TABLE}.userid) ;;
+    sql: coalesce(${TABLE}.userid,${TABLE}.ifa,${TABLE}.ip) ;;
+    description: "Takes the first id type that is not null - userid, ifa or ip, according to this order"
   }
 
   dimension: isbillable {

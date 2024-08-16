@@ -1466,10 +1466,16 @@ dimension: browser_type_name {
     sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."inv_cost"  ELSE NULL END ;;
   }
 
+  # measure: unruly_impression {
+  #   type: sum
+  #   label: "Nexxen Impressions"
+  #   sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."impression"  ELSE NULL END ;;
+  # }
+
   measure: unruly_impression {
-    type: sum
+    type: number
     label: "Nexxen Impressions"
-    sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."impression"  ELSE NULL END ;;
+    sql: SUM(CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."impression"  ELSE 0 END) ;;
   }
 
   measure: unruly_adv_spend {
@@ -1484,15 +1490,21 @@ dimension: browser_type_name {
     sql: ${unruly_impression};;
   }
 
+  # measure: impressions_test {
+  #   type: number
+  #   label: "impressions_test"
+  #   sql: ${impression};;
+  # }
+
   measure: impressions_test {
     type: number
-    label: "impressions_test"
-    sql: ${impression};;
+    #value_format: "#,##0,,,\"B\""
+    sql: SUM(${TABLE}."impression") ;;
   }
 
   measure: nexxen_imp_test {
     type: number
-    sql: ${nexxen_impressions_test}/${impressions_test} ;;
+    sql: ${unruly_impression}/${impressions_test} ;;
   }
 
   measure: nexxen_inv_cost_percent {
@@ -1663,17 +1675,7 @@ dimension: browser_type_name {
     sql: TIMESTAMPADD(DAY, ${day_in_period} - 1, CAST({% date_start current_date_range %} AS TIMESTAMP)) ;;
     view_label: "PoP"
     timeframes: [
-      date,
-      hour_of_day,
-      day_of_week,
-      day_of_week_index,
-      day_of_month,
-      day_of_year,
-      week_of_year,
-      month,
-      month_name,
-      month_num,
-      year]
+      date]
   }
 
 
@@ -1736,9 +1738,62 @@ dimension: browser_type_name {
     label: "Total Inv Cost period-over-period % change"
     type: number
     sql: CASE WHEN ${current_period_inv_cost} = 0
-                THEN NULL
-                ELSE (1.0 * ${current_period_inv_cost} / NULLIF(${previous_period_inv_cost} ,0)) - 1 END ;;
-    value_format_name: percent_2
-  }
+                 THEN NULL
+                 ELSE (1.0 * ${current_period_inv_cost} / NULLIF(${previous_period_inv_cost} ,0)) - 1 END ;;
+     value_format_name: percent_2
+   }
+
+  # measure: current_period_cogs {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.cogs ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "this"]
+  # }
+
+  # measure: previous_period_cogs {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.cogs ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "last"]
+  # }
+
+  # measure: cogs_pop_change {
+  #   view_label: "PoP"
+  #   label: "Total Cogs period-over-period % change"
+  #   type: number
+  #   sql: CASE WHEN ${current_period_cogs} = 0
+  #               THEN NULL
+  #               ELSE (1.0 * ${current_period_cogs} / NULLIF(${previous_period_cogs} ,0)) - 1 END ;;
+  #   value_format_name: percent_2
+  # }
+
+  # measure: current_period_clicks {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.clicks ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "this"]
+  # }
+
+  # measure: previous_period_clicks {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.clicks ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "last"]
+  # }
+
+  # measure: clicks_pop_change {
+  #   view_label: "PoP"
+  #   label: "Total Clicks period-over-period % change"
+  #   type: number
+  #   sql: CASE WHEN ${current_period_clicks} = 0
+  #               THEN NULL
+  #               ELSE (1.0 * ${current_period_clicks} / NULLIF(${previous_period_clicks} ,0)) - 1 END ;;
+  #   value_format_name: percent_2
+  # }
+
 
 }

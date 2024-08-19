@@ -72,7 +72,7 @@ view: bid_opti_v1 {
       bd.COGS,
       bd.COGS/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as COGS_scaled,,
       bd.Cost- bd.COGS as "Supply Margin $",
-      (bd.Cost- bd.COGS)/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as "Supply Margin $ scaled",
+      (bd.Cost- bd.COGS)/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as supply_margin_dollar_scaled
       bd.Attempts / nullif(bd.Requests,0) as "Attempt Rate",
       bd.Bids / nullif(bd.requests,0) as "Bid Rate",
       bd.Impressions / nullif(bd.Requests,0) as "Fill Rate",
@@ -85,6 +85,8 @@ view: bid_opti_v1 {
       and pl.placement_id = bd.placement_id
       and pl.imp_type = bd.imp_type ;;
   }
+
+
 
   measure: count {
     type: count
@@ -175,6 +177,14 @@ view: bid_opti_v1 {
     value_format: "#,##0"
   }
 
+
+
+  measure: Requests_scaled {
+    type: sum
+    sql: ${TABLE}.Requests_scaled ;;
+    value_format: "#,##0"
+  }
+
   measure: req_ratio {
     type: sum
     sql: ${TABLE}.req_ratio ;;
@@ -187,11 +197,26 @@ view: bid_opti_v1 {
     value_format: "#,##0"
   }
 
+  measure: Attempts_scaled {
+    type: sum
+    sql: ${TABLE}.Attempts_scaled ;;
+    value_format: "#,##0"
+  }
+
   measure: bids {
     type: sum
     sql: ${TABLE}.Bids ;;
     value_format: "#,##0"
   }
+
+  measure: bid_scaled {
+    type: sum
+    sql: ${TABLE}.bid_scaled ;;
+    value_format: "#,##0"
+  }
+
+
+
 
   measure: impressions {
     type: sum
@@ -199,11 +224,26 @@ view: bid_opti_v1 {
     value_format: "#,##0"
   }
 
+  measure: Impressions_scaled {
+    type: sum
+    sql: ${TABLE}.Impressions_scaled ;;
+    value_format: "#,##0"
+  }
+
+
   measure: cogs {
     type: sum
     sql: ${TABLE}.COGS ;;
     value_format: "$#,##0.00"
   }
+
+
+  measure: COGS_scaled {
+    type: sum
+    sql: ${TABLE}.COGS_scaled ;;
+    value_format: "$#,##0.00"
+  }
+
 
   measure: cost {
     type: sum
@@ -211,9 +251,23 @@ view: bid_opti_v1 {
     value_format: "$#,##0.00"
   }
 
+  measure: cost_scaled {
+    type: sum
+    sql: ${TABLE}.cost_scaled ;;
+    value_format: "$#,##0.00"
+  }
+
+
   measure: supply_margin_dollar {
     type: number
     sql: ${cost}-${cogs} ;;
+    value_format: "$#,##0.00"
+  }
+
+
+  measure: supply_margin_dollar_scaled {
+    type: number
+    sql: ${TABLE}.supply_margin_dollar_scaled ;;
     value_format: "$#,##0.00"
   }
 
@@ -307,7 +361,16 @@ view: bid_opti_v1 {
       attempts,
       bids,
       impressions,
-      cogs
+      cogs,
+      Attempts_scaled,
+      bid_scaled,
+      COGS_scaled,
+      cost_scaled,
+      Impressions_scaled,
+      Requests_scaled,
+      Requests_scaled,
+      supply_margin_dollar_scaled,
+      supply_margin_percent_avg
     ]
   }
 }

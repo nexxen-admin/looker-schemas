@@ -70,9 +70,9 @@ view: bid_opti_v1 {
       bd.Cost,
       bd.Cost/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as cost_scaled,
       bd.COGS,
-      bd.COGS/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as COGS_scaled,,
+      bd.COGS/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as COGS_scaled,
       bd.Cost- bd.COGS as "Supply Margin $",
-      (bd.Cost- bd.COGS)/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as supply_margin_dollar_scaled
+      (bd.Cost- bd.COGS)/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as supply_margin_dollar_scaled,
       bd.Attempts / nullif(bd.Requests,0) as "Attempt Rate",
       bd.Bids / nullif(bd.requests,0) as "Bid Rate",
       bd.Impressions / nullif(bd.Requests,0) as "Fill Rate",

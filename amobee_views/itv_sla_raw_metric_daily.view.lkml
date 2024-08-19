@@ -1,5 +1,5 @@
 view: raw_metric_daily {
-  sql_table_name: SLA.RAW_METRIC_DAILY ;;
+  sql_table_name: RAW_METRIC_DAILY ;;
 
   dimension: metric_id {
     type: string

@@ -1,5 +1,5 @@
 view: sla_false_positive {
-  sql_table_name: "SLA"."SLA_FALSE_POSITIVE"
+  sql_table_name: SLA_FALSE_POSITIVE"
     ;;
 
   dimension: comments {

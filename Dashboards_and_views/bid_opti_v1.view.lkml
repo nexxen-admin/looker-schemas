@@ -116,10 +116,8 @@ view: bid_opti_v1 {
   }
 
 
-
-
   dimension: publisher_id {
-    type: number
+    type: string
     sql: ${TABLE}.publisher_id ;;
   }
 

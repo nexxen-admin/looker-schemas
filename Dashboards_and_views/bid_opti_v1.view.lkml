@@ -12,7 +12,11 @@ view: bid_opti_v1 {
           then 'opti'
           else ad.bidfloor_opti_version
           end as Opti_Status,
+        bidfloor_only_pct,
+        pubcost_only_pct,
+        bidfloor_pubcost_pct,
         --ad.bidfloor_opti_version,
+        -- measures
         case when sum(ad.impression_pixel) > 0 then
           sum(ad.rx_bid_floor * ad.impression_pixel) / sum(impression_pixel)
           else NULL end as Bid_Floor,
@@ -34,7 +38,7 @@ view: bid_opti_v1 {
             or ad.slot_attempts > 0
             or ad.responses > 0
             or ad.impression_pixel > 0)
-      Group by 1, 2, 3, 4, 5, 6, 7),
+      Group by 1, 2, 3, 4, 5, 6, 7,8,9,10),
 
       Placement_Limiter as (
       Select event_date,
@@ -51,10 +55,10 @@ view: bid_opti_v1 {
       )
 
       Select bd.event_date,
-      op.bidfloor_only_pct,
-      op.pubcost_only_pct,
-      op.bidfloor_pubcost_pct,
-      1-op.bidfloor_only_pct-op.pubcost_only_pct-op.bidfloor_pubcost_pct as no_opti_pct,
+      bidfloor_only_pct,
+      pubcost_only_pct,
+      bidfloor_pubcost_pct,
+      1-bidfloor_only_pct-pubcost_only_pct-bidfloor_pubcost_pct as no_opti_pct,
       bd.publisher_id,
       bd.publisher_name,
       bd.placement_id,

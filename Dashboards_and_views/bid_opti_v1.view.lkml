@@ -51,6 +51,10 @@ view: bid_opti_v1 {
       )
 
       Select bd.event_date,
+      op.bidfloor_only_pct,
+      op.pubcost_only_pct,
+      op.bidfloor_pubcost_pct,
+      1-op.bidfloor_only_pct-op.pubcost_only_pct-op.bidfloor_pubcost_pct as no_opti_pct,
       bd.publisher_id,
       bd.publisher_name,
       bd.placement_id,
@@ -141,6 +145,31 @@ view: bid_opti_v1 {
     type: string
     sql: ${TABLE}.Opti_Status ;;
   }
+
+
+  dimension: bidfloor_only_pct {
+    type: number
+    sql: ${TABLE}.bidfloor_only_pct ;;
+  }
+
+
+  dimension: pubcost_only_pct {
+    type: number
+    sql: ${TABLE}.pubcost_only_pct ;;
+  }
+
+  dimension: bidfloor_pubcost_pct {
+    type: number
+    sql: ${TABLE}.bidfloor_pubcost_pct ;;
+  }
+
+  dimension: no_opti_pct {
+    type: number
+    sql: ${TABLE}.no_opti_pct ;;
+  }
+
+
+
 
   # dimension: bidfloor_opti_version {
   #   type: string
@@ -356,6 +385,12 @@ view: bid_opti_v1 {
       imp_type,
       device_type,
       opti_status,
+
+      bidfloor_only_pct,
+      pubcost_only_pct,
+      bidfloor_pubcost_pct,
+      no_opti_pct,
+
       requests,
       req_ratio,
       attempts,

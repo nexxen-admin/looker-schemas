@@ -115,6 +115,9 @@ view: bid_opti_v1 {
     sql: ${TABLE}.event_date ;;
   }
 
+
+
+
   dimension: publisher_id {
     type: number
     sql: ${TABLE}.publisher_id ;;
@@ -151,11 +154,12 @@ view: bid_opti_v1 {
   }
 
 
-  dimension: bidfloor_only_pct {
-    type: number
-    sql: ${TABLE}.bidfloor_only_pct ;;
-  }
 
+  dimension: bidfloor_only_pct {
+    type: string
+    sql: ${TABLE}.bidfloor_only_pct ;;
+    hidden: no
+  }
 
   dimension: pubcost_only_pct {
     type: number

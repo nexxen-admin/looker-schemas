@@ -25,7 +25,8 @@ view: bid_opti_v1 {
         sum(ad.responses) as Bids,
         sum(ad.impression_pixel) as Impressions,
         sum(ad.cost) as Cost,
-        sum(ad.cogs) as COGS
+        sum(ad.cogs) as COGS,
+        sum(ad.revenue) as revenue
       From andromeda.ad_data_daily ad
         inner join Andromeda.rx_dim_supply_placement_margin_opti_split_override_r op on op.placement_id::varchar = ad.media_id::varchar
                             and ad.rx_ssp_name ilike 'rmp%'
@@ -87,7 +88,8 @@ view: bid_opti_v1 {
       (bd.Cost / nullif(bd.Impressions,0)) * 1000 as 'eCPM',
       (bd.Cost - bd.COGS)/nullif(bd.Cost,0) as "Supply Margin %",
       (bd.Cost- bd.COGS) / nullif((bd.Requests/1000000),0) as "Supply Margin $ /M Requests",
-      bd.Bid_Floor*bd.Impressions as "Bid Floor Imp"
+      bd.Bid_Floor*bd.Impressions as "Bid Floor Imp",
+      revenue
       From base_data bd
       inner join Placement_Limiter pl on pl.event_date = bd.event_date
       and pl.placement_id = bd.placement_id
@@ -382,6 +384,13 @@ view: bid_opti_v1 {
     value_format: "$#,##0.00"
   }
 
+  measure: revenue{
+    type: number
+    sql: ${TABLE}.revenue;;
+    value_format: "$#,##0.00"
+  }
+
+
   set: detail {
     fields: [
       publisher_id,
@@ -411,7 +420,8 @@ view: bid_opti_v1 {
       Requests_scaled,
       Requests_scaled,
       supply_margin_dollar_scaled,
-      supply_margin_percent_avg
+      supply_margin_percent_avg,
+      revenue
     ]
   }
 }

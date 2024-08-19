@@ -58,7 +58,7 @@ view: bid_opti_v1 {
       bidfloor_only_pct,
       pubcost_only_pct,
       bidfloor_pubcost_pct,
-      1-bidfloor_only_pct-pubcost_only_pct-bidfloor_pubcost_pct as no_opti_pct,
+      100-bidfloor_only_pct-pubcost_only_pct-bidfloor_pubcost_pct as no_opti_pct,
       bd.publisher_id,
       bd.publisher_name,
       bd.placement_id,

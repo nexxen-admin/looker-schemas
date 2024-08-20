@@ -89,7 +89,8 @@ view: bid_opti_v1 {
       (bd.Cost - bd.COGS)/nullif(bd.Cost,0) as "Supply Margin %",
       (bd.Cost- bd.COGS) / nullif((bd.Requests/1000000),0) as "Supply Margin $ /M Requests",
       bd.Bid_Floor*bd.Impressions as "Bid Floor Imp",
-      revenue
+      revenue,
+      revenue/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as revenue_scaled
       From base_data bd
       inner join Placement_Limiter pl on pl.event_date = bd.event_date
       and pl.placement_id = bd.placement_id
@@ -385,11 +386,17 @@ view: bid_opti_v1 {
   }
 
   measure: revenue{
-    type: number
+    type: sum
     sql: ${TABLE}.revenue;;
     value_format: "$#,##0.00"
   }
 
+
+  measure: revenue_scaled{
+    type: sum
+    sql: ${TABLE}.revenue_scaled;;
+    value_format: "$#,##0.00"
+  }
 
   set: detail {
     fields: [
@@ -421,7 +428,8 @@ view: bid_opti_v1 {
       Requests_scaled,
       supply_margin_dollar_scaled,
       supply_margin_percent_avg,
-      revenue
+      revenue,
+      revenue_scaled
     ]
   }
 }

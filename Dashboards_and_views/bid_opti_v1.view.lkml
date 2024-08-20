@@ -318,6 +318,7 @@ view: bid_opti_v1 {
   measure: attempt_rate {
     type: number
     sql: ${attempts}/nullif(${requests},0) ;;
+    value_format:"0.00%"
   }
 
   measure: attempt_rate_avg {

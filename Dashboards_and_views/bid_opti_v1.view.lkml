@@ -304,7 +304,7 @@ view: bid_opti_v1 {
 
 
   measure: supply_margin_dollar_scaled {
-    type: number
+    type: average
     sql: ${TABLE}.supply_margin_dollar_scaled ;;
     value_format: "$#,##0.00"
   }

@@ -1,5 +1,5 @@
 view: sla_report_config {
-  sql_table_name: SLA.SLA_REPORT_CONFIG ;;
+  sql_table_name: SLA_REPORT_CONFIG ;;
 
   dimension: config_key {
     type: string

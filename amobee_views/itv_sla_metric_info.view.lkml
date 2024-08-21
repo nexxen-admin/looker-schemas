@@ -1,13 +1,6 @@
 view: metric_info {
 
-  sql_table_name:
-    {% if _model._name == 'itv_sla' %}
-      SLA.METRIC_INFO
-    {% elsif _model._name == 'dsp_sla' %}
-      SLA_DSP.METRIC_INFO
-    {% else %}
-      UNDEF_MODEL.METRIC_INFO
-    {% endif %} ;;
+  sql_table_name: METRIC_INFO ;;
 
   dimension: component {
     type: string

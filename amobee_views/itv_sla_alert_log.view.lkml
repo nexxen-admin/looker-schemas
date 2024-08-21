@@ -1,5 +1,5 @@
 view: sla_alert_log {
-  sql_table_name: "SLA"."SLA_ALERT_LOG"
+  sql_table_name: "SLA_ALERT_LOG"
     ;;
 
   dimension_group: created {
@@ -47,8 +47,8 @@ view: sla_alert_log {
     type:  string
     label: "SLA Value"
     sql: CASE
-          WHEN sla_report_info.sla_value_type = 0 THEN (round(${sla_value}, 4) * 100) || '%'
-          ELSE ${sla_value} || ''
+          WHEN sla_report_info.sla_value_type = 0 THEN concat((round(${sla_value}, 4) * 100),'%')
+          ELSE concat(${sla_value},'')
           END ;;
   }
 

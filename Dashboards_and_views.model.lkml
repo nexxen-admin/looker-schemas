@@ -498,6 +498,11 @@ explore: bid_opti_find_placements {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: bid_floor_opti_high_level {
+  label: "bid_floor_opti_high_level"
+  required_access_grants: [can_view_all_tremor]
+}
+
 explore: creative_package_overlap_dates {
   required_access_grants: [can_view_pub_come_looker]
 }

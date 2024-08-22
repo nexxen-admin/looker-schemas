@@ -12,7 +12,11 @@ view: bid_opti_v1 {
           then 'opti'
           else ad.bidfloor_opti_version
           end as Opti_Status,
+        bidfloor_only_pct,
+        pubcost_only_pct,
+        bidfloor_pubcost_pct,
         --ad.bidfloor_opti_version,
+        -- measures
         case when sum(ad.impression_pixel) > 0 then
           sum(ad.rx_bid_floor * ad.impression_pixel) / sum(impression_pixel)
           else NULL end as Bid_Floor,
@@ -21,7 +25,8 @@ view: bid_opti_v1 {
         sum(ad.responses) as Bids,
         sum(ad.impression_pixel) as Impressions,
         sum(ad.cost) as Cost,
-        sum(ad.cogs) as COGS
+        sum(ad.cogs) as COGS,
+        sum(ad.revenue) as revenue
       From andromeda.ad_data_daily ad
         inner join Andromeda.rx_dim_supply_placement_margin_opti_split_override_r op on op.placement_id::varchar = ad.media_id::varchar
                             and ad.rx_ssp_name ilike 'rmp%'
@@ -34,7 +39,7 @@ view: bid_opti_v1 {
             or ad.slot_attempts > 0
             or ad.responses > 0
             or ad.impression_pixel > 0)
-      Group by 1, 2, 3, 4, 5, 6, 7),
+      Group by 1, 2, 3, 4, 5, 6, 7,8,9,10),
 
       Placement_Limiter as (
       Select event_date,
@@ -51,6 +56,10 @@ view: bid_opti_v1 {
       )
 
       Select bd.event_date,
+      bidfloor_only_pct,
+      pubcost_only_pct,
+      bidfloor_pubcost_pct,
+      100-bidfloor_only_pct-pubcost_only_pct-bidfloor_pubcost_pct as no_opti_pct,
       bd.publisher_id,
       bd.publisher_name,
       bd.placement_id,
@@ -59,25 +68,36 @@ view: bid_opti_v1 {
       bd.Opti_Status,
       bd.Bid_Floor,
       bd.Requests,
-      bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type)) as req_ratio,
+      bd.Requests/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as Requests_scaled,
+      (bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as req_ratio,
       bd.Attempts,
+      bd.Attempts/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as Attempts_scaled,
       bd.Bids,
+      bd.Bids/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as bid_scaled,
       bd.Impressions,
+      bd.Impressions/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as Impressions_scaled,
       bd.Cost,
+      bd.Cost/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as cost_scaled,
       bd.COGS,
+      bd.COGS/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as COGS_scaled,
       bd.Cost- bd.COGS as "Supply Margin $",
+      (bd.Cost- bd.COGS)/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as supply_margin_dollar_scaled,
       bd.Attempts / nullif(bd.Requests,0) as "Attempt Rate",
       bd.Bids / nullif(bd.requests,0) as "Bid Rate",
       bd.Impressions / nullif(bd.Requests,0) as "Fill Rate",
       (bd.Cost / nullif(bd.Impressions,0)) * 1000 as 'eCPM',
       (bd.Cost - bd.COGS)/nullif(bd.Cost,0) as "Supply Margin %",
       (bd.Cost- bd.COGS) / nullif((bd.Requests/1000000),0) as "Supply Margin $ /M Requests",
-      bd.Bid_Floor*bd.Impressions as "Bid Floor Imp"
+      bd.Bid_Floor*bd.Impressions as "Bid Floor Imp",
+      revenue,
+      revenue/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as revenue_scaled
       From base_data bd
       inner join Placement_Limiter pl on pl.event_date = bd.event_date
       and pl.placement_id = bd.placement_id
       and pl.imp_type = bd.imp_type ;;
   }
+
+
 
   measure: count {
     type: count
@@ -98,8 +118,9 @@ view: bid_opti_v1 {
     sql: ${TABLE}.event_date ;;
   }
 
+
   dimension: publisher_id {
-    type: number
+    type: string
     sql: ${TABLE}.publisher_id ;;
   }
 
@@ -132,6 +153,32 @@ view: bid_opti_v1 {
     type: string
     sql: ${TABLE}.Opti_Status ;;
   }
+
+
+
+  dimension: bidfloor_only_pct {
+    type: string
+    sql: ${TABLE}.bidfloor_only_pct ;;
+    hidden: no
+  }
+
+  dimension: pubcost_only_pct {
+    type: number
+    sql: ${TABLE}.pubcost_only_pct ;;
+  }
+
+  dimension: bidfloor_pubcost_pct {
+    type: number
+    sql: ${TABLE}.bidfloor_pubcost_pct ;;
+  }
+
+  dimension: no_opti_pct {
+    type: number
+    sql: ${TABLE}.no_opti_pct ;;
+  }
+
+
+
 
   # dimension: bidfloor_opti_version {
   #   type: string
@@ -168,6 +215,14 @@ view: bid_opti_v1 {
     value_format: "#,##0"
   }
 
+
+
+  measure: Requests_scaled {
+    type: sum
+    sql: ${TABLE}.Requests_scaled ;;
+    value_format: "#,##0"
+  }
+
   measure: req_ratio {
     type: sum
     sql: ${TABLE}.req_ratio ;;
@@ -180,11 +235,26 @@ view: bid_opti_v1 {
     value_format: "#,##0"
   }
 
+  measure: Attempts_scaled {
+    type: sum
+    sql: ${TABLE}.Attempts_scaled ;;
+    value_format: "#,##0"
+  }
+
   measure: bids {
     type: sum
     sql: ${TABLE}.Bids ;;
     value_format: "#,##0"
   }
+
+  measure: bid_scaled {
+    type: sum
+    sql: ${TABLE}.bid_scaled ;;
+    value_format: "#,##0"
+  }
+
+
+
 
   measure: impressions {
     type: sum
@@ -192,11 +262,26 @@ view: bid_opti_v1 {
     value_format: "#,##0"
   }
 
+  measure: Impressions_scaled {
+    type: sum
+    sql: ${TABLE}.Impressions_scaled ;;
+    value_format: "#,##0"
+  }
+
+
   measure: cogs {
     type: sum
     sql: ${TABLE}.COGS ;;
     value_format: "$#,##0.00"
   }
+
+
+  measure: COGS_scaled {
+    type: sum
+    sql: ${TABLE}.COGS_scaled ;;
+    value_format: "$#,##0.00"
+  }
+
 
   measure: cost {
     type: sum
@@ -204,9 +289,23 @@ view: bid_opti_v1 {
     value_format: "$#,##0.00"
   }
 
+  measure: cost_scaled {
+    type: sum
+    sql: ${TABLE}.cost_scaled ;;
+    value_format: "$#,##0.00"
+  }
+
+
   measure: supply_margin_dollar {
     type: number
     sql: ${cost}-${cogs} ;;
+    value_format: "$#,##0.00"
+  }
+
+
+  measure: supply_margin_dollar_scaled {
+    type: average
+    sql: ${TABLE}.supply_margin_dollar_scaled ;;
     value_format: "$#,##0.00"
   }
 
@@ -219,6 +318,7 @@ view: bid_opti_v1 {
   measure: attempt_rate {
     type: number
     sql: ${attempts}/nullif(${requests},0) ;;
+    value_format:"0.00%"
   }
 
   measure: attempt_rate_avg {
@@ -286,6 +386,19 @@ view: bid_opti_v1 {
     value_format: "$#,##0.00"
   }
 
+  measure: revenue{
+    type: sum
+    sql: ${TABLE}.revenue;;
+    value_format: "$#,##0.00"
+  }
+
+
+  measure: revenue_scaled{
+    type: sum
+    sql: ${TABLE}.revenue_scaled;;
+    value_format: "$#,##0.00"
+  }
+
   set: detail {
     fields: [
       publisher_id,
@@ -295,12 +408,29 @@ view: bid_opti_v1 {
       imp_type,
       device_type,
       opti_status,
+
+      bidfloor_only_pct,
+      pubcost_only_pct,
+      bidfloor_pubcost_pct,
+      no_opti_pct,
+
       requests,
       req_ratio,
       attempts,
       bids,
       impressions,
-      cogs
+      cogs,
+      Attempts_scaled,
+      bid_scaled,
+      COGS_scaled,
+      cost_scaled,
+      Impressions_scaled,
+      Requests_scaled,
+      Requests_scaled,
+      supply_margin_dollar_scaled,
+      supply_margin_percent_avg,
+      revenue,
+      revenue_scaled
     ]
   }
 }

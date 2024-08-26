@@ -9,7 +9,7 @@ view: bid_opti_cost_v1 {
                 ad.rx_imp_type as imp_type,
                 case when ad.pubcost_opti_version != 'no_opti'
                   then 'opti'
-                  else ad.pubcost_opti_version
+                  else 'no_opti'
                   end as Opti_Status,
                 bidfloor_only_pct,
                 pubcost_only_pct,
@@ -50,8 +50,8 @@ view: bid_opti_cost_v1 {
         From base_Data
         Where requests > 0
         Group by 1, 2, 3
-        Having Percent_Opti >= 0.1
-        and Total_Requests >= 80000
+        Having Percent_Opti >= 0.01
+        and Total_Requests >= 1000
         )
 
         Select bd.event_date,
@@ -93,7 +93,8 @@ view: bid_opti_cost_v1 {
         From base_data bd
         inner join Placement_Limiter pl on pl.event_date = bd.event_date
         and pl.placement_id = bd.placement_id
-        and pl.imp_type = bd.imp_type ;;
+        and pl.imp_type = bd.imp_type
+        where Requests>0 ;;
     }
 
 

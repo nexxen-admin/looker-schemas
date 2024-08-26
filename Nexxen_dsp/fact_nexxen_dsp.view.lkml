@@ -911,4 +911,71 @@ view: fact_nexxen_dsp {
     filters: [period_filtered_measures: "last"]
   }
 
+  measure: html_kpi_board {
+    type: count
+    html:
+    <div style = "background:#15003b; color:#fff; width: 100%;">
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+          Pacing
+          <div style=" line-height: 15px; font-size: 30px;">
+            {{ pacing._rendered_value }}
+          </div>
+        </div>
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        Total impressions
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ impressions._rendered_value }}
+          </div>
+        </div>
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        Clicks
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ clicks._rendered_value }}
+          </div>
+        </div>
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        CTR
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ CTR_1P._rendered_value }}
+          </div>
+        </div>
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        Total Budget
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ cogs._rendered_value }}
+          </div>
+        </div>
+
+    </div>
+    <div style = "color:#15003b; width: 100%;">
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+          VCR
+          <div style=" line-height: 15px; font-size: 30px;">
+            {{ pacing._rendered_value }}
+          </div>
+        </div>
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        Reach
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ cogs._rendered_value }}
+          </div>
+        </div>
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        Frequency
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ cogs._rendered_value }}
+          </div>
+        </div>
+
+    </div>;;
+  }
+
 }

@@ -34,6 +34,7 @@ view: bid_opti_cost_v1 {
                 left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
               where ad.event_time >= current_date()-3
                 and ad.event_time < current_date()
+                and pubcost_opti_version is not null and bidfloor_opti_version is not null
                 and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
                     or ad.slot_attempts > 0
                     or ad.responses > 0

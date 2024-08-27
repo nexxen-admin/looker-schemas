@@ -52,7 +52,7 @@ view: bid_opti_cost_v1 {
         Where requests > 0
         Group by 1, 2, 3
         Having Percent_Opti >= 0.01
-        and Total_Requests >= 1000
+        and Total_Requests >= 10000
         )
 
         Select bd.event_date,

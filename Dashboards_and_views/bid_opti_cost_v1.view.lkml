@@ -7,10 +7,14 @@ view: bid_opti_cost_v1 {
                 ad.media_id as placement_id,
                 spl.placement_name as placement_name,
                 ad.rx_imp_type as imp_type,
-                case when ad.pubcost_opti_version != 'no_opti'
-                  then 'opti'
-                  else 'no_opti'
+
+                CASE WHEN (ad.pubcost_opti_version = 'no_opti' AND ad.bidfloor_opti_version = 'no_opti') THEN 'no opti'
+                     WHEN (ad.pubcost_opti_version != 'no_opti' AND ad.bidfloor_opti_version != 'no_opti'
+                           AND ad.pubcost_opti_version is not null  AND ad.bidfloor_opti_version is not null)
+                          THEN 'opti'
+                     else 'not use'
                   end as Opti_Status,
+
                 bidfloor_only_pct,
                 pubcost_only_pct,
                 bidfloor_pubcost_pct,
@@ -34,12 +38,13 @@ view: bid_opti_cost_v1 {
                 left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
               where ad.event_time >= current_date()-3
                 and ad.event_time < current_date()
-                and pubcost_opti_version is not null and bidfloor_opti_version is not null
                 and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
                     or ad.slot_attempts > 0
                     or ad.responses > 0
                     or ad.impression_pixel > 0)
-              Group by 1, 2, 3, 4, 5, 6, 7,8,9,10),
+              Group by 1, 2, 3, 4, 5, 6, 7,8,9,10
+              HAVING Opti_Status != 'not use'
+              ),
 
         Placement_Limiter as (
         Select event_date,
@@ -51,7 +56,7 @@ view: bid_opti_cost_v1 {
         From base_Data
         Where requests > 0
         Group by 1, 2, 3
-        Having Percent_Opti >= 0.01
+        Having Percent_Opti >= 0.05
         and Total_Requests >= 10000
         )
 

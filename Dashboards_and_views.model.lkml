@@ -498,8 +498,8 @@ explore: bid_opti_cost_v1 {
   required_access_grants: [can_view_all_tremor]
 }
 
-explore: bid_opti_find_placements {
-  label: "bid_opti_find_placements"
+explore: bid_opti_only_cost_v1 {
+  label: "bid_opti_only_cost_v1"
   required_access_grants: [can_view_all_tremor]
 }
 

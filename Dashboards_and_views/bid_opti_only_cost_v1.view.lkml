@@ -39,28 +39,15 @@ view: bid_opti_only_cost_v1 {
       left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
       where ad.event_time >= current_date()-3
       and ad.event_time < current_date()
-      and (bidfloor_only_pct = 10 and pubcost_only_pct = 10 and bidfloor_pubcost_pct = 10)
+      and (bidfloor_pubcost_pct > 0)
       and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
       or ad.slot_attempts > 0
       or ad.responses > 0
       or ad.impression_pixel > 0)
       Group by 1, 2, 3, 4, 5, 6, 7,8,9,10
       HAVING Opti_Status != 'not use'
-      ),
-
-      Placement_Limiter as (
-      Select event_date,
-      placement_id,
-      imp_type,
-      sum(case when Opti_Status = 'opti' then requests else 0 end) as Opti_Requests,
-      sum(requests) as Total_Requests,
-      sum(case when Opti_Status = 'opti' then requests else 0 end) / sum(requests) as Percent_Opti
-      From base_Data
-      Where requests > 0
-      Group by 1, 2, 3
-      Having Percent_Opti >= 0.05
-      and Total_Requests >= 10000
       )
+
 
       Select bd.event_date,
       bidfloor_only_pct,
@@ -99,9 +86,6 @@ view: bid_opti_only_cost_v1 {
       revenue,
       revenue/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as revenue_scaled
       From base_data bd
-      inner join Placement_Limiter pl on pl.event_date = bd.event_date
-      and pl.placement_id = bd.placement_id
-      and pl.imp_type = bd.imp_type
       where Requests>0 ;;
   }
 

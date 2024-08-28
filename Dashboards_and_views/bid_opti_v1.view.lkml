@@ -2,6 +2,7 @@
 view: bid_opti_v1 {
   derived_table: {
     sql: With Base_Data as (
+      -- only floor opti
       Select ad.event_time::date as event_date,
         sp.publisher_id,
         sp.publisher_name,
@@ -36,6 +37,7 @@ view: bid_opti_v1 {
       where ad.event_time >= current_date()-3
         and ad.event_time < current_date()
         and bidfloor_opti_version is not null
+        and (bidfloor_only_pct = 25 and bidfloor_only_pct = 0 and bidfloor_pubcost_pct = 0)
         and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
             or ad.slot_attempts > 0
             or ad.responses > 0

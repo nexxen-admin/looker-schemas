@@ -1,6 +1,7 @@
 view: bid_opti_cost_v1 {
     derived_table: {
       sql: With Base_Data as (
+              -- only floor+cost
               Select ad.event_time::date as event_date,
                 sp.publisher_id,
                 sp.publisher_name,
@@ -38,6 +39,7 @@ view: bid_opti_cost_v1 {
                 left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
               where ad.event_time >= current_date()-3
                 and ad.event_time < current_date()
+                and (bidfloor_only_pct = 10 and bidfloor_only_pct = 10 and bidfloor_pubcost_pct = 10)
                 and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
                     or ad.slot_attempts > 0
                     or ad.responses > 0

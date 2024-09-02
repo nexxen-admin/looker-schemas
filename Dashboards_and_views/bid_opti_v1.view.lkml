@@ -55,7 +55,7 @@ Select event_date,
 From base_Data
 Where requests > 0
 Group by 1, 2, 3
-Having Opti_Requests>0 and and Non_Opti_Requests>0
+Having Opti_Requests>0 and Non_Opti_Requests>0
 
 )
 

@@ -53,12 +53,13 @@ view: bid_opti_only_cost_v1 {
         placement_id,
         imp_type,
         sum(case when Opti_Status = 'opti' then requests else 0 end) as Opti_Requests,
+        sum(case when Opti_Status = 'no_opti' then requests else 0 end) as Non_Opti_Requests,
         sum(requests) as Total_Requests,
         sum(case when Opti_Status = 'opti' then requests else 0 end) / sum(requests) as Percent_Opti
       From base_Data
       Where requests > 0
       Group by 1, 2, 3
-      Having Opti_Requests>0
+      Having Opti_Requests>0 and Non_Opti_Requests>0
 
       )
 

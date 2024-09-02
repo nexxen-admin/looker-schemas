@@ -11,7 +11,7 @@ view: bid_opti_v1 {
         ad.rx_imp_type as imp_type,
         case when ad.bidfloor_opti_version != 'no_opti'
           then 'opti'
-          else ad.bidfloor_opti_version
+          else 'no opti'
           end as Opti_Status,
         bidfloor_only_pct,
         pubcost_only_pct,

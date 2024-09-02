@@ -917,7 +917,7 @@ view: fact_nexxen_dsp {
     <div style = "background:#1982c4; color:#fff; width: 100%;">
 
         <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
-          Pacing
+          % Delivered
           <div style=" line-height: 15px; font-size: 30px;">
             {{ pacing._rendered_value }}
           </div>

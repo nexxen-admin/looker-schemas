@@ -327,13 +327,13 @@ view: fact_nexxen_dsp {
   }
 
   measure: pacing {
-    type: average
+    type: sum
     value_format: "0.00\%"
     sql: ${TABLE}.pacing ;;
   }
 
   measure: yesterday_pacing {
-    type: average
+    type: sum
     value_format: "0.00\%"
     sql: ${TABLE}.pacing ;;
     filters: [date_key_in_timezone_date: "yesterday"]
@@ -914,7 +914,7 @@ view: fact_nexxen_dsp {
   measure: html_kpi_board {
     type: count
     html:
-    <div style = "background:#15003b; color:#fff; width: 100%;">
+    <div style = "background:#1982c4; color:#fff; width: 100%;">
 
         <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
           Pacing
@@ -927,6 +927,13 @@ view: fact_nexxen_dsp {
         Total impressions
           <div style="line-height: 15px; font-size: 30px;">
             {{ impressions._rendered_value }}
+          </div>
+        </div>
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        Total Budget
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ cogs._rendered_value }}
           </div>
         </div>
 
@@ -944,20 +951,13 @@ view: fact_nexxen_dsp {
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
-        Total Budget
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ cogs._rendered_value }}
-          </div>
-        </div>
-
     </div>
-    <div style = "color:#15003b; width: 100%;">
+    <div style = "color:#1982c4; width: 100%;">
 
         <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
           VCR
           <div style=" line-height: 15px; font-size: 30px;">
-            {{ pacing._rendered_value }}
+            {{ VCR_1P._rendered_value }}
           </div>
         </div>
 

@@ -258,7 +258,7 @@ explore: fact_nexxen_dsp  {
 }
 
 explore: fact_nexxen_msd  {
-  required_access_grants: [advertiser_msd]
+  #required_access_grants: [advertiser_msd]
   view_name: fact_nexxen_dsp
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD"

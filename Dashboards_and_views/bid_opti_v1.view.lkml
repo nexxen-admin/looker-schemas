@@ -11,7 +11,7 @@ view: bid_opti_v1 {
         ad.rx_imp_type as imp_type,
         case when ad.bidfloor_opti_version != 'no_opti'
           then 'opti'
-          else ad.bidfloor_opti_version
+          else 'no opti'
           end as Opti_Status,
         bidfloor_only_pct,
         pubcost_only_pct,
@@ -42,7 +42,22 @@ view: bid_opti_v1 {
             or ad.slot_attempts > 0
             or ad.responses > 0
             or ad.impression_pixel > 0)
-      Group by 1, 2, 3, 4, 5, 6, 7,8,9,10)
+      Group by 1, 2, 3, 4, 5, 6, 7,8,9,10),
+
+Placement_Limiter as (
+Select event_date,
+  placement_id,
+  imp_type,
+  sum(case when Opti_Status = 'opti' then requests else 0 end) as Opti_Requests,
+  sum(case when Opti_Status = 'no opti' then requests else 0 end) as Non_Opti_Requests,
+  sum(requests) as Total_Requests,
+  sum(case when Opti_Status = 'opti' then requests else 0 end) / sum(requests) as Percent_Opti
+From base_Data
+Where requests > 0
+Group by 1, 2, 3
+Having Opti_Requests>0 and Non_Opti_Requests>0
+
+)
 
 
       Select bd.event_date,
@@ -82,8 +97,11 @@ view: bid_opti_v1 {
       revenue,
       revenue/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as revenue_scaled
       From base_data bd
-      where bd.Requests > 0
-      ;;
+      inner join Placement_Limiter pl on pl.event_date = bd.event_date
+                  and pl.placement_id = bd.placement_id
+                  and pl.imp_type = bd.imp_type
+      where bd.Requests > 0;;
+
   }
 
 

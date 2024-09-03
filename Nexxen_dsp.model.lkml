@@ -62,6 +62,21 @@ explore: v_monthly_billing_report_diff_live_locked {
   hidden: yes
 }
 
+explore: fact_reach_accumulative {
+  required_access_grants: [can_view_all_tremor]
+  view_name: fact_reach_accumulative
+  label: "Nexxen dsp - Reach"
+  persist_with: CleanCash_datagroup
+  view_label: "Measures"
+  hidden: yes
+
+  join: dim_dsp_advertiser {
+    type: inner
+    view_label: "Advertiser"
+    sql_on: ${dim_dsp_advertiser.advertiser_id_key} = ${fact_reach_accumulative.advertiser_id_key} ;;
+    relationship: many_to_one
+  }
+}
 
 explore: fact_nexxen_dsp  {
   required_access_grants: [can_view_all_tremor]

@@ -6,7 +6,7 @@ Select media_id as placement_id,
        pubcost_only_pct,
        bidfloor_pubcost_pct,
        NULLIF(SUM(CASE WHEN bidfloor_opti_version is not null THEN requests end),0) as tot_requests,
-       round(SUM(CASE WHEN (bidfloor_opti_version != 'no_opti' AND bidfloor_opti_version is not null) THEN requests end)/NULLIF(SUM(CASE WHEN bidfloor_opti_version is not null THEN requests end),0),3) as request_ratio
+       (round(SUM(CASE WHEN (bidfloor_opti_version != 'no_opti' AND bidfloor_opti_version is not null) THEN requests end)/NULLIF(SUM(CASE WHEN bidfloor_opti_version is not null THEN requests end),0),3))*100 as request_ratio
 
 FROM andromeda.ad_data_daily ad
 INNER JOIN Andromeda.rx_dim_supply_placement_margin_opti_split_override_r op on op.placement_id::varchar = ad.media_id::varchar
@@ -68,7 +68,7 @@ GROUP BY 1,2,3,4;;
   measure: request_ratio {
     type: sum
     sql: ${TABLE}.request_ratio ;;
-    value_format:"0.00%"
+    value_format: "#,##0"
   }
 
 

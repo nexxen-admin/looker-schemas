@@ -268,4 +268,10 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  # join: advertisers_email {
+  #   type: inner
+  #   sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;
+  #   relationship: many_to_one
+  # }
+
 }

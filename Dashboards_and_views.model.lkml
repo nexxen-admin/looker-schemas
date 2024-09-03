@@ -503,7 +503,10 @@ explore: bid_opti_only_cost_v1 {
   required_access_grants: [can_view_all_tremor]
 }
 
-
+explore: bid_opti_placement_qa {
+  label: "bid_opti_placement_qa"
+  required_access_grants: [can_view_all_tremor]
+}
 
 explore: creative_package_overlap_dates {
   required_access_grants: [can_view_pub_come_looker]

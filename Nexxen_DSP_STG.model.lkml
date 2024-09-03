@@ -29,7 +29,7 @@ access_grant: can_view_all_tremor {
 
 access_grant: advertiser_msd {
   user_attribute: advertiser
-  allowed_values: ["Advertiser"]
+  allowed_values: ["Advertiser","%, NULL"]
 }
 
 explore: monthly_billing_locked_report {
@@ -263,10 +263,10 @@ explore: fact_nexxen_msd  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD"
   view_label: "Measures"
-  # access_filter: {
-  #   field: advertisers_email.email
-  #   user_attribute: advertiser
-  # }
+  access_filter: {
+    field: advertisers_email.email
+    user_attribute: advertiser
+  }
   #hidden: yes
 
   join: dim_dsp_creative {

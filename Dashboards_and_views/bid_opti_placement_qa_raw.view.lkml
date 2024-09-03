@@ -5,12 +5,12 @@ view: bid_opti_placement_qa_raw {
        CASE WHEN bidfloor_opti_version is null then 'null'
             WHEN bidfloor_opti_version = 'no_opti' then 'no_opti'
             WHEN (bidfloor_opti_version is not null) and (bidfloor_opti_version != 'no_opti') THEN 'opti'
-            END bidfloor_opti_version_version,
+            END bidfloor_opti_version,
 
        CASE WHEN pubcost_opti_version is null then 'null'
             WHEN pubcost_opti_version = 'no_opti' then 'no_opti'
             WHEN (pubcost_opti_version is not null) and (pubcost_opti_version != 'no_opti') THEN 'opti'
-            END pubcost_opti_version_version,
+            END pubcost_opti_version,
 
        bidfloor_only_pct,
        pubcost_only_pct,

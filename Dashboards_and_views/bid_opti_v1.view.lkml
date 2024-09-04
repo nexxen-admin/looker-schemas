@@ -9,10 +9,17 @@ view: bid_opti_v1 {
         ad.media_id as placement_id,
         spl.placement_name as placement_name,
         ad.rx_imp_type as imp_type,
-        case when ad.bidfloor_opti_version != 'no_opti'
-          then 'opti'
-          else 'no opti'
-          end as Opti_Status,
+
+      CASE WHEN (ad.bidfloor_opti_version = 'no_opti'
+                 AND (ad.pubcost_opti_version = 'no_opti' OR ad.pubcost_opti_version is null)) THEN 'no opti'
+
+           WHEN (ad.bidfloor_opti_version != 'no_opti' AND ad.bidfloor_opti_version is not null
+                 AND (ad.pubcost_opti_version = 'no_opti' or ad.pubcost_opti_version is null)
+                 ) THEN 'opti'
+
+      else 'not use'
+      end as Opti_Status,
+
         bidfloor_only_pct,
         pubcost_only_pct,
         bidfloor_pubcost_pct,

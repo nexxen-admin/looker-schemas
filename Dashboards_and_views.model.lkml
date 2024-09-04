@@ -143,7 +143,7 @@ explore: yearly_consolidated_revenue_by_region_with_amobee {
 explore: comscore_active_segments {
   label: "Comscore Active Segments"
   required_access_grants: [can_view_all_tremor]
-  hidden: yes
+  hidden: no
 }
 
 explore: bid_details_in_app {

@@ -40,15 +40,15 @@ view: bid_opti_placement_qa_raw {
     }
 
 
-    dimension: bidfloor_opti_version_version {
+    dimension: bidfloor_opti_version {
       type: string
-      sql: ${TABLE}.bidfloor_opti_version_version ;;
+      sql: ${TABLE}.bidfloor_opti_version ;;
       hidden: no
     }
 
-    dimension: pubcost_opti_version_version {
+    dimension: pubcost_opti_version {
       type: number
-      sql: ${TABLE}.pubcost_opti_version_version ;;
+      sql: ${TABLE}.pubcost_opti_version ;;
     }
 
     dimension: bidfloor_only_pct {
@@ -90,8 +90,8 @@ view: bid_opti_placement_qa_raw {
     set: detail {
       fields: [
         placement_id,
-        bidfloor_opti_version_version,
-        pubcost_opti_version_version,
+        bidfloor_opti_version,
+        pubcost_opti_version,
         bidfloor_only_pct,
         pubcost_only_pct,
         bidfloor_pubcost_pct,

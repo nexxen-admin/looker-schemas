@@ -22,6 +22,7 @@ view: dim_country {
 
   dimension: country_name {
     label: "Country"
+    map_layer_name: countries
     description: "Country Full Name"
     type: string
     sql: ${TABLE}.Country_Name ;;

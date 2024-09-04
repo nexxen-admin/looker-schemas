@@ -17,31 +17,37 @@ view: comscore_active_segments {
   dimension: segment_id {
     type: string
     sql: ${TABLE}.segment_id ;;
+    case_sensitive: no
   }
 
   dimension: segment_name {
     type: string
     sql: ${TABLE}.segment_name ;;
+    case_sensitive: no
   }
 
   dimension: display_name {
     type: string
     sql: ${TABLE}.display_name ;;
+    case_sensitive: no
   }
 
   dimension: description {
     type: string
     sql: ${TABLE}.description ;;
+    case_sensitive: no
   }
 
   dimension: type {
     type: string
     sql: ${TABLE}."type" ;;
+    case_sensitive: no
   }
 
   dimension: status {
     type: string
     sql: ${TABLE}.status ;;
+    case_sensitive: no
   }
 
   dimension: cpm {

@@ -666,8 +666,7 @@ explore: v_daily_data_usage {
 }
 
 
-explore: v_daily_data_usage_not_active_30 {
-  label: "Vertica Data Usage - Not Active Attributes 30 days"
+explore: v_daily_data_usage_not_active {
   hidden: yes
 }
 

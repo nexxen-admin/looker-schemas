@@ -47,7 +47,7 @@ view: bid_opti_placement_qa_raw {
     }
 
     dimension: pubcost_opti_version {
-      type: number
+      type: string
       sql: ${TABLE}.pubcost_opti_version ;;
     }
 

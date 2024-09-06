@@ -667,6 +667,7 @@ explore: v_daily_data_usage {
 
 
 explore: v_daily_data_usage_not_active {
+  label: "Vertica Data Usage - Not Active Attributes"
   hidden: yes
 }
 

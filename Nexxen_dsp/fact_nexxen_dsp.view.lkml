@@ -327,13 +327,13 @@ view: fact_nexxen_dsp {
   }
 
   measure: pacing {
-    type: sum
+    type: average
     value_format: "0.00\%"
     sql: ${TABLE}.pacing ;;
   }
 
   measure: yesterday_pacing {
-    type: sum
+    type: average
     value_format: "0.00\%"
     sql: ${TABLE}.pacing ;;
     filters: [date_key_in_timezone_date: "yesterday"]

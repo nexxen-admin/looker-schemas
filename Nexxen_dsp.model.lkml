@@ -69,13 +69,6 @@ explore: fact_reach_accumulative {
   persist_with: CleanCash_datagroup
   view_label: "Measures"
   hidden: yes
-
-  join: dim_dsp_advertiser {
-    type: inner
-    view_label: "Advertiser"
-    sql_on: ${dim_dsp_advertiser.advertiser_id_key} = ${fact_reach_accumulative.advertiser_id_key} ;;
-    relationship: many_to_one
-  }
 }
 
 explore: fact_nexxen_dsp  {

@@ -1,11 +1,14 @@
 view: fact_reach_accumulative {
   sql_table_name: BI_DSP.fact_reach_accumulative ;;
 
-  dimension: advertiser_id_key {
-    type: number
-    value_format_name: id
-    sql: ${TABLE}.advertiser_id_key ;;
-    hidden: yes
+  dimension: related_brand {
+    type: string
+    sql: ${TABLE}.related_brand_name ;;
+  }
+
+  dimension: account_name {
+    type: string
+    sql: ${TABLE}.account_name ;;
   }
 
   dimension_group: date_key_in_timezone {

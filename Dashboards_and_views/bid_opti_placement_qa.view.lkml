@@ -74,15 +74,6 @@ GROUP BY 1,2,3,4;;
     sql: ${TABLE}.bidfloor_pubcost_pct ;;
   }
 
-  dimension: bid_floor_opti_ratio {
-    type: number
-    sql: ${TABLE}.bid_floor_opti_ratio ;;
-  }
-
-  dimension: pub_cost_opti_ratio {
-    type: number
-    sql: ${TABLE}.pub_cost_opti_ratio ;;
-  }
 
 
   # dimension: bidfloor_opti_version {
@@ -104,6 +95,19 @@ GROUP BY 1,2,3,4;;
   measure: request_ratio {
     type: sum
     sql: ${TABLE}.request_ratio ;;
+    value_format: "#,##0"
+  }
+
+  measure: bid_floor_opti_ratio {
+    type: sum
+    sql: ${TABLE}.bid_floor_opti_ratio ;;
+    value_format: "#,##0"
+  }
+
+
+  measure: pub_cost_opti_ratio {
+    type: sum
+    sql: ${TABLE}.pub_cost_opti_ratio ;;
     value_format: "#,##0"
   }
 

@@ -5,8 +5,36 @@ Select media_id as placement_id,
        bidfloor_only_pct,
        pubcost_only_pct,
        bidfloor_pubcost_pct,
+
        NULLIF(SUM(CASE WHEN bidfloor_opti_version is not null THEN requests end),0) as tot_requests,
-       (round(SUM(CASE WHEN (bidfloor_opti_version != 'no_opti' AND bidfloor_opti_version is not null) THEN requests end)/NULLIF(SUM(CASE WHEN bidfloor_opti_version is not null THEN requests end),0),3))*100 as request_ratio
+
+       (round(SUM(CASE WHEN (bidfloor_opti_version != 'no_opti' AND bidfloor_opti_version is not null) THEN requests end)/NULLIF(SUM(CASE WHEN bidfloor_opti_version is not null THEN requests end),0),3))*100 as request_ratio,
+
+      (NULLIF(SUM(CASE WHEN (ad.bidfloor_opti_version = 'no_opti'
+             AND (ad.pubcost_opti_version = 'no_opti' OR ad.pubcost_opti_version is null)) THEN 0
+
+             WHEN (ad.bidfloor_opti_version != 'no_opti' AND ad.bidfloor_opti_version is not null
+                         AND (ad.pubcost_opti_version = 'no_opti' or ad.pubcost_opti_version is null)
+                         ) THEN requests
+             ELSE 0 END),0)/
+      NULLIF(SUM(CASE WHEN (ad.bidfloor_opti_version = 'no_opti'
+             AND (ad.pubcost_opti_version = 'no_opti' OR ad.pubcost_opti_version is null)) THEN requests
+
+             WHEN (ad.bidfloor_opti_version != 'no_opti' AND ad.bidfloor_opti_version is not null
+                         AND (ad.pubcost_opti_version = 'no_opti' or ad.pubcost_opti_version is null)
+                         ) THEN requests
+             ELSE 0 END),0))*100 as bid_floor_opti_ratio,
+
+      (NULLIF(SUM(CASE WHEN (ad.pubcost_opti_version = 'no_opti' AND ad.bidfloor_opti_version = 'no_opti') THEN 0
+              WHEN (ad.pubcost_opti_version != 'no_opti' AND ad.bidfloor_opti_version = 'no_opti'
+              AND ad.pubcost_opti_version is not null  AND ad.bidfloor_opti_version is not null) THEN requests
+              else 0 END),0)/
+      NULLIF(SUM(CASE WHEN (ad.pubcost_opti_version = 'no_opti' AND ad.bidfloor_opti_version = 'no_opti') THEN requests
+              WHEN (ad.pubcost_opti_version != 'no_opti' AND ad.bidfloor_opti_version = 'no_opti'
+              AND ad.pubcost_opti_version is not null  AND ad.bidfloor_opti_version is not null) THEN requests
+              else 0 END),0))*100 as pub_cost_opti_ratio
+
+
 
 FROM andromeda.ad_data_daily ad
 INNER JOIN Andromeda.rx_dim_supply_placement_margin_opti_split_override_r op on op.placement_id::varchar = ad.media_id::varchar
@@ -48,7 +76,6 @@ GROUP BY 1,2,3,4;;
 
 
 
-
   # dimension: bidfloor_opti_version {
   #   type: string
   #   sql: ${TABLE}.bidfloor_opti_version ;;
@@ -71,6 +98,19 @@ GROUP BY 1,2,3,4;;
     value_format: "#,##0"
   }
 
+  measure: bid_floor_opti_ratio {
+    type: sum
+    sql: ${TABLE}.bid_floor_opti_ratio ;;
+    value_format: "#,##0"
+  }
+
+
+  measure: pub_cost_opti_ratio {
+    type: sum
+    sql: ${TABLE}.pub_cost_opti_ratio ;;
+    value_format: "#,##0"
+  }
+
 
   set: detail {
     fields: [
@@ -79,7 +119,9 @@ GROUP BY 1,2,3,4;;
       pubcost_only_pct,
       bidfloor_pubcost_pct,
       tot_requests,
-      request_ratio
+      request_ratio,
+      bid_floor_opti_ratio,
+      pub_cost_opti_ratio
 
     ]
   }

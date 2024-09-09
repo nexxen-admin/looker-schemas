@@ -1,7 +1,7 @@
 view: bid_opti_only_cost_v1 {
   derived_table: {
     sql: With Base_Data as (
-              -- only floor+cost
+              -- only cost
               Select ad.event_time::date as event_date,
                 sp.publisher_id,
                 sp.publisher_name,

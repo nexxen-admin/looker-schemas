@@ -911,67 +911,59 @@ view: fact_nexxen_dsp {
     filters: [period_filtered_measures: "last"]
   }
 
-  measure: html_kpi_board {
+  measure: html_kpi_board_line1 {
     type: count
     html:
-    <div style = "background:#1982c4; color:#fff; width: 100%;">
+    <div style = "background:#1982c4; color:#fff; width: 100%; ">
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
           % Delivered
           <div style=" line-height: 15px; font-size: 30px;">
             {{ pacing._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
         Total impressions
           <div style="line-height: 15px; font-size: 30px;">
             {{ impressions._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
         Total Budget
           <div style="line-height: 15px; font-size: 30px;">
             {{ cogs._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
         Clicks
           <div style="line-height: 15px; font-size: 30px;">
             {{ clicks._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
-        CTR
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ CTR_1P._rendered_value }}
-          </div>
-        </div>
+    </div>;;
 
-    </div>
-    <div style = "color:#1982c4; width: 100%;">
+  }
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+  measure: html_kpi_board_line2 {
+    type: count
+    html:
+    <div style = "color:#1982c4; ">
+
+        <div style="font-size: 20px; display: inline-block; float: right; padding: 0px 40px; letter-spacing: 0.01em; height: auto; padding-bottom: 5px;">
           VCR
-          <div style=" line-height: 15px; font-size: 30px;">
+          <div style="color:#1982c4; line-height: 15px; font-size: 30px;">
             {{ VCR_1P._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
-        Reach
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ cogs._rendered_value }}
-          </div>
-        </div>
-
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
-        Frequency
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ cogs._rendered_value }}
+        <div style="font-size: 20px; display: inline-block; float: right; padding: 0px 40px; letter-spacing: 0.01em; padding-bottom: 5px;">
+        CTR
+          <div style="color:#1982c4; line-height: 15px; font-size: 30px;">
+            {{ CTR_1P._rendered_value }}
           </div>
         </div>
 

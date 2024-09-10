@@ -209,6 +209,18 @@ dimension: deal_status {
   sql: case when now()>${deal_end} then 'Finished' else 'Live Deal' end ;;
 }
 
+dimension: deal_external_name {
+  type: string
+  description: "External Deal Name - includes details we can expose to clients"
+  sql: ${TABLE}.deal_external_name ;;
+}
+
+dimension: deal_partner_id {
+  type: number
+  label: "Deal Partner ID"
+  sql: ${TABLE}.deal_partner_id ;;
+}
+
   measure: count {
     type: count
     drill_fields: [deal_name]

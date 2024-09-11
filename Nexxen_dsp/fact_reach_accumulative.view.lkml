@@ -41,7 +41,7 @@ view: fact_reach_accumulative {
   measure: frequency {
     type: number
     value_format: "#.00"
-    sql: ${impressions}/${unique_users} ;;
+    sql: CASE WHEN ${unique_users} >0 THEN ${impressions}/${unique_users} ELSE 0 END ;;
   }
 
   measure: html_kpi_board {

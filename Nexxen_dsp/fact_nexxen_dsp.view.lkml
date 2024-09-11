@@ -504,6 +504,7 @@ view: fact_nexxen_dsp {
     type: number
     sql: ${dim_sfdb_opportunitylineitem.units__c}/
     (datediff('day',${dim_dsp_package_budget_schedule.start_date_in_timezone},${dim_dsp_package_budget_schedule.end_date_in_timezone})+1) ;;
+    hidden: yes
   }
 
   measure: pacing_msd {

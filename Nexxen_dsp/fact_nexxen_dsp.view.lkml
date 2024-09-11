@@ -509,6 +509,7 @@ view: fact_nexxen_dsp {
 
   measure: pacing_msd {
     type: sum
+    value_format: "#,##0.00"
     sql: case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then ${TABLE}.impressions/${cap_msd}*100
               end ;;
   }

@@ -500,6 +500,20 @@ view: fact_nexxen_dsp {
 
   }
 
+  dimension: cap_msd {
+    type: number
+    sql: ${dim_sfdb_opportunitylineitem.units__c}/
+    (datediff('day',${dim_dsp_package_budget_schedule.start_date_in_timezone},${dim_dsp_package_budget_schedule.end_date_in_timezone})+1) ;;
+    hidden: yes
+  }
+
+  measure: pacing_msd {
+    type: sum
+    value_format: "#,##0.00"
+    sql: case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then ${TABLE}.impressions/${cap_msd}*100
+              end ;;
+  }
+
   measure: count {
     type: count
     hidden: yes

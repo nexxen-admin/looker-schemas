@@ -13,7 +13,7 @@ LEFT JOIN DIM.FLIGHT_DETAILS_VIEW  AS v_flight_details ON v_flight_media_details
 LEFT JOIN DIM.CAMPAIGN_DETAILS_BASE_VIEW AS v_campaign_details_base ON v_flight_details.CAMPAIGN_ID = v_campaign_details_base.CAMPAIGN_ID
 LEFT JOIN DIM.ADVERTISER_BRAND_DETAILS_VIEW  AS v_advertiser_brand_details ON v_campaign_details_base.ADVERTISER_BRAND_ID = v_advertiser_brand_details.ADVERTISER_BRAND_ID
 LEFT JOIN DIM.RETARGETING_ATTRIBUTE_DETAILS_VIEW  AS v_retargeting_attribute ON v_daily_data_usage.COST_ATTRIBUTE_ID = v_retargeting_attribute.RETARGETING_ATTRIBUTE_ID
-WHERE ((( v_daily_data_usage.DEMAND_DATE  ) >= {% parameter start_date %} AND ( v_daily_data_usage.DEMAND_DATE  ) < {% parameter end_date %})) AND ((COALESCE(v_daily_data_usage.DEMAND_DATE, '9999-12-31') >= (SELECT MIN(DEMAND_DATE) FROM RAWDB.daily_data_usage)))
+WHERE ((( v_daily_data_usage.DEMAND_DATE  ) >= (((DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC') + (-({% parameter number_of_days %}-1) || ' day')::INTERVAL))) AND ( v_daily_data_usage.DEMAND_DATE  ) < ((((DATE_TRUNC('day', CURRENT_TIMESTAMP AT TIME ZONE 'UTC') + (-({% parameter number_of_days %}-1) || ' day')::INTERVAL) + ({% parameter number_of_days %} || ' day')::INTERVAL))))) AND ((COALESCE(v_daily_data_usage.DEMAND_DATE, '9999-12-31') >= (SELECT MIN(DEMAND_DATE) FROM RAWDB.daily_data_usage)))
 GROUP BY 1, 2, 3
 ),
 all_at AS (
@@ -42,12 +42,9 @@ FROM active ;;
   }
 label: "Vertica Data Usage - Not Active Attributes"
 
-  parameter: start_date {
-    type: date_time
-  }
-
-  parameter: end_date {
-    type: date_time
+  parameter: number_of_days{
+    type: number
+    label: "Number of Days since last usage"
   }
 
 dimension: provider_name  {

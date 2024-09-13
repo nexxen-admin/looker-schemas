@@ -20,6 +20,11 @@ view: fact_reach_accumulative {
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 
+ dimension: advertiser_name {
+   type: string
+  sql: ${TABLE}.advertiser_name;;
+ }
+
   measure: accumulative_unique_users {
     type: sum
     value_format: "#,##0"

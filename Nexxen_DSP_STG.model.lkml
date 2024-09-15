@@ -257,11 +257,11 @@ explore: fact_nexxen_dsp  {
 
 }
 
-explore: fact_nexxen_msd  {
+explore: fact_nexxen_msd_advertiser  {
   #required_access_grants: [advertiser_msd]
   view_name: fact_nexxen_dsp
   persist_with: CleanCash_datagroup
-  label: "Nexxen dsp MSD"
+  label: "Nexxen dsp MSD Advertiser"
   view_label: "Measures"
   access_filter: {
     field: advertisers_email.email
@@ -458,4 +458,209 @@ explore: fact_nexxen_msd  {
     relationship: many_to_one
   }
 
+  join: agencies_email {
+    type: inner
+    sql_on: ${dim_sfdb_account.id}=${agencies_email.account_id} ;;
+    relationship: many_to_one
+  }
+
 }
+
+explore: fact_nexxen_msd_agency  {
+  #required_access_grants: [advertiser_msd]
+  view_name: fact_nexxen_dsp
+  persist_with: CleanCash_datagroup
+  label: "Nexxen dsp MSD Agency"
+  view_label: "Measures"
+  access_filter: {
+    field: agencies_email.email
+    user_attribute: agency
+  }
+  #hidden: yes
+
+  join: dim_dsp_creative {
+    type: inner
+    view_label: "Creative"
+    sql_on: ${dim_dsp_creative.creative_id_key}=${fact_nexxen_dsp.creative_id_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_creative_file {
+    type:left_outer
+    view_label: "Creative"
+    sql_on: ${dim_dsp_creative_file.creative_file_key} = ${fact_nexxen_dsp.creative_file_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_monthly_manual_adjustment {
+    type:left_outer
+    view_label: "Manual Billing ADJ"
+    sql_on: ${dim_dsp_monthly_manual_adjustment.manual_adjustment_key} = ${fact_nexxen_dsp.manual_adjustment_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_netsuite_invoice{
+    type:left_outer
+    view_label: "Netsuite Billing Fields"
+    sql_on: ${dim_dsp_netsuite_invoice.netsuite_invoice_key} = ${fact_nexxen_dsp.netsuite_invoice_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_creative_file_tracking_url {
+    type: left_outer
+    view_label: "Creative"
+    sql_on: ${dim_dsp_creative_file_tracking_url.creative_file_id} = ${dim_dsp_creative_file.creative_file_id}
+      and ${dim_dsp_creative_file_tracking_url.platform_id} = ${dim_dsp_creative_file.platform_id};;
+    relationship: many_to_one
+  }
+
+
+  join: v_dim_dsp_date {
+    type: inner
+    view_label: "Time Frame"
+    sql_on: ${v_dim_dsp_date.date_key_raw} = ${fact_nexxen_dsp.date_key_in_timezone_raw} ;;
+    relationship: many_to_one
+
+  }
+  join: dim_sfdb_legal_entity {
+    type: inner
+    view_label: "Legal Entity"
+    sql_on: ${dim_sfdb_legal_entity.id} = ${dim_sfdb_account.legal_entity__c} ;;
+    relationship: many_to_one
+
+  }
+
+
+  join: dim_dsp_advertiser {
+
+    type: inner
+    view_label: "Advertiser"
+    sql_on: ${dim_dsp_advertiser.advertiser_id_key} = ${fact_nexxen_dsp.advertiser_id_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_market {
+    type: inner
+    view_label: "Market"
+    sql_on: ${dim_dsp_market.market_id_key} = ${fact_nexxen_dsp.market_id_key};;
+    relationship: many_to_one
+  }
+
+
+  join: dim_dsp_package_budget_schedule {
+    type: inner
+    view_label: "DSP Flight & Package"
+    sql_on:${dim_dsp_package_budget_schedule.package_budget_schedule_key}=${fact_nexxen_dsp.package_budget_schedule_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_sfdb_account {
+    type: inner
+    view_label: "Salsforce Account"
+    sql_on: ${dim_sfdb_account.account_id_key} = ${fact_nexxen_dsp.account_id_key};;
+    relationship: many_to_one
+
+  }
+  join: dim_sfdb_po__c {
+
+    type: left_outer
+    view_label: "Salsforce Purchase Order"
+    sql_on: ${dim_sfdb_po__c.po_aid__c} = ${dim_sfdb_account.id} ;;
+    relationship: many_to_one
+
+  }
+
+  join: dim_sfdb_opportunity {
+    type: inner
+    view_label: "Salsforce Opportunity"
+    sql_on: ${dim_sfdb_opportunity.opportunity_id_key} = ${fact_nexxen_dsp.opportunity_id_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_sfdb_opportunitylineitemschedule {
+    type: inner
+    view_label: "Salesforce Opportunity Line Item Flight"
+    sql_on: ${dim_sfdb_opportunitylineitemschedule.opportunitylineitemschedule_key}=${fact_nexxen_dsp.opportunitylineitemschedule_key} ;;
+    relationship: many_to_one
+  }
+  join:  dim_sfdb_opportunitylineitem {
+    type: inner
+    view_label: "Salsforce Opportunity Line Item"
+    sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
+    relationship: many_to_one
+
+
+  }
+
+  join: dim_sfdb_user {
+
+    type: inner
+    view_label: "Employee"
+    sql_on: ${dim_sfdb_user.user_key_id}=${fact_nexxen_dsp.user_key_id};;
+    relationship: many_to_one
+
+  }
+
+  join: datorama_dsp_third_party {
+    type: full_outer
+    view_label: "3rd Party Data"
+    sql_on: ${datorama_dsp_third_party.third_party_key}=${fact_nexxen_dsp.third_party_key} ;;
+    relationship: many_to_one
+  }
+
+  join: v_dim_netsuite_daily_exchange_rate_target_currency {
+    type: inner
+    view_label: "Netsuite Target Currency"
+    sql_on: ${v_dim_netsuite_daily_exchange_rate_target_currency.netsuite_daily_exchange_rate_key}=${fact_nexxen_dsp.exchange_rate_to_target_currency_key} ;;
+    relationship: many_to_one
+  }
+
+  join: v_dim_netsuite_daily_exchange_rate_usd_currency {
+    type: inner
+    view_label: "Netsuite USD Currency"
+    sql_on: ${v_dim_netsuite_daily_exchange_rate_usd_currency.netsuite_daily_exchange_rate_key}=${fact_nexxen_dsp.exchange_rate_to_usd_currency_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_sfdb_related_accounts {
+    type: left_outer
+    view_label: "Salsforce Account"
+    sql_on: ${dim_sfdb_related_accounts.id}=${dim_sfdb_opportunity.related_account__c} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_sfdb_user_opportunity_owner {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${dim_sfdb_user_opportunity_owner.opp_owner_id}=${dim_sfdb_opportunity.ownerid} ;;
+    relationship: many_to_one
+  }
+
+  join: v_dim_sfdb_opportunitylineitemschedule_new {
+    type: inner
+    view_label: "Salesforce Opportunity Line Item Schedule"
+    sql_on: ${v_dim_sfdb_opportunitylineitemschedule_new.opportunitylineitem_key}=${fact_nexxen_dsp.opportunitylineitem_key}
+      and ${fact_nexxen_dsp.date_key_month}=${v_dim_sfdb_opportunitylineitemschedule_new.event_month_month};;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_package {
+    type: inner
+    view_label: "Package"
+    sql_on: ${dim_dsp_package.package_id_key}=${fact_nexxen_dsp.package_id_key} ;;
+    relationship: many_to_one
+  }
+
+  join: advertisers_email {
+    type: inner
+    sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;
+    relationship: many_to_one
+  }
+
+  join: agencies_email {
+    type: inner
+    sql_on: ${dim_sfdb_account.id}=${agencies_email.account_id} ;;
+    relationship: many_to_one
+  }
+
+  }

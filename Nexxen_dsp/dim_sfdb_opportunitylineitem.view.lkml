@@ -697,6 +697,12 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.units__c ;;
   }
 
+  measure: units__c_msd {
+    type: number
+    label: "Booked Units"
+    sql: ${TABLE}.units__c ;;
+  }
+
   measure: budgeted_units {
     type: sum
     description: "Shows the same number as dimension 'Booked Units', but is a measure, so will show total"
@@ -725,5 +731,14 @@ view: dim_sfdb_opportunitylineitem {
     type: count
     drill_fields: [id]
     hidden: yes
+  }
+  measure: cap_temp {
+    type: sum
+    sql: ${units__c}/(datediff('day',${start_date__c_date},${end_date__c_date})+1) ;;
+  }
+
+  measure: cap_msd_test {
+    type: number
+    sql: ${cap_temp} ;;
   }
 }

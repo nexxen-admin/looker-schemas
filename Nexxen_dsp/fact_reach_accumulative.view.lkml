@@ -20,6 +20,11 @@ view: fact_reach_accumulative {
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 
+ dimension: advertiser_name {
+   type: string
+  sql: ${TABLE}.advertiser_name;;
+ }
+
   measure: accumulative_unique_users {
     type: sum
     value_format: "#,##0"
@@ -41,7 +46,7 @@ view: fact_reach_accumulative {
   measure: frequency {
     type: number
     value_format: "#.00"
-    sql: ${impressions}/${unique_users} ;;
+    sql: CASE WHEN ${unique_users} >0 THEN ${impressions}/${unique_users} ELSE 0 END ;;
   }
 
   measure: html_kpi_board {

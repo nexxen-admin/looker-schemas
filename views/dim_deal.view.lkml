@@ -219,6 +219,7 @@ dimension: deal_partner_id {
   type: number
   label: "Deal Partner ID"
   sql: ${TABLE}.deal_partner_id ;;
+  hidden: yes
 }
 
   measure: count {

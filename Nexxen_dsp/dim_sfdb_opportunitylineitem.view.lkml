@@ -738,7 +738,8 @@ view: dim_sfdb_opportunitylineitem {
   }
 
   measure: cap_msd_test {
-    type: number
-    sql: ${cap_temp} ;;
+    type: running_total
+    direction: "column"
+    sql: ${cap_temp};;
   }
 }

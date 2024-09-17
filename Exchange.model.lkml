@@ -441,6 +441,13 @@ explore: extend_Inbound_Exchange {
     sql_on: ${dim_seat.seat_key}=${dim_dsp_seat.seat_key};;
     relationship: many_to_one
   }
+
+  join: dim_deal_partner {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
+    relationship: many_to_one
+  }
   hidden: yes
 }
 
@@ -831,6 +838,13 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_bidfloor_opti_version.bidfloor_opti_version_key}=${fact_ad_daily_agg.bidfloor_opti_version_key} ;;
     relationship: many_to_one
   }
+
+  join: dim_deal_partner {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
+    relationship: many_to_one
+  }
 }
 
 
@@ -1131,6 +1145,13 @@ explore: fact_ad_hourly_agg{
     sql_on: ${dim_seat.seat_key}=${dim_dsp_seat.seat_key};;
     relationship: many_to_one
   }
+
+  join: dim_deal_partner {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
+    relationship: many_to_one
+  }
 }
 
 
@@ -1372,6 +1393,13 @@ explore: fact_ad_bid_request_daily_agg{
     type: inner
     view_label: "Personnel"
     sql_on: ${dim_deal_personnel.deal_id}=${dim_deal.internal_deal_id} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_partner {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
     relationship: many_to_one
   }
 

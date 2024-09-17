@@ -1,6 +1,16 @@
 view: bid_opti_only_cost_v1 {
   derived_table: {
-    sql: With Base_Data as (
+    sql: With placement_tab as (select distinct placement_id,bidfloor_only_pct,pubcost_only_pct,bidfloor_pubcost_pct
+                        from(
+                                (select distinct placement_id,bidfloor_only_pct,pubcost_only_pct,bidfloor_pubcost_pct
+                                from Andromeda.rx_dim_supply_placement_margin_opti_split_override_r)
+                                UNION ALL
+                                (select distinct placement_id,bidfloor_only_pct,pubcost_only_pct,bidfloor_pubcost_pct
+                                from Andromeda.rx_dim_supply_placement_margin_opti_split_automated_r
+                                where placement_id not in (select placement_id from Andromeda.rx_dim_supply_placement_margin_opti_split_override_r)
+                                )) AA),
+
+    Base_Data as (
               -- only cost
               Select ad.event_time::date as event_date,
                 sp.publisher_id,
@@ -41,7 +51,7 @@ view: bid_opti_only_cost_v1 {
       sum(ad.cogs) as COGS,
       sum(ad.revenue) as revenue
       From andromeda.ad_data_hourly ad
-      inner join Andromeda.rx_dim_supply_placement_margin_opti_split_override_r op on op.placement_id::varchar = ad.media_id::varchar
+      inner join placement_tab op on op.placement_id::varchar = ad.media_id::varchar
       and ad.rx_ssp_name ilike 'rmp%'
       left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id::varchar = ad.media_id
       left outer join andromeda.rx_dim_supply_publisher_traffic_source spts on spts.pub_ts_id = spl.pub_ts_id

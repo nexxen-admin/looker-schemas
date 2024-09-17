@@ -732,14 +732,25 @@ view: dim_sfdb_opportunitylineitem {
     drill_fields: [id]
     hidden: yes
   }
-  measure: cap_temp {
-    type: sum
-    sql: ${units__c}/(datediff('day',${start_date__c_date},${end_date__c_date})+1) ;;
+  dimension: date_diff {
+    type: number
+    sql: case when ${end_date__c_date} <fact_nexxen_dsp.date_key_in_timezone then 1
+              when ${start_date__c_date} > fact_nexxen_dsp.date_key_in_timezone then 0  else
+         (fact_nexxen_dsp.date_key_in_timezone - ${start_date__c_date})+1 end;;
+  }
+  dimension: cap_temp {
+    type: number
+    sql: ${units__c}/(datediff('day',${start_date__c_date},${end_date__c_date})+1)*${date_diff} ;;
   }
 
   measure: cap_msd_test {
-    type: running_total
-    direction: "column"
+    type: max
     sql: ${cap_temp};;
   }
+  measure: msd_test {
+    type: number
+    sql:
+       ${fact_nexxen_dsp.delivered_units}/${cap_msd_test}*100;;
+  }
+
 }

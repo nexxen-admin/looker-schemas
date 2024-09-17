@@ -166,6 +166,7 @@ view: fact_nexxen_dsp {
 
   dimension: opportunitylineitem_key {
     type: number
+   # primary_key: yes
     sql: ${TABLE}.opportunitylineitem_key ;;
     hidden: yes
   }
@@ -510,8 +511,8 @@ view: fact_nexxen_dsp {
   measure: pacing_msd {
     type: sum
     value_format: "0.00\%"
-    sql: case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then
-    ${impressions}/${dim_sfdb_opportunitylineitem.cap_temp}*100 end ;;
+    sql: -- case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then
+        ${dim_sfdb_opportunitylineitem.msd_test}*100;;
               #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPC' then ${TABLE}.clicks/sum(${cap_msd}*100
               #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'dCPM' then ${TABLE}.cost/${cap_msd}*100 end;;
   }

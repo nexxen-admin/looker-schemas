@@ -1,7 +1,9 @@
 connection: "looker_ms"
 
 #include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
-include: "/**/*.view.lkml"                 # include all views in this project
+include: "/**/*.view.lkml"
+#include: "MSD_Overview_Chair_King.dashboard.lookml"
+# include all views in this project
 # include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 
 datagroup: CleanCash_datagroup {

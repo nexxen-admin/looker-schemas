@@ -23,8 +23,23 @@ view: agencies_email {
 
   dimension: email {
     type: string
+    label: "Agency User Email"
     sql: ${TABLE}.email ;;
   }
+
+
+  dimension: first_name {
+    type: string
+    label: "Agency User First Name"
+    sql: ${TABLE}.First_Name ;;
+  }
+
+  dimension: last_name {
+    type: string
+    label: "Agency User Last Name"
+    sql: ${TABLE}.Last_Name ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [account_name]

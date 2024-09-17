@@ -25,9 +25,22 @@ view: advertisers_email {
 
   dimension: email {
     type: string
-    label: "Advertiser Email"
+    label: "Advertiser User Email"
     sql: ${TABLE}.email ;;
   }
+
+  dimension: first_name {
+    type: string
+    label: "Adv User First Name"
+    sql: ${TABLE}.First_Name ;;
+  }
+
+  dimension: last_name {
+    type: string
+    label: "Adv User Last Name"
+    sql: ${TABLE}.Last_Name ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [advertiser_name]

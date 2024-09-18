@@ -519,10 +519,7 @@ explore: bid_opti_placement_qa_raw {
   required_access_grants: [can_view_all_tremor]
 }
 
-explore: tva_tvi {
-  label: "tva_tvi"
-  required_access_grants: [can_view_all_tremor]
-}
+
 
 
 explore: creative_package_overlap_dates {

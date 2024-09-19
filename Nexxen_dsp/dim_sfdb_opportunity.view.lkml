@@ -88,8 +88,9 @@ view: dim_sfdb_opportunity {
 
   dimension: billing_account__c {
     type: string
-    sql: ${TABLE}.billing_account__c ;;
-    hidden: yes
+    sql: ${TABLE}.billing_account__c ;
+    label: "Billing Account ID";
+    hidden: no
   }
 
   dimension: brand_classification__c {

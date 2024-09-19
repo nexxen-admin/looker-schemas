@@ -751,7 +751,7 @@ view: dim_sfdb_opportunitylineitem {
     type: number
     value_format: "0.00%"
     sql:
-       IFNULL(${fact_nexxen_dsp.delivered_units}/${cap_msd_test}*100,0);;
+       IFNULL(${fact_nexxen_dsp.delivered_units}/${cap_msd_test},0);;
   }
 
 }

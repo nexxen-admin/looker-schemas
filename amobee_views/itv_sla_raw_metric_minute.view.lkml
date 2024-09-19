@@ -182,7 +182,7 @@ view: raw_metric_minute {
 
   measure: metric_tag_sum {
     type: sum
-    sql: try_cast(${TABLE}."METRIC_TAG" as int) ;;
+    sql: try_cast(${TABLE}."METRIC_TAG" as bigint) ;;
   }
 
  measure: total_requests {

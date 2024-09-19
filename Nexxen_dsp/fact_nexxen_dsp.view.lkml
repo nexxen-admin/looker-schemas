@@ -166,6 +166,7 @@ view: fact_nexxen_dsp {
 
   dimension: opportunitylineitem_key {
     type: number
+   # primary_key: yes
     sql: ${TABLE}.opportunitylineitem_key ;;
     hidden: yes
   }
@@ -327,13 +328,13 @@ view: fact_nexxen_dsp {
   }
 
   measure: pacing {
-    type: sum
+    type: average
     value_format: "0.00\%"
     sql: ${TABLE}.pacing ;;
   }
 
   measure: yesterday_pacing {
-    type: sum
+    type: average
     value_format: "0.00\%"
     sql: ${TABLE}.pacing ;;
     filters: [date_key_in_timezone_date: "yesterday"]
@@ -414,7 +415,7 @@ view: fact_nexxen_dsp {
   measure: CTR_1P {
     type: number
     value_format: "0.00%"
-    sql: ${clicks}/nullif(${impressions},0) ;;
+    sql: IFNULL(${clicks}/nullif(${impressions},0),0) ;;
   }
 
   measure: CTR_3P {
@@ -425,7 +426,7 @@ view: fact_nexxen_dsp {
 
   measure: VCR_1P {
     type: number
-    sql: ${complete_events}/nullif(${impressions},0) ;;
+    sql: IFNULL(${complete_events}/nullif(${impressions},0),0) ;;
     value_format: "0.00%"
   }
 
@@ -498,6 +499,22 @@ view: fact_nexxen_dsp {
     hidden: yes
     #incorrect - might need to be calculated in the back
 
+  }
+
+  dimension: cap_msd {
+    type: number
+    sql: ${dim_sfdb_opportunitylineitem.units__c}/
+    (datediff('day',${dim_dsp_package_budget_schedule.start_date_in_timezone},${dim_dsp_package_budget_schedule.end_date_in_timezone})+1) ;;
+    #hidden: yes
+  }
+
+  measure: pacing_msd {
+    type: sum
+    value_format: "0.00\%"
+    sql: -- case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then
+        ${dim_sfdb_opportunitylineitem.msd_pacing}*100;;
+              #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPC' then ${TABLE}.clicks/sum(${cap_msd}*100
+              #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'dCPM' then ${TABLE}.cost/${cap_msd}*100 end;;
   }
 
   measure: count {
@@ -911,67 +928,59 @@ view: fact_nexxen_dsp {
     filters: [period_filtered_measures: "last"]
   }
 
-  measure: html_kpi_board {
+  measure: html_kpi_board_line1 {
     type: count
     html:
-    <div style = "background:#1982c4; color:#fff; width: 100%;">
+    <div style = "background:#1982c4; color:#fff; width: 100%; ">
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
           % Delivered
           <div style=" line-height: 15px; font-size: 30px;">
-            {{ pacing._rendered_value }}
+            {{ dim_sfdb_opportunitylineitem.msd_pacing._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
         Total impressions
           <div style="line-height: 15px; font-size: 30px;">
             {{ impressions._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
         Total Budget
           <div style="line-height: 15px; font-size: 30px;">
             {{ cogs._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
         Clicks
           <div style="line-height: 15px; font-size: 30px;">
             {{ clicks._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
-        CTR
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ CTR_1P._rendered_value }}
-          </div>
-        </div>
+    </div>;;
 
-    </div>
-    <div style = "color:#1982c4; width: 100%;">
+  }
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
+  measure: html_kpi_board_line2 {
+    type: count
+    html:
+    <div style = "color:#1982c4; ">
+
+        <div style="font-size: 20px; display: inline-block; float: right; padding: 0px 40px; letter-spacing: 0.01em; height: auto; padding-bottom: 5px;">
           VCR
-          <div style=" line-height: 15px; font-size: 30px;">
+          <div style="color:#1982c4; line-height: 15px; font-size: 30px;">
             {{ VCR_1P._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
-        Reach
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ cogs._rendered_value }}
-          </div>
-        </div>
-
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; padding: 0px 10px">
-        Frequency
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ cogs._rendered_value }}
+        <div style="font-size: 20px; display: inline-block; float: right; padding: 0px 40px; letter-spacing: 0.01em; padding-bottom: 5px;">
+        CTR
+          <div style="color:#1982c4; line-height: 15px; font-size: 30px;">
+            {{ CTR_1P._rendered_value }}
           </div>
         </div>
 

@@ -415,7 +415,7 @@ view: fact_nexxen_dsp {
   measure: CTR_1P {
     type: number
     value_format: "0.00%"
-    sql: ${clicks}/nullif(${impressions},0) ;;
+    sql: IFNULL(${clicks}/nullif(${impressions},0),0) ;;
   }
 
   measure: CTR_3P {
@@ -426,7 +426,7 @@ view: fact_nexxen_dsp {
 
   measure: VCR_1P {
     type: number
-    sql: ${complete_events}/nullif(${impressions},0) ;;
+    sql: IFNULL(${complete_events}/nullif(${impressions},0),0) ;;
     value_format: "0.00%"
   }
 
@@ -512,7 +512,7 @@ view: fact_nexxen_dsp {
     type: sum
     value_format: "0.00\%"
     sql: -- case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then
-        ${dim_sfdb_opportunitylineitem.msd_test}*100;;
+        ${dim_sfdb_opportunitylineitem.msd_pacing}*100;;
               #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPC' then ${TABLE}.clicks/sum(${cap_msd}*100
               #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'dCPM' then ${TABLE}.cost/${cap_msd}*100 end;;
   }
@@ -936,7 +936,7 @@ view: fact_nexxen_dsp {
         <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
           % Delivered
           <div style=" line-height: 15px; font-size: 30px;">
-            {{ pacing_msd._rendered_value }}
+            {{ dim_sfdb_opportunitylineitem.msd_pacing._rendered_value }}
           </div>
         </div>
 

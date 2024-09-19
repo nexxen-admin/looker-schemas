@@ -747,10 +747,11 @@ view: dim_sfdb_opportunitylineitem {
     type: max
     sql: ${cap_temp};;
   }
-  measure: msd_test {
+  measure: msd_pacing {
     type: number
+    value_format: "0.00%"
     sql:
-       ${fact_nexxen_dsp.delivered_units}/${cap_msd_test}*100;;
+       IFNULL(${fact_nexxen_dsp.delivered_units}/${cap_msd_test}*100,0);;
   }
 
 }

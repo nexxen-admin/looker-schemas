@@ -111,7 +111,7 @@ explore: sam_lt_comm {
 explore: sam_performance_monitor_v2 {
   access_filter: {
     field: sam_performance_monitor_v2.sam
-    user_attribute: allowed_users
+    user_attribute: allowed_users_sam_lt
   }
   label: "SAM Performance Monitor V2"
   required_access_grants: [can_view_all_tremor]

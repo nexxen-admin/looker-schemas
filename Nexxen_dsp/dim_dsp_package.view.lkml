@@ -293,6 +293,10 @@ view: dim_dsp_package {
     sql: ${TABLE}.inventory_type_id ;;
   }
 
+  dimension: insertion_order_name {
+    type: string
+    sql: ${TABLE}.insertion_order_name ;;
+  }
   dimension: io_number {
     type: string
     sql: ${TABLE}.io_number ;;

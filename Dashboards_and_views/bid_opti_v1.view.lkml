@@ -50,7 +50,7 @@ view: bid_opti_v1 {
         sum(ad.cost) as Cost,
         sum(ad.cogs) as COGS,
         sum(ad.revenue) as revenue
-      From andromeda.ad_data_hourly ad
+      From andromeda.ad_data_daily ad
         inner join placement_tab op on op.placement_id::varchar = ad.media_id::varchar
                             and ad.rx_ssp_name ilike 'rmp%'
         left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id::varchar = ad.media_id

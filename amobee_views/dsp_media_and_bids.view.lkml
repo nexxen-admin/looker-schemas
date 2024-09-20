@@ -386,6 +386,7 @@ view: dsp_media_and_bids {
     type: string
     description: "Size of the creative"
     sql: ${TABLE}."creative_size" ;;
+    drill_fields: [creative_name]
   }
 
   measure: cross_device_action {

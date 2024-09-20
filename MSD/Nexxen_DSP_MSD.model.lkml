@@ -2,7 +2,7 @@ connection: "looker_ms"
 
 #include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"
-#include: "MSD_Overview_Chair_King.dashboard.lookml"
+include: "/**/*.dashboard.lookml"
 # include all views in this project
 # include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
 
@@ -40,10 +40,10 @@ explore: fact_nexxen_msd_advertiser  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD Advertiser"
   view_label: "Measures"
-  access_filter: {
-    field: advertisers_email.email
-    user_attribute: advertiser
-  }
+  # access_filter: {
+  #   field: advertisers_email.email
+  #   user_attribute: advertiser
+  # }
   #hidden: yes
 
   join: dim_dsp_creative {
@@ -243,16 +243,29 @@ explore: fact_nexxen_msd_advertiser  {
 
 }
 
+explore: fact_reach_accumulative_advertiser {
+  # required_access_grants: [can_view_all_tremor]
+  view_name: fact_reach_accumulative
+  label: "Nexxen dsp MSD - Reach Advertiser"
+  persist_with: CleanCash_datagroup
+  view_label: "Measures"
+  # access_filter: {
+  #   field: advertisers_email.email
+  #   user_attribute: advertiser
+  # }
+  # hidden: yes
+}
+
 explore: fact_nexxen_msd_agency  {
   #required_access_grants: [advertiser_msd]
   view_name: fact_nexxen_dsp
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD Agency"
   view_label: "Measures"
-  access_filter: {
-    field: agencies_email.email
-    user_attribute: agency
-  }
+  # access_filter: {
+  #   field: agencies_email.email
+  #   user_attribute: agency
+  # }
   #hidden: yes
 
   join: dim_dsp_creative {
@@ -440,4 +453,17 @@ explore: fact_nexxen_msd_agency  {
     relationship: many_to_one
   }
 
+}
+
+explore: fact_reach_accumulative_agency {
+  # required_access_grants: [can_view_all_tremor]
+  view_name: fact_reach_accumulative
+  label: "Nexxen dsp MSD - Reach Agency"
+  persist_with: CleanCash_datagroup
+  view_label: "Measures"
+  # access_filter: {
+  #   field: agencies_email.email
+  #   user_attribute: agency
+  # }
+  # hidden: yes
 }

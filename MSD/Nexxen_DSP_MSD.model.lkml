@@ -40,10 +40,10 @@ explore: fact_nexxen_msd_advertiser  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD Advertiser"
   view_label: "Measures"
-  # access_filter: {
-  #   field: advertisers_email.email
-  #   user_attribute: advertiser
-  # }
+  access_filter: {
+    field: advertisers_email.email
+    user_attribute: advertiser
+  }
   #hidden: yes
 
   join: dim_dsp_creative {
@@ -262,10 +262,10 @@ explore: fact_nexxen_msd_agency  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD Agency"
   view_label: "Measures"
-  # access_filter: {
-  #   field: agencies_email.email
-  #   user_attribute: agency
-  # }
+  access_filter: {
+    field: agencies_email.email
+    user_attribute: agency
+  }
   #hidden: yes
 
   join: dim_dsp_creative {

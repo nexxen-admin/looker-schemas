@@ -20,20 +20,14 @@ view: bid_opti_v1 {
         spl.placement_name as placement_name,
         ad.rx_imp_type as imp_type,
 
-      --old
-      --CASE WHEN (ad.bidfloor_opti_version = 'no_opti'
-      --           AND (ad.pubcost_opti_version = 'no_opti' OR ad.pubcost_opti_version is null)) THEN 'no opti'
-      --     WHEN (ad.bidfloor_opti_version != 'no_opti' AND ad.bidfloor_opti_version is not null
-      --           AND (ad.pubcost_opti_version = 'no_opti' or ad.pubcost_opti_version is null)
-      --           ) THEN 'opti'
-      --else 'not use'
-      --end as Opti_Status,
-
-      --new
-      CASE WHEN (ad.bidfloor_opti_version = 'no_opti')  THEN 'no opti'
-           WHEN (ad.bidfloor_opti_version != 'no_opti' AND ad.bidfloor_opti_version is not null) THEN 'opti'
+      CASE WHEN (ad.pubcost_opti_enabled != 1 AND ad.bidfloor_opti_version = 'no_opti') THEN 'no opti'
+      WHEN (ad.pubcost_opti_enabled != 1
+            AND ad.bidfloor_opti_version != 'no_opti'
+            AND ad.bidfloor_opti_version is not null)
+            THEN 'opti'
       else 'not use'
       end as Opti_Status,
+
 
         bidfloor_only_pct,
         pubcost_only_pct,
@@ -59,7 +53,7 @@ view: bid_opti_v1 {
       where ad.event_time::date >= current_date()-3
             and ad.event_time::date < current_date()
         and bidfloor_opti_version is not null
-        and (bidfloor_only_pct > 0 and pubcost_only_pct = 0 and bidfloor_pubcost_pct = 0)
+        and (bidfloor_only_pct > 0)
         and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
             or ad.slot_attempts > 0
             or ad.responses > 0

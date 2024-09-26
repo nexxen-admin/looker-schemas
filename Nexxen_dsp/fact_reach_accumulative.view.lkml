@@ -54,14 +54,14 @@ view: fact_reach_accumulative {
     html:
     <div style = "color:#1982c4; backgroubd: red; ">
 
-        <div style="font-size: 20px; display: inline-block; float: left; padding: 0px 40px; letter-spacing: 0.01em; padding-bottom: 5px; ">
+        <div style="font-size: 20px; display: inline-block; padding: 0px 40px; letter-spacing: 0.01em; padding-bottom: 5px; ">
           Reach
           <div style="color:#1982c4; line-height: 15px; font-size: 30px;">
             {{ unique_users._rendered_value }}
           </div>
         </div>
 
-        <div style="font-size: 20px; display: inline-block; float: left; padding: 0px 40px; letter-spacing: 0.01em; padding-bottom: 5px;">
+        <div style="font-size: 20px; display: inline-block; padding: 0px 40px; letter-spacing: 0.01em; padding-bottom: 5px;">
         Frequency
           <div style="color:#1982c4; line-height: 15px; font-size: 30px;">
             {{ frequency._rendered_value }}

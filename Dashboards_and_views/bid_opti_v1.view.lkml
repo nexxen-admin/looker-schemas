@@ -43,7 +43,9 @@ view: bid_opti_v1 {
             or ad.slot_attempts > 0
             or ad.responses > 0
             or ad.impression_pixel > 0)
-      Group by 1, 2, 3, 4, 5, 6, 7),
+      Group by 1, 2, 3, 4, 5, 6, 7
+      HAVING Opti_Status != 'not use'
+      ),
 
 Placement_Limiter as (
 Select event_date,

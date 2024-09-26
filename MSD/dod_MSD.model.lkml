@@ -32,6 +32,7 @@ access_grant: can_view_all_tremor {
 
 explore: dsp_media_and_bids_advertiser {
   label: "Dsp Media and bids - MSD"
+  persist_with: CleanCash_datagroup
   view_name: dsp_media_and_bids
   access_filter: {
     field: advertisers_email.email

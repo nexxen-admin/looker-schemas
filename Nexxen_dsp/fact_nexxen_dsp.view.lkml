@@ -940,33 +940,49 @@ view: fact_nexxen_dsp {
     html:
     <div style = "background:#1982c4; color:#fff; width: 100%; ">
 
-        <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
+        <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
           % Delivered
           <div style=" line-height: 15px; font-size: 30px;">
             {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
         Total impressions
           <div style="line-height: 15px; font-size: 30px;">
             {{ impressions._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
         Total Budget
           <div style="line-height: 15px; font-size: 30px;">
             {{ cogs._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
         Clicks
           <div style="line-height: 15px; font-size: 30px;">
             {{ clicks._rendered_value }}
           </div>
         </div>
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
+        CTR
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ CTR_1P._rendered_value }}
+          </div>
+        </div>
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
+          VCR
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ VCR_1P._rendered_value }}
+          </div>
+        </div>
+
+
 
     </div>;;
 

@@ -150,7 +150,7 @@ view: v_dim_employee_pub_ops {
                    ${TABLE}.Employee_Name='Ashleigh Fisher' OR ${TABLE}.Employee_Name='Noa Krashniak' OR
                    ${TABLE}.Employee_Name='Gonni Kern'then 'In App'
               when ${TABLE}.Employee_Name='Itzik Vaknin' OR ${TABLE}.Employee_Name='Yovel Modlin' OR ${TABLE}.Employee_Name='Bar Wolkowiski' or ${TABLE}.Employee_Name='Noa Karako'
-              or ${TABLE}.Employee_Name='Shir Elzam' OR ${TABLE}.Employee_Name='Shachar Laufer' then 'Web'
+              or ${TABLE}.Employee_Name='Shir Elzam' OR ${TABLE}.Employee_Name='Shachar Laufer' OR ${TABLE}.Employee_Name='Omri Lender' then 'Web'
               when ${TABLE}.Employee_name='Mikayla Skarzynski' or ${TABLE}.Employee_name='Rachel Gargett'
               or ${TABLE}.Employee_name='Hannah Quigley' or ${TABLE}.Employee_name='Raffaele Santambrogio'  then 'UK'
               else 'null' end

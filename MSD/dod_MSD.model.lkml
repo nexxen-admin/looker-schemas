@@ -10,6 +10,22 @@ datagroup: dod_default_datagroup {
 persist_with: dod_default_datagroup
 
 
+
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
+access_grant: can_view_all_tremor {
+  user_attribute: all_tremor
+  allowed_values: ["all_tremor"]
+}
+
+access_grant: advertiser_msd {
+  user_attribute: advertiser
+  allowed_values: ["advertiser"]
+}
+
 explore: dsp_media_and_bids_advertiser {
   label: "Dsp Media and bids - MSD"
   view_name: dsp_media_and_bids

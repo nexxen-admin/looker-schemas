@@ -928,6 +928,13 @@ view: fact_nexxen_dsp {
     filters: [period_filtered_measures: "last"]
   }
 
+  measure: daily_pacing_msd_fact {
+    type: average
+    label: "MSD Daily Pacing"
+    value_format: "0.00%"
+    sql:  NULLIF(${dim_sfdb_opportunitylineitem_pacing.daily_pacing_dim},0) ;;
+  }
+
   measure: html_kpi_board_line1 {
     type: count
     html:
@@ -936,7 +943,7 @@ view: fact_nexxen_dsp {
         <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 30px">
           % Delivered
           <div style=" line-height: 15px; font-size: 30px;">
-            {{ dim_sfdb_opportunitylineitem.msd_pacing._rendered_value }}
+            {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
           </div>
         </div>
 

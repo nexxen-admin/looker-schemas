@@ -10,7 +10,7 @@ view: bid_opti_cost_v1 {
                                 where placement_id not in (select placement_id from Andromeda.rx_dim_supply_placement_margin_opti_split_override_r)
                                 )) AA),
       Base_Data as (
-              -- only floor+cost
+              -- both floor+cost
               Select ad.event_time::date as event_date,
                 sp.publisher_id,
                 sp.publisher_name,
@@ -18,16 +18,9 @@ view: bid_opti_cost_v1 {
                 spl.placement_name as placement_name,
                 ad.rx_imp_type as imp_type,
 
-                --old
-                --CASE WHEN (ad.pubcost_opti_version = 'no_opti' AND ad.bidfloor_opti_version = 'no_opti') THEN 'no opti'
-                --     WHEN (ad.pubcost_opti_version != 'no_opti' AND ad.bidfloor_opti_version != 'no_opti'
-                --           AND ad.pubcost_opti_version is not null  AND ad.bidfloor_opti_version is not null)
-                --          THEN 'opti'
-                --     else 'not use'
-                --  end as Opti_Status,
 
                 -- new
-                CASE WHEN (ad.pubcost_opti_enabled = 0 AND ad.bidfloor_opti_version = 'no_opti') THEN 'no opti'
+                CASE WHEN (ad.pubcost_opti_enabled >= -3 AND ad.pubcost_opti_enabled <= 0 AND ad.bidfloor_opti_version = 'no_opti') THEN 'no opti'
                      WHEN (ad.pubcost_opti_enabled = 1 AND ad.bidfloor_opti_version != 'no_opti'
                           AND ad.bidfloor_opti_version is not null)
                           THEN 'opti'

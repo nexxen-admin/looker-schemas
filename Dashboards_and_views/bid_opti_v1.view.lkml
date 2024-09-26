@@ -1,17 +1,7 @@
 
 view: bid_opti_v1 {
   derived_table: {
-    sql: WITH placement_tab as (select distinct placement_id,bidfloor_only_pct,pubcost_only_pct,bidfloor_pubcost_pct,imp_type
-                        from(
-                                (select distinct placement_id,bidfloor_only_pct,pubcost_only_pct,bidfloor_pubcost_pct,imp_type
-                                from Andromeda.rx_dim_supply_placement_margin_opti_split_override_r)
-                                UNION ALL
-                                (select distinct placement_id,bidfloor_only_pct,pubcost_only_pct,bidfloor_pubcost_pct,imp_type
-                                from Andromeda.rx_dim_supply_placement_margin_opti_split_automated_r
-                                where placement_id not in (select placement_id from Andromeda.rx_dim_supply_placement_margin_opti_split_override_r)
-                                )) AA),
-
-    Base_Data as (
+    sql: WITH Base_Data as (
       -- only floor opti
       Select ad.event_time::date as event_date,
         sp.publisher_id,
@@ -45,13 +35,12 @@ view: bid_opti_v1 {
         sum(ad.cogs) as COGS,
         sum(ad.revenue) as revenue
       From andromeda.ad_data_daily ad
-        inner join placement_tab op on (op.placement_id::varchar = ad.media_id::varchar and rx_imp_type::varchar = imp_type::varchar)
-                            and ad.rx_ssp_name ilike 'rmp%'
         left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id::varchar = ad.media_id
         left outer join andromeda.rx_dim_supply_publisher_traffic_source spts on spts.pub_ts_id = spl.pub_ts_id
         left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
       where ad.event_time::date >= current_date()-3
             and ad.event_time::date < current_date()
+            and ad.rx_ssp_name ilike 'rmp%'
         and bidfloor_opti_version is not null
         and (bidfloor_only_pct > 0)
         and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
@@ -77,10 +66,6 @@ Having Opti_Requests>0 and Non_Opti_Requests>0
 
 
       Select bd.event_date,
-      bidfloor_only_pct,
-      pubcost_only_pct,
-      bidfloor_pubcost_pct,
-      100-bidfloor_only_pct-pubcost_only_pct-bidfloor_pubcost_pct as no_opti_pct,
       bd.publisher_id,
       bd.publisher_name,
       bd.placement_id,

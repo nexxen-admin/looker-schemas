@@ -19,9 +19,6 @@ view: bid_opti_v1 {
       end as Opti_Status,
 
 
-        bidfloor_only_pct,
-        pubcost_only_pct,
-        bidfloor_pubcost_pct,
         --ad.bidfloor_opti_version,
         -- measures
         case when sum(ad.impression_pixel) > 0 then
@@ -42,12 +39,11 @@ view: bid_opti_v1 {
             and ad.event_time::date < current_date()
             and ad.rx_ssp_name ilike 'rmp%'
         and bidfloor_opti_version is not null
-        and (bidfloor_only_pct > 0)
         and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
             or ad.slot_attempts > 0
             or ad.responses > 0
             or ad.impression_pixel > 0)
-      Group by 1, 2, 3, 4, 5, 6, 7,8,9,10),
+      Group by 1, 2, 3, 4, 5, 6, 7),
 
 Placement_Limiter as (
 Select event_date,
@@ -163,27 +159,6 @@ Having Opti_Requests>0 and Non_Opti_Requests>0
   }
 
 
-
-  dimension: bidfloor_only_pct {
-    type: string
-    sql: ${TABLE}.bidfloor_only_pct ;;
-    hidden: no
-  }
-
-  dimension: pubcost_only_pct {
-    type: number
-    sql: ${TABLE}.pubcost_only_pct ;;
-  }
-
-  dimension: bidfloor_pubcost_pct {
-    type: number
-    sql: ${TABLE}.bidfloor_pubcost_pct ;;
-  }
-
-  dimension: no_opti_pct {
-    type: number
-    sql: ${TABLE}.no_opti_pct ;;
-  }
 
 
 
@@ -416,11 +391,6 @@ Having Opti_Requests>0 and Non_Opti_Requests>0
       imp_type,
       device_type,
       opti_status,
-
-      bidfloor_only_pct,
-      pubcost_only_pct,
-      bidfloor_pubcost_pct,
-      no_opti_pct,
 
       requests,
       req_ratio,

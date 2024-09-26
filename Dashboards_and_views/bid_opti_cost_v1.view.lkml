@@ -18,14 +18,6 @@ view: bid_opti_cost_v1 {
                      else 'not use'
                   end as Opti_Status,
 
-
-
-
-                bidfloor_only_pct,
-                pubcost_only_pct,
-                bidfloor_pubcost_pct,
-                --ad.bidfloor_opti_version,
-                -- measures
                 case when sum(ad.impression_pixel) > 0 then
                   sum(ad.rx_bid_floor * ad.impression_pixel) / sum(impression_pixel)
                   else NULL end as Bid_Floor,
@@ -40,14 +32,13 @@ view: bid_opti_cost_v1 {
                 left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id::varchar = ad.media_id
                 left outer join andromeda.rx_dim_supply_publisher_traffic_source spts on spts.pub_ts_id = spl.pub_ts_id
                 left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
-              where ad.event_time::date >= current_date()-3 and ad.event_time:date < current_date()
+              where ad.event_time::date >= current_date()-3 and ad.event_time::date < current_date()
                     and ad.rx_ssp_name ilike 'rmp%'
-                    and (bidfloor_pubcost_pct > 0)
                     and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
                             or ad.slot_attempts > 0
                             or ad.responses > 0
                             or ad.impression_pixel > 0)
-              Group by 1, 2, 3, 4, 5, 6, 7,8,9,10
+              Group by 1, 2, 3, 4, 5, 6, 7
               HAVING Opti_Status != 'not use'
               ),
 
@@ -168,28 +159,6 @@ view: bid_opti_cost_v1 {
       sql: ${TABLE}.Opti_Status ;;
     }
 
-
-
-    dimension: bidfloor_only_pct {
-      type: string
-      sql: ${TABLE}.bidfloor_only_pct ;;
-      hidden: no
-    }
-
-    dimension: pubcost_only_pct {
-      type: number
-      sql: ${TABLE}.pubcost_only_pct ;;
-    }
-
-    dimension: bidfloor_pubcost_pct {
-      type: number
-      sql: ${TABLE}.bidfloor_pubcost_pct ;;
-    }
-
-    dimension: no_opti_pct {
-      type: number
-      sql: ${TABLE}.no_opti_pct ;;
-    }
 
 
 
@@ -422,11 +391,6 @@ view: bid_opti_cost_v1 {
         imp_type,
         device_type,
         opti_status,
-
-        bidfloor_only_pct,
-        pubcost_only_pct,
-        bidfloor_pubcost_pct,
-        no_opti_pct,
 
         requests,
         req_ratio,

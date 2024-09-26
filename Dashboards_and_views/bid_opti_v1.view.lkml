@@ -1,17 +1,7 @@
 
 view: bid_opti_v1 {
   derived_table: {
-    sql: WITH placement_tab as (select distinct placement_id,bidfloor_only_pct,pubcost_only_pct,bidfloor_pubcost_pct
-                        from(
-                                (select distinct placement_id,bidfloor_only_pct,pubcost_only_pct,bidfloor_pubcost_pct
-                                from Andromeda.rx_dim_supply_placement_margin_opti_split_override_r)
-                                UNION ALL
-                                (select distinct placement_id,bidfloor_only_pct,pubcost_only_pct,bidfloor_pubcost_pct
-                                from Andromeda.rx_dim_supply_placement_margin_opti_split_automated_r
-                                where placement_id not in (select placement_id from Andromeda.rx_dim_supply_placement_margin_opti_split_override_r)
-                                )) AA),
-
-    Base_Data as (
+    sql: WITH Base_Data as (
       -- only floor opti
       Select ad.event_time::date as event_date,
         sp.publisher_id,
@@ -20,24 +10,15 @@ view: bid_opti_v1 {
         spl.placement_name as placement_name,
         ad.rx_imp_type as imp_type,
 
-      --old
-      --CASE WHEN (ad.bidfloor_opti_version = 'no_opti'
-      --           AND (ad.pubcost_opti_version = 'no_opti' OR ad.pubcost_opti_version is null)) THEN 'no opti'
-      --     WHEN (ad.bidfloor_opti_version != 'no_opti' AND ad.bidfloor_opti_version is not null
-      --           AND (ad.pubcost_opti_version = 'no_opti' or ad.pubcost_opti_version is null)
-      --           ) THEN 'opti'
-      --else 'not use'
-      --end as Opti_Status,
-
-      --new
-      CASE WHEN (ad.bidfloor_opti_version = 'no_opti')  THEN 'no opti'
-           WHEN (ad.bidfloor_opti_version != 'no_opti' AND ad.bidfloor_opti_version is not null) THEN 'opti'
+      CASE WHEN (ad.pubcost_opti_enabled >= -3 AND ad.pubcost_opti_enabled <= 0 AND ad.bidfloor_opti_version = 'no_opti') THEN 'no opti'
+      WHEN (ad.pubcost_opti_enabled >= -3 AND ad.pubcost_opti_enabled <= 0
+            AND ad.bidfloor_opti_version != 'no_opti'
+            AND ad.bidfloor_opti_version is not null)
+            THEN 'opti'
       else 'not use'
       end as Opti_Status,
 
-        bidfloor_only_pct,
-        pubcost_only_pct,
-        bidfloor_pubcost_pct,
+
         --ad.bidfloor_opti_version,
         -- measures
         case when sum(ad.impression_pixel) > 0 then
@@ -51,20 +32,20 @@ view: bid_opti_v1 {
         sum(ad.cogs) as COGS,
         sum(ad.revenue) as revenue
       From andromeda.ad_data_daily ad
-        inner join placement_tab op on op.placement_id::varchar = ad.media_id::varchar
-                            and ad.rx_ssp_name ilike 'rmp%'
         left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id::varchar = ad.media_id
         left outer join andromeda.rx_dim_supply_publisher_traffic_source spts on spts.pub_ts_id = spl.pub_ts_id
         left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
       where ad.event_time::date >= current_date()-3
             and ad.event_time::date < current_date()
+            and ad.rx_ssp_name ilike 'rmp%'
         and bidfloor_opti_version is not null
-        and (bidfloor_only_pct > 0 and pubcost_only_pct = 0 and bidfloor_pubcost_pct = 0)
         and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
             or ad.slot_attempts > 0
             or ad.responses > 0
             or ad.impression_pixel > 0)
-      Group by 1, 2, 3, 4, 5, 6, 7,8,9,10),
+      Group by 1, 2, 3, 4, 5, 6, 7
+      HAVING Opti_Status != 'not use'
+      ),
 
 Placement_Limiter as (
 Select event_date,
@@ -83,10 +64,6 @@ Having Opti_Requests>0 and Non_Opti_Requests>0
 
 
       Select bd.event_date,
-      bidfloor_only_pct,
-      pubcost_only_pct,
-      bidfloor_pubcost_pct,
-      100-bidfloor_only_pct-pubcost_only_pct-bidfloor_pubcost_pct as no_opti_pct,
       bd.publisher_id,
       bd.publisher_name,
       bd.placement_id,
@@ -184,27 +161,6 @@ Having Opti_Requests>0 and Non_Opti_Requests>0
   }
 
 
-
-  dimension: bidfloor_only_pct {
-    type: string
-    sql: ${TABLE}.bidfloor_only_pct ;;
-    hidden: no
-  }
-
-  dimension: pubcost_only_pct {
-    type: number
-    sql: ${TABLE}.pubcost_only_pct ;;
-  }
-
-  dimension: bidfloor_pubcost_pct {
-    type: number
-    sql: ${TABLE}.bidfloor_pubcost_pct ;;
-  }
-
-  dimension: no_opti_pct {
-    type: number
-    sql: ${TABLE}.no_opti_pct ;;
-  }
 
 
 
@@ -437,11 +393,6 @@ Having Opti_Requests>0 and Non_Opti_Requests>0
       imp_type,
       device_type,
       opti_status,
-
-      bidfloor_only_pct,
-      pubcost_only_pct,
-      bidfloor_pubcost_pct,
-      no_opti_pct,
 
       requests,
       req_ratio,

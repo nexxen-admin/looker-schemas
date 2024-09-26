@@ -170,6 +170,15 @@ explore: fact_nexxen_msd_advertiser  {
 
   }
 
+  join: dim_sfdb_opportunitylineitem_pacing {
+    type: inner
+    view_label: "Salsforce Opportunity Line Item"
+    sql_on: ${dim_sfdb_opportunitylineitem_pacing.line_item_id}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${dim_sfdb_opportunitylineitem_pacing.date_key_date}=${v_dim_dsp_date.date_key_date};;
+    relationship: many_to_one
+
+  }
+
+
   join: dim_sfdb_user {
 
     type: inner
@@ -379,6 +388,14 @@ explore: fact_nexxen_msd_agency  {
     sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
     relationship: many_to_one
 
+
+  }
+
+  join: dim_sfdb_opportunitylineitem_pacing {
+    type: inner
+    view_label: "Salsforce Opportunity Line Item"
+    sql_on: ${dim_sfdb_opportunitylineitem_pacing.line_item_id}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${dim_sfdb_opportunitylineitem_pacing.date_key_date}=${v_dim_dsp_date.date_key_date};;
+    relationship: many_to_one
 
   }
 

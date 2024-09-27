@@ -490,6 +490,12 @@ view: fact_nexxen_dsp {
     #incorrect - might need to be calculated in the back
     }
 
+  measure: Delivered_Spend {
+    type: sum
+    sql: ${TABLE}.impressions/1000*${dim_sfdb_opportunitylineitem.rate__c};;
+    value_format: "$#,##0.00"
+  }
+
 
   measure: daily_units_needed {
     type: sum
@@ -955,9 +961,9 @@ view: fact_nexxen_dsp {
         </div>
 
         <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
-        Total Budget
+        Delivered Spend
           <div style="line-height: 15px; font-size: 30px;">
-            {{ cogs._rendered_value }}
+            {{ Delivered_Spend._rendered_value }}
           </div>
         </div>
 

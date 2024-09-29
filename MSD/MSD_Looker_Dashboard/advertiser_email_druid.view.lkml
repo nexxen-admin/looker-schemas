@@ -2,7 +2,7 @@ view: advertiser_email_druid {
 
   derived_table: {
     sql: SELECT
-        advertiser_id,
+        advertiser_id as advertiser_id_druid,
         'roni-test@nexxen.com' as email,
         'Test' as First_Name,
         'User' as Last_Name
@@ -10,9 +10,9 @@ view: advertiser_email_druid {
         where advertiser_id='1608944983'
       ;;
   }
-  dimension: advertiser_id {
+  dimension: advertiser_id_druid {
     type: number
-    sql: ${TABLE}."advertiser_id" ;;
+    sql: ${TABLE}.advertiser_id ;;
     hidden: yes
   }
 

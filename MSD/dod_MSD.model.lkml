@@ -33,14 +33,14 @@ access_grant: can_view_all_tremor {
 explore: dsp_media_and_bids_advertiser {
   label: "Dsp Media and bids - MSD"
   view_name: dsp_media_and_bids
-  access_filter: {
-    field: advertiser_email_druid.email
-    user_attribute: advertiser
-  }
+  # access_filter: {
+  #   field: advertiser_email_druid.email
+  #   user_attribute: advertiser
+  # }
 
-join: advertiser_email_druid{
-  type: inner
-  sql_on: ${dsp_media_and_bids.advertiser_id}=${advertiser_email_druid.advertiser_id} ;;
-  relationship: many_to_one
-}
+# join: advertiser_email_druid{
+#   type: inner
+#   sql_on: ${dsp_media_and_bids.advertiser_id}=${advertiser_email_druid.advertiser_id_druid} ;;
+#   relationship: many_to_one
+# }
 }

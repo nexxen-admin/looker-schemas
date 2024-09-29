@@ -12,7 +12,7 @@ view: advertiser_email_druid {
   }
   dimension: advertiser_id {
     type: number
-    sql: ${TABLE}.advertiser_id ;;
+    sql: ${TABLE}."advertiser_id" ;;
     hidden: yes
   }
 

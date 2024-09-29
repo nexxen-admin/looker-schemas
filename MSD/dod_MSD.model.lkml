@@ -7,12 +7,12 @@ datagroup: dod_default_datagroup {
   max_cache_age: "1 hour"
 }
 
-datagroup: CleanCash_datagroup {
-  sql_trigger: SELECT max(date_key) FROM BI_DSP.fact_nexxen_dsp  ;;
-  max_cache_age: "15 hours"
-  label: "Clean Cash Trigger"
-  description: "Triggered when new date is added to ETL"
-}
+# datagroup: CleanCash_datagroup {
+#   sql_trigger: SELECT max(date_key) FROM BI_DSP.fact_nexxen_dsp  ;;
+#   max_cache_age: "15 hours"
+#   label: "Clean Cash Trigger"
+#   description: "Triggered when new date is added to ETL"
+# }
 
 access_grant: advertiser_msd {
   user_attribute: advertiser

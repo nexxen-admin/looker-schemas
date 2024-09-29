@@ -7,7 +7,12 @@ datagroup: dod_default_datagroup {
   max_cache_age: "1 hour"
 }
 
-persist_with: dod_default_datagroup
+datagroup: CleanCash_datagroup {
+  sql_trigger: SELECT max(date_key) FROM BI_DSP.fact_nexxen_dsp  ;;
+  max_cache_age: "15 hours"
+  label: "Clean Cash Trigger"
+  description: "Triggered when new date is added to ETL"
+}
 
 access_grant: advertiser_msd {
   user_attribute: advertiser
@@ -28,14 +33,14 @@ access_grant: can_view_all_tremor {
 explore: dsp_media_and_bids_advertiser {
   label: "Dsp Media and bids - MSD"
   view_name: dsp_media_and_bids
-  access_filter: {
-    field: advertisers_email.email
-    user_attribute: advertiser
-  }
+  #access_filter: {
+   # field: advertisers_email.email
+    #user_attribute: advertiser
+  #}
 
-join: advertisers_email {
-  type: inner
-  sql_on: ${dsp_media_and_bids.advertiser_id}=${advertisers_email.advertiser_id} ;;
-  relationship: many_to_one
-}
+#join: advertisers_email {
+ # type: inner
+  #sql_on: ${dsp_media_and_bids.advertiser_id}=${advertisers_email.advertiser_id} ;;
+  #relationship: many_to_one
+#}
 }

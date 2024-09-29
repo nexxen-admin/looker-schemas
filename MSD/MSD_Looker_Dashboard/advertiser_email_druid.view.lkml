@@ -3,7 +3,6 @@ view: advertiser_email_druid {
   derived_table: {
     sql: SELECT
         advertiser_id,
-        advertiser_name,
         'roni-test@nexxen.com' as email,
         'Test' as First_Name,
         'User' as Last_Name
@@ -14,12 +13,6 @@ view: advertiser_email_druid {
   dimension: advertiser_id {
     type: number
     sql: ${TABLE}.advertiser_id ;;
-    hidden: yes
-  }
-
-  dimension: advertiser_name {
-    type: string
-    sql: ${TABLE}.advertiser_name ;;
     hidden: yes
   }
 

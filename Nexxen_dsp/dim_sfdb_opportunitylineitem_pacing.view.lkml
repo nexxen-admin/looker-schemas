@@ -9,6 +9,7 @@ SELECT
     dim_sfdb_opportunitylineitem.units__c  AS "budgeted_units",
         (DATE(v_dim_dsp_date.Date_Key )) AS "key_date",
         DATE(v_dim_dsp_date.Date_Key )-DATE(dim_dsp_package_budget_schedule.start_date_in_timezone )+1 AS "day_of_campaign",
+        DATE(dim_dsp_package_budget_schedule.end_date_in_timezone )-DATE(v_dim_dsp_date.Date_Key )+1 AS "days_left",
         dim_sfdb_opportunitylineitem.units__c/(DATE(dim_dsp_package_budget_schedule.end_date_in_timezone )-DATE(dim_dsp_package_budget_schedule.start_date_in_timezone )+1) AS "daily_goal",
     COALESCE(SUM(fact_nexxen_dsp.delivery_units ), 0) AS "delivered_units"
 FROM BI_DSP.fact_nexxen_dsp  AS fact_nexxen_dsp
@@ -18,11 +19,12 @@ INNER JOIN BI_DSP.v_dim_dsp_package_budget_schedule  AS dim_dsp_package_budget_s
 INNER JOIN BI_DSP.dim_sfdb_opportunitylineitem  AS dim_sfdb_opportunitylineitem ON dim_sfdb_opportunitylineitem.opportunitylineitem_key =fact_nexxen_dsp.opportunitylineitem_key
 INNER JOIN BI_DSP.advertisers_email  AS advertisers_email ON dim_dsp_advertiser.advertiser_id=advertisers_email.advertiser_id
 WHERE dim_dsp_package_budget_schedule.start_date_in_timezone IS NOT NULL
-GROUP BY 1, 2, 3, 4, 5, 6, 7, 8
+GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9
 )
 SELECT *,
     daily_goal * day_of_campaign AS "run_total_goal",
-    delivered_units/daily_goal AS "daily_pacing",
+    SUM(delivered_units) OVER (PARTITION  BY line_item_id ORDER BY key_date) AS "run_total_delivered",
+    delivered_units/((budgeted_units - run_total_delivered)/days_left) AS "daily_pacing",
     CASE WHEN key_date=MAX(key_date) OVER (PARTITION BY line_item_id) THEN SUM(delivered_units) OVER (PARTITION  BY line_item_id ORDER BY key_date)/(daily_goal * day_of_campaign) END AS "last_day_pacing"
 FROM base
 GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ;;

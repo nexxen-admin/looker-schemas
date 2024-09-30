@@ -8,11 +8,11 @@
 
 # &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Getting Started
 
-<div style="display: flex; justify-content: center; align-items: center; height: 100vh; padding: 5px;">
+<div style="width: 100%; padding: 5px 0; text-align: center;">
   <a style="padding: 5px 10px; color: #fff; text-transform: uppercase; background-color: #1F3466; border-radius: 5px; white-space: nowrap;" href="https://tremor.cloud.looker.com/folders/1519">MSD Dashboards</a>
 </div>
 
-<div style="width: 100%; text-align: center;">
+<div style="width: 100%; text-align: center; padding-top: 20px;">
   <div style="background: #fff;">
     <p style="background: #fff; font-weight: 300; color: #1F3466; padding: 15px 5px; font-size: 20px;"></p>
   </div>

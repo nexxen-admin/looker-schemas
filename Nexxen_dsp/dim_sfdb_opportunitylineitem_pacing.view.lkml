@@ -26,7 +26,7 @@ SELECT b.*,
     SUM(delivered_units) OVER (PARTITION  BY line_item_id ORDER BY key_date) AS "run_total_delivered",
     delivered_units/((budgeted_units - run_total_delivered)/days_left) AS "daily_pacing",
     CASE WHEN key_date=MAX(key_date) OVER (PARTITION BY line_item_id) THEN SUM(delivered_units) OVER (PARTITION  BY line_item_id ORDER BY key_date)/(daily_goal * day_of_campaign) END AS "last_day_pacing"
-FROM base  b INNER JOIN BI_DSP.advertisers_email  AS adv_em ON b.advertiser_id=adv_em.advertiser_id
+FROM base  b --INNER JOIN BI_DSP.advertisers_email  AS adv_em ON b.advertiser_id=adv_em.advertiser_id
 GROUP BY 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ;;
 }
 

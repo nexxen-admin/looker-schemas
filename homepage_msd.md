@@ -4,22 +4,18 @@
 
 # &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-## Nexxen Looker
-
 ---
 
 # &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Getting Started
 
-<div style="padding: 5px; padding-bottom: 0px; float: left;">
-<a style="padding: 5px 5px; margin: 300px; color: #fff; text-transform: uppercase; background-color: #1F3466; border-radius: 5px;" href="https://tremor.cloud.looker.com/folders/1519">MSD Dashboards</a>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; padding: 5px;">
+  <a style="padding: 5px 10px; color: #fff; text-transform: uppercase; background-color: #1F3466; border-radius: 5px; white-space: nowrap;" href="https://tremor.cloud.looker.com/folders/1519">MSD Dashboards</a>
 </div>
 
-
-<div style="width: 100%; padding-bottom 5px; text-align: center;">
-<div style="background: #fff;">
-  <p style="background: #fff; font-weight: 300; color: #1F3466; padding: 15px 5px; font-size: 20px;"><span style="font-weight: 200;"> </span>
-  </p>
-</div>
+<div style="width: 100%; text-align: center;">
+  <div style="background: #fff;">
+    <p style="background: #fff; font-weight: 300; color: #1F3466; padding: 15px 5px; font-size: 20px;"></p>
+  </div>
 </div>
 
 

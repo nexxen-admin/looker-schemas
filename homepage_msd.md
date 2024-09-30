@@ -1,4 +1,4 @@
-![Welcome Logo](https://i.ibb.co/nzf8gc7/Frame-4-1.png)
+![Welcome Logo](https://tremor.cloud.looker.com/api/internal/homepage_items/248/image)
 
 ---
 
@@ -17,7 +17,7 @@
 
 <div style="width: 100%; padding-bottom 5px; text-align: center;">
 <div style="background: #fff;">
-  <p style="background: #fff; font-weight: 300; color: #1F3466; padding: 15px 5px; font-size: 20px;"><span style="font-weight: 400;"> </span>
+  <p style="background: #fff; font-weight: 300; color: #1F3466; padding: 15px 5px; font-size: 20px;"><span style="font-weight: 200;"> </span>
   </p>
 </div>
 </div>

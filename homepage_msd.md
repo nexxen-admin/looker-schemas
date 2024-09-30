@@ -11,7 +11,7 @@
 # &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Getting Started
 
 <div style="padding: 5px; padding-bottom: 0px; float: left;">
-<a style="padding: 5px 5px; margin: 300px; color: #fff; text-transform: uppercase; background-color: #1F3466; border-radius: 5px;" href="https://tremor.cloud.looker.com/folders/1531">MSD Dashboards</a>
+<a style="padding: 5px 5px; margin: 300px; color: #fff; text-transform: uppercase; background-color: #1F3466; border-radius: 5px;" href="https://tremor.cloud.looker.com/folders/1519">MSD Dashboards</a>
 </div>
 
 

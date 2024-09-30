@@ -6,10 +6,8 @@
 
 ---
 
-# &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Getting Started
-
 <div style="width: 100%; padding: 5px 0; text-align: center;">
-  <a style="padding: 5px 10px; color: #fff; text-transform: uppercase; background-color: #1F3466; border-radius: 5px; white-space: nowrap;" href="https://tremor.cloud.looker.com/folders/1519">MSD Dashboards</a>
+  <a style="padding: 5px 10px; color: #fff; text-transform: uppercase; background-color: #1F3466; border-radius: 5px; white-space: nowrap;" href="https://tremor.cloud.looker.com/folders/1519">Nexxen Campaign Dashboards</a>
 </div>
 
 <div style="width: 100%; text-align: center; padding-top: 20px;">

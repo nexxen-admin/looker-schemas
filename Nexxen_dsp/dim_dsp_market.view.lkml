@@ -56,9 +56,8 @@ view: dim_dsp_market {
   dimension: market_id {
     type: number
     label: "Market ID"
+    description: "ID of the DSP market to which the Advertiser belongs"
     sql: ${TABLE}.market_id ;;
-    description: "DSP market"
-
   }
 
   dimension: market_id_key {

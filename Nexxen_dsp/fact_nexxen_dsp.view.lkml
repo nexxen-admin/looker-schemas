@@ -242,6 +242,7 @@ view: fact_nexxen_dsp {
   measure: complete_events  {
     type: sum
     value_format: "#,##0.00"
+    description: "1 for events that were completed"
     sql: ${TABLE}.complete_events  ;;
   }
 
@@ -282,6 +283,7 @@ view: fact_nexxen_dsp {
   measure: cogs {
     type: sum
     sql: ${TABLE}.cogs ;;
+    description: "Inventory cost plus third party cost"
     value_format: "$#,##0.00"
   }
 

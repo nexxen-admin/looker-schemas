@@ -10,11 +10,9 @@ view: bid_opti_v1 {
         spl.placement_name as placement_name,
         ad.rx_imp_type as imp_type,
 
-      CASE WHEN (ad.pubcost_opti_enabled >= -3 AND ad.pubcost_opti_enabled <= 0 AND ad.bidfloor_opti_version = 'no_opti') THEN 'no opti'
-      WHEN (ad.pubcost_opti_enabled >= -3 AND ad.pubcost_opti_enabled <= 0
-            AND ad.bidfloor_opti_version != 'no_opti'
-            AND ad.bidfloor_opti_version is not null)
-            THEN 'opti'
+      CASE WHEN ((ad.pubcost_opti_enabled = -4 OR ad.pubcost_opti_enabled = 0) AND ad.bidfloor_opti_version = 'no_opti') THEN 'no opti'
+      WHEN ((ad.pubcost_opti_enabled = -4 OR ad.pubcost_opti_enabled = 0) AND ad.bidfloor_opti_version != 'no_opti'
+             AND ad.bidfloor_opti_version is not null) THEN 'opti'
       else 'not use'
       end as Opti_Status,
 

@@ -530,7 +530,7 @@ view: fact_ad_daily_agg {
         <th><div style ="vertical-align: bottom;padding-top:50px;text-align:right;">| Business Intelligence Platform</div></th>
       </tr>
     </table>
-
+      <div style = "margin:5px 72px 72px 72px; font-size:20px; text-align:left; color:red">Note! Personal folders permissions were changed. contact looker_support_bi slack channel for help<br></div>
       <div style = "margin:5px 72px 72px 72px; text-align:left; ">Hey {{ _user_attributes['name'] }},<br>
 
       <div><a style="float:right; color: #FFFFFF; background-color:#000000; border: solid 3px #000000; font-weight: 400;height:70px;

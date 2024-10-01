@@ -113,8 +113,8 @@ view: dim_dsp_creative {
   dimension: media_channel_id {
     type: number
     label: "Media Channel id"
+    description: "1 - Display; 2 - Video; 3 - Social; 4 - Mobile"
     sql: ${TABLE}.media_channel_id ;;
-
   }
 
   dimension: ri_info {

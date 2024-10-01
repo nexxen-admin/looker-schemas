@@ -14,6 +14,7 @@ view: dim_dsp_advertiser {
   dimension: advertiser_id {
     type: string
     label: "Advertiser ID"
+    description: "Audience Suite Advertiser ID"
     sql: ${TABLE}.advertiser_id ;;
   }
 

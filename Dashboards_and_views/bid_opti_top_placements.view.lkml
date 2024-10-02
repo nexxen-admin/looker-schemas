@@ -1,7 +1,7 @@
-view: bid_opti_cost_v1 {
+view: bid_opti_top_placements {
     derived_table: {
-      sql: With Base_Data as (
-              -- both floor+cost
+      sql: WITH Base_Data as (
+              -- only floor opti
               Select ad.event_time::date as event_date,
                 sp.publisher_id,
                 sp.publisher_name,
@@ -9,54 +9,59 @@ view: bid_opti_cost_v1 {
                 spl.placement_name as placement_name,
                 ad.rx_imp_type as imp_type,
 
-                CASE WHEN (ad.pubcost_opti_enabled = -4 AND ad.bidfloor_opti_version = 'no_opti') THEN 'no opti'
-                     WHEN (ad.pubcost_opti_enabled = 1 AND ad.bidfloor_opti_version != 'no_opti'
-                          AND ad.bidfloor_opti_version is not null)
-                          THEN 'opti'
-                     else 'not use'
-                  end as Opti_Status,
-
-                case when sum(ad.impression_pixel) > 0 then
-                  sum(ad.rx_bid_floor * ad.impression_pixel) / sum(impression_pixel)
-                  else NULL end as Bid_Floor,
-                sum(case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) as requests,
-                sum(ad.slot_attempts) as Attempts,
-                sum(ad.responses) as Bids,
-                sum(ad.impression_pixel) as Impressions,
-                sum(ad.cost) as Cost,
-                sum(ad.cogs) as COGS,
-                sum(ad.revenue) as revenue
-              From andromeda.ad_data_daily ad
-                left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id::varchar = ad.media_id
-                left outer join andromeda.rx_dim_supply_publisher_traffic_source spts on spts.pub_ts_id = spl.pub_ts_id
-                left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
-              where ad.event_time::date >= current_date()-3 and ad.event_time::date < current_date()
-                    and ad.rx_ssp_name ilike 'rmp%'
-                    and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
-                            or ad.slot_attempts > 0
-                            or ad.responses > 0
-                            or ad.impression_pixel > 0)
-              Group by 1, 2, 3, 4, 5, 6, 7
-              HAVING Opti_Status != 'not use'
-              ),
+        CASE WHEN (ad.pubcost_opti_enabled >= -3 AND ad.pubcost_opti_enabled <= 0 AND ad.bidfloor_opti_version = 'no_opti') THEN 'no opti'
+        WHEN (ad.pubcost_opti_enabled >= -3 AND ad.pubcost_opti_enabled <= 0
+        AND ad.bidfloor_opti_version != 'no_opti'
+        AND ad.bidfloor_opti_version is not null)
+        THEN 'opti'
+        else 'not use'
+        end as Opti_Status,
 
 
-              Placement_Limiter as (
-              Select event_date,
-                placement_id,
-                imp_type,
-                sum(case when Opti_Status = 'opti' then requests else 0 end) as Opti_Requests,
-                sum(case when Opti_Status = 'no opti' then requests else 0 end) as Non_Opti_Requests,
-                sum(requests) as Total_Requests,
-                sum(case when Opti_Status = 'opti' then requests else 0 end) / sum(requests) as Percent_Opti
-              From base_Data
-              Where requests > 0
-              Group by 1, 2, 3
-              Having Opti_Requests>0 and Non_Opti_Requests>0
+        --ad.bidfloor_opti_version,
+        -- measures
+        case when sum(ad.impression_pixel) > 0 then
+        sum(ad.rx_bid_floor * ad.impression_pixel) / sum(impression_pixel)
+        else NULL end as Bid_Floor,
+        sum(case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) as requests,
+        sum(ad.slot_attempts) as Attempts,
+        sum(ad.responses) as Bids,
+        sum(ad.impression_pixel) as Impressions,
+        sum(ad.cost) as Cost,
+        sum(ad.cogs) as COGS,
+        sum(ad.revenue) as revenue
+        From andromeda.ad_data_daily ad
+        left outer join andromeda.rx_dim_supply_placement spl on spl.placement_id::varchar = ad.media_id
+        left outer join andromeda.rx_dim_supply_publisher_traffic_source spts on spts.pub_ts_id = spl.pub_ts_id
+        left outer join andromeda.rx_dim_supply_publisher sp on sp.publisher_id = spts.publisher_id
+        where ad.event_time::date >= current_date()-3
+        and ad.event_time::date < current_date()
+        and ad.rx_ssp_name ilike 'rmp%'
+        and bidfloor_opti_version is not null
+        and ( (case when ad.rx_request_status in ('nodsp','nodspbids','bidresponse') or ad.rx_request_status is NULL then ad.requests else 0 end) > 0
+        or ad.slot_attempts > 0
+        or ad.responses > 0
+        or ad.impression_pixel > 0)
+        Group by 1, 2, 3, 4, 5, 6, 7
+        HAVING Opti_Status != 'not use'
+        ),
 
-              )
+        Placement_Limiter as (
+        Select event_date,
+        placement_id,
+        imp_type,
+        sum(case when Opti_Status = 'opti' then requests else 0 end) as Opti_Requests,
+        sum(case when Opti_Status = 'no opti' then requests else 0 end) as Non_Opti_Requests,
+        sum(requests) as Total_Requests,
+        sum(case when Opti_Status = 'opti' then requests else 0 end) / sum(requests) as Percent_Opti
+        From base_Data
+        Where requests > 0
+        Group by 1, 2, 3
+        Having Opti_Requests>0 and Non_Opti_Requests>0
 
+        ),
 
+        base_date_adjusted as (
         Select bd.event_date,
         bd.publisher_id,
         bd.publisher_name,
@@ -91,12 +96,36 @@ view: bid_opti_cost_v1 {
         revenue/(bd.Requests/(sum(bd.Requests) over (partition by bd.event_date,bd.publisher_id,bd.publisher_name,bd.placement_id,bd.placement_name,bd.imp_type))) as revenue_scaled
         From base_data bd
         inner join Placement_Limiter pl on pl.event_date = bd.event_date
-                  and pl.placement_id = bd.placement_id
-                  and pl.imp_type = bd.imp_type
-        where Requests>0 ;;
+        and pl.placement_id = bd.placement_id
+        and pl.imp_type = bd.imp_type
+        where bd.Requests > 0),
+
+        filter_top as (
+
+        select *, rank() over (partition by event_date,imp_type order by diff desc) as ranky
+        from (
+            select event_date,
+                   imp_type,
+                   placement_id,
+                   lag(supply_margin_dollar_scaled) over (partition by event_date,publisher_id,publisher_name,placement_id,placement_name,imp_type order by Opti_Status desc)-supply_margin_dollar_scaled as diff
+            from base_date_adjusted) tempy
+        where diff is not null
+        )
 
 
 
+        select *
+        from base_date_adjusted AA
+        inner join filter_top BB
+        on AA.event_date = BB.event_date and AA.imp_type = BB.imp_type and AA.placement_id = BB.placement_id
+        where ranky<6
+
+
+
+
+
+
+        ;;
 
     }
 
@@ -156,6 +185,7 @@ view: bid_opti_cost_v1 {
       type: string
       sql: ${TABLE}.Opti_Status ;;
     }
+
 
 
 
@@ -409,4 +439,4 @@ view: bid_opti_cost_v1 {
         revenue_scaled
       ]
     }
-    }
+  }

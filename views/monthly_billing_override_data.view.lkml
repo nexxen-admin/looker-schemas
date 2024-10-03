@@ -13,11 +13,13 @@ view: monthly_billing_override_data {
 
   dimension: account_manager_id {
     type: string
+    label: "Account Manager Name"
     sql: ${TABLE}.Account_manager_ID ;;
   }
 
   dimension: account_manager_name {
     type: string
+    label: "Account Manager ID"
     sql: ${TABLE}.Account_manager_Name ;;
   }
 
@@ -84,12 +86,14 @@ view: monthly_billing_override_data {
 
   dimension_group: created {
     type: time
+    label: "JIRA Create Date"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.Created ;;
   }
 
   dimension_group: db_created {
     type: time
+    label: "Upload Date"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_created_date ;;
   }

@@ -34,11 +34,6 @@ explore: billing_media_io {
   # hidden: yes
 }
 
-explore: monthly_billing_override_data {
-  required_access_grants: [billing_report_group]
-  label: "Monthly Billing Override Data"
-  # hidden: yes
-}
 
 explore: fact_reach_accumulative {
   required_access_grants: [can_view_all_tremor]

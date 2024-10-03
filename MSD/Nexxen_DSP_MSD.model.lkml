@@ -40,10 +40,10 @@ explore: fact_nexxen_msd_advertiser  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD Advertiser"
   view_label: "Measures"
-  access_filter: {
-    field: advertisers_email.email
-    user_attribute: advertiser
-  }
+  # access_filter: {
+  #   field: advertisers_email.email
+  #   user_attribute: advertiser
+  # }
   #hidden: yes
 
   join: dim_dsp_creative {
@@ -238,17 +238,17 @@ explore: fact_nexxen_msd_advertiser  {
     relationship: many_to_one
   }
 
-  join: advertisers_email {
-    type: inner
-    sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;
-    relationship: many_to_one
-  }
+  # join: advertisers_email {
+  #   type: inner
+  #   sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;
+  #   relationship: many_to_one
+  # }
 
-  join: agencies_email {
-    type: inner
-    sql_on: ${dim_sfdb_account.id}=${agencies_email.account_id} ;;
-    relationship: many_to_one
-  }
+  # join: agencies_email {
+  #   type: inner
+  #   sql_on: ${dim_sfdb_account.id}=${agencies_email.account_id} ;;
+  #   relationship: many_to_one
+  # }
 
 }
 
@@ -271,10 +271,10 @@ explore: fact_nexxen_msd_agency  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD Agency"
   view_label: "Measures"
-  access_filter: {
-    field: agencies_email.email
-    user_attribute: agency
-  }
+  # access_filter: {
+  #   field: agencies_email.email
+  #   user_attribute: agency
+  # }
   #hidden: yes
 
   join: dim_dsp_creative {
@@ -458,17 +458,17 @@ explore: fact_nexxen_msd_agency  {
     relationship: many_to_one
   }
 
-  join: advertisers_email {
-    type: inner
-    sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;
-    relationship: many_to_one
-  }
+  # join: advertisers_email {
+  #   type: inner
+  #   sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;
+  #   relationship: many_to_one
+  # }
 
-  join: agencies_email {
-    type: inner
-    sql_on: ${dim_sfdb_account.id}=${agencies_email.account_id} ;;
-    relationship: many_to_one
-  }
+  # join: agencies_email {
+  #   type: inner
+  #   sql_on: ${dim_sfdb_account.id}=${agencies_email.account_id} ;;
+  #   relationship: many_to_one
+  # }
 
 }
 

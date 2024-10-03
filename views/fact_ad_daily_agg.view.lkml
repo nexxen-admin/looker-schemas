@@ -1327,6 +1327,16 @@ view: fact_ad_daily_agg {
     ;;
   }
 
+  measure: Valid_Bid_Rate {
+    type: number
+    label: "Valid Bid Rate"
+    description: "Valid responses/requests"
+    value_format: "0.00\%"
+    group_label: "Daily Measures"
+    sql: (${valid_responses}/NULLIF(${requests},0))*100--/100000
+      ;;
+  }
+
   measure: Fill_Rate {
     type: number
     description: "Number of impressions out of the requests"
@@ -1469,6 +1479,15 @@ view: fact_ad_daily_agg {
     value_format: "#,##0"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_responses ;;
+  }
+
+  measure: valid_responses {
+    type: sum
+    label: "Valid Bids"
+    description: "Valid Bid responses returned from dsps. There may be more than one bid response per bid request."
+    value_format: "#,##0"
+    group_label: "Daily Measures"
+    sql: case when ${dim_response_status.response_status} = 'unknown' then ${TABLE}.sum_of_responses else 0 end;;
   }
 
   measure: revenue

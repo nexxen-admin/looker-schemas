@@ -242,6 +242,7 @@ view: fact_nexxen_dsp {
   measure: complete_events  {
     type: sum
     value_format: "#,##0.00"
+    description: "1 for events that were completed"
     sql: ${TABLE}.complete_events  ;;
   }
 
@@ -282,6 +283,7 @@ view: fact_nexxen_dsp {
   measure: cogs {
     type: sum
     sql: ${TABLE}.cogs ;;
+    description: "Inventory cost plus third party cost"
     value_format: "$#,##0.00"
   }
 
@@ -943,11 +945,12 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_board_line1 {
     type: count
+    hidden: yes
     html:
     <div style = "background:#1982c4; color:#fff; width: 100%; ">
 
         <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
-          % Delivered
+          Pacing
           <div style=" line-height: 15px; font-size: 30px;">
             {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
           </div>
@@ -996,6 +999,7 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_board_line2 {
     type: count
+    hidden: yes
     html:
     <div style = "color:#1982c4; ">
 

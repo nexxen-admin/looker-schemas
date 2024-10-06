@@ -506,7 +506,31 @@ view: fact_nexxen_dsp {
     (${dim_sfdb_opportunitylineitem.units__c}-${TABLE}.delivery_units)/nullif(${v_dim_sfdb_opportunitylineitemschedule_new.total_days_left_in_sl},0) end;;
     hidden: yes
     #incorrect - might need to be calculated in the back
+  }
 
+  measure: GP {
+    type: number
+    sql: ${capped_revenue}-${cogs} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: out_of_geo_rate {
+    type: sum
+    sql: ${TABLE}.out_of_geo_rate ;;
+    hidden: yes
+  }
+
+  measure: brand_safety_rate {
+    type: sum
+    sql: ${TABLE}.brand_safety_rate ;;
+    hidden: yes
+  }
+
+  measure: third_party_fraud_SIVT_incidents {
+    type: sum
+    label: "3P fraud/sivt incidents"
+    sql: ${TABLE}.third_party_Fraud_SIVTIncidents ;;
+    hidden: yes
   }
 
   dimension: cap_msd {

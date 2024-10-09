@@ -517,20 +517,20 @@ view: fact_nexxen_dsp {
   measure: out_of_geo_rate {
     type: sum
     sql: ${TABLE}.out_of_geo_rate ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: brand_safety_rate {
     type: sum
     sql: ${TABLE}.brand_safety_rate ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: third_party_fraud_SIVT_incidents {
     type: sum
     label: "3P fraud/sivt incidents"
     sql: ${TABLE}.third_party_Fraud_SIVTIncidents ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: cap_msd {

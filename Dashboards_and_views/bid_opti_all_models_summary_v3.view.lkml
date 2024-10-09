@@ -99,6 +99,7 @@ SELECT  imp_type,
         opti,
         date_trunc,
 
+        COUNT(*) as placment_count,
         SUM(requests) as requests,
         SUM(impression) as impression,
         SUM(revenue) as revenue,
@@ -154,10 +155,15 @@ FROM aggr_tab;;
 
 # measu
 
+  measure: requests {
+    type: sum
+    sql: ${TABLE}.requests ;;
+    value_format: "#,##0"
+  }
 
-    measure: requests {
+    measure: placment_count {
       type: sum
-      sql: ${TABLE}.requests ;;
+      sql: ${TABLE}.placment_count ;;
       value_format: "#,##0"
     }
 
@@ -203,6 +209,7 @@ FROM aggr_tab;;
         imp_type,
         opti,
         date_trunc,
+        placment_count,
         impression,
         revenue,
         margin,

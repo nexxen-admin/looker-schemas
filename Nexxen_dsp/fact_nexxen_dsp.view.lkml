@@ -107,6 +107,12 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: line_item_key {
+    type: number
+    sql: ${TABLE}.line_item_key ;;
+    hidden: yes
+  }
+
   dimension_group: db_created {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
@@ -517,20 +523,44 @@ view: fact_nexxen_dsp {
   measure: out_of_geo_rate {
     type: sum
     sql: ${TABLE}.out_of_geo_rate ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: brand_safety_rate {
     type: sum
     sql: ${TABLE}.brand_safety_rate ;;
-    hidden: yes
+    #hidden: yes
   }
 
   measure: third_party_fraud_SIVT_incidents {
     type: sum
     label: "3P fraud/sivt incidents"
     sql: ${TABLE}.third_party_Fraud_SIVTIncidents ;;
-    hidden: yes
+    #hidden: yes
+  }
+
+  measure: actions {
+    type: sum
+    sql: ${TABLE}.actions ;;
+    value_format: "#,##0"
+  }
+
+  measure: eCPA {
+    type: number
+    sql: ${capped_revenue}/nullif(${3p_total_conversions},0) ;;
+    value_format: "#,##0.00"
+  }
+
+  measure: 1P_CVR {
+    type: number
+    sql: ${actions}/nullif(${impressions},0) ;;
+    value_format: "#,##0.0000"
+  }
+
+  measure: 3P_CVR {
+    type: number
+    sql: ${actions}/nullif(${third_party_impressions},0) ;;
+    value_format: "#,##0.0000"
   }
 
   dimension: cap_msd {

@@ -82,7 +82,10 @@ select  dt.media_id,
   opti.impression/split as scaled_impression,
   opti.revenue/split as scaled_revenue,
   opti.demand_margin/split as scaled_demand_margin,
-  opti.supply_margin/split as scaled_supply_margin
+  opti.supply_margin/split as scaled_supply_margin,
+
+  (opti.margin/split) / (SUM(case when opti='no_opti' then opti.margin/split else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc))-1 as scaled_margin_ratio_to_no_opti,
+  (opti.margin/split) - (SUM(case when opti='no_opti' then opti.margin/split else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_margin_diff_to_no_opti
 
 from data_totals as dt
 inner join opti_base_data as opti
@@ -163,6 +166,17 @@ from scaled_margin;;
     value_format: "#,##0"
   }
 
+  measure: scaled_margin_ratio_to_no_opti {
+    type: sum
+    sql: ${TABLE}.scaled_margin_ratio_to_no_opti ;;
+    value_format:"0.00%"
+  }
+
+  measure: scaled_margin_diff_to_no_opti {
+    type: sum
+    sql: ${TABLE}.scaled_margin_diff_to_no_opti ;;
+    value_format: "#,##0"
+  }
 
   set: detail {
     fields: [
@@ -173,7 +187,8 @@ from scaled_margin;;
       impression,
       revenue,
       margin,
-      scaled_margin
+      scaled_margin,scaled_margin_ratio_to_no_opti,
+      scaled_margin_diff_to_no_opti
     ]
   }
 

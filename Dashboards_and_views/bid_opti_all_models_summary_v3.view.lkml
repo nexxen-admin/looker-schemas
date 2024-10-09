@@ -129,13 +129,6 @@ FROM aggr_tab;;
       drill_fields: [detail*]
     }
 
-
-
-    dimension: media_id {
-      type: string
-      sql: ${TABLE}.media_id ;;
-    }
-
     dimension: imp_type {
       type: string
       sql: ${TABLE}.imp_type ;;
@@ -205,7 +198,6 @@ FROM aggr_tab;;
 
     set: detail {
       fields: [
-        media_id,
         imp_type,
         opti,
         date_trunc,

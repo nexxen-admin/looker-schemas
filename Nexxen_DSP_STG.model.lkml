@@ -256,6 +256,14 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_line_item {
+    type: inner
+    view_label: "Line Item"
+    sql_on: ${dim_dsp_line_item.line_item_id_key}=${fact_nexxen_dsp.line_item_key} ;;
+    relationship: many_to_one
+  }
+
+
   join: advertisers_email {
     type: inner
     sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;

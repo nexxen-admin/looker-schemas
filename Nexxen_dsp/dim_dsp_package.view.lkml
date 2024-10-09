@@ -343,6 +343,7 @@ view: dim_dsp_package {
   dimension: name {
     type: string
     sql: ${TABLE}."name" ;;
+    drill_fields: [dim_sfdb_opportunitylineitem.tactic]
   }
 
   dimension: optimization_strategy {

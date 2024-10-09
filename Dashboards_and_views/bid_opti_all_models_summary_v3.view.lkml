@@ -99,18 +99,19 @@ SELECT  imp_type,
         opti,
         date_trunc,
 
-        SUM(requests),
-        SUM(impression),
-        SUM(revenue),
-        SUM(margin),
-        SUM(demand_margin),
-        SUM(supply_margin),
+        SUM(requests) as requests,
+        SUM(impression) as impression,
+        SUM(revenue) as revenue,
+        SUM(margin) as margin,
+        SUM(demand_margin) as demand_margin,
+        SUM(supply_margin) as supply_margin,
         SUM(scaled_margin) as scaled_margin,
-        SUM(scaled_requests),
-        SUM(scaled_impression),
-        SUM(scaled_revenue),
-        SUM(scaled_demand_margin),
-        SUM(scaled_supply_margin)from scaled_margin
+        SUM(scaled_requests) as scaled_requests,
+        SUM(scaled_impression) as scaled_impression,
+        SUM(scaled_revenue) as scaled_revenue,
+        SUM(scaled_demand_margin) as scaled_demand_margin,
+        SUM(scaled_supply_margin)
+from scaled_margin
 GROUP BY 1,2,3)
 
 SELECT *,

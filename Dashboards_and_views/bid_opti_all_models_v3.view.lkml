@@ -94,7 +94,7 @@ on opti.media_id = dt.media_id
    and opti.date_trunc = dt.date_trunc
 where dt.total_requests >80000 AND (opti.requests/dt.total_requests>0)
 and concat(concat(dt.media_id,dt.imp_type),dt.date_trunc)  in ( select media_imp_date from optis_list where optis>=4)
-order by dt.total_demand_margin desc)
+order by dt.media_id,dt.imp_type desc)
 
 
 SELECT *

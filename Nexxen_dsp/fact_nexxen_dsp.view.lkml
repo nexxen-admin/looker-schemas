@@ -366,6 +366,7 @@ view: fact_nexxen_dsp {
     type: number
     sql: dim_sfdb_opportunitylineitem.gross_billable__c - ${hybrid_impressions_delivered}*dim_sfdb_opportunitylineitem.rate__c
     /1000 ;;
+    hidden: yes
   }
 
   measure: impressions_discrepancy {
@@ -561,6 +562,13 @@ view: fact_nexxen_dsp {
     type: number
     sql: ${actions}/nullif(${third_party_impressions},0) ;;
     value_format: "#,##0.0000"
+  }
+
+  measure: third_party_media_measured_impressions {
+    type: sum
+    label: "3P media measured impressions"
+    sql: ${TABLE}.third_party_media_measured_impressions ;;
+    value_format: "#,##0"
   }
 
   dimension: cap_msd {

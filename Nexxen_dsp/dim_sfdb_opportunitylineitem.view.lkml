@@ -727,6 +727,18 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.vat_tax__c ;;
     hidden: yes
   }
+
+  dimension: tactic {
+    type: string
+    label: "Tactic"
+    sql: CASE WHEN ${line_item_name__c} LIKE '%RET%' THEN 'Retargeting'
+    WHEN ${line_item_name__c} LIKE '%BI%' THEN 'Brand Intelligence'
+    WHEN ${line_item_name__c} LIKE '%DEMO%' THEN 'Demographic'
+    WHEN ${line_item_name__c} LIKE '%BT%' THEN 'Behavioral'
+    WHEN ${line_item_name__c} LIKE '%PERF%' THEN 'Performance'
+    WHEN ${line_item_name__c} LIKE '%PMP%' THEN 'PMP'END ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id]

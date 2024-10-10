@@ -1010,49 +1010,26 @@ view: fact_nexxen_dsp {
     html:
     <div style = "background:#1982c4; color:#fff; width: 100%; ">
 
-        <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
+        <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 50px">
           Pacing
           <div style=" line-height: 15px; font-size: 30px;">
             {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 50px">
         Total impressions
           <div style="line-height: 15px; font-size: 30px;">
             {{ impressions._rendered_value }}
           </div>
         </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 50px">
         Delivered Spend
           <div style="line-height: 15px; font-size: 30px;">
             {{ Delivered_Spend._rendered_value }}
           </div>
         </div>
-
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
-        Clicks
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ clicks._rendered_value }}
-          </div>
-        </div>
-
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
-        CTR
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ CTR_1P._rendered_value }}
-          </div>
-        </div>
-
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
-          VCR
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ VCR_1P._rendered_value }}
-          </div>
-        </div>
-
-
 
     </div>;;
 
@@ -1060,21 +1037,28 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_board_line2 {
     type: count
-    hidden: yes
+    # hidden: yes
     html:
-    <div style = "color:#1982c4; ">
+    <div style = "color:#1982c4; width: 100%;">
 
-        <div style="font-size: 20px; display: inline-block; float: right; padding: 0px 40px; letter-spacing: 0.01em; height: auto; padding-bottom: 5px;">
-          VCR
-          <div style="color:#1982c4; line-height: 15px; font-size: 30px;">
-            {{ VCR_1P._rendered_value }}
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 75px">
+        Clicks
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ clicks._rendered_value }}
           </div>
         </div>
 
-        <div style="font-size: 20px; display: inline-block; float: right; padding: 0px 40px; letter-spacing: 0.01em; padding-bottom: 5px;">
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 75px">
         CTR
-          <div style="color:#1982c4; line-height: 15px; font-size: 30px;">
+          <div style="line-height: 15px; font-size: 30px;">
             {{ CTR_1P._rendered_value }}
+          </div>
+        </div>
+
+        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 75px">
+          VCR
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ VCR_1P._rendered_value }}
           </div>
         </div>
 

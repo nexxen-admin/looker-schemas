@@ -111,15 +111,17 @@ SELECT  imp_type,
         SUM(scaled_impression) as scaled_impression,
         SUM(scaled_revenue) as scaled_revenue,
         SUM(scaled_demand_margin) as scaled_demand_margin,
-        SUM(scaled_supply_margin)
+        SUM(scaled_supply_margin) as scaled_supply_margin
 from scaled_margin
 GROUP BY 1,2,3)
 
 SELECT *,
         scaled_margin / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_margin_ratio_to_no_opti,
-        scaled_margin - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_margin_diff_to_no_opti
-FROM aggr_tab;;
+        scaled_margin - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_margin_diff_to_no_opti,
 
+        scaled_supply_margin / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_supply_margin_ratio_to_no_opti,
+        scaled_supply_margin - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_supply_margin_diff_to_no_opti
+FROM aggr_tab;;
 
     }
 
@@ -184,6 +186,12 @@ FROM aggr_tab;;
       value_format: "#,##0"
     }
 
+  measure: scaled_supply_margin {
+    type: sum
+    sql: ${TABLE}.scaled_supply_margin ;;
+    value_format: "#,##0"
+  }
+
     measure: scaled_margin_ratio_to_no_opti {
       type: sum
       sql: ${TABLE}.scaled_margin_ratio_to_no_opti ;;
@@ -196,6 +204,21 @@ FROM aggr_tab;;
       value_format: "#,##0"
     }
 
+
+  measure: scaled_supply_margin_ratio_to_no_opti {
+    type: sum
+    sql: ${TABLE}.scaled_supply_margin_ratio_to_no_opti ;;
+    value_format:"0.00%"
+  }
+
+  measure: scaled_supply_margin_diff_to_no_opti {
+    type: sum
+    sql: ${TABLE}.scaled_supply_margin_diff_to_no_opti ;;
+    value_format: "#,##0"
+  }
+
+
+
     set: detail {
       fields: [
         imp_type,
@@ -205,7 +228,9 @@ FROM aggr_tab;;
         impression,
         revenue,
         margin,
-        scaled_margin,scaled_margin_ratio_to_no_opti,
+        scaled_margin,
+        scaled_supply_margin,
+        scaled_margin_ratio_to_no_opti,
         scaled_margin_diff_to_no_opti
       ]
     }

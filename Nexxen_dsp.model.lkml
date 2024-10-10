@@ -144,7 +144,7 @@ explore: fact_nexxen_dsp  {
 
     type: left_outer
     view_label: "Salsforce Purchase Order"
-    sql_on: ${dim_sfdb_po__c.po_aid__c} = ${dim_sfdb_account.id} ;;
+    sql_on: ${dim_sfdb_po__c.account_aid__c} = ${dim_sfdb_account.id} ;;
     relationship: many_to_one
 
   }

@@ -366,6 +366,7 @@ view: fact_nexxen_dsp {
     type: number
     sql: dim_sfdb_opportunitylineitem.gross_billable__c - ${hybrid_impressions_delivered}*dim_sfdb_opportunitylineitem.rate__c
     /1000 ;;
+    hidden: yes
   }
 
   measure: impressions_discrepancy {

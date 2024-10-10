@@ -195,7 +195,7 @@ from scaled_margin;;
     type: sum
     sql: ${TABLE}.scaled_margin ;;
     value_format: "$#,##0.00"
-    label: "scaled margin $"
+    label: "Scaled margin $"
   }
 
   measure: scaled_margin_ratio_to_no_opti {

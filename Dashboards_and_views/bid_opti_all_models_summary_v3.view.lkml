@@ -165,7 +165,7 @@ FROM aggr_tab;;
     measure: impression {
       type: sum
       sql: ${TABLE}.impression ;;
-      value_format: "$#,##0.00"
+      value_format: "#,##0"
     }
 
     measure: revenue {
@@ -183,25 +183,28 @@ FROM aggr_tab;;
     measure: scaled_margin {
       type: sum
       sql: ${TABLE}.scaled_margin ;;
-      value_format: "#,##0"
+      value_format: "$#,##0.00"
     }
 
   measure: scaled_supply_margin {
     type: sum
     sql: ${TABLE}.scaled_supply_margin ;;
-    value_format: "#,##0"
+    value_format: "$#,##0.00"
+    label: "Scaled Supply Margin $"
   }
 
     measure: scaled_margin_ratio_to_no_opti {
       type: sum
       sql: ${TABLE}.scaled_margin_ratio_to_no_opti ;;
       value_format:"0.00%"
+      label: "Scaled Margin % Diff To No Opti"
     }
 
     measure: scaled_margin_diff_to_no_opti {
       type: sum
       sql: ${TABLE}.scaled_margin_diff_to_no_opti ;;
-      value_format: "#,##0"
+      value_format: "$#,##0.00"
+      label: "Scaled Margin $ Diff To No Opti"
     }
 
 
@@ -209,12 +212,14 @@ FROM aggr_tab;;
     type: sum
     sql: ${TABLE}.scaled_supply_margin_ratio_to_no_opti ;;
     value_format:"0.00%"
+    label: "Scaled Supply Margin % Diff To No Opti"
   }
 
   measure: scaled_supply_margin_diff_to_no_opti {
     type: sum
     sql: ${TABLE}.scaled_supply_margin_diff_to_no_opti ;;
-    value_format: "#,##0"
+    value_format: "$#,##0.00"
+    label: "Scaled Supply Margin $ Diff To No Opti"
   }
 
 
@@ -231,7 +236,9 @@ FROM aggr_tab;;
         scaled_margin,
         scaled_supply_margin,
         scaled_margin_ratio_to_no_opti,
-        scaled_margin_diff_to_no_opti
+        scaled_margin_diff_to_no_opti,
+        scaled_supply_margin_ratio_to_no_opti,
+        scaled_supply_margin_diff_to_no_opti
       ]
     }
 

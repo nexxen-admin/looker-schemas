@@ -563,6 +563,13 @@ view: fact_nexxen_dsp {
     value_format: "#,##0.0000"
   }
 
+  measure: third_party_media_measured_impressions {
+    type: sum
+    label: "3P media measured impressions"
+    sql: ${TABLE}.third_party_media_measured_impressions ;;
+    value_format: "#,##0"
+  }
+
   dimension: cap_msd {
     type: number
     sql: ${dim_sfdb_opportunitylineitem.units__c}/

@@ -166,11 +166,11 @@ explore: fifa_dsp_metrics {
 
 explore: bd_comm {
   label: "BD Comm US"
-  required_access_grants: [allowed_users_sam_lt]
-  # access_filter: {
-  #   field: bd_comm.bizdev_owner
-  #   user_attribute: allowed_users_sam_lt
-  # }
+  #required_access_grants: [allowed_users_sam_lt]
+  access_filter: {
+    field: bd_comm.bizdev_owner
+    user_attribute: finance_reports
+  }
   hidden: yes
 }
 

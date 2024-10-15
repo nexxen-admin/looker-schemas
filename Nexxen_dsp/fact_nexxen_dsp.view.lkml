@@ -515,6 +515,12 @@ view: fact_nexxen_dsp {
     #incorrect - might need to be calculated in the back
   }
 
+  measure: daily_units_needed_t1 {
+    type: sum
+    sql: ${dim_sfdb_opportunitylineitem.daily_units_needed_comp_2}-${TABLE}.delivery_units/nullif(${v_dim_sfdb_opportunitylineitemschedule_new.total_days_left_in_sl},0) ;;
+    hidden: yes
+  }
+
   measure: GP {
     type: number
     sql: ${capped_revenue}-${cogs} ;;
@@ -583,8 +589,15 @@ view: fact_nexxen_dsp {
     value_format: "0.00\%"
     sql: -- case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then
         ${dim_sfdb_opportunitylineitem.msd_pacing}*100;;
+        #hidden: yes
               #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPC' then ${TABLE}.clicks/sum(${cap_msd}*100
               #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'dCPM' then ${TABLE}.cost/${cap_msd}*100 end;;
+  }
+
+  measure: monthly_budget_breakdown_v1 {
+    type: sum
+    sql: ${dim_sfdb_opportunitylineitem.monthy_budget_breakout_temp} ;;
+    hidden: yes
   }
 
   measure: count {

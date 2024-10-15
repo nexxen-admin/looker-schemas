@@ -487,7 +487,7 @@ view: dim_sfdb_opportunity {
 
   dimension: opp_name_shortcut {
     type: string
-    sql: SUBSTRING(name FROM (POSITION('F-' IN name) + 1) FOR 8) ;;
+    sql: SUBSTRING(dim_sfdb_opportunity.name FROM (POSITION('F-' IN dim_sfdb_opportunity.name) + 1) FOR 8) ;;
   }
 
   dimension: new_market__c {

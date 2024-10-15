@@ -749,21 +749,56 @@ view: dim_sfdb_opportunitylineitem {
     sql: case when ${end_date__c_date} <fact_nexxen_dsp.date_key_in_timezone then 1
               when ${start_date__c_date} > fact_nexxen_dsp.date_key_in_timezone then 0  else
          (fact_nexxen_dsp.date_key_in_timezone - ${start_date__c_date})+1 end;;
+        hidden: yes
   }
   dimension: cap_temp {
     type: number
     sql: ${units__c}/(datediff('day',${start_date__c_date},${end_date__c_date})+1)*${date_diff} ;;
+    #hidden: yes
   }
 
   measure: cap_msd_test {
     type: max
     sql: ${cap_temp};;
+    #hidden: yes
   }
   measure: msd_pacing {
     type: number
     value_format: "0.00%"
     sql:
        IFNULL(${fact_nexxen_dsp.delivered_units}/${cap_msd_test},0);;
+      #hidden: yes
+  }
+
+  measure: gross_billable_comp {
+    type: max
+    sql: ${gross_billable__c} ;;
+    hidden: yes
+  }
+
+  measure: monthy_budget_breakout_temp {
+    type: number
+    sql: ${gross_billable_comp}-${fact_nexxen_dsp.capped_revenue} ;;
+    hidden: yes
+  }
+
+  dimension: daily_units_needed_comp {
+    type: number
+    sql: case when ${dim_sfdb_opportunitylineitem.price_type_name__c} in ('dCPM', 'CPR') then
+    ${dim_sfdb_opportunitylineitem.gross_billable__c} else ${dim_sfdb_opportunitylineitem.units__c} end;;
+    hidden: yes
+  }
+
+  measure: daily_units_needed_comp_2 {
+    type: max
+    sql: ${daily_units_needed_comp} ;;
+    hidden: yes
+  }
+
+  measure: daily_units_needed_comp_3 {
+    type: number
+    sql: ${daily_units_needed_comp_2}-${fact_nexxen_dsp.delivered_units}/nullif(${v_dim_sfdb_opportunitylineitemschedule_new.total_days_left_in_sl},0) ;;
+    hidden: yes
   }
 
 }

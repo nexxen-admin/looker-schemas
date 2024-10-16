@@ -126,7 +126,7 @@ SELECT  media_id,
 from tot_sup_marg
 )
 
-select *
+select AA.*
 from scaled_margin aa
 inner join tot_sup_marg_rank bb
 on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.date_trunc = bb.date_trunc

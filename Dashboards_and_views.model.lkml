@@ -63,6 +63,13 @@ access_grant: can_view_aniview {
 }
 
 
+# for opti report
+#access_grant: can_view_opti_report {
+#  user_attribute: opti_ssp_report
+#  allowed_values: ["opti_ssp_report"]
+#}
+
+
 #access_grant: can_view_pub_come_looker {
 # user_attribute: allowed_users
 #allowed_values: ["Looker_Admins"]
@@ -540,6 +547,8 @@ explore: bid_opti_bottom_5_placement_v3 {
   label: "bid_opti_bottom_5_placement_v3"
   required_access_grants: [can_view_all_tremor]
 }
+
+
 
 
 explore: creative_package_overlap_dates {

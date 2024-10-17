@@ -95,6 +95,12 @@ explore: publishers_report_monthly_for_finance {
   #hidden: yes
 }
 
+explore: IAS_Monthly_Usage {
+  required_access_grants: [can_view_all_tremor]
+  label: "IAS Monthly Usage"
+  #hidden: yes
+}
+
 explore: v_fact_ad_daily {
   required_access_grants: [can_view_all_tremor]
   label: "Fact Ad Daily Exchange"

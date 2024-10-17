@@ -1079,4 +1079,48 @@ view: fact_nexxen_dsp {
     </div>;;
   }
 
+  measure: html_kpi_board_ag_overv {
+    type: count
+    # hidden: yes
+    html:
+    <div style = "background:#1982c4; color:#fff; width: 100%;">
+
+              <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
+              # of advertisers
+                <div style="line-height: 15px; font-size: 30px;">
+                  {{  dim_sfdb_related_accounts.num_of_advertisers_msd._rendered_value }}
+                </div>
+              </div>
+
+      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
+      Impressions
+      <div style="line-height: 15px; font-size: 30px;">
+      {{ impressions._rendered_value }}
+      </div>
+      </div>
+
+      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
+      Clicks
+      <div style="line-height: 15px; font-size: 30px;">
+      {{ clicks._rendered_value }}
+      </div>
+      </div>
+
+      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
+      Pacing
+      <div style="line-height: 15px; font-size: 30px;">
+      {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
+      </div>
+      </div>
+
+      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
+        Delivered Spend
+          <div style="line-height: 15px; font-size: 30px;">
+            {{ Delivered_Spend._rendered_value }}
+          </div>
+        </div>
+
+      </div>;;
+  }
+
 }

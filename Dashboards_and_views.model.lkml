@@ -62,6 +62,10 @@ access_grant: can_view_aniview {
   allowed_values: ["Aniview"]
 }
 
+access_grant: can_view_opti_report {
+  user_attribute: opti_ssp_report
+  allowed_values: ["opti_ssp_report"]
+}
 
 #access_grant: can_view_pub_come_looker {
 # user_attribute: allowed_users

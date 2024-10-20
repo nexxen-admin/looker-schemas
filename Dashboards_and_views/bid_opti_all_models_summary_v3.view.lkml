@@ -184,6 +184,7 @@ FROM aggr_tab;;
       type: sum
       sql: ${TABLE}.scaled_margin ;;
       value_format: "$#,##0.00"
+      label: "Scaled Total Margin $"
     }
 
   measure: scaled_supply_margin {

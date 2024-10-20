@@ -215,7 +215,7 @@ view: bid_opti_bottom_5_placement_v3 {
       type: sum
       sql: ${TABLE}.scaled_margin ;;
       value_format: "$#,##0.00"
-      label: "Scaled margin $"
+      label: "Scaled Total Margin $"
     }
 
     measure: scaled_margin_ratio_to_no_opti {

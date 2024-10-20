@@ -544,12 +544,12 @@ explore: bid_opti_all_models_summary_v3 {
 
 explore: bid_opti_top_5_placement_v3 {
   label: "bid_opti_top_5_placement_v3"
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [can_view_opti_report]
 }
 
 explore: bid_opti_bottom_5_placement_v3 {
   label: "bid_opti_bottom_5_placement_v3"
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [can_view_opti_report]
 }
 
 

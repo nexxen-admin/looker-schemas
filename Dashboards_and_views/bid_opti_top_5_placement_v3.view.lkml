@@ -215,7 +215,7 @@ where ranky<=5;;
     type: sum
     sql: ${TABLE}.scaled_margin ;;
     value_format: "$#,##0.00"
-    label: "Scaled margin $"
+    label: "Scaled Total Margin $"
   }
 
   measure: scaled_margin_ratio_to_no_opti {

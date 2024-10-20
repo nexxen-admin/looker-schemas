@@ -526,4 +526,11 @@ view: dim_sfdb_related_accounts {
     type: count
     drill_fields: [id, name]
   }
+
+  measure: num_of_advertisers_msd {
+    label: "# of advertisers"
+    hidden: yes
+    type: count_distinct
+    sql: ${name} ;;
+  }
 }

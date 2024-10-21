@@ -207,6 +207,7 @@ view: bid_opti_bottom_5_placement_v3 {
       type: sum
       sql: ${TABLE}.margin ;;
       value_format: "$#,##0.00"
+      label: "Total Margin $"
     }
 
 # scled margins metrics
@@ -222,14 +223,14 @@ view: bid_opti_bottom_5_placement_v3 {
       type: sum
       sql: ${TABLE}.scaled_margin_ratio_to_no_opti ;;
       value_format:"0.00%"
-      label: "Scaled Margin % Diff To No Opti"
+      label: "Scaled Total Margin % Diff To No Opti"
     }
 
     measure: scaled_margin_diff_to_no_opti {
       type: sum
       sql: ${TABLE}.scaled_margin_diff_to_no_opti ;;
       value_format: "$#,##0.00"
-      label: "Scaled Margin $ Diff To No Opti"
+      label: "Scaled Total Margin $ Diff To No Opti"
     }
 
 # scaled supply margin metrcis

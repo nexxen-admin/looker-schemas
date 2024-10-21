@@ -801,4 +801,9 @@ view: dim_sfdb_opportunitylineitem {
     hidden: yes
   }
 
+  measure: total_booked_budget_meas {
+    type: sum
+    sql: ${TABLE}.gross_billable__c ;;
+  }
+
 }

@@ -126,7 +126,13 @@ SELECT  media_id,
 from tot_sup_marg
 )
 
-select AA.*
+select AA.*,
+       BB.ranky,
+       CASE WHEN opti = 'no_opti' THEN 1
+                    WHEN opti = 'bidfloor' THEN 2
+                    WHEN opti = 'pubcost' THEN 3
+                    WHEN opti = 'pubcost_bidfloor' THEN 4
+                    ELSE 5 END as rank_model
 from scaled_margin aa
 inner join tot_sup_marg_rank bb
 on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.date_trunc = bb.date_trunc
@@ -210,6 +216,19 @@ where ranky<=5;;
     label: "Total Margin $"
   }
 
+
+  dimension: ranky {
+    type: string
+    sql: ${TABLE}.ranky ;;
+  }
+
+
+  dimension: rank_model {
+    type: string
+    sql: ${TABLE}.rank_model ;;
+  }
+
+
 # scled margins metrics
 
   measure: scaled_margin {
@@ -268,6 +287,8 @@ where ranky<=5;;
       date_trunc,
       publisher_id,
       publisher_name,
+      ranky,
+      rank_model,
 
       impression,
       revenue,

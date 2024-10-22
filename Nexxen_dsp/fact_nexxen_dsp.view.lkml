@@ -596,6 +596,26 @@ view: fact_nexxen_dsp {
     sql: case when ${yesterday_pacing}>1 then 0 else ${remaining_budget}*(1-${yesterday_pacing}) end;;
   }
 
+  measure: completion_discrepancy {
+    type: number
+    sql: (${third_party_complete_events}-${complete_events})/nullif(${complete_events},0) ;;
+    value_format: "0.00%"
+  }
+
+  measure: dsp_padding {
+    type: number
+    sql: case when ((1/100) + case when round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) <
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),3) then
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) + (1/100) else
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) end) < 0
+                  then 0 else
+                  (1/100) + case when round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) <
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),3) then
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) + (1/100) else
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) end
+                  end;;
+  }
+
   measure: count {
     type: count
     hidden: yes

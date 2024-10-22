@@ -591,6 +591,11 @@ view: fact_nexxen_dsp {
     sql: ${dim_sfdb_opportunitylineitem.total_booked_budget_meas}-${dim_dsp_netsuite_invoice.passed_bill_amount_measure};;
   }
 
+  measure: revenue_risk {
+    type: number
+    sql: case when ${yesterday_pacing}>1 then 0 else ${remaining_budget}*(1-${yesterday_pacing}) end;;
+  }
+
   measure: count {
     type: count
     hidden: yes

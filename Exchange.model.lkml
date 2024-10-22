@@ -121,13 +121,13 @@ join: dim_publisher  {
 }
 
 join: v_dim_employee_biz_dev {
-  type: inner
+  type: left_outer
   sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key} ;;
   relationship: many_to_one
 }
 
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: left_outer
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key} ;;
     relationship: many_to_one
   }
@@ -398,13 +398,13 @@ explore: extend_Inbound_Exchange {
   }
 
   join: v_dim_employee_biz_dev {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one
@@ -745,14 +745,14 @@ explore: fact_ad_daily_agg{
   }
 
   join: v_dim_employee_biz_dev {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key}  ;;
     relationship: many_to_one
   }
 
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key}  ;;
     relationship: many_to_one
@@ -1108,13 +1108,13 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
   }
   join: v_dim_employee_biz_dev {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one
@@ -1362,13 +1362,13 @@ explore: fact_ad_bid_request_daily_agg{
     relationship: many_to_one
   }
   join: v_dim_employee_biz_dev {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one

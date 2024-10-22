@@ -55,6 +55,13 @@ view: dim_dsp_netsuite_invoice {
     sql: ${TABLE}.ri_info ;;
     hidden: yes
   }
+
+  measure: passed_bill_amount_measure {
+    type: max
+    sql: ${monthly_budget_amount} ;;
+  }
+
+
   measure: count {
     type: count
   }

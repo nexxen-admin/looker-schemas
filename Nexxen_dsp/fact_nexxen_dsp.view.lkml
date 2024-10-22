@@ -354,30 +354,15 @@ view: fact_nexxen_dsp {
     value_format: "#,##0"
   }
 
-  measure: hybrid_impressions_delivered {
-    type: sum
-    value_format: "#,##0"
-    sql: case when dim_sfdb_opportunitylineitem.reporting__c = 'Amobee' then ${TABLE}.impressions else
-    ${TABLE}.third_party_impressions end;;
-    hidden: yes
-  }
-
-  measure: remaining_budget {
-    type: number
-    sql: dim_sfdb_opportunitylineitem.gross_billable__c - ${hybrid_impressions_delivered}*dim_sfdb_opportunitylineitem.rate__c
-    /1000 ;;
-    hidden: yes
-  }
-
   measure: impressions_discrepancy {
     type: number
-    sql: (${impressions}-${third_party_impressions})/NULLIF(${impressions},0) ;;
+    sql: (${third_party_impressions}-${impressions})/NULLIF(${impressions},0) ;;
     value_format: "0.00%"
   }
 
   measure: clicks_discrepancy {
     type: number
-    sql: (${clicks}-${third_party_clicks})/nullif(${clicks},0) ;;
+    sql: (${third_party_clicks}-${clicks})/nullif(${clicks},0) ;;
     value_format: "0.00%"
   }
 
@@ -598,6 +583,12 @@ view: fact_nexxen_dsp {
     type: sum
     sql: ${dim_sfdb_opportunitylineitem.monthy_budget_breakout_temp} ;;
     hidden: yes
+  }
+
+  measure: remaining_budget {
+    type: number
+    label: "Remaining Budget"
+    sql: ${dim_sfdb_opportunitylineitem.total_booked_budget_meas}-${dim_dsp_netsuite_invoice.passed_bill_amount_measure};;
   }
 
   measure: count {

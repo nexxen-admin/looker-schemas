@@ -136,7 +136,7 @@ select AA.*,
 from scaled_margin aa
 inner join tot_sup_marg_rank bb
 on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.date_trunc = bb.date_trunc
-where ranky<=5;;
+where ranky<=20;;
 
 
   }

@@ -354,30 +354,15 @@ view: fact_nexxen_dsp {
     value_format: "#,##0"
   }
 
-  measure: hybrid_impressions_delivered {
-    type: sum
-    value_format: "#,##0"
-    sql: case when dim_sfdb_opportunitylineitem.reporting__c = 'Amobee' then ${TABLE}.impressions else
-    ${TABLE}.third_party_impressions end;;
-    hidden: yes
-  }
-
-  measure: remaining_budget {
-    type: number
-    sql: dim_sfdb_opportunitylineitem.gross_billable__c - ${hybrid_impressions_delivered}*dim_sfdb_opportunitylineitem.rate__c
-    /1000 ;;
-    hidden: yes
-  }
-
   measure: impressions_discrepancy {
     type: number
-    sql: (${impressions}-${third_party_impressions})/NULLIF(${impressions},0) ;;
+    sql: (${third_party_impressions}-${impressions})/NULLIF(${impressions},0) ;;
     value_format: "0.00%"
   }
 
   measure: clicks_discrepancy {
     type: number
-    sql: (${clicks}-${third_party_clicks})/nullif(${clicks},0) ;;
+    sql: (${third_party_clicks}-${clicks})/nullif(${clicks},0) ;;
     value_format: "0.00%"
   }
 
@@ -598,6 +583,37 @@ view: fact_nexxen_dsp {
     type: sum
     sql: ${dim_sfdb_opportunitylineitem.monthy_budget_breakout_temp} ;;
     hidden: yes
+  }
+
+  measure: remaining_budget {
+    type: number
+    label: "Remaining Budget"
+    sql: ${dim_sfdb_opportunitylineitem.total_booked_budget_meas}-${dim_dsp_netsuite_invoice.passed_bill_amount_measure};;
+  }
+
+  measure: revenue_risk {
+    type: number
+    sql: case when ${yesterday_pacing}>1 then 0 else ${remaining_budget}*(1-${yesterday_pacing}) end;;
+  }
+
+  measure: completion_discrepancy {
+    type: number
+    sql: (${third_party_complete_events}-${complete_events})/nullif(${complete_events},0) ;;
+    value_format: "0.00%"
+  }
+
+  measure: dsp_padding {
+    type: number
+    sql: case when ((1/100) + case when round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) <
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),3) then
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) + (1/100) else
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) end) < 0
+                  then 0 else
+                  (1/100) + case when round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) <
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),3) then
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) + (1/100) else
+                   round((${third_party_impressions}-${impressions})/NULLIF(${impressions},0),2) end
+                  end;;
   }
 
   measure: count {

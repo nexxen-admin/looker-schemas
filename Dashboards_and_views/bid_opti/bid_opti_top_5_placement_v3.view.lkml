@@ -126,11 +126,17 @@ SELECT  media_id,
 from tot_sup_marg
 )
 
-select AA.*
+select AA.*,
+       BB.ranky,
+       CASE WHEN opti = 'no_opti' THEN 1
+                    WHEN opti = 'bidfloor' THEN 2
+                    WHEN opti = 'pubcost' THEN 3
+                    WHEN opti = 'pubcost_bidfloor' THEN 4
+                    ELSE 5 END as rank_model
 from scaled_margin aa
 inner join tot_sup_marg_rank bb
 on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.date_trunc = bb.date_trunc
-where ranky<=5;;
+where ranky<=20;;
 
 
   }
@@ -207,7 +213,21 @@ where ranky<=5;;
     type: sum
     sql: ${TABLE}.margin ;;
     value_format: "$#,##0.00"
+    label: "Total Margin $"
   }
+
+
+  dimension: ranky {
+    type: string
+    sql: ${TABLE}.ranky ;;
+  }
+
+
+  dimension: rank_model {
+    type: string
+    sql: ${TABLE}.rank_model ;;
+  }
+
 
 # scled margins metrics
 
@@ -215,21 +235,21 @@ where ranky<=5;;
     type: sum
     sql: ${TABLE}.scaled_margin ;;
     value_format: "$#,##0.00"
-    label: "Scaled margin $"
+    label: "Scaled Total Margin $"
   }
 
   measure: scaled_margin_ratio_to_no_opti {
     type: sum
     sql: ${TABLE}.scaled_margin_ratio_to_no_opti ;;
     value_format:"0.00%"
-    label: "Scaled Margin % Diff To No Opti"
+    label: "Scaled Total Margin % Diff To No Opti"
   }
 
   measure: scaled_margin_diff_to_no_opti {
     type: sum
     sql: ${TABLE}.scaled_margin_diff_to_no_opti ;;
     value_format: "$#,##0.00"
-    label: "Scaled Margin $ Diff To No Opti"
+    label: "Scaled Total Margin $ Diff To No Opti"
   }
 
 # scaled supply margin metrcis
@@ -267,6 +287,8 @@ where ranky<=5;;
       date_trunc,
       publisher_id,
       publisher_name,
+      ranky,
+      rank_model,
 
       impression,
       revenue,

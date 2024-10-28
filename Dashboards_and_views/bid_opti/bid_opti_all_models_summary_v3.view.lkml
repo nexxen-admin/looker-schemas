@@ -120,7 +120,14 @@ SELECT *,
         scaled_margin - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_margin_diff_to_no_opti,
 
         scaled_supply_margin / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_supply_margin_ratio_to_no_opti,
-        scaled_supply_margin - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_supply_margin_diff_to_no_opti
+        scaled_supply_margin - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_supply_margin_diff_to_no_opti,
+
+        CASE WHEN opti = 'no_opti' THEN 1
+             WHEN opti = 'bidfloor' THEN 2
+             WHEN opti = 'pubcost' THEN 3
+             WHEN opti = 'pubcost_bidfloor' THEN 4
+             ELSE 5 END as rank_model
+
 FROM aggr_tab;;
 
     }
@@ -146,6 +153,11 @@ FROM aggr_tab;;
       type: string
       sql: ${TABLE}.date_trunc ;;
     }
+
+  dimension: rank_model {
+    type: string
+    sql: ${TABLE}.rank_model ;;
+  }
 
 
 # measu
@@ -230,6 +242,8 @@ FROM aggr_tab;;
         imp_type,
         opti,
         date_trunc,
+        rank_model,
+
         placment_count,
         impression,
         revenue,

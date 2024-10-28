@@ -1081,12 +1081,12 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_board_ag_overv {
     type: count
-    # hidden: yes
+    hidden: yes
     html:
     <div style = "background:#1982c4; color:#fff; width: 100%;">
 
               <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
-              # of advertisers
+              Number of Advertisers
                 <div style="line-height: 15px; font-size: 30px;">
                   {{  dim_sfdb_related_accounts.num_of_advertisers_msd._rendered_value }}
                 </div>

@@ -148,6 +148,17 @@ view: bid_opti_all_models_summary_v5 {
   dimension: opti {
     type: string
     sql: ${TABLE}.opti ;;
+
+    html:
+    {% if value == 'no_opti' %}
+    <p style="color: blue; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% elsif value == 'bidfloor' %}
+    <p style="color: orange; background-color: lightgreen; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% else %}
+    <p style="color: black; background-color: orange; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% endif %}
+    ;;
+
   }
 
 

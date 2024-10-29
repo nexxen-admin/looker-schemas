@@ -552,7 +552,10 @@ explore: bid_opti_bottom_5_placement_v3 {
   required_access_grants: [can_view_all_tremor]
 }
 
-
+explore: bid_opti_all_models_summary_v5 {
+  label: "bid_opti_all_models_summary_v5"
+  required_access_grants: [can_view_all_tremor]
+}
 
 
 explore: creative_package_overlap_dates {

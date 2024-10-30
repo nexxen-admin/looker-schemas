@@ -4,13 +4,12 @@ view: bid_opti_bottom_5_placement_v3 {
         -- placement level dashboard
 
         -- takes all raw data and splits into different opti buckets
-        select case when bidfloor_opti_version !='no_opti' and (pubcost_opti_enabled = '-4' or pubcost_opti_enabled = '0')  then 'bidfloor'
-        when bidfloor_opti_version !='no_opti' and pubcost_opti_enabled = '1' then 'pubcost_bidfloor'
-        when bidfloor_opti_version = 'no_opti' and pubcost_opti_enabled = '1' then 'pubcost'
-        when bidfloor_opti_version = 'no_opti' and (pubcost_opti_enabled = '-4' or pubcost_opti_enabled = '0')   then 'no_opti'
-        when bidfloor_opti_version is null and (pubcost_opti_enabled is null or pubcost_opti_enabled = '0') then 'not enabled'
-        when pubcost_opti_enabled in ('-1','-2','-3') then 'inelgible/error'
-        else pubcost_opti_enabled::varchar  end as opti,
+        select case when margin_opti_bucket = 1  then 'bidfloor'
+                    when margin_opti_bucket = 2  then 'pubcost'
+                    when margin_opti_bucket = 3  then 'pubcost_bidfloor'
+                    when margin_opti_bucket = 4  then 'no_opti'
+                    else margin_opti_bucket::VARCHAR end as opti,
+
         -- other dimensions
         rx_imp_type as imp_type,
         media_id,
@@ -31,7 +30,7 @@ view: bid_opti_bottom_5_placement_v3 {
         and rx_ssp_name like'rmp%'
         and rx_imp_type in ('banner','video')
         group by 1,2,3,4,5,6,7
-        having (demand_margin + supply_margin) >0
+        having (demand_margin + supply_margin) >0 and opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
         ),
 
         data_totals as (

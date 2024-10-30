@@ -171,6 +171,13 @@ where ranky<=20;;
     type: string
     sql: ${TABLE}.opti ;;
 
+    html:
+    {% if value == 'no_opti' %}
+    <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% else %}
+    {{ rendered_value }}
+    {% endif %};;
+
   }
 
 

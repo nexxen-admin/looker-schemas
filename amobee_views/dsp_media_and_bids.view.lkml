@@ -1460,6 +1460,22 @@ dimension: browser_type_name {
         1657, 1659, 1676, 1731, 1819, 1972, 2010, 2057, 2084, 9999) THEN 'Other' ELSE 'Unknown' END ;;
   }
 
+  dimension: amobee_business_unit_special {
+    type: string
+    label: "Amobee Business Unit - Special"
+    sql: CASE WHEN ${market_id} in (884, 2067, 2050, 58, 1677, 2148, 1792, 1637, 2164, 2141,
+    2142, 2196) THEN 'ACCESS'
+      WHEN ${market_id} in (1008, 2069, 1477, 2127, 1577, 1371, 2058, 1084, 1608, 1090, 681,
+      1183, 2099, 2174) THEN 'ANZ & APAC'
+      WHEN ${market_id} = 1 THEN 'DSP Internal / Defaults'
+      WHEN ${market_id} in (1079, 2086, 175, 961, 1121, 1778, 1407) THEN 'EMEA'
+      WHEN ${market_id} in (2073, 1480, 2145, 1069, 1405, 2172, 2169, 2134, 1379, 1574, 1990,
+      2107, 2158, 2149, 2175, 1487, 2178, 2168, 3, 2060, 2138, 999, 2139, 2143, 1472, 2152,
+      1602, 2048, 2147, 2159, 861, 2133, 141, 1356, 927, 2011) THEN 'Enterprise'
+      WHEN ${market_id} in (2201, 2215, 2209, 2205, 2194, 2202, 2203, 2200, 2198, 2188, 2195,
+      2191, 2186, 2193, 2176, 2092, 2190, 2192, 2187, 2183, 2184, 2181) THEN 'Other' ELSE 'Unknown' END ;;
+  }
+
   measure: unruly_inv_cost {
     type: sum
     label: "Nexxen Inv Cost"

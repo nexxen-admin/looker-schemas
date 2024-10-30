@@ -124,7 +124,7 @@ explore: fact_nexxen_msd_advertiser  {
 
   join: dim_sfdb_account {
     type: inner
-    view_label: "Salsforce Account"
+    view_label: "Salesforce Account"
     sql_on: ${dim_sfdb_account.account_id_key} = ${fact_nexxen_dsp.account_id_key};;
     relationship: many_to_one
 
@@ -132,7 +132,7 @@ explore: fact_nexxen_msd_advertiser  {
   join: dim_sfdb_po__c {
 
     type: left_outer
-    view_label: "Salsforce Purchase Order"
+    view_label: "Salesforce Purchase Order"
     sql_on: ${dim_sfdb_po__c.po_aid__c} = ${dim_sfdb_account.id} ;;
     relationship: many_to_one
 
@@ -140,14 +140,14 @@ explore: fact_nexxen_msd_advertiser  {
 
   join: dim_sfdb_opportunity {
     type: inner
-    view_label: "Salsforce Opportunity"
+    view_label: "Salesforce Opportunity"
     sql_on: ${dim_sfdb_opportunity.opportunity_id_key} = ${fact_nexxen_dsp.opportunity_id_key} ;;
     relationship: many_to_one
   }
 
   # join: v_dim_sfdb_opportunitylineitemschedule_looker {
   #   type: inner
-  #   view_label: "Salsforce Opportunity Line Item Flight"
+  #   view_label: "Salesforce Opportunity Line Item Flight"
   #   sql_on: ${v_dim_sfdb_opportunitylineitemschedule_looker.opportunitylineitem_key} = ${fact_nexxen_dsp.opportunitylineitem_key}
   #   and ${fact_nexxen_dsp.date_key_in_timezone_raw}>= ${v_dim_sfdb_opportunitylineitemschedule_looker.scheduledate_raw} and
   #   ${fact_nexxen_dsp.date_key_in_timezone_raw} <= ${v_dim_sfdb_opportunitylineitemschedule_looker.end_date__c_raw};;
@@ -163,7 +163,7 @@ explore: fact_nexxen_msd_advertiser  {
   }
   join:  dim_sfdb_opportunitylineitem {
     type: inner
-    view_label: "Salsforce Opportunity Line Item"
+    view_label: "Salesforce Opportunity Line Item"
     sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
     relationship: many_to_one
 
@@ -172,7 +172,7 @@ explore: fact_nexxen_msd_advertiser  {
 
   join: dim_sfdb_opportunitylineitem_pacing {
     type: inner
-    view_label: "Salsforce Opportunity Line Item"
+    view_label: "Salesforce Opportunity Line Item"
     sql_on: ${dim_sfdb_opportunitylineitem_pacing.line_item_id}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${dim_sfdb_opportunitylineitem_pacing.date_key_date}=${v_dim_dsp_date.date_key_date};;
     relationship: many_to_one
 
@@ -211,7 +211,7 @@ explore: fact_nexxen_msd_advertiser  {
 
   join: dim_sfdb_related_accounts {
     type: left_outer
-    view_label: "Salsforce Account"
+    view_label: "Salesforce Account"
     sql_on: ${dim_sfdb_related_accounts.id}=${dim_sfdb_opportunity.related_account__c} ;;
     relationship: many_to_one
   }
@@ -244,6 +244,14 @@ explore: fact_nexxen_msd_advertiser  {
     sql_on: ${dim_dsp_line_item.line_item_id_key}=${fact_nexxen_dsp.line_item_key} ;;
     relationship: many_to_one
   }
+
+  join: dim_sfdb_account_opportunity_billling_account_name {
+    type: inner
+    view_label: "Salesforce Opportunity"
+    sql_on: ${fact_nexxen_dsp.opportunity_id_key}=${dim_sfdb_account_opportunity_billling_account_name.opportunity_id_key} ;;
+    relationship: many_to_one
+  }
+
 
 
   # join: advertisers_email {
@@ -363,7 +371,7 @@ explore: fact_nexxen_msd_agency  {
 
   join: dim_sfdb_account {
     type: inner
-    view_label: "Salsforce Account"
+    view_label: "Salesforce Account"
     sql_on: ${dim_sfdb_account.account_id_key} = ${fact_nexxen_dsp.account_id_key};;
     relationship: many_to_one
 
@@ -371,7 +379,7 @@ explore: fact_nexxen_msd_agency  {
   join: dim_sfdb_po__c {
 
     type: left_outer
-    view_label: "Salsforce Purchase Order"
+    view_label: "Salesforce Purchase Order"
     sql_on: ${dim_sfdb_po__c.po_aid__c} = ${dim_sfdb_account.id} ;;
     relationship: many_to_one
 
@@ -379,7 +387,7 @@ explore: fact_nexxen_msd_agency  {
 
   join: dim_sfdb_opportunity {
     type: inner
-    view_label: "Salsforce Opportunity"
+    view_label: "Salesforce Opportunity"
     sql_on: ${dim_sfdb_opportunity.opportunity_id_key} = ${fact_nexxen_dsp.opportunity_id_key} ;;
     relationship: many_to_one
   }
@@ -392,7 +400,7 @@ explore: fact_nexxen_msd_agency  {
   }
   join:  dim_sfdb_opportunitylineitem {
     type: inner
-    view_label: "Salsforce Opportunity Line Item"
+    view_label: "Salesforce Opportunity Line Item"
     sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
     relationship: many_to_one
 
@@ -401,7 +409,7 @@ explore: fact_nexxen_msd_agency  {
 
   join: dim_sfdb_opportunitylineitem_pacing {
     type: inner
-    view_label: "Salsforce Opportunity Line Item"
+    view_label: "Salesforce Opportunity Line Item"
     sql_on: ${dim_sfdb_opportunitylineitem_pacing.line_item_id}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${dim_sfdb_opportunitylineitem_pacing.date_key_date}=${v_dim_dsp_date.date_key_date};;
     relationship: many_to_one
 
@@ -439,7 +447,7 @@ explore: fact_nexxen_msd_agency  {
 
   join: dim_sfdb_related_accounts {
     type: left_outer
-    view_label: "Salsforce Account"
+    view_label: "Salesforce Account"
     sql_on: ${dim_sfdb_related_accounts.id}=${dim_sfdb_opportunity.related_account__c} ;;
     relationship: many_to_one
   }
@@ -472,6 +480,14 @@ explore: fact_nexxen_msd_agency  {
     sql_on: ${dim_dsp_line_item.line_item_id_key}=${fact_nexxen_dsp.line_item_key} ;;
     relationship: many_to_one
   }
+
+  join: dim_sfdb_account_opportunity_billling_account_name {
+    type: inner
+    view_label: "Salesforce Opportunity"
+    sql_on: ${fact_nexxen_dsp.opportunity_id_key}=${dim_sfdb_account_opportunity_billling_account_name.opportunity_id_key} ;;
+    relationship: many_to_one
+  }
+
 
 
   # join: advertisers_email {

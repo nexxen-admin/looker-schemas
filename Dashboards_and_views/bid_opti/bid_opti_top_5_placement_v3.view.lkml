@@ -234,13 +234,13 @@ where ranky<=20;;
 
 
   dimension: ranky {
-    type: string
+    type: number
     sql: ${TABLE}.ranky ;;
   }
 
 
   dimension: rank_model {
-    type: string
+    type: number
     sql: ${TABLE}.rank_model ;;
   }
 

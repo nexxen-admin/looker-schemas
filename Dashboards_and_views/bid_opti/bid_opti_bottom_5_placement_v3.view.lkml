@@ -195,13 +195,13 @@ view: bid_opti_bottom_5_placement_v3 {
     }
 
   dimension: ranky {
-    type: string
+    type: number
     sql: ${TABLE}.ranky ;;
   }
 
 
   dimension: rank_model {
-    type: string
+    type: number
     sql: ${TABLE}.rank_model ;;
   }
 

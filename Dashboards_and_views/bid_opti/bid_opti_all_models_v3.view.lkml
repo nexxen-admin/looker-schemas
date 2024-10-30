@@ -109,7 +109,14 @@ and concat(concat(dt.media_id,dt.imp_type),dt.date_trunc)  in ( select media_imp
 order by dt.date_trunc,dt.media_id desc)
 
 
-SELECT *
+SELECT *,
+
+        CASE WHEN opti = 'no_opti' THEN 1
+             WHEN opti = 'bidfloor' THEN 2
+             WHEN opti = 'pubcost' THEN 3
+             WHEN opti = 'pubcost_bidfloor' THEN 4
+             ELSE 5 END as rank_model
+
 from scaled_margin;;
 
 
@@ -144,8 +151,15 @@ from scaled_margin;;
   dimension: opti {
     type: string
     sql: ${TABLE}.opti ;;
-  }
 
+    html:
+    {% if value == 'no_opti' %}
+    <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% else %}
+    {{ rendered_value }}
+    {% endif %};;
+
+  }
 
   dimension: date_trunc {
     type: string
@@ -161,6 +175,12 @@ from scaled_margin;;
     type: string
     sql: ${TABLE}.publisher_name ;;
   }
+
+  dimension: rank_model {
+    type: string
+    sql: ${TABLE}.rank_model ;;
+  }
+
 
 # measu
 
@@ -247,6 +267,7 @@ from scaled_margin;;
       date_trunc,
       publisher_id,
       publisher_name,
+      rank_model,
 
       impression,
       revenue,

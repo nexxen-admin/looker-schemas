@@ -167,11 +167,18 @@ view: bid_opti_bottom_5_placement_v3 {
       sql: ${TABLE}.imp_type ;;
     }
 
-    dimension: opti {
-      type: string
-      sql: ${TABLE}.opti ;;
-    }
+  dimension: opti {
+    type: string
+    sql: ${TABLE}.opti ;;
 
+    html:
+    {% if value == 'no_opti' %}
+    <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% else %}
+    {{ rendered_value }}
+    {% endif %};;
+
+  }
 
     dimension: date_trunc {
       type: string

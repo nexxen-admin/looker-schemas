@@ -20,6 +20,8 @@ view: dim_buying_channel_ctrl {
   dimension: buying_channel_ctrl_name {
     type: string
     sql: ${TABLE}.Buying_Channel_ctrl_name ;;
+    label: "Demand Buying Channel"
+    description: "Classification that defines if advertisers are purchasing inventory from high-quality publishers or specific demand sources via invitation-only or curated setups, ensuring brand-safe environments, advanced targeting capabilities, and enhanced transparency, or direct from the open market.  Logic aligns with definitions in CTRL"
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.

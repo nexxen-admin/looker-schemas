@@ -1176,14 +1176,14 @@ explore: fact_ad_hourly_agg{
   join: dim_revenue_type {
     type: inner
     view_label: "Revenue Type"
-    sql: ${dim_revenue_type.revenue_type_key}=${fact_ad_hourly_agg.revenue_type_key};;
+    sql_on: ${dim_revenue_type.revenue_type_key}=${fact_ad_hourly_agg.revenue_type_key};;
     relationship: many_to_one
   }
 
   join: dim_buying_channel_ctrl {
     type: inner
     view_label: "Buying Channel"
-    sql: ${dim_buying_channel_ctrl.buying_channel_ctrl_key}=${fact_ad_hourly_agg.buying_channel_ctrl_key};;
+    sql_on: ${dim_buying_channel_ctrl.buying_channel_ctrl_key}=${fact_ad_hourly_agg.buying_channel_ctrl_key};;
     relationship: many_to_one
   }
 }

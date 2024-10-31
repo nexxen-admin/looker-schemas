@@ -62,7 +62,7 @@ view: bid_opti_bottom_5_placement_v3 {
         optis_list as (
         -- checks the number of buckets for each placement
         select concat(concat(media_id,imp_type),date_trunc) as media_imp_date,
-        count(distinct opti) as optis
+               count(distinct case when requests>0 then opti else null end) as optis
         from opti_base_data
         group by 1
         ),

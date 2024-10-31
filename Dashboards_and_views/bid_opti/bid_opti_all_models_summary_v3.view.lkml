@@ -27,7 +27,8 @@ view: bid_opti_all_models_summary_v3 {
         and rx_ssp_name like'rmp%'
         and rx_imp_type in ('banner','video')
         group by 1,2,3,4,5
-        having (demand_margin + supply_margin) >0 and opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+        having (demand_margin + supply_margin) >0
+               and opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
         ),
 
         data_totals as (
@@ -52,13 +53,13 @@ view: bid_opti_all_models_summary_v3 {
         and rx_ssp_name like'rmp%'
         and rx_imp_type in ('banner','video')
         group by 1,2,3,4,5
-        having total_margin >0
+        having total_margin >0 and total_requests>0
         ),
 
         optis_list as (
         -- checks the number of buckets for each placement
         select concat(concat(media_id,imp_type),date_trunc) as media_imp_date,
-        count(distinct opti) as optis
+               count(distinct case when requests>0 then opti else null end) as optis
         from opti_base_data
         group by 1
         ),

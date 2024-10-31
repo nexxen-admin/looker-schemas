@@ -29,7 +29,7 @@ view: bid_opti_all_models_summary_v5 {
       and rx_ssp_name like'rmp%'
       and rx_imp_type in ('banner','video')
       group by 1,2,3,4,5
-      having (demand_margin + supply_margin) >0
+      having (demand_margin + supply_margin) >0 and opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
       ),
 
       data_totals as (

@@ -851,6 +851,20 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
     relationship: many_to_one
   }
+
+  join: dim_revenue_type {
+    type: inner
+    view_label: "Revenue Type"
+    sql_on: ${dim_revenue_type.revenue_type_key}=${fact_ad_daily_agg.revenue_type_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_buying_channel_ctrl {
+    type: inner
+    view_label: "Buying Channel"
+    sql_on: ${dim_buying_channel_ctrl.buying_channel_ctrl_key}=${fact_ad_daily_agg.buying_channel_ctrl_key};;
+    relationship: many_to_one
+  }
 }
 
 
@@ -1156,6 +1170,20 @@ explore: fact_ad_hourly_agg{
     type: inner
     view_label: "Deal"
     sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_revenue_type {
+    type: inner
+    view_label: "Revenue Type"
+    sql: ${dim_revenue_type.revenue_type_key}=${fact_ad_hourly_agg.revenue_type_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_buying_channel_ctrl {
+    type: inner
+    view_label: "Buying Channel"
+    sql: ${dim_buying_channel_ctrl.buying_channel_ctrl_key}=${fact_ad_hourly_agg.buying_channel_ctrl_key};;
     relationship: many_to_one
   }
 }

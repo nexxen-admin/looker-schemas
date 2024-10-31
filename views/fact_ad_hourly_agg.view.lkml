@@ -88,6 +88,18 @@ view: fact_ad_hourly_agg {
     hidden: yes
   }
 
+  dimension: buying_channel_ctrl_key {
+    type: number
+    sql: ${TABLE}.Buying_Channel_ctrl_key ;;
+    hidden: yes
+  }
+
+  dimension: revenue_type_key {
+    type: number
+    sql: ${TABLE}.revenue_type_key ;;
+    hidden: yes
+  }
+
   dimension: country_key {
     type: number
     sql: ${TABLE}.Country_Key ;;

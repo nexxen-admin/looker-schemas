@@ -65,8 +65,7 @@ view: dim_dsp_seat {
     type: yesno
     label: "Is 1st Party Demand"
     description: "The demand is from within the company, hence Amobee or Tremor"
-    sql: ${TABLE}.Is_1st_Party_Demand ;;
-
+    sql: ${dim_revenue_type.revenue_type_name} = 'firstparty';;
   }
 
   dimension: 1st_Party_Demand_Desc {

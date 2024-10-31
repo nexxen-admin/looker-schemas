@@ -2896,16 +2896,18 @@ view: fact_ad_daily_agg {
 
   measure: barter_fee {
     type: sum
-    sql: case when dim_deal_agency.deal_agency_name like '%iNvolved%' then ${TABLE}.sum_of_revenue*0.2
-              when dim_deal_agency.deal_agency_name like '%Orion%' then ${TABLE}.sum_of_revenue*0.15
-              when dim_deal_agency.deal_agency_name like '%ICON%' then ${TABLE}.sum_of_revenue*0.2
-              when dim_deal_agency.deal_agency_name like '%Agyle%' then ${TABLE}.sum_of_revenue*0.15
-              when dim_deal_agency.deal_agency_name like '%Evergreen%' then ${TABLE}.sum_of_revenue*0.2
-              when dim_deal_agency.deal_agency_name like '%Anchor%' then ${TABLE}.sum_of_revenue*0.15
-              when dim_deal_agency.deal_agency_name like '%UM Tech%' then ${TABLE}.sum_of_revenue*0.1
-              when dim_deal_agency.deal_agency_name like '%NYIAX%' then ${TABLE}.sum_of_revenue*0.1
+    sql: case when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' then ${TABLE}.sum_of_revenue*0.2
+              when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} < '2024-09-01' then ${TABLE}.sum_of_revenue*0.15
+              when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} >= '2024-09-01' then ${TABLE}.sum_of_revenue*0.24
+              when ${dim_deal_agency.deal_agency_name} like '%ICON%' then ${TABLE}.sum_of_revenue*0.2
+              when ${dim_deal_agency.deal_agency_name} like '%Agyle%' then ${TABLE}.sum_of_revenue*0.15
+              when ${dim_deal_agency.deal_agency_name} like '%Evergreen%' then ${TABLE}.sum_of_revenue*0.2
+              when ${dim_deal_agency.deal_agency_name} like '%Anchor%' then ${TABLE}.sum_of_revenue*0.15
+              when ${dim_deal_agency.deal_agency_name} like '%UM Tech%' then ${TABLE}.sum_of_revenue*0.1
+              when ${dim_deal_agency.deal_agency_name} like '%NYIAX%' then ${TABLE}.sum_of_revenue*0.1
               end;;
     value_format: "$#,##0.00"
+    description: "A monetary incentive or discount to an agency or buyer in exchange for meeting specified spending thresholds or for directing a set volume of ad spend to their platform."
   }
 
   # measure: sum_user_matched {

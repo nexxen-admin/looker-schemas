@@ -73,7 +73,7 @@ view: dim_dsp_creative {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_created_date ;;
-   # hidden: yes
+    hidden: yes
   }
 
   dimension_group: db_updated {
@@ -138,7 +138,7 @@ view: dim_dsp_creative {
 
   dimension: tpa_external_id {
     type: string
-    label: "3rd Part Placement ID"
+    label: "3P Placement ID"
     sql: ${TABLE}.tpa_external_id ;;
   }
 

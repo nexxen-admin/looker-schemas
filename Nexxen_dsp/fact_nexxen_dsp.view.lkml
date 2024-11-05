@@ -48,6 +48,7 @@ view: fact_nexxen_dsp {
 
   measure: clicks {
     type: sum
+    label: "1P Clicks"
     sql: ${TABLE}.clicks ;;
 
  }
@@ -131,20 +132,21 @@ view: fact_nexxen_dsp {
 
   measure: impressions {
     type: sum
+    label: "1P Impressions"
     value_format: "#,##0"
     sql: ${TABLE}.impressions ;;
   }
 
   measure: third_party_impressions {
     type: sum
-    label: "3RD Party Impressions"
+    label: "3P Impressions"
     value_format: "#,##0"
     sql: ${TABLE}.third_party_impressions ;;
   }
 
   measure: third_party_clicks {
     type: sum
-    label: "3RD Party Clicks"
+    label: "3P Clicks"
     value_format: "#,##0"
     sql: ${TABLE}.third_party_clicks ;;
   }
@@ -319,6 +321,7 @@ view: fact_nexxen_dsp {
 
   measure: 3p_total_conversions {
     type: sum
+    label: "3P Conversions"
     sql: ${TABLE}.third_party_total_conversions ;;
     value_format: "#,##0"
   }
@@ -533,26 +536,35 @@ view: fact_nexxen_dsp {
 
   measure: actions {
     type: sum
+    label: "1P Conversions"
     sql: ${TABLE}.actions ;;
     value_format: "#,##0"
   }
 
-  measure: eCPA {
+  measure: eCPA_3P {
+    label: "eCPA 3P"
     type: number
     sql: ${capped_revenue}/nullif(${3p_total_conversions},0) ;;
+    value_format: "#,##0.00"
+  }
+
+  measure: eCPA_1P {
+    label: "eCPA 1P"
+    type: number
+    sql: ${capped_revenue}/nullif(${actions},0) ;;
     value_format: "#,##0.00"
   }
 
   measure: 1P_CVR {
     type: number
     sql: ${actions}/nullif(${impressions},0) ;;
-    value_format: "#,##0.0000"
+    value_format: "0.00%"
   }
 
   measure: 3P_CVR {
     type: number
-    sql: ${actions}/nullif(${third_party_impressions},0) ;;
-    value_format: "#,##0.0000"
+    sql: ${3p_total_conversions}/nullif(${third_party_impressions},0) ;;
+    value_format: "0.00%"
   }
 
   measure: third_party_media_measured_impressions {

@@ -18,7 +18,7 @@ view: dim_dsp_netsuite_invoice {
 
   dimension: monthly_budget_amount {
     type: number
-    label: "Passed Bill Amount"
+    label: "Past Billed Amount"
     sql: COALESCE(${TABLE}.monthly_budget_amount,0) ;;
   }
 

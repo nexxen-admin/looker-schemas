@@ -745,8 +745,8 @@ view: dsp_media_and_bids {
     sql: ${TABLE}."shopping_cart_value_cta" ;;
   }
 
-  dimension: shopping_cart_value_vta {
-    type: number
+  measure: shopping_cart_value_vta {
+    type: sum
     sql: ${TABLE}."shopping_cart_value_vta" ;;
   }
 

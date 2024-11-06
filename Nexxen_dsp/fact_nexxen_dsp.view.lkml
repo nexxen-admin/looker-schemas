@@ -1050,7 +1050,7 @@ view: fact_nexxen_dsp {
     type: count
     hidden: yes
     html:
-    <div style = "background:#1982c4; color:#fff; width: 100%; ">
+    <div style = " color:#1982c4; width: 100%; ">
 
         <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 50px">
           Pacing

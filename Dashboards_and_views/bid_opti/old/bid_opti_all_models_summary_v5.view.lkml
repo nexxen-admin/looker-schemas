@@ -2,7 +2,6 @@ view: bid_opti_all_models_summary_v5 {
   derived_table: {
     sql: with opti_base_data  as (
         -- takes all raw data and splits into different opti buckets
-
         select case when margin_opti_bucket = 1  then 'bidfloor'
                     when margin_opti_bucket = 2  then 'pubcost'
                     when margin_opti_bucket = 3  then 'pubcost_bidfloor'
@@ -10,26 +9,26 @@ view: bid_opti_all_models_summary_v5 {
                     else margin_opti_bucket::VARCHAR end as opti,
 
 
-
-                    -- other dimensions
-                    media_id,
-                    rx_imp_type as imp_type ,
-                    pub_id,
-                    event_time::date as date_trunc,
-                    -- measures
-                    sum(case when rx_request_status in ('nodsp','nodspbids','bidresponse') or rx_request_status is NULL then requests else 0 end) as requests,
-                    sum(impression_pixel) as impression,
-                    sum(revenue) as revenue,
-                    sum(revenue)- sum(cogs) as margin,
-                    sum(revenue)-sum(cost) as demand_margin,
-                    sum(cost)-sum(cogs) as supply_margin
+      -- other dimensions
+      media_id,
+      rx_imp_type as imp_type ,
+      pub_id,
+      event_time::date as date_trunc,
+      -- measures
+      sum(case when rx_request_status in ('nodsp','nodspbids','bidresponse') or rx_request_status is NULL then requests else 0 end) as requests,
+      sum(impression_pixel) as impression,
+      sum(revenue) as revenue,
+      sum(revenue)- sum(cogs) as margin,
+      sum(revenue)-sum(cost) as demand_margin,
+      sum(cost)-sum(cogs) as supply_margin
 
       from Andromeda.ad_data_daily add2
       where event_time::date >= current_date()-3 and event_time::date < current_date()
       and rx_ssp_name like'rmp%'
       and rx_imp_type in ('banner','video')
       group by 1,2,3,4,5
-      having (demand_margin + supply_margin) >0 and opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+      having (demand_margin + supply_margin) >0
+      and opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
       ),
 
       data_totals as (
@@ -54,13 +53,13 @@ view: bid_opti_all_models_summary_v5 {
       and rx_ssp_name like'rmp%'
       and rx_imp_type in ('banner','video')
       group by 1,2,3,4,5
-      having total_margin >0
+      having total_margin >0 and total_requests>0
       ),
 
       optis_list as (
       -- checks the number of buckets for each placement
       select concat(concat(media_id,imp_type),date_trunc) as media_imp_date,
-      count(distinct opti) as optis
+      count(distinct case when requests>0 then opti else null end) as optis
       from opti_base_data
       group by 1
       ),
@@ -115,7 +114,9 @@ view: bid_opti_all_models_summary_v5 {
       SUM(scaled_demand_margin) as scaled_demand_margin,
       SUM(scaled_supply_margin) as scaled_supply_margin
       from scaled_margin
-      GROUP BY 1,2,3)
+      GROUP BY 1,2,3),
+
+      fin_tab_before_tot as (
 
       SELECT *,
       scaled_margin / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_margin_ratio_to_no_opti,
@@ -130,7 +131,43 @@ view: bid_opti_all_models_summary_v5 {
       WHEN opti = 'pubcost_bidfloor' THEN 4
       ELSE 5 END as rank_model
 
-      FROM aggr_tab;;
+      FROM aggr_tab),
+
+      tot_for_vis as (
+       select imp_type,
+       'total' as opti,
+       date_trunc,
+
+       sum(case when opti='no_opti' then placment_count else 0 end) as placment_count,
+       sum(requests) as requests,
+       sum(impression) as impression,
+       1 as revenue,
+       1 as margin,
+       1 as demand_margin,
+       1 as supply_margin,
+       1 as scaled_margin,
+       1 as scaled_requests,
+       1 as scaled_impression,
+       1 as scaled_revenue,
+       1 as scaled_demand_margin,
+       1 as scaled_supply_margin,
+       (sum(margin) - sum(case when opti='no_opti' then scaled_margin else 0 end))/(sum(margin)) as scaled_margin_ratio_to_no_opti,
+       1 as scaled_margin_diff_to_no_opti,
+       1 as scaled_supply_margin_ratio_to_no_opti,
+       1 as scaled_supply_margin_diff_to_no_opti,
+       5 as rank_model
+       from res
+       group by 1,2,3),
+
+      select *
+      from fin_tab_before_tot
+      union all
+      select *
+      from tot_for_vis
+
+
+
+      ;;
 
   }
 
@@ -144,6 +181,7 @@ view: bid_opti_all_models_summary_v5 {
     type: string
     sql: ${TABLE}.imp_type ;;
   }
+
 
   dimension: opti {
     type: string

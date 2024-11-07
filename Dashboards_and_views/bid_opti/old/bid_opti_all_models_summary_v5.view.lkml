@@ -135,39 +135,35 @@ view: bid_opti_all_models_summary_v5 {
 
       tot_for_vis as (
        select imp_type,
-       'total' as opti,
+       'Total' as opti,
        date_trunc,
 
        sum(case when opti='no_opti' then placment_count else 0 end) as placment_count,
        sum(requests) as requests,
        sum(impression) as impression,
-       1 as revenue,
-       1 as margin,
-       1 as demand_margin,
-       1 as supply_margin,
-       1 as scaled_margin,
-       1 as scaled_requests,
-       1 as scaled_impression,
-       1 as scaled_revenue,
-       1 as scaled_demand_margin,
-       1 as scaled_supply_margin,
+       sum(revenue) as revenue,
+       sum(margin) as margin,
+       sum(demand_margin) as demand_margin,
+       sum(supply_margin) as supply_margin,
+       null::FLOAT as scaled_margin,
+       null::FLOAT as scaled_requests,
+       null::FLOAT as scaled_impression,
+       null::FLOAT as scaled_revenue,
+       null::FLOAT as scaled_demand_margin,
+       null::FLOAT as scaled_supply_margin,
        (sum(margin) - sum(case when opti='no_opti' then scaled_margin else 0 end))/(sum(margin)) as scaled_margin_ratio_to_no_opti,
-       1 as scaled_margin_diff_to_no_opti,
-       1 as scaled_supply_margin_ratio_to_no_opti,
-       1 as scaled_supply_margin_diff_to_no_opti,
+       sum(margin) - sum(case when opti='no_opti' then scaled_margin else 0 end) as scaled_margin_diff_to_no_opti,
+       (sum(supply_margin) - sum(case when opti='no_opti' then scaled_supply_margin else 0 end))/(sum(supply_margin)) as scaled_supply_margin_ratio_to_no_opti,
+      sum(supply_margin) - sum(case when opti='no_opti' then scaled_supply_margin else 0 end) as scaled_supply_margin_diff_to_no_opti,
        5 as rank_model
-       from res
-       group by 1,2,3),
+       from fin_tab_before_tot
+       group by 1,2,3)
 
       select *
       from fin_tab_before_tot
       union all
       select *
-      from tot_for_vis
-
-
-
-      ;;
+      from tot_for_vis;;
 
   }
 
@@ -188,8 +184,9 @@ view: bid_opti_all_models_summary_v5 {
     sql: ${TABLE}.opti ;;
 
     html:
-    {% if value == 'no_opti' %}
-    <p style="color: black; background-color: lightblue; font-size:100%; text-align:center">{{ rendered_value }}</p>
+    {% if value == 'Total' %}
+    <p style="color: black; font-weight: bold; font-size: 100%; text-align: left;">{{ rendered_value }}</p>
+
     {% else %}
     {{ rendered_value }}
     {% endif %};;
@@ -231,26 +228,26 @@ view: bid_opti_all_models_summary_v5 {
   measure: revenue {
     type: sum
     sql: ${TABLE}.revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
   measure: margin {
     type: sum
     sql: ${TABLE}.margin ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
   measure: scaled_margin {
     type: sum
     sql: ${TABLE}.scaled_margin ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Scaled Total Margin $"
   }
 
   measure: scaled_supply_margin {
     type: sum
     sql: ${TABLE}.scaled_supply_margin ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Scaled Supply Margin $"
   }
 
@@ -264,7 +261,7 @@ view: bid_opti_all_models_summary_v5 {
   measure: scaled_margin_diff_to_no_opti {
     type: sum
     sql: ${TABLE}.scaled_margin_diff_to_no_opti ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Scaled Margin $ Diff To No Opti"
   }
 
@@ -279,7 +276,7 @@ view: bid_opti_all_models_summary_v5 {
   measure: scaled_supply_margin_diff_to_no_opti {
     type: sum
     sql: ${TABLE}.scaled_supply_margin_diff_to_no_opti ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Scaled Supply Margin $ Diff To No Opti"
   }
 

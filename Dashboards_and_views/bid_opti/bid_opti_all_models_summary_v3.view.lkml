@@ -193,26 +193,26 @@ FROM aggr_tab;;
     measure: revenue {
       type: sum
       sql: ${TABLE}.revenue ;;
-      value_format: "$#,##0.00"
+      value_format: "$#,##0"
     }
 
     measure: margin {
       type: sum
       sql: ${TABLE}.margin ;;
-      value_format: "$#,##0.00"
+      value_format: "$#,##0"
     }
 
     measure: scaled_margin {
       type: sum
       sql: ${TABLE}.scaled_margin ;;
-      value_format: "$#,##0.00"
+      value_format: "$#,##0"
       label: "Scaled Total Margin $"
     }
 
   measure: scaled_supply_margin {
     type: sum
     sql: ${TABLE}.scaled_supply_margin ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Scaled Supply Margin $"
   }
 
@@ -226,7 +226,7 @@ FROM aggr_tab;;
     measure: scaled_margin_diff_to_no_opti {
       type: sum
       sql: ${TABLE}.scaled_margin_diff_to_no_opti ;;
-      value_format: "$#,##0.00"
+      value_format: "$#,##0"
       label: "Scaled Margin $ Diff To No Opti"
     }
 
@@ -241,7 +241,7 @@ FROM aggr_tab;;
   measure: scaled_supply_margin_diff_to_no_opti {
     type: sum
     sql: ${TABLE}.scaled_supply_margin_diff_to_no_opti ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Scaled Supply Margin $ Diff To No Opti"
   }
 

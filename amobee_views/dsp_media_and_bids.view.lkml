@@ -1446,23 +1446,6 @@ dimension: browser_type_name {
   dimension: amobee_business_unit {
     type: string
     label: "Amobee Business Unit"
-    sql: CASE WHEN ${market_id} in (884, 1792, 2067, 2050, 58, 1602, 1637, 577, 1398, 1489, 1677, 2017, 1781,
-      1805, 2045) THEN 'ACCESS'
-      WHEN ${market_id} in (1008, 1051, 1810, 1604, 996, 1090, 305, 1678, 1183, 2018, 1577, 933,
-        2058, 1310, 2012, 301, 658, 1144, 1307, 1368, 1606, 1789, 2013, 2039, 2056) THEN 'ANZ & APAC'
-      WHEN ${market_id} in (1, -1, 59) THEN 'DSP Internal / Defaults'
-      WHEN ${market_id} in (1376, 1407, 272, 1576, 1776, 961, 2064, 2087, 1121, 1636, 1120) THEN 'EMEA'
-      WHEN ${market_id} in (923, 1487, 1379, 685, 1431, 2035, 2091, 927, 3, 141, 999, 1480, 1356,
-        95, 1393, 2107, 861, 1472, 1532, 1405, 2101, 2048, 1058, 2014, 1045, 2120, 1192, 1516, 1069,
-        2111, 2011, 898, 1188, 1204, 1380, 1441, 1533, 1734, 2034, 2103) THEN 'Enterprise'
-      WHEN ${market_id} in (1477, 1383, 2099, 2088, 2069, 1084, 681, 2032, 1079, 1608, 175, 2063, 1371,
-        2117, 1566, 2086, 1662, 2125, 2127, 2121, 2092, 1997, 671, 2129, 1076, 1206, 1416, 1425, 1538, 1570,
-        1657, 1659, 1676, 1731, 1819, 1972, 2010, 2057, 2084, 9999) THEN 'Other' ELSE 'Unknown' END ;;
-  }
-
-  dimension: amobee_business_unit_special {
-    type: string
-    label: "Amobee Business Unit - Special"
     sql: CASE WHEN ${market_id} in (884, 2067, 2050, 58, 1677, 2148, 1792, 1637, 2164, 2141,
     2142, 2196) THEN 'ACCESS'
       WHEN ${market_id} in (1008, 2069, 1477, 2127, 1577, 1371, 2058, 1084, 1608, 1090, 681,

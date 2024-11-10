@@ -185,7 +185,7 @@ view: bid_opti_all_models_summary_v5 {
 
     html:
     {% if value == 'Total' %}
-    <p style="color: black; font-weight: bold; font-size: 100%; text-align: left;">{{ rendered_value }}</p>
+    <p style="color: black; font-weight: bold; background-color: lightblue; font-size: 100%; text-align: left;">{{ rendered_value }}</p>
 
     {% else %}
     {{ rendered_value }}

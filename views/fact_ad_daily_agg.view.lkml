@@ -2896,9 +2896,13 @@ view: fact_ad_daily_agg {
 
   measure: barter_fee {
     type: sum
-    sql: case when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' then ${TABLE}.sum_of_revenue*0.2
-              when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} < '2024-09-01' then ${TABLE}.sum_of_revenue*0.15
-              when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} >= '2024-09-01' then ${TABLE}.sum_of_revenue*0.24
+    sql: case when ${dim_deal_partner.deal_partner_id} = '2' and ${dim_deal_type.deal_type_id} = 12 then
+              ${TABLE}.sum_of_revenue*0.3
+              when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_deal_brand.deal_brand_id} = '1036' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.2
+              when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.5
+              when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_date.date_key_raw} < '2024-10-01' then ${TABLE}.sum_of_revenue*0.2
+              when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} < '2024-10-01' then ${TABLE}.sum_of_revenue*0.15
+              when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.24
               when ${dim_deal_agency.deal_agency_name} like '%ICON%' then ${TABLE}.sum_of_revenue*0.2
               when ${dim_deal_agency.deal_agency_name} like '%Agyle%' then ${TABLE}.sum_of_revenue*0.15
               when ${dim_deal_agency.deal_agency_name} like '%Evergreen%' then ${TABLE}.sum_of_revenue*0.2

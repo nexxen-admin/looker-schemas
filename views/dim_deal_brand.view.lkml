@@ -46,7 +46,7 @@ view: dim_deal_brand {
   dimension: deal_brand_id {
     type: number
     sql: ${TABLE}.Deal_Brand_ID ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: deal_brand_key {

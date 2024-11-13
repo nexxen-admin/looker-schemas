@@ -229,6 +229,65 @@ view: deal_commision_data {
     type: number
     sql: ${TABLE}.rebate_percent;;
   }
+
+  dimension: days_in_quarter{
+    type: number
+    sql:   datediff('day',${adjusted_delivered_start_date},case when ${deal_end} >=
+    '2024-12-31' then '2024-12-31' else ${deal_end} end)+1;;
+  }
+
+  dimension: yesterday_date {
+    type: date
+    sql: date_trunc('day',current_timestamp)-1 ;;
+    hidden: yes
+  }
+
+  dimension: adjusted_delivered_start_date {
+    type: date
+    sql: case when ${deal_start} > ${quarter_start} then ${deal_start} else ${quarter_start} end ;;
+  }
+
+  dimension: adjusted_delivered_end_date {
+    type: date
+    sql: case when ${deal_end} > ${yesterday_date} then
+  ${yesterday_date} else ${deal_end} end ;;
+  }
+
+  dimension: days_so_far {
+    type: number
+    sql: datediff('day',${adjusted_delivered_start_date},${adjusted_delivered_end_date})+1 ;;
+  }
+
+  measure: current_q_daily_run_rate {
+    type: number
+    sql: ${split_revenue} / nullif(${max_days_so_far},0) ;;
+    value_format: "$#,##0.00"
+  }
+
+  dimension: quarter_start {
+    type: date
+    sql: date_trunc('quarter',current_timestamp) ;;
+  }
+
+  measure: max_days_so_far {
+    type: max
+    sql: ${days_so_far} ;;
+    hidden: yes
+  }
+
+  measure: max_days_in_quarter {
+    type: max
+    sql: ${days_in_quarter} ;;
+    hidden: yes
+  }
+
+  measure: current_q_projected_split_rev {
+    type: number
+    sql: (${split_revenue} / nullif(${max_days_so_far},0))*${max_days_in_quarter} ;;
+    value_format: "$#,##0.00"
+  }
+
+
   measure: count {
     type: count
     drill_fields: [dsp_name, personnel_name]

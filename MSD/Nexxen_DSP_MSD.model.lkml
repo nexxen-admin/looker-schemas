@@ -268,9 +268,9 @@ explore: fact_nexxen_msd_advertiser  {
 
 }
 
-explore: fact_reach_accumulative_advertiser {
+explore: fact_reach_advertiser {
   # required_access_grants: [can_view_all_tremor]
-  view_name: fact_reach_accumulative
+  view_name: fact_reach_frequency
   label: "Nexxen dsp MSD - Reach Advertiser"
   persist_with: CleanCash_datagroup
   view_label: "Measures"
@@ -504,9 +504,9 @@ explore: fact_nexxen_msd_agency  {
 
 }
 
-explore: fact_reach_accumulative_agency {
+explore: fact_reach_agency {
   # required_access_grants: [can_view_all_tremor]
-  view_name: fact_reach_accumulative
+  view_name: fact_reach_frequency
   label: "Nexxen dsp MSD - Reach Agency"
   persist_with: CleanCash_datagroup
   view_label: "Measures"

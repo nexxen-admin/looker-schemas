@@ -3498,4 +3498,12 @@ view: v_hourly_analytics {
     hidden: yes
     sql: ${impressions} ;;
   }
+
+  dimension: cookie_set_metrics {
+    type: string
+    sql:  CASE WHEN ${TABLE}.ASSET_GROUP_RESTRICTED_CLEARCAST_CODES='cd|1' THEN 'Cookies set'
+        WHEN ${TABLE}.ASSET_GROUP_RESTRICTED_CLEARCAST_CODES='uc|1' THEN 'Cookies enabled'
+        WHEN ${TABLE}.ASSET_GROUP_RESTRICTED_CLEARCAST_CODES='uc|0' THEN 'Cookies disabled'
+        END ;;
+  }
 }

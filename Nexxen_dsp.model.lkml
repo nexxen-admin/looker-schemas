@@ -41,9 +41,9 @@ explore: monthly_billing_override_data {
 }
 
 
-explore: fact_reach_accumulative {
+explore: fact_reach_frequency {
   required_access_grants: [can_view_all_tremor]
-  view_name: fact_reach_accumulative
+  view_name: fact_reach_frequency
   label: "Nexxen dsp - Reach"
   persist_with: CleanCash_datagroup
   view_label: "Measures"

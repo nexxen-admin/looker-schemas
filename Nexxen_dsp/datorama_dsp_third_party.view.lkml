@@ -31,6 +31,7 @@ view: datorama_dsp_third_party {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.event_date ;;
+    hidden: yes
   }
 
   measure: impressions {

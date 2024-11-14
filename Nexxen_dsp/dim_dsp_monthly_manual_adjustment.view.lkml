@@ -30,6 +30,7 @@ view: dim_dsp_monthly_manual_adjustment {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.event_month ;;
+    hidden: yes
   }
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.

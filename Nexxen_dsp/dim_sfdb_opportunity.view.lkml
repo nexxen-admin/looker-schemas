@@ -267,8 +267,9 @@ view: dim_sfdb_opportunity {
     # no data
   }
 
-  dimension: end_date__c {
-    type: date
+  dimension_group: end_date__c {
+    type: time
+    timeframes: [raw, time, date, week, month, quarter, year]
     label: "Opportunity End Date"
     sql: ${TABLE}.end_date__c ;;
   }

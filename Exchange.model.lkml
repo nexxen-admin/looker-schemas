@@ -853,7 +853,7 @@ explore: fact_ad_daily_agg{
   }
 
   join: dim_revenue_type {
-    type: inner
+    type: left_outer
     view_label: "Revenue Type"
     sql_on: ${dim_revenue_type.revenue_type_key}=${fact_ad_daily_agg.revenue_type_key};;
     relationship: many_to_one
@@ -1174,7 +1174,7 @@ explore: fact_ad_hourly_agg{
   }
 
   join: dim_revenue_type {
-    type: inner
+    type: left_outer
     view_label: "Revenue Type"
     sql_on: ${dim_revenue_type.revenue_type_key}=${fact_ad_hourly_agg.revenue_type_key};;
     relationship: many_to_one

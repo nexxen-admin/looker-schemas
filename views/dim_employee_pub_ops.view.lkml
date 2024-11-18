@@ -147,14 +147,14 @@ view: v_dim_employee_pub_ops {
     type: string
     required_access_grants: [can_view_aniview]
     sql: case when ${TABLE}.Employee_Name='Itamar Bilu' OR ${TABLE}.Employee_Name='Stav Ezer' OR
-                   ${TABLE}.Employee_Name='Ashleigh Fisher' OR ${TABLE}.Employee_Name='Noa Krashniak' OR
-                   ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Lihi Katabi' then 'In App'
-              when ${TABLE}.Employee_Name='Itzik Vaknin' OR ${TABLE}.Employee_Name='Yovel Modlin' OR
-              ${TABLE}.Employee_Name='Bar Wolkowiski' OR ${TABLE}.Employee_Name='Noa Karako'
-              or ${TABLE}.Employee_Name='Shir Elzam' OR ${TABLE}.Employee_Name='Shachar Laufer'
-              OR ${TABLE}.Employee_Name='Omri Lender' then 'Web'
-              when ${TABLE}.Employee_name='Mikayla Skarzynski' or ${TABLE}.Employee_name='Rachel Gargett'
-              or ${TABLE}.Employee_name='Hannah Quigley' or ${TABLE}.Employee_name='Raffaele Santambrogio'  then 'UK'
+                   ${TABLE}.Employee_Name='Ashleigh Fisher' OR ${TABLE}.Employee_Name='Noa Krashniak' OR ${TABLE}.Employee_Name='Gonni Kern' OR
+                  ${TABLE}.Employee_Name='Lihi Katabi' then 'In App'
+              when ${TABLE}.Employee_Name='Itzik Vaknin' OR ${TABLE}.Employee_Name='Yovel Modlin' OR ${TABLE}.Employee_Name='Bar Wolkowiski' OR ${TABLE}.Employee_Name='Noa Karako'
+              OR ${TABLE}.Employee_Name='Shir Elzam' OR ${TABLE}.Employee_Name='Shachar Laufer'
+              OR ${TABLE}.Employee_Name='Omri Lender' OR ${TABLE}.Employee_Name='Rom Lubianiker' then 'Web'
+              when ${TABLE}.Employee_name='Mikayla Skarzynski' OR
+              ${TABLE}.Employee_name='Rachel Gargett' OR ${TABLE}.Employee_name='Hannah Quigley'
+              OR ${TABLE}.Employee_name='Raffaele Santambrogio'  then 'UK'
               else 'null' end
  ;;
   }

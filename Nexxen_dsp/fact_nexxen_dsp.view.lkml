@@ -495,12 +495,9 @@ view: fact_nexxen_dsp {
 
 
   measure: daily_units_needed {
-    type: sum
-    sql: case when ${dim_sfdb_opportunitylineitem.price_type_name__c} in ('dCPM', 'CPR') then
-    (${dim_sfdb_opportunitylineitem.gross_billable__c} - ${TABLE}.delivery_units)/nullif(${v_dim_sfdb_opportunitylineitemschedule_new.total_days_left_in_sl},0) else
-    (${dim_sfdb_opportunitylineitem.units__c}-${TABLE}.delivery_units)/nullif(${v_dim_sfdb_opportunitylineitemschedule_new.total_days_left_in_sl},0) end;;
-    hidden: yes
-    #incorrect - might need to be calculated in the back
+    type: average
+    value_format: "#,##0"
+    sql: ${TABLE}.daily_units_needed;;
   }
 
   measure: daily_units_needed_t1 {

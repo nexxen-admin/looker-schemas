@@ -2036,6 +2036,7 @@ view: fact_ad_daily_agg {
     description: "The bid floor every publisher determines. every bid price below it will be immediately filtered out"
     label: "Bid Floor"
     group_label: "Daily Measures"
+    value_format: "#,##0.00"
     sql: ${TABLE}.avg_of_ssp_bid_floor ;;
     # hidden: yes
   }
@@ -2046,6 +2047,18 @@ view: fact_ad_daily_agg {
     label: "Bid Price"
     sql: ${TABLE}.avg_of_dsp_bid_price ;;
     # hidden: yes
+  }
+
+  measure: ssp_bid_price {
+    type: average
+    sql: ${TABLE}.avg_of_ssp_bid_price;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: ssp_rev {
+    type: sum
+    sql: ${TABLE}.avg_of_ssp_bid_price * ${TABLE}.sum_of_impression_pixel /1000 ;;
+    value_format: "$#,##0.00"
   }
 
   dimension: win_price {

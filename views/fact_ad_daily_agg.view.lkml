@@ -811,6 +811,11 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.ssp_crid  ;;
   }
 
+  dimension: margin_opti_bucket {
+    type: number
+    sql: ${TABLE}.margin_opti_bucket ;;
+  }
+
   dimension: bidfloor_opti_version_key {
     type: number
     sql: ${TABLE}.Bidfloor_Opti_Version_Key ;;

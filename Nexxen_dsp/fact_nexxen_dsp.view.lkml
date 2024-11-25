@@ -479,7 +479,7 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.impressions ;;
     value_format: "$#,##0.00"
     filters: [date_key_in_timezone_date: "yesterday"]
-    #hidden: yes
+    hidden: yes
   }
 
   measure:  Last_day_3p_impressions {
@@ -488,7 +488,7 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.third_party_impressions ;;
     value_format: "$#,##0.00"
     filters: [date_key_in_timezone_date: "yesterday"]
-    #hidden: yes
+    hidden: yes
   }
 
   measure:  Last_day_1p_complete_events {
@@ -497,7 +497,7 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.complete_events ;;
     value_format: "$#,##0.00"
     filters: [date_key_in_timezone_date: "yesterday"]
-    #hidden: yes
+    hidden: yes
   }
 
   measure:  Last_day_3p_complete_events {
@@ -506,7 +506,7 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.third_party_complete_events ;;
     value_format: "$#,##0.00"
     filters: [date_key_in_timezone_date: "yesterday"]
-    #hidden: yes
+    hidden: yes
   }
 
   measure:  Last_day_1P_CTR {

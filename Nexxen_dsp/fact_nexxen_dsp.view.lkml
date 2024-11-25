@@ -455,6 +455,90 @@ view: fact_nexxen_dsp {
     value_format: "#,##0"
   }
 
+  measure:  Last_day_1p_clicks {
+    label: "Yesterday 1P Clicks"
+    type: sum
+    sql: ${TABLE}.clicks ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "yesterday"]
+    #hidden: yes
+  }
+
+  measure:  Last_day_3p_clicks {
+    label: "Yesterday 3P Clicks"
+    type: sum
+    sql: ${TABLE}.third_party_clicks ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "yesterday"]
+    #hidden: yes
+  }
+
+  measure:  Last_day_1p_impressions {
+    label: "Yesterday 1P Impressions"
+    type: sum
+    sql: ${TABLE}.impressions ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "yesterday"]
+    #hidden: yes
+  }
+
+  measure:  Last_day_3p_impressions {
+    label: "Yesterday 3P Impressions"
+    type: sum
+    sql: ${TABLE}.third_party_impressions ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "yesterday"]
+    #hidden: yes
+  }
+
+  measure:  Last_day_1p_complete_events {
+    label: "Yesterday 1P Complete Events"
+    type: sum
+    sql: ${TABLE}.complete_events ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "yesterday"]
+    #hidden: yes
+  }
+
+  measure:  Last_day_3p_complete_events {
+    label: "Yesterday 3P Complete Events"
+    type: sum
+    sql: ${TABLE}.third_party_complete_events ;;
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "yesterday"]
+    #hidden: yes
+  }
+
+  measure:  Last_day_1P_CTR {
+    label: "Yesterday 1P CTR"
+    type: number
+    sql: IFNULL(${Last_day_1p_clicks}/nullif(${Last_day_1p_impressions},0),0) ;;
+    value_format: "0.00%"
+  }
+
+  measure:  Last_day_3P_CTR {
+    label: "Yesterday 3P CTR"
+    type: number
+    sql: IFNULL(${Last_day_3p_clicks}/nullif(${Last_day_3p_impressions},0),0) ;;
+    value_format: "0.00%"
+  }
+
+  measure:  Last_day_1P_VCR {
+    label: "Yesterday 1P VCR"
+    type: number
+    sql: IFNULL(${Last_day_1p_complete_events}/nullif(${Last_day_1p_impressions},0),0) ;;
+    value_format: "0.00%"
+  }
+
+  measure:  Last_day_3P_VCR {
+    label: "Yesterday 3P VCR"
+    type: number
+    sql: IFNULL(${Last_day_3p_complete_events}/nullif(${Last_day_3p_impressions},0),0) ;;
+    value_format: "0.00%"
+  }
+
+
+
   measure: distinct_package_id {
     type: count_distinct
     sql: ${dim_dsp_package_budget_schedule.package_id} ;;

@@ -30,6 +30,7 @@ select case when margin_opti_bucket = 1  then 'bidfloor'
             sum(case when rx_request_status in ('nodsp','nodspbids','bidresponse') or rx_request_status is NULL then requests else 0 end) as requests,
             sum(impression_pixel) as impression,
             sum(revenue) as revenue,
+            sum(cost) as cost,
             sum(revenue)- sum(cogs) as margin,
             sum(revenue)-sum(cost) as demand_margin,
             sum(cost)-sum(cogs) as supply_margin
@@ -43,30 +44,23 @@ having (demand_margin + supply_margin) >0 and opti IN ('bidfloor','pubcost','pub
 ),
 
 data_totals as (
--- Provides the total sum of metrics across all opti buckets
-select media_id,
-       placement_name,
-       rx_imp_type as imp_type ,
-       pub_id,
-       publisher_name,
-       event_time::date as date_trunc,
+      -- Provides the total sum of metrics across all opti buckets
+      select media_id,
+      imp_type ,
+      pub_id,
+      date_trunc,
+      placement_name,
+      publisher_name,
 
-       -- measures
-       sum(case when rx_request_status in ('nodsp','nodspbids','bidresponse') or rx_request_status is NULL then requests else 0 end) as total_requests,
-       sum(impression_pixel) as total_impression,
-       sum(revenue) as total_revenue,
-       sum(revenue)- sum(cogs) as total_margin,
-       sum(revenue)-sum(cost) as total_demand_margin,
-       sum(cost)-sum(cogs) as total_supply_margin
+      -- measures
+      sum(requests) as total_requests,
+      sum(revenue)-sum(cost) as total_demand_margin
 
 
-from Andromeda.ad_data_daily add2
-where event_time::date >= current_date()-3 and event_time::date < current_date()
-      and rx_ssp_name like'rmp%'
-      and rx_imp_type in ('banner','video')
-group by 1,2,3,4,5,6
-having total_margin >0
-),
+      from opti_base_data
+      group by 1,2,3,4,5,6
+      ),
+
 
 optis_list as (
 -- checks the number of buckets for each placement
@@ -111,8 +105,7 @@ inner join opti_base_data as opti
 on opti.media_id = dt.media_id
    and opti.imp_type = dt.imp_type
    and opti.date_trunc = dt.date_trunc
-where dt.total_requests >80000 AND (opti.requests/dt.total_requests>0)
-and concat(concat(dt.media_id,dt.imp_type),dt.date_trunc)  in ( select media_imp_date from optis_list where optis>=4)
+where concat(concat(dt.media_id,dt.imp_type),dt.date_trunc)  in ( select media_imp_date from optis_list where optis=4)
 order by dt.date_trunc,dt.media_id desc),
 
 tot_sup_marg as (

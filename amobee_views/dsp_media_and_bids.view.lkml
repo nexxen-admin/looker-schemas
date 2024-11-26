@@ -15,6 +15,11 @@ view: dsp_media_and_bids {
     sql: ${TABLE}."__time" ;;
   }
 
+  dimension: timezone {
+    type: date_time
+    sql: time_shift(cast(${__time_time} as timestamp),'PT5H',-1)  ;;
+  }
+
   dimension: lag_date {
     type: date
     sql: lag(${__time_date},1) over(order by ${__time_date}) ;;

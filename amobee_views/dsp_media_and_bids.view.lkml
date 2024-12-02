@@ -1519,6 +1519,14 @@ dimension: browser_type_name {
     value_format: "0.00%"
   }
 
+  dimension: LOB  {
+    type: string
+    label: "LOB"
+    sql: case when ${amobee_business_unit} = 'ACCESS' then 'MS'
+              when ${amobee_business_unit} = 'Enterprise' then 'SS'
+              else 'Other' end;;
+  }
+
   measure: count {
     type: count
     drill_fields: [iab_category_name, media_channel_name, mobile_app_name]

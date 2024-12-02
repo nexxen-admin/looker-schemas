@@ -1514,7 +1514,7 @@ dimension: browser_type_name {
 
   measure: nexxen_inv_cost_percent {
     type: number
-    label: "Nexxen_inv_cost_%"
+    label: "Nexxen inv cost %"
     sql: ${unruly_inv_cost}/nullif(${inv_cost},0)  ;;
     value_format: "0.00%"
   }
@@ -1734,7 +1734,7 @@ dimension: browser_type_name {
     view_label: "PoP"
     type: sum
     sql: ${TABLE}.inv_cost ;;
-    value_format: "$#,##0,\" K\""
+    value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
   }
 
@@ -1742,7 +1742,7 @@ dimension: browser_type_name {
     view_label: "PoP"
     type: sum
     sql: ${TABLE}.inv_cost ;;
-    value_format: "$#,##0,\" K\""
+    value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
   }
 
@@ -1755,6 +1755,48 @@ dimension: browser_type_name {
                  ELSE (1.0 * ${current_period_inv_cost} / NULLIF(${previous_period_inv_cost} ,0)) - 1 END ;;
      value_format_name: percent_2
    }
+
+  measure: current_period_nexxen_inv_cost {
+    view_label: "PoP"
+    type: sum
+    sql: CASE WHEN LOOKUP(CONCAT(publisher_id, ''), 'dsp_media_and_bids_inventory_source_id') = 158 THEN ${TABLE}.inv_cost  ELSE NULL END ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_nexxen_inv_cost {
+    view_label: "PoP"
+    type: sum
+    sql: CASE WHEN LOOKUP(CONCAT(publisher_id, ''), 'dsp_media_and_bids_inventory_source_id') = 158 THEN ${TABLE}.inv_cost  ELSE NULL END ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: nexxen_inv_cost_pop_change {
+    view_label: "PoP"
+    label: "Nexxen Inv Cost period-over-period % change"
+    type: number
+    sql: CASE WHEN ${current_period_nexxen_inv_cost} = 0
+                 THEN NULL
+                 ELSE (1.0 * ${current_period_nexxen_inv_cost} / NULLIF(${previous_period_nexxen_inv_cost} ,0)) - 1 END ;;
+    value_format_name: percent_2
+  }
+
+  measure: current_period_media_shift {
+    view_label: "PoP"
+    type: number
+    sql: ${current_period_nexxen_inv_cost}/nullif(${current_period_inv_cost},0) ;;
+    value_format: "0.00%"
+
+  }
+
+  measure: previous_period_media_shift {
+    view_label: "PoP"
+    type: number
+    sql: ${previous_period_nexxen_inv_cost}/nullif(${previous_period_inv_cost},0) ;;
+    value_format: "0.00%"
+
+  }
 
   # measure: current_period_cogs {
   #   view_label: "PoP"

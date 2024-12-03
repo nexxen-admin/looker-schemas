@@ -1132,7 +1132,6 @@ dimension: inventory_source_id {
 dimension: inventory_source_name {
   type: string
   sql: LOOKUP(CONCAT(publisher_id, ''), 'dsp_media_and_bids_inventory_source_name') ;;
-  drill_fields: [LOB,format]
 }
 
 measure: ssp {

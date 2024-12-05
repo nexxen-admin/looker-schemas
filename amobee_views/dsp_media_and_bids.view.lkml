@@ -1622,7 +1622,7 @@ dimension: browser_type_name {
   }
 
   dimension: period_2_start {
-    hidden:  yes
+    #hidden:  yes
     view_label: "PoP"
     description: "Calculates the start of the previous period"
     type: date
@@ -1635,7 +1635,7 @@ dimension: browser_type_name {
   }
 
   dimension: period_2_end {
-    hidden:  yes
+    #hidden:  yes
     view_label: "PoP"
     description: "Calculates the end of the previous period"
     type: date
@@ -1643,7 +1643,7 @@ dimension: browser_type_name {
             {% if compare_to._parameter_value == "Period" %}
             TIMESTAMPADD(DAY, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
             {% else %}
-            TIMESTAMPADD({% parameter compare_to %}, -1, TIMESTAMPADD(DAY, -1, CAST({% date_end current_date_range %} AS TIMESTAMP)))
+            TIMESTAMPADD({% parameter compare_to %}, -1, TIMESTAMPADD(DAY, 0, CAST({% date_end current_date_range %} AS TIMESTAMP)))
             {% endif %};;
   }
 

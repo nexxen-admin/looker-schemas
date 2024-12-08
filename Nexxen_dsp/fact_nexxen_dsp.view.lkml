@@ -1131,30 +1131,30 @@ view: fact_nexxen_dsp {
     type: count
     hidden: yes
     html:
-    <div style = " color:#1982c4; width: 100%; ">
+    <div style = " color:#15003b; width: 100%; ">
 
-        <div style="display: inline-block; font-size: 20px; letter-spacing: 0.01em; margin: 0px 50px">
-          Pacing
-          <div style=" line-height: 15px; font-size: 30px;">
-            {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
-          </div>
-        </div>
+              <div style="display: inline-block; font-size: 25px; letter-spacing: 0.01em; margin: 0px 50px">
+                Pacing
+                <div style=" line-height: 15px; font-size: 35px; font-weight: 500;">
+                  {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
+                </div>
+              </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 50px">
-        Total impressions
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ impressions._rendered_value }}
-          </div>
-        </div>
+      <div style="display: inline-block;  font-size: 25px; letter-spacing: 0.01em; margin: 0px 50px">
+      Total impressions
+      <div style="line-height: 15px; font-size: 35px; font-weight: 500;">
+      {{ impressions._rendered_value }}
+      </div>
+      </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 50px">
-        Delivered Spend
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ Delivered_Spend._rendered_value }}
-          </div>
-        </div>
+      <div style="display: inline-block;  font-size: 25px; letter-spacing: 0.01em; margin: 0px 50px">
+      Delivered Spend
+      <div style="line-height: 15px; font-size: 35px; font-weight: 500;">
+      {{ Delivered_Spend._rendered_value }}
+      </div>
+      </div>
 
-    </div>;;
+      </div>;;
 
   }
 
@@ -1162,30 +1162,30 @@ view: fact_nexxen_dsp {
     type: count
     # hidden: yes
     html:
-    <div style = "color:#1982c4; width: 100%;">
+    <div style = "color:#15003b; width: 100%;">
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 75px">
-        Clicks
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ clicks._rendered_value }}
-          </div>
-        </div>
+              <div style="display: inline-block;  font-size: 25px; letter-spacing: 0.01em; margin: 0px 90px">
+              Clicks
+                <div style="line-height: 15px; font-size: 35px; font-weight: 500;">
+                  {{ clicks._rendered_value }}
+                </div>
+              </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 75px">
-        CTR
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ CTR_1P._rendered_value }}
-          </div>
-        </div>
+      <div style="display: inline-block;  font-size: 25px; letter-spacing: 0.01em; margin: 0px 90px">
+      CTR
+      <div style="line-height: 15px; font-size: 35px; font-weight: 500;">
+      {{ CTR_1P._rendered_value }}
+      </div>
+      </div>
 
-        <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 75px">
-          VCR
-          <div style="line-height: 15px; font-size: 30px;">
-            {{ VCR_1P._rendered_value }}
-          </div>
-        </div>
+      <div style="display: inline-block;  font-size: 25px; letter-spacing: 0.01em; margin: 0px 90px">
+      VCR
+      <div style="line-height: 15px; font-size: 35px; font-weight: 500;">
+      {{ VCR_1P._rendered_value }}
+      </div>
+      </div>
 
-    </div>;;
+      </div>;;
   }
 
   measure: html_kpi_board_ag_overv {

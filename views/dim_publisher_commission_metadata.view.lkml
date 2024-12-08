@@ -1,5 +1,5 @@
 view: dim_publisher_commission_metadata {
-  sql_table_name: BI_New.dim_publisher_commission_metadata ;;
+  sql_table_name: BI_New.v_dim_publisher_commission_metadata ;;
 
   dimension_group: commission_begin_date_key {
     type: time
@@ -77,6 +77,11 @@ view: dim_publisher_commission_metadata {
     datatype: date
     sql: ${TABLE}.prior_start_date ;;
     description: "`Start day of prior activity"
+  }
+
+  dimension: days_since_last_activity_date {
+    type: number
+    sql: ${TABLE}.days_since_last_activity_date ;;
   }
 
   dimension: pub_key {

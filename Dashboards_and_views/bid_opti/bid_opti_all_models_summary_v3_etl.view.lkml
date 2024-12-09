@@ -152,10 +152,11 @@ view: bid_opti_all_models_summary_v3_etl {
     }
 
 
-    dimension: date_trunc {
-      type: string
-      sql: ${TABLE}.date_trunc ;;
-    }
+  dimension: date_trunc {
+    type: date
+    sql: CAST(${TABLE}.date_trunc AS DATE) ;;
+  }
+
 
     dimension: rank_model {
       type: string

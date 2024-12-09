@@ -560,6 +560,7 @@ view: fact_nexxen_dsp {
   measure: media_margin {
     type: number
     sql: (${capped_revenue}-${cost})/nullif(${capped_revenue},0) ;;
+    value_format_name: percent_2
   }
 
   measure: monthly_budget_breakout {

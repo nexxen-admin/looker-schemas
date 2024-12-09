@@ -571,3 +571,111 @@ explore: bid_opti_all_models_summary_v3_etl {
 explore: creative_package_overlap_dates {
   required_access_grants: [can_view_pub_come_looker]
 }
+
+explore: fact_ad_daily_agg {
+  label: "BD Comm Global New"
+# access_filter: {
+#   field: v_dim_employee_biz_dev.employee_name
+#   user_attribute: allowed_users_sam_lt
+# }
+
+join: dim_publisher_commission_metadata {
+  type: inner
+  view_label: "Publisher Commission Data"
+  sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key} and ${fact_ad_daily_agg.date_key_raw} between ${dim_publisher_commission_metadata.prior_start_raw} and ${dim_publisher_commission_metadata.last_activity_raw} ;;
+  relationship: many_to_one
+}
+
+join: dim_date {
+  type: inner
+  view_label: "Time Frame"
+  sql_on: ${dim_date.date_key_raw}=${fact_ad_daily_agg.date_key_raw} ;;
+  relationship: many_to_one
+}
+
+join: dim_publisher_ssp {
+  type: inner
+  view_label: "Publishers"
+  sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_daily_agg.pub_ssp_key} ;;
+  relationship: many_to_one
+}
+
+join: dim_publisher {
+  type: inner
+  view_label: "Publishers"
+  sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
+  relationship: many_to_one
+}
+
+join: v_dim_employee_biz_dev {
+  type: left_outer
+  view_label: "Employee"
+  sql_on: ${dim_publisher.bizdev_owner_key}=${v_dim_employee_biz_dev.employee_key} ;;
+  relationship: many_to_one
+}
+
+join: dim_dsp_seat {
+  type: inner
+  view_label: "Seat"
+  sql_on: ${dim_dsp_seat.dsp_seat_key}=${fact_ad_daily_agg.dsp_seat_key} ;;
+  relationship: many_to_one
+}
+
+  join: dim_deal_type {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal_type.deal_type_key}=${dim_deal.deal_type_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_deal {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_key}=${fact_ad_daily_agg.deal_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_partner {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_agency {
+    type: full_outer
+    view_label: "Deal"
+    sql_on: ${dim_deal_agency.deal_agency_key}=${dim_deal.deal_agency_key};;
+    relationship: many_to_one
+  }
+
+  join: v_dim_employee_pub_ops {
+    type: left_outer
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_revenue_type {
+    type: left_outer
+    view_label: "Revenue Type"
+    sql_on: ${dim_revenue_type.revenue_type_key}=${fact_ad_daily_agg.revenue_type_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_response_status {
+    type: inner
+    view_label: "Response Attributes"
+    sql_on: ${dim_response_status.response_status_key}=${fact_ad_daily_agg.response_status_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_brand {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal_brand.deal_brand_key}=${dim_deal.deal_brand_key};;
+    relationship: many_to_one
+  }
+
+
+}

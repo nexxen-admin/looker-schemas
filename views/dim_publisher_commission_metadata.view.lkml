@@ -98,6 +98,20 @@ view: dim_publisher_commission_metadata {
     sql: case when ${fact_ad_daily_agg.date_key_raw} between ${commission_begin_date_key_raw} and ${commission_end_date_key_raw} then ${fact_ad_daily_agg.date_key_raw} else null end ;;
   }
 
+  dimension: BD_Country {
+    type: string
+    sql: case when ${v_dim_employee_biz_dev.employee_office} in ('Columbia','Redwood City','Bellevue','Los Angeles','Baltimore','Chicago','Remote','None','New York City') then 'US'
+              when ${v_dim_employee_biz_dev.employee_office} in ('United Kingdom','United Kindom','London') then 'GB'
+              when ${v_dim_employee_biz_dev.employee_office} = 'Sydney' then 'AU'
+              when ${v_dim_employee_biz_dev.employee_office} = 'Canada' then 'CA'
+              when ${v_dim_employee_biz_dev.employee_office} = 'Paris' then 'FR'
+              when ${v_dim_employee_biz_dev.employee_office} = 'Tel Aviv' then 'IL'
+              when ${v_dim_employee_biz_dev.employee_office} = 'Milan' then 'IT'
+              when ${v_dim_employee_biz_dev.employee_office} = 'Tokyo' then 'JP'
+              when ${v_dim_employee_biz_dev.employee_office} = 'Singapore' then 'SG'
+              else 'Unknown' end;;
+  }
+
   measure: count {
     type: count
   }

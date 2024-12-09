@@ -176,10 +176,10 @@ view: dim_publisher {
     }
 
     dimension: is_1st_party {
-      label: "Is 1st Party"
+      label: "`publisher is 1st Party"
       type: yesno
       sql: ${TABLE}.Is_1st_Party ;;
-      hidden: yes
+      #hidden: yes
     }
 
     dimension: is_network {

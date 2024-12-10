@@ -454,13 +454,6 @@ explore: extend_Inbound_Exchange {
     sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
     relationship: many_to_one
   }
-
-  join: dim_publisher_commission_metadata {
-    type: inner
-    view_label: "Commission Metadata"
-    sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key} and ${fact_ad_daily_agg.date_key_raw} between ${dim_publisher_commission_metadata.prior_start_raw} and ${dim_publisher_commission_metadata.last_activity_raw} ;;
-    relationship: many_to_one
-  }
   hidden: yes
 
 
@@ -875,12 +868,6 @@ explore: fact_ad_daily_agg{
     relationship: many_to_one
   }
 
-  join: dim_publisher_commission_metadata {
-    type: inner
-    view_label: "Commission Metadata"
-    sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key} and ${fact_ad_daily_agg.date_key_raw} between ${dim_publisher_commission_metadata.prior_start_raw} and ${dim_publisher_commission_metadata.last_activity_raw} ;;
-    relationship: many_to_one
-  }
 }
 
 

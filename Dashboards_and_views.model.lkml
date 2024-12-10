@@ -574,6 +574,7 @@ explore: creative_package_overlap_dates {
 
 explore: fact_ad_daily_agg {
   label: "BD Comm Global New"
+  hidden: yes
 # access_filter: {
 #   field: v_dim_employee_biz_dev.employee_name
 #   user_attribute: allowed_users_sam_lt
@@ -582,7 +583,7 @@ explore: fact_ad_daily_agg {
 join: dim_publisher_commission_metadata {
   type: inner
   view_label: "Publisher Commission Data"
-  sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key} and ${fact_ad_daily_agg.date_key_raw} between ${dim_publisher_commission_metadata.prior_start_raw} and ${dim_publisher_commission_metadata.last_activity_raw} ;;
+  sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key}  ;;
   relationship: many_to_one
 }
 

@@ -575,10 +575,10 @@ explore: creative_package_overlap_dates {
 explore: fact_ad_daily_agg {
   label: "BD Comm Global New"
   hidden: yes
-# access_filter: {
-#   field: v_dim_employee_biz_dev.employee_name
-#   user_attribute: allowed_users_sam_lt
-# }
+access_filter: {
+  field: v_dim_employee_biz_dev.employee_name
+  user_attribute: finance_reports
+}
 
 join: dim_publisher_commission_metadata {
   type: inner

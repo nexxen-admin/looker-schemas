@@ -1193,39 +1193,39 @@ view: fact_nexxen_dsp {
     type: count
     hidden: yes
     html:
-    <div style = "background:#1982c4; color:#fff; width: 100%;">
+    <div style = "color:#15003b; width: 100%;">
 
-              <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
+              <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
               Number of Advertisers
-                <div style="line-height: 15px; font-size: 30px;">
+                <div style="line-height: 15px; font-size: 30px; font-weight: 500;">
                   {{  dim_sfdb_related_accounts.num_of_advertisers_msd._rendered_value }}
                 </div>
               </div>
 
-      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
+      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
       Impressions
-      <div style="line-height: 15px; font-size: 30px;">
+      <div style="line-height: 15px; font-size: 30px; font-weight: 500;">
       {{ impressions._rendered_value }}
       </div>
       </div>
 
-      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
+      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
       Clicks
-      <div style="line-height: 15px; font-size: 30px;">
+      <div style="line-height: 15px; font-size: 30px; font-weight: 500;">
       {{ clicks._rendered_value }}
       </div>
       </div>
 
-      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
+      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
       Pacing
-      <div style="line-height: 15px; font-size: 30px;">
+      <div style="line-height: 15px; font-size: 30px; font-weight: 500;">
       {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
       </div>
       </div>
 
-      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 25px">
+      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
         Delivered Spend
-          <div style="line-height: 15px; font-size: 30px;">
+          <div style="line-height: 15px; font-size: 30px; font-weight: 500;">
             {{ Delivered_Spend._rendered_value }}
           </div>
         </div>

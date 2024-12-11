@@ -806,4 +806,10 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.gross_billable__c ;;
   }
 
+  dimension: booked_rate {
+    type: number
+    label: "Booked Rate"
+    sql: CASE WHEN ${TABLE}.free__c='Added Value' AND ${TABLE}.price_type_name__c='CPM' THEN 0 ELSE ${TABLE}.rate__c END  ;;
+  }
+
 }

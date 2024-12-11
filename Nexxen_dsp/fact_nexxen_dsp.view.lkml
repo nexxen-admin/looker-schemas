@@ -715,6 +715,13 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  measure: fdw_cost {
+    type: sum
+    label: "FDW Cost"
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.fdw_cost ;;
+  }
+
   #--------------------------------------------------pop-------------------------------------------------------
   filter: current_date_range {
     type: date

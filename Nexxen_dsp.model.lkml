@@ -28,7 +28,7 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
-explore: billing_media_io {
+explore: billing_temp_nov {
   required_access_grants: [billing_report_group]
   label: "Billing INTL Final"
   # hidden: yes

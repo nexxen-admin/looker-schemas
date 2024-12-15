@@ -2,9 +2,10 @@ view: scope3 {
     derived_table: {
       sql:
 
+
       SELECT *
       FROM (
-      SELECT AA.event_time::date as est_datetime,
+      SELECT DATE_TRUNC('MONTH', AA.event_time)::date as est_datetime,
              'NEXXEN.SSP' as atp,
              country_code as country,
              CASE WHEN rx_ssp_name ilike 'rmp%' THEN sps.seller_id ELSE CC.adstxt_hash::varchar END as seller_id,
@@ -21,7 +22,8 @@ view: scope3 {
                   WHEN rtb_device_type=7 THEN 'tv' ELSE '' END
                   as device_type,
              SUM(requests) as ad_opportunities,
-             SUM(CASE WHEN (aa.rx_request_status in ('nodsp','nodspbids','bidresponse') or aa.rx_request_status is NULL) THEN requests ELSE 0 END) as ad_opportunities_processed
+             SUM(CASE WHEN (aa.rx_request_status in ('nodsp','nodspbids','bidresponse') or aa.rx_request_status is NULL) THEN requests ELSE 0 END) as ad_opportunities_processed,
+             COUNT(DISTINCT DATE_TRUNC('DAY', AA.event_time)) AS distinct_days
       FROM Andromeda.ad_data_daily AA
 
       LEFT OUTER JOIN andromeda.rx_dim_supply_placement spl
@@ -33,16 +35,16 @@ view: scope3 {
       left outer join andromeda.rx_dim_ssp_r CC
       ON AA.rx_ssp_name = CC.name
 
-      WHERE AA.event_time >= (CURRENT_DATE - INTERVAL '1 day')
-            AND AA.event_time < CURRENT_DATE
+      WHERE DATE_TRUNC('MONTH', AA.event_time) = (DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1 month')
             AND requests>0
 
       GROUP BY 1,2,3,4,5,6,7,9) AA
-      WHERE ad_opportunities>10000
-
-
+      WHERE (ad_opportunities/distinct_days)>10000
         ;;
+
     }
+
+
 
 
 

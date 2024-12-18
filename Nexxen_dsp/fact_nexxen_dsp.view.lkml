@@ -722,6 +722,19 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.fdw_cost ;;
   }
 
+  measure: fraud_rate {
+    type: number
+    sql:  ${third_party_fraud_SIVT_incidents}/${3p_impressions_analyzed} ;;
+    value_format: "0.00%"
+  }
+
+  measure: delivered_spend_100_view_impr {
+    hidden: yes
+    label: "Delivered Spend (100% viewable impressions)"
+    type: number
+    sql: (${3p_iv_ia_billable_impressions}*${dim_sfdb_opportunitylineitem.booked_rate})/1000 ;;
+  }
+
   #--------------------------------------------------pop-------------------------------------------------------
   filter: current_date_range {
     type: date

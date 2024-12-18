@@ -724,7 +724,8 @@ view: fact_nexxen_dsp {
 
   measure: fraud_rate {
     type: number
-    sql:  ${third_party_fraud_SIVT_incidents}/${3p_impressions_analyzed} ;;
+    sql:  CASE WHEN ${3p_impressions_analyzed}!=0 AND ${3p_impressions_analyzed} IS NOT NULL
+            THEN ${third_party_fraud_SIVT_incidents}/${3p_impressions_analyzed} END;;
     value_format: "0.00%"
   }
 

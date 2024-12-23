@@ -19,6 +19,7 @@ WITH agg_data_from_vertica as (
        sum(supply_margin) as supply_margin
        FROM bi.opti_bid_raw_v1
        group by 1,2,3,4,5,6,7,8
+       having (max_date_trunc - min_date_trunc) = 2
         ),
 
         data_totals as (
@@ -142,6 +143,7 @@ WITH agg_data_from_vertica as (
        sum(supply_margin) as supply_margin
        FROM bi.opti_bid_raw_v1
        group by 1,2,3,4,5,6,7,8
+       having (max_date_trunc - min_date_trunc) = 4
         ),
 
         data_totals as (
@@ -265,6 +267,7 @@ WITH agg_data_from_vertica as (
        sum(supply_margin) as supply_margin
        FROM bi.opti_bid_raw_v1
        group by 1,2,3,4,5,6,7,8
+       having (max_date_trunc - min_date_trunc) = 6
         ),
 
         data_totals as (
@@ -388,6 +391,7 @@ WITH agg_data_from_vertica as (
        sum(supply_margin) as supply_margin
        FROM bi.opti_bid_raw_v1
        group by 1,2,3,4,5,6,7,8
+       having (max_date_trunc - min_date_trunc) = 14
         ),
 
         data_totals as (

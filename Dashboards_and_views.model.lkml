@@ -567,6 +567,11 @@ explore: bid_opti_all_models_summary_v3_etl {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: bid_opti_top_5_placement_v3_etl {
+  label: "bid_opti_top_5_placement_v3_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
 
 explore: creative_package_overlap_dates {
   required_access_grants: [can_view_pub_come_looker]

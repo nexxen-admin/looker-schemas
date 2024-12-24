@@ -121,7 +121,7 @@ WITH agg_data_from_vertica as (
         from scaled_margin aa
         inner join tot_sup_marg_rank bb
         on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.period_a_days = bb.period_a_days
-        where ranky<=20
+        --where ranky<=20
 )
 
 UNION ALL
@@ -245,7 +245,7 @@ WITH agg_data_from_vertica as (
         from scaled_margin aa
         inner join tot_sup_marg_rank bb
         on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.period_a_days = bb.period_a_days
-        where ranky<=20
+        --where ranky<=20
 )
 
 UNION ALL
@@ -369,7 +369,7 @@ WITH agg_data_from_vertica as (
         from scaled_margin aa
         inner join tot_sup_marg_rank bb
         on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.period_a_days = bb.period_a_days
-        where ranky<=20
+        --where ranky<=20
 )
 
 UNION ALL
@@ -493,7 +493,7 @@ WITH agg_data_from_vertica as (
         from scaled_margin aa
         inner join tot_sup_marg_rank bb
         on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.period_a_days = bb.period_a_days
-        where ranky<=20
+        --where ranky<=20
 );;
 
 
@@ -600,6 +600,7 @@ WITH agg_data_from_vertica as (
     dimension: ranky {
       type: number
       sql: ${TABLE}.ranky ;;
+      label: "Placement Rank"
     }
 
 

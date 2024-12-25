@@ -862,7 +862,7 @@ explore: fact_ad_daily_agg{
   }
 
   join: dim_buying_channel_ctrl {
-    type: inner
+    type: left_outer
     view_label: "Buying Channel"
     sql_on: ${dim_buying_channel_ctrl.buying_channel_ctrl_key}=${fact_ad_daily_agg.buying_channel_ctrl_key};;
     relationship: many_to_one

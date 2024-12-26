@@ -75,8 +75,8 @@ view: v_dim_employee_biz_dev {
     full_suggestions: yes
     drill_fields: [v_dim_employee_biz_dev.employee_name]
     link: {
-      label: "Drill To New Publishers"
-      url: "https://tremor.cloud.looker.com/dashboards/560?BizDev+Name={{ value }}"
+      label: "Drill To Publishers Activity"
+      url: "https://tremor.cloud.looker.com/dashboards/2203?Is+Current=1&Publisher+Name=&Commissionable+Date=1+year&Current+Publisher+Start+Date=1+year&Pub+ID=&BizDev+Owner=&Days+Since+Last+Activity+Date={{ value }}"
     }
   }
 

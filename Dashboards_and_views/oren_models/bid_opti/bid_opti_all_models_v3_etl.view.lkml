@@ -1,6 +1,13 @@
 view: bid_opti_all_models_v3_etl {
     derived_table: {
-      sql: with data_totals as (
+      sql: with raw_data_4_models as (
+      select *
+      from bi.opti_bid_raw_v1
+      where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+      ),
+
+
+      data_totals as (
         -- Provides the total sum of metrics across all opti buckets
         select media_id,
         imp_type ,
@@ -14,7 +21,7 @@ view: bid_opti_all_models_v3_etl {
         sum(revenue)-sum(cost) as total_demand_margin
 
 
-        from bi.opti_bid_raw_v1
+        from raw_data_4_models
         group by 1,2,3,4,5,6
         ),
 
@@ -22,7 +29,7 @@ view: bid_opti_all_models_v3_etl {
         -- checks the number of buckets for each placement
         select concat(concat(media_id,imp_type),date_trunc) as media_imp_date,
         count(distinct case when requests>0 then opti else null end) as optis
-        from bi.opti_bid_raw_v1
+        from raw_data_4_models
         group by 1
         ),
 
@@ -58,7 +65,7 @@ view: bid_opti_all_models_v3_etl {
 
 
         from data_totals as dt
-        inner join bi.opti_bid_raw_v1 as opti
+        inner join raw_data_4_models as opti
         on opti.media_id = dt.media_id
         and opti.imp_type = dt.imp_type
         and opti.date_trunc = dt.date_trunc

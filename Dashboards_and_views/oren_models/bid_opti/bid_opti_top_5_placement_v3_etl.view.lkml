@@ -4,9 +4,15 @@ view: bid_opti_top_5_placement_v3_etl {
 
        --- 3 days
 (
-WITH agg_data_from_vertica as (
+WITH raw_data_4_models as (
+      select *
+      from bi.opti_bid_raw_v1
+      where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+      ),
+
+     agg_data_from_vertica as (
        select opti,media_id,placement_name,ssp_name,imp_type,pub_id,publisher_name,
-       FLOOR(((select max(date_trunc) from bi.opti_bid_raw_v1)-date_trunc)/3) as period_a_days,
+       FLOOR(((select max(date_trunc) from raw_data_4_models)-date_trunc)/3) as period_a_days,
 
        max(date_trunc) as max_date_trunc,
        min(date_trunc) as min_date_trunc,
@@ -17,7 +23,7 @@ WITH agg_data_from_vertica as (
        sum(demand_margin) as demand_margin,
        sum(cost) as cost,
        sum(supply_margin) as supply_margin
-       FROM bi.opti_bid_raw_v1
+       FROM raw_data_4_models
        group by 1,2,3,4,5,6,7,8
        having (max_date_trunc - min_date_trunc) = 2
         ),
@@ -128,9 +134,15 @@ UNION ALL
 
 --- 5 days
 (
-WITH agg_data_from_vertica as (
+WITH raw_data_4_models as (
+      select *
+      from bi.opti_bid_raw_v1
+      where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+      ),
+
+     agg_data_from_vertica as (
        select opti,media_id,placement_name,ssp_name,imp_type,pub_id,publisher_name,
-       FLOOR(((select max(date_trunc) from bi.opti_bid_raw_v1)-date_trunc)/5) as period_a_days,
+       FLOOR(((select max(date_trunc) from raw_data_4_models)-date_trunc)/5) as period_a_days,
 
        max(date_trunc) as max_date_trunc,
        min(date_trunc) as min_date_trunc,
@@ -141,7 +153,7 @@ WITH agg_data_from_vertica as (
        sum(demand_margin) as demand_margin,
        sum(cost) as cost,
        sum(supply_margin) as supply_margin
-       FROM bi.opti_bid_raw_v1
+       FROM raw_data_4_models
        group by 1,2,3,4,5,6,7,8
        having (max_date_trunc - min_date_trunc) = 4
         ),
@@ -252,9 +264,15 @@ UNION ALL
 
 --- 7 days
 (
-WITH agg_data_from_vertica as (
+WITH raw_data_4_models as (
+      select *
+      from bi.opti_bid_raw_v1
+      where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+      ),
+
+      agg_data_from_vertica as (
        select opti,media_id,placement_name,ssp_name,imp_type,pub_id,publisher_name,
-       FLOOR(((select max(date_trunc) from bi.opti_bid_raw_v1)-date_trunc)/7) as period_a_days,
+       FLOOR(((select max(date_trunc) from raw_data_4_models)-date_trunc)/7) as period_a_days,
 
        max(date_trunc) as max_date_trunc,
        min(date_trunc) as min_date_trunc,
@@ -265,7 +283,7 @@ WITH agg_data_from_vertica as (
        sum(demand_margin) as demand_margin,
        sum(cost) as cost,
        sum(supply_margin) as supply_margin
-       FROM bi.opti_bid_raw_v1
+       FROM raw_data_4_models
        group by 1,2,3,4,5,6,7,8
        having (max_date_trunc - min_date_trunc) = 6
         ),
@@ -376,9 +394,15 @@ UNION ALL
 
 --- 15 days
 (
-WITH agg_data_from_vertica as (
+WITH raw_data_4_models as (
+      select *
+      from bi.opti_bid_raw_v1
+      where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+      ),
+
+     agg_data_from_vertica as (
        select opti,media_id,placement_name,ssp_name,imp_type,pub_id,publisher_name,
-       FLOOR(((select max(date_trunc) from bi.opti_bid_raw_v1)-date_trunc)/15) as period_a_days,
+       FLOOR(((select max(date_trunc) from raw_data_4_models)-date_trunc)/15) as period_a_days,
 
        max(date_trunc) as max_date_trunc,
        min(date_trunc) as min_date_trunc,
@@ -389,7 +413,7 @@ WITH agg_data_from_vertica as (
        sum(demand_margin) as demand_margin,
        sum(cost) as cost,
        sum(supply_margin) as supply_margin
-       FROM bi.opti_bid_raw_v1
+       FROM raw_data_4_models
        group by 1,2,3,4,5,6,7,8
        having (max_date_trunc - min_date_trunc) = 14
         ),

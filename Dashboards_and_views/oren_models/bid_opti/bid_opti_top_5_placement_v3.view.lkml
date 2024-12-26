@@ -40,7 +40,7 @@ where event_time::date >= current_date()-3 and event_time::date < current_date()
       and rx_ssp_name like'rmp%'
       and rx_imp_type in ('banner','video')
 group by 1,2,3,4,5,6,7
-having (demand_margin + supply_margin) >0 and opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+having sum(requests)>0 and sum(revenue)>0 and opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
 ),
 
 data_totals as (

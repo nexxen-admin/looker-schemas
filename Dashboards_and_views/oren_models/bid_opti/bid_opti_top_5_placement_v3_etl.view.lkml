@@ -8,7 +8,7 @@ WITH raw_data_4_models as (
       select *
       from bi.opti_bid_raw_v1
       where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
-            AND lower(rx_ssp_name) like'%rmp%'
+            AND lower(ssp_name) like'%rmp%'
       ),
 
      agg_data_from_vertica as (
@@ -139,7 +139,7 @@ WITH raw_data_4_models as (
       select *
       from bi.opti_bid_raw_v1
       where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
-            AND lower(rx_ssp_name) like'%rmp%'
+            AND lower(ssp_name) like'%rmp%'
       ),
 
      agg_data_from_vertica as (
@@ -270,7 +270,7 @@ WITH raw_data_4_models as (
       select *
       from bi.opti_bid_raw_v1
       where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
-            AND lower(rx_ssp_name) like'%rmp%'
+            AND lower(ssp_name) like'%rmp%'
       ),
 
       agg_data_from_vertica as (
@@ -401,7 +401,7 @@ WITH raw_data_4_models as (
       select *
       from bi.opti_bid_raw_v1
       where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
-            AND lower(rx_ssp_name) like'%rmp%'
+            AND lower(ssp_name) like'%rmp%'
       ),
 
      agg_data_from_vertica as (

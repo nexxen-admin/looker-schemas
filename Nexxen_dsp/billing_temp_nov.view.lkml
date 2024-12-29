@@ -1,5 +1,5 @@
 view: billing_temp_nov {
-  sql_table_name: BI_DSP.billing_temp_nov ;;
+  sql_table_name: BI_DSP.billing_temp_no_1 ;;
 
   dimension: account_id {
     type: string
@@ -268,7 +268,7 @@ view: billing_temp_nov {
   }
   dimension: quantity {
     type: number
-    sql: ${TABLE}.quantity ;;
+    sql: ${TABLE}.Nesuite_units ;;
   }
   dimension: rate {
     type: number
@@ -374,14 +374,14 @@ view: billing_temp_nov {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	account_name,
-	price_type_name,
-	related_brand_name,
-	opportunity_name,
-	line_item_name,
-	opportunity_owner_name,
-	account_manager_name
-	]
+  account_name,
+  price_type_name,
+  related_brand_name,
+  opportunity_name,
+  line_item_name,
+  opportunity_owner_name,
+  account_manager_name
+  ]
   }
 
 }

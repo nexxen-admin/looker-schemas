@@ -1,4 +1,4 @@
-view: revenue_diff_report {
+view: revenue_diff_report_etl {
     derived_table: {
       sql: with imp_count as (
 
@@ -11,7 +11,7 @@ view: revenue_diff_report {
                                sum(revenue) as tot_rev
                 from bi.opti_bid_raw_v1
                 where date_trunc = '2024-12-25' and (opti in ('bidfloor','pubcost','pubcost_bidfloor','no_opti'))
-                      and imp_type in ('banner','video')
+                      and imp_type in ('banner','video') AND lower(rx_ssp_name) like'%rmp%'
                 group by 1),
 
      by_groups as (

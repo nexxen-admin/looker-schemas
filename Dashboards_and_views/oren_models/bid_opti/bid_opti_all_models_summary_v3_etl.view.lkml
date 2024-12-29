@@ -4,6 +4,7 @@ view: bid_opti_all_models_summary_v3_etl {
       select *
       from bi.opti_bid_raw_v1
       where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+            AND lower(rx_ssp_name) like'%rmp%'
       ),
 
 

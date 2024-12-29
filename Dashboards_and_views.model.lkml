@@ -577,8 +577,8 @@ explore: tvi_v1 {
   required_access_grants: [can_view_all_tremor]
 }
 
-explore: revenue_diff_report {
-  label: "revenue_diff_report"
+explore: revenue_diff_report_etl {
+  label: "revenue_diff_report_etl"
   required_access_grants: [can_view_all_tremor]
 }
 

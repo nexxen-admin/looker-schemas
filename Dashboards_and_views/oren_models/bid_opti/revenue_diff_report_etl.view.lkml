@@ -96,21 +96,41 @@ from table_no_banner_video;;
       sql: ${TABLE}.used_group ;;
     }
 
+  dimension: date_trunc {
+    type: date
+    sql: ${TABLE}.date_trunc ;;
+  }
 
 # measu
 
-    measure: tot_rev {
+    measure: tot_req {
       type: sum
-      sql: ${TABLE}.tot_rev ;;
+      sql: ${TABLE}.tot_req ;;
       value_format: "#,##0"
     }
+
+  measure: tot_imp {
+    type: sum
+    sql: ${TABLE}.tot_imp ;;
+    value_format: "#,##0"
+  }
+
+  measure: tot_rev {
+    type: sum
+    sql: ${TABLE}.tot_rev ;;
+    value_format: "#,##0"
+  }
 
 
     set: detail {
       fields: [
         used_group,
+        date_trunc,
 
+        tot_req,
+        tot_imp,
         tot_rev
+
       ]
     }
 

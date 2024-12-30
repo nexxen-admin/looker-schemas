@@ -46,6 +46,13 @@ explore: fact_nexxen_msd_advertiser  {
   # }
   #hidden: yes
 
+  join: dim_dsp_format {
+    type: left_outer
+    view_label: "Creative"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.format_id}=${dim_dsp_format.format_id} ;;
+  }
+
   join: dim_dsp_creative {
     type: inner
     view_label: "Creative"
@@ -292,6 +299,13 @@ explore: fact_nexxen_msd_agency  {
   #   user_attribute: agency
   # }
   #hidden: yes
+
+  join: dim_dsp_format {
+    type: left_outer
+    view_label: "Creative"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.format_id}=${dim_dsp_format.format_id} ;;
+  }
 
   join: dim_dsp_creative {
     type: inner

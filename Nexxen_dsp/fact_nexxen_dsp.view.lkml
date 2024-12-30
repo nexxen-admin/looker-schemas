@@ -128,6 +128,12 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: format_id {
+    type: number
+    sql: ${TABLE}.format_key ;;
+    hidden: yes
+  }
+
 
 
   measure: impressions {

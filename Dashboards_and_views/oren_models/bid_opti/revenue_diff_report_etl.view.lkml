@@ -142,6 +142,15 @@ view: revenue_diff_report_etl {
         WHEN ${TABLE}.used_group = 'none_none_none_none_none' THEN 'No Events'
         ELSE ${TABLE}.used_group
        END ;;
+
+    html:
+    {% if value == 'Total' %}
+    <p style="color: black; background-color: lightblue; font-size:100%; text-align:left">{{ rendered_value }}</p>
+    {% else %}
+    {{ rendered_value }}
+    {% endif %};;
+
+    label: "Group"
   }
 
 
@@ -149,6 +158,7 @@ view: revenue_diff_report_etl {
   dimension: date_trunc {
     type: date
     sql: ${TABLE}.date_trunc ;;
+    label: "Date"
   }
 
   dimension: rank {
@@ -163,38 +173,41 @@ view: revenue_diff_report_etl {
       type: sum
       sql: ${TABLE}.tot_req ;;
       value_format: "#,##0"
+      label: "Requests"
     }
 
   measure: tot_imp {
     type: sum
     sql: ${TABLE}.tot_imp ;;
     value_format: "#,##0"
+    label: "Impressions"
   }
 
   measure: tot_rev {
     type: sum
     sql: ${TABLE}.tot_rev ;;
     value_format: "#,##0"
+    label: "Revenue"
   }
 
   measure: req_ratio {
     type: sum
     sql: ${TABLE}.req_ratio ;;
-    value_format: "#,##0"
+    value_format: "0.00%"
   }
 
 
   measure: imp_ratio {
     type: sum
     sql: ${TABLE}.imp_ratio ;;
-    value_format: "#,##0"
+    value_format: "0.00%"
   }
 
 
   measure: rev_ratio {
     type: sum
     sql: ${TABLE}.rev_ratio ;;
-    value_format: "#,##0"
+    value_format: "0.00%"
   }
 
 

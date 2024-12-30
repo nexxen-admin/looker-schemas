@@ -577,6 +577,13 @@ explore: tvi_v1 {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: revenue_diff_report_etl {
+  label: "revenue_diff_report_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
+
 explore: creative_package_overlap_dates {
   required_access_grants: [can_view_pub_come_looker]
 }

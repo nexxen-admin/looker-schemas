@@ -742,6 +742,33 @@ view: fact_nexxen_dsp {
     sql: (${3p_iv_ia_billable_impressions}*${dim_sfdb_opportunitylineitem.booked_rate})/1000 ;;
   }
 
+
+  measure: primary_kpi_result {
+    label: "Primary KPI Result"
+    type: number
+    sql: ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN ${CTR_1P}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN ${VCR_1P}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN ${1P_CVR}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${1P_CVR}
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN ${eCPA_1P}
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${pacing}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${uncapped_revenue}/${actions}
+              ELSE 0 END,2);;
+  }
+
+  measure: secondary_kpi_result {
+    label: "Secondary KPI Result"
+    type: number
+    sql: ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.secondary_kpi__c}='CTR' THEN ${CTR_1P}*100
+              WHEN ${dim_sfdb_opportunitylineitem.secondary_kpi__c}='Completion Rate' THEN ${VCR_1P}*100
+              WHEN ${dim_sfdb_opportunitylineitem.secondary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN ${1P_CVR}*100
+              WHEN ${dim_sfdb_opportunitylineitem.secondary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.secondary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${1P_CVR}
+              WHEN ${dim_sfdb_opportunitylineitem.secondary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN ${eCPA_1P}
+              WHEN ${dim_sfdb_opportunitylineitem.secondary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.secondary_kpi_metric__c}) LIKE '%pacing%' THEN ${pacing}*100
+              WHEN ${dim_sfdb_opportunitylineitem.secondary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.secondary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${uncapped_revenue}/${actions}
+              ELSE 0 END,2);;
+  }
+
   #--------------------------------------------------pop-------------------------------------------------------
   filter: current_date_range {
     type: date

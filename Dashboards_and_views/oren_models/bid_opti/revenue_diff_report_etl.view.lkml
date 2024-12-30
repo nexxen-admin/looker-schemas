@@ -121,6 +121,12 @@ from table_no_banner_video;;
     value_format: "#,##0"
   }
 
+  measure: percentage_of_total_rev {
+    type: number
+    sql: ( ${tot_rev} * 100.0 ) / SUM(${tot_rev}) ;;
+    value_format: "0.00%"
+  }
+
 
     set: detail {
       fields: [

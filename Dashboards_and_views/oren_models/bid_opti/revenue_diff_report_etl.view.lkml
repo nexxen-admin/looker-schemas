@@ -117,31 +117,36 @@ view: revenue_diff_report_etl {
 
     }
 
-
-
   dimension: used_group {
     type: string
     sql: CASE
-        WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_no_opti_none' THEN 'All Models Used'
-        WHEN ${TABLE}.used_group = 'null_bucket' THEN 'Null Events In Opti Model'
-        WHEN ${TABLE}.used_group = 'bidfloor_none_none_no_opti_none' THEN 'Only Bidfoor Model Used'
-        WHEN ${TABLE}.used_group = 'audio' THEN 'Events From Audio Placements'
-        WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_none_none' THEN 'All Events Were Optimized (no no_opti events)'
-        WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_no_opti_none' THEN 'No PubCost Events'
-        WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_no_opti_none' THEN 'No PubCost_Bidfloor Events'
-        WHEN ${TABLE}.used_group = 'none_none_none_no_opti_none' THEN 'All Events Were Non-Optimzed'
-        WHEN ${TABLE}.used_group = 'native' THEN 'Events From Native Placements'
-        WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_no_opti_none' THEN 'No Bidfloor Events'
-        WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_no_opti_none' THEN 'No bidfloor Or Pubcost Events'
-        WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_none_none' THEN 'No Pubcost And Non_opti Events'
-        WHEN ${TABLE}.used_group = 'bidfloor_none_none_none_none' THEN 'Only Bidfloor Events'
-        WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_none_none' THEN 'Only Pubcost_bidfloor Events'
-        WHEN ${TABLE}.used_group = 'none_pubcost_none_none_none' THEN 'Only Pubcost Events'
-        WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_none_none' THEN 'Only Bidfloor And Pubcost Events'
-        WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_none_none' THEN 'Only Pubcost And Bidfloor_pubcost Events'
-        WHEN ${TABLE}.used_group = 'none_none_none_none_none' THEN 'No Events'
-        ELSE ${TABLE}.used_group
-       END ;;
+
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_no_opti_none' THEN '1. All Models Used'
+      WHEN ${TABLE}.used_group = 'null_bucket' THEN '1. Null Events Only In Opti Model'
+       WHEN ${TABLE}.used_group = 'bidfloor_none_none_no_opti_none' THEN '1. Bidfloor+no_opti'
+
+      WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_no_opti_none' THEN '2. bidfloor+pubcost_bidfloor+no_opti'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_no_opti_none' THEN '2. bidfloor+pubcost+no_opti'
+      WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_no_opti_none' THEN '2. pubcost+pubcost_bidfloor+no_opti'
+      WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_no_opti_none' THEN '2. pubcost_bidfloor+no_opti'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_none_none' THEN '2. bidfloor+pubcost_bidfloor'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_none_none_none' THEN '2. bidfloor'
+      WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_none_none' THEN '2. pubcost_bidfloor'
+      WHEN ${TABLE}.used_group = 'none_pubcost_none_none_none' THEN '2. pubcost'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_none_none' THEN '2. bidfloor+pubcost'
+      WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_none_none' THEN '2. pubcost+pubcost_bidfloor'
+      WHEN ${TABLE}.used_group = 'none_pubcost_none_no_opti_none' THEN '2. pubcost+no_opti'
+
+
+      WHEN ${TABLE}.used_group = 'none_none_none_none_none' THEN '3. No Events'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_none_none' THEN '3. All Evenets Were Optimized'
+      WHEN ${TABLE}.used_group = 'none_none_none_no_opti_none' THEN '3. All Evenets Were Not Optimized'
+
+      WHEN ${TABLE}.used_group = 'native' THEN '4. Events From Native Placements'
+      WHEN ${TABLE}.used_group = 'audio' THEN '4. Events From Audio Placements'
+
+      ELSE ${TABLE}.used_group
+      END ;;
 
     html:
     {% if value == 'Total' %}
@@ -153,6 +158,142 @@ view: revenue_diff_report_etl {
     label: "Group"
   }
 
+  dimension: bidfloor {
+    type: string
+    sql: CASE
+
+
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_no_opti_none' THEN 'Y'
+        WHEN ${TABLE}.used_group = 'null_bucket' THEN 'N'
+        WHEN ${TABLE}.used_group = 'bidfloor_none_none_no_opti_none' THEN 'Y'
+
+        WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_no_opti_none' THEN 'Y'
+        WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_no_opti_none' THEN 'Y'
+        WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_no_opti_none' THEN 'N'
+        WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_no_opti_none' THEN 'N'
+        WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_none_none' THEN 'Y'
+        WHEN ${TABLE}.used_group = 'bidfloor_none_none_none_none' THEN 'Y'
+        WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_none_none' THEN 'N'
+        WHEN ${TABLE}.used_group = 'none_pubcost_none_none_none' THEN 'N'
+        WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_none_none' THEN 'Y'
+        WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_none_none' THEN 'N'
+        WHEN ${TABLE}.used_group = 'none_pubcost_none_no_opti_none' THEN 'N'
+
+
+        WHEN ${TABLE}.used_group = 'none_none_none_none_none' THEN 'N'
+        WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_none_none' THEN 'Y'
+        WHEN ${TABLE}.used_group = 'none_none_none_no_opti_none' THEN 'N'
+
+        WHEN ${TABLE}.used_group = 'native' THEN ''
+        WHEN ${TABLE}.used_group = 'audio' THEN ''
+        WHEN ${TABLE}.used_group = 'Total' THEN ''
+
+        ELSE ${TABLE}.used_group
+       END ;;
+    label: "Bidfloor"
+  }
+
+  dimension: pubcost {
+    type: string
+    sql: CASE
+
+
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'null_bucket' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_none_no_opti_none' THEN 'N'
+
+      WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_no_opti_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_no_opti_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_none_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'none_pubcost_none_none_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_none_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_none_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_pubcost_none_no_opti_none' THEN 'Y'
+
+      WHEN ${TABLE}.used_group = 'none_none_none_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_none_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_none_none_no_opti_none' THEN 'N'
+
+      WHEN ${TABLE}.used_group = 'native' THEN ''
+      WHEN ${TABLE}.used_group = 'audio' THEN ''
+      WHEN ${TABLE}.used_group = 'Total' THEN ''
+
+      ELSE ${TABLE}.used_group
+      END ;;
+    label: "Pubcost"
+  }
+
+  dimension: pubcost_bidfloor {
+    type: string
+    sql: CASE
+
+
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'null_bucket' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_none_no_opti_none' THEN 'N'
+
+      WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_no_opti_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_none_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_none_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_none_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_pubcost_none_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_none_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_pubcost_none_no_opti_none' THEN 'N'
+
+      WHEN ${TABLE}.used_group = 'none_none_none_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_none_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_none_none_no_opti_none' THEN 'N'
+
+      WHEN ${TABLE}.used_group = 'native' THEN ''
+      WHEN ${TABLE}.used_group = 'audio' THEN ''
+      WHEN ${TABLE}.used_group = 'Total' THEN ''
+
+      ELSE ${TABLE}.used_group
+      END ;;
+    label: "Pubcost_Bidfloor"
+  }
+
+  dimension: no_opti {
+    type: string
+    sql: CASE
+
+
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'null_bucket' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_none_no_opti_none' THEN 'Y'
+
+      WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_no_opti_none' THEN 'Y'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_none_none_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'none_none_pubcost_bidfloor_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'none_pubcost_none_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_none_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'none_pubcost_pubcost_bidfloor_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'none_pubcost_none_no_opti_none' THEN 'Y'
+
+      WHEN ${TABLE}.used_group = 'none_none_none_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_none_none' THEN 'N'
+      WHEN ${TABLE}.used_group = 'none_none_none_no_opti_none' THEN 'Y'
+
+      WHEN ${TABLE}.used_group = 'native' THEN ''
+      WHEN ${TABLE}.used_group = 'audio' THEN ''
+      WHEN ${TABLE}.used_group = 'Total' THEN ''
+
+      ELSE ${TABLE}.used_group
+      END ;;
+    label: "No_opti"
+  }
 
 
   dimension: date_trunc {
@@ -216,6 +357,11 @@ view: revenue_diff_report_etl {
       fields: [
         used_group,
         date_trunc,
+
+        bidfloor,
+        pubcost,
+        pubcost_bidfloor,
+        no_opti,
 
         tot_req,
         tot_imp,

@@ -14,8 +14,7 @@ view: revenue_diff_report_etl {
                        sum(revenue) as tot_rev
 
                 from bi.opti_bid_raw_v1
-                where date_trunc >= current_date()-7 and date_trunc < current_date()
-                      and opti != 'null_bucket'
+                where opti != 'null_bucket'
                       and imp_type in ('banner','video')
                 group by 1,2),
 
@@ -52,8 +51,7 @@ view: revenue_diff_report_etl {
              sum(revenue) as tot_rev
 
       from bi.opti_bid_raw_v1
-      where date_trunc >= current_date()-7 and date_trunc < current_date()
-            and opti = 'null_bucket'
+      where opti = 'null_bucket'
             and imp_type in ('banner','video')
       group by 1,2
       ),
@@ -65,8 +63,7 @@ view: revenue_diff_report_etl {
              sum(impression) as tot_imp,
              sum(revenue) as tot_rev
       from bi.opti_bid_raw_v1
-      where date_trunc >= current_date()-7 and date_trunc < current_date()
-            and imp_type not in ('banner','video')
+      where imp_type not in ('banner','video')
       group by 1,2
       ),
 

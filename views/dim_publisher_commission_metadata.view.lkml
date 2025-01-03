@@ -5,7 +5,6 @@ view: dim_publisher_commission_metadata {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
-    datatype: date
     label: "Commission Start Date"
     sql: ${TABLE}.commission_begin_date_key ;;
   }

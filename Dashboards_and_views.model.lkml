@@ -582,6 +582,11 @@ explore: revenue_diff_report_etl {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: etl_checker {
+  label: "etl_checker"
+  required_access_grants: [can_view_all_tremor]
+}
+
 
 
 explore: creative_package_overlap_dates {

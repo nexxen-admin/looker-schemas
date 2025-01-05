@@ -1,5 +1,5 @@
 view: billing_temp_nov {
-  sql_table_name: BI_DSP.billing_temp_no_1 ;;
+  sql_table_name: BI_DSP.media_IO_billing_US ;;
 
   dimension: account_id {
     type: string
@@ -94,6 +94,10 @@ view: billing_temp_nov {
     type: number
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent ;;
   }
+  dimension: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_percent {
+    type: number
+    sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj_percent ;;
+  }
   dimension_group: dsp_end {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
@@ -180,6 +184,7 @@ view: billing_temp_nov {
     type: number
     sql: ${TABLE}.ns_remaining_units ;;
   }
+
   dimension_group: opportunity_end {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
@@ -268,7 +273,7 @@ view: billing_temp_nov {
   }
   dimension: quantity {
     type: number
-    sql: ${TABLE}.Nesuite_units ;;
+    sql: ${TABLE}.quantity;;
   }
   dimension: rate {
     type: number
@@ -282,14 +287,15 @@ view: billing_temp_nov {
     type: string
     sql: ${TABLE}.related_brand_name ;;
   }
-  dimension: remaining_diff_between_1_p_to_billing_3_p_vs_1_p_discrepancy_local_currency {
+  dimension: remaining_diff_between_1_p_to_billing_3_p_vs_1_p_discrepancy {
     type: number
-    sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy_local_currency ;;
+    sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy;;
   }
   dimension: remaining_diff_between_1_p_to_billing_3_p_vs_1_p_discrepancy_usd {
     type: number
     sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy_usd ;;
   }
+
   dimension: revenue_adj {
     type: number
     sql: ${TABLE}.revenue_adj ;;

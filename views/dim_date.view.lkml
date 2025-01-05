@@ -18,6 +18,13 @@ view: dim_date {
     description: "Main Date Dimension - use this field as your main date metric"
   }
 
+  dimension: date {
+  type: date
+  datatype: date
+  sql: ${TABLE}.Date_Key ;;
+
+  }
+
   dimension: month_year {
     type: string
     sql: month(${TABLE}.Date_Key);;

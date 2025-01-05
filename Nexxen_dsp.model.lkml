@@ -30,7 +30,7 @@ access_grant: can_view_all_tremor {
 
 explore: billing_temp_nov {
   #required_access_grants: [billing_report_group]
-  label: "Billing INTL Final"
+  label: "Billing US Final"
   # hidden: yes
 }
 

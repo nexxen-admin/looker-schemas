@@ -35,7 +35,7 @@ view: scope3 {
       left outer join andromeda.rx_dim_ssp_r CC
       ON AA.rx_ssp_name = CC.name
 
-      WHERE DATE_TRUNC('MONTH', AA.event_time) = (DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1 month')
+      WHERE DATE_TRUNC('MONTH', AA.event_time) = DATE_TRUNC('MONTH', CURRENT_DATE - INTERVAL '1 MONTH')
             AND requests>0
 
       GROUP BY 1,2,3,4,5,6,7,9) AA

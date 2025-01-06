@@ -605,7 +605,9 @@ explore: fact_ad_daily_agg {
 join: dim_publisher_commission_metadata {
   type: inner
   view_label: "Publisher Commission Data"
-  sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key}  ;;
+  sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key} and
+      ${dim_publisher_commission_metadata.commission_begin_date_key_raw} <= ${fact_ad_daily_agg.date_key_raw} and
+      ${dim_publisher_commission_metadata.commission_end_date_key_raw}>= ${fact_ad_daily_agg.date_key_raw} ;;
   relationship: many_to_one
 }
 

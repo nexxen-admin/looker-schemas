@@ -587,6 +587,11 @@ explore: etl_checker {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: revenue_diff_placement_etl {
+  label: "revenue_diff_placement_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
 
 
 explore: creative_package_overlap_dates {

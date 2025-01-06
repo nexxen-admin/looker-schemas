@@ -46,6 +46,7 @@ view: v_dim_publisher_commission_metadata {
   }
   dimension_group: last_activity_date {
     type: time
+    label: "Last Activity"
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
     datatype: date

@@ -15,6 +15,7 @@ view: revenue_diff_placement_etl {
        SUM(CASE WHEN opti not in ('bidfloor','pubcost','pubcost_bidfloor','no_opti') THEN revenue ELSE 0 END) AS revenue_not_enabled,
        SUM(revenue) as total_revenue
 from bi.opti_bid_raw_v1
+where opti != 'null_bucket'
 group by 1,2,3,4,5,6 ;;
 
   }

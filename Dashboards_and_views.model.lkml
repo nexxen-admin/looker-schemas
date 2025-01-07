@@ -593,10 +593,33 @@ explore: revenue_diff_placement_etl {
 }
 
 
+explore: v_dim_publisher_commission_metadata {
+  label: "ttt"
 
-explore: creative_package_overlap_dates {
-  required_access_grants: [can_view_pub_come_looker]
+ join: dim_publisher {
+   type: inner
+   sql_on: ${dim_publisher.pub_key} = ${v_dim_publisher_commission_metadata.pub_key} ;;
+  relationship: many_to_one
+ }
+
+join: v_dim_employee_biz_dev {
+
+    type: left_outer
+    view_label: "Employee"
+    sql_on: ${dim_publisher.bizdev_owner_key}=${v_dim_employee_biz_dev.employee_key} ;;
+    relationship: many_to_one
+
+  }
+
+join: v_dim_employee_pub_ops {
+    type: left_outer
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
+    relationship: many_to_one
+  }
+
 }
+
 
 explore: fact_ad_daily_agg {
   label: "BD Comm Global New"
@@ -610,7 +633,9 @@ explore: fact_ad_daily_agg {
 join: dim_publisher_commission_metadata {
   type: inner
   view_label: "Publisher Commission Data"
-  sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key}  ;;
+  sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key} and
+      ${dim_publisher_commission_metadata.commission_begin_date_key_raw} <= ${fact_ad_daily_agg.date_key_raw} and
+      ${dim_publisher_commission_metadata.commission_end_date_key_raw}>= ${fact_ad_daily_agg.date_key_raw} ;;
   relationship: many_to_one
 }
 
@@ -704,6 +729,8 @@ join: dim_dsp_seat {
     sql_on: ${dim_deal_brand.deal_brand_key}=${dim_deal.deal_brand_key};;
     relationship: many_to_one
   }
+
+
 
 
 }

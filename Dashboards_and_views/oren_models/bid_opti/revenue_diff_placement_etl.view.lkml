@@ -23,6 +23,7 @@ group by 1,2,3,4,5 ;;
   dimension: date_trunc {
     type: date
     sql: CAST(${TABLE}.date_trunc AS DATE) ;;
+    label: "Date"
   }
 
   dimension: publisher_id {

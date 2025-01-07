@@ -5,6 +5,7 @@ view: revenue_diff_placement_etl {
        publisher_name,
        media_id as placement_id,
        placement_name,
+      operations_owner_name,
        -- requests
        SUM(CASE WHEN opti in ('bidfloor','pubcost','pubcost_bidfloor','no_opti') THEN requests ELSE 0 END) AS requests_enabled,
        SUM(CASE WHEN opti not in ('bidfloor','pubcost','pubcost_bidfloor','no_opti') THEN requests ELSE 0 END) AS requests_not_enabled,
@@ -14,7 +15,7 @@ view: revenue_diff_placement_etl {
        SUM(CASE WHEN opti not in ('bidfloor','pubcost','pubcost_bidfloor','no_opti') THEN revenue ELSE 0 END) AS revenue_not_enabled,
        SUM(revenue) as total_revenue
 from bi.opti_bid_raw_v1
-group by 1,2,3,4,5 ;;
+group by 1,2,3,4,5,6 ;;
 
   }
 
@@ -49,6 +50,13 @@ group by 1,2,3,4,5 ;;
     sql: ${TABLE}.placement_name ;;
     label: "Placement Name"
   }
+
+  dimension: operations_owner_name {
+    type: string
+    sql: ${TABLE}.operations_owner_name ;;
+    label: "Owner Name"
+  }
+
 
 
 # measu
@@ -105,6 +113,7 @@ group by 1,2,3,4,5 ;;
       publisher_name,
       placement_id,
       placement_name,
+      operations_owner_name,
 
       requests_enabled,
       requests_not_enabled,

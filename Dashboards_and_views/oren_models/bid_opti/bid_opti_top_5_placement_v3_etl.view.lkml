@@ -583,11 +583,13 @@ WITH raw_data_4_models as (
   dimension: min_date_trunc {
     type: string
     sql: ${TABLE}.min_date_trunc ;;
+    label: "Min Date"
   }
 
   dimension: max_date_trunc {
     type: string
     sql: ${TABLE}.max_date_trunc ;;
+    label: "Max Date"
   }
 
   dimension: time_range {

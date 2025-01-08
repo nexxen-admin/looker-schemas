@@ -630,49 +630,49 @@ explore: fact_ad_daily_agg {
 #  user_attribute: finance_reports
 #}
 
-join: dim_publisher_commission_metadata {
-  type: inner
-  view_label: "Publisher Commission Data"
-  sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key} and
+  join: dim_publisher_commission_metadata {
+    type: inner
+    view_label: "Publisher Commission Data"
+    sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key} and
       ${dim_publisher_commission_metadata.commission_begin_date_key_raw} <= ${fact_ad_daily_agg.date_key_raw} and
       ${dim_publisher_commission_metadata.commission_end_date_key_raw}>= ${fact_ad_daily_agg.date_key_raw} ;;
-  relationship: many_to_one
-}
+    relationship: many_to_one
+  }
 
-join: dim_date {
-  type: inner
-  view_label: "Time Frame"
-  sql_on: ${dim_date.date_key_raw}=${fact_ad_daily_agg.date_key_raw} ;;
-  relationship: many_to_one
-}
+  join: dim_date {
+    type: inner
+    view_label: "Time Frame"
+    sql_on: ${dim_date.date_key_raw}=${fact_ad_daily_agg.date_key_raw} ;;
+    relationship: many_to_one
+  }
 
-join: dim_publisher_ssp {
-  type: inner
-  view_label: "Publishers"
-  sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_daily_agg.pub_ssp_key} ;;
-  relationship: many_to_one
-}
+  join: dim_publisher_ssp {
+    type: inner
+    view_label: "Publishers"
+    sql_on: ${dim_publisher_ssp.pub_ssp_key}=${fact_ad_daily_agg.pub_ssp_key} ;;
+    relationship: many_to_one
+  }
 
-join: dim_publisher {
-  type: inner
-  view_label: "Publishers"
-  sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
-  relationship: many_to_one
-}
+  join: dim_publisher {
+    type: inner
+    view_label: "Publishers"
+    sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
+    relationship: many_to_one
+  }
 
-join: v_dim_employee_biz_dev {
-  type: left_outer
-  view_label: "Employee"
-  sql_on: ${dim_publisher.bizdev_owner_key}=${v_dim_employee_biz_dev.employee_key} ;;
-  relationship: many_to_one
-}
+  join: v_dim_employee_biz_dev {
+    type: left_outer
+    view_label: "Employee"
+    sql_on: ${dim_publisher.bizdev_owner_key}=${v_dim_employee_biz_dev.employee_key} ;;
+    relationship: many_to_one
+  }
 
-join: dim_dsp_seat {
-  type: inner
-  view_label: "Seat"
-  sql_on: ${dim_dsp_seat.dsp_seat_key}=${fact_ad_daily_agg.dsp_seat_key} ;;
-  relationship: many_to_one
-}
+  join: dim_dsp_seat {
+    type: inner
+    view_label: "Seat"
+    sql_on: ${dim_dsp_seat.dsp_seat_key}=${fact_ad_daily_agg.dsp_seat_key} ;;
+    relationship: many_to_one
+  }
 
   join: dim_deal_type {
     type: inner
@@ -729,8 +729,6 @@ join: dim_dsp_seat {
     sql_on: ${dim_deal_brand.deal_brand_key}=${dim_deal.deal_brand_key};;
     relationship: many_to_one
   }
-
-
 
 
 }

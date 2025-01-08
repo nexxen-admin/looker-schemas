@@ -250,12 +250,12 @@ view: v_dim_publisher {
     sql: ${TABLE}.PUB_Name;;
     drill_fields: [new_revenue.publisher_name,dim_imp_type.imp_type,dim_buying_channel.buying_channel, dim_dsp.dsp_display_name, dim_a_domain.a_domain, dim_o_domain.o_domain]
     link: {
-      label: "Drill To New Publishers"
-      url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"
+      label: "Drill To Publisher Activity"
+      url: "https://tremor.cloud.looker.com/dashboards/2203?Publisher+ID=&Publisher+Name=&Is+Current=1&Days+Since+Last+Activity+={{ value }}"
     }
     link: {
-      label: "Drill To Supply Tracker"
-      url: "https://tremor.cloud.looker.com/dashboards/544?Publisher+Name={{ value }}"
+      label: "Drill To BD Comm"
+      url: "https://tremor.cloud.looker.com/dashboards/2200?Commission+Cohort+Timeframe=1+month+ago+for+1+month&BizDev+Office=&BizDev+Owner=&Publisher+ID=&Is+Current=1&BD+Country=&Publisher+Name={{ value }}"
     }
 
   }

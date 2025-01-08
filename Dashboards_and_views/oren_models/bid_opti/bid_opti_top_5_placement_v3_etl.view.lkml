@@ -84,10 +84,10 @@ WITH raw_data_4_models as (
         opti.demand_margin/split as scaled_demand_margin,
         opti.supply_margin/split as scaled_supply_margin,
 
-        (scaled_margin) / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days))-1 as scaled_margin_ratio_to_no_opti,
+        (scaled_margin) / NULLIF((SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)),0)-1 as scaled_margin_ratio_to_no_opti,
         (scaled_margin) - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)) as scaled_margin_diff_to_no_opti,
 
-        (scaled_supply_margin) / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days))-1 as scaled_supply_margin_ratio_to_no_opti,
+        (scaled_supply_margin) / NULLIF((SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)),0)-1 as scaled_supply_margin_ratio_to_no_opti,
         (scaled_supply_margin) - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)) as scaled_supply_margin_diff_to_no_opti
 
         from data_totals as dt
@@ -215,10 +215,10 @@ WITH raw_data_4_models as (
         opti.demand_margin/split as scaled_demand_margin,
         opti.supply_margin/split as scaled_supply_margin,
 
-        (scaled_margin) / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days))-1 as scaled_margin_ratio_to_no_opti,
+        (scaled_margin) / NULLIF((SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)),0)-1 as scaled_margin_ratio_to_no_opti,
         (scaled_margin) - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)) as scaled_margin_diff_to_no_opti,
 
-        (scaled_supply_margin) / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days))-1 as scaled_supply_margin_ratio_to_no_opti,
+        (scaled_supply_margin) / NULLIF((SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)),0)-1 as scaled_supply_margin_ratio_to_no_opti,
         (scaled_supply_margin) - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)) as scaled_supply_margin_diff_to_no_opti
 
         from data_totals as dt
@@ -346,10 +346,10 @@ WITH raw_data_4_models as (
         opti.demand_margin/split as scaled_demand_margin,
         opti.supply_margin/split as scaled_supply_margin,
 
-        (scaled_margin) / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days))-1 as scaled_margin_ratio_to_no_opti,
+        (scaled_margin) / NULLIF((SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)),0)-1 as scaled_margin_ratio_to_no_opti,
         (scaled_margin) - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)) as scaled_margin_diff_to_no_opti,
 
-        (scaled_supply_margin) / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days))-1 as scaled_supply_margin_ratio_to_no_opti,
+        (scaled_supply_margin) / NULLIF((SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)),0)-1 as scaled_supply_margin_ratio_to_no_opti,
         (scaled_supply_margin) - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)) as scaled_supply_margin_diff_to_no_opti
 
         from data_totals as dt
@@ -477,10 +477,10 @@ WITH raw_data_4_models as (
         opti.demand_margin/split as scaled_demand_margin,
         opti.supply_margin/split as scaled_supply_margin,
 
-        (scaled_margin) / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days))-1 as scaled_margin_ratio_to_no_opti,
+        (scaled_margin) / NULLIF((SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)),0)-1 as scaled_margin_ratio_to_no_opti,
         (scaled_margin) - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)) as scaled_margin_diff_to_no_opti,
 
-        (scaled_supply_margin) / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days))-1 as scaled_supply_margin_ratio_to_no_opti,
+        (scaled_supply_margin) / NULLIF((SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)),0)-1 as scaled_supply_margin_ratio_to_no_opti,
         (scaled_supply_margin) - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.period_a_days)) as scaled_supply_margin_diff_to_no_opti
 
         from data_totals as dt
@@ -583,11 +583,13 @@ WITH raw_data_4_models as (
   dimension: min_date_trunc {
     type: string
     sql: ${TABLE}.min_date_trunc ;;
+    label: "Min Date"
   }
 
   dimension: max_date_trunc {
     type: string
     sql: ${TABLE}.max_date_trunc ;;
+    label: "Max Date"
   }
 
   dimension: time_range {

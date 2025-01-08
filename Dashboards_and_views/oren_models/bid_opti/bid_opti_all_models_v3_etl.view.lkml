@@ -130,6 +130,7 @@ view: bid_opti_all_models_v3_etl {
   dimension: date_trunc {
     type: date
     sql: CAST(${TABLE}.date_trunc AS DATE) ;;
+    label: "Date"
   }
 
     dimension: publisher_id {

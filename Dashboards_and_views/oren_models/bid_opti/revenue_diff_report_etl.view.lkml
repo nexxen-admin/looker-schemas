@@ -120,7 +120,7 @@ view: revenue_diff_report_etl {
 
 
   WHEN ${TABLE}.used_group = 'bidfloor_pubcost_pubcost_bidfloor_no_opti_none' THEN '1. All Models Used'
-  WHEN ${TABLE}.used_group = 'null_bucket' THEN '1. Null Events Only in Optimization Model'
+  WHEN ${TABLE}.used_group = 'null_bucket' THEN '1. Null Events'
   WHEN ${TABLE}.used_group = 'bidfloor_none_none_no_opti_none' THEN '1. Bidfloor & No-Opti Events'
 
   WHEN ${TABLE}.used_group = 'bidfloor_none_pubcost_bidfloor_no_opti_none' THEN '2. Bidfloor & Bidfloor_Pubcost with No-Opti Events'

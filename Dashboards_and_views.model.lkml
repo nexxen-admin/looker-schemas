@@ -592,6 +592,12 @@ explore: revenue_diff_placement_etl {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: bid_opti_bottom_5_placement_v3_etl {
+  label: "bid_opti_bottom_5_placement_v3_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
 
 explore: v_dim_publisher_commission_metadata {
   label: "BD COMM NEW"

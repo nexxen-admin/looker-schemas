@@ -427,7 +427,7 @@ view: monthly_billing_locked_report {
 
   measure: total_billable_units_before_adj {
     type: sum
-    sql: ${TABLE}.total_billable_units_before_adj ;;
+    sql: ${TABLE}.total_billable_units_before_adj_adops_override ;;
     value_format: "#,##0"
   }
 

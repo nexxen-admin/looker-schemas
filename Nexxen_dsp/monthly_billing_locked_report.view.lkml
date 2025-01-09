@@ -134,7 +134,7 @@ view: monthly_billing_locked_report {
 
   measure: disc_between_1p_and_final_billable_revenue_after_adj_usd_precent {
     type: sum
-    sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_precent ;;
+    sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent ;;
     value_format: "0.00%"
   }
 
@@ -146,7 +146,7 @@ view: monthly_billing_locked_report {
 
   measure: discrepancy_between_1p_and_final_billable_revenue_after_adj_precent {
     type: sum
-    sql: ${TABLE}.discrepancy_between_1p_and_final_billable_revenue_after_adj_precent ;;
+    sql: ${TABLE}.discrepancy_between_1p_and_final_billable_revenue_after_adj_percent ;;
     value_format: "0.00%"
   }
 

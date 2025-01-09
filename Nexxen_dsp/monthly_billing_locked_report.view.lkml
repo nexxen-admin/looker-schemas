@@ -128,13 +128,13 @@ view: monthly_billing_locked_report {
 
   measure: disc_between_1p_and_final_billable_revenue_after_adj_usd {
     type: sum
-    sql: ${TABLE}.disc_between_1p_and_final_billable_revenue_after_adj_usd ;;
+    sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd ;;
     value_format: "#,##0.00"
   }
 
   measure: disc_between_1p_and_final_billable_revenue_after_adj_usd_precent {
     type: sum
-    sql: ${TABLE}.disc_between_1p_and_final_billable_revenue_after_adj_usd_precent ;;
+    sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_precent ;;
     value_format: "0.00%"
   }
 

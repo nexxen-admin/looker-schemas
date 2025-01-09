@@ -436,9 +436,15 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.total_booked_budget ;;
   }
 
-  measure: uncapped_revenue {
+  measure: uncapped_revenue_adj_adops {
     type: sum
-    sql: ${TABLE}.uncapped_revenue ;;
+    sql: ${TABLE}.uncapped_revenue_adj_adops ;;
+    value_format: "#,##0.00"
+  }
+
+  measure: uncapped_revenue_after_adops_override {
+    type: sum
+    sql: ${TABLE}.uncapped_revenue_after_adops_override ;;
     value_format: "#,##0.00"
   }
 

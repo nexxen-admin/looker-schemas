@@ -74,7 +74,7 @@ view: monthly_billing_locked_report {
 
   measure: capped_revenue_before_adj {
     type: sum
-    sql: ${TABLE}.capped_revenue_before_adj ;;
+    sql: ${TABLE}.capped_revenue_before_adj_with_override ;;
     value_format: "#,##0.00"
   }
 
@@ -212,7 +212,7 @@ view: monthly_billing_locked_report {
 
   measure: margin_amount_in_usd_precent {
     type: sum
-    sql: ${TABLE}.margin_amount_in_usd_precent ;;
+    sql: ${TABLE}.margin_amount_percent_usd ;;
     value_format: "0.00%"
   }
 
@@ -248,13 +248,13 @@ view: monthly_billing_locked_report {
 
   measure: one_p_rev {
     type: sum
-    sql: ${TABLE}.one_p_rev ;;
+    sql: ${TABLE}.p_rev ;;
     value_format: "#,##0.00"
   }
 
   measure: one_p_rev_usd {
     type: sum
-    sql: ${TABLE}.one_p_rev_usd ;;
+    sql: ${TABLE}.p_rev_usd ;;
     value_format: "#,##0.00"
   }
 
@@ -307,7 +307,7 @@ view: monthly_billing_locked_report {
 
   measure: over_delivery_amount_in_usd {
     type: sum
-    sql: ${TABLE}.over_delivery_amount_in_usd ;;
+    sql: ${TABLE}.over_delivery_amount_usd ;;
     value_format: "#,##0.00"
   }
 
@@ -373,13 +373,13 @@ view: monthly_billing_locked_report {
 
   measure: remaining_diff_between_1p_to_billing_3p_1p_discrepancy_local_currency {
     type: sum
-    sql: ${TABLE}.remaining_diff_between_1p_to_billing_3p_1p_discrepancy_local_currency ;;
+    sql: ${TABLE}.remaining_diff_between_1p_to_billing_3p_vs_1p_discrepancy_local_currency ;;
     value_format: "#,##0.00"
   }
 
   measure: remaining_diff_between_1p_to_billing_3p_1p_discrepancy_usd {
     type: sum
-    sql: ${TABLE}.remaining_diff_between_1p_to_billing_3p_1p_discrepancy_usd ;;
+    sql: ${TABLE}.remaining_diff_between_1p_to_billing_3p_VS_1p_discrepancy_usd ;;
     value_format: "#,##0.00"
   }
 
@@ -450,7 +450,7 @@ view: monthly_billing_locked_report {
 
   measure: under_delivery_budget_in_usd {
     type: sum
-    sql: ${TABLE}.under_delivery_budget_in_usd ;;
+    sql: ${TABLE}.under_delivery_budget_usd ;;
     value_format: "#,##0.00"
   }
 
@@ -462,7 +462,7 @@ view: monthly_billing_locked_report {
 
   measure: units_adj {
     type: sum
-    sql: ${TABLE}.units_adj ;;
+    sql: ${TABLE}.units_ADJ ;;
     value_format: "#,##0"
   }
 

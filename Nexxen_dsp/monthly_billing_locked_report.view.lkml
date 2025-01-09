@@ -280,7 +280,7 @@ view: monthly_billing_locked_report {
 
   dimension: opportunity_owner {
     type: string
-    sql: ${TABLE}.opportunity_owner ;;
+    sql: ${TABLE}.opportunity_owner_name ;;
     label: "Opportunity Owner Name"
   }
 
@@ -318,17 +318,17 @@ view: monthly_billing_locked_report {
 
   measure: percent25events {
     type: sum
-    sql: ${TABLE}.percent25events ;;
+    sql: ${TABLE}.percent25_events ;;
   }
 
   measure: percent50events {
     type: sum
-    sql: ${TABLE}.percent50events ;;
+    sql: ${TABLE}.percent50_events ;;
   }
 
   measure: percent75events {
     type: sum
-    sql: ${TABLE}.percent75events ;;
+    sql: ${TABLE}.percent75_events ;;
   }
 
   dimension: price_type_name {
@@ -468,7 +468,7 @@ view: monthly_billing_locked_report {
 
   measure: units_before_adj {
     type: sum
-    sql: ${TABLE}.units_before_adj ;;
+    sql: ${TABLE}.units_before_adj_adops_override ;;
     value_format: "#,##0"
   }
   measure: count {

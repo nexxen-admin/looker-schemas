@@ -218,7 +218,7 @@ view: monthly_billing_locked_report {
 
   measure: margin_amount_percent {
     type: sum
-    sql: ${TABLE}.margin_amount_percent ;;
+    sql: ${TABLE}.margin_parcent ;;
     value_format: "0.00%"
   }
 

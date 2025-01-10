@@ -89,13 +89,13 @@ view: dim_publisher_commission_metadata {
     hidden: yes
   }
 
-  dimension_group: commissionable_date {
-    type: time
-    timeframes: [raw, date, week, month, quarter, year]
-    convert_tz: no
-    datatype: date
-    sql: case when ${fact_ad_daily_agg.date_key_raw} between ${commission_begin_date_key_raw} and ${commission_end_date_key_raw} then ${fact_ad_daily_agg.date_key_raw} else null end ;;
-  }
+  # dimension_group: commissionable_date {
+  #   type: time
+  #   timeframes: [raw, date, week, month, quarter, year]
+  #   convert_tz: no
+  #   datatype: date
+  #   sql: case when ${fact_ad_daily_agg.date_key_raw} between ${commission_begin_date_key_raw} and ${commission_end_date_key_raw} then ${fact_ad_daily_agg.date_key_raw} else null end ;;
+  # }
 
   dimension: BD_Country {
     type: string

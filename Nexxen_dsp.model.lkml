@@ -39,6 +39,30 @@ explore: monthly_billing_override_data {
   label: "Monthly Billing Override Data"
   # hidden: yes
 }
+explore: v_monthly_dato_billing_report_diff{
+    label: "Datorama Looker Diff"
+}
+
+explore: v_monthly_billing_report_diff_live_locked {
+ label: "Diff Report"
+}
+
+explore: monthly_billing_locked_report{
+ label: "Locked Report"
+}
+
+#explore: v_monthly_billing_report_diff_live_locked {
+# required_access_grants: [billing_report_group]
+#  label: "Monthly Billing Report Diff Live Locked"
+#  # hidden: yes
+#}
+
+#explore: monthly_billing_locked_report {
+#  required_access_grants: [billing_report_group]
+#  label: "Monthly billing locked report"
+  # hidden: yes
+#}
+
 
 
 explore: fact_reach_frequency {

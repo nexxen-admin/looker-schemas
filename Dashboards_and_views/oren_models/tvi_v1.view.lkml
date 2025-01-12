@@ -20,7 +20,7 @@ order by day_date,country desc;;
   }
 
   dimension: day_date {
-    type: string
+    type: date
     sql: ${TABLE}.day_date ;;
   }
 

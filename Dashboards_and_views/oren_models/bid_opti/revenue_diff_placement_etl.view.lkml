@@ -7,12 +7,12 @@ view: revenue_diff_placement_etl {
        placement_name,
       operations_owner_name,
        -- requests
-       SUM(CASE WHEN opti in ('bidfloor','pubcost','pubcost_bidfloor','no_opti') THEN requests ELSE 0 END) AS requests_enabled,
-       SUM(CASE WHEN opti not in ('bidfloor','pubcost','pubcost_bidfloor','no_opti') THEN requests ELSE 0 END) AS requests_not_enabled,
+       SUM(CASE WHEN opti in ('bidfloor','pubcost','pubcost_bidfloor') THEN requests ELSE 0 END) AS requests_enabled,
+       SUM(CASE WHEN opti not in ('bidfloor','pubcost','pubcost_bidfloor') THEN requests ELSE 0 END) AS requests_not_enabled,
        SUM(requests) as total_requests,
        -- revenue
-       SUM(CASE WHEN opti in ('bidfloor','pubcost','pubcost_bidfloor','no_opti') THEN revenue ELSE 0 END) AS revenue_enabled,
-       SUM(CASE WHEN opti not in ('bidfloor','pubcost','pubcost_bidfloor','no_opti') THEN revenue ELSE 0 END) AS revenue_not_enabled,
+       SUM(CASE WHEN opti in ('bidfloor','pubcost','pubcost_bidfloor') THEN revenue ELSE 0 END) AS revenue_enabled,
+       SUM(CASE WHEN opti not in ('bidfloor','pubcost','pubcost_bidfloor') THEN revenue ELSE 0 END) AS revenue_not_enabled,
        SUM(revenue) as total_revenue
 from bi.opti_bid_raw_v1
 where opti != 'null_bucket'

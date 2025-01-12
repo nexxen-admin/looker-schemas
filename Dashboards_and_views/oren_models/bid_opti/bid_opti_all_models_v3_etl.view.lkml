@@ -58,10 +58,10 @@ view: bid_opti_all_models_v3_etl {
         opti.demand_margin/split as scaled_demand_margin,
         opti.supply_margin/split as scaled_supply_margin,
 
-        (scaled_margin) / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc))-1 as scaled_margin_ratio_to_no_opti,
+        (scaled_margin) / nullif((SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)),0)-1 as scaled_margin_ratio_to_no_opti,
         (scaled_margin) - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_margin_diff_to_no_opti,
 
-        (scaled_supply_margin) / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc))-1 as scaled_supply_margin_ratio_to_no_opti,
+        (scaled_supply_margin) / nullif((SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)),0)-1 as scaled_supply_margin_ratio_to_no_opti,
         (scaled_supply_margin) - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_supply_margin_diff_to_no_opti
 
 

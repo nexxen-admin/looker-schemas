@@ -44,7 +44,7 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.Dato_price_type ;;
   }
   dimension: looker_price_type {
-    type: number
+    type: string
     sql: ${TABLE}.looker_price_type ;;
   }
   dimension: dato_account_id {

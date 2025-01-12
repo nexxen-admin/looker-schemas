@@ -36,7 +36,16 @@ view: v_monthly_dato_billing_report_diff {
   }
   dimension: column {
     type: number
+    label: "Impressions diff"
     sql: ${TABLE}."?column?" ;;
+  }
+  dimension: dato_price_type {
+    type: string
+    sql: ${TABLE}.Dato_price_type ;;
+  }
+  dimension: looker_price_type {
+    type: number
+    sql: ${TABLE}.looker_price_type ;;
   }
   dimension: dato_account_id {
     type: string
@@ -572,14 +581,14 @@ view: v_monthly_dato_billing_report_diff {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	looker_account_name,
-	looker_opp_name,
-	dato_opp_name,
-	dato_related_brand_name,
-	dato_account_manager_name,
-	looker_related_brand_name,
-	dato_account_name
-	]
+  looker_account_name,
+  looker_opp_name,
+  dato_opp_name,
+  dato_related_brand_name,
+  dato_account_manager_name,
+  looker_related_brand_name,
+  dato_account_name
+  ]
   }
 
 }

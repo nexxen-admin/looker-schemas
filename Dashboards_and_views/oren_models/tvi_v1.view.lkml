@@ -3,12 +3,14 @@ view: tvi_v1 {
     sql: select day_date,
        nexxen_dmp_provider,
        country,
+       segment_id,
+       segmenttype,
        sum(imp_price) as imp_price,
        sum(imp_price_adj) as imp_price_adj,
        sum(impressions) as impressions,
        sum(impressions_adj) as impressions_adj
 from bi.tvi_report
-group by 1,2,3
+group by 1,2,3,4,5
 order by day_date,country desc;;
 
   }
@@ -35,6 +37,16 @@ order by day_date,country desc;;
     sql: ${TABLE}.country ;;
   }
 
+  dimension: segment_id {
+    type: string
+    sql: ${TABLE}.segment_id ;;
+  }
+
+
+  dimension: segmenttype {
+    type: string
+    sql: ${TABLE}.segmenttype ;;
+  }
 
 # measu
 
@@ -70,6 +82,8 @@ order by day_date,country desc;;
       day_date,
       nexxen_dmp_provider,
       country,
+      segment_id,
+      segmenttype,
 
       imp_price,
       imp_price_adj,

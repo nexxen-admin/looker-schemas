@@ -47,6 +47,10 @@ explore: v_monthly_billing_report_diff_live_locked {
  label: "Diff Report"
 }
 
+explore: v_monthly_dato_billing_report_diff_on_locked {
+  label: "Billing Diff Report Locked"
+}
+
 explore: monthly_billing_locked_report{
  label: "Locked Report"
 }

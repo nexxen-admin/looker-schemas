@@ -7,6 +7,7 @@ view: dim_publisher_commission_metadata {
     convert_tz: no
     label: "Commission Start Date"
     sql: ${TABLE}.commission_begin_date_key ;;
+    description: "The date on which publisher start their commissionable period. (logic based)"
   }
   dimension_group: commission_end_date_key {
     type: time
@@ -15,6 +16,7 @@ view: dim_publisher_commission_metadata {
     datatype: date
     label: "Commission End Date"
     sql: ${TABLE}.commission_end_date_key ;;
+    description: "The date on which publisher ends their commissionable period. (logic based)"
   }
 
   dimension_group: current_start {
@@ -24,11 +26,13 @@ view: dim_publisher_commission_metadata {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.current_start_date ;;
+    description: "The earliest date on which the publisher generated revenue within the 365-day period."
   }
 
   dimension: days_since_prior_activity {
     type: number
     sql: ${TABLE}.days_since_prior_activity ;;
+    description: "# of days between prior activity date and current start date. Day difference between current start date and prior activity date."
   }
 
   dimension_group: db_created {
@@ -75,12 +79,13 @@ view: dim_publisher_commission_metadata {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.prior_start_date ;;
-    description: "`Start day of prior activity"
+    description: "`The earliest date on which the publisher generated revenue before the current start date. For new publishers, this date will be 1900"
   }
 
   dimension: days_since_last_activity_date {
     type: number
     sql: ${TABLE}.days_since_last_activity_date ;;
+    description: "# of days between yesterday's date and the last time the publisher was active, can help to identify how long a publisher is not active"
   }
 
   dimension: pub_key {

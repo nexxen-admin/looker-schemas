@@ -455,6 +455,25 @@ view: v_monthly_dato_billing_report_diff_on_locked {
     type: number
     sql: ${TABLE}.price_type_diff ;;
   }
+  dimension: start_date_diff {
+    type: number
+    sql: ${TABLE}.start_date_diff ;;
+  }
+  dimension: end_date_diff {
+    type: number
+    sql: ${TABLE}.end_date_diff ;;
+  }
+  dimension: Dato_price_type {
+    type: string
+    sql: ${TABLE}.Dato_price_type ;;
+  }
+
+
+  dimension: looker_price_type {
+    type: string
+    sql: ${TABLE}.looker_price_type ;;
+  }
+
   dimension: primary_kpi_diff {
     type: number
     sql: ${TABLE}.primary_kpi_diff ;;
@@ -544,6 +563,30 @@ view: v_monthly_dato_billing_report_diff_on_locked {
   dimension: units_adj {
     type: number
     sql: ${TABLE}.Units_ADJ ;;
+  }
+  dimension: Dato_first_p_dis {
+    type: number
+    sql: ${TABLE}.Dato_first_p_dis ;;
+  }
+  dimension: looker_first_p_disc {
+    type: number
+    sql: ${TABLE}.looker_first_p_disc ;;
+  }
+  dimension: dato_first_p_perc_disc {
+    type: number
+    sql: ${TABLE}.dato_first_p_perc_disc ;;
+  }
+  dimension: looker_first_p_perc_disc {
+    type: number
+    sql: ${TABLE}.looker_first_p_perc_disc ;;
+  }
+  dimension: first_p_perc_diff {
+    type: number
+    sql: ${TABLE}.first_p_perc_diff ;;
+  }
+  dimension: first_p_disc_diff {
+    type: number
+    sql: ${TABLE}.first_p_disc_diff ;;
   }
   dimension: units_adj_override {
     type: number

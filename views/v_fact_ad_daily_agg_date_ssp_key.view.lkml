@@ -27,6 +27,11 @@ view: v_fact_ad_daily_agg_date_ssp_key {
     sql: ${TABLE}.sum_of_revenue ;;
     value_format: "$#,##0.00"
   }
+  measure: sum_of_net_revenue {
+    type: sum
+    sql: ${TABLE}.sum_of_revenue - ${TABLE}.sum_of_cogs + ${TABLE}.sum_of_pub_platform_fee ;;
+    value_format: "$#,##0.00"
+  }
   measure: count {
     type: count
   }

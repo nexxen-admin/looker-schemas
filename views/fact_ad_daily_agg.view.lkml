@@ -2920,12 +2920,15 @@ view: fact_ad_daily_agg {
               when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_date.date_key_raw} < '2024-10-01' then ${TABLE}.sum_of_revenue*0.2
               when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} < '2024-10-01' then ${TABLE}.sum_of_revenue*0.15
               when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.24
+              when ${dim_deal_agency.deal_agency_name} like '%ICON%' and ${dim_deal_agency.deal_agency_name} like '%T-Mobile%' then then ${TABLE}.sum_of_revenue*0.25
+              when ${dim_deal_agency.deal_agency_name} like '%ICON%' and ${dim_deal_agency.deal_agency_name} like '%lovesac%' then then ${TABLE}.sum_of_revenue*0.25
               when ${dim_deal_agency.deal_agency_name} like '%ICON%' then ${TABLE}.sum_of_revenue*0.2
               when ${dim_deal_agency.deal_agency_name} like '%Agyle%' then ${TABLE}.sum_of_revenue*0.15
               when ${dim_deal_agency.deal_agency_name} like '%Evergreen%' then ${TABLE}.sum_of_revenue*0.2
               when ${dim_deal_agency.deal_agency_name} like '%Anchor%' then ${TABLE}.sum_of_revenue*0.15
-              when ${dim_deal_agency.deal_agency_name} like '%UM Tech%' then ${TABLE}.sum_of_revenue*0.1
+              when ${dim_deal_agency.deal_agency_name} like '%UM Technologies%' then ${TABLE}.sum_of_revenue*0.1
               when ${dim_deal_agency.deal_agency_name} like '%NYIAX%' then ${TABLE}.sum_of_revenue*0.1
+              when ${dim_deal_agency.deal_agency_name} like '%Tingley Lane%' then ${TABLE}.sum_of_revenue*0.15
               end;;
     value_format: "$#,##0.00"
     description: "A monetary incentive or discount to an agency or buyer in exchange for meeting specified spending thresholds or for directing a set volume of ad spend to their platform."

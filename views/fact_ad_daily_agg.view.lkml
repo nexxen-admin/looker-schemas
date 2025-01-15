@@ -2920,8 +2920,8 @@ view: fact_ad_daily_agg {
               when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_date.date_key_raw} < '2024-10-01' then ${TABLE}.sum_of_revenue*0.2
               when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} < '2024-10-01' then ${TABLE}.sum_of_revenue*0.15
               when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.24
-              when ${dim_deal_agency.deal_agency_name} like '%ICON%' and ${dim_deal_agency.deal_agency_name} like '%T-Mobile%' then then ${TABLE}.sum_of_revenue*0.25
-              when ${dim_deal_agency.deal_agency_name} like '%ICON%' and ${dim_deal_agency.deal_agency_name} like '%lovesac%' then then ${TABLE}.sum_of_revenue*0.25
+              when ${dim_deal_agency.deal_agency_name} like '%ICON%' and ${dim_deal_agency.deal_agency_name} like '%T-Mobile%' then ${TABLE}.sum_of_revenue*0.25
+              when ${dim_deal_agency.deal_agency_name} like '%ICON%' and ${dim_deal_agency.deal_agency_name} like '%lovesac%' then ${TABLE}.sum_of_revenue*0.25
               when ${dim_deal_agency.deal_agency_name} like '%ICON%' then ${TABLE}.sum_of_revenue*0.2
               when ${dim_deal_agency.deal_agency_name} like '%Agyle%' then ${TABLE}.sum_of_revenue*0.15
               when ${dim_deal_agency.deal_agency_name} like '%Evergreen%' then ${TABLE}.sum_of_revenue*0.2

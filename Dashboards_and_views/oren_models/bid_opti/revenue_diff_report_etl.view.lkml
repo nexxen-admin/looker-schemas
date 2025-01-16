@@ -82,8 +82,9 @@ view: revenue_diff_report_etl {
 
       union all
       select *
-      from table_no_banner_video)
+      from table_no_banner_video),
 
+      fin_unioed_tab as (
       -- final output
 
       select date_trunc,
@@ -109,7 +110,12 @@ view: revenue_diff_report_etl {
              sum(tot_imp),
              sum(tot_rev)
       from unioned_table
-      group by 1,2,3,4);;
+      group by 1,2,3,4)
+      )
+
+      select *,
+             max(date_trunc) over () as max_date
+      from fin_unioed_tab;;
 
 
     }
@@ -304,6 +310,12 @@ view: revenue_diff_report_etl {
     label: "Date"
   }
 
+  dimension: max_date {
+    type: date
+    sql: ${TABLE}.max_date ;;
+    label: "max_date"
+  }
+
   dimension: rank {
     type: string
     sql: ${TABLE}.rank ;;
@@ -355,6 +367,8 @@ view: revenue_diff_report_etl {
 
 
 
+
+
     set: detail {
       fields: [
         used_group,
@@ -364,6 +378,7 @@ view: revenue_diff_report_etl {
         pubcost,
         pubcost_bidfloor,
         no_opti,
+        max_date,
 
         tot_req,
         tot_imp,

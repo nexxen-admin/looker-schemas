@@ -114,7 +114,7 @@ view: revenue_diff_report_etl {
       )
 
       select *,
-             max(date_trunc) over () as max_date
+             CASE WHEN (max(date_trunc) over ()) = date_trunc THEN 1 ELSE 0 END as check_max_date
       from fin_unioed_tab;;
 
 
@@ -310,10 +310,10 @@ view: revenue_diff_report_etl {
     label: "Date"
   }
 
-  dimension: max_date {
-    type: date
-    sql: ${TABLE}.max_date ;;
-    label: "max_date"
+  dimension: check_max_date {
+    type: number
+    sql: ${TABLE}.check_max_date ;;
+    label: "check_max_date"
   }
 
   dimension: rank {
@@ -378,7 +378,7 @@ view: revenue_diff_report_etl {
         pubcost,
         pubcost_bidfloor,
         no_opti,
-        max_date,
+        check_max_date,
 
         tot_req,
         tot_imp,

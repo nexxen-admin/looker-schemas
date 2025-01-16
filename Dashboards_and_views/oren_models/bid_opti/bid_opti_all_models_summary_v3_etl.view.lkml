@@ -91,6 +91,9 @@ view: bid_opti_all_models_summary_v3_etl {
         scaled_supply_margin / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_supply_margin_ratio_to_no_opti,
         scaled_supply_margin - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_supply_margin_diff_to_no_opti,
 
+        scaled_demand_margin / (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_demand_margin_ratio_to_no_opti,
+        scaled_demand_margin - (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_demand_margin_diff_to_no_opti,
+
         CASE WHEN opti = 'no_opti' THEN 1
         WHEN opti = 'bidfloor' THEN 2
         WHEN opti = 'pubcost' THEN 3
@@ -117,10 +120,16 @@ view: bid_opti_all_models_summary_v3_etl {
         null::FLOAT as scaled_revenue,
         null::FLOAT as scaled_demand_margin,
         null::FLOAT as scaled_supply_margin,
+
         (sum(margin) - sum(case when opti='no_opti' then scaled_margin else 0 end))/(sum(margin)) as scaled_margin_ratio_to_no_opti,
         sum(margin) - sum(case when opti='no_opti' then scaled_margin else 0 end) as scaled_margin_diff_to_no_opti,
+
         (sum(supply_margin) - sum(case when opti='no_opti' then scaled_supply_margin else 0 end))/(sum(supply_margin)) as scaled_supply_margin_ratio_to_no_opti,
         sum(supply_margin) - sum(case when opti='no_opti' then scaled_supply_margin else 0 end) as scaled_supply_margin_diff_to_no_opti,
+
+         (sum(demand_margin) - sum(case when opti='no_opti' then scaled_demand_margin else 0 end))/(sum(demand_margin)) as scaled_demand_margin_ratio_to_no_opti,
+        sum(demand_margin) - sum(case when opti='no_opti' then scaled_demand_margin else 0 end) as scaled_demand_margin_diff_to_no_opti,
+
         5 as rank_model
         from fin_tab_before_tot
         group by 1,2,3)
@@ -219,6 +228,13 @@ view: bid_opti_all_models_summary_v3_etl {
       label: "Scaled Supply Margin $"
     }
 
+  measure: scaled_demand_margin {
+    type: sum
+    sql: ${TABLE}.scaled_demand_margin ;;
+    value_format: "$#,##0"
+    label: "Scaled Demand Margin $"
+  }
+
     measure: scaled_margin_ratio_to_no_opti {
       type: sum
       sql: ${TABLE}.scaled_margin_ratio_to_no_opti ;;
@@ -249,6 +265,20 @@ view: bid_opti_all_models_summary_v3_etl {
     }
 
 
+  measure: scaled_demand_margin_ratio_to_no_opti {
+    type: sum
+    sql: ${TABLE}.scaled_demand_margin_ratio_to_no_opti ;;
+    value_format:"0.00%"
+    label: "Scaled Demand Margin % Diff To No Opti"
+  }
+
+  measure: scaled_demand_margin_diff_to_no_opti {
+    type: sum
+    sql: ${TABLE}.scaled_demand_margin_diff_to_no_opti ;;
+    value_format: "$#,##0"
+    label: "Scaled Demand Margin $ Diff To No Opti"
+  }
+
 
     set: detail {
       fields: [
@@ -263,10 +293,13 @@ view: bid_opti_all_models_summary_v3_etl {
         margin,
         scaled_margin,
         scaled_supply_margin,
+        scaled_demand_margin,
         scaled_margin_ratio_to_no_opti,
         scaled_margin_diff_to_no_opti,
         scaled_supply_margin_ratio_to_no_opti,
-        scaled_supply_margin_diff_to_no_opti
+        scaled_supply_margin_diff_to_no_opti,
+        scaled_demand_margin_ratio_to_no_opti,
+        scaled_demand_margin_diff_to_no_opti
       ]
     }
 

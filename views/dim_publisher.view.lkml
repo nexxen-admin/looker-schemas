@@ -248,7 +248,7 @@ view: dim_publisher {
       type: string
       description: "The name of the entity that operates one or more sites"
       sql: ${TABLE}.PUB_Name;;
-      drill_fields: [dim_a_domain.a_domain, dim_dsp.dsp_display_name, dim_imp_type.imp_type]
+      drill_fields: [dim_a_domain.a_domain, dim_dsp.dsp_display_name, dim_imp_type.imp_type, dim_o_domain.top_level_domain, dim_buying_channel_ctrl.buying_channel_ctrl_name, dim_device_type.device_type]
       }
 
     dimension_group: pub_updated {

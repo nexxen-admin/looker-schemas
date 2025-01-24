@@ -19,6 +19,11 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 #   }
 # }
 
+access_grant: interview_candidates {
+  user_attribute: interview_candidates
+  allowed_values: ["yes"]
+}
+
 explore: bif_interview_table {
 label: "Front-End Developer Interview Table"
 }

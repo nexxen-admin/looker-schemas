@@ -24,10 +24,6 @@ access_grant: interview_candidates {
   allowed_values: ["yes"]
 }
 
-access_grant: can_view_pub_come_looker {
-  user_attribute: admins
-  allowed_values: ["Looker_Admins"]
-}
 
 explore: bif_interview_table {
 label: "Front-End Developer Interview Table"

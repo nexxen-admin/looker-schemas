@@ -72,7 +72,7 @@ view: bif_interview_table {
     sql: ${TABLE}.Items_Sold ;;
   }
 
-  dimension: revenue {
+  measure: revenue {
     type: number
     value_format: "$0.00"
     sql: ${TABLE}.Revenue ;;

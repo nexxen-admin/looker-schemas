@@ -53,25 +53,29 @@ order by day_date,country desc;;
   measure: imp_price {
     type: sum
     sql: ${TABLE}.imp_price ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
+    label: "Impressions Price"
   }
 
   measure: imp_price_adj {
     type: sum
     sql: ${TABLE}.imp_price_adj ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
+    label: "Impressions Price Adjusted*"
   }
 
   measure: impressions {
     type: sum
     sql: ${TABLE}.impressions ;;
     value_format: "#,##0"
+    label: "Impressions"
   }
 
   measure: impressions_adj {
     type: sum
     sql: ${TABLE}.impressions_adj ;;
-    value_format: "$#,##0"
+    value_format: "#,##0"
+    label: "Impressions Adjusted*"
   }
 
 

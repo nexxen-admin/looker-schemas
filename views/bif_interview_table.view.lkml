@@ -20,7 +20,7 @@ view: bif_interview_table {
           SI.Address,
           SI.State,
           SI.City,
-          SI.Zip
+          SI.Zip,
           SUM(SL.Revenue) as Revenue
       FROM
           bi.sales_test SL

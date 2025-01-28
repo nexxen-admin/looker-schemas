@@ -13,10 +13,13 @@ view: revenue_diff_placement_etl {
        -- revenue
        SUM(CASE WHEN opti in ('bidfloor','pubcost','pubcost_bidfloor') THEN revenue ELSE 0 END) AS revenue_enabled,
        SUM(CASE WHEN opti not in ('bidfloor','pubcost','pubcost_bidfloor') THEN revenue ELSE 0 END) AS revenue_not_enabled,
-       SUM(revenue) as total_revenue
+       SUM(revenue) as total_revenue,
+
+       SUM(CASE WHEN opti in ('bidfloor','pubcost','pubcost_bidfloor') THEN revenue ELSE 0 END)/sum(revenue) as percent_revenue_enabled
 from bi.opti_bid_raw_v1
 where opti != 'null_bucket'
-group by 1,2,3,4,5,6 ;;
+group by 1,2,3,4,5,6
+HAVING sum(revenue)>0;;
 
   }
 
@@ -104,6 +107,13 @@ group by 1,2,3,4,5,6 ;;
     label: "Total Revenue"
   }
 
+  measure: percent_revenue_enabled {
+    type: sum
+    sql: ${TABLE}.percent_revenue_enabled ;;
+    value_format: "0.00%"
+    label: "Percentage of Revenue Enabled"
+  }
+
 
 
   set: detail {
@@ -121,7 +131,8 @@ group by 1,2,3,4,5,6 ;;
       total_requests,
       revenue_enabled,
       revenue_not_enabled,
-      total_revenue
+      total_revenue,
+      percent_revenue_enabled
     ]
   }
 

@@ -16,6 +16,7 @@ view: bid_opti_all_models_v3_etl {
         date_trunc,
         placement_name,
         publisher_name,
+        operations_owner_name,
 
         -- measures
         sum(requests) as total_requests,
@@ -23,7 +24,7 @@ view: bid_opti_all_models_v3_etl {
 
 
         from raw_data_4_models
-        group by 1,2,3,4,5,6
+        group by 1,2,3,4,5,6,7
         ),
 
         optis_list as (
@@ -43,6 +44,7 @@ view: bid_opti_all_models_v3_etl {
         dt.date_trunc,
         dt.pub_id as publisher_id,
         dt.publisher_name,
+        dt.operations_owner_name,
 
         opti.requests,
         opti.impression,
@@ -143,10 +145,18 @@ view: bid_opti_all_models_v3_etl {
       sql: ${TABLE}.publisher_name ;;
     }
 
+
+  dimension: operations_owner_name {
+    type: string
+    sql: ${TABLE}.operations_owner_name ;;
+  }
+
+
     dimension: rank_model {
       type: string
       sql: ${TABLE}.rank_model ;;
     }
+
 
 
 # measu
@@ -235,6 +245,7 @@ view: bid_opti_all_models_v3_etl {
         publisher_id,
         publisher_name,
         rank_model,
+        operations_owner_name,
 
         impression,
         revenue,

@@ -1175,10 +1175,50 @@ view: fact_nexxen_dsp {
     filters: [period_filtered_measures: "last"]
   }
 
+  measure: current_period_complete_events {
+    view_label: "PoP"
+    type: sum
+    description: "Current period completes"
+    sql:   ${TABLE}.complete_events ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_complete_events {
+    view_label: "PoP"
+    type: sum
+    description: "Previous period completes"
+    sql:   ${TABLE}.complete_events ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_vcr {
+    view_label: "PoP"
+    type: number
+    description: "Current period VCR"
+    sql:  IFNULL(${current_period_complete_events}/nullif(${current_period_impressions},0),0);;
+    value_format: "0.00%"
+    # filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_vcr {
+    view_label: "PoP"
+    type: number
+    description: "Previous period VCR"
+    sql:  IFNULL(${previous_period_complete_events}/nullif(${previous_period_impressions},0),0);;
+    value_format: "0.00%"
+    #filters: [period_filtered_measures: "last"]
+  }
+
+
+
+
+
   measure: daily_pacing_msd_fact {
     type: average
     label: "MSD Daily Pacing"
-    value_format: "0.00%"
+    value_format: "#,##0"
     sql:  NULLIF(${dim_sfdb_opportunitylineitem_pacing.daily_pacing_dim},0) ;;
   }
 

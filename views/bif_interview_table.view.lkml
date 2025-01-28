@@ -10,7 +10,7 @@ view: bif_interview_table {
           SL.Employee,
           SL.Product_Type,
           SL.Items_Sold,
-          SL.Revenue,
+
 
           -- From Employee
           E.Name AS Employee_Name,
@@ -21,12 +21,14 @@ view: bif_interview_table {
           SI.State,
           SI.City,
           SI.Zip
+          SUM(SL.Revenue) as Revenue
       FROM
           bi.sales_test SL
       LEFT JOIN
           bi.Emplyee_test  E ON SL.Employee = E.Employee_ID
       LEFT JOIN
-          bi.store_info_test SI ON SL.Store_ID = SI.Store_ID ;;
+          bi.store_info_test SI ON SL.Store_ID = SI.Store_ID
+      GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13;;
   }
 
   measure: count {
@@ -73,7 +75,7 @@ view: bif_interview_table {
   }
 
   measure: revenue {
-    type: number
+    type: sum
     value_format: "$0.00"
     sql: ${TABLE}.Revenue ;;
   }

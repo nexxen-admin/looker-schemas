@@ -24,6 +24,7 @@ order by day_date,country desc;;
   dimension: day_date {
     type: date
     sql: ${TABLE}.day_date ;;
+    drill_fields: [segment_id,segmenttype]
   }
 
 
@@ -36,6 +37,7 @@ order by day_date,country desc;;
   dimension: country {
     type: string
     sql: ${TABLE}.country ;;
+    drill_fields: [segment_id,segmenttype]
   }
 
   dimension: segment_id {

@@ -604,6 +604,10 @@ explore: bid_opti_bottom_5_placement_v3_etl {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: tvi_dsp_v1 {
+  label: "tvi_dsp_v1"
+  required_access_grants: [can_view_all_tremor]
+}
 
 
 explore: v_dim_publisher_commission_metadata {

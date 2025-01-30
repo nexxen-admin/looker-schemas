@@ -25,6 +25,27 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: creative_size_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.creative_size_key ;;
+    hidden: yes
+  }
+
+  dimension: dma_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.creative_size_key ;;
+    hidden: yes
+  }
+
+  dimension: device_type_key{
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.device_type_key ;;
+    hidden: yes
+  }
+
   dimension: creative_file_key {
     type: number
     value_format_name: id

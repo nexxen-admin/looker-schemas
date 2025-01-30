@@ -87,9 +87,27 @@ explore: fact_nexxen_dsp  {
 
   join: dim_dsp_format {
     type: left_outer
-    view_label: "Creative"
+    view_label: "Request Attributes"
     relationship: many_to_one
     sql_on: ${fact_nexxen_dsp.format_id}=${dim_dsp_format.format_id} ;;
+  }
+  join: dim_dsp_creative_size {
+    type: inner
+    view_label: "Creative"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.creative_size_key}=${dim_dsp_creative_size.creative_size_key} ;;
+  }
+  join: dim_dsp_dma{
+    type: inner
+    view_label: "Geo"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.dma_key}=${dim_dsp_dma.dma_key} ;;
+  }
+  join: dim_dsp_device_type {
+    type: inner
+    view_label: "Request Attributes"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.device_type_key}=${dim_dsp_device_type.device_type_key} ;;
   }
 
   join: dim_dsp_creative {

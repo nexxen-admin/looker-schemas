@@ -20,5 +20,5 @@ view: dim_dsp_format {
   dimension: format {
     type: string
     sql: ${TABLE}.format ;;
-  }
-  }
+    }
+}

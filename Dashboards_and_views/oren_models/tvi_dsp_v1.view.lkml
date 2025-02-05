@@ -1,15 +1,16 @@
 view: tvi_dsp_v1 {
     derived_table: {
       sql: select date,
-                  country,
+                  country_name as country,
                   attribution_contract_name,
                   attribution_category_id,
                   attribution_data_provider_name,
-                  SUM(adjusted_publisher_cost) as adjusted_publisher_cost,
-                  SUM(adjusted_total_billable) as adjusted_total_billable,
+                  SUM(adj_Publisher_Cost) as adjusted_publisher_cost,
+                  SUM(adj_total_billable) as adjusted_total_billable,
+                  SUM(total_billable) as total_billable,
                   SUM(data_cost) as data_cost,
-                  SUM(adjusted_inventory_cost) as adjusted_inventory_cost,
-                  SUM(impressions_adjusted) as impressions_adjusted,
+                  SUM(adj_inventory_cost) as adjusted_inventory_cost,
+                  SUM(adj_impression) as impressions_adjusted,
                   SUM(impressions) as impressions
         from bi.tvi_report_dsp
         group by 1,2,3,4,5;;
@@ -80,6 +81,7 @@ view: tvi_dsp_v1 {
       label: "Data Cost"
     }
 
+
     measure: adjusted_inventory_cost {
       type: sum
       sql: ${TABLE}.adjusted_inventory_cost ;;
@@ -101,6 +103,12 @@ view: tvi_dsp_v1 {
     label: "Impressions"
   }
 
+  measure: total_billable {
+    type: sum
+    sql: ${TABLE}.total_billable ;;
+    value_format: "#,##0"
+    label: "Total Billable"
+  }
 
 
 
@@ -116,7 +124,8 @@ view: tvi_dsp_v1 {
                   data_cost,
                   adjusted_inventory_cost,
                   impressions_adjusted,
-                  impressions
+                  impressions,
+                  total_billable
 
       ]
     }

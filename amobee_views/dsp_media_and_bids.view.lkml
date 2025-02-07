@@ -1537,6 +1537,14 @@ dimension: browser_type_name {
               else 'Other' end;;
   }
 
+  measure: media_shift_goals{
+  type: number
+  label: "Media Shift LOB Goals"
+  sql: case when {LOB} = 'MS' THEN .75
+            when {LOB} = 'SS' THEN .45
+            ELSE 0 END;;
+  }
+
   measure: count {
     type: count
     drill_fields: [iab_category_name, media_channel_name, mobile_app_name]

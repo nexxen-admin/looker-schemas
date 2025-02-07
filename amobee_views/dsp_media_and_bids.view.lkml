@@ -1543,6 +1543,8 @@ dimension: browser_type_name {
   sql: case when {LOB} = 'MS' THEN .75
             when {LOB} = 'SS' THEN .45
             ELSE 0 END;;
+    value_format: "0.00%"
+
   }
 
   measure: count {

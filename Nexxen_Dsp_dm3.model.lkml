@@ -1,4 +1,4 @@
-connection: "vertica_iad"
+connection: "vertica_dm3"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"
@@ -40,11 +40,11 @@ explore: monthly_billing_override_data {
   # hidden: yes
 }
 explore: v_monthly_dato_billing_report_diff{
-    label: "Datorama Looker Diff"
+  label: "Datorama Looker Diff"
 }
 
 explore: v_monthly_billing_report_diff_live_locked {
- label: "Diff Report"
+  label: "Diff Report"
 }
 
 explore: v_monthly_dato_billing_report_diff_on_locked {
@@ -52,7 +52,7 @@ explore: v_monthly_dato_billing_report_diff_on_locked {
 }
 
 explore: monthly_billing_locked_report{
- label: "Locked Report"
+  label: "Locked Report"
 }
 
 #explore: v_monthly_billing_report_diff_live_locked {
@@ -64,7 +64,7 @@ explore: monthly_billing_locked_report{
 #explore: monthly_billing_locked_report {
 #  required_access_grants: [billing_report_group]
 #  label: "Monthly billing locked report"
-  # hidden: yes
+# hidden: yes
 #}
 
 
@@ -87,27 +87,9 @@ explore: fact_nexxen_dsp  {
 
   join: dim_dsp_format {
     type: left_outer
-    view_label: "Request Attributes"
-    relationship: many_to_one
-    sql_on: ${fact_nexxen_dsp.format_id}=${dim_dsp_format.format_id} ;;
-  }
-  join: dim_dsp_creative_size {
-    type: inner
     view_label: "Creative"
     relationship: many_to_one
-    sql_on: ${fact_nexxen_dsp.creative_size_key}=${dim_dsp_creative_size.creative_size_key} ;;
-  }
-  join: dim_dsp_dma{
-    type: inner
-    view_label: "Geo"
-    relationship: many_to_one
-    sql_on: ${fact_nexxen_dsp.dma_key}=${dim_dsp_dma.dma_key} ;;
-  }
-  join: dim_dsp_device_type {
-    type: inner
-    view_label: "Request Attributes"
-    relationship: many_to_one
-    sql_on: ${fact_nexxen_dsp.device_type_key}=${dim_dsp_device_type.device_type_key} ;;
+    sql_on: ${fact_nexxen_dsp.format_id}=${dim_dsp_format.format_id} ;;
   }
 
   join: dim_dsp_creative {
@@ -142,7 +124,7 @@ explore: fact_nexxen_dsp  {
     type: left_outer
     view_label: "Creative"
     sql_on: ${dim_dsp_creative_file_tracking_url.creative_file_id} = ${dim_dsp_creative_file.creative_file_id}
-    and ${dim_dsp_creative_file_tracking_url.platform_id} = ${dim_dsp_creative_file.platform_id};;
+      and ${dim_dsp_creative_file_tracking_url.platform_id} = ${dim_dsp_creative_file.platform_id};;
     relationship: many_to_one
   }
 

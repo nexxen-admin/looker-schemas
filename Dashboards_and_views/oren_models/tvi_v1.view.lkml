@@ -30,6 +30,7 @@ order by day_date,country desc;;
   dimension: nexxen_dmp_provider {
     type: string
     sql: ${TABLE}.nexxen_dmp_provider ;;
+    drill_fields: [segment_id,segmenttype]
   }
 
   dimension: country {

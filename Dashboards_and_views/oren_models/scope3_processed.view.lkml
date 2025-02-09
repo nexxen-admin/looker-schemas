@@ -45,12 +45,11 @@ from bi.scope3_processed_data
     sql: ${TABLE}."country" ;;
   }
 
-
-
   dimension: seller_id {
-    type: number
-    sql: round(${TABLE}."seller_id",0) ;;
+    type: string
+    sql: ${TABLE}."seller_id" ;;
   }
+
 
   dimension: device_type {
     type: string
@@ -65,7 +64,7 @@ from bi.scope3_processed_data
 
 
   dimension: utc_datetime {
-    type: date_time
+    type: string
     sql: ${TABLE}."utc_datetime" ;;
   }
 
@@ -90,14 +89,9 @@ from bi.scope3_processed_data
 
   dimension: seller_placement_id {
     type: string
-    sql:
-    CASE
-      WHEN ${TABLE}."seller_placement_id" ~ '^[0-9.]+$' THEN
-        CAST(ROUND(${TABLE}."seller_placement_id"::numeric, 0) AS INT)::VARCHAR
-      ELSE
-        ${TABLE}."seller_placement_id"
-    END;;
+    sql: ${TABLE}."seller_placement_id" ;;
   }
+
 
   dimension: ad_opportunities_processed {
     type: number
@@ -105,7 +99,7 @@ from bi.scope3_processed_data
   }
 
   dimension: gmp_eligible {
-    type: string
+    type: number
     sql: ${TABLE}."gmp_eligible" ;;
   }
 

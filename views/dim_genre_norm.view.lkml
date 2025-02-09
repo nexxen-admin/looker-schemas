@@ -11,6 +11,21 @@ view: dim_genre_norm {
     type: string
     sql: split_part(btrim(${TABLE}.Genre_Norm,'[]'),',',1) ;;
     drill_fields: [dim_publisher.publisher_name]
+    hidden: yes
+  }
+
+  dimension: Genre_Norm_Full_Name {
+    label: "Genre"
+    description: "The genre of the ad"
+    type: string
+    sql: CASE ${Genre_Norm} WHEN 'reality tv' THEN 'Reality TV'
+        WHEN 'lgbtq' THEN 'LGBTQ'
+        WHEN 'business & finance' THEN 'Business & Finance'
+        WHEN 'food & cooking' THEN 'Food & Cooking'
+        WHEN 'sci-fi & fantasy' THEN 'Sci-fi & Fantasy'
+        ELSE CONCAT(UPPER(LEFT(${Genre_Norm}, 1)), SUBSTRING(${Genre_Norm}, 2))
+        END  ;;
+    drill_fields: [dim_publisher.publisher_name]
   }
 
   dimension: Sub_Genre {

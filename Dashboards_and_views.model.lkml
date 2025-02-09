@@ -609,6 +609,11 @@ explore: tvi_dsp_v1 {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: scope3_processed {
+  label: "scope3_processed"
+  required_access_grants: [can_view_all_tremor]
+}
+
 
 explore: v_dim_publisher_commission_metadata {
   label: "BD COMM NEW"

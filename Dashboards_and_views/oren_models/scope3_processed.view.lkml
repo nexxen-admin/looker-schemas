@@ -9,6 +9,7 @@ select file_name,
        device_type,
        inventory_id,
        utc_datetime,
+      TO_CHAR(utc_datetime, 'YYYY-MM') AS event_month,
        ad_opportunities,
        inventory_coverage,
        max_placement_size,
@@ -68,6 +69,10 @@ from bi.scope3_processed_data
     sql: ${TABLE}."utc_datetime" ;;
   }
 
+    dimension: event_month {
+    type: string
+    sql: ${TABLE}."event_month" ;;
+  }
 
   measure: ad_opportunities {
     type: sum
@@ -114,6 +119,7 @@ from bi.scope3_processed_data
        device_type,
        inventory_id,
        utc_datetime,
+       event_month,
        ad_opportunities,
        inventory_coverage,
        max_placement_size,

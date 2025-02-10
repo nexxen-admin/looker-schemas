@@ -14,7 +14,7 @@ select file_name,
        max_placement_size,
        seller_placement_id,
        ad_opportunities_processed,
-       gmp_eligible
+       gmp_eligible::boolean as gmp_eligible
 from bi.scope3_processed_data
       ;;
 

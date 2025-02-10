@@ -104,6 +104,7 @@ view: exchange_daily_report_component {
       raw,
       date,
       week,
+      day_of_week,
       month,
       quarter,
       year

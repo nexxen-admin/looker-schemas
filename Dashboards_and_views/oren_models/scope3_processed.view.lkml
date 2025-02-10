@@ -69,8 +69,8 @@ from bi.scope3_processed_data
   }
 
 
-  dimension: ad_opportunities {
-    type: number
+  measure: ad_opportunities {
+    type: sum
     sql: ${TABLE}."ad_opportunities" ;;
   }
 
@@ -93,8 +93,8 @@ from bi.scope3_processed_data
   }
 
 
-  dimension: ad_opportunities_processed {
-    type: number
+  measure: ad_opportunities_processed {
+    type: sum
     sql: ${TABLE}."ad_opportunities_processed" ;;
   }
 

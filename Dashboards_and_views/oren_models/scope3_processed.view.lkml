@@ -99,7 +99,7 @@ from bi.scope3_processed_data
   }
 
   dimension: gmp_eligible {
-    type: number
+    type: yesno
     sql: ${TABLE}."gmp_eligible" ;;
   }
 

@@ -64,7 +64,7 @@ from bi.scope3_processed_data
 
 
   dimension: utc_datetime {
-    type: string
+    type: date
     sql: ${TABLE}."utc_datetime" ;;
   }
 

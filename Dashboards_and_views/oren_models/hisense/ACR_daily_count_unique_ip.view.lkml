@@ -1,10 +1,10 @@
 view: ACR_daily_count_unique_ip {
   derived_table: {
-    sql: SELECT date(AA.viewing_start_utc) as date,
+    sql: SELECT date,
     country,
-       COUNT(DISTINCT AA.ip) as distinct_ip_count
-FROM dragon.viewership_content_sessions_combined_daily AA
-where AA.viewing_start_utc>current_date - INTERVAL '1 month'
+       sum(count_of_device_id) as distinct_ip_count
+FROM bi_new.ACR_daily_count_unique_ip
+where date>current_date - INTERVAL '1 month'
 GROUP BY 1,2
  ;;
   }

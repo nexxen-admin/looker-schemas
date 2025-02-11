@@ -1,19 +1,14 @@
 view: daily_null_count_all_col {
   derived_table: {
-    sql: SELECT date(AA.viewing_start_utc),
-    country,
-       SUM(CASE WHEN CC.episode_number is not null THEN 1 ELSE 0 END)/count(*) as count_events_with_episode_numbers,
-       SUM(CASE WHEN CC.season_number is not null THEN 1 ELSE 0 END)/count(*) as count_events_with_season_number,
-       SUM(CASE WHEN BB.genre_tremor_id is not null THEN 1 ELSE 0 END)/count(*) as count_events_with_genre_tremor_id,
-       SUM(CASE WHEN AA.tv_program_tremor_id is not null THEN 1 ELSE 0 END)/count(*) as tv_program_tremor_id
-FROM dragon.viewership_content_sessions_combined_daily AA
-RIGHT JOIN dragon.program_genre BB
-ON AA.tv_program_tremor_id=BB.tv_program_tremor_id
-RIGHT JOIN dragon.program CC
-ON AA.tv_program_tremor_id=CC.tv_program_tremor_id
-where AA.viewing_start_utc>current_date - INTERVAL '1 month'
-GROUP BY 1,2
-ORDER BY 1
+    sql:
+SELECT date,
+       country,
+       sum(count_events_with_episode_numbers) as count_events_with_episode_numbers,
+       sum(count_events_with_season_number) as count_events_with_season_number,
+       sum(count_events_with_genre_tremor_id) as count_events_with_genre_tremor_id,
+       sum(tv_program_tremor_id) as tv_program_tremor_id
+FROM bi_new.daily_null_count_all_col
+group by 1,2
  ;;
   }
 

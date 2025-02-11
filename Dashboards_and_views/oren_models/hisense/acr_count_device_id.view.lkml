@@ -3,23 +3,14 @@ view: acr_count_device_id {
     sql:
 
 
-    SELECT date(AA.viewing_start_utc) as date,
-          aa.country,
-          COUNT(DISTINCT aa.device_id) AS "count_of_device_id"
-    FROM dragon.viewership_content_sessions_combined_daily AA
-    LEFT JOIN dragon.device_info_r BB
-    ON AA.device_id = BB.device_id
-    where AA.viewing_start_utc>current_date - INTERVAL '1 month'
-    GROUP BY 1,2
-
+SELECT date,country,sum(count_of_device_id) as count_of_device_id
+FROM bi_new.acr_count_device_id
+where date > current_date - INTERVAL '1 month'
+group by 1,2
 
       ;;
   }
 
-  dimension: count {
-    type: number
-    drill_fields: [detail*]
-  }
 
   dimension: date {
     type: date

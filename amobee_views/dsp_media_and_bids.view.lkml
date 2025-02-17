@@ -1540,8 +1540,10 @@ dimension: browser_type_name {
   measure: media_shift_goals{
   type: number
   label: "Media Shift LOB Goals"
-  sql: case when {LOB} = 'MS' THEN .75
-            when {LOB} = 'SS' THEN .45
+  sql: case when ${__time_year} = "2024" and ${amobee_business_unit} = 'ACCESS' THEN .75
+            when ${__time_year} = "2024" and ${amobee_business_unit} = 'Enterprise' THEN .35
+            when ${__time_year} = "2025" and ${amobee_business_unit} = 'ACCESS' THEN .70
+            when ${__time_year} = "2025" and ${amobee_business_unit} = 'Enterprise' THEN .45
             ELSE 0 END;;
     value_format: "0.00%"
 

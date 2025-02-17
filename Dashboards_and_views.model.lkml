@@ -620,6 +620,15 @@ explore: scope3_processed {
 }
 
 
+explore: acr_count_device_id_etl_checker {
+  label: "acr_count_device_id_etl_checker"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
+
+
+
 explore: v_dim_publisher_commission_metadata {
   label: "BD COMM NEW"
 

@@ -8,7 +8,8 @@ view: etl_checker {
                             UNION
                             SELECT
                                 -- gives the last tuseday date
-                                CURRENT_DATE - ((EXTRACT(DOW FROM CURRENT_DATE) + 5) % 7 + 1) AS sample_date
+                                -- CURRENT_DATE - ((EXTRACT(DOW FROM CURRENT_DATE) + 5) % 7 + 1) AS sample_date
+                                current_date() - interval '2 days' AS sample_date
                         ) min_max_date
                         TIMESERIES slice_time AS '1 DAY' OVER(ORDER BY sample_date::VARCHAR::TIMESTAMP)),
 

@@ -1537,11 +1537,13 @@ dimension: browser_type_name {
               else 'Other' end;;
   }
 
-  measure: media_shift_goals{
+  dimension: media_shift_goals{
   type: number
   label: "Media Shift LOB Goals"
-  sql: case when {LOB} = 'MS' THEN .75
-            when {LOB} = 'SS' THEN .45
+  sql: case when ${__time_year} = '2024' and ${LOB} = 'MS' THEN .75
+            when ${__time_year} = "2024" and ${LOB} = 'SS' THEN .35
+            when ${__time_year} = "2025" and ${LOB} = 'MS' THEN .70
+            when ${__time_year} = "2025" and ${LOB} = 'SS' THEN .45
             ELSE 0 END;;
     value_format: "0.00%"
 
@@ -1578,6 +1580,8 @@ dimension: browser_type_name {
         THEN ${__time_month}
       WHEN {% parameter date_granularity %} = 'Quarter'
         THEN ${__time_quarter}
+      WHEN {% parameter date_granularity %} = 'Year'
+        THEN ${__time_year}
       ELSE NULL
     END ;;
 

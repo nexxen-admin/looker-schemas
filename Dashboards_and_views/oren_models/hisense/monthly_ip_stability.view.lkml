@@ -2,78 +2,17 @@ view: monthly_ip_stability {
   derived_table: {
     sql:
 
-
-select '1 Month' as 'Time_period',
+select Time_period,
        country,
-       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
-       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
-       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
-       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as 'ip4',
-       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as 'ip5',
-       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as 'ip6',
-       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
-       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
-from (
-      select device_id,country,count(distinct ip) as ip_count
-      from dragon.viewership_content_sessions_combined_daily AA
-      where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -1) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
-      group by 1,2
-      ) BB
-group by 1,2
-UNION ALL
-select '2 Month' as 'Time period',
-       country,
-       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
-       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
-       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
-       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as 'ip4',
-       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as 'ip5',
-       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as 'ip6',
-       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
-       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
-from (
-      select device_id,country,count(distinct ip) as ip_count
-      from dragon.viewership_content_sessions_combined_daily AA
-      where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -2) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
-      group by 1,2
-      ) BB
-group by 1,2
-UNION ALL
-select '3 Month' as 'Time period',
-       country,
-       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
-       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
-       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
-       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as 'ip4',
-       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as 'ip5',
-       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as 'ip6',
-       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
-       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
-from (
-      select device_id,country,count(distinct ip) as ip_count
-      from dragon.viewership_content_sessions_combined_daily AA
-      where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -3) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
-      group by 1,2
-      ) BB
-group by 1,2
-UNION ALL
-select '4 Month' as 'Time period',
-       country,
-       round(count(distinct case when ip_count=1 then device_id end)/count(device_id),3) as 'ip1',
-       round(count(distinct case when ip_count=2 then device_id end)/count(device_id),3) as 'ip2',
-       round(count(distinct case when ip_count=3 then device_id end)/count(device_id),3) as 'ip3',
-       round(count(distinct case when ip_count=4 then device_id end)/count(device_id),3) as 'ip4',
-       round(count(distinct case when ip_count=5 then device_id end)/count(device_id),3) as 'ip5',
-       round(count(distinct case when ip_count=6 then device_id end)/count(device_id),3) as 'ip6',
-       round(count(distinct case when ip_count=7 then device_id end)/count(device_id),3) as 'ip7',
-       round(count(distinct case when ip_count=8 then device_id end)/count(device_id),3) as 'ip8'
-from (
-      select device_id,country,count(distinct ip) as ip_count
-      from dragon.viewership_content_sessions_combined_daily AA
-      where AA.viewing_start_utc between ADD_MONTHS(CURRENT_TIMESTAMP, -4) and ADD_MONTHS(CURRENT_TIMESTAMP,0)
-      group by 1,2
-      ) BB
-group by 1,2
+       ip1,
+       ip2,
+       ip3,
+       ip4,
+       ip5,
+       ip6,
+       ip7,
+       ip8
+from bi_new.monthly_ip_stability
 
 
 

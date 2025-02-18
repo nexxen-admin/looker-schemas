@@ -1,17 +1,13 @@
 
 view: acr_weekly_title_device_by_vod_linear {
     derived_table: {
-      sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
-               PP.title,
+      sql: SELECT week_date,
+              title,
               source,
-              aa.country,
-               COUNT(DISTINCT device_id) as count_devices
-        FROM dragon.viewership_content_sessions_combined_daily AA
-        LEFT JOIN dragon.program PP
-        ON AA.tv_program_tremor_id=PP.tv_program_tremor_id
-        where AA.viewing_start_utc>current_date - INTERVAL '2 month'
-        GROUP BY 1,2,3,4
-        ORDER BY 1 DESC
+              country,
+              count_devices
+        FROM bi_new.acr_weekly_title_device_by_vod_linear
+
          ;;
     }
 

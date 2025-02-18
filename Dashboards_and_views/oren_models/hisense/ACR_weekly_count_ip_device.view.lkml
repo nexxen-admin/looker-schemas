@@ -1,13 +1,11 @@
   view: ACR_weekly_count_ip_device {
     derived_table: {
-      sql: SELECT DATE_TRUNC('WEEK',AA.viewing_start_utc) as week_date,
-              aa.country,
-               COUNT(DISTINCT AA.ip) as distinct_ip_count,
-              COUNT(DISTINCT AA.device_id) as device_id_count,
-              round(COUNT(DISTINCT AA.device_id)/COUNT(DISTINCT AA.ip),2) as device_ip_ratio
-        FROM dragon.viewership_content_sessions_combined_daily AA
-        where AA.viewing_start_utc>current_date - INTERVAL '1 month'
-        GROUP BY 1,2
+      sql: SELECT week_date,
+              country,
+              distinct_ip_count,
+              device_id_count,
+              device_ip_ratio
+        FROM bi_new.ACR_weekly_count_ip_device
          ;;
     }
 

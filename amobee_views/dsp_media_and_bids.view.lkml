@@ -1537,7 +1537,7 @@ dimension: browser_type_name {
               else 'Other' end;;
   }
 
-  measure: media_shift_goals{
+  dimension: media_shift_goals{
   type: number
   label: "Media Shift LOB Goals"
   sql: case when ${__time_year} = '2024' and ${LOB} = 'MS' THEN .75

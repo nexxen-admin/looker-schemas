@@ -1580,6 +1580,8 @@ dimension: browser_type_name {
         THEN ${__time_month}
       WHEN {% parameter date_granularity %} = 'Quarter'
         THEN ${__time_quarter}
+      WHEN {% parameter date_granularity %} = 'Year'
+        THEN ${__time_year}
       ELSE NULL
     END ;;
 

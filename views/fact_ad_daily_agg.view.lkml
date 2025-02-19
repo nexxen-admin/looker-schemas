@@ -2452,6 +2452,24 @@ view: fact_ad_daily_agg {
     filters: [period_filtered_measures: "last"]
   }
 
+  measure: current_period_net_revenue{
+    view_label: "PoP"
+    label: "Current Period Net Revenue "
+    type: number
+    description: "Specifies the tech fee a publisher is paying on using the ctrl, in the current period we are looking at, using the filter 'current date range' which has to be applied"
+    sql: ${current_period_revenue}-${current_period_cost}+${current_period_pub_platform_fee} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: previous_period_net_revenue {
+    view_label: "PoP"
+    label: "Previous Period Net Revenue "
+    description: "Difference between revenue and cogs"
+    type: number
+    sql: ${previous_period_revenue}-${previous_period_cost}+${previous_period_pub_platform_fee} ;;
+    value_format: "$#,##0.00"
+  }
+
   measure: margin_pop_change {
     view_label: "PoP"
     label: "Margin Previous {{_filters['compare_to']}} Change"

@@ -103,9 +103,11 @@ view: exchange_daily_report_component {
     timeframes: [
       raw,
       date,
+      day_of_month,
       week,
       day_of_week,
       month,
+      month_name,
       quarter,
       year
     ]
@@ -122,4 +124,162 @@ view: exchange_daily_report_component {
   set: detail {
     fields: [file_record, Revenue]
   }
+
+
+  #---------------------------------------------------------------POP------------------------------------------------------------------------
+  parameter: compare_to {
+    view_label: "PoP"
+    description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
+    label: "Compare To:"
+    type: unquoted
+
+    allowed_value: {
+      label: "Previous Month"
+      value: "Month"
+    }
+
+    allowed_value: {
+      label: "Previous Year"
+      value: "Year"
+    }
+
+    allowed_value: {
+      label: "Previous Week"
+      value: "Week"
+    }
+
+    allowed_value: {
+      label: "Previous Quarter"
+      value: "Quarter"
+    }
+    default_value: "Period"
+  }
+
+  filter: current_date_range {
+    type: date
+    view_label: "PoP"
+    label: "Current Date Range"
+    description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
+    sql: ${period_filtered_measures} IS NOT NULL ;;
+  }
+
+  dimension: days_in_period {
+    hidden:  yes
+    view_label: "PoP"
+    description: "Gives the number of days in the current period date range"
+    type: number
+    sql: TIMESTAMPDIFF(DAY, CAST({% date_start current_date_range %} AS TIMESTAMP), CAST({% date_end current_date_range %} AS TIMESTAMP)) ;;
+  }
+
+  dimension: period_2_start {
+    hidden:  yes
+    view_label: "PoP"
+    description: "Calculates the start of the previous period"
+    type: date
+    sql:
+            {% if compare_to._parameter_value == "Period" %}
+            TIMESTAMPADD(DAY, -${days_in_period}, CAST({% date_start current_date_range %} AS TIMESTAMP))
+            {% else %}
+            TIMESTAMPADD({% parameter compare_to %}, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
+            {% endif %};;
+  }
+
+  dimension: period_2_end {
+    hidden:  yes
+    view_label: "PoP"
+    description: "Calculates the end of the previous period"
+    type: date
+    sql:
+            {% if compare_to._parameter_value == "Period" %}
+            TIMESTAMPADD(DAY, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
+            {% else %}
+            TIMESTAMPADD({% parameter compare_to %}, -1, TIMESTAMPADD(DAY, -1, CAST({% date_end current_date_range %} AS TIMESTAMP)))
+            {% endif %};;
+  }
+
+  dimension: period_filtered_measures {
+    hidden: yes
+    type: string
+    sql:
+            {% if current_date_range._is_filtered %}
+                CASE
+                WHEN {% condition current_date_range %} ${event_raw} {% endcondition %} THEN 'this'
+                WHEN ${event_raw} between ${period_2_start} and ${period_2_end} THEN 'last' END
+            {% else %} NULL {% endif %} ;;
+  }
+
+  dimension: day_in_period {
+    hidden: yes
+    description: "Gives the number of days since the start of each period. Use this to align the event dates onto the same axis, the axes will read 1,2,3, etc."
+    type: number
+    sql:
+        {% if current_date_range._is_filtered %}
+            CASE
+            WHEN {% condition current_date_range %} ${event_raw} {% endcondition %}
+            THEN TIMESTAMPDIFF(DAY, CAST({% date_start current_date_range %} AS TIMESTAMP), ${event_raw}) + 1
+            WHEN ${event_raw} between ${period_2_start} and ${period_2_end}
+            THEN TIMESTAMPDIFF(DAY, ${period_2_start}, ${event_raw}) + 1
+            END
+        {% else %} NULL
+        {% endif %}
+        ;;
+  }
+
+  dimension_group: date_in_period {
+    description: "Use this as your grouping dimension when comparing periods. Aligns the previous periods onto the current period"
+    label: "Current Period"
+    type: time
+    sql: TIMESTAMPADD(DAY, ${day_in_period} - 1, CAST({% date_start current_date_range %} AS TIMESTAMP)) ;;
+    view_label: "PoP"
+    timeframes: [
+      raw,
+      date,
+      day_of_month,
+      week,
+      day_of_week,
+      month,
+      month_name,
+      quarter,
+      year]
+
+  }
+
+  dimension_group: previous_date_in_period {
+    description: "Use this as your grouping dimension when comparing periods. Aligns the previous periods onto the current period"
+    label: "Previous Period"
+    type: time
+    sql: TIMESTAMPADD(DAY, ${day_in_period} - 1, ${period_2_start}) ;;
+    view_label: "PoP"
+    timeframes: [
+      raw,
+      date,
+      day_of_month,
+      week,
+      day_of_week,
+      month,
+      month_name,
+      quarter,
+      year]
+
+  }
+
+
+  measure: current_period_net_revenue {
+    view_label: "PoP"
+    type: sum
+    description: "Current period Net Revenue"
+    sql:  ${TABLE}.Revenue-${TABLE}.Cost;;
+    value_format: "$#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_net_revenue{
+    view_label: "PoP"
+    type: sum
+    description: "Previous period Net Revenue"
+    sql: ${TABLE}.Revenue-${TABLE}.Cost ;;
+    value_format: "$#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
 }

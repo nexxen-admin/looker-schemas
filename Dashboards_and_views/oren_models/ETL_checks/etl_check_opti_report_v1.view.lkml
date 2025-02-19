@@ -7,7 +7,7 @@ view: etl_check_opti_report_v1 {
                                 current_date() - interval '30 days' AS sample_date
                             UNION ALL
                             SELECT
-                                current_date() - interval '2 days' AS sample_date
+                                current_date() - interval '1 days' AS sample_date
                         ) min_max_date
                         TIMESERIES slice_time AS '1 DAY' OVER(ORDER BY sample_date::VARCHAR::TIMESTAMP)
                         )

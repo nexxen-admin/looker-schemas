@@ -1352,31 +1352,59 @@ view: fact_nexxen_dsp {
   measure: html_kpi_pacing {
     type: count
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 20px; letter-spacing: 0.01em;">
+     <div style="color:#636E7A; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Pacing
-        <div style=" line-height: 15px; font-size: 28px; font-weight: 500;">
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
         </div>
       </div>;;
   }
 
   measure: html_kpi_impressions {
-    type: count
+    type: number
+    sql: ( ${current_period_impressions} / NULLIF(${previous_period_impressions} ,0)) - 1  ;;
+    value_format_name: percent_0
+
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 20px; letter-spacing: 0.01em; ">
+    <div style="color:#636E7A; display: inline-block; font-size: 15px; letter-spacing: 0.01em; ">
         Impressions
-        <div style=" line-height: 15px; font-size: 28px; font-weight: 500;">
-          {{ impressions._rendered_value }}
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ current_period_impressions._rendered_value }}
         </div>
-      </div>;;
+        <div style="color:#636E7A; line-height: 15px; font-size: 15px; margin-top:20px;">
+          {% if value > 0 %}
+          {% assign indicator = "#7EC537,▲" | split: ',' %}
+          {% elsif value < 0 %}
+
+            {% assign indicator = "#C53737,▼" | split: ',' %}
+
+            {% else %}
+
+            {% assign indicator = "#636E7A,▬" | split: ',' %}
+
+            {% endif %}
+            <font color="{{indicator[0]}}">
+
+            {% if value == 99999.12345 %} &infin
+
+            {% else %}{{indicator[1]}}
+
+            {% endif %}
+
+            </font>
+            {{rendered_value}}
+        </div>
+      </div>
+
+      ;;
   }
 
   measure: html_kpi_vcr {
     type: count
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 20px; letter-spacing: 0.01em;">
+     <div style="color:#636E7A; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         VCR
-        <div style=" line-height: 15px; font-size: 28px; font-weight: 500;">
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ VCR_1P._rendered_value }}
         </div>
       </div>;;
@@ -1385,9 +1413,9 @@ view: fact_nexxen_dsp {
   measure: html_kpi_delivered_spend {
     type: count
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 20px; letter-spacing: 0.01em;">
+     <div style="color:#636E7A; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Delivered Spend
-        <div style=" line-height: 15px; font-size: 28px; font-weight: 500;">
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ Delivered_Spend._rendered_value }}
         </div>
       </div>;;

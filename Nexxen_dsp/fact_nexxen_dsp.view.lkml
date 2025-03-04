@@ -438,26 +438,26 @@ view: fact_nexxen_dsp {
 
   measure: CTR_1P {
     type: number
-    value_format: "0.00%"
+    value_format: "0.0%"
     sql: IFNULL(${clicks}/nullif(${impressions},0),0) ;;
   }
 
   measure: CTR_3P {
     type: number
-    value_format: "0.00%"
+    value_format: "0.0%"
     sql: ${third_party_clicks}/nullif(${third_party_impressions},0) ;;
   }
 
   measure: VCR_1P {
     type: number
     sql: IFNULL(${complete_events}/nullif(${impressions},0),0) ;;
-    value_format: "0.00%"
+    value_format: "0.0%"
   }
 
   measure: VCR_3P {
     type: number
     sql: ${third_party_complete_events}/nullif(${third_party_impressions},0) ;;
-    value_format: "0.00%"
+    value_format: "0.0%"
   }
 
   measure: IV {
@@ -692,7 +692,7 @@ view: fact_nexxen_dsp {
 
   measure: pacing_msd {
     type: sum
-    value_format: "0.00\%"
+    value_format: "0.0\%"
     sql: -- case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then
         ${dim_sfdb_opportunitylineitem.msd_pacing}*100;;
         #hidden: yes

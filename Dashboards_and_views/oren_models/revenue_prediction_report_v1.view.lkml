@@ -67,7 +67,7 @@ from BI.revenue_prediction
 
   measure: net_revenue_last_year{
     type: sum
-    sql: ${TABLE}.revenue_last_year} - ${TABLE}.cost_last_year ;;
+    sql: ${TABLE}.revenue_last_year - ${TABLE}.cost_last_year ;;
     value_format: "#,##0"
   }
 

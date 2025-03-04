@@ -438,26 +438,26 @@ view: fact_nexxen_dsp {
 
   measure: CTR_1P {
     type: number
-    value_format: "0.00%"
+    value_format: "0.0%"
     sql: IFNULL(${clicks}/nullif(${impressions},0),0) ;;
   }
 
   measure: CTR_3P {
     type: number
-    value_format: "0.00%"
+    value_format: "0.0%"
     sql: ${third_party_clicks}/nullif(${third_party_impressions},0) ;;
   }
 
   measure: VCR_1P {
     type: number
     sql: IFNULL(${complete_events}/nullif(${impressions},0),0) ;;
-    value_format: "0.00%"
+    value_format: "0.0%"
   }
 
   measure: VCR_3P {
     type: number
     sql: ${third_party_complete_events}/nullif(${third_party_impressions},0) ;;
-    value_format: "0.00%"
+    value_format: "0.0%"
   }
 
   measure: IV {
@@ -692,7 +692,7 @@ view: fact_nexxen_dsp {
 
   measure: pacing_msd {
     type: sum
-    value_format: "0.00\%"
+    value_format: "0.0\%"
     sql: -- case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then
         ${dim_sfdb_opportunitylineitem.msd_pacing}*100;;
         #hidden: yes
@@ -1345,6 +1345,79 @@ view: fact_nexxen_dsp {
           </div>
         </div>
 
+      </div>;;
+  }
+
+
+  measure: html_kpi_pacing {
+    type: count
+    html:
+     <div style="color:#636E7A; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Pacing
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
+        </div>
+      </div>;;
+  }
+
+  measure: html_kpi_impressions {
+    type: number
+    sql: ( ${current_period_impressions} / NULLIF(${previous_period_impressions} ,0)) - 1  ;;
+    value_format_name: percent_0
+
+    html:
+    <div style="color:#636E7A; display: inline-block; font-size: 15px; letter-spacing: 0.01em; ">
+        Impressions
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ current_period_impressions._rendered_value }}
+        </div>
+        <div style="color:#636E7A; line-height: 15px; font-size: 15px; margin-top:20px;">
+          {% if value > 0 %}
+          {% assign indicator = "#7EC537,▲" | split: ',' %}
+          {% elsif value < 0 %}
+
+            {% assign indicator = "#C53737,▼" | split: ',' %}
+
+            {% else %}
+
+            {% assign indicator = "#636E7A,▬" | split: ',' %}
+
+            {% endif %}
+            <font color="{{indicator[0]}}">
+
+            {% if value == 99999.12345 %} &infin
+
+            {% else %}{{indicator[1]}}
+
+            {% endif %}
+
+            </font>
+            {{rendered_value}}
+        </div>
+      </div>
+
+      ;;
+  }
+
+  measure: html_kpi_vcr {
+    type: count
+    html:
+     <div style="color:#636E7A; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        VCR
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ VCR_1P._rendered_value }}
+        </div>
+      </div>;;
+  }
+
+  measure: html_kpi_delivered_spend {
+    type: count
+    html:
+     <div style="color:#636E7A; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Delivered Spend
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ Delivered_Spend._rendered_value }}
+        </div>
       </div>;;
   }
 

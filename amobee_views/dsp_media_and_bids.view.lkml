@@ -576,6 +576,15 @@ view: dsp_media_and_bids {
     sql: ${TABLE}."impression" ;;
   }
 
+  measure: html_impr_comp_event {
+    type: number
+    #value_format: "#,##0,,,\"B\""
+    sql: ${impression} ;;
+    label: "Impressions"
+    html: {{ rendered_value }} | Complete Events: {{complete_events._rendered_value }}  ;;
+    hidden: yes
+  }
+
   measure: inv_cost {
     type: sum
     #value_format: "$#,##0"
@@ -1541,9 +1550,9 @@ dimension: browser_type_name {
   type: number
   label: "Media Shift LOB Goals"
   sql: case when ${__time_year} = '2024' and ${LOB} = 'MS' THEN .75
-            when ${__time_year} = "2024" and ${LOB} = 'SS' THEN .35
-            when ${__time_year} = "2025" and ${LOB} = 'MS' THEN .70
-            when ${__time_year} = "2025" and ${LOB} = 'SS' THEN .45
+            when ${__time_year} = '2024' and ${LOB} = 'SS' THEN .35
+            when ${__time_year} = '2025' and ${LOB} = 'MS' THEN .70
+            when ${__time_year} = '2025' and ${LOB} = 'SS' THEN .45
             ELSE 0 END;;
     value_format: "0.00%"
 

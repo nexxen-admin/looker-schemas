@@ -65,7 +65,7 @@ dimension: daily_pacing_dim {
   measure: total_pacing {
     type: average
     label: "Total Pacing - MSD"
-    value_format: "0.00%"
+    value_format: "0.0%"
     sql: ISNULL(${last_day_pacing_dim},0) ;;
   }
 }

@@ -6,6 +6,19 @@ view: v_monthly_dato_billing_report_diff {
     value_format_name: id
     sql: ${TABLE}.account_id_diff ;;
   }
+
+  dimension: Period {
+    type: string
+    sql: ${TABLE}.Period;;
+  }
+  dimension: Looker_DB_update_date {
+    type: string
+    sql: ${TABLE}.Looker_DB_update_date;;
+  }
+  dimension: Dato_DB_update_date {
+    type: string
+    sql: ${TABLE}.Dato_DB_update_date;;
+  }
   dimension: account_manager_diff {
     type: number
     sql: ${TABLE}.account_manager_diff ;;

@@ -66,6 +66,6 @@ dimension: daily_pacing_dim {
     type: average
     label: "Total Pacing - MSD"
     value_format: "0.0%"
-    sql: ISNULL(${last_day_pacing_dim},0) ;;
+    sql: ${last_day_pacing_dim} ;;
   }
 }

@@ -754,20 +754,20 @@ view: dim_sfdb_opportunitylineitem {
   dimension: cap_temp {
     type: number
     sql: ${units__c}/(datediff('day',${start_date__c_date},${end_date__c_date})+1)*${date_diff} ;;
-    #hidden: yes
+    hidden: yes
   }
 
   measure: cap_msd_test {
     type: max
     sql: ${cap_temp};;
-    #hidden: yes
+    hidden: yes
   }
   measure: msd_pacing {
     type: number
     value_format: "0.00%"
     sql:
        IFNULL(${fact_nexxen_dsp.delivered_units}/${cap_msd_test},0);;
-      #hidden: yes
+      hidden: yes
   }
 
   measure: gross_billable_comp {

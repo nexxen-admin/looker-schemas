@@ -625,7 +625,10 @@ explore: acr_count_device_id_etl_checker {
   required_access_grants: [can_view_all_tremor]
 }
 
-
+explore: revenue_prediction_report_v1 {
+  label: "revenue_prediction_report_v1"
+  required_access_grants: [can_view_all_tremor]
+}
 
 
 

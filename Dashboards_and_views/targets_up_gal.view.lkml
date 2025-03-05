@@ -32,6 +32,11 @@ view: targets_up_gal {
     sql: ${TABLE}.population ;;
   }
 
+  dimension: country_name {
+    type: string
+    sql: ${TABLE}.country_name ;;
+  }
+
   measure: net_revenue {
     type: sum
     sql: ${TABLE}.Net_Revenue ;;

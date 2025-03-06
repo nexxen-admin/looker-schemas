@@ -49,12 +49,15 @@ from BI.revenue_prediction
 
 # measu
 
-    measure: revenue {
+  measure: revenue {
       type: sum
       sql: ${TABLE}.revenue ;;
       value_format: "$#,##0"
       label: "Revenue Prediction"
+
+
     }
+
 
   measure: cost {
     type: sum

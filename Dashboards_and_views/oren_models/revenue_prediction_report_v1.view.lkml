@@ -43,7 +43,7 @@ from BI.revenue_prediction
   dimension: subcategory {
     type: string
     sql: ${TABLE}.subcategory ;;
-    label: "Sub Category"
+    label: "Subcategory"
   }
 
 

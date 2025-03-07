@@ -17,6 +17,15 @@ view: dim_dsp_device_type {
     type: string
     sql: ${TABLE}.device_type ;;
   }
+  dimension: device_type_category {
+    type: string
+    sql: CASE WHEN ${TABLE}.device_type IN ('TV', 'Set Top Box', 'Media Player', 'Games Console') THEN 'CTV'
+      WHEN ${TABLE}.device_type='PC' THEN 'Desktop'
+       WHEN ${TABLE}.device_type='E-Reader' THEN 'Tablet'
+      ELSE 'Other' END;;
+  }
+
+
   dimension: device_type_key {
     type: number
     sql: ${TABLE}.device_type_key ;;

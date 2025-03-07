@@ -1,5 +1,5 @@
-view: dim_dsp_dma {
-  sql_table_name: BI_DSP.dim_dsp_dma ;;
+view: dim_dsp_region {
+  sql_table_name: BI_DSP.dim_dsp_region ;;
 
   dimension_group: db_created {
     type: time
@@ -13,22 +13,20 @@ view: dim_dsp_dma {
     sql: ${TABLE}.db_updated_date ;;
     hidden: yes
   }
-  dimension: dma_key {
+  dimension: region_id {
     type: number
-    sql: ${TABLE}.dma_key ;;
+    sql: ${TABLE}.region_id ;;
     hidden: yes
   }
-  dimension: dma_name {
-    type: string
-    sql: ${TABLE}.dma_name ;;
+  dimension: region_key {
+    type: number
+    sql: ${TABLE}.region_key ;;
     hidden: yes
   }
-  dimension: dma_name_public {
+  dimension: region_name {
     type: string
-    label: "DMA Name"
-    sql:  CASE WHEN INSTR(${TABLE}.dma_name, '(')>0 THEN TRIM(SUBSTR(${TABLE}.dma_name, 1, INSTR(${TABLE}.dma_name, '(')-1)) ELSE ${TABLE}.dma_name END;;
+    sql: ${TABLE}.region_name ;;
   }
-
   dimension: ri_info {
     type: string
     sql: ${TABLE}.ri_info ;;
@@ -36,7 +34,7 @@ view: dim_dsp_dma {
   }
   measure: count {
     type: count
-    drill_fields: [dma_name]
+    drill_fields: [region_name]
     hidden: yes
   }
 }

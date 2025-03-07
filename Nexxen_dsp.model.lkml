@@ -123,6 +123,13 @@ explore: fact_nexxen_dsp  {
     sql_on: ${fact_nexxen_dsp.country_key}=${dim_dsp_country.country_key} ;;
   }
 
+  join: dim_dsp_region{
+    type: left_outer
+    view_label: "Geo"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.region_key}=${dim_dsp_region.region_key} ;;
+  }
+
   join: dim_dsp_mobile_app {
     type: left_outer
     view_label: "Request Attributes"

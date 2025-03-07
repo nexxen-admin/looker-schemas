@@ -39,6 +39,27 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: city_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.city_id_key ;;
+    hidden: yes
+  }
+
+  dimension: mobile_app_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.mobile_app_key ;;
+    hidden: yes
+  }
+
+  dimension: country_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.country_key ;;
+    hidden: yes
+  }
+
   dimension: device_type_key{
     type: number
     value_format_name: id
@@ -229,6 +250,12 @@ view: fact_nexxen_dsp {
     type: number
     sql: ${TABLE}.package_id_key ;;
     hidden: yes
+  }
+
+  dimension: zip_code {
+    type: zipcode
+    view_label: "Geo"
+    sql: ${TABLE}.zip_code ;;
   }
 
    measure: inventory_cost {

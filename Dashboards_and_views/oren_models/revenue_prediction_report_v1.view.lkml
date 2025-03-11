@@ -20,20 +20,20 @@ from BI.revenue_prediction
 
 
 
-    dimension: date {
-      type: date
-      sql: ${TABLE}.date ;;
-      label: "Date"
+  dimension: date {
+    type: date
+    sql: ${TABLE}.date ;;
+    label: "Date"
 
-         html:
-      {% assign current_date = "now" | date: "%Y-%m-%d" %}
-      {% assign tomorrow_date = current_date | date: "%Y-%m-%d" | date_add: 4 %}  {% assign value_date = value | date: "%Y-%m-%d" %}
-      {% if value_date > tomorrow_date %}
-      <span style="font-style: italic; font-weight: bold;">{{ rendered_value }}</span>
+    html:
+      {% if is_date == 1 %}
+        <span style="font-weight: bold;">{{ rendered_value }}</span>
       {% else %}
-      {{ rendered_value }}
-      {% endif %};;
-    }
+        {{ rendered_value }}
+      {% endif %}
+      ;;
+  }
+
 
 
 

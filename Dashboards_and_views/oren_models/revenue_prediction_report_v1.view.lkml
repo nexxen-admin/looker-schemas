@@ -10,7 +10,18 @@ select date,
        revenue_last_year,
        cost_last_year,
        revenue_last_year_adjsted,
-       cost_last_year_adjsted
+       cost_last_year_adjsted,
+
+        CASE
+          WHEN date <= CURRENT_DATE THEN revenue_last_year
+          ELSE NULL
+        END AS revenue_past_solid,
+
+        CASE
+          WHEN date > CURRENT_DATE THEN revenue_last_year
+          ELSE NULL
+        END AS revenue_past_dotted
+
 from BI.revenue_prediction
         ;;
 
@@ -23,15 +34,14 @@ from BI.revenue_prediction
       sql: ${TABLE}.date ;;
       label: "Date"
 
-      html:
+         html:
       {% assign current_date = "now" | date: "%Y-%m-%d" %}
-      {% assign three_days_ago = "now" | date: "%Y-%m-%d" | date: "%Y-%m-%d" | date_add: -2, "days" %}
-      {% if value < three_days_ago %}
-      <p style="background-color: lightblue;">{{ rendered_value }}</p>
+      {% assign tomorrow_date = current_date | date: "%Y-%m-%d" | date_add: 4 %}  {% assign value_date = value | date: "%Y-%m-%d" %}
+      {% if value_date > tomorrow_date %}
+      <span style="font-style: italic; font-weight: bold;">{{ rendered_value }}</span>
       {% else %}
       {{ rendered_value }}
       {% endif %};;
-
     }
 
   dimension: category {
@@ -54,8 +64,6 @@ from BI.revenue_prediction
       sql: ${TABLE}.revenue ;;
       value_format: "$#,##0"
       label: "Revenue Prediction"
-
-
     }
 
 
@@ -77,43 +85,44 @@ from BI.revenue_prediction
     type: sum
     sql: ${TABLE}.revenue_last_year ;;
     value_format: "$#,##0"
-    label: "Revenue Last Year"
+    label: "Revenue (Last Year)"
   }
 
   measure: cost_last_year {
     type: sum
     sql: ${TABLE}.cost_last_year ;;
     value_format: "$#,##0"
-    label: "Cost Last Year"
+    label: "Cost (Last Year)"
   }
 
   measure: net_revenue_last_year{
     type: sum
     sql: ${TABLE}.revenue_last_year - ${TABLE}.cost_last_year ;;
     value_format: "$#,##0"
-    label: "Net Revenue Last Year"
+    label: "Net Revenue (Last Year)"
   }
 
   measure: revenue_last_year_adjsted {
     type: sum
     sql: ${TABLE}.revenue_last_year_adjsted ;;
     value_format: "$#,##0"
-    label: "Revenue Adjusted Last Year"
+    label: "Adjusted Revenue (Last Year)"
   }
 
   measure: cost_last_year_adjsted {
     type: sum
     sql: ${TABLE}.cost_last_year_adjsted ;;
     value_format: "$#,##0"
-    label: "Cost Adjusted Last Year"
+    label: "Adjusted Cost (Last Year)"
   }
 
   measure: net_revenue_last_year_adjusted{
     type: sum
     sql: ${TABLE}.revenue_last_year_adjsted - ${TABLE}.cost_last_year_adjsted ;;
     value_format: "$#,##0"
-    label: "Net Revenue Adjusted Last Year"
+    label: "Adjusted Net Revenue (Last Year)"
   }
+
 
 
 

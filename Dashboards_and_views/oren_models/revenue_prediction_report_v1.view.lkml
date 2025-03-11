@@ -2,7 +2,6 @@ view: revenue_prediction_report_v1 {
     derived_table: {
       sql:
 select date,
-       CURRENT_DATE AS current_date,
        category,
        subcategory,
        revenue,
@@ -11,16 +10,8 @@ select date,
        cost_last_year,
        revenue_last_year_adjsted,
        cost_last_year_adjsted,
+      case when date >= CURRENT_DATE then 1 else 0 end as is_date
 
-        CASE
-          WHEN date <= CURRENT_DATE THEN revenue_last_year
-          ELSE NULL
-        END AS revenue_past_solid,
-
-        CASE
-          WHEN date > CURRENT_DATE THEN revenue_last_year
-          ELSE NULL
-        END AS revenue_past_dotted
 
 from BI.revenue_prediction
         ;;
@@ -43,6 +34,16 @@ from BI.revenue_prediction
       {{ rendered_value }}
       {% endif %};;
     }
+
+
+
+
+  dimension: is_date {
+    type: number
+    sql: ${TABLE}.is_date ;;
+    label: "is_date"
+  }
+
 
   dimension: category {
     type: string
@@ -140,7 +141,8 @@ from BI.revenue_prediction
         cost_last_year_adjsted,
         net_revenue,
         net_revenue_last_year,
-        net_revenue_last_year_adjusted
+        net_revenue_last_year_adjusted,
+        is_date
       ]
     }
 

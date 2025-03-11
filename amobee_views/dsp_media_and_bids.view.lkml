@@ -576,15 +576,6 @@ view: dsp_media_and_bids {
     sql: ${TABLE}."impression" ;;
   }
 
-  measure: html_impr_comp_event {
-    type: number
-    #value_format: "#,##0,,,\"B\""
-    sql: ${impression} ;;
-    label: "Impressions"
-    html: {{ rendered_value }} | Complete Events: {{complete_events._rendered_value }}  ;;
-    hidden: yes
-  }
-
   measure: inv_cost {
     type: sum
     #value_format: "$#,##0"

@@ -54,26 +54,54 @@ explore: fact_nexxen_msd_advertiser  {
   }
 
   join: dim_dsp_creative_size {
-    type: inner
+    type: left_outer
     view_label: "Creative"
     relationship: many_to_one
     sql_on: ${fact_nexxen_dsp.creative_size_key}=${dim_dsp_creative_size.creative_size_key} ;;
   }
   join: dim_dsp_dma{
-    type: inner
+    type: left_outer
     view_label: "Geo"
     relationship: many_to_one
     sql_on: ${fact_nexxen_dsp.dma_key}=${dim_dsp_dma.dma_key} ;;
   }
   join: dim_dsp_device_type {
-    type: inner
+    type: left_outer
     view_label: "Request Attributes"
     relationship: many_to_one
     sql_on: ${fact_nexxen_dsp.device_type_key}=${dim_dsp_device_type.device_type_key} ;;
   }
 
+  join: dim_dsp_city {
+    type: left_outer
+    view_label: "Geo"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.city_key}=${dim_dsp_city.city_id_key} ;;
+  }
+
+  join: dim_dsp_country {
+    type: left_outer
+    view_label: "Geo"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.country_key}=${dim_dsp_country.country_key} ;;
+  }
+
+  join: dim_dsp_region{
+    type: left_outer
+    view_label: "Geo"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.region_key}=${dim_dsp_region.region_key} ;;
+  }
+
+  join: dim_dsp_mobile_app {
+    type: left_outer
+    view_label: "Request Attributes"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.mobile_app_key}=${dim_dsp_mobile_app.mobile_app_key} ;;
+  }
+
   join: dim_dsp_creative {
-    type: inner
+    type: left_outer
     view_label: "Creative"
     sql_on: ${dim_dsp_creative.creative_id_key}=${fact_nexxen_dsp.creative_id_key} ;;
     relationship: many_to_one
@@ -326,8 +354,55 @@ explore: fact_nexxen_msd_agency  {
     sql_on: ${fact_nexxen_dsp.format_id}=${dim_dsp_format.format_id} ;;
   }
 
+  join: dim_dsp_creative_size {
+    type: left_outer
+    view_label: "Creative"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.creative_size_key}=${dim_dsp_creative_size.creative_size_key} ;;
+  }
+  join: dim_dsp_dma{
+    type: left_outer
+    view_label: "Geo"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.dma_key}=${dim_dsp_dma.dma_key} ;;
+  }
+  join: dim_dsp_device_type {
+    type: left_outer
+    view_label: "Request Attributes"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.device_type_key}=${dim_dsp_device_type.device_type_key} ;;
+  }
+
+  join: dim_dsp_city {
+    type: left_outer
+    view_label: "Geo"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.city_key}=${dim_dsp_city.city_id_key} ;;
+  }
+
+  join: dim_dsp_country {
+    type: left_outer
+    view_label: "Geo"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.country_key}=${dim_dsp_country.country_key} ;;
+  }
+
+  join: dim_dsp_region{
+    type: left_outer
+    view_label: "Geo"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.region_key}=${dim_dsp_region.region_key} ;;
+  }
+
+  join: dim_dsp_mobile_app {
+    type: left_outer
+    view_label: "Request Attributes"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.mobile_app_key}=${dim_dsp_mobile_app.mobile_app_key} ;;
+  }
+
   join: dim_dsp_creative {
-    type: inner
+    type: left_outer
     view_label: "Creative"
     sql_on: ${dim_dsp_creative.creative_id_key}=${fact_nexxen_dsp.creative_id_key} ;;
     relationship: many_to_one

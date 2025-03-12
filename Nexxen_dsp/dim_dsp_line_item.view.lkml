@@ -69,6 +69,23 @@ view: dim_dsp_line_item {
     sql: ${TABLE}.ri_info ;;
     hidden: yes
   }
+
+  dimension: brand_safety_set_id  {
+    type: number
+    sql: ${TABLE}.brand_safety_set_id  ;;
+  }
+
+  dimension: workflow_status_id  {
+    type: number
+    sql: ${TABLE}.workflow_status_id  ;;
+  }
+
+  dimension: insertion_order_id  {
+    type: number
+    sql: ${TABLE}.insertion_order_id  ;;
+    hidden: yes
+  }
+
   measure: count {
     type: count
     drill_fields: [line_item_name]

@@ -335,6 +335,13 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_insertion_order {
+    type: inner
+    view_label: "Insertion Order"
+    sql_on: ${dim_dsp_line_item.insertion_order_id }=${dim_dsp_insertion_order.insertion_order_id} ;;
+    relationship: many_to_one
+  }
+
   join: dim_sfdb_account_opportunity_billling_account_name {
     type: inner
     view_label: "Salesforce Opportunity"

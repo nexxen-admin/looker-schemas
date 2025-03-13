@@ -1,22 +1,20 @@
 view: revenue_prediction_report_v1 {
-    derived_table: {
-      sql:
-select date,
-       category,
-       subcategory,
-       revenue,
-       cost,
-       revenue_last_year,
-       cost_last_year,
-       revenue_last_year_adjsted,
-       cost_last_year_adjsted,
-      case when date >= CURRENT_DATE then 1 else 0 end as is_date
+  derived_table: {
+    sql:
+    select date,
+           max_real_data_date,
+           category,
+           subcategory,
+           revenue,
+           cost,
+           revenue_last_year,
+           cost_last_year,
+           revenue_last_year_adjsted,
+           cost_last_year_adjsted
+      from BI.revenue_prediction
+      ;;
 
-
-from BI.revenue_prediction
-        ;;
-
-    }
+  }
 
 
 
@@ -24,25 +22,15 @@ from BI.revenue_prediction
     type: date
     sql: ${TABLE}.date ;;
     label: "Date"
+  }
 
-    html:
-      {% if is_date == 1 %}
-        <span style="font-weight: bold;">{{ rendered_value }}</span>
-      {% else %}
-        {{ rendered_value }}
-      {% endif %}
-      ;;
+  dimension: max_real_data_date {
+    type: date
+    sql: ${TABLE}.max_real_data_date ;;
+    label: "max_real_data_date"
   }
 
 
-
-
-
-  dimension: is_date {
-    type: number
-    sql: ${TABLE}.is_date ;;
-    label: "is_date"
-  }
 
 
   dimension: category {
@@ -61,25 +49,48 @@ from BI.revenue_prediction
 # measu
 
   measure: revenue {
-      type: sum
-      sql: ${TABLE}.revenue ;;
-      value_format: "$#,##0"
-      label: "Revenue Prediction"
-    }
+    type: sum
+    sql: ${TABLE}.revenue ;;
+    value_format: "$#,##0"
+    label: "Revenue Prediction*"
+
+    html:
+    {% if date._value > max_real_data_date._value %}
+      <p style="font-weight: bold;">{{ rendered_value }}</p>
+    {% else %}
+      <p>{{ rendered_value }}</p>
+    {% endif %};;
+
+
+  }
 
 
   measure: cost {
     type: sum
     sql: ${TABLE}.cost ;;
     value_format: "$#,##0"
-    label: "Cost Prediction"
+    label: "Cost Prediction*"
+
+    html:
+    {% if date._value > max_real_data_date._value %}
+    <p style="font-weight: bold;">{{ rendered_value }}</p>
+    {% else %}
+    <p>{{ rendered_value }}</p>
+    {% endif %};;
   }
 
   measure: net_revenue {
     type: sum
     sql: ${TABLE}.revenue - ${TABLE}.cost ;;
     value_format: "$#,##0"
-    label: "Net Revenue Prediction"
+    label: "Net Revenue Prediction*"
+
+    html:
+    {% if date._value > max_real_data_date._value %}
+    <p style="font-weight: bold;">{{ rendered_value }}</p>
+    {% else %}
+    <p>{{ rendered_value }}</p>
+    {% endif %};;
   }
 
   measure: revenue_last_year {
@@ -128,22 +139,22 @@ from BI.revenue_prediction
 
 
 
-    set: detail {
-      fields: [
-        date,
-        category,
-        subcategory,
-        revenue,
-        cost,
-        revenue_last_year,
-        cost_last_year,
-        revenue_last_year_adjsted,
-        cost_last_year_adjsted,
-        net_revenue,
-        net_revenue_last_year,
-        net_revenue_last_year_adjusted,
-        is_date
-      ]
-    }
-
+  set: detail {
+    fields: [
+      date,
+      max_real_data_date,
+      category,
+      subcategory,
+      revenue,
+      cost,
+      revenue_last_year,
+      cost_last_year,
+      revenue_last_year_adjsted,
+      cost_last_year_adjsted,
+      net_revenue,
+      net_revenue_last_year,
+      net_revenue_last_year_adjusted
+    ]
   }
+
+}

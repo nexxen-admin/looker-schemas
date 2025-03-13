@@ -136,7 +136,12 @@ view: revenue_prediction_report_v1 {
   }
 
 
-
+  measure: net_revenue_no_design {
+    type: sum
+    sql: ${TABLE}.revenue - ${TABLE}.cost ;;
+    value_format: "$#,##0"
+    label: "Net Revenue Prediction"
+  }
 
 
   set: detail {
@@ -153,7 +158,8 @@ view: revenue_prediction_report_v1 {
       cost_last_year_adjsted,
       net_revenue,
       net_revenue_last_year,
-      net_revenue_last_year_adjusted
+      net_revenue_last_year_adjusted,
+      net_revenue_no_design
     ]
   }
 

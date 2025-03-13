@@ -14,7 +14,7 @@ view: exchange_daily_report_component {
       sum(revenue) as Revenue,
       sum(cost) as Cost
     From BI.SVC_DRR_Daily_Revenue_Report
-    where event_date>= '2022-01-01' and event_date< current_date()
+    where event_date>= '2022-01-01' and event_date< current_date()-1
     --event_date >= date_trunc('quarter',timestampadd('month',-2,date_trunc('month',current_date())))
      -- and event_date < date_trunc('month',current_date())
     --and category = 'Exchange'

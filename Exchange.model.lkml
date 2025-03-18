@@ -165,6 +165,13 @@ explore: extend_Inbound_Exchange {
     relationship: many_to_one
   }
 
+  join: dim_pad_agreement {
+    type: inner
+    view_label: "Time Frame"
+    sql_on: ${dim_pad_agreement.pad_agreement_key}=${fact_ad_daily_agg.pad_agreement_key} ;;
+    relationship: many_to_one
+  }
+
   join: dim_country {
     type: inner
     view_label: "Geo"
@@ -1190,6 +1197,12 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
   }
 
+  join: dim_pad_agreement {
+    type: inner
+    view_label: "Pad Agreement"
+    sql_on: ${dim_pad_agreement.pad_agreement_key}=${fact_ad_hourly_agg.pad_agreement_key};;
+    relationship: many_to_one
+  }
 
 }
 

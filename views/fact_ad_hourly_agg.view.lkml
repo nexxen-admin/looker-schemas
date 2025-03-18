@@ -16,6 +16,12 @@ view: fact_ad_hourly_agg {
     hidden: yes
   }
 
+  dimension: pad_agreement_key {
+    type: number
+    sql: ${TABLE}.pad_agreement_key ;;
+    hidden: yes
+  }
+
   dimension: avg_of_deal_bid_floor {
     type: number
     sql: ${TABLE}.avg_of_deal_bid_floor ;;

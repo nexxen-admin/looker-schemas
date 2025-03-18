@@ -1400,7 +1400,7 @@ view: fact_nexxen_dsp {
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Pacing
         <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-          100.3%
+          100%
         </div>
       </div>;;
   }

@@ -22,7 +22,8 @@ view: dim_dsp_device_type {
     sql: CASE WHEN ${TABLE}.device_type IN ('TV', 'Set Top Box', 'Media Player', 'Games Console') THEN 'CTV'
       WHEN ${TABLE}.device_type='PC' THEN 'Desktop'
        WHEN ${TABLE}.device_type='E-Reader' THEN 'Tablet'
-      ELSE 'Other' END;;
+      WHEN ${TABLE}.device_type IS NULL or  ${TABLE}.device_type IN ('Unknown', 'Any Device') THEN  'Other'
+      ELSE ${TABLE}.device_type END;;
   }
 
 

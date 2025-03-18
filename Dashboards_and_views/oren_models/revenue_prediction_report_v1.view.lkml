@@ -157,13 +157,6 @@ view: revenue_prediction_report_v1 {
     sql: ${TABLE}.revenue_last_year_adjsted - ${TABLE}.cost_last_year_adjsted ;;
     value_format: "$#,##0"
     label: "Uplift-Based Model Net Revenue"
-
-    html:
-    {% if date._value > max_real_data_date._value %}
-    <p style="font-weight: bold;">{{ rendered_value }}</p>
-    {% else %}
-    <p>{{ rendered_value }}</p>
-    {% endif %};;
   }
 
 

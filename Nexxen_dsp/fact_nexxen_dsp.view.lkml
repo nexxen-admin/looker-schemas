@@ -1394,6 +1394,17 @@ view: fact_nexxen_dsp {
       </div>;;
   }
 
+  measure: html_kpi_pacing_demo {
+    type: count
+    html:
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Pacing
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          100.3%
+        </div>
+      </div>;;
+  }
+
   measure: html_kpi_impressions {
     type: count
     html:

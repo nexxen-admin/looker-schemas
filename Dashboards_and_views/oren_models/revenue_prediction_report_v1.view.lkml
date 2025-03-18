@@ -16,12 +16,11 @@ view: revenue_prediction_report_v1 {
 
   }
 
+# for titles
 
-
-  dimension: date {
-    type: date
-    sql: ${TABLE}.date ;;
-    label: "Date"
+  dimension: max_date_text {
+    type: string
+    sql: 'Quarter Predicted: Q' || CEIL(EXTRACT(MONTH FROM ${max_real_data_date}) / 3) || ' ' || EXTRACT(YEAR FROM ${max_real_data_date}) ;;
   }
 
   dimension: max_real_data_date {
@@ -30,7 +29,13 @@ view: revenue_prediction_report_v1 {
     label: "max_real_data_date"
   }
 
+# regular dimentions and measures
 
+  dimension: date {
+    type: date
+    sql: ${TABLE}.date ;;
+    label: "Date"
+  }
 
 
   dimension: category {
@@ -52,7 +57,7 @@ view: revenue_prediction_report_v1 {
     type: sum
     sql: ${TABLE}.revenue ;;
     value_format: "$#,##0"
-    label: "Revenue Prediction*"
+    label: "AI Model Revenue Prediction*"
 
     html:
     {% if date._value > max_real_data_date._value %}
@@ -60,8 +65,6 @@ view: revenue_prediction_report_v1 {
     {% else %}
       <p>{{ rendered_value }}</p>
     {% endif %};;
-
-
   }
 
 
@@ -69,7 +72,7 @@ view: revenue_prediction_report_v1 {
     type: sum
     sql: ${TABLE}.cost ;;
     value_format: "$#,##0"
-    label: "Cost Prediction*"
+    label: "AI Model Cost Prediction*"
 
     html:
     {% if date._value > max_real_data_date._value %}
@@ -83,7 +86,7 @@ view: revenue_prediction_report_v1 {
     type: sum
     sql: ${TABLE}.revenue - ${TABLE}.cost ;;
     value_format: "$#,##0"
-    label: "Net Revenue Prediction*"
+    label: "AI Model Net Revenue Prediction*"
 
     html:
     {% if date._value > max_real_data_date._value %}
@@ -91,6 +94,13 @@ view: revenue_prediction_report_v1 {
     {% else %}
     <p>{{ rendered_value }}</p>
     {% endif %};;
+  }
+
+  measure: net_revenue_no_design {
+    type: sum
+    sql: ${TABLE}.revenue - ${TABLE}.cost ;;
+    value_format: "$#,##0"
+    label: "AI Model Net Revenue Prediction"
   }
 
   measure: revenue_last_year {
@@ -118,30 +128,39 @@ view: revenue_prediction_report_v1 {
     type: sum
     sql: ${TABLE}.revenue_last_year_adjsted ;;
     value_format: "$#,##0"
-    label: "Adjusted Revenue (Last Year)"
+    label: "Uplift-Based Model Revenue"
+
+    html:
+    {% if date._value > max_real_data_date._value %}
+    <p style="font-weight: bold;">{{ rendered_value }}</p>
+    {% else %}
+    <p>{{ rendered_value }}</p>
+    {% endif %};;
   }
 
   measure: cost_last_year_adjsted {
     type: sum
     sql: ${TABLE}.cost_last_year_adjsted ;;
     value_format: "$#,##0"
-    label: "Adjusted Cost (Last Year)"
+    label: "Uplift-Based Model Cost"
+
+    html:
+    {% if date._value > max_real_data_date._value %}
+    <p style="font-weight: bold;">{{ rendered_value }}</p>
+    {% else %}
+    <p>{{ rendered_value }}</p>
+    {% endif %};;
   }
 
   measure: net_revenue_last_year_adjusted{
     type: sum
     sql: ${TABLE}.revenue_last_year_adjsted - ${TABLE}.cost_last_year_adjsted ;;
     value_format: "$#,##0"
-    label: "Adjusted Net Revenue (Last Year)"
+    label: "Uplift-Based Model Net Revenue"
   }
 
 
-  measure: net_revenue_no_design {
-    type: sum
-    sql: ${TABLE}.revenue - ${TABLE}.cost ;;
-    value_format: "$#,##0"
-    label: "Net Revenue Prediction"
-  }
+
 
 
   set: detail {

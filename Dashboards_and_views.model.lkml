@@ -630,6 +630,10 @@ explore: revenue_prediction_report_v1 {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: buyer_mapping_master {
+  label: "Buyer Mapping Master"
+  required_access_grants: [can_view_all_tremor]
+}
 
 
 explore: v_dim_publisher_commission_metadata {

@@ -1506,6 +1506,22 @@ view: fact_ad_daily_agg {
     sql: case when ${dim_response_status.response_status} = 'unknown' then ${TABLE}.sum_of_responses else 0 end;;
   }
 
+  measure: deal_data_fee {
+    type: sum
+    label: "Deal Data Fee"
+    value_format: "#,##0"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_deal_data_fee;;
+  }
+
+  measure: dsp_fee {
+    type: sum
+    label: "DSP Fee"
+    value_format: "#,##0"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_dsp_fee;;
+  }
+
   measure: revenue
   {
     type: sum

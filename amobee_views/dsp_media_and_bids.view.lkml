@@ -578,7 +578,7 @@ view: dsp_media_and_bids {
 
   measure: inv_cost {
     type: sum
-    #value_format: "$#,##0"
+    value_format: "$#,##0"
     sql: ${TABLE}."inv_cost" ;;
   }
 

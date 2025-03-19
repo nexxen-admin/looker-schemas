@@ -116,6 +116,13 @@ explore: fact_nexxen_dsp  {
     sql_on: ${fact_nexxen_dsp.city_key}=${dim_dsp_city.city_id_key} ;;
   }
 
+  join: dim_dsp_beacon {
+    type: left_outer
+    view_label: "Beacon"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.beacon_key}=${dim_dsp_beacon.beacon_key} ;;
+  }
+
   join: dim_dsp_country {
     type: left_outer
     view_label: "Geo"

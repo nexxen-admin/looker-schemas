@@ -72,6 +72,13 @@ explore: fact_nexxen_msd_advertiser  {
     sql_on: ${fact_nexxen_dsp.device_type_key}=${dim_dsp_device_type.device_type_key} ;;
   }
 
+  join: dim_dsp_beacon {
+    type: left_outer
+    view_label: "Beacon"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.beacon_key}=${dim_dsp_beacon.beacon_key} ;;
+  }
+
   join: dim_dsp_city {
     type: left_outer
     view_label: "Geo"
@@ -378,6 +385,13 @@ explore: fact_nexxen_msd_agency  {
     view_label: "Geo"
     relationship: many_to_one
     sql_on: ${fact_nexxen_dsp.city_key}=${dim_dsp_city.city_id_key} ;;
+  }
+
+  join: dim_dsp_beacon {
+    type: left_outer
+    view_label: "Beacon"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.beacon_key}=${dim_dsp_beacon.beacon_key} ;;
   }
 
   join: dim_dsp_country {

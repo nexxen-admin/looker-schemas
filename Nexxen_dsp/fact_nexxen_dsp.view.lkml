@@ -67,6 +67,13 @@ view: fact_nexxen_dsp {
     hidden:  yes
   }
 
+  dimension: beacon_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.beacon_key ;;
+    hidden:  yes
+  }
+
   dimension: device_type_key{
     type: number
     value_format_name: id
@@ -774,6 +781,24 @@ view: fact_nexxen_dsp {
   measure: count {
     type: count
     hidden: yes
+  }
+
+  measure: shopping_cart_value {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.shopping_cart_value ;;
+  }
+
+  measure: shopping_cart_value_cta {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.shopping_cart_value_cta ;;
+  }
+
+  measure: shopping_cart_value_vta {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.shopping_cart_value_vta ;;
   }
 
   measure: fdw_cost {

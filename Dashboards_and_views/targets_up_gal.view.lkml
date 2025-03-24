@@ -37,6 +37,14 @@ view: targets_up_gal {
     sql: ${TABLE}.country_name ;;
   }
 
+  dimension: omp_group {
+    type: string
+    label: "OMP Group"
+    sql: CASE WHEN ${TABLE}.population='OMP-APAC' AND ${TABLE}.country_name IN ('ANZ', 'India', 'Japan') THEN CONCAT('OMP-APAC ', ${TABLE}.country_name)
+        WHEN ${TABLE}.population='OMP-APAC' AND ${TABLE}.country_name = 'Rest' THEN 'OMP-APAC ROW'
+        ELSE 'OMP-EMEA' END ;;
+  }
+
   measure: net_revenue {
     type: sum
     sql: ${TABLE}.Net_Revenue ;;

@@ -32,11 +32,11 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.billing_instructions_diff ;;
   }
   measure: booked_budget_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.booked_budget_diff ;;
   }
   measure: capped_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.capped_diff ;;
     value_format: "$0"
   }
@@ -45,12 +45,12 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.case_safe_opp_line_item_id ;;
   }
   measure: check_completeness_revenue_adj {
-    type: number
+    type: sum
     sql: ${TABLE}.Check_completeness_Revenue_ADJ ;;
     value_format: "$0"
   }
   measure: column {
-    type: number
+    type: sum
     label: "Impressions diff"
     sql: ${TABLE}."?column?" ;;
   }
@@ -79,7 +79,7 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.dato_billing_instructions ;;
   }
   measure: dato_booked_budget {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_booked_budget ;;
   }
   dimension: dato_booked_units {
@@ -87,12 +87,12 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.dato_booked_units ;;
   }
   measure: dato_capped_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_capped_revenue ;;
     value_format: "$0"
   }
   measure: dato_click {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_click ;;
   }
   dimension_group: dato_end {
@@ -103,25 +103,25 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.dato_end_Date ;;
   }
   measure: dato_expected_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_expected_revenue ;;
     value_format: "$0"
   }
   measure: dato_final_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.Dato_Final_Revenue ;;
   }
   measure: dato_first_complete_events {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_first_complete_events ;;
   }
   measure: dato_first_party_rev {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_first_party_rev ;;
     value_format: "$0"
   }
   measure: dato_imp {
-    type: number
+    type: sum
     sql: ${TABLE}.DATO_IMP ;;
   }
   dimension: dato_industry {
@@ -141,7 +141,7 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.dato_line_item ;;
   }
   measure: dato_ns_remaining_amount {
-    type: number
+    type: sum
     sql: ${TABLE}.Dato_ns_remaining_amount ;;
     value_format: "$0"
   }
@@ -158,7 +158,7 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.dato_opportunity_owner ;;
   }
   measure: dato_over_delivery {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_over_delivery ;;
   }
   dimension: dato_passed_bill {
@@ -213,19 +213,19 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.dato_status ;;
   }
   measure: dato_third_complete_events {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_third_complete_events ;;
   }
   measure: dato_third_party_click {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_third_party_click ;;
   }
   measure: dato_uncapped_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_Uncapped_revenue ;;
   }
   measure: dato_under_delivery {
-    type: number
+    type: sum
     sql: ${TABLE}.dato_under_delivery ;;
   }
   dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj {
@@ -245,20 +245,20 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.expected_revenue_diff ;;
   }
   measure: final_revenue_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.Final_Revenue_Diff ;;
     value_format: "$0"
   }
   measure: first_comp_events_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.first_comp_events_diff ;;
   }
   measure: first_party_click_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.first_party_click_diff ;;
   }
   measure: first_party_rev_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.first_party_rev_diff ;;
   }
   dimension: industry_diff {
@@ -266,7 +266,7 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.industry_diff ;;
   }
   measure: inv_cost {
-    type: number
+    type: sum
     sql: ${TABLE}.inv_cost ;;
     value_format: "$0.00"
   }
@@ -303,7 +303,7 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.looker_billing_instructions ;;
   }
   measure: looker_booked_budget {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_booked_budget ;;
   }
   dimension: looker_booked_units {
@@ -311,12 +311,12 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.looker_booked_units ;;
   }
   measure: looker_capped_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.Looker_capped_revenue ;;
     value_format: "$0"
   }
   measure: looker_clicks {
-    type: number
+    type: sum
     sql: ${TABLE}.Looker_clicks ;;
   }
   dimension_group: looker_end {
@@ -327,24 +327,24 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.looker_end_Date ;;
   }
   measure: looker_expected_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_expected_revenue ;;
   }
   measure: looker_final_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.Looker_Final_Revenue ;;
     value_format: "$0"
   }
   measure: looker_first_complete_events {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_first_complete_events ;;
   }
   measure: looker_first_party_rev {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_first_party_rev ;;
   }
   measure: looker_imp {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_imp ;;
   }
   dimension: looker_industry {
@@ -364,7 +364,7 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.looker_line_item ;;
   }
   measure: looker_ns_remaining_amount {
-    type: number
+    type: sum
     sql: ${TABLE}.Looker_ns_remaining_amount ;;
     value_format: "$0"
   }
@@ -381,11 +381,11 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.looker_opportunity_owner ;;
   }
   measure: looker_over_delivery {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_over_delivery ;;
   }
   measure: looker_passed_bill {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_passed_bill ;;
     value_format: "$0"
   }
@@ -422,7 +422,7 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.looker_reporting ;;
   }
   measure: looker_revenue_adj {
-    type: number
+    type: sum
     sql: ${TABLE}.Looker_Revenue_adj ;;
     value_format: "$0"
   }
@@ -442,23 +442,23 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.looker_status ;;
   }
   measure: looker_third_complete_events {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_third_complete_events ;;
   }
   measure: looker_third_party_click {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_third_party_click ;;
   }
   measure: looker_uncapped_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_Uncapped_revenue ;;
   }
   measure: looker_under_delivery {
-    type: number
+    type: sum
     sql: ${TABLE}.looker_under_delivery ;;
   }
   measure: margin_amount {
-    type: number
+    type: sum
     sql: ${TABLE}.margin_amount ;;
     value_format: "$0.00"
   }
@@ -484,7 +484,7 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.opportunity_owner_diff ;;
   }
   measure: over_delivery_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.over_delivery_diff ;;
   }
   dimension: passed_bill_diff {
@@ -542,60 +542,60 @@ view: v_monthly_dato_billing_report_diff {
     sql: ${TABLE}.status_diff ;;
   }
   measure: third_comp_events_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.third_comp_events_diff ;;
   }
   measure: third_party_click_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.third_party_click_diff ;;
   }
   measure: third_party_imp {
-    type: number
+    type: sum
     sql: ${TABLE}.third_party_imp ;;
   }
   measure: third_party_imp_dato {
-    type: number
+    type: sum
     sql: ${TABLE}.third_party_imp_dato ;;
   }
   measure: third_party_imp_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.third_party_imp_diff ;;
   }
   measure: uncappe_d_revenue_adj_adops {
-    type: number
+    type: sum
     sql: ${TABLE}.UncappeD_Revenue_adj_adops ;;
   }
   measure: uncapped_after_ad_ops_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.uncapped_after_ad_ops_diff ;;
   }
   measure: under_delivery_budget {
-    type: number
+    type: sum
     sql: ${TABLE}.under_delivery_budget ;;
     value_format: "$0"
   }
   measure: under_delivery_diff {
-    type: number
+    type: sum
     sql: ${TABLE}.under_delivery_diff ;;
   }
   measure: unit_ad_ops_override_1_p {
-    type: number
+    type: sum
     sql: ${TABLE}.Unit_AdOps_Override_1P ;;
   }
   measure: unit_ad_ops_override_3_p {
-    type: number
+    type: sum
     sql: ${TABLE}.Unit_AdOps_Override_3P ;;
   }
   measure: units_adj {
-    type: number
+    type: sum
     sql: ${TABLE}.Units_ADJ ;;
   }
   measure: units_adj_override {
-    type: number
+    type: sum
     sql: ${TABLE}.units_adj_override ;;
   }
   measure: units_before_adj_ad_ops_override {
-    type: number
+    type: sum
     sql: ${TABLE}.units_before_adj_AdOps_override ;;
   }
   dimension: units_diff {

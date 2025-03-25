@@ -1421,6 +1421,7 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_pacing_demo {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Pacing
@@ -1437,6 +1438,25 @@ view: fact_nexxen_dsp {
         Impressions
         <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ impressions._rendered_value }}
+        </div>
+      </div>;;
+  }
+
+  measure: impressions_demo {
+    type: number
+    hidden: yes
+    value_format: "#,##0"
+    sql:${impressions}  *10.2;;
+  }
+
+  measure: html_kpi_impressions_demo {
+    type: count
+    hidden: yes
+    html:
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Impressions
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ impressions_demo._rendered_value }}
         </div>
       </div>;;
   }
@@ -1498,6 +1518,25 @@ view: fact_nexxen_dsp {
         Delivered Spend
         <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ Delivered_Spend._rendered_value }}
+        </div>
+      </div>;;
+  }
+
+  measure: delivered_spend_demo {
+    type: number
+    hidden: yes
+    value_format: "$#,##0.00"
+    sql:${Delivered_Spend}  *11.7;;
+  }
+
+  measure: html_kpi_delivered_spend_demo {
+    type: count
+    hidden: yes
+    html:
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Delivered Spend
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ delivered_spend_demo._rendered_value }}
         </div>
       </div>;;
   }

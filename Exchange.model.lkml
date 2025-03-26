@@ -76,6 +76,11 @@ explore: impression_r {
   # }
 }
 
+explore: region_publisher_traffic_source {
+  label: "Region Publisher Traffic Source"
+  required_access_grants: [can_view_all_tremor]
+}
+
 explore: appsflyer{
   label: "Appsflyer"
   persist_with:TapticaCleanCash_datagroup

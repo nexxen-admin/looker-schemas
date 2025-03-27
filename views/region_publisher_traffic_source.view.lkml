@@ -28,11 +28,11 @@ view: region_publisher_traffic_source {
     sql: ${TABLE}.publisher_name ;;
   }
   measure: qps_defined {
-    type: min
+    type: max
     sql: ${TABLE}.qps_defined ;;
   }
   measure: qps_limit {
-    type: min
+    type: max
     sql: ${TABLE}.qps_limit ;;
   }
   dimension: region {

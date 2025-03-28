@@ -336,7 +336,7 @@ explore: fact_reach_advertiser {
   persist_with: CleanCash_datagroup
   view_label: "Measures"
   # access_filter: {
-  #   field: advertisers_email.email
+  #   field: dim_dsp_advertiser.advertiser_id
   #   user_attribute: advertiser
   # }
   # hidden: yes
@@ -348,10 +348,10 @@ explore: fact_nexxen_msd_agency  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD Agency"
   view_label: "Measures"
-  # access_filter: {
-  #   field: agencies_email.email
-  #   user_attribute: agency
-  # }
+  access_filter: {
+    field: dim_dsp_advertiser.advertiser_id
+    user_attribute: advertiser
+  }
   #hidden: yes
 
   join: dim_dsp_format {
@@ -633,8 +633,8 @@ explore: fact_reach_agency {
   persist_with: CleanCash_datagroup
   view_label: "Measures"
   # access_filter: {
-  #   field: agencies_email.email
-  #   user_attribute: agency
+  #   field: dim_dsp_advertiser.advertiser_id
+  #   user_attribute: advertiser
   # }
   # hidden: yes
 }

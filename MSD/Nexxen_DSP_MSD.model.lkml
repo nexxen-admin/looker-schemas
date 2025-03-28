@@ -40,10 +40,10 @@ explore: fact_nexxen_msd_advertiser  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD Advertiser"
   view_label: "Measures"
-  # access_filter: {
-  #   field: advertisers_email.email
-  #   user_attribute: advertiser
-  # }
+  access_filter: {
+    field: dim_dsp_advertiser.advertiser_id
+    user_attribute: advertiser
+  }
   #hidden: yes
 
   join: dim_dsp_format {

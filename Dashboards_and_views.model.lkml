@@ -619,6 +619,12 @@ explore: scope3_processed {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: ops_partners {
+  label: "ops_partners"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
 
 explore: acr_count_device_id_etl_checker {
   label: "acr_count_device_id_etl_checker"

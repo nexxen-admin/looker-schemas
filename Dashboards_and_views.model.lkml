@@ -668,10 +668,11 @@ explore: v_fact_ad_daily_agg_date_ssp_key {
   label: "BD Comm Global New"
   hidden: yes
 #  description: "This is a miny Inbound exchange for the FP&A use - it has commission data that is restricted to most users."
-#access_filter: {
-#  field: v_dim_employee_biz_dev.employee_name
-#  user_attribute: finance_reports
-#}
+access_filter: {
+  field: v_dim_employee_biz_dev.employee_name
+  user_attribute: finance_reports
+}
+
 
   join: dim_publisher_commission_metadata {
     type: inner

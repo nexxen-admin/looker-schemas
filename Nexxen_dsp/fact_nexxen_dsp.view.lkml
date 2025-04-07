@@ -88,6 +88,13 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: device_manufacturer_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.device_manufacturer_key ;;
+    hidden: yes
+  }
+
   dimension: exchange_rate_to_target_currency_key {
     type: number
     value_format_name: id

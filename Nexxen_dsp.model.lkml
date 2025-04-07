@@ -160,7 +160,7 @@ explore: fact_nexxen_dsp  {
 
   join: dim_dsp_device_manufacturer {
     type:left_outer
-    view_label: "Creative"
+    view_label: "Request Attributes"
     sql_on: ${dim_dsp_device_manufacturer.device_manufacturer_key} = ${fact_nexxen_dsp.device_manufacturer_key};;
     relationship: many_to_one
   }

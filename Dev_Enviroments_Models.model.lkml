@@ -156,6 +156,13 @@ explore: scope3 {
   hidden: no
 }
 
+explore: ops_partners {
+  label: "ops_partners"
+  required_access_grants: [can_view_acr_group]
+  hidden: no
+}
+
+
 
 explore: peerlogix_weekly_genre_device_ip {
   label: "peerlogix weekly genre device ip"

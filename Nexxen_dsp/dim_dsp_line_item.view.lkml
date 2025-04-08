@@ -86,6 +86,11 @@ view: dim_dsp_line_item {
     hidden: yes
   }
 
+  dimension: line_item_nickname  {
+    type: string
+    sql: ${TABLE}.line_item_nickname ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [line_item_name]

@@ -73,10 +73,10 @@ dimension: daily_goal{
   hidden: yes
 }
 
-measure: total_pacing {
-  type: average
+dimension: pacing_dim {
+  type: number
   sql: CASE WHEN ${TABLE}.date_key_in_timezone=${TABLE}.max_date_key_in_timezone THEN ${TABLE}.run_total_delivered/(${daily_goal}*${day_of_campaign}) END ;;
-  label: "Total Pacing - NCD"
-  value_format: "0.0%"
+  hidden: yes
 }
+
 }

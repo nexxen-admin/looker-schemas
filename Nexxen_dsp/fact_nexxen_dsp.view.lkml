@@ -1309,17 +1309,24 @@ view: fact_nexxen_dsp {
   #   sql:  NULLIF(${dim_sfdb_opportunitylineitem_pacing.daily_pacing_dim},0) ;;
   # }
 
+measure: total_pacing {
+  type: average
+  label: "Total Pacing - NCD"
+  sql: ${ncd_pacing.pacing_dim} ;;
+  value_format: "0.0%"
+}
 
-  # measure: html_kpi_pacing {
-  #   type: count
-  #   html:
-  #   <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-  #       Pacing
-  #       <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-  #         {{ ncd_pacing.total_pacing._rendered_value }}
-  #       </div>
-  #     </div>;;
-  # }
+  measure: html_kpi_pacing {
+    type: count
+    hidden: yes
+    html:
+    <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Pacing
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ total_pacing._rendered_value }}
+        </div>
+      </div>;;
+  }
 
   measure: html_kpi_pacing_demo {
     type: count
@@ -1335,6 +1342,7 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_impressions {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Impressions
@@ -1366,6 +1374,7 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_vcr {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         VCR
@@ -1377,6 +1386,7 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_delivered_spend {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Delivered Spend
@@ -1407,6 +1417,7 @@ view: fact_nexxen_dsp {
 
   measure: html_impr_comp_event {
     type: number
+    hidden: yes
     #value_format: "#,##0,,,\"B\""
     sql: ${impressions} ;;
     label: "Impressions"
@@ -1415,6 +1426,7 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_shopping_cart_value {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Cart Value
@@ -1426,6 +1438,7 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_shopping_cart_value_cta {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Cart Value CT
@@ -1437,6 +1450,7 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_shopping_cart_value_vta {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Cart Value VT

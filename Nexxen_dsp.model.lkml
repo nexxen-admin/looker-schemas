@@ -165,6 +165,13 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: ncd_pacing {
+    type: inner
+    view_label: "Salesforce Opportunity Line Item"
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${v_dim_dsp_date.date_key_date};;
+    relationship: many_to_one
+  }
+
   join: dim_dsp_monthly_manual_adjustment {
     type:left_outer
     view_label: "Manual Billing ADJ"

@@ -72,13 +72,7 @@ measure: IMPRESSION {
     label: "Adjusted Net Rev / Gross Rev % (Total)"
   }
 
-  measure: gross_rev_part_of_total {
-    type: number
-    sql: (CASE WHEN ${TABLE}.GROSS_REVENUE = 0 THEN 0 ELSE ${TABLE}.GROSS_REVENUE END)
-      / NULLIF(SUM(${TABLE}.GROSS_REVENUE), 0) ;;
-    value_format: "0.0%"
-    label: "Gross Rev % Of Total"
-  }
+
 
 set: detail {
   fields: [
@@ -88,8 +82,7 @@ set: detail {
     GROSS_REVENUE,
     ADJUSTED_NET_REVENUE,
     TURN_FEE,
-    rev_dev_gross_percentage,
-    gross_rev_part_of_total
+    rev_dev_gross_percentage
   ]
 }
     }

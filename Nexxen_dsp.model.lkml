@@ -85,6 +85,13 @@ explore: fact_nexxen_dsp  {
   label: "Nexxen dsp"
   view_label: "Measures"
 
+  join: dim_dsp_environment {
+    type: left_outer
+    view_label: "Environment"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.environment_key}=${dim_dsp_environment.environment_key} ;;
+  }
+
   join: dim_dsp_format {
     type: left_outer
     view_label: "Request Attributes"

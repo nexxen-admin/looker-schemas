@@ -1302,24 +1302,24 @@ view: fact_nexxen_dsp {
 
 #---------------------------------------------NCD Specifics---------------------------------------------------
 
-  measure: daily_pacing_msd_fact {
-    type: average
-    label: "NCD Daily Pacing"
-    value_format: "#,##0"
-    sql:  NULLIF(${dim_sfdb_opportunitylineitem_pacing.daily_pacing_dim},0) ;;
-  }
+  # measure: daily_pacing_msd_fact {
+  #   type: average
+  #   label: "NCD Daily Pacing"
+  #   value_format: "#,##0"
+  #   sql:  NULLIF(${dim_sfdb_opportunitylineitem_pacing.daily_pacing_dim},0) ;;
+  # }
 
 
-  measure: html_kpi_pacing {
-    type: count
-    html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-        Pacing
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
-        </div>
-      </div>;;
-  }
+  # measure: html_kpi_pacing {
+  #   type: count
+  #   html:
+  #   <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+  #       Pacing
+  #       <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+  #         {{ ncd_pacing.total_pacing._rendered_value }}
+  #       </div>
+  #     </div>;;
+  # }
 
   measure: html_kpi_pacing_demo {
     type: count

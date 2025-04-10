@@ -731,23 +731,6 @@ view: fact_nexxen_dsp {
     value_format: "#,##0"
   }
 
-  dimension: cap_msd {
-    type: number
-    sql: ${dim_sfdb_opportunitylineitem.units__c}/
-    (datediff('day',${dim_dsp_package_budget_schedule.start_date_in_timezone},${dim_dsp_package_budget_schedule.end_date_in_timezone})+1) ;;
-    #hidden: yes
-  }
-
-  measure: pacing_msd {
-    type: sum
-    value_format: "0.0\%"
-    sql: -- case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then
-        ${dim_sfdb_opportunitylineitem.msd_pacing}*100;;
-    hidden: yes
-              #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPC' then ${TABLE}.clicks/sum(${cap_msd}*100
-              #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'dCPM' then ${TABLE}.cost/${cap_msd}*100 end;;
-  }
-
   measure: monthly_budget_breakdown_v1 {
     type: sum
     sql: ${dim_sfdb_opportunitylineitem.monthy_budget_breakout_temp} ;;

@@ -35,7 +35,7 @@ view: fact_nexxen_dsp {
   dimension: dma_key {
     type: number
     value_format_name: id
-    sql: ${TABLE}.creative_size_key ;;
+    sql: ${TABLE}.dma_key ;;
     hidden: yes
   }
 

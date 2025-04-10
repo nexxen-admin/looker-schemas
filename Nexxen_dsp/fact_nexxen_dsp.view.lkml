@@ -150,6 +150,43 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+
+  parameter: date_granularity {
+
+    label: "Date Granularity Filter (D/W/M/Q/Y)"
+    description: "For dynamic Delivery period Granularity. Use with dynamic Dimension Date Granularity"
+    type: string
+    allowed_value: {value:"Day"}
+    allowed_value: {value:"Week"}
+    allowed_value: {value:"Month"}
+    allowed_value: {value:"Quarter"}
+    allowed_value: {value:"Year"}
+  }
+
+  dimension: date {
+    group_label: "Deliverydate Granularity"
+    label: "Deliverydate Granularity"
+    description: "For dynamic Delivery period Granularity. Use with Filter Date Granularity"
+    #value_format: "%m/%d"
+    sql:  CASE
+      WHEN {% parameter date_granularity %} = 'Day'
+        THEN ${date_key_date}
+      When {% parameter date_granularity %} ='Week'
+        THEN ${date_key_week}
+      WHEN {% parameter date_granularity %} = 'Month'
+        THEN ${date_key_month}
+      WHEN {% parameter date_granularity %} = 'Quarter'
+        THEN ${date_key_quarter}
+      WHEN {% parameter date_granularity %} = 'Year'
+        THEN ${date_key_year}
+      ELSE NULL
+    END ;;
+
+    hidden:  no
+  }
+
+
+
   dimension_group: date_key_in_timezone {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
@@ -159,6 +196,11 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 
+dimension: inventory_source_key {
+  type: number
+  sql: ${TABLE}.inventory_source_key ;;
+  hidden: yes
+}
 
   dimension: manual_adjustment_key {
     type: number
@@ -298,6 +340,14 @@ view: fact_nexxen_dsp {
     value_format: "$#,##0.00"
     sql: ${TABLE}.inv_cost ;;
   }
+
+# measure: nexxen_inventory_cost {
+#   type: sum
+#   label: "nexxen inventory cost"
+#   value_format: "$#,##0.00"
+#   sql: CASE WHEN ${inventory_source_id} = 158 THEN ${TABLE}."inv_cost" ELSE NULL END ;;
+# }
+
 
   measure: brand_safety_data_cost {
     type: sum

@@ -4,15 +4,14 @@ view: ops_partners_das {
     SELECT date(DATE_PERIOD) as DATE_PERIOD,
        NS_VENDOR_ID,
        VENDOR_NAME,
+      MARKET_NAME,
+      ADVERTISER_NAME,
         SUM(IMPRESSION) as IMPRESSION,
         SUM(GROSS_REVENUE) as GROSS_REVENUE,
         SUM(ADJUSTED_NET_REVENUE) as ADJUSTED_NET_REVENUE,
         SUM(TURN_FEE) as TURN_FEE
 FROM bi_new.decom_condensed
-GROUP BY
-DATE_PERIOD,
-NS_VENDOR_ID,
-VENDOR_NAME
+GROUP BY 1,2,3,4,5
     ;;
 
 }
@@ -34,6 +33,15 @@ VENDOR_NAME
     sql: ${TABLE}.VENDOR_NAME ;;
   }
 
+  dimension: MARKET_NAME {
+    type: string
+    sql: ${TABLE}.MARKET_NAME ;;
+  }
+
+  dimension: ADVERTISER_NAME {
+    type: string
+    sql: ${TABLE}.ADVERTISER_NAME ;;
+  }
 
 measure: IMPRESSION {
   type: sum
@@ -78,6 +86,9 @@ set: detail {
   fields: [
     DATE_PERIOD,
     NS_VENDOR_ID,
+    MARKET_NAME,
+    ADVERTISER_NAME,
+
     IMPRESSION,
     GROSS_REVENUE,
     ADJUSTED_NET_REVENUE,

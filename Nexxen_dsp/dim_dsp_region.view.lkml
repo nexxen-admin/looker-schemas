@@ -25,6 +25,7 @@ view: dim_dsp_region {
   }
   dimension: region_name {
     type: string
+    map_layer_name: us_states
     sql: ${TABLE}.region_name ;;
   }
   dimension: ri_info {

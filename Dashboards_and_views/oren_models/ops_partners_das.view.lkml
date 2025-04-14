@@ -6,12 +6,13 @@ view: ops_partners_das {
        VENDOR_NAME,
       MARKET_NAME,
       ADVERTISER_NAME,
+      case when DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end as source,
         SUM(IMPRESSION) as IMPRESSION,
         SUM(GROSS_REVENUE) as GROSS_REVENUE,
         SUM(ADJUSTED_NET_REVENUE) as ADJUSTED_NET_REVENUE,
         SUM(TURN_FEE) as TURN_FEE
 FROM bi_new.decom_condensed
-GROUP BY 1,2,3,4,5
+GROUP BY 1,2,3,4,5,6
     ;;
 
 }
@@ -42,6 +43,12 @@ GROUP BY 1,2,3,4,5
     type: string
     sql: ${TABLE}.ADVERTISER_NAME ;;
   }
+
+  dimension: source {
+    type: string
+    sql: ${TABLE}.source ;;
+  }
+
 
 measure: IMPRESSION {
   type: sum
@@ -88,6 +95,7 @@ set: detail {
     NS_VENDOR_ID,
     MARKET_NAME,
     ADVERTISER_NAME,
+    source,
 
     IMPRESSION,
     GROSS_REVENUE,

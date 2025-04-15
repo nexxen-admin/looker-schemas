@@ -1404,7 +1404,7 @@ measure: total_pacing {
     #value_format: "#,##0,,,\"B\""
     sql: ${impressions} ;;
     label: "Impressions"
-    html: {{ rendered_value }} | Complete Events: {{complete_events._rendered_value }}  ;;
+    html: {{ rendered_value }} | VCR: {{VCR_1P._rendered_value }}  ;;
   }
 
   measure: html_kpi_shopping_cart_value {

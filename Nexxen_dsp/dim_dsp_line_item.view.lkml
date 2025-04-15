@@ -34,6 +34,7 @@ view: dim_dsp_line_item {
 
   dimension_group: line_item_created_date {
     type: time
+    label: "Line Item Created Date"
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.created_date ;;
 

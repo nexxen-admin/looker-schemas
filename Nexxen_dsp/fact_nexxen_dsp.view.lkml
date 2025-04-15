@@ -35,7 +35,7 @@ view: fact_nexxen_dsp {
   dimension: dma_key {
     type: number
     value_format_name: id
-    sql: ${TABLE}.creative_size_key ;;
+    sql: ${TABLE}.dma_key ;;
     hidden: yes
   }
 
@@ -85,6 +85,13 @@ view: fact_nexxen_dsp {
     type: number
     value_format_name: id
     sql: ${TABLE}.creative_file_key ;;
+    hidden: yes
+  }
+
+  dimension: device_manufacturer_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.device_manufacturer_key ;;
     hidden: yes
   }
 
@@ -724,23 +731,6 @@ view: fact_nexxen_dsp {
     value_format: "#,##0"
   }
 
-  dimension: cap_msd {
-    type: number
-    sql: ${dim_sfdb_opportunitylineitem.units__c}/
-    (datediff('day',${dim_dsp_package_budget_schedule.start_date_in_timezone},${dim_dsp_package_budget_schedule.end_date_in_timezone})+1) ;;
-    #hidden: yes
-  }
-
-  measure: pacing_msd {
-    type: sum
-    value_format: "0.0\%"
-    sql: -- case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then
-        ${dim_sfdb_opportunitylineitem.msd_pacing}*100;;
-    hidden: yes
-              #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPC' then ${TABLE}.clicks/sum(${cap_msd}*100
-              #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'dCPM' then ${TABLE}.cost/${cap_msd}*100 end;;
-  }
-
   measure: monthly_budget_breakdown_v1 {
     type: sum
     sql: ${dim_sfdb_opportunitylineitem.monthy_budget_breakout_temp} ;;
@@ -1293,134 +1283,37 @@ view: fact_nexxen_dsp {
 
 
 
+#---------------------------------------------NCD Specifics---------------------------------------------------
 
+  # measure: daily_pacing_msd_fact {
+  #   type: average
+  #   label: "NCD Daily Pacing"
+  #   value_format: "#,##0"
+  #   sql:  NULLIF(${dim_sfdb_opportunitylineitem_pacing.daily_pacing_dim},0) ;;
+  # }
 
-  measure: daily_pacing_msd_fact {
-    type: average
-    label: "MSD Daily Pacing"
-    value_format: "#,##0"
-    sql:  NULLIF(${dim_sfdb_opportunitylineitem_pacing.daily_pacing_dim},0) ;;
-  }
-
-  measure: html_kpi_board_line1 {
-    type: count
-    hidden: yes
-    html:
-    <div style = " color:#15003b; width: 100%; ">
-
-              <div style="display: inline-block; font-size: 25px; letter-spacing: 0.01em; margin: 0px 50px">
-                Pacing
-                <div style=" line-height: 15px; font-size: 35px; font-weight: 500;">
-                  {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
-                </div>
-              </div>
-
-      <div style="display: inline-block;  font-size: 25px; letter-spacing: 0.01em; margin: 0px 50px">
-      Total impressions
-      <div style="line-height: 15px; font-size: 35px; font-weight: 500;">
-      {{ impressions._rendered_value }}
-      </div>
-      </div>
-
-      <div style="display: inline-block;  font-size: 25px; letter-spacing: 0.01em; margin: 0px 50px">
-      Delivered Spend
-      <div style="line-height: 15px; font-size: 35px; font-weight: 500;">
-      {{ Delivered_Spend._rendered_value }}
-      </div>
-      </div>
-
-      </div>;;
-
-  }
-
-  measure: html_kpi_board_line2 {
-    type: count
-    # hidden: yes
-    html:
-    <div style = "color:#15003b; width: 100%;">
-
-              <div style="display: inline-block;  font-size: 25px; letter-spacing: 0.01em; margin: 0px 90px">
-              Clicks
-                <div style="line-height: 15px; font-size: 35px; font-weight: 500;">
-                  {{ clicks._rendered_value }}
-                </div>
-              </div>
-
-      <div style="display: inline-block;  font-size: 25px; letter-spacing: 0.01em; margin: 0px 90px">
-      CTR
-      <div style="line-height: 15px; font-size: 35px; font-weight: 500;">
-      {{ CTR_1P._rendered_value }}
-      </div>
-      </div>
-
-      <div style="display: inline-block;  font-size: 25px; letter-spacing: 0.01em; margin: 0px 90px">
-      VCR
-      <div style="line-height: 15px; font-size: 35px; font-weight: 500;">
-      {{ VCR_1P._rendered_value }}
-      </div>
-      </div>
-
-      </div>;;
-  }
-
-  measure: html_kpi_board_ag_overv {
-    type: count
-    hidden: yes
-    html:
-    <div style = "color:#15003b; width: 100%;">
-
-              <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
-              Number of Advertisers
-                <div style="line-height: 15px; font-size: 30px; font-weight: 500;">
-                  {{  dim_sfdb_related_accounts.num_of_advertisers_msd._rendered_value }}
-                </div>
-              </div>
-
-      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
-      Impressions
-      <div style="line-height: 15px; font-size: 30px; font-weight: 500;">
-      {{ impressions._rendered_value }}
-      </div>
-      </div>
-
-      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
-      Clicks
-      <div style="line-height: 15px; font-size: 30px; font-weight: 500;">
-      {{ clicks._rendered_value }}
-      </div>
-      </div>
-
-      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
-      Pacing
-      <div style="line-height: 15px; font-size: 30px; font-weight: 500;">
-      {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
-      </div>
-      </div>
-
-      <div style="display: inline-block;  font-size: 20px; letter-spacing: 0.01em; margin: 0px 20px">
-        Delivered Spend
-          <div style="line-height: 15px; font-size: 30px; font-weight: 500;">
-            {{ Delivered_Spend._rendered_value }}
-          </div>
-        </div>
-
-      </div>;;
-  }
-
+measure: total_pacing {
+  type: average
+  label: "Total Pacing - NCD"
+  sql: ${ncd_pacing.pacing_dim} ;;
+  value_format: "0.0%"
+}
 
   measure: html_kpi_pacing {
     type: count
+    hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+    <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Pacing
         <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
+          {{ total_pacing._rendered_value }}
         </div>
       </div>;;
   }
 
   measure: html_kpi_pacing_demo {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Pacing
@@ -1432,6 +1325,7 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_impressions {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Impressions
@@ -1441,47 +1335,29 @@ view: fact_nexxen_dsp {
       </div>;;
   }
 
-  measure: html_kpi_impressions_change {
+  measure: impressions_demo {
     type: number
-    sql: ( ${current_period_impressions} / NULLIF(${previous_period_impressions} ,0)) - 1  ;;
-    value_format_name: percent_0
+    hidden: yes
+    value_format: "#,##0"
+    sql:${impressions}  *10.2;;
+  }
 
+  measure: html_kpi_impressions_demo {
+    type: count
+    hidden: yes
     html:
-    <div style="color:#636E7A; display: inline-block; font-size: 15px; letter-spacing: 0.01em; ">
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Impressions
         <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ current_period_impressions._rendered_value }}
+          {{ impressions_demo._rendered_value }}
         </div>
-        <div style="color:#636E7A; line-height: 15px; font-size: 15px; margin-top:20px;">
-          {% if value > 0 %}
-          {% assign indicator = "#7EC537,▲" | split: ',' %}
-          {% elsif value < 0 %}
-
-            {% assign indicator = "#C53737,▼" | split: ',' %}
-
-            {% else %}
-
-            {% assign indicator = "#636E7A,▬" | split: ',' %}
-
-            {% endif %}
-            <font color="{{indicator[0]}}">
-
-            {% if value == 99999.12345 %} &infin
-
-            {% else %}{{indicator[1]}}
-
-            {% endif %}
-
-            </font>
-            {{rendered_value}}
-        </div>
-      </div>
-
-      ;;
+      </div>;;
   }
+
 
   measure: html_kpi_vcr {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         VCR
@@ -1493,6 +1369,7 @@ view: fact_nexxen_dsp {
 
   measure: html_kpi_delivered_spend {
     type: count
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Delivered Spend
@@ -1502,51 +1379,68 @@ view: fact_nexxen_dsp {
       </div>;;
   }
 
+  measure: delivered_spend_demo {
+    type: number
+    hidden: yes
+    value_format: "$#,##0.00"
+    sql:${Delivered_Spend}  *11.7;;
+  }
+
+  measure: html_kpi_delivered_spend_demo {
+    type: count
+    hidden: yes
+    html:
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Delivered Spend
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ delivered_spend_demo._rendered_value }}
+        </div>
+      </div>;;
+  }
+
   measure: html_impr_comp_event {
     type: number
+    hidden: yes
     #value_format: "#,##0,,,\"B\""
     sql: ${impressions} ;;
     label: "Impressions"
-    html: {{ rendered_value }} | Complete Events: {{complete_events._rendered_value }}  ;;
+    html: {{ rendered_value }} | VCR: {{VCR_1P._rendered_value }}  ;;
   }
 
-  measure: html_kpi_vcr_change {
-    type: number
-    sql: ( ${current_period_vcr} / NULLIF(${previous_period_vcr} ,0)) - 1  ;;
-    value_format_name: percent_0
-
+  measure: html_kpi_shopping_cart_value {
+    type: count
+    hidden: yes
     html:
-    <div style="color:#636E7A; display: inline-block; font-size: 15px; letter-spacing: 0.01em; ">
-        VCR
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Cart Value
         <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ current_period_vcr._rendered_value }}
+          {{ shopping_cart_value._rendered_value }}
         </div>
-        <div style="color:#636E7A; line-height: 15px; font-size: 15px; margin-top:20px;">
-          {% if value > 0 %}
-          {% assign indicator = "#7EC537,▲" | split: ',' %}
-          {% elsif value < 0 %}
+      </div>;;
+  }
 
-      {% assign indicator = "#C53737,▼" | split: ',' %}
+  measure: html_kpi_shopping_cart_value_cta {
+    type: count
+    hidden: yes
+    html:
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Cart Value CT
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ shopping_cart_value_cta._rendered_value }}
+        </div>
+      </div>;;
+  }
 
-      {% else %}
-
-      {% assign indicator = "#636E7A,▬" | split: ',' %}
-
-      {% endif %}
-      <font color="{{indicator[0]}}">
-
-      {% if value == 99999.12345 %} &infin
-
-      {% else %}{{indicator[1]}}
-
-      {% endif %}
-
-      </font>
-      {{rendered_value}}
-      </div>
-      </div>
-
-      ;;
+  measure: html_kpi_shopping_cart_value_vta {
+    type: count
+    hidden: yes
+    html:
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Cart Value VT
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ shopping_cart_value_vta._rendered_value }}
+        </div>
+      </div>;;
   }
 
 

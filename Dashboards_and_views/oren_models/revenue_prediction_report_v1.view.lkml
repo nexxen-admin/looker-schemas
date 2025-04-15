@@ -38,6 +38,13 @@ view: revenue_prediction_report_v1 {
   }
 
 
+
+  dimension: quarter {
+    type: date
+    sql: DATE_TRUNC('quarter', ${TABLE}.date) ;;
+  }
+
+
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
@@ -167,6 +174,7 @@ view: revenue_prediction_report_v1 {
     fields: [
       date,
       max_real_data_date,
+      quarter,
       category,
       subcategory,
       revenue,

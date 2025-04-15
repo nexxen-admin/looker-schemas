@@ -147,4 +147,19 @@ view: dim_dsp_creative {
     sql: ${TABLE}.workflow_status_id ;;
     hidden: yes
   }
+
+  dimension: creative_group {
+    type: string
+    sql: ${TABLE}.creative_group ;;
+  }
+
+  dimension: creative_message {
+    type: string
+    sql: ${TABLE}.creative_message ;;
+  }
+
+  dimension: language {
+    type: string
+    sql: ${TABLE}.language ;;
+  }
 }

@@ -40,11 +40,18 @@ explore: fact_nexxen_msd_advertiser  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD Advertiser"
   view_label: "Measures"
-  # access_filter: {
-  #   field: advertisers_email.email
-  #   user_attribute: advertiser
-  # }
+  access_filter: {
+    field: dim_dsp_advertiser.advertiser_id
+    user_attribute: advertiser
+  }
   #hidden: yes
+
+  join: dim_dsp_insertion_order {
+    type: inner
+    view_label: "Insertion Order"
+    sql_on: ${dim_dsp_line_item.insertion_order_id}=${dim_dsp_insertion_order.insertion_order_id} ;;
+    relationship: many_to_one
+  }
 
   join: dim_dsp_format {
     type: left_outer
@@ -118,6 +125,13 @@ explore: fact_nexxen_msd_advertiser  {
     type:left_outer
     view_label: "Creative"
     sql_on: ${dim_dsp_creative_file.creative_file_key} = ${fact_nexxen_dsp.creative_file_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_device_manufacturer {
+    type:left_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_dsp_device_manufacturer.device_manufacturer_key} = ${fact_nexxen_dsp.device_manufacturer_key};;
     relationship: many_to_one
   }
 
@@ -231,12 +245,11 @@ explore: fact_nexxen_msd_advertiser  {
 
   }
 
-  join: dim_sfdb_opportunitylineitem_pacing {
+  join: ncd_pacing {
     type: inner
     view_label: "Salesforce Opportunity Line Item"
-    sql_on: ${dim_sfdb_opportunitylineitem_pacing.line_item_id}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${dim_sfdb_opportunitylineitem_pacing.date_key_date}=${v_dim_dsp_date.date_key_date};;
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${v_dim_dsp_date.date_key_date};;
     relationship: many_to_one
-
   }
 
 
@@ -336,7 +349,7 @@ explore: fact_reach_advertiser {
   persist_with: CleanCash_datagroup
   view_label: "Measures"
   # access_filter: {
-  #   field: advertisers_email.email
+  #   field: dim_dsp_advertiser.advertiser_id
   #   user_attribute: advertiser
   # }
   # hidden: yes
@@ -348,11 +361,18 @@ explore: fact_nexxen_msd_agency  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp MSD Agency"
   view_label: "Measures"
-  # access_filter: {
-  #   field: agencies_email.email
-  #   user_attribute: agency
-  # }
+  access_filter: {
+    field: dim_dsp_advertiser.advertiser_id
+    user_attribute: advertiser
+  }
   #hidden: yes
+
+  join: dim_dsp_insertion_order {
+    type: inner
+    view_label: "Insertion Order"
+    sql_on: ${dim_dsp_line_item.insertion_order_id}=${dim_dsp_insertion_order.insertion_order_id} ;;
+    relationship: many_to_one
+  }
 
   join: dim_dsp_format {
     type: left_outer
@@ -426,6 +446,13 @@ explore: fact_nexxen_msd_agency  {
     type:left_outer
     view_label: "Creative"
     sql_on: ${dim_dsp_creative_file.creative_file_key} = ${fact_nexxen_dsp.creative_file_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_device_manufacturer {
+    type:left_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_dsp_device_manufacturer.device_manufacturer_key} = ${fact_nexxen_dsp.device_manufacturer_key};;
     relationship: many_to_one
   }
 
@@ -529,12 +556,11 @@ explore: fact_nexxen_msd_agency  {
 
   }
 
-  join: dim_sfdb_opportunitylineitem_pacing {
+  join: ncd_pacing {
     type: inner
     view_label: "Salesforce Opportunity Line Item"
-    sql_on: ${dim_sfdb_opportunitylineitem_pacing.line_item_id}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${dim_sfdb_opportunitylineitem_pacing.date_key_date}=${v_dim_dsp_date.date_key_date};;
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${v_dim_dsp_date.date_key_date};;
     relationship: many_to_one
-
   }
 
   join: dim_sfdb_user {
@@ -633,8 +659,8 @@ explore: fact_reach_agency {
   persist_with: CleanCash_datagroup
   view_label: "Measures"
   # access_filter: {
-  #   field: agencies_email.email
-  #   user_attribute: agency
+  #   field: dim_dsp_advertiser.advertiser_id
+  #   user_attribute: advertiser
   # }
   # hidden: yes
 }

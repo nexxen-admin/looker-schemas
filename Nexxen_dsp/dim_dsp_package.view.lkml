@@ -474,6 +474,12 @@ view: dim_dsp_package {
     type: number
     sql: ${TABLE}.workflow_status_id ;;
   }
+
+  dimension:  package_nickname {
+    type: string
+    sql: ${TABLE}.package_nickname ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [name]

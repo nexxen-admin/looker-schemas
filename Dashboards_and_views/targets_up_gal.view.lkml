@@ -92,26 +92,17 @@ view: targets_up_gal {
     value_format: "0.00%"
   }
 
-  dimension: quarter {
-    type: number
-    sql: quarter(${month_year_date});;
-  }
+  # dimension: quarter {
+  #   type: number
+  #   sql: quarter(${month_year_date});;
+  # }
 
   dimension: days_passed {
     type: number
-    sql: case when ${quarter}='1' and month(current_date)='1' then day(current_date)
-              when ${quarter}='1' and month(current_date)='2' then 31+day(current_date)
-              when ${quarter}='1' and month(current_date)='3' then 59+day(current_date)
-              when ${quarter}='2' and month(current_date)='4' then day(current_date)
-              when ${quarter}='2' and month(current_date)='5' then 30+day(current_date)
-              when ${quarter}='2' and month(current_date)='6' then 61+day(current_date)
-              when ${quarter}='3' and month(current_date)='7' then day(current_date)
-              when ${quarter}='3' and month(current_date)='8' then 31+day(current_date)
-              when ${quarter}='3' and month(current_date)='9' then 62+day(current_date)
-              when ${quarter}='4' and month(current_date)='10' then day(current_date)
-              when ${quarter}='4' and month(current_date)='11' then 31+day(current_date)
-              when ${quarter}='4' and month(current_date)='12' then 61+day(current_date)
-              end ;;
+    sql: CASE WHEN now()>=TIMESTAMPADD(d, -1, TIMESTAMPADD(q, TIMESTAMPDIFF(q, '1000-01-01', ${month_year_date}) + 1, '1000-01-01')) THEN ${quarter_length}
+    WHEN now()< TIMESTAMPADD ( q, TIMESTAMPDIFF (q, '1000-01-01', ${month_year_date}), '1000-01-01' ) THEN 0
+    ELSE TIMESTAMPDIFF(d, TIMESTAMPADD ( q, TIMESTAMPDIFF (q, '1000-01-01', ${month_year_date}), '1000-01-01' ), now())
+      END;;
   }
 
 
@@ -119,9 +110,10 @@ view: targets_up_gal {
   dimension: quarter_length {
     type: number
     sql: case
-              when month(${month_year_month})='1' OR month(${month_year_month})='2' OR month(${month_year_month})='3' then '90'
-              when month(${month_year_month})='4' OR month(${month_year_month})='5' OR month(${month_year_month})='6' then '91'
-              else '92' end;;
+              when month(${month_year_month}) IN (1, 2, 3) AND ${month_year_year} IN (2020, 2024, 2028, 2032) then 91
+              when month(${month_year_month}) IN (1, 2, 3) then 90
+              when month(${month_year_month}) IN (4, 5, 6) then 91
+              else 92 end;;
   }
 
   measure: tech_fee {

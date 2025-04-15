@@ -158,6 +158,20 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_device_manufacturer {
+    type:left_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_dsp_device_manufacturer.device_manufacturer_key} = ${fact_nexxen_dsp.device_manufacturer_key};;
+    relationship: many_to_one
+  }
+
+  join: ncd_pacing {
+    type: inner
+    view_label: "Salesforce Opportunity Line Item"
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${v_dim_dsp_date.date_key_date};;
+    relationship: many_to_one
+  }
+
   join: dim_dsp_monthly_manual_adjustment {
     type:left_outer
     view_label: "Manual Billing ADJ"
@@ -268,13 +282,6 @@ explore: fact_nexxen_dsp  {
 
   }
 
-  join: dim_sfdb_opportunitylineitem_pacing {
-    type: inner
-    view_label: "Salesforce Opportunity Line Item"
-    sql_on: ${dim_sfdb_opportunitylineitem_pacing.line_item_id}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${dim_sfdb_opportunitylineitem_pacing.date_key_date}=${v_dim_dsp_date.date_key_date};;
-    relationship: many_to_one
-
-  }
 
   join: dim_sfdb_user {
 

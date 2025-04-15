@@ -17,6 +17,19 @@ GROUP BY 1,2,3,4,5,6
 
 }
 
+  dimension_group: time_frame {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.DATE_PERIOD ;;
+    label: "Time Frame"
+  }
 
   dimension: DATE_PERIOD {
     type: date
@@ -92,6 +105,7 @@ measure: IMPRESSION {
 set: detail {
   fields: [
     DATE_PERIOD,
+    time_frame_quarter,
     NS_VENDOR_ID,
     MARKET_NAME,
     ADVERTISER_NAME,

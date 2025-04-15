@@ -32,6 +32,13 @@ view: dim_dsp_line_item {
     hidden: yes
   }
 
+  dimension_group: line_item_created_date {
+    type: time
+    timeframes: [raw, time, date, week, month, quarter, year]
+    sql: ${TABLE}.created_date ;;
+
+  }
+
   dimension: is_deleted {
     type: number
     sql: ${TABLE}.is_deleted ;;

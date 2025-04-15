@@ -356,6 +356,20 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_target_deal {
+    type: inner
+    view_label: "Target Deal"
+    sql_on: ${dim_dsp_line_item.line_item_id}=${dim_dsp_target_deal.line_item_id} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_publisher_deal {
+    type: inner
+    view_label: "Publisher Deal"
+    sql_on: ${dim_dsp_target_deal.publisher_deal_id}=${dim_dsp_publisher_deal.publisher_deal_id};;
+    relationship: many_to_one
+  }
+
   join: dim_dsp_insertion_order {
     type: inner
     view_label: "Insertion Order"

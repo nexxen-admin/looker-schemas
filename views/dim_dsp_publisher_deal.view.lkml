@@ -54,11 +54,13 @@ view: dim_dsp_publisher_deal {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_created_date ;;
+    hidden: yes
   }
   dimension_group: db_updated {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_updated_date ;;
+    hidden: yes
   }
   dimension: deal_id {
     type: string
@@ -179,6 +181,7 @@ view: dim_dsp_publisher_deal {
   dimension: publisher_deal_key {
     type: number
     sql: ${TABLE}.publisher_deal_key ;;
+    hidden:  yes
   }
   dimension: publisher_name {
     type: string
@@ -191,6 +194,7 @@ view: dim_dsp_publisher_deal {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.ri_info ;;
+    hidden:  yes
   }
   dimension_group: start {
     type: time
@@ -225,5 +229,6 @@ view: dim_dsp_publisher_deal {
   measure: count {
     type: count
     drill_fields: [publisher_name, name]
+    hidden:  yes
   }
 }

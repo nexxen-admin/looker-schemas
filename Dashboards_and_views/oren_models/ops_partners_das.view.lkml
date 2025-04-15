@@ -74,21 +74,21 @@ measure: IMPRESSION {
   measure: GROSS_REVENUE {
     type: sum
     sql: ${TABLE}.GROSS_REVENUE ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Gross Revenue"
   }
 
   measure: ADJUSTED_NET_REVENUE {
     type: sum
     sql: ${TABLE}.ADJUSTED_NET_REVENUE ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Net Revenue"
   }
 
   measure: TURN_FEE {
     type: sum
     sql: ${TABLE}.TURN_FEE ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "Turn Fee"
   }
 

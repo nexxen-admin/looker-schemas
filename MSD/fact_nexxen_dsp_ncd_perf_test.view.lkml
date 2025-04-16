@@ -1,7 +1,7 @@
 view: fact_nexxen_dsp_ncd_perf_test {
     # The sql_table_name parameter indicates the underlying database table
     # to be used for all fields in this view.
-    sql_table_name: BI_DSP.fact_neexen_dsp_ncd_perf_test ;;
+    sql_table_name: BI_DSP.ncd_fact_nexxen_dsp_state ;;
 
     # No primary key is defined for this view. In order to join this view in an Explore,
     # define primary_key: yes on a dimension that has no repeated values.

@@ -1408,7 +1408,7 @@ measure: total_pacing {
 
   measure: html_kpi_clicks {
     type: count
-    # hidden: yes
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Clicks
@@ -1420,7 +1420,7 @@ measure: total_pacing {
 
   measure: html_kpi_complete_events {
     type: count
-    # hidden: yes
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Complete Events
@@ -1432,7 +1432,7 @@ measure: total_pacing {
 
   measure: html_kpi_ctr {
     type: count
-    # hidden: yes
+    hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         CTR

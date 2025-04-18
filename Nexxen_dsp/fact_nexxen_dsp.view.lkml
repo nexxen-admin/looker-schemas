@@ -119,6 +119,7 @@ view: fact_nexxen_dsp {
   measure: clicks {
     type: sum
     label: "1P Clicks"
+    value_format: "#,##0"
     sql: ${TABLE}.clicks ;;
 
  }
@@ -331,7 +332,7 @@ view: fact_nexxen_dsp {
 
   measure: complete_events  {
     type: sum
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     description: "1 for events that were completed"
     sql: ${TABLE}.complete_events  ;;
   }
@@ -1401,6 +1402,42 @@ measure: total_pacing {
         Delivered Spend
         <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ delivered_spend_demo._rendered_value }}
+        </div>
+      </div>;;
+  }
+
+  measure: html_kpi_clicks {
+    type: count
+    # hidden: yes
+    html:
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Clicks
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ clicks._rendered_value }}
+        </div>
+      </div>;;
+  }
+
+  measure: html_kpi_complete_events {
+    type: count
+    # hidden: yes
+    html:
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Complete Events
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ complete_events._rendered_value }}
+        </div>
+      </div>;;
+  }
+
+  measure: html_kpi_ctr {
+    type: count
+    # hidden: yes
+    html:
+     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        CTR
+        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ CTR_1P._rendered_value }}
         </div>
       </div>;;
   }

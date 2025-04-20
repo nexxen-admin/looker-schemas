@@ -6,13 +6,16 @@ view: ops_partners_das {
        VENDOR_NAME,
       MARKET_NAME,
       ADVERTISER_NAME,
+      ENVIRONMENT,
+      PROVIDER_NAME,
+      MARKET_ID,
       case when DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end as source,
         SUM(IMPRESSION) as IMPRESSION,
         SUM(GROSS_REVENUE) as GROSS_REVENUE,
         SUM(ADJUSTED_NET_REVENUE) as ADJUSTED_NET_REVENUE,
         SUM(TURN_FEE) as TURN_FEE
 FROM bi_new.decom_condensed
-GROUP BY 1,2,3,4,5,6
+GROUP BY 1,2,3,4,5,6,7,8,9
     ;;
 
 }
@@ -36,6 +39,23 @@ GROUP BY 1,2,3,4,5,6
     sql: ${TABLE}.DATE_PERIOD ;;
     label: "Date"
   }
+
+
+  dimension: ENVIRONMENT {
+    type: date
+    sql: ${TABLE}.ENVIRONMENT ;;
+  }
+
+  dimension: PROVIDER_NAME {
+    type: date
+    sql: ${TABLE}.PROVIDER_NAME ;;
+  }
+
+  dimension: MARKET_ID {
+    type: date
+    sql: ${TABLE}.MARKET_ID ;;
+  }
+
 
   dimension: NS_VENDOR_ID {
     type: date
@@ -110,6 +130,9 @@ set: detail {
     MARKET_NAME,
     ADVERTISER_NAME,
     source,
+    ENVIRONMENT,
+    PROVIDER_NAME,
+    MARKET_ID,
 
     IMPRESSION,
     GROSS_REVENUE,

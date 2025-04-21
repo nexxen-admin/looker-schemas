@@ -42,44 +42,52 @@ GROUP BY 1,2,3,4,5,6,7,8,9
 
 
   dimension: ENVIRONMENT {
-    type: date
+    type: string
     sql: ${TABLE}.ENVIRONMENT ;;
+    label: "Environment"
   }
 
   dimension: PROVIDER_NAME {
-    type: date
+    type: string
     sql: ${TABLE}.PROVIDER_NAME ;;
+    label: "Provider Name"
   }
 
   dimension: MARKET_ID {
-    type: date
+    type: string
     sql: ${TABLE}.MARKET_ID ;;
+    label: "Market ID"
   }
 
 
   dimension: NS_VENDOR_ID {
-    type: date
+    type: string
     sql: ${TABLE}.NS_VENDOR_ID ;;
+    label: "Vendor ID"
   }
 
   dimension: VENDOR_NAME {
     type: string
     sql: ${TABLE}.VENDOR_NAME ;;
+    label: "Vendor Name"
   }
 
   dimension: MARKET_NAME {
     type: string
     sql: ${TABLE}.MARKET_NAME ;;
+    label: "Market Name"
   }
 
   dimension: ADVERTISER_NAME {
     type: string
     sql: ${TABLE}.ADVERTISER_NAME ;;
+    label: "Advertiser Name"
   }
 
   dimension: source {
     type: string
     sql: ${TABLE}.source ;;
+    label: "Source"
   }
 
 

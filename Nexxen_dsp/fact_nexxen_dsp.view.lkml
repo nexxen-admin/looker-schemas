@@ -1311,9 +1311,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-    <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+    <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Pacing
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ total_pacing._rendered_value }}
         </div>
       </div>;;
@@ -1323,9 +1323,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Pacing
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           100%
         </div>
       </div>;;
@@ -1335,9 +1335,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Impressions
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ impressions._rendered_value }}
         </div>
       </div>;;
@@ -1354,9 +1354,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Impressions
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ impressions_demo._rendered_value }}
         </div>
       </div>;;
@@ -1367,9 +1367,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         VCR
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ VCR_1P._rendered_value }}
         </div>
       </div>;;
@@ -1379,9 +1379,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Delivered Spend
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ Delivered_Spend._rendered_value }}
         </div>
       </div>;;
@@ -1398,9 +1398,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Delivered Spend
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ delivered_spend_demo._rendered_value }}
         </div>
       </div>;;
@@ -1410,9 +1410,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Clicks
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ clicks._rendered_value }}
         </div>
       </div>;;
@@ -1422,9 +1422,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Complete Events
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ complete_events._rendered_value }}
         </div>
       </div>;;
@@ -1434,9 +1434,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         CTR
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ CTR_1P._rendered_value }}
         </div>
       </div>;;
@@ -1455,9 +1455,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Cart Value
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ shopping_cart_value._rendered_value }}
         </div>
       </div>;;
@@ -1467,9 +1467,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Cart Value CT
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ shopping_cart_value_cta._rendered_value }}
         </div>
       </div>;;
@@ -1479,9 +1479,9 @@ measure: total_pacing {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Cart Value VT
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ shopping_cart_value_vta._rendered_value }}
         </div>
       </div>;;

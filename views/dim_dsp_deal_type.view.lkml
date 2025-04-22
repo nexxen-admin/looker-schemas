@@ -1,0 +1,40 @@
+# The name of this view in Looker is "V Dim Dsp Deal Type"
+view: dim_dsp_deal_type {
+  # The sql_table_name parameter indicates the underlying database table
+  # to be used for all fields in this view.
+  sql_table_name: BI_New.V_Dim_DSP_Deal_Type ;;
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
+
+
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Dsp Deal Type" in Explore.
+
+  dimension: dsp_deal_type {
+    type: string
+    description: "Indicates the source of the deal.    Possible values:  rx - Unruly Exchange Deal, pub - Unruly CTRL Publisher Deal, and  passthrough - 3rd Party SSP Passthrough Deal ."
+    sql: ${TABLE}.DSP_Deal_Type ;;
+  }
+
+  dimension: dsp_deal_type_key {
+    type: number
+    sql: ${TABLE}.DSP_Deal_Type_Key ;;
+    hidden: yes
+  }
+
+  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
+  # measures for this dimension, but you can also add measures of many different aggregates.
+  # Click on the type parameter to see all the options in the Quick Help panel on the right.
+
+
+  measure: count {
+    type: count
+    drill_fields: []
+    hidden: yes
+  }
+}

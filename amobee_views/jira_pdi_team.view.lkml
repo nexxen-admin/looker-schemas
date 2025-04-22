@@ -1,0 +1,17 @@
+view: pdi_team {
+  sql_table_name: public.customfieldoption ;;
+
+  dimension: id {
+    primary_key: yes
+    type: number
+    hidden: yes
+    sql: ${TABLE}.id ;;
+  }
+
+  dimension: customvalue {
+    type: string
+    label: "PDI Team"
+    view_label: "Custom Fields"
+    sql: ${TABLE}.customvalue ;;
+  }
+}

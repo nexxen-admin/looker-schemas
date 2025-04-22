@@ -1,0 +1,784 @@
+connection: "vertica_iad"
+
+include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
+include: "/**/*.view.lkml"                 # include all views in this project
+# include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
+
+# # Select the views that should be a part of this model,
+# # and define the joins that connect them together.
+#
+# explore: order_items {
+#   join: orders {
+#     relationship: many_to_one
+#     sql_on: ${orders.id} = ${order_items.order_id} ;;
+#   }
+#
+#   join: users {
+#     relationship: many_to_one
+#     sql_on: ${users.id} = ${orders.user_id} ;;
+#   }
+# }
+datagroup: ChangeCleanCash_datagroup {
+  sql_trigger: SELECT max(hour) FROM tremor_to_unruly ;;
+  max_cache_age: "15 hours"
+  label: "Clean Cash Trigger"
+  description: "Triggered when new date is added to ETL"
+}
+
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
+}
+
+access_grant: allowed_users_sam_lt {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["Finance Reports All Access", "Chris Chandler Group", "Mike Padula Group"]
+  #allowed_values: ["Finance Reports All Access", "Mike Padula Group"]
+  #allowed_values: ["mike padula group","Finance Reports All Access"]
+}
+
+access_grant: allowed_mike {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["Mike Padula Group"]
+}
+
+access_grant: allowed_sales {
+  user_attribute: allowed_users_sam_lt
+  allowed_values: ["SalesOps"]
+}
+
+access_grant: can_view_all_tremor {
+  user_attribute: all_tremor
+  allowed_values: ["all_tremor"]
+}
+
+access_grant: can_view_candidates {
+  user_attribute: candidates
+  allowed_values: ["candidates"]
+}
+
+access_grant: can_view_aniview {
+  user_attribute: aniview
+  allowed_values: ["Aniview"]
+}
+
+access_grant: can_view_opti_report {
+  user_attribute: opti_ssp_report
+  allowed_values: ["opti_ssp_report"]
+}
+
+# for opti report
+#access_grant: can_view_opti_report {
+#  user_attribute: opti_ssp_report
+#  allowed_values: ["opti_ssp_report"]
+#}
+
+
+#access_grant: can_view_pub_come_looker {
+# user_attribute: allowed_users
+#allowed_values: ["Looker_Admins"]
+#}
+explore: datorama_forcast_poc {
+
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+
+}
+explore: sam_goal_monitor {
+  access_filter: {
+    field: sam_goal_monitor.sam
+    user_attribute: allowed_users
+  }
+  label: "SAM Performance Monitor"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: sam {
+  access_filter: {
+    field: sam.sam
+    user_attribute: allowed_users
+
+  }
+  label: "SAM Performance Monitor new"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: sam_lt_comm {
+  # access_filter: {
+  #   field: sam_lt_comm.operations_owner
+  #   user_attribute: allowed_users_sam_lt
+  # }
+  label: "SAM LT Commision"
+  #affecting bd comm - global, monthly metrics by ops owner
+  #required_access_grants: [allowed_users_sam_lt,allowed_sales]
+  #required_access_grants: [allowed_sales]
+  required_access_grants: [allowed_users_sam_lt]
+  hidden: yes
+}
+
+
+explore: sam_performance_monitor_v2 {
+  access_filter: {
+    field: sam_performance_monitor_v2.sam
+    user_attribute: allowed_users_sam_lt
+  }
+  label: "SAM Performance Monitor V2"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: sam_lt_pub_metrics {
+  access_filter: {
+    field: sam_lt_pub_metrics.operations_owner
+    user_attribute: allowed_users_sam_lt
+  }
+  label: "SAM + LT Publisher Metrics"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: phase_2_ak {
+  label: "Phase 2 - AK"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: yearly_consolidated_revenue_by_region_with_amobee {
+  label: "Yearly Consolidated Revenue by Region With Amobee"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: comscore_active_segments {
+  label: "Comscore Active Segments"
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
+
+explore: bid_details_in_app {
+  label: "Bid Details - In App"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: spearad_fifa_view {
+  label: "FIFA-SpearAd View"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: fifa_dsp_metrics {
+  label: "FIFA-DSP View"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: bd_comm {
+  label: "BD Comm US"
+  #required_access_grants: [allowed_users_sam_lt]
+  access_filter: {
+    field: bd_comm.bizdev_owner
+    user_attribute: finance_reports
+  }
+  hidden: yes
+}
+
+explore: bd_comm_intl {
+  label: "BD Comm Intl"
+  #required_access_grants: [can_view_all_tremor]
+  access_filter: {
+    field: bd_comm_intl.bizdev_owner
+    user_attribute: allowed_users_sam_lt
+  }
+  hidden: yes
+}
+
+explore: net_revenue_with_demand_ss_fees {
+  label: "net revenue with demand ss fees"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: base_data_demand {
+  label: "Base Data Demand"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: net_revenue_without_demand_ss_fees {
+  label: "net revenue without demand ss fees"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: base_data_without_demand {
+  label: "Base Data Without Demand"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: ads_txt_domain_publisher {
+  label: "ads_txt_domain_publisher"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: unruly_pmp {
+  label: "Unruly PMP"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: deal_splits_owner_report {
+  label: "Deal_splits_owner_report"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: active_inactive_publishers {
+  label: "Active Inactive Publishers"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+
+explore:  exchange_daily_report_component{
+  label: "Exchange Daily Report Component"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+
+explore:  ivt_report{
+  label: "IVT Report"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore:  no_bid_reason{
+  label: "No_Bid_Reason"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: new_revenue {
+  label: "New Revenue"
+  #required_access_grants:  [can_view_pub_come_looker]
+
+  join: dim_publisher  {
+    type:inner
+    sql_on:  ${dim_publisher.pub_id} = ${new_revenue.pub_id};;
+    relationship: many_to_one
+  }
+  join: v_dim_employee_pub_ops {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
+    relationship: many_to_one
+  }
+  join: v_dim_employee_biz_dev {
+    type: inner
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
+    relationship: many_to_one
+  }
+  hidden: yes
+
+}
+
+explore: investor_kpi{
+  label: "Investor KPI"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: pubs_and_advertisers{
+  label: "Pubs and Advertisers"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: revenue_vertical_buying_channel{
+  label: "Revenue Vertical Buying Channel"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: investor_kpi_excluding_amobee{
+  label: "Investor KPI Excluding Amobee"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: pubs_and_advertisers_excluding_amobee{
+  label: "Pubs and Adverstisers Excluding Amobee"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: investor_kpi_only_amobee{
+  label: "Investor KPI Only Amobee"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: pubs_and_advertisers_only_amobee{
+  label: "Pubs and Advertisers Only Amobee"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: publisher_90_day_revenue{
+  label: "Publisher 90-Day Revenue"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: bliss_point_media_margin_profile{
+  label: "BPM Margin Profile"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: holdco_revenue_report{
+  label: "HoldCo Revenue View"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: q1_concentration_data{
+  label: "Concentration - Q1"
+  required_access_grants: [can_view_pub_come_looker,allowed_users_sam_lt]
+  hidden: no
+}
+
+explore: tremor_to_unruly{
+  label: "Tremor to Unruly"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: deal_commision_data {
+  label: "Deal Commision Data"
+  #required_access_grants: [allowed_users_sam_lt]
+  hidden: yes
+}
+
+explore: deal_commission_data_pivot {
+  label: "Deal Commision Data - Pivot"
+  #required_access_grants: [allowed_users_sam_lt]
+  hidden: yes
+}
+
+explore: new_money_unruly_player_aniview {
+  label: "New Money Unruly Player Aniview"
+  #required_access_grants: [can_view_pub_come_looker]
+  hidden: yes
+}
+
+explore: new_money_unruly_player_ctrl{
+  label: "New Money Unruly Player CTRL"
+  #required_access_grants: [can_view_pub_come_looker]
+  hidden: yes
+}
+
+explore: publishers_bids_breakdown {
+  label: "Publishers Bids Breakdown"
+  required_access_grants: [can_view_pub_come_looker]
+  hidden: yes
+}
+
+explore: fact_supply_chain {
+  label: "Supply Chain Report"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: fact_apac_1_data {
+  label: "BD Comm APAC TS"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: fact_apac_2_data {
+  label: "BD Comm APAC"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: fact_apac_3_data {
+  label: "BD Comm APAC - BD out of APAC"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: fact_emea_data {
+  label: "BD Comm EMEA"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: fact_segments_usage_data {
+  label: "Segment Usage Data"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: pub_deals_performance {
+  label: "Pub Deals Performance"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: consolidated_revenue {
+  label: "Consolidated Revenue"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: consolidated_graph_data {
+  label: "Consolidated Graph Data"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: self_service_financial {
+  label: "Self Service Financial Report"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: monthly_revenue_dsp_classification_deal {
+  label: "Monthly Revenue by DSP, Classification and Deal"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: targets_up_gal {
+  label: "Targets For Gal Team UP"
+  required_access_grants: [can_view_aniview]
+  hidden: no
+}
+
+explore: net_emea_publisher {
+  label: "Net Revenue EMEA by Publisher"
+  required_access_grants: [can_view_aniview]
+}
+
+explore: billing_dragon_data {
+  label: "Billing Dragon Data for Dennis"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: pmp_stats_hourly {
+  label: "PMP Stats Hourly"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: rupi_datamine {
+  label: "Custom Events Datamine"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: segment_syndication {
+  label: "Segment Syndication"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: rx_fact_segments_usage_data {
+  label: "Segments Usage Data"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: segments_with_0_cost_in_rx {
+  label: "Zero Cost Segments"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_version {
+  label: "Bid Opti Version"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_v1 {
+  label: "Bid Opti v1"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_cost_v1 {
+  label: "bid opti cost v1"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_only_cost_v1 {
+  label: "bid_opti_only_cost_v1"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_placement_qa {
+  label: "bid_opti_placement_qa"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_placement_qa_raw {
+  label: "bid_opti_placement_qa_raw"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
+explore: bid_opti_all_models_v3 {
+  label: "bid_opti_all_models_v3"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
+explore: bid_opti_all_models_summary_v3 {
+  label: "bid_opti_all_models_summary_v3"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_top_5_placement_v3 {
+  label: "bid_opti_top_5_placement_v3"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_bottom_5_placement_v3 {
+  label: "bid_opti_bottom_5_placement_v3"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_all_models_summary_v5 {
+  label: "bid_opti_all_models_summary_v5"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_all_models_v3_etl {
+  label: "bid_opti_all_models_v3_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_all_models_summary_v3_etl {
+  label: "bid_opti_all_models_summary_v3_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_top_5_placement_v3_etl {
+  label: "bid_opti_top_5_placement_v3_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
+explore: bid_opti_only_bid_and_no_opti_summary_etl_v1 {
+  label: "bid_opti_only_bid_and_no_opti_summary_etl_v1"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
+explore: tvi_v1 {
+  label: "tvi_v1"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: revenue_diff_report_etl {
+  label: "revenue_diff_report_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: etl_checker {
+  label: "etl_checker"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: etl_check_opti_report_v1 {
+  label: "etl_check_opti_report_v1"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: revenue_diff_placement_etl {
+  label: "revenue_diff_placement_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: bid_opti_bottom_5_placement_v3_etl {
+  label: "bid_opti_bottom_5_placement_v3_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: tvi_dsp_v1 {
+  label: "tvi_dsp_v1"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: scope3_processed {
+  label: "scope3_processed"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: ops_partners_das {
+  label: "ops_partners_das"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
+
+explore: acr_count_device_id_etl_checker {
+  label: "acr_count_device_id_etl_checker"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: revenue_prediction_report_v1 {
+  label: "revenue_prediction_report_v1"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: buyer_mapping_master {
+  label: "Buyer Mapping Master"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
+explore: v_dim_publisher_commission_metadata {
+  label: "BD COMM NEW"
+
+ join: v_dim_publisher {
+   type: inner
+   sql_on: ${v_dim_publisher.pub_key} = ${v_dim_publisher_commission_metadata.pub_key} ;;
+  relationship: many_to_one
+ }
+
+join: v_dim_employee_biz_dev {
+
+    type: left_outer
+    view_label: "Employee"
+    sql_on: ${v_dim_publisher.bizdev_owner_key}=${v_dim_employee_biz_dev.employee_key} ;;
+    relationship: many_to_one
+
+  }
+
+join: v_dim_employee_pub_ops {
+    type: left_outer
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${v_dim_publisher.ops_owner_key};;
+    relationship: many_to_one
+  }
+
+}
+
+
+explore: v_fact_ad_daily_agg_date_ssp_key {
+  label: "BD Comm Global New"
+  hidden: yes
+#  description: "This is a miny Inbound exchange for the FP&A use - it has commission data that is restricted to most users."
+access_filter: {
+  field: v_dim_employee_biz_dev.employee_name
+  user_attribute: bd_comm_owners
+}
+
+
+  join: dim_publisher_commission_metadata {
+    type: inner
+    view_label: "Publisher Commission Data"
+    sql_on: ${dim_publisher_commission_metadata.pub_key}=${dim_publisher.pub_key} and
+      ${dim_publisher_commission_metadata.commission_begin_date_key_raw} <= ${v_fact_ad_daily_agg_date_ssp_key.date_key_raw} and
+      ${dim_publisher_commission_metadata.commission_end_date_key_raw}>= ${v_fact_ad_daily_agg_date_ssp_key.date_key_raw} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_date {
+    type: inner
+    view_label: "Time Frame"
+    sql_on: ${dim_date.date_key_raw}=${v_fact_ad_daily_agg_date_ssp_key.date_key_raw} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_publisher_ssp {
+    type: inner
+    view_label: "Publishers"
+    sql_on: ${dim_publisher_ssp.pub_ssp_key}=${v_fact_ad_daily_agg_date_ssp_key.pub_ssp_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_publisher {
+    type: inner
+    view_label: "Publishers"
+    sql_on: ${dim_publisher.pub_key}=${dim_publisher_ssp.pub_key} ;;
+    relationship: many_to_one
+  }
+
+  join: v_dim_employee_biz_dev {
+    type: left_outer
+    view_label: "Employee"
+    sql_on: ${dim_publisher.bizdev_owner_key}=${v_dim_employee_biz_dev.employee_key} ;;
+    relationship: many_to_one
+  }
+
+  # join: dim_dsp_seat {
+  #   type: inner
+  #   view_label: "Seat"
+  #   sql_on: ${dim_dsp_seat.dsp_seat_key}=${v_fact_ad_daily_agg_date_ssp_key.dsp_seat_key} ;;
+  #   relationship: many_to_one
+  # }
+
+  # join: dim_deal_type {
+  #   type: inner
+  #   view_label: "Deal"
+  #   sql_on: ${dim_deal_type.deal_type_key}=${dim_deal.deal_type_key} ;;
+  #   relationship: many_to_one
+  # }
+
+  # join: dim_deal {
+  #   type: inner
+  #   view_label: "Deal"
+  #   sql_on: ${dim_deal.deal_key}=${v_fact_ad_daily_agg_date_ssp_key.deal_key};;
+  #   relationship: many_to_one
+  # }
+
+  # join: dim_deal_partner {
+  #   type: inner
+  #   view_label: "Deal"
+  #   sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
+  #   relationship: many_to_one
+  # }
+
+  # join: dim_deal_agency {
+  #   type: full_outer
+  #   view_label: "Deal"
+  #   sql_on: ${dim_deal_agency.deal_agency_key}=${dim_deal.deal_agency_key};;
+  #   relationship: many_to_one
+  # }
+
+  join: v_dim_employee_pub_ops {
+    type: left_outer
+    view_label: "Employee"
+    sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
+    relationship: many_to_one
+  }
+
+  # join: dim_revenue_type {
+  #   type: left_outer
+  #   view_label: "Revenue Type"
+  #   sql_on: ${dim_revenue_type.revenue_type_key}=${fact_ad_daily_agg.revenue_type_key};;
+  #   relationship: many_to_one
+  # }
+
+  # join: dim_response_status {
+  #   type: inner
+  #   view_label: "Response Attributes"
+  #   sql_on: ${dim_response_status.response_status_key}=${fact_ad_daily_agg.response_status_key};;
+  #   relationship: many_to_one
+  # }
+
+  # join: dim_deal_brand {
+  #   type: inner
+  #   view_label: "Deal"
+  #   sql_on: ${dim_deal_brand.deal_brand_key}=${dim_deal.deal_brand_key};;
+  #   relationship: many_to_one
+  # }
+
+
+}

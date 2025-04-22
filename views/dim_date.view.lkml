@@ -1,0 +1,366 @@
+view: dim_date {
+  sql_table_name: BI_New.V_Dim_Date ;;
+
+  dimension_group: date_key {
+    label: " "
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.Date_Key ;;
+    description: "Main Date Dimension - use this field as your main date metric"
+  }
+
+  dimension: date {
+  type: date
+  datatype: date
+  sql: ${TABLE}.Date_Key ;;
+
+  }
+
+  dimension: month_year {
+    type: string
+    sql: month(${TABLE}.Date_Key);;
+    description: "Month of date (for example - may 2024 will be 2024-04-01)"
+  }
+
+  parameter: time_to_date{
+    type: unquoted
+    allowed_value: {
+      label: "MTD"
+      value: "is_mtd"
+    }
+    allowed_value: {
+      label: "QTD"
+      value: "is_qtd"
+    }
+    allowed_value: {
+      label: "YTD"
+      value: "is_ytd"
+    }
+    hidden: yes
+  }
+
+  dimension: dynamic_time_to_date {
+    type: string
+    sql: {% parameter time_to_date %} ;;
+    hidden: yes
+  }
+
+dimension: is_qtd{
+  type: string
+  description: "filter that Specifies timeframe to be quarter to date"
+  sql: CASE
+    WHEN
+      DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) = DATE_PART('YEAR', CURRENT_TIMESTAMP) AND
+      DATE_PART('QUARTER', ${date_key_raw}::TIMESTAMP) = DATE_PART('QUARTER', CURRENT_TIMESTAMP)
+    THEN 'Yes'
+    ELSE 'No'
+  END ;;
+}
+
+ dimension: is_mtd {
+   type: string
+  description: "filter that Specifies timeframe to be month to date"
+  sql: CASE
+    WHEN
+      DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) = DATE_PART('YEAR', CURRENT_TIMESTAMP) AND
+      DATE_PART('MONTH', ${date_key_raw}::TIMESTAMP) = DATE_PART('MONTH', CURRENT_TIMESTAMP) AND
+      ${date_key_raw}::TIMESTAMP <= CURRENT_TIMESTAMP
+    THEN 'Yes'
+    ELSE 'No'
+  END ;;
+ }
+
+dimension: is_ytd {
+  type: string
+  description: "filter that Specifies timeframe to be month to date"
+  sql: CASE
+    WHEN
+      DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) = DATE_PART('YEAR', CURRENT_TIMESTAMP) AND
+      ${date_key_raw}::TIMESTAMP <= CURRENT_TIMESTAMP
+    THEN 'Yes'
+    ELSE 'No'
+  END ;;
+}
+
+  dimension: is_before_mtd {
+    description: "should be used when comparing month to month while including the current not complited month -
+                  in this case the - Is Before Mtd,
+                  will filter the other months on exact days of the not complited month.
+                  e.g when comparing last 2 monthes January and Fabuarty and the current month is Fab and the day is 16 ,
+                  the - Is Before Mtd will filter Jan to be 1-16 also "
+    type: yesno
+    sql: DATE_PART('DAY', ${date_key_raw}::TIMESTAMP) < DATE_PART('DAY', CURRENT_TIMESTAMP) ;;
+hidden: yes
+  }
+
+
+
+  dimension: is_before_ytd {
+    description: "should be used when comparing year to year while including the current not complited year -
+                  in this case the - Is Before Ytd,
+                  will filter the other years on exact months of the not complited year.
+                  e.g when comparing last 2 years 2023 and 2022 and the current year is 2023 and the month is march,
+                  the - Is Before Ytd will filter 2022 to be Jan-Mar also"
+    type: yesno
+    sql: DATE_PART('YEAR', ${date_key_raw}::TIMESTAMP) < DATE_PART('YEAR', CURRENT_TIMESTAMP) ;;
+hidden: yes
+  }
+  #dimension: is_before_qtd {
+
+   # type: number
+    #sql: case when month(${date_key_raw}) = month(current_date-1) then ${month_number_in_quarter} end;;
+  # hidden: yes
+  #}
+
+  dimension: is_before_qtd {
+    description: "should be used when comparing year to year while including the current not complited year -
+    in this case the - Is Before Qtd,
+    will filter the other years on exact quarters of the not complited year."
+    type: yesno
+    sql: DATE_PART('QUARTER', ${date_key_raw}::TIMESTAMP) < DATE_PART('QUARTER', CURRENT_TIMESTAMP)
+    and date_trunc('Year',current_timestamp) = date_trunc('Year', ${date_key_raw}::timestamp);;
+hidden: yes
+  }
+
+  dimension: current_month_number_in_quarter{
+    type: number
+    sql: case when ${month_number_in_quarter} = ${is_before_qtd} then ${month_number_in_quarter} end;;
+    hidden: yes
+  }
+
+  dimension: day_number_in_month {
+    type: number
+    sql: ${TABLE}.Day_Number_In_Month ;;
+  }
+
+  dimension: month_number_in_quarter {
+    description: "month number in quarter - jan,apr,jul,oct - 1, feb,may,aug,nov - 2, mar,jun,sep,dec -3"
+    type: number
+    sql: case when ${month_number} in ('1','4','7','10') then 1
+         when ${month_number} in ('2','5','8','11') then 2
+        when ${month_number} in ('3','6','9','12') then 3 end;;
+  }
+
+
+
+  dimension: day_number_in_week {
+    type: number
+    sql: ${TABLE}.Day_Number_In_Week ;;
+  }
+
+  dimension: day_number_in_year {
+    type: number
+    sql: ${TABLE}.Day_Number_In_Year ;;
+  }
+
+  dimension: day_of_week_name {
+    type: string
+    description: "Name of day"
+    sql: ${TABLE}.Day_Of_Week_Name ;;
+  }
+
+  dimension: day_suffix {
+    type: string
+    description: "Day number with suffix"
+    sql: ${TABLE}.Day_Suffix ;;
+  }
+
+  dimension: holiday_text {
+    type: string
+    description: "Holidays Names"
+    sql: ${TABLE}.Holiday_Text ;;
+  }
+
+  dimension: last_120_days_flag {
+    type: number
+    description: "Marks if the data was in the past 120 days"
+    sql: ${TABLE}.Last_120_Days_Flag ;;
+  }
+
+  dimension: last_14_days_flag {
+    type: number
+    description: "Marks if the data was in the past 14 days"
+    sql: ${TABLE}.Last_14_Days_Flag ;;
+  }
+
+  dimension: last_180_days_flag {
+    type: number
+    description: "Marks if the data was in the past 180 days"
+    sql: ${TABLE}.Last_180_Days_Flag ;;
+  }
+
+  dimension: last_30_days_flag {
+    type: number
+    description: "Marks if the data was in the past 30 days"
+    sql: ${TABLE}.Last_30_Days_Flag ;;
+  }
+
+  dimension: last_90_days_flag {
+    type: number
+    description: "Marks if the data was in the past 90 days"
+    sql: ${TABLE}.Last_90_Days_Flag ;;
+  }
+
+  dimension: month_name {
+    type: string
+    sql: ${TABLE}.Month_Name ;;
+  }
+
+  dimension: month_number {
+    type: number
+    sql: ${TABLE}.Month_Number ;;
+  }
+
+  dimension: quarter_name {
+    type: string
+    sql: ${TABLE}.Quarter_Name ;;
+  }
+
+  dimension: quarter_name_short {
+    type: string
+    description: "Shorten quarter name"
+    sql: ${TABLE}.Quarter_Name_Short ;;
+  }
+
+  dimension: quarter_number {
+    type: number
+    sql: ${TABLE}.Quarter_Number ;;
+  }
+
+  dimension: week_number_in_month {
+    type: number
+    sql: ${TABLE}.Week_Number_In_Month ;;
+  }
+
+  dimension: week_number_in_year {
+    type: number
+    sql: ${TABLE}.Week_Number_In_Year ;;
+  }
+
+  dimension: year_and_quarter {
+    type: string
+    sql: ${TABLE}.Year_And_Quarter ;;
+  }
+
+  dimension: year_number {
+    type: number
+    sql: ${TABLE}.Year_Number ;;
+  }
+
+  measure: count {
+    type: count
+    drill_fields: [quarter_name, month_name, day_of_week_name]
+  }
+
+
+  dimension:  Week_Frame {
+    label: "Week_Frame"
+    description: "Indicates if date frame is last week, 2 weeks ago or 4 weeks ago"
+    type: string
+    sql:  CASE WHEN ${TABLE}.Date_Key >= current_date()-28 and ${TABLE}.Date_Key < current_date()-21 THEN '4 Weeks Ago'
+           WHEN ${TABLE}.Date_Key >= current_date()-14 and ${TABLE}.Date_Key < current_date()-7 THEN '2 Weeks Ago'
+           WHEN ${TABLE}.Date_Key >= current_date()-7 and ${TABLE}.Date_Key < current_date() THEN 'Last Week'
+           ELSE 'Other' END ;;
+}
+
+  filter: current_date_range {
+    type: date
+    view_label: "PoP"
+    label: "Current Date Range"
+    description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
+    sql: ${date_key_raw} IS NOT NULL ;;
+  }
+
+  dimension: quarter {
+    type: number
+    sql: quarter(${date_key_date});;
+    hidden: yes
+  }
+
+
+  dimension: days_passed_in_quarter {
+    type: number
+    sql: case when ${quarter}='1' and month(current_date)='1' then day(current_date)
+              when ${quarter}='1' and month(current_date)='2' then 31+day(current_date)
+              when ${quarter}='1' and month(current_date)='3' then 59+day(current_date)
+              when ${quarter}='2' and month(current_date)='4' then day(current_date)
+              when ${quarter}='2' and month(current_date)='5' then 30+day(current_date)
+              when ${quarter}='2' and month(current_date)='6' then 61+day(current_date)
+              when ${quarter}='3' and month(current_date)='7' then day(current_date)
+              when ${quarter}='3' and month(current_date)='8' then 31+day(current_date)
+              when ${quarter}='3' and month(current_date)='9' then 62+day(current_date)
+              when ${quarter}='4' and month(current_date)='10' then day(current_date)
+              when ${quarter}='4' and month(current_date)='11' then 31+day(current_date)
+              when ${quarter}='4' and month(current_date)='12' then 61+day(current_date)
+              end ;;
+  }
+
+  dimension: quarter_length {
+    type: number
+    sql: case
+              when month(${date_key_month})='1' OR month(${date_key_month})='2' OR month(${date_key_month})='3' then '90'
+              when month(${date_key_month})='4' OR month(${date_key_month})='5' OR month(${date_key_month})='6' then '91'
+              else '92' end;;
+  }
+  # parameter: chosen_date {
+  #   type: date
+  #   label: "Chosen Date"
+
+  # }
+
+  # filter: chosen_date_range {
+  #   type: date
+  #   view_label: "Measures"
+  #   label: "Chosen Date Range"
+  #   description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
+  #   sql: ${date_key_raw} between  ;;
+  # }
+
+
+  # filter: quarter_filter {
+  #   type: date
+  #   view_label: "Measures"
+  #   sql: (case when ${date_key_raw} between '2023-01-01' and '2023-03-31' then 'Q1')= ;;
+  # }
+
+
+  # dimension: dynamic_sum {
+  #   type: date
+  #   sql: ${TABLE}.{% parameter ${chosen_date} %} ;;
+  #   value_format_name: "usd"
+  # }
+
+  # dimension: quarter_start {
+  #   type: date
+  #   sql: ${date_key_raw} ;;
+  #   sql_start: date_trunc('quarter', {{ _view.chosen_date.start._value }})
+  #   ;;
+  # }
+
+  # dimension: qtd_start_date {
+  #   type: date
+  #   sql: date_trunc('quarter', ${chosen_date_range});;
+  # }
+
+  # dimension: qtd_start {
+  #   type: string
+  #   sql:  case when ${date_key_quarter} like '%Q1' then '1'
+  #         else null end;;
+  #   #sql: {% if _view.{% date_start current_date_range %} and _view.{% date_end current_date_range %}{{ _view.{% date_start current_date_range %} | date_trunc: 'quarter' }}{% endif %} ;;
+  # }
+
+  # dimension: qtd_end {
+  #   type: date
+  #   sql: timestampadd(DAY, -1, {% date_end ${chosen_date_range.field} %}) ;;
+  # }
+
+}

@@ -1475,13 +1475,14 @@ measure: total_pacing {
       </div>;;
   }
 
+
   measure: html_kpi_shopping_cart_value_vta {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Cart Value VT
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ shopping_cart_value_vta._rendered_value }}
         </div>
       </div>;;

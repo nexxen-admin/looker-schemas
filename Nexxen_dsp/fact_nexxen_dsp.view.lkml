@@ -494,7 +494,7 @@ view: fact_nexxen_dsp {
 
   measure: CTR_1P {
     type: number
-    value_format: "0.0%"
+    value_format: "0.00%"
     sql: IFNULL(${clicks}/nullif(${impressions},0),0) ;;
   }
 

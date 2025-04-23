@@ -1331,23 +1331,23 @@ measure: total_pacing {
       </div>;;
   }
 
-  measure: html_kpi_impressions {
+  measure: html_kpi_delivered_units {
     type: count
-    hidden: yes
+    # hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-        Impressions
+        Delivered Units
         <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ impressions._rendered_value }}
+          {{ delivered_units._rendered_value }}
         </div>
       </div>;;
   }
 
-  measure: impressions_demo {
+  measure: delivered_units_demo {
     type: number
     hidden: yes
     value_format: "#,##0"
-    sql:${impressions}  *10.2;;
+    sql:${delivered_units}  *10.2;;
   }
 
   measure: html_kpi_impressions_demo {
@@ -1355,9 +1355,9 @@ measure: total_pacing {
     hidden: yes
     html:
      <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-        Impressions
+        Delivered Units
         <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ impressions_demo._rendered_value }}
+          {{ delivered_units_demo._rendered_value }}
         </div>
       </div>;;
   }

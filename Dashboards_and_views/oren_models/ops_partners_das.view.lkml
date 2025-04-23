@@ -40,6 +40,12 @@ GROUP BY 1,2,3,4,5,6,7,8,9
     label: "Date"
   }
 
+  dimension: CATEGORY {
+    type: string
+    sql: ${TABLE}.CATEGORY ;;
+    label: "Category"
+  }
+
 
   dimension: ENVIRONMENT {
     type: string
@@ -141,6 +147,7 @@ set: detail {
     ENVIRONMENT,
     PROVIDER_NAME,
     MARKET_ID,
+    CATEGORY,
 
     IMPRESSION,
     GROSS_REVENUE,

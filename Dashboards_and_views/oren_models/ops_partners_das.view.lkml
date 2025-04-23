@@ -83,13 +83,13 @@ GROUP BY 1,2,3,4,5,6,7,8,9,10
   dimension: MARKET_NAME {
     type: string
     sql: ${TABLE}.MARKET_NAME ;;
-    label: "Market Name"
+    label: "Market/Agency Name"
   }
 
   dimension: ADVERTISER_NAME {
     type: string
     sql: ${TABLE}.ADVERTISER_NAME ;;
-    label: "Advertiser Name"
+    label: "Advertiser/Brand Name"
   }
 
   dimension: source {

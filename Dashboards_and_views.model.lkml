@@ -620,7 +620,7 @@ explore: scope3_processed {
 }
 
 explore: ops_partners_das {
-  label: "ops_partners_das"
+  label: "ops_partners"
   required_access_grants: [can_view_all_tremor]
 }
 

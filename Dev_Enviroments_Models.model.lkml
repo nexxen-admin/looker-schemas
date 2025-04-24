@@ -157,7 +157,7 @@ explore: scope3 {
 }
 
 explore: ops_partners_das {
-  label: "ops_partners_das"
+  label: "ops_partners"
   required_access_grants: [can_view_acr_group]
   hidden: no
 }

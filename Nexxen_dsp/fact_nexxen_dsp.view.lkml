@@ -1300,6 +1300,19 @@ view: fact_nexxen_dsp {
   #   sql:  NULLIF(${dim_sfdb_opportunitylineitem_pacing.daily_pacing_dim},0) ;;
   # }
 
+  measure: ncd_clicks {
+    type: sum
+    value_format: "#,##0"
+    label: "NCD Clicks"
+    sql: CASE WHEN ${dim_dsp_device_type.device_type_category}='CTV' THEN 0 ELSE ${TABLE}.clicks END;;
+  }
+
+  measure: ncd_ctr {
+    type: number
+    value_format: "0.00%"
+    sql: IFNULL(${ncd_clicks}/${impressions},0) ;;
+  }
+
 measure: total_pacing {
   type: average
   label: "Total Pacing - NCD"
@@ -1413,7 +1426,7 @@ measure: total_pacing {
      <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Clicks
         <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ clicks._rendered_value }}
+          {{ ncd_clicks._rendered_value }}
         </div>
       </div>;;
   }
@@ -1437,7 +1450,7 @@ measure: total_pacing {
      <div style="color:#3d00ac; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         CTR
         <div style="color:#3d00ac; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ CTR_1P._rendered_value }}
+          {{ ncd_ctr._rendered_value }}
         </div>
       </div>;;
   }

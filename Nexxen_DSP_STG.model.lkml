@@ -72,6 +72,13 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_device_type {
+    type: left_outer
+    view_label: "Request Attributes"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.device_type_key}=${dim_dsp_device_type.device_type_key} ;;
+  }
+
   join: dim_dsp_creative_file {
     type:left_outer
     view_label: "Creative"

@@ -4,11 +4,9 @@ view: base_data_without_demand {
           Event_Month,
           to_char(Event_Month, 'mm') as month,
           to_char(Event_Month, 'yyyy') as year,
-          trim(Publisher) as Publisher,
-          case when Billing_Agency ilike '%bidswitch%'
-          then 'Bidswitch'
-          else trim(Billing_Agency) end as Buyer,
-          trim(Advertiser_Name) as Advertiser,
+          upper(trim(Publisher)) as Publisher,
+          upper(Coalesce(bm.buyer_new,trm.billing_agency)) as Buyer,
+          Upper(trim(Advertiser_Name)) as Advertiser,
           trim(upper(Device_Type)) as Device_Type,
           trim(upper(Impression_Type)) as Impression_Type,
           sum(Exchange_Revenue) as Exchange_Revenue,
@@ -17,7 +15,9 @@ view: base_data_without_demand {
           sum(Demand_Cost) as Demand_Cost,
           sum(E2E_Revenue) as E2E_Revenue,
           sum(E2E_Cost) as E2E_Cost
-      From BI.SVC_TRMRCon_Consolidated
+      From BI.SVC_TRMRCon_Consolidated trm
+        left outer join BI.SVC_Buyer_Mapping_Master bm on upper(bm.buyer_original) = upper(trm.Billing_Agency)
+      Where bm.buyer_new != 'DELETE'
       Group by 1, 2, 3, 4, 5, 6,7,8
        ;;
   }

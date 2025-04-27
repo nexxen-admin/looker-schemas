@@ -16,7 +16,7 @@ view: ops_partners_das {
         SUM(GROSS_REVENUE) as GROSS_REVENUE,
         SUM(ADJUSTED_NET_REVENUE) as ADJUSTED_NET_REVENUE,
         SUM(TURN_FEE) as TURN_FEE
-FROM bi_new.decom_condensed
+FROM bi_new.decom
 GROUP BY 1,2,3,4,5,6,7,8,9,10
     ;;
 

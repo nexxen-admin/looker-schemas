@@ -99,7 +99,7 @@ view: dim_sfdb_opportunitylineitemschedule {
     type: number
     label: "Spend"
     sql: ${TABLE}.revenue ;;
-    hidden: yes
+    hidden: no
   }
 
 

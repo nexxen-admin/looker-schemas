@@ -170,15 +170,15 @@ view: fact_nexxen_dsp {
     #value_format: "%m/%d"
     sql:  CASE
       WHEN {% parameter date_granularity %} = 'Day'
-        THEN ${date_key_date}
+        THEN ${date_key_in_timezone_date}
       When {% parameter date_granularity %} ='Week'
-        THEN ${date_key_week}
+        THEN ${date_key_in_timezone_week}
       WHEN {% parameter date_granularity %} = 'Month'
-        THEN ${date_key_month}
+        THEN ${date_key_in_timezone_month}
       WHEN {% parameter date_granularity %} = 'Quarter'
-        THEN ${date_key_quarter}
+        THEN ${date_key_in_timezone_quarter}
       WHEN {% parameter date_granularity %} = 'Year'
-        THEN ${date_key_year}
+        THEN ${date_key_in_timezone_year}
       ELSE NULL
     END ;;
 
@@ -199,8 +199,14 @@ view: fact_nexxen_dsp {
 dimension: inventory_source_key {
   type: number
   sql: ${TABLE}.inventory_source_key ;;
-  hidden: yes
+  hidden: no
 }
+
+  # dimension: inventory_source_id {
+  #   type: number
+  #   sql: ${TABLE}.inventory_source_id ;;
+  #   hidden: yes
+  # }
 
   dimension: manual_adjustment_key {
     type: number
@@ -304,6 +310,8 @@ dimension: inventory_source_key {
 
   }
 
+
+
   dimension: package_budget_schedule_key {
     type: number
     sql: ${TABLE}.package_budget_schedule_key ;;
@@ -340,6 +348,28 @@ dimension: inventory_source_key {
     value_format: "$#,##0.00"
     sql: ${TABLE}.inv_cost ;;
   }
+
+
+#   measure: Nexxen_Inv_Cost {
+#     type: sum
+#     value_format: "$#,##0.00"
+#     sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inv_cost" else null end ;;
+#   }
+
+
+# measure: Nexxen_Inv_Cost_Percent {
+#   type: number
+#   label: "Nexxen Inv Cost %"
+#   value_format:  "0.00%"
+#   sql: ${Nexxen_Inv_Cost}/nullif(${inv_cost},0);;
+# }
+
+
+  # measure: inv_cost {
+  #   type: sum
+  #   value_format: "$#,##0.00"
+  #   sql: ${TABLE}.inv_cost ;;
+  # }
 
 # measure: nexxen_inventory_cost {
 #   type: sum

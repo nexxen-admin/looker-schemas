@@ -543,7 +543,7 @@ view: dim_sfdb_opportunity {
   dimension: opportunity_margin__c {
     type: number
     sql: ${TABLE}.opportunity_margin__c ;;
-    hidden: yes
+    hidden: no
   }
 
   dimension: opportunity_number__c {
@@ -617,7 +617,7 @@ view: dim_sfdb_opportunity {
   dimension: probability {
     type: number
     sql: ${TABLE}.probability ;;
-    hidden: yes
+    hidden: no
   }
 
   dimension: products_sold__c {
@@ -857,6 +857,35 @@ view: dim_sfdb_opportunity {
   measure: count {
     type: count
     drill_fields: [id, name, stagename]
-    hidden: yes
+    hidden: no
   }
+
+  measure: name_count_distinct {
+    type: count_distinct
+    label: "# of Opps in Stagedden"
+    sql: ${TABLE}."name" ;;
+  }
+
+
+  # measure: name_count {
+  #   type: count
+  #   label: "# of Opps in Stage"
+  #   sql: ${TABLE}."name" ;;
+  # }
+
+  # measure: distinctcount {
+  #   type: count_distinct
+  #   drill_fields: [id, name, stagename]
+  #   hidden: no
+  # }
+
+
+
+  # measure: distinctcount {
+  #   type: count_distinct
+  #   sql: ${TABLE}.opportunity.Name ;;
+  #   label: "# of Opps in Stagedden"
+  #   hidden: no
+  # }
+
 }

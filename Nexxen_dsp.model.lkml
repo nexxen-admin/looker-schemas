@@ -55,6 +55,12 @@ explore: monthly_billing_locked_report{
  label: "Locked Report"
 }
 
+
+explore: snapshot_quarterly_forecast{
+  label: "Snapshot quarterly forecast"
+}
+
+
 #explore: v_monthly_billing_report_diff_live_locked {
 # required_access_grants: [billing_report_group]
 #  label: "Monthly Billing Report Diff Live Locked"

@@ -72,12 +72,7 @@ view: v_dim_employee_biz_dev {
     description: "Name of the BizDev employee"
     type: string
     sql: ${TABLE}.Employee_Name ;;
-    full_suggestions: yes
-    drill_fields: [v_dim_employee_biz_dev.employee_name]
-    link: {
-      label: "Drill To New Publishers"
-      url: "https://tremor.cloud.looker.com/dashboards/560?BizDev+Name={{ value }}"
-    }
+
   }
 
   dimension: pub_name {

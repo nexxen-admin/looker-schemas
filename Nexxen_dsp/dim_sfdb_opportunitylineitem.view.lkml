@@ -721,9 +721,72 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.vat_tax__c ;;
     hidden: yes
   }
+
+  dimension: tactic {
+    type: string
+    label: "Tactic"
+    sql: CASE WHEN ${line_item_name__c} LIKE '%RET%' THEN 'Retargeting'
+    WHEN ${line_item_name__c} LIKE '%BI%' THEN 'Brand Intelligence'
+    WHEN ${line_item_name__c} LIKE '%DEMO%' THEN 'Demographic'
+    WHEN ${line_item_name__c} LIKE '%BT%' THEN 'Behavioral'
+    WHEN ${line_item_name__c} LIKE '%PERF%' THEN 'Performance'
+    WHEN ${line_item_name__c} LIKE '%PMP%' THEN 'PMP'END ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id]
     hidden: yes
   }
+  dimension: date_diff {
+    type: number
+    sql: case when ${end_date__c_date} <fact_nexxen_dsp.date_key_in_timezone then 1
+              when ${start_date__c_date} > fact_nexxen_dsp.date_key_in_timezone then 0  else
+         (fact_nexxen_dsp.date_key_in_timezone - ${start_date__c_date})+1 end;;
+        hidden: yes
+  }
+
+
+  measure: gross_billable_comp {
+    type: max
+    sql: ${gross_billable__c} ;;
+    hidden: yes
+  }
+
+  measure: monthy_budget_breakout_temp {
+    type: number
+    sql: ${gross_billable_comp}-${fact_nexxen_dsp.capped_revenue} ;;
+    hidden: yes
+  }
+
+  dimension: daily_units_needed_comp {
+    type: number
+    sql: case when ${dim_sfdb_opportunitylineitem.price_type_name__c} in ('dCPM', 'CPR') then
+    ${dim_sfdb_opportunitylineitem.gross_billable__c} else ${dim_sfdb_opportunitylineitem.units__c} end;;
+    hidden: yes
+  }
+
+  measure: daily_units_needed_comp_2 {
+    type: max
+    sql: ${daily_units_needed_comp} ;;
+    hidden: yes
+  }
+
+  measure: daily_units_needed_comp_3 {
+    type: number
+    sql: ${daily_units_needed_comp_2}-${fact_nexxen_dsp.delivered_units}/nullif(${v_dim_sfdb_opportunitylineitemschedule_new.total_days_left_in_sl},0) ;;
+    hidden: yes
+  }
+
+  measure: total_booked_budget_meas {
+    type: sum
+    sql: ${TABLE}.gross_billable__c ;;
+  }
+
+  dimension: booked_rate {
+    type: number
+    label: "Booked Rate"
+    sql: CASE WHEN ${TABLE}.free__c='Added Value' AND ${TABLE}.price_type_name__c='CPM' THEN 0 ELSE ${TABLE}.rate__c END  ;;
+  }
+
 }

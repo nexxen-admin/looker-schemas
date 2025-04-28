@@ -1,5 +1,5 @@
 view: sla_lookup {
-    sql_table_name: SLA.SLA_LOOKUP ;;
+    sql_table_name: SLA_LOOKUP ;;
 
     dimension: sla_lookup_id {
       type: string

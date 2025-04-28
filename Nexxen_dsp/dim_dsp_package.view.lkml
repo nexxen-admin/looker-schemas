@@ -293,6 +293,10 @@ view: dim_dsp_package {
     sql: ${TABLE}.inventory_type_id ;;
   }
 
+  dimension: insertion_order_name {
+    type: string
+    sql: ${TABLE}.insertion_order_name ;;
+  }
   dimension: io_number {
     type: string
     sql: ${TABLE}.io_number ;;
@@ -339,6 +343,7 @@ view: dim_dsp_package {
   dimension: name {
     type: string
     sql: ${TABLE}."name" ;;
+    drill_fields: [dim_sfdb_opportunitylineitem.tactic]
   }
 
   dimension: optimization_strategy {
@@ -469,6 +474,12 @@ view: dim_dsp_package {
     type: number
     sql: ${TABLE}.workflow_status_id ;;
   }
+
+  dimension:  package_nickname {
+    type: string
+    sql: ${TABLE}.package_nickname ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [name]

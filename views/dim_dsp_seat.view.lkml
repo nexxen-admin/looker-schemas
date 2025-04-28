@@ -64,9 +64,8 @@ view: dim_dsp_seat {
   dimension: Is_1st_Party_Demand {
     type: yesno
     label: "Is 1st Party Demand"
-    description: "The demand is from within the company, hence Amobee or Tremor"
-    sql: ${TABLE}.Is_1st_Party_Demand ;;
-
+    description: "Flag that identifies if buying demand source is Nexxen or a third-party DSP."
+    sql: ${dim_revenue_type.revenue_type_name} = 'firstparty';;
   }
 
   dimension: 1st_Party_Demand_Desc {

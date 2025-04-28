@@ -88,8 +88,8 @@ view: dim_sfdb_opportunity {
 
   dimension: billing_account__c {
     type: string
+    label: "Billing Account ID"
     sql: ${TABLE}.billing_account__c ;;
-    hidden: yes
   }
 
   dimension: brand_classification__c {
@@ -267,8 +267,9 @@ view: dim_sfdb_opportunity {
     # no data
   }
 
-  dimension: end_date__c {
-    type: date
+  dimension_group: end_date__c {
+    type: time
+    timeframes: [raw, time, date, week, month, quarter, year]
     label: "Opportunity End Date"
     sql: ${TABLE}.end_date__c ;;
   }
@@ -487,7 +488,7 @@ view: dim_sfdb_opportunity {
 
   dimension: opp_name_shortcut {
     type: string
-    sql: SUBSTRING(name FROM (POSITION('F-' IN name) + 1) FOR 8) ;;
+    sql: SUBSTRING(dim_sfdb_opportunity.name FROM (POSITION('F-' IN dim_sfdb_opportunity.name) + 1) FOR 8) ;;
   }
 
   dimension: new_market__c {

@@ -73,7 +73,7 @@ view: dim_dsp_creative {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_created_date ;;
-   # hidden: yes
+    hidden: yes
   }
 
   dimension_group: db_updated {
@@ -113,8 +113,8 @@ view: dim_dsp_creative {
   dimension: media_channel_id {
     type: number
     label: "Media Channel id"
+    description: "1 - Display; 2 - Video; 3 - Social; 4 - Mobile"
     sql: ${TABLE}.media_channel_id ;;
-
   }
 
   dimension: ri_info {
@@ -138,7 +138,7 @@ view: dim_dsp_creative {
 
   dimension: tpa_external_id {
     type: string
-    label: "3rd Part Placement ID"
+    label: "3P Placement ID"
     sql: ${TABLE}.tpa_external_id ;;
   }
 
@@ -146,5 +146,20 @@ view: dim_dsp_creative {
     type: number
     sql: ${TABLE}.workflow_status_id ;;
     hidden: yes
+  }
+
+  dimension: creative_group {
+    type: string
+    sql: ${TABLE}.creative_group ;;
+  }
+
+  dimension: creative_message {
+    type: string
+    sql: ${TABLE}.creative_message ;;
+  }
+
+  dimension: language {
+    type: string
+    sql: ${TABLE}.language ;;
   }
 }

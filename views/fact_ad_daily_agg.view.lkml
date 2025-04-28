@@ -530,7 +530,6 @@ view: fact_ad_daily_agg {
         <th><div style ="vertical-align: bottom;padding-top:50px;text-align:right;">| Business Intelligence Platform</div></th>
       </tr>
     </table>
-
       <div style = "margin:5px 72px 72px 72px; text-align:left; ">Hey {{ _user_attributes['name'] }},<br>
 
       <div><a style="float:right; color: #FFFFFF; background-color:#000000; border: solid 3px #000000; font-weight: 400;height:70px;
@@ -811,9 +810,26 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.ssp_crid  ;;
   }
 
+  dimension: margin_opti_bucket {
+    type: number
+    sql: ${TABLE}.margin_opti_bucket ;;
+  }
+
   dimension: bidfloor_opti_version_key {
     type: number
     sql: ${TABLE}.Bidfloor_Opti_Version_Key ;;
+    hidden: yes
+  }
+
+  dimension: revenue_type_key {
+    type: number
+    sql: ${TABLE}.revenue_type_key ;;
+    hidden: yes
+  }
+
+  dimension: buying_channel_ctrl_key {
+    type: number
+    sql: ${TABLE}.Buying_Channel_ctrl_key ;;
     hidden: yes
   }
 
@@ -832,6 +848,12 @@ view: fact_ad_daily_agg {
   dimension: a_domain_key {
     type: number
     sql: ${TABLE}.A_Domain_Key ;;
+    hidden: yes
+  }
+
+  dimension: pad_agreement_key {
+    type: number
+    sql: ${TABLE}.pad_agreement_key ;;
     hidden: yes
   }
 
@@ -1327,6 +1349,16 @@ view: fact_ad_daily_agg {
     ;;
   }
 
+  measure: Valid_Bid_Rate {
+    type: number
+    label: "Valid Bid Rate"
+    description: "Valid responses/requests"
+    value_format: "0.00\%"
+    group_label: "Daily Measures"
+    sql: (${valid_responses}/NULLIF(${requests},0))*100--/100000
+      ;;
+  }
+
   measure: Fill_Rate {
     type: number
     description: "Number of impressions out of the requests"
@@ -1469,6 +1501,31 @@ view: fact_ad_daily_agg {
     value_format: "#,##0"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_responses ;;
+  }
+
+  measure: valid_responses {
+    type: sum
+    label: "Valid Bids"
+    description: "Valid Bid responses returned from dsps. There may be more than one bid response per bid request."
+    value_format: "#,##0"
+    group_label: "Daily Measures"
+    sql: case when ${dim_response_status.response_status} = 'unknown' then ${TABLE}.sum_of_responses else 0 end;;
+  }
+
+  measure: deal_data_fee {
+    type: sum
+    label: "Deal Data Fee"
+    value_format: "#,##0"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_deal_data_fee;;
+  }
+
+  measure: dsp_fee {
+    type: sum
+    label: "DSP Fee"
+    value_format: "#,##0"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_dsp_fee;;
   }
 
   measure: revenue
@@ -2005,6 +2062,7 @@ view: fact_ad_daily_agg {
     description: "The bid floor every publisher determines. every bid price below it will be immediately filtered out"
     label: "Bid Floor"
     group_label: "Daily Measures"
+    value_format: "#,##0.00"
     sql: ${TABLE}.avg_of_ssp_bid_floor ;;
     # hidden: yes
   }
@@ -2015,6 +2073,18 @@ view: fact_ad_daily_agg {
     label: "Bid Price"
     sql: ${TABLE}.avg_of_dsp_bid_price ;;
     # hidden: yes
+  }
+
+  measure: ssp_bid_price {
+    type: average
+    sql: ${TABLE}.avg_of_ssp_bid_price;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: ssp_rev {
+    type: sum
+    sql: ${TABLE}.avg_of_ssp_bid_price * ${TABLE}.sum_of_impression_pixel /1000 ;;
+    value_format: "$#,##0.00"
   }
 
   dimension: win_price {
@@ -2402,6 +2472,24 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_pub_platform_fee ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_net_revenue{
+    view_label: "PoP"
+    label: "Current Period Net Revenue "
+    type: number
+    description: "Specifies the tech fee a publisher is paying on using the ctrl, in the current period we are looking at, using the filter 'current date range' which has to be applied"
+    sql: ${current_period_revenue}-${current_period_cost}+${current_period_pub_platform_fee} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: previous_period_net_revenue {
+    view_label: "PoP"
+    label: "Previous Period Net Revenue "
+    description: "Difference between revenue and cogs"
+    type: number
+    sql: ${previous_period_revenue}-${previous_period_cost}+${previous_period_pub_platform_fee} ;;
+    value_format: "$#,##0.00"
   }
 
   measure: margin_pop_change {
@@ -2865,16 +2953,25 @@ view: fact_ad_daily_agg {
 
   measure: barter_fee {
     type: sum
-    sql: case when dim_deal_agency.deal_agency_name like '%iNvolved%' then ${TABLE}.sum_of_revenue*0.2
-              when dim_deal_agency.deal_agency_name like '%Orion%' then ${TABLE}.sum_of_revenue*0.15
-              when dim_deal_agency.deal_agency_name like '%ICON%' then ${TABLE}.sum_of_revenue*0.2
-              when dim_deal_agency.deal_agency_name like '%Agyle%' then ${TABLE}.sum_of_revenue*0.15
-              when dim_deal_agency.deal_agency_name like '%Evergreen%' then ${TABLE}.sum_of_revenue*0.2
-              when dim_deal_agency.deal_agency_name like '%Anchor%' then ${TABLE}.sum_of_revenue*0.15
-              when dim_deal_agency.deal_agency_name like '%UM Tech%' then ${TABLE}.sum_of_revenue*0.1
-              when dim_deal_agency.deal_agency_name like '%NYIAX%' then ${TABLE}.sum_of_revenue*0.1
+    sql: case when ${dim_deal_partner.deal_partner_id} = '2' and ${dim_deal_type.deal_type_id} = 12 then
+              ${TABLE}.sum_of_revenue*0.3
+              when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_deal_brand.deal_brand_id} = '1036' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.2
+              when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.5
+              when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_date.date_key_raw} < '2024-10-01' then ${TABLE}.sum_of_revenue*0.2
+              when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} < '2024-10-01' then ${TABLE}.sum_of_revenue*0.15
+              when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.24
+              when ${dim_deal_agency.deal_agency_name} like '%ICON%' and ${dim_deal_agency.deal_agency_name} like '%T-Mobile%' then ${TABLE}.sum_of_revenue*0.25
+              when ${dim_deal_agency.deal_agency_name} like '%ICON%' and ${dim_deal_agency.deal_agency_name} like '%lovesac%' then ${TABLE}.sum_of_revenue*0.25
+              when ${dim_deal_agency.deal_agency_name} like '%ICON%' then ${TABLE}.sum_of_revenue*0.2
+              when ${dim_deal_agency.deal_agency_name} like '%Agyle%' then ${TABLE}.sum_of_revenue*0.15
+              when ${dim_deal_agency.deal_agency_name} like '%Evergreen%' then ${TABLE}.sum_of_revenue*0.2
+              when ${dim_deal_agency.deal_agency_name} like '%Anchor%' then ${TABLE}.sum_of_revenue*0.15
+              when ${dim_deal_agency.deal_agency_name} like '%UM Technologies%' then ${TABLE}.sum_of_revenue*0.1
+              when ${dim_deal_agency.deal_agency_name} like '%NYIAX%' then ${TABLE}.sum_of_revenue*0.1
+              when ${dim_deal_agency.deal_agency_name} like '%Tingley Lane%' then ${TABLE}.sum_of_revenue*0.15
               end;;
     value_format: "$#,##0.00"
+    description: "A monetary incentive or discount to an agency or buyer in exchange for meeting specified spending thresholds or for directing a set volume of ad spend to their platform."
   }
 
   # measure: sum_user_matched {

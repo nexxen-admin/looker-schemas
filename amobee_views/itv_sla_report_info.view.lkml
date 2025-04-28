@@ -1,13 +1,6 @@
 view: sla_report_info {
 
-  sql_table_name:
-    {% if _model._name == 'itv_sla' %}
-      SLA.SLA_REPORT_INFO
-    {% elsif _model._name == 'dsp_sla' %}
-      SLA_DSP.SLA_REPORT_INFO
-    {% else %}
-      UNDEF_MODEL.SLA_REPORT_INFO
-    {% endif %} ;;
+  sql_table_name:SLA_REPORT_INFO ;;
 
   drill_fields: [sla_report_info_id]
 
@@ -53,8 +46,8 @@ view: sla_report_info {
     label: "SLA Threshold"
     type:  string
     sql: CASE
-    WHEN ${sla_value_type} = 0 THEN (round(${sla_high_threshold_value}, 4) * 100) || '%'
-    ELSE ${sla_high_threshold_value} || ''
+    WHEN ${sla_value_type} = 0 THEN concat((round(${sla_high_threshold_value}, 4) * 100), '%')
+    ELSE concat(${sla_high_threshold_value}, '')
     END ;;
   }
 

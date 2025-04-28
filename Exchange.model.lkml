@@ -76,6 +76,11 @@ explore: impression_r {
   # }
 }
 
+explore: region_publisher_traffic_source {
+  label: "Region Publisher Traffic Source"
+  required_access_grants: [can_view_all_tremor]
+}
+
 explore: appsflyer{
   label: "Appsflyer"
   persist_with:TapticaCleanCash_datagroup
@@ -92,7 +97,13 @@ explore: appsflyer_agg{
 explore: publishers_report_monthly_for_finance {
   required_access_grants: [can_view_all_tremor]
   label: "publishers report monthly for finance"
-  hidden: yes
+  #hidden: yes
+}
+
+explore: IAS_Monthly_Usage {
+  required_access_grants: [can_view_all_tremor]
+  label: "IAS Monthly Usage"
+  #hidden: yes
 }
 
 explore: v_fact_ad_daily {
@@ -115,13 +126,13 @@ join: dim_publisher  {
 }
 
 join: v_dim_employee_biz_dev {
-  type: inner
+  type: left_outer
   sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key} ;;
   relationship: many_to_one
 }
 
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: left_outer
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key} ;;
     relationship: many_to_one
   }
@@ -156,6 +167,13 @@ explore: extend_Inbound_Exchange {
     type: inner
     view_label: "Time Frame"
     sql_on: ${dim_date.date_key_raw}=${fact_ad_daily_agg.date_key_raw} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_pad_agreement {
+    type: inner
+    view_label: "Time Frame"
+    sql_on: ${dim_pad_agreement.pad_agreement_key}=${fact_ad_daily_agg.pad_agreement_key} ;;
     relationship: many_to_one
   }
 
@@ -392,13 +410,13 @@ explore: extend_Inbound_Exchange {
   }
 
   join: v_dim_employee_biz_dev {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one
@@ -441,7 +459,16 @@ explore: extend_Inbound_Exchange {
     sql_on: ${dim_seat.seat_key}=${dim_dsp_seat.seat_key};;
     relationship: many_to_one
   }
+
+  join: dim_deal_partner {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
+    relationship: many_to_one
+  }
   hidden: yes
+
+
 }
 
 #The normal contents of the Explore follow
@@ -732,14 +759,14 @@ explore: fact_ad_daily_agg{
   }
 
   join: v_dim_employee_biz_dev {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key}  ;;
     relationship: many_to_one
   }
 
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key}  ;;
     relationship: many_to_one
@@ -831,6 +858,28 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_bidfloor_opti_version.bidfloor_opti_version_key}=${fact_ad_daily_agg.bidfloor_opti_version_key} ;;
     relationship: many_to_one
   }
+
+  join: dim_deal_partner {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_revenue_type {
+    type: left_outer
+    view_label: "Revenue Type"
+    sql_on: ${dim_revenue_type.revenue_type_key}=${fact_ad_daily_agg.revenue_type_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_buying_channel_ctrl {
+    type: left_outer
+    view_label: "Buying Channel"
+    sql_on: ${dim_buying_channel_ctrl.buying_channel_ctrl_key}=${fact_ad_daily_agg.buying_channel_ctrl_key};;
+    relationship: many_to_one
+  }
+
 }
 
 
@@ -1088,13 +1137,13 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
   }
   join: v_dim_employee_biz_dev {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one
@@ -1131,6 +1180,35 @@ explore: fact_ad_hourly_agg{
     sql_on: ${dim_seat.seat_key}=${dim_dsp_seat.seat_key};;
     relationship: many_to_one
   }
+
+  join: dim_deal_partner {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_revenue_type {
+    type: left_outer
+    view_label: "Revenue Type"
+    sql_on: ${dim_revenue_type.revenue_type_key}=${fact_ad_hourly_agg.revenue_type_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_buying_channel_ctrl {
+    type: inner
+    view_label: "Buying Channel"
+    sql_on: ${dim_buying_channel_ctrl.buying_channel_ctrl_key}=${fact_ad_hourly_agg.buying_channel_ctrl_key};;
+    relationship: many_to_one
+  }
+
+  join: dim_pad_agreement {
+    type: inner
+    view_label: "Pad Agreement"
+    sql_on: ${dim_pad_agreement.pad_agreement_key}=${fact_ad_hourly_agg.pad_agreement_key};;
+    relationship: many_to_one
+  }
+
 }
 
 
@@ -1335,13 +1413,13 @@ explore: fact_ad_bid_request_daily_agg{
     relationship: many_to_one
   }
   join: v_dim_employee_biz_dev {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_biz_dev.employee_key}=${dim_publisher.bizdev_owner_key};;
     relationship: many_to_one
   }
   join: v_dim_employee_pub_ops {
-    type: inner
+    type: left_outer
     view_label: "Employee"
     sql_on: ${v_dim_employee_pub_ops.employee_key}=${dim_publisher.ops_owner_key};;
     relationship: many_to_one
@@ -1372,6 +1450,13 @@ explore: fact_ad_bid_request_daily_agg{
     type: inner
     view_label: "Personnel"
     sql_on: ${dim_deal_personnel.deal_id}=${dim_deal.internal_deal_id} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_deal_partner {
+    type: inner
+    view_label: "Deal"
+    sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
     relationship: many_to_one
   }
 

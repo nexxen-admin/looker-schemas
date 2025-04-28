@@ -16,6 +16,12 @@ view: fact_ad_hourly_agg {
     hidden: yes
   }
 
+  dimension: pad_agreement_key {
+    type: number
+    sql: ${TABLE}.pad_agreement_key ;;
+    hidden: yes
+  }
+
   dimension: avg_of_deal_bid_floor {
     type: number
     sql: ${TABLE}.avg_of_deal_bid_floor ;;
@@ -85,6 +91,18 @@ view: fact_ad_hourly_agg {
   dimension: buying_channel_key {
     type: number
     sql: ${TABLE}.Buying_Channel_Key ;;
+    hidden: yes
+  }
+
+  dimension: buying_channel_ctrl_key {
+    type: number
+    sql: ${TABLE}.Buying_Channel_ctrl_key ;;
+    hidden: yes
+  }
+
+  dimension: revenue_type_key {
+    type: number
+    sql: ${TABLE}.revenue_type_key ;;
     hidden: yes
   }
 

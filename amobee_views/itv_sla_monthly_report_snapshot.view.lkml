@@ -1,13 +1,6 @@
 view: monthly_report_snapshot {
 
-  sql_table_name:
-    {% if _model._name == 'itv_sla' %}
-      SLA.MONTHLY_REPORT_SNAPSHOT
-    {% elsif _model._name == 'dsp_sla' %}
-      SLA_DSP.MONTHLY_REPORT_SNAPSHOT
-    {% else %}
-      UNDEF_MODEL.MONTHLY_REPORT_SNAPSHOT
-    {% endif %} ;;
+  sql_table_name: MONTHLY_REPORT_SNAPSHOT;;
 
   dimension: count_numerator {
     type: number
@@ -82,8 +75,8 @@ view: monthly_report_snapshot {
     label: "SLA Value"
     type:  string
     sql: CASE
-    WHEN sla_report_info.sla_value_type = 0 THEN (round(${sla_value}, 4) * 100) || '%'
-    ELSE ${sla_value} || ''
+    WHEN sla_report_info.sla_value_type = 0 THEN concat((round(${sla_value}, 4) * 100), '%')
+    ELSE concat(${sla_value}, '')
     END ;;
   }
 

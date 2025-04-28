@@ -40,7 +40,6 @@ view: dim_deal {
       raw,
       time,
       date,
-      week,
       month,
       quarter,
       year
@@ -79,8 +78,16 @@ view: dim_deal {
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
 
-  dimension: deal_end {
-    type: date
+  dimension_group: deal_end {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      month,
+      quarter,
+      year
+    ]
     description: "Deal contract End date"
     sql: ${TABLE}.Deal_End ;;
   }
@@ -130,8 +137,17 @@ view: dim_deal {
     sql: ${TABLE}.Deal_Office ;;
   }
 
-  dimension: deal_start {
-    type: date
+  dimension_group: deal_start {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
     description: "Deal contract Start date"
     sql: ${TABLE}.Deal_Start ;;
   }
@@ -139,7 +155,7 @@ view: dim_deal {
   dimension: deal_time {
     type: number
     description: "Time period of deal"
-    sql: datediff(day, ${deal_start}, ${deal_end}) ;;
+    sql: datediff(day, ${deal_start_raw}, ${deal_end_raw}) ;;
   }
 
   dimension: deal_supply_margin_pct {
@@ -206,7 +222,20 @@ view: dim_deal {
 dimension: deal_status {
   type: string
   description: "Indicated if the deal is live or finished"
-  sql: case when now()>${deal_end} then 'Finished' else 'Live Deal' end ;;
+  sql: case when now()>${deal_end_raw} then 'Finished' else 'Live Deal' end ;;
+}
+
+dimension: deal_external_name {
+  type: string
+  description: "External Deal Name - includes details we can expose to clients"
+  sql: ${TABLE}.deal_external_name ;;
+}
+
+dimension: deal_partner_id {
+  type: number
+  label: "Deal Partner ID"
+  sql: ${TABLE}.deal_partner_id ;;
+  hidden: yes
 }
 
   measure: count {

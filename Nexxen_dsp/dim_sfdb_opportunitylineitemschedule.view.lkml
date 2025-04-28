@@ -86,7 +86,7 @@ view: dim_sfdb_opportunitylineitemschedule {
     type: string
     label: "Salesforce Line Item ID"
     sql: ${TABLE}.opportunitylineitemid ;;
-
+    hidden: yes
   }
 
   dimension: opportunitylineitemschedule_key {
@@ -99,7 +99,7 @@ view: dim_sfdb_opportunitylineitemschedule {
     type: number
     label: "Spend"
     sql: ${TABLE}.revenue ;;
-    #hidden: yes
+    hidden: yes
   }
 
 

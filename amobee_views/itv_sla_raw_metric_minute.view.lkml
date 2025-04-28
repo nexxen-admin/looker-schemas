@@ -1,15 +1,6 @@
 view: raw_metric_minute {
 
-  sql_table_name:
-    {% if _model._name == 'itv_sla' %}
-      SLA.RAW_METRIC_MINUTE
-    {% elsif _model._name == 'dsp_sla' %}
-      SLA_DSP.RAW_METRIC
-    {% elsif _model._name == 'itv_sla_sbx' %}
-      SBX.SLA.RAW_METRIC_MINUTE
-    {% else %}
-      UNDEF_MODEL.RAW_METRIC
-    {% endif %} ;;
+  sql_table_name: RAW_METRIC_MINUTE ;;
 
   dimension: metric_id {
     type: string
@@ -143,33 +134,33 @@ view: raw_metric_minute {
 
   }
 
-  measure: metric_value_mean {
-    type: percentile
-    percentile:  50
-    value_format: "0.##"
-    sql:  ${TABLE}.metric_value  ;;
-  }
+  # measure: metric_value_mean {
+  #   type: percentile
+  #   percentile:  50
+  #   value_format: "0.##"
+  #   sql:  ${TABLE}.metric_value  ;;
+  # }
 
-  measure: metric_value_lower_quantile {
-    type: percentile
-    percentile:  25
-    value_format: "0.##"
-    sql:  ${TABLE}.metric_value  ;;
-  }
+  # measure: metric_value_lower_quantile {
+  #   type: percentile
+  #   percentile:  25
+  #   value_format: "0.##"
+  #   sql:  ${TABLE}.metric_value  ;;
+  # }
 
-  measure: metric_value_upper_quantile {
-    type: percentile
-    percentile:  75
-    value_format: "0.##"
-    sql:  ${TABLE}.metric_value  ;;
-  }
+  # measure: metric_value_upper_quantile {
+  #   type: percentile
+  #   percentile:  75
+  #   value_format: "0.##"
+  #   sql:  ${TABLE}.metric_value  ;;
+  # }
 
-  measure: metric_value_98_quantile {
-    type: percentile
-    percentile:  98
-    value_format: "0.##"
-    sql:  ${TABLE}.metric_value  ;;
-  }
+  # measure: metric_value_98_quantile {
+  #   type: percentile
+  #   percentile:  98
+  #   value_format: "0.##"
+  #   sql:  ${TABLE}.metric_value  ;;
+  # }
 
   measure: metric_value_min {
     type: min
@@ -191,7 +182,7 @@ view: raw_metric_minute {
 
   measure: metric_tag_sum {
     type: sum
-    sql: try_cast(${TABLE}."METRIC_TAG" as int) ;;
+    sql: try_cast(${TABLE}."METRIC_TAG" as bigint) ;;
   }
 
  measure: total_requests {

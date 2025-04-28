@@ -807,6 +807,26 @@ view: v_placement_details_base {
         END;;
   }
 
+  dimension: publisher_use_cookies {
+    type: yesno
+    label: "Publisher Use Cookies"
+    sql:  ${TABLE}.partner_use_cookies = 1;;
+  }
+
+  dimension: placement_use_cookies_override_publisher {
+    type: yesno
+    label: "Placement Use Cookies - Override inherited setting from publisher"
+    sql: ${TABLE}.placement_use_cookies IS NOT NULL ;;
+  }
+
+  dimension: placement_use_cookies {
+    type: yesno
+    label: "Placement Use Cookies"
+    sql: CASE WHEN ${placement_use_cookies_override_publisher} THEN ${TABLE}.placement_use_cookies
+              ELSE ${TABLE}.partner_use_cookies
+         END = 1 ;;
+  }
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [

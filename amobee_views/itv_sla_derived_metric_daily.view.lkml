@@ -1,13 +1,6 @@
 view: derived_metric_daily {
 
-  sql_table_name:
-    {% if _model._name == 'itv_sla' %}
-      SLA.DERIVED_METRIC_DAILY
-    {% elsif _model._name == 'dsp_sla' %}
-      SLA_DSP.DERIVED_METRIC_DAILY
-    {% else %}
-      UNDEF_MODEL.DERIVED_METRIC_DAILY
-    {% endif %} ;;
+  sql_table_name: DERIVED_METRIC_DAILY ;;
 
   dimension_group: created {
     type: time

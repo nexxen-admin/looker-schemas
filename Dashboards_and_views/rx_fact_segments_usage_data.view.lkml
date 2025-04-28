@@ -63,6 +63,11 @@ view: rx_fact_segments_usage_data {
     type: string
     sql: ${TABLE}.DMP_Provider_Name ;;
   }
+
+  dimension: rx_dmp_provider_name {
+    type: string
+    sql: ${TABLE}.RX_DMP_Provider_Name ;;
+  }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 

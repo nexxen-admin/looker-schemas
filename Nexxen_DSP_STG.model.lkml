@@ -27,6 +27,11 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
+access_grant: advertiser_msd {
+  user_attribute: advertiser
+  allowed_values: ["Advertiser","%, NULL"]
+}
+
 explore: monthly_billing_locked_report {
   required_access_grants: [can_view_pub_come_looker]
   label: "Locked Report Billing US STG"
@@ -65,6 +70,13 @@ explore: fact_nexxen_dsp  {
     view_label: "Creative"
     sql_on: ${dim_dsp_creative.creative_id_key}=${fact_nexxen_dsp.creative_id_key} ;;
     relationship: many_to_one
+  }
+
+  join: dim_dsp_device_type {
+    type: left_outer
+    view_label: "Request Attributes"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.device_type_key}=${dim_dsp_device_type.device_type_key} ;;
   }
 
   join: dim_dsp_creative_file {
@@ -138,7 +150,7 @@ explore: fact_nexxen_dsp  {
 
   join: dim_sfdb_account {
     type: inner
-    view_label: "Salsforce Account"
+    view_label: "Salesforce Account"
     sql_on: ${dim_sfdb_account.account_id_key} = ${fact_nexxen_dsp.account_id_key};;
     relationship: many_to_one
 
@@ -146,7 +158,7 @@ explore: fact_nexxen_dsp  {
   join: dim_sfdb_po__c {
 
     type: left_outer
-    view_label: "Salsforce Purchase Order"
+    view_label: "Salesforce Purchase Order"
     sql_on: ${dim_sfdb_po__c.po_aid__c} = ${dim_sfdb_account.id} ;;
     relationship: many_to_one
 
@@ -154,14 +166,14 @@ explore: fact_nexxen_dsp  {
 
   join: dim_sfdb_opportunity {
     type: inner
-    view_label: "Salsforce Opportunity"
+    view_label: "Salesforce Opportunity"
     sql_on: ${dim_sfdb_opportunity.opportunity_id_key} = ${fact_nexxen_dsp.opportunity_id_key} ;;
     relationship: many_to_one
   }
 
   # join: v_dim_sfdb_opportunitylineitemschedule_looker {
   #   type: inner
-  #   view_label: "Salsforce Opportunity Line Item Flight"
+  #   view_label: "Salesforce Opportunity Line Item Flight"
   #   sql_on: ${v_dim_sfdb_opportunitylineitemschedule_looker.opportunitylineitem_key} = ${fact_nexxen_dsp.opportunitylineitem_key}
   #   and ${fact_nexxen_dsp.date_key_in_timezone_raw}>= ${v_dim_sfdb_opportunitylineitemschedule_looker.scheduledate_raw} and
   #   ${fact_nexxen_dsp.date_key_in_timezone_raw} <= ${v_dim_sfdb_opportunitylineitemschedule_looker.end_date__c_raw};;
@@ -177,11 +189,18 @@ explore: fact_nexxen_dsp  {
   }
   join:  dim_sfdb_opportunitylineitem {
     type: inner
-    view_label: "Salsforce Opportunity Line Item"
+    view_label: "Salesforce Opportunity Line Item"
     sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
     relationship: many_to_one
 
 
+  }
+
+  join: ncd_pacing {
+    type: inner
+    view_label: "Salesforce Opportunity Line Item"
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${v_dim_dsp_date.date_key_date};;
+    relationship: many_to_one
   }
 
   join: dim_sfdb_user {
@@ -216,7 +235,7 @@ explore: fact_nexxen_dsp  {
 
   join: dim_sfdb_related_accounts {
     type: left_outer
-    view_label: "Salsforce Account"
+    view_label: "Salesforce Account"
     sql_on: ${dim_sfdb_related_accounts.id}=${dim_sfdb_opportunity.related_account__c} ;;
     relationship: many_to_one
   }
@@ -242,6 +261,27 @@ explore: fact_nexxen_dsp  {
     sql_on: ${dim_dsp_package.package_id_key}=${fact_nexxen_dsp.package_id_key} ;;
     relationship: many_to_one
   }
+
+  join: dim_dsp_line_item {
+    type: inner
+    view_label: "Line Item"
+    sql_on: ${dim_dsp_line_item.line_item_id_key}=${fact_nexxen_dsp.line_item_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_sfdb_account_opportunity_billling_account_name {
+    type: inner
+    view_label: "Salesforce Opportunity"
+    sql_on: ${fact_nexxen_dsp.opportunity_id_key}=${dim_sfdb_account_opportunity_billling_account_name.opportunity_id_key} ;;
+    relationship: many_to_one
+  }
+
+
+  # join: advertisers_email {
+  #   type: inner
+  #   sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;
+  #   relationship: many_to_one
+  # }
 
 
 }

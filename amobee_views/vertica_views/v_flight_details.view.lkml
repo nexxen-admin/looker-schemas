@@ -160,8 +160,8 @@ view: v_flight_details {
     hidden: yes
     description: "The total number of days in the flight."
     label: "Flight Total Days"
-    sql: greatest(0, ceil(coalesce(datediff(h, ${TABLE}.BEGIN_DATETIME_LOCAL, ${TABLE}.END_DATETIME_LOCAL),
-      datediff(h, ${TABLE}.CONTRACT_START_DATE, ${TABLE}.CONTRACT_END_DATE)) / 24)) ;;
+    sql: greatest(0, ceil(coalesce(datediff(hh, ${TABLE}.BEGIN_DATETIME_LOCAL, ${TABLE}.END_DATETIME_LOCAL),
+      datediff(hh, ${TABLE}.CONTRACT_START_DATE, ${TABLE}.CONTRACT_END_DATE)) / 24)) ;;
   }
 
   dimension: flight_remaining_days {
@@ -169,8 +169,8 @@ view: v_flight_details {
     hidden: yes
     description: "The total number of days remaining (end date - yesterday) in the flight."
     label: "Flight Remaining Days"
-    sql: greatest(0, ceil(coalesce(datediff(h, greatest(${TABLE}.BEGIN_DATETIME_LOCAL, TIMESTAMPADD(d, 1, ${v_demand_mart_load_tracking.load_through_date})), ${TABLE}.END_DATETIME_LOCAL),
-      datediff(h, greatest(${TABLE}.CONTRACT_START_DATE, TIMESTAMPADD(d, 1, ${v_demand_mart_load_tracking.load_through_date})), ${TABLE}.CONTRACT_END_DATE)) / 24)) ;;
+    sql: greatest(0, ceil(coalesce(datediff(hh, greatest(${TABLE}.BEGIN_DATETIME_LOCAL, TIMESTAMPADD(d, 1, ${v_demand_mart_load_tracking.load_through_date})), ${TABLE}.END_DATETIME_LOCAL),
+      datediff(hh, greatest(${TABLE}.CONTRACT_START_DATE, TIMESTAMPADD(d, 1, ${v_demand_mart_load_tracking.load_through_date})), ${TABLE}.CONTRACT_END_DATE)) / 24)) ;;
   }
 
   dimension: flight_elapsed_days {

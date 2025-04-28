@@ -15,6 +15,21 @@ view: dsp_media_and_bids {
     sql: ${TABLE}."__time" ;;
   }
 
+  dimension_group: timezone {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    label: "EST Timezone"
+    sql: time_shift(cast(${__time_time} as timestamp),'PT5H',-1)  ;;
+  }
+
   dimension: lag_date {
     type: date
     sql: lag(${__time_date},1) over(order by ${__time_date}) ;;
@@ -386,6 +401,7 @@ view: dsp_media_and_bids {
     type: string
     description: "Size of the creative"
     sql: ${TABLE}."creative_size" ;;
+    drill_fields: [creative_name]
   }
 
   measure: cross_device_action {
@@ -562,7 +578,7 @@ view: dsp_media_and_bids {
 
   measure: inv_cost {
     type: sum
-    #value_format: "$#,##0"
+    value_format: "$#,##0"
     sql: ${TABLE}."inv_cost" ;;
   }
 
@@ -744,8 +760,8 @@ view: dsp_media_and_bids {
     sql: ${TABLE}."shopping_cart_value_cta" ;;
   }
 
-  dimension: shopping_cart_value_vta {
-    type: number
+  measure: shopping_cart_value_vta {
+    type: sum
     sql: ${TABLE}."shopping_cart_value_vta" ;;
   }
 
@@ -1248,18 +1264,11 @@ dimension: browser_type_name {
   dimension: service_type_name {
     type: string
     label: "Service Type"
-    sql: CASE WHEN ${market_id} in (884, 1792, 2067, 2050, 58, 1637, 577, 1398, 1489, 1677, 2017,
-     1781, 1805, 1008, 1051, 1810, 1604, 996, 1090, 961, 923, 1487, 1379, 685, 1431, 2035, 2091,
-     1045, 1121, 1477, 1383, 2120, 1636, 2099, 2088, 2111, 1188, 1734) THEN 'Managed'
-      WHEN ${market_id} in (2045, 305, 1678, 1183, 2018, 1577, 933, 2058, 1310, 2012, 301,
-        658, 1376, 1407, 272, 1576, 1776, 2064, 2087, 927, 3, 141, 999, 1480, 1356, 95, 1393, 2107,
-        861, 1472, 1532, 1405, 2101, 2048, 1058, 2014, 2069, 1084, 1120, 1192, 681, 2032, 1079, 1516,
-        1608, 175, 2063, 1371, 2117, 1566, 2086, 1069, 2011, 898, 1204, 1380, 1441, 1533, 2034, 2103 ) THEN 'Self-Service'
-      WHEN ${market_id} in (1, -1, 59) THEN 'DSP Internal / Defaults'
+    sql: CASE WHEN ${market_id} in (2203,2202,2196,2193,2187,2181,2174,2167,2164,2160,2148,2142,2141,2139,2136,2134,2133,2125,2121,2120,2111,2107,2099,2092,2091,2088,2073,2067,2050,2035,2017,1810,1805,1792,1789,1781,1734,1677,1637,1636,1626,1604,1574,1489,1487,1486,1477,1431,1398,1383,1379,1188,1121,1090,1051,1045,1008,996,961,923,884,685,577,58) THEN 'Managed'
+      WHEN ${market_id} in (2221,2215,2209,2205,2201,2200,2194,2192,2190,2188,2185,2184,2183,2178,2175,2172,2169,2168,2166,2159,2158,2152,2149,2147,2145,2143,2138,2132,2127,2117,2103,2101,2087,2086,2084,2069,2064,2063,2060,2058,2056,2048,2045,2039,2034,2032,2018,2014,2013,2012,2011,2010,1997,1990,1972,1778,1776,1678,1676,1662,1659,1658,1657,1608,1606,1577,1576,1570,1566,1538,1533,1532,1516,1480,1472,1441,1407,1405,1393,1380,1376,1371,1368,1356,1310,1307,1204,1192,1183,1144,1120,1084,1079,1076,1069,1058,999,933,927,898,861,681,671,658,305,301,272,175,141,95,3) THEN 'Self-Service'
+      WHEN ${market_id} in (2197,2182,2144,59,2,1,-1) THEN 'DSP Internal / Defaults'
       WHEN ${market_id} in (1602) THEN 'Managed/self service'
-      WHEN ${market_id} in (1144, 1307, 1368, 1606, 1789, 2013, 2039, 2056, 1662, 2125, 2127, 2121,
-        2092, 1997, 671, 2129, 1076, 1206, 1416, 1425, 1538, 1570, 1657, 1659, 1676, 1731, 1819, 1972,
-        2010, 2057, 2084, 9999) THEN 'Other'
+      WHEN ${market_id} in (9999) THEN 'Other'
       ELSE 'Unknown' END ;;
   }
 
@@ -1445,18 +1454,12 @@ dimension: browser_type_name {
   dimension: amobee_business_unit {
     type: string
     label: "Amobee Business Unit"
-    sql: CASE WHEN ${market_id} in (884, 1792, 2067, 2050, 58, 1602, 1637, 577, 1398, 1489, 1677, 2017, 1781,
-      1805, 2045) THEN 'ACCESS'
-      WHEN ${market_id} in (1008, 1051, 1810, 1604, 996, 1090, 305, 1678, 1183, 2018, 1577, 933,
-        2058, 1310, 2012, 301, 658, 1144, 1307, 1368, 1606, 1789, 2013, 2039, 2056) THEN 'ANZ & APAC'
-      WHEN ${market_id} in (1, -1, 59) THEN 'DSP Internal / Defaults'
-      WHEN ${market_id} in (1376, 1407, 272, 1576, 1776, 961, 2064, 2087, 1121, 1636, 1120) THEN 'EMEA'
-      WHEN ${market_id} in (923, 1487, 1379, 685, 1431, 2035, 2091, 927, 3, 141, 999, 1480, 1356,
-        95, 1393, 2107, 861, 1472, 1532, 1405, 2101, 2048, 1058, 2014, 1045, 2120, 1192, 1516, 1069,
-        2111, 2011, 898, 1188, 1204, 1380, 1441, 1533, 1734, 2034, 2103) THEN 'Enterprise'
-      WHEN ${market_id} in (1477, 1383, 2099, 2088, 2069, 1084, 681, 2032, 1079, 1608, 175, 2063, 1371,
-        2117, 1566, 2086, 1662, 2125, 2127, 2121, 2092, 1997, 671, 2129, 1076, 1206, 1416, 1425, 1538, 1570,
-        1657, 1659, 1676, 1731, 1819, 1972, 2010, 2057, 2084, 9999) THEN 'Other' ELSE 'Unknown' END ;;
+    sql: CASE WHEN ${market_id} in (2196,2167,2164,2148,2142,2141,2136,2067,2050,2045,2017,1805,1792,1781,1677,1637,1626,1602,1489,1398,884,577,58) THEN 'ACCESS'
+      WHEN ${market_id} in (2222,2181,2174,2151,2127,2099,2088,2069,2058,2056,2039,2032,2018,2013,2012,1997,1972,1810,1789,1678,1676,1659,1658,1657,1608,1606,1604,1577,1486,1477,1383,1371,1368,1310,1307,1183,1144,1090,1084,1076,1051,1008,996,933,681,671,658,305,301) THEN 'ANZ & APAC'
+      WHEN ${market_id} in (2197,2182,2144,69,2,1,-1) THEN 'DSP Internal / Defaults'
+      WHEN ${market_id} in (2227,2226,2225,2224,2221,2153,2117,2087,2086,2084,2064,2063,1778,1776,1662,1636,1576,1570,1566,1538,1407,1376,1121,1120,1079,961,272,175) THEN 'EMEA'
+      WHEN ${market_id} in (2223,2215,2209,2205,2203,2202,2201,2200,2199,2193,2192,2190,2188,2187,2185,2184,2178,2175,2172,2169,2168,2166,2159,2158,2152,2149,2147,2145,2143,2139,2138,2134,2133,2132,2125,2121,2120,2111,2107,2103,2101,2091,2073,2060,2048,2035,2034,2014,2011,1990,1734,1574,1533,1532,1516,1487,1480,1472,1441,1431,1405,1393,1380,1379,1356,1204,1192,1188,1069,1058,1045,999,927,923,898,861,685,141,95,3) THEN 'Enterprise'
+      WHEN ${market_id} in (9999) THEN 'Other' ELSE 'Unknown' END ;;
   }
 
   measure: unruly_inv_cost {
@@ -1509,9 +1512,29 @@ dimension: browser_type_name {
 
   measure: nexxen_inv_cost_percent {
     type: number
-    label: "Nexxen_inv_cost_%"
+    label: "Nexxen inv cost %"
     sql: ${unruly_inv_cost}/nullif(${inv_cost},0)  ;;
     value_format: "0.00%"
+  }
+
+  dimension: LOB  {
+    type: string
+    label: "LOB"
+    sql: case when ${amobee_business_unit} = 'ACCESS' then 'MS'
+              when ${amobee_business_unit} = 'Enterprise' then 'SS'
+              else 'Other' end;;
+  }
+
+  dimension: media_shift_goals{
+  type: number
+  label: "Media Shift LOB Goals"
+  sql: case when ${__time_year} = '2024' and ${LOB} = 'MS' THEN .75
+            when ${__time_year} = '2024' and ${LOB} = 'SS' THEN .35
+            when ${__time_year} = '2025' and ${LOB} = 'MS' THEN .70
+            when ${__time_year} = '2025' and ${LOB} = 'SS' THEN .45
+            ELSE 0 END;;
+    value_format: "0.00%"
+
   }
 
   measure: count {
@@ -1545,6 +1568,8 @@ dimension: browser_type_name {
         THEN ${__time_month}
       WHEN {% parameter date_granularity %} = 'Quarter'
         THEN ${__time_quarter}
+      WHEN {% parameter date_granularity %} = 'Year'
+        THEN ${__time_year}
       ELSE NULL
     END ;;
 
@@ -1599,7 +1624,7 @@ dimension: browser_type_name {
   }
 
   dimension: period_2_start {
-    hidden:  yes
+    #hidden:  yes
     view_label: "PoP"
     description: "Calculates the start of the previous period"
     type: date
@@ -1612,7 +1637,7 @@ dimension: browser_type_name {
   }
 
   dimension: period_2_end {
-    hidden:  yes
+    #hidden:  yes
     view_label: "PoP"
     description: "Calculates the end of the previous period"
     type: date
@@ -1620,7 +1645,7 @@ dimension: browser_type_name {
             {% if compare_to._parameter_value == "Period" %}
             TIMESTAMPADD(DAY, -1, CAST({% date_start current_date_range %} AS TIMESTAMP))
             {% else %}
-            TIMESTAMPADD({% parameter compare_to %}, -1, TIMESTAMPADD(DAY, -1, CAST({% date_end current_date_range %} AS TIMESTAMP)))
+            TIMESTAMPADD({% parameter compare_to %}, -1, TIMESTAMPADD(DAY, 0, CAST({% date_end current_date_range %} AS TIMESTAMP)))
             {% endif %};;
   }
 
@@ -1721,7 +1746,7 @@ dimension: browser_type_name {
     view_label: "PoP"
     type: sum
     sql: ${TABLE}.inv_cost ;;
-    value_format: "$#,##0,\" K\""
+    value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
   }
 
@@ -1729,7 +1754,7 @@ dimension: browser_type_name {
     view_label: "PoP"
     type: sum
     sql: ${TABLE}.inv_cost ;;
-    value_format: "$#,##0,\" K\""
+    value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
   }
 
@@ -1738,9 +1763,104 @@ dimension: browser_type_name {
     label: "Total Inv Cost period-over-period % change"
     type: number
     sql: CASE WHEN ${current_period_inv_cost} = 0
-                THEN NULL
-                ELSE (1.0 * ${current_period_inv_cost} / NULLIF(${previous_period_inv_cost} ,0)) - 1 END ;;
+                 THEN NULL
+                 ELSE (1.0 * ${current_period_inv_cost} / NULLIF(${previous_period_inv_cost} ,0)) - 1 END ;;
+     value_format_name: percent_2
+   }
+
+  measure: current_period_nexxen_inv_cost {
+    view_label: "PoP"
+    type: sum
+    sql: CASE WHEN LOOKUP(CONCAT(publisher_id, ''), 'dsp_media_and_bids_inventory_source_id') = 158 THEN ${TABLE}.inv_cost  ELSE NULL END ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_nexxen_inv_cost {
+    view_label: "PoP"
+    type: sum
+    sql: CASE WHEN LOOKUP(CONCAT(publisher_id, ''), 'dsp_media_and_bids_inventory_source_id') = 158 THEN ${TABLE}.inv_cost  ELSE NULL END ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: nexxen_inv_cost_pop_change {
+    view_label: "PoP"
+    label: "Nexxen Inv Cost period-over-period % change"
+    type: number
+    sql: CASE WHEN ${current_period_nexxen_inv_cost} = 0
+                 THEN NULL
+                 ELSE (1.0 * ${current_period_nexxen_inv_cost} / NULLIF(${previous_period_nexxen_inv_cost} ,0)) - 1 END ;;
     value_format_name: percent_2
   }
+
+  measure: current_period_media_shift {
+    view_label: "PoP"
+    type: number
+    sql: ${current_period_nexxen_inv_cost}/nullif(${current_period_inv_cost},0) ;;
+    value_format: "0.00%"
+
+  }
+
+  measure: previous_period_media_shift {
+    view_label: "PoP"
+    type: number
+    sql: ${previous_period_nexxen_inv_cost}/nullif(${previous_period_inv_cost},0) ;;
+    value_format: "0.00%"
+
+  }
+
+  # measure: current_period_cogs {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.cogs ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "this"]
+  # }
+
+  # measure: previous_period_cogs {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.cogs ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "last"]
+  # }
+
+  # measure: cogs_pop_change {
+  #   view_label: "PoP"
+  #   label: "Total Cogs period-over-period % change"
+  #   type: number
+  #   sql: CASE WHEN ${current_period_cogs} = 0
+  #               THEN NULL
+  #               ELSE (1.0 * ${current_period_cogs} / NULLIF(${previous_period_cogs} ,0)) - 1 END ;;
+  #   value_format_name: percent_2
+  # }
+
+  # measure: current_period_clicks {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.clicks ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "this"]
+  # }
+
+  # measure: previous_period_clicks {
+  #   view_label: "PoP"
+  #   type: sum
+  #   sql: ${TABLE}.clicks ;;
+  #   value_format: "$#,##0,\" K\""
+  #   filters: [period_filtered_measures: "last"]
+  # }
+
+  # measure: clicks_pop_change {
+  #   view_label: "PoP"
+  #   label: "Total Clicks period-over-period % change"
+  #   type: number
+  #   sql: CASE WHEN ${current_period_clicks} = 0
+  #               THEN NULL
+  #               ELSE (1.0 * ${current_period_clicks} / NULLIF(${previous_period_clicks} ,0)) - 1 END ;;
+  #   value_format_name: percent_2
+  # }
+
 
 }

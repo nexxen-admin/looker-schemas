@@ -35,6 +35,12 @@ view: dim_deal_personnel {
     sql: ${TABLE}.personnel_id ;;
   }
 
+  dimension: sales_region {
+    type: string
+    label: "Personnel Sales Region"
+    sql: ${TABLE}.sales_region ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [personnel_name]

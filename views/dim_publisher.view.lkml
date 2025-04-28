@@ -176,10 +176,10 @@ view: dim_publisher {
     }
 
     dimension: is_1st_party {
-      label: "Is 1st Party"
+      label: "Is 1st Party - Pub"
       type: yesno
       sql: ${TABLE}.Is_1st_Party ;;
-      hidden: yes
+      #hidden: yes
     }
 
     dimension: is_network {
@@ -248,17 +248,8 @@ view: dim_publisher {
       type: string
       description: "The name of the entity that operates one or more sites"
       sql: ${TABLE}.PUB_Name;;
-      drill_fields: [new_revenue.publisher_name,dim_imp_type.imp_type,dim_buying_channel.buying_channel, dim_dsp.dsp_display_name, dim_a_domain.a_domain, dim_o_domain.o_domain]
-      link: {
-        label: "Drill To New Publishers"
-        url: "https://tremor.cloud.looker.com/dashboards/560?Publisher+Name={{ value }}"
+      drill_fields: [dim_a_domain.a_domain, dim_dsp.dsp_display_name, dim_imp_type.imp_type, dim_o_domain.top_level_domain, dim_buying_channel_ctrl.buying_channel_ctrl_name, dim_device_type.device_type]
       }
-      link: {
-        label: "Drill To Supply Tracker"
-        url: "https://tremor.cloud.looker.com/dashboards/544?Publisher+Name={{ value }}"
-      }
-
-    }
 
     dimension_group: pub_updated {
       type: time

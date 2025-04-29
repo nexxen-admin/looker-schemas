@@ -480,6 +480,9 @@ view: dim_sfdb_opportunity {
     hidden: yes
   }
 
+
+
+
   dimension: name {
     type: string
     label: "Opportunity Name"
@@ -545,6 +548,17 @@ view: dim_sfdb_opportunity {
     sql: ${TABLE}.opportunity_margin__c ;;
     hidden: no
   }
+
+  dimension: opportunity_margin_check {
+    type: string
+    label: "Opportunity Margin Check"
+    sql:
+    CASE
+      WHEN ${opportunity_margin__c} IS NULL THEN 'Missing'
+      ELSE 'Entered'
+    END ;;
+  }
+
 
   dimension: opportunity_number__c {
     type: string
@@ -762,6 +776,26 @@ view: dim_sfdb_opportunity {
     sql: ${TABLE}.stagename ;;
   }
 
+  dimension: revenue_stage {
+    type: string
+    label: "Revenue Stage"
+    sql:
+    CASE
+      WHEN ${stagename} LIKE '%Closed Won%' THEN 'Booked'
+      WHEN ${stagename} LIKE '%Closed Lost%' THEN 'Lost'
+
+      WHEN ${stagename} = 'Verbal' THEN 'Committed'
+      WHEN ${stagename} = 'Final Approval' THEN 'Committed'
+
+      WHEN ${stagename} = 'Discovery Meeting' THEN 'Pre-Pipeline'
+      WHEN ${stagename} = 'Draft' THEN 'Pre-Pipeline'
+
+      ELSE 'Pipeline'
+      END ;;
+  }
+
+
+
   dimension_group: start_date__c {
     type: time
     label: "Opportunity Start Date"
@@ -823,6 +857,47 @@ view: dim_sfdb_opportunity {
     type: string
     sql: ${TABLE}."type" ;;
   }
+
+  dimension: revenue_line_v2 {
+    type: string
+    label: "Revenue Line v2"
+    sql:
+    CASE
+      WHEN ${type} = 'All - Market Expectation' THEN 'All - Market Expectation'
+
+      WHEN ${type} IN (
+      'Amobee TV Media Managed',
+      'Amobee TV Platform Managed',
+      'Amobee TV Platform HOK',
+      'Amobee TV Platform ATD',
+      'Amobee TV',
+      'TV Supply',
+      'TV',
+      'TV Demand - Media Managed',
+      'TV Demand - Platform Managed',
+      'TV Demand - HOK'
+      ) THEN 'TV'
+
+      WHEN ${type} = 'Media Managed' THEN 'MS'
+
+      WHEN ${type} = 'Platform Managed' THEN 'DSP (Self-Service & Managed)'
+
+      WHEN ${type} LIKE '%Media%' THEN 'MS'
+      WHEN ${type} LIKE '%MS%' THEN 'MS'
+
+      WHEN ${type} IN ('Platform ATD', 'Platform MSP', 'Platform HOK', 'SS') THEN 'DSP (Self-Service & Managed)'
+
+      WHEN ${type} LIKE '%Platform%' THEN 'DSP (Self-Service & Managed)'
+
+      WHEN ${type} IN ('Social Managed', 'Social ATD', 'Social MSP', 'Social HOK') THEN 'Social'
+      WHEN ${type} LIKE '%Social%' THEN 'Social'
+
+      WHEN ${type} LIKE '%PMP%' THEN 'PMP'
+
+      ELSE NULL
+      END ;;
+  }
+
 
   dimension: valid_conversions__c {
     type: string

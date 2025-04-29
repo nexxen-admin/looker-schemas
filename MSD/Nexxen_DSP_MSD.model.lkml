@@ -46,6 +46,13 @@ explore: fact_nexxen_msd_advertiser  {
   }
   #hidden: yes
 
+  join: dim_dsp_insertion_order {
+    type: inner
+    view_label: "Insertion Order"
+    sql_on: ${dim_dsp_line_item.insertion_order_id}=${dim_dsp_insertion_order.insertion_order_id} ;;
+    relationship: many_to_one
+  }
+
   join: dim_dsp_format {
     type: left_outer
     view_label: "Request Attributes"
@@ -238,12 +245,11 @@ explore: fact_nexxen_msd_advertiser  {
 
   }
 
-  join: dim_sfdb_opportunitylineitem_pacing {
+  join: ncd_pacing {
     type: inner
     view_label: "Salesforce Opportunity Line Item"
-    sql_on: ${dim_sfdb_opportunitylineitem_pacing.line_item_id}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${dim_sfdb_opportunitylineitem_pacing.date_key_date}=${v_dim_dsp_date.date_key_date};;
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${v_dim_dsp_date.date_key_date};;
     relationship: many_to_one
-
   }
 
 
@@ -360,6 +366,13 @@ explore: fact_nexxen_msd_agency  {
     user_attribute: advertiser
   }
   #hidden: yes
+
+  join: dim_dsp_insertion_order {
+    type: inner
+    view_label: "Insertion Order"
+    sql_on: ${dim_dsp_line_item.insertion_order_id}=${dim_dsp_insertion_order.insertion_order_id} ;;
+    relationship: many_to_one
+  }
 
   join: dim_dsp_format {
     type: left_outer
@@ -543,12 +556,11 @@ explore: fact_nexxen_msd_agency  {
 
   }
 
-  join: dim_sfdb_opportunitylineitem_pacing {
+  join: ncd_pacing {
     type: inner
     view_label: "Salesforce Opportunity Line Item"
-    sql_on: ${dim_sfdb_opportunitylineitem_pacing.line_item_id}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${dim_sfdb_opportunitylineitem_pacing.date_key_date}=${v_dim_dsp_date.date_key_date};;
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${v_dim_dsp_date.date_key_date};;
     relationship: many_to_one
-
   }
 
   join: dim_sfdb_user {

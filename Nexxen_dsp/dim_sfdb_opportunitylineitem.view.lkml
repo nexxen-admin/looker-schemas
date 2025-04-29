@@ -697,12 +697,6 @@ view: dim_sfdb_opportunitylineitem {
     sql: ${TABLE}.units__c ;;
   }
 
-  measure: units__c_msd {
-    type: number
-    label: "Booked Units"
-    sql: ${TABLE}.units__c ;;
-  }
-
   measure: budgeted_units {
     type: sum
     description: "Shows the same number as dimension 'Booked Units', but is a measure, so will show total"
@@ -751,24 +745,7 @@ view: dim_sfdb_opportunitylineitem {
          (fact_nexxen_dsp.date_key_in_timezone - ${start_date__c_date})+1 end;;
         hidden: yes
   }
-  dimension: cap_temp {
-    type: number
-    sql: ${units__c}/(datediff('day',${start_date__c_date},${end_date__c_date})+1)*${date_diff} ;;
-    hidden: yes
-  }
 
-  measure: cap_msd_test {
-    type: max
-    sql: ${cap_temp};;
-    hidden: yes
-  }
-  measure: msd_pacing {
-    type: number
-    value_format: "0.00%"
-    sql:
-       IFNULL(${fact_nexxen_dsp.delivered_units}/${cap_msd_test},0);;
-      hidden: yes
-  }
 
   measure: gross_billable_comp {
     type: max

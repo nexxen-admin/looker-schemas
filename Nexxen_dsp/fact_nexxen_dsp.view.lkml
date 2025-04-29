@@ -25,6 +25,13 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: environment_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.environment_key ;;
+    hidden: yes
+  }
+
   dimension: creative_size_key {
     type: number
     value_format_name: id
@@ -35,7 +42,7 @@ view: fact_nexxen_dsp {
   dimension: dma_key {
     type: number
     value_format_name: id
-    sql: ${TABLE}.creative_size_key ;;
+    sql: ${TABLE}.dma_key ;;
     hidden: yes
   }
 
@@ -119,6 +126,7 @@ view: fact_nexxen_dsp {
   measure: clicks {
     type: sum
     label: "1P Clicks"
+    value_format: "#,##0"
     sql: ${TABLE}.clicks ;;
 
  }
@@ -411,7 +419,7 @@ dimension: inventory_source_key {
 
   measure: complete_events  {
     type: sum
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     description: "1 for events that were completed"
     sql: ${TABLE}.complete_events  ;;
   }
@@ -573,7 +581,7 @@ dimension: inventory_source_key {
 
   measure: CTR_1P {
     type: number
-    value_format: "0.0%"
+    value_format: "0.00%"
     sql: IFNULL(${clicks}/nullif(${impressions},0),0) ;;
   }
 
@@ -816,23 +824,6 @@ dimension: inventory_source_key {
     label: "3P media measured impressions"
     sql: ${TABLE}.third_party_media_measured_impressions ;;
     value_format: "#,##0"
-  }
-
-  dimension: cap_msd {
-    type: number
-    sql: ${dim_sfdb_opportunitylineitem.units__c}/
-    (datediff('day',${dim_dsp_package_budget_schedule.start_date_in_timezone},${dim_dsp_package_budget_schedule.end_date_in_timezone})+1) ;;
-    #hidden: yes
-  }
-
-  measure: pacing_msd {
-    type: sum
-    value_format: "0.0\%"
-    sql: -- case when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPM' then
-        ${dim_sfdb_opportunitylineitem.msd_pacing}*100;;
-    hidden: yes
-              #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'CPC' then ${TABLE}.clicks/sum(${cap_msd}*100
-              #when ${dim_sfdb_opportunitylineitem.price_type_name__c} = 'dCPM' then ${TABLE}.cost/${cap_msd}*100 end;;
   }
 
   measure: monthly_budget_breakdown_v1 {
@@ -1389,21 +1380,41 @@ dimension: inventory_source_key {
 
 #---------------------------------------------NCD Specifics---------------------------------------------------
 
-  measure: daily_pacing_msd_fact {
-    type: average
-    label: "NCD Daily Pacing"
+  # measure: daily_pacing_msd_fact {
+  #   type: average
+  #   label: "NCD Daily Pacing"
+  #   value_format: "#,##0"
+  #   sql:  NULLIF(${dim_sfdb_opportunitylineitem_pacing.daily_pacing_dim},0) ;;
+  # }
+
+  measure: ncd_clicks {
+    type: sum
     value_format: "#,##0"
-    sql:  NULLIF(${dim_sfdb_opportunitylineitem_pacing.daily_pacing_dim},0) ;;
+    label: "NCD Clicks"
+    sql: CASE WHEN ${dim_dsp_device_type.device_type_category}='CTV' THEN 0 ELSE ${TABLE}.clicks END;;
   }
 
+  measure: ncd_ctr {
+    type: number
+    value_format: "0.00%"
+    sql: IFNULL(${ncd_clicks}/${impressions},0) ;;
+  }
+
+measure: total_pacing {
+  type: average
+  label: "Total Pacing - NCD"
+  sql: ${ncd_pacing.pacing_dim} ;;
+  value_format: "0.0%"
+}
 
   measure: html_kpi_pacing {
     type: count
+    hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+    <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Pacing
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ dim_sfdb_opportunitylineitem_pacing.total_pacing._rendered_value }}
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ total_pacing._rendered_value }}
         </div>
       </div>;;
   }
@@ -1412,40 +1423,41 @@ dimension: inventory_source_key {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Pacing
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
           100%
         </div>
       </div>;;
   }
 
-  measure: html_kpi_impressions {
+  measure: html_kpi_delivered_units {
     type: count
+    # hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-        Impressions
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ impressions._rendered_value }}
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Delivered Units
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ delivered_units._rendered_value }}
         </div>
       </div>;;
   }
 
-  measure: impressions_demo {
+  measure: delivered_units_demo {
     type: number
     hidden: yes
     value_format: "#,##0"
-    sql:${impressions}  *10.2;;
+    sql:${delivered_units}  *10.2;;
   }
 
   measure: html_kpi_impressions_demo {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-        Impressions
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-          {{ impressions_demo._rendered_value }}
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Delivered Units
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ delivered_units_demo._rendered_value }}
         </div>
       </div>;;
   }
@@ -1453,10 +1465,11 @@ dimension: inventory_source_key {
 
   measure: html_kpi_vcr {
     type: count
+    hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         VCR
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ VCR_1P._rendered_value }}
         </div>
       </div>;;
@@ -1464,10 +1477,11 @@ dimension: inventory_source_key {
 
   measure: html_kpi_delivered_spend {
     type: count
+    hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Delivered Spend
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ Delivered_Spend._rendered_value }}
         </div>
       </div>;;
@@ -1484,28 +1498,66 @@ dimension: inventory_source_key {
     type: count
     hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Delivered Spend
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ delivered_spend_demo._rendered_value }}
+        </div>
+      </div>;;
+  }
+
+  measure: html_kpi_clicks {
+    type: count
+    hidden: yes
+    html:
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Clicks
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ ncd_clicks._rendered_value }}
+        </div>
+      </div>;;
+  }
+
+  measure: html_kpi_complete_events {
+    type: count
+    hidden: yes
+    html:
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        Complete Events
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ complete_events._rendered_value }}
+        </div>
+      </div>;;
+  }
+
+  measure: html_kpi_ctr {
+    type: count
+    hidden: yes
+    html:
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+        CTR
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+          {{ ncd_ctr._rendered_value }}
         </div>
       </div>;;
   }
 
   measure: html_impr_comp_event {
     type: number
+    hidden: yes
     #value_format: "#,##0,,,\"B\""
     sql: ${impressions} ;;
     label: "Impressions"
-    html: {{ rendered_value }} | Complete Events: {{complete_events._rendered_value }}  ;;
+    html: {{ rendered_value }} | VCR: {{VCR_1P._rendered_value }}  ;;
   }
 
   measure: html_kpi_shopping_cart_value {
     type: count
+    hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Cart Value
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ shopping_cart_value._rendered_value }}
         </div>
       </div>;;
@@ -1513,21 +1565,24 @@ dimension: inventory_source_key {
 
   measure: html_kpi_shopping_cart_value_cta {
     type: count
+    hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Cart Value CT
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ shopping_cart_value_cta._rendered_value }}
         </div>
       </div>;;
   }
 
+
   measure: html_kpi_shopping_cart_value_vta {
     type: count
+    hidden: yes
     html:
-     <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+     <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
         Cart Value VT
-        <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+        <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
           {{ shopping_cart_value_vta._rendered_value }}
         </div>
       </div>;;

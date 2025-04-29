@@ -12,6 +12,10 @@ view: dim_dsp_insertion_order {
     sql: ${TABLE}.insertion_order_id ;;
     hidden:  yes
   }
+  dimension: campaign {
+    type: string
+    sql: ${TABLE}.campaign ;;
+  }
   dimension_group: overall_end {
     type: time
     timeframes: [raw, date, week, month, quarter, year]

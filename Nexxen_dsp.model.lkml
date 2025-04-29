@@ -169,6 +169,13 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_environment {
+    type: left_outer
+    view_label: "Environment"
+    sql_on: ${dim_dsp_environment.environment_key}=${fact_nexxen_dsp.environment_key} ;;
+    relationship: many_to_one
+  }
+
   join: dim_dsp_creative_file {
     type:left_outer
     view_label: "Creative"
@@ -180,6 +187,13 @@ explore: fact_nexxen_dsp  {
     type:left_outer
     view_label: "Request Attributes"
     sql_on: ${dim_dsp_device_manufacturer.device_manufacturer_key} = ${fact_nexxen_dsp.device_manufacturer_key};;
+    relationship: many_to_one
+  }
+
+  join: ncd_pacing {
+    type: inner
+    view_label: "Salesforce Opportunity Line Item"
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${v_dim_dsp_date.date_key_date};;
     relationship: many_to_one
   }
 
@@ -293,13 +307,6 @@ explore: fact_nexxen_dsp  {
 
   }
 
-  join: dim_sfdb_opportunitylineitem_pacing {
-    type: inner
-    view_label: "Salesforce Opportunity Line Item"
-    sql_on: ${dim_sfdb_opportunitylineitem_pacing.line_item_id}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${dim_sfdb_opportunitylineitem_pacing.date_key_date}=${v_dim_dsp_date.date_key_date};;
-    relationship: many_to_one
-
-  }
 
   join: dim_sfdb_user {
 
@@ -364,6 +371,20 @@ explore: fact_nexxen_dsp  {
     type: inner
     view_label: "Line Item"
     sql_on: ${dim_dsp_line_item.line_item_id_key}=${fact_nexxen_dsp.line_item_key} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_target_deal {
+    type: inner
+    view_label: "Target Deal"
+    sql_on: ${dim_dsp_line_item.line_item_id}=${dim_dsp_target_deal.line_item_id} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_dsp_publisher_deal {
+    type: inner
+    view_label: "Publisher Deal"
+    sql_on: ${dim_dsp_target_deal.publisher_deal_id}=${dim_dsp_publisher_deal.publisher_deal_id};;
     relationship: many_to_one
   }
 

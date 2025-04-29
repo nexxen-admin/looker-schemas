@@ -38,3 +38,9 @@ explore: bid_opti_version {
 explore: sam_lt_comm {
   required_access_grants: [can_view_pub_come_looker]
 }
+
+
+explore: snapshot_quarterly_forecast {
+  label: "Snapshot Quarterly Forecast"
+  # required_access_grants: [can_view_pub_come_looker]
+}

@@ -139,6 +139,12 @@ view: sam_lt_comm {
     sql: ${TABLE}.supply_name ;;
   }
 
+  dimension: device_type {
+    type: string
+    label: "Device Type"
+    sql: ${TABLE}.device_type ;;
+  }
+
   dimension: supply_source {
     type: string
     label: "Supply Source"

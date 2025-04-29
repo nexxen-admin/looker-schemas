@@ -52,6 +52,16 @@ view: dim_dsp_market {
       WHEN ${market_id} in (9999) THEN 'Other' ELSE 'Unknown' END ;;
   }
 
+
+  dimension: LOB  {
+    type: string
+    label: "LOB"
+    sql: case when ${amobee_business_unit} = 'ACCESS' then 'MS'
+              when ${amobee_business_unit} = 'Enterprise' then 'SS'
+              else 'Other' end;;
+  }
+
+
   dimension: is_deleted {
     type: number
     sql: ${TABLE}.is_deleted ;;

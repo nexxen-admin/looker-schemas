@@ -56,9 +56,7 @@ explore: monthly_billing_locked_report{
 }
 
 
-explore: snapshot_quarterly_forecast{
-  label: "Snapshot quarterly forecast"
-}
+
 
 
 #explore: v_monthly_billing_report_diff_live_locked {

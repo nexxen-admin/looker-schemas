@@ -480,6 +480,16 @@ view: dim_dsp_package {
     sql: ${TABLE}.package_nickname ;;
   }
 
+  dimension:  package_group_b {
+    type: string
+    sql: ${TABLE}.package_group_b ;;
+  }
+
+  dimension:  package_group_c {
+    type: string
+    sql: ${TABLE}.package_group_c ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [name]

@@ -157,6 +157,12 @@ explore: comscore_active_segments {
   hidden: no
 }
 
+explore: buyer_cohort {
+  label: "Buyer Cohort"
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
+
 explore: bid_details_in_app {
   label: "Bid Details - In App"
   required_access_grants: [can_view_all_tremor]

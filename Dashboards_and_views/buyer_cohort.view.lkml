@@ -51,7 +51,7 @@ view: buyer_cohort {
   }
 
   dimension: cohort_year {
-    type: date
+    type: number
     label: "Cohort Year"
     sql: ${TABLE}."Cohort Year" ;;
   }
@@ -68,7 +68,7 @@ view: buyer_cohort {
   }
 
   dimension: event_year {
-    type: date
+    type: number
     label: "Event Year"
     sql: ${TABLE}."Event Year" ;;
   }

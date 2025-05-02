@@ -38,9 +38,9 @@ view: buyer_cohort {
         cohort as 'Cohort Number',
         buyer as Buyer,
         event_year as 'Event Year',
-        annual_gross_revenue as 'Gross Revenue',
+        annual_gross_revenue,
         annual_cost as Cost,
-        annual_net_revenue as 'Net Revenue'
+        annual_net_revenue
       From Cohort_Labeled
       Order by 1, 3, 4 ;;
   }
@@ -77,7 +77,7 @@ view: buyer_cohort {
     type: number
     label: "Gross Revenue"
     value_format: "$#,##0.00"
-    sql: ${TABLE}."Gross Revenue" ;;
+    sql: ${TABLE}.annual_gross_revenue ;;
   }
 
   measure: cost {
@@ -91,7 +91,7 @@ view: buyer_cohort {
     type: number
     label: "Net Revenue"
     value_format: "$#,##0.00"
-    sql: ${TABLE}."Net Revenue" ;;
+    sql: ${TABLE}.annual_net_revenue ;;
   }
 
   set: detail {

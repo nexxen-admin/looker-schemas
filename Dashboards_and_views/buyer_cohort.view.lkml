@@ -73,6 +73,11 @@ view: buyer_cohort {
     sql: ${TABLE}."Event Year" ;;
   }
 
+  measure:  Buyer_Count{
+    type:  count_distinct
+    sql: ${TABLE}.Buyer ;;
+  }
+
   measure: gross_revenue {
     type: sum
     label: "Gross Revenue"

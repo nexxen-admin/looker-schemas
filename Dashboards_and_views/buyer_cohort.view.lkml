@@ -74,21 +74,21 @@ view: buyer_cohort {
   }
 
   measure: gross_revenue {
-    type: number
+    type: sum
     label: "Gross Revenue"
     value_format: "$#,##0.00"
     sql: ${TABLE}.annual_gross_revenue ;;
   }
 
   measure: cost {
-    type: number
+    type: sum
     label: "Cost"
     value_format: "$#,##0.00"
     sql: ${TABLE}.Cost ;;
   }
 
   measure: net_revenue {
-    type: number
+    type: sum
     label: "Net Revenue"
     value_format: "$#,##0.00"
     sql: ${TABLE}.annual_net_revenue ;;

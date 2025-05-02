@@ -1,7 +1,7 @@
 view: ops_partners_das {
   derived_table: {
     sql:
-    SELECT date(DATE_PERIOD) as DATE_PERIOD,
+    SELECT date(IMPRESSION_DATE) as DATE_PERIOD,
        NS_VENDOR_ID,
        VENDOR_NAME,
       MARKET_NAME,

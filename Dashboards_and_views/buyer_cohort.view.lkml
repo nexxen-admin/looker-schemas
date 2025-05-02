@@ -73,21 +73,21 @@ view: buyer_cohort {
     sql: ${TABLE}."Event Year" ;;
   }
 
-  dimension: gross_revenue {
+  measure: gross_revenue {
     type: number
     label: "Gross Revenue"
     value_format: "$#,##0.00"
     sql: ${TABLE}."Gross Revenue" ;;
   }
 
-  dimension: cost {
+  measure: cost {
     type: number
     label: "Cost"
     value_format: "$#,##0.00"
     sql: ${TABLE}.Cost ;;
   }
 
-  dimension: net_revenue {
+  measure: net_revenue {
     type: number
     label: "Net Revenue"
     value_format: "$#,##0.00"
@@ -100,9 +100,6 @@ view: buyer_cohort {
   cohort_number,
   buyer,
   event_year,
-  gross_revenue,
-  cost,
-  net_revenue
-    ]
+  ]
   }
 }

@@ -100,6 +100,9 @@ view: buyer_cohort {
   cohort_number,
   buyer,
   event_year,
+  gross_revenue,
+  cost,
+  net_revenue
   ]
   }
 }

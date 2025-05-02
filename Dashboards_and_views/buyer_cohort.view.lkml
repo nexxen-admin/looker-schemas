@@ -70,6 +70,7 @@ view: buyer_cohort {
   dimension: event_year {
     type: number
     label: "Event Year"
+    value_format: "###0"
     sql: ${TABLE}."Event Year" ;;
   }
 

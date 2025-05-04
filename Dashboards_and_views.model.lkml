@@ -630,6 +630,11 @@ explore: ops_partners_das {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: hisense_postal_code {
+  label: "Hisense Postal Code"
+  required_access_grants: [can_view_all_tremor]
+}
+
 
 
 explore: acr_count_device_id_etl_checker {

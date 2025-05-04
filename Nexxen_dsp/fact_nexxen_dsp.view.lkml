@@ -53,12 +53,21 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+
   # dimension: environment_key {
   #   type: number
   #   value_format_name: id
   #   sql: ${TABLE}.environment_key ;;
   #   hidden: yes
   # }
+
+  ##dimension: environment_key {
+   ## type: number
+    ##value_format_name: id
+   ## sql: ${TABLE}.environment_key ;;
+   ## hidden: yes
+  ##}
+
 
   dimension: mobile_app_key {
     type: number

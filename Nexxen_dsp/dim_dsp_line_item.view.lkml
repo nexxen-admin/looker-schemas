@@ -99,6 +99,16 @@ view: dim_dsp_line_item {
     sql: ${TABLE}.line_item_nickname ;;
   }
 
+  dimension: line_item_group_b  {
+    type: string
+    sql: ${TABLE}.line_item_group_b ;;
+  }
+
+  dimension: line_item_group_c  {
+    type: string
+    sql: ${TABLE}.line_item_group_c ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [line_item_name]

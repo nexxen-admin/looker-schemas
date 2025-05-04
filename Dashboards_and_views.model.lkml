@@ -157,6 +157,12 @@ explore: comscore_active_segments {
   hidden: no
 }
 
+explore: buyer_cohort {
+  label: "Buyer Cohort"
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
+
 explore: bid_details_in_app {
   label: "Bid Details - In App"
   required_access_grants: [can_view_all_tremor]
@@ -621,6 +627,11 @@ explore: scope3_processed {
 
 explore: ops_partners_das {
   label: "ops_partners_das"
+  required_access_grants: [can_view_all_tremor]
+}
+
+explore: hisense_postal_code {
+  label: "Hisense Postal Code"
   required_access_grants: [can_view_all_tremor]
 }
 

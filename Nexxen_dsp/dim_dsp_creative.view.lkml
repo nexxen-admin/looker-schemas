@@ -148,9 +148,19 @@ view: dim_dsp_creative {
     hidden: yes
   }
 
-  dimension: creative_group {
+  dimension: creative_group_a {
     type: string
-    sql: ${TABLE}.creative_group ;;
+    sql: ${TABLE}.creative_group_a ;;
+  }
+
+  dimension: creative_group_b {
+    type: string
+    sql: ${TABLE}.creative_group_b ;;
+  }
+
+  dimension: creative_group_c {
+    type: string
+    sql: ${TABLE}.creative_group_c ;;
   }
 
   dimension: creative_message {

@@ -634,6 +634,16 @@ view: dim_sfdb_opportunity {
     hidden: no
   }
 
+  dimension: probability_level {
+    type: string
+    label: "Probability Level"
+    sql:
+    CASE
+      WHEN ${confidence_level__c} IS not NULL THEN ${confidence_level__c}
+      ELSE ${probability}
+    END ;;
+  }
+
   dimension: products_sold__c {
     type: string
     label: "Product Sold"

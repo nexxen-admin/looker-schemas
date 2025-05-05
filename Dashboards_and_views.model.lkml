@@ -635,7 +635,10 @@ explore: hisense_postal_code {
   required_access_grants: [can_view_all_tremor]
 }
 
-
+explore: hisense_brand_postal_code {
+  label: "Hisense Brand Postal Code"
+  required_access_grants: [can_view_all_tremor]
+}
 
 explore: acr_count_device_id_etl_checker {
   label: "acr_count_device_id_etl_checker"

@@ -3,7 +3,7 @@ view: hisense_postal_code {
       sql: SELECT DISTINCT DATE(viewing_start_utc) as date,
                            bb.call_letters as networks,
                            postal_code
-          FROM dragon.viewership_content_sessions_combined aa
+          FROM dragon.viewership_content_sessions_combined_daily aa
           LEFT JOIN dragon.station_info bb
           ON aa.station_tremor_id = bb.station_tremor_id
           WHERE  viewing_start_utc > TRUNC(NOW()) - INTERVAL '1 month'

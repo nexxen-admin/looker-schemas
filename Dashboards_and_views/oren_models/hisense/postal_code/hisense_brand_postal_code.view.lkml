@@ -15,6 +15,7 @@ view: hisense_brand_postal_code {
 
         WHERE viewing_start_utc > TRUNC(NOW()) - INTERVAL '1 month'
               AND AA.country = 'gb'
+              AND REGEXP_COUNT(postal_code, '^[A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}$') > 0 -- only valid gb codes
 
          ;;
   }

@@ -64,7 +64,10 @@ view: bid_opti_all_models_v3_etl {
         (scaled_margin) - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_margin_diff_to_no_opti,
 
         (scaled_supply_margin) / nullif((SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)),0)-1 as scaled_supply_margin_ratio_to_no_opti,
-        (scaled_supply_margin) - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_supply_margin_diff_to_no_opti
+        (scaled_supply_margin) - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_supply_margin_diff_to_no_opti,
+
+        (scaled_demand_margin) / nullif((SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)),0)-1 as scaled_demand_margin_ratio_to_no_opti,
+        (scaled_demand_margin) - (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_demand_margin_diff_to_no_opti
 
 
         from data_totals as dt
@@ -233,6 +236,29 @@ view: bid_opti_all_models_v3_etl {
       label: "Scaled Supply Margin $ Diff To No Opti"
     }
 
+# scaled supply margin metrcis
+
+  measure: scaled_demand_margin {
+    type: sum
+    sql: ${TABLE}.scaled_demand_margin ;;
+    value_format: "$#,##0.00"
+    label: "Scaled Demand Margin $"
+  }
+
+
+  measure: scaled_demand_margin_ratio_to_no_opti {
+    type: sum
+    sql: ${TABLE}.scaled_demand_margin_ratio_to_no_opti ;;
+    value_format: "0.00%"
+    label: "Scaled Demand Margin % Diff To No Opti"
+  }
+
+  measure: scaled_demand_margin_diff_to_no_opti {
+    type: sum
+    sql: ${TABLE}.scaled_demand_margin_diff_to_no_opti ;;
+    value_format: "$#,##0.00"
+    label: "Scaled Demand Margin $ Diff To No Opti"
+  }
 
 
     set: detail {
@@ -255,7 +281,9 @@ view: bid_opti_all_models_v3_etl {
         scaled_margin_ratio_to_no_opti,
         scaled_margin_diff_to_no_opti,
         scaled_supply_margin_ratio_to_no_opti,
-        scaled_supply_margin_diff_to_no_opti
+        scaled_supply_margin_diff_to_no_opti,
+        scaled_demand_margin_ratio_to_no_opti,
+        scaled_demand_margin_diff_to_no_opti
       ]
     }
 

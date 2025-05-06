@@ -1406,7 +1406,7 @@ dimension: inventory_source_key {
   measure: ncd_ctr {
     type: number
     value_format: "0.00%"
-    sql: IFNULL(${ncd_clicks}/${impressions},0) ;;
+    sql: IFNULL(${ncd_clicks}/NULLIF(${impressions},0),0) ;;
   }
 
 measure: total_pacing {

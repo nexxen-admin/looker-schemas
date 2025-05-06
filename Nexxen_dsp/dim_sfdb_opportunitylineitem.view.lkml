@@ -381,8 +381,9 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: item_type__c {
     type: string
+    label: "Item Type"
     sql: ${TABLE}.item_type__c ;;
-    hidden: yes
+    hidden: no
   }
 
   dimension: lastmodifiedbyid {

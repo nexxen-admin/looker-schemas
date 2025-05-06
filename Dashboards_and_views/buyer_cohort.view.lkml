@@ -42,6 +42,7 @@ view: buyer_cohort {
         annual_cost as Cost,
         annual_net_revenue
       From Cohort_Labeled
+      Where buyer != 'DELETE'
       Order by 1, 3, 4 ;;
   }
 

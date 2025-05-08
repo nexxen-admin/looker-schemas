@@ -177,7 +177,6 @@ view: bid_opti_all_models_v3_etl {
   dimension: is_enabled {
     type: string
     sql: ${TABLE}.is_enabled
-    label: "Model Versions"
     ;;
   }
 

@@ -1,8 +1,6 @@
 
 view: buyer_cohort {
-  derived_table: {
-    sql: SELECT * FROM BI.SVC_Buyer_Cohort_By_Event_Year;;
-  }
+  sql_table_name: BI.SVC_Buyer_Cohort_By_Event_Year ;;
 
   measure: count {
     type: count

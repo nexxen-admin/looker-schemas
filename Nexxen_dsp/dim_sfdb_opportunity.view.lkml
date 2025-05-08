@@ -150,7 +150,7 @@ view: dim_sfdb_opportunity {
   }
 
   dimension: confidence_level__c {
-    type: string
+    type: number
     sql: ${TABLE}.confidence_level__c ;;
     hidden: yes
   }
@@ -634,15 +634,25 @@ view: dim_sfdb_opportunity {
     hidden: no
   }
 
+
+  # You need to ensure you're only casting when the value is not null AND numeric.
+  # Vertica doesn’t have ISNUMERIC() natively, but a safe workaround is using a regex to test for numeric content
+
+  # The ~ is Vertica's regex match operator.
+  # This pattern '^[0-9]+(\.[0-9]+)?$' matches integers and decimals like 10 or 10.5.
+  # If your values may contain commas or other formats, we can adjust the regex.
+
   dimension: probability_level {
-    type: string
+    type: number
     label: "Probability Level"
     sql:
     CASE
-      WHEN ${confidence_level__c} IS not NULL THEN ${confidence_level__c}
-      ELSE ${probability}
+      WHEN ${confidence_level__c} IS NOT NULL
+           AND ${confidence_level__c} ~ '^[0-9]+(\.[0-9]+)?$' THEN CAST(${confidence_level__c} AS FLOAT)
+      ELSE CAST(${probability} AS FLOAT)
     END ;;
   }
+
 
   dimension: products_sold__c {
     type: string

@@ -1,8 +1,6 @@
 
 view: buyer_cohort {
-  derived_table: {
-    sql: SELECT * FROM BI.SVC_Buyer_Cohort_By_Event_Year;;
-  }
+  sql_table_name: BI.SVC_Buyer_Cohort_By_Event_Year ;;
 
   measure: count {
     type: count
@@ -18,7 +16,7 @@ view: buyer_cohort {
   dimension: Cohort_Begin_Agg_Year {
     type: number
     label: "Cohort Start Year"
-    sql: ${TABLE}."Cohort Year" ;;
+    sql: ${TABLE}.Cohort_Begin_Agg_Year ;;
   }
 
   dimension: cohort_number {

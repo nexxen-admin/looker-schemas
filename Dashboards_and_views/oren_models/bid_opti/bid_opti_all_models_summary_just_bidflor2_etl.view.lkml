@@ -7,7 +7,7 @@ view: bid_opti_all_models_summary_just_bidflor2_etl {
       ON (aa.media_id = AD.placement_id AND aa.imp_type = AD.imp_type)
       where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
             AND lower(ssp_name) like'%rmp%'
-            AND AD.enabled = 0
+            AND AD.enabled = 1
 
       ),
 

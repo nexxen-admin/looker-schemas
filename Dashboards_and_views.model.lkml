@@ -585,6 +585,12 @@ explore: bid_opti_only_bid_and_no_opti_summary_etl_v1 {
 }
 
 
+explore: bid_opti_all_models_summary_just_bidflor2_etl {
+  label: "bid_opti_all_models_summary_just_bidflor2_etl"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
 explore: tvi_v1 {
   label: "tvi_v1"
   required_access_grants: [can_view_all_tremor]

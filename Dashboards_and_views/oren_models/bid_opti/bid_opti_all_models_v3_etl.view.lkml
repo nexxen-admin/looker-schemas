@@ -89,7 +89,7 @@ view: bid_opti_all_models_v3_etl {
 
                CASE WHEN AD.enabled=1 THEN 'Bidfloor V2 + PubCost V1'
                     WHEN AD.enabled=0 THEN 'Bidfloor V1 + PubCost V1'
-                    ELSE 'Not in Opti Table' as is_enabled,
+                    ELSE 'Not in Opti Table' END as is_enabled,
 
               CASE WHEN opti = 'no_opti' THEN 1
               WHEN opti = 'bidfloor' THEN 2
@@ -293,6 +293,7 @@ view: bid_opti_all_models_v3_etl {
         publisher_name,
         rank_model,
         operations_owner_name,
+        is_enabled,
 
         impression,
         revenue,

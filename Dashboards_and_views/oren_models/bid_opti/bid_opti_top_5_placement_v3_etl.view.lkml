@@ -124,10 +124,17 @@ WITH raw_data_4_models as (
         WHEN opti = 'pubcost' THEN 3
         WHEN opti = 'pubcost_bidfloor' THEN 4
         ELSE 5 END as rank_model,
-        '3 days' as time_range
+        '3 days' as time_range,
+
+        CASE WHEN AD.enabled=1 THEN 'Bidfloor V2 + PubCost V1'
+        WHEN AD.enabled=0 THEN 'Bidfloor V1 + PubCost V1'
+        ELSE 'Not in Opti Table' END as is_enabled
+
         from scaled_margin aa
         inner join tot_sup_marg_rank bb
         on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.period_a_days = bb.period_a_days
+        LEFT JOIN andromeda.rx_dim_supply_placement_bidfloor_model_opti_r AD
+        ON (aa.media_id = AD.placement_id AND aa.imp_type = AD.imp_type)
         --where ranky<=20
 )
 
@@ -255,10 +262,17 @@ WITH raw_data_4_models as (
         WHEN opti = 'pubcost' THEN 3
         WHEN opti = 'pubcost_bidfloor' THEN 4
         ELSE 5 END as rank_model,
-        '5 days' as time_range
+        '5 days' as time_range,
+
+        CASE WHEN AD.enabled=1 THEN 'Bidfloor V2 + PubCost V1'
+        WHEN AD.enabled=0 THEN 'Bidfloor V1 + PubCost V1'
+        ELSE 'Not in Opti Table' END as is_enabled
+
         from scaled_margin aa
         inner join tot_sup_marg_rank bb
         on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.period_a_days = bb.period_a_days
+        LEFT JOIN andromeda.rx_dim_supply_placement_bidfloor_model_opti_r AD
+        ON (aa.media_id = AD.placement_id AND aa.imp_type = AD.imp_type)
         --where ranky<=20
 )
 
@@ -386,10 +400,17 @@ WITH raw_data_4_models as (
         WHEN opti = 'pubcost' THEN 3
         WHEN opti = 'pubcost_bidfloor' THEN 4
         ELSE 5 END as rank_model,
-        '7 days' as time_range
+        '7 days' as time_range,
+
+        CASE WHEN AD.enabled=1 THEN 'Bidfloor V2 + PubCost V1'
+        WHEN AD.enabled=0 THEN 'Bidfloor V1 + PubCost V1'
+        ELSE 'Not in Opti Table' END as is_enabled
+
         from scaled_margin aa
         inner join tot_sup_marg_rank bb
         on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.period_a_days = bb.period_a_days
+        LEFT JOIN andromeda.rx_dim_supply_placement_bidfloor_model_opti_r AD
+        ON (aa.media_id = AD.placement_id AND aa.imp_type = AD.imp_type)
         --where ranky<=20
 )
 
@@ -517,10 +538,17 @@ WITH raw_data_4_models as (
         WHEN opti = 'pubcost' THEN 3
         WHEN opti = 'pubcost_bidfloor' THEN 4
         ELSE 5 END as rank_model,
-        '15 days' as time_range
+        '15 days' as time_range,
+
+        CASE WHEN AD.enabled=1 THEN 'Bidfloor V2 + PubCost V1'
+        WHEN AD.enabled=0 THEN 'Bidfloor V1 + PubCost V1'
+        ELSE 'Not in Opti Table' END as is_enabled
+
         from scaled_margin aa
         inner join tot_sup_marg_rank bb
         on aa.media_id = bb.media_id and aa.imp_type = bb.imp_type and aa.period_a_days = bb.period_a_days
+        LEFT JOIN andromeda.rx_dim_supply_placement_bidfloor_model_opti_r AD
+        ON (aa.media_id = AD.placement_id AND aa.imp_type = AD.imp_type)
         --where ranky<=20
 );;
 
@@ -597,6 +625,10 @@ WITH raw_data_4_models as (
     sql: ${TABLE}.time_range ;;
   }
 
+  dimension: is_enabled {
+    type: string
+    sql: ${TABLE}.is_enabled ;;
+  }
 
 # measu
 
@@ -703,6 +735,7 @@ WITH raw_data_4_models as (
         min_date_trunc,
         max_date_trunc,
         time_range,
+        is_enabled,
 
         impression,
         revenue,

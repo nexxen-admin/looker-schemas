@@ -79,15 +79,24 @@ view: bid_opti_all_models_v3_etl {
         order by dt.date_trunc,dt.media_id desc)
 
 
-        SELECT *,
-
+        SELECT sm.media_id as media_id,sm.placement_name as placement_name,sm.imp_type as imp_type,
+               opti,date_trunc,publisher_id,
+               publisher_name,operations_owner_name,impression,
+               revenue,margin,scaled_supply_margin,scaled_margin,
+               scaled_margin_ratio_to_no_opti,scaled_margin_diff_to_no_opti,
+               scaled_supply_margin_ratio_to_no_opti,scaled_supply_margin_diff_to_no_opti,
+               scaled_demand_margin_ratio_to_no_opti,scaled_demand_margin_diff_to_no_opti,
+               AD.enabled as is_enabled,
         CASE WHEN opti = 'no_opti' THEN 1
         WHEN opti = 'bidfloor' THEN 2
         WHEN opti = 'pubcost' THEN 3
         WHEN opti = 'pubcost_bidfloor' THEN 4
         ELSE 5 END as rank_model
+        FROM scaled_margin SM
+        LEFT JOIN andromeda.rx_dim_supply_placement_bidfloor_model_opti_r AD
+        ON (SM.media_id = AD.placement_id AND SM.imp_type = AD.imp_type)
 
-        from scaled_margin;;
+        ;;
 
 
     }
@@ -159,6 +168,11 @@ view: bid_opti_all_models_v3_etl {
       type: string
       sql: ${TABLE}.rank_model ;;
     }
+
+  dimension: is_enabled {
+    type: string
+    sql: ${TABLE}.is_enabled ;;
+  }
 
 
 

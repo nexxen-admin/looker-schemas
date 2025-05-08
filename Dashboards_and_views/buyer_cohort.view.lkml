@@ -18,7 +18,7 @@ view: buyer_cohort {
   dimension: Cohort_Begin_Agg_Year {
     type: number
     label: "Cohort Start Year"
-    sql: ${TABLE}."Cohort Year" ;;
+    sql: ${TABLE}.Cohort_Begin_Agg_Year ;;
   }
 
   dimension: cohort_number {
@@ -48,21 +48,21 @@ view: buyer_cohort {
     type: sum
     label: "Gross Revenue"
     value_format: "$#,##0.00"
-    sql: ${TABLE}.annual_gross_revenue ;;
+    sql: COALESCE(${TABLE}.annual_gross_revenue,0) ;;
   }
 
   measure: cost {
     type: sum
     label: "Cost"
     value_format: "$#,##0.00"
-    sql: ${TABLE}.Cost ;;
+    sql: COALESCE(${TABLE}.Cost,0) ;;
   }
 
   measure: net_revenue {
     type: sum
     label: "Net Revenue"
     value_format: "$#,##0.00"
-    sql: ${TABLE}.annual_net_revenue ;;
+    sql: COALESCE(${TABLE}.annual_net_revenue,0) ;;
   }
 
   set: detail {

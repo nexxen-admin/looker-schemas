@@ -147,6 +147,10 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     type: string
     sql: ${TABLE}.package_group_b ;;
   }
+  dimension: package_group_c {
+    type: string
+    sql: ${TABLE}.package_group_c ;;
+  }
   dimension: package_nickname {
     type: string
     label: "Package Name"

@@ -2538,6 +2538,13 @@ view: fact_ad_daily_agg {
     filters: [period_filtered_measures: "last"]
   }
 
+  measure: pop_revenue_change {
+    view_label: "PoP"
+    type: number
+    value_format: "0.00%"
+    sql:  (${current_period_revenue}-${previous_period_revenue}) / ${previous_period_revenue};;
+  }
+
   measure: revenue_pop_change {
     view_label: ""
     label: "Rev Previous {{_filters['compare_to']}} Change"

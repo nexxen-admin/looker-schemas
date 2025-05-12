@@ -2605,7 +2605,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: number
     description: "The current period's bid rate"
-    sql: (${current_period_responses}/NULLIF(${current_period_requests},0))*100 ;;
+    sql: (${current_period_responses}/${current_period_requests})*100 ;;
     value_format: "0.00%"
 
   }
@@ -2614,7 +2614,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: number
     description: "The previous period's bid rate"
-    sql: (${previous_period_responses}/NULLIF(${previous_period_requests},0))*100  ;;
+    sql: (${previous_period_responses}/${previous_period_requests})*100  ;;
     value_format: "0.00%"
   }
 

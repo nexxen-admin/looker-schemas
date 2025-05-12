@@ -16,12 +16,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     type: string
     sql: ${TABLE}.campaign ;;
   }
-  measure: clicks {
-    type: sum
-    label: "1P Clicks"
-    sql: ${TABLE}.clicks ;;
 
-  }
   measure: complete_events  {
     type: sum
     value_format: "#,##0.00"
@@ -63,6 +58,10 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
   dimension: day_number_in_week {
     type: number
     sql: ${TABLE}.Day_Number_In_Week ;;
+  }
+  dimension: day_of_week_name {
+    type: string
+    sql: substring(TO_CHAR(${TABLE}.Date_Key, 'Day') ,1,3) ;;
   }
 
   dimension: device_manufacturer {
@@ -165,6 +164,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
   }
   dimension: region_name {
     type: string
+    map_layer_name: us_states
     sql: ${TABLE}.region_name ;;
   }
   dimension: related_accounts_name {
@@ -172,11 +172,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     label: "Related Brand Name"
     sql: ${TABLE}.related_accounts_name ;;
   }
-  dimension: spend__c {
-    type: number
-    sql: ${TABLE}.spend__c ;;
-    hidden: yes
-  }
+
   dimension_group: start_date__c {
     type: time
     label: "Start Date"
@@ -187,22 +183,31 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     type: string
     sql: ${TABLE}.state_name ;;
   }
-  dimension: units__c {
-    type: number
-    sql: ${TABLE}.units__c ;;
-    hidden: yes
+  dimension: tactic {
+    type: string
+    label: "Tactic"
+    sql: CASE WHEN ${line_item_name__c} LIKE '%RET%' THEN 'Retargeting'
+          WHEN ${line_item_name__c} LIKE '%BI%' THEN 'Brand Intelligence'
+          WHEN ${line_item_name__c} LIKE '%DEMO%' THEN 'Demographic'
+          WHEN ${line_item_name__c} LIKE '%BT%' THEN 'Behavioral'
+          WHEN ${line_item_name__c} LIKE '%PERF%' THEN 'Performance'
+          WHEN ${line_item_name__c} LIKE '%PMP%' THEN 'PMP'END ;;
   }
+
   measure: delivered_units {
     type: sum
     sql: ${TABLE}.delivery_units ;;
     value_format: "#,##0"
   }
-
-
-  measure: CTR_1P {
-    type: number
-    value_format: "0.0%"
-    sql: IFNULL(${clicks}/nullif(${impressions},0),0) ;;
+  measure: budgeted_spend{
+    type: sum
+    label: "Budgeted Spend"
+    sql: ${TABLE}.spend__c ;;
+  }
+  measure: budgeted_units {
+    type: sum
+    label: "Budgeted Units"
+    sql: ${TABLE}.units__c ;;
   }
 
 
@@ -216,6 +221,26 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     type: sum
     sql: ${TABLE}.impressions/1000*${TABLE}.rate__c;;
     value_format: "$#,##0.00"
+  }
+
+  dimension: ncd_clicks_dim {
+    type: number
+    hidden: yes
+    sql: CASE WHEN ${device_type_category}='CTV' THEN 0 ELSE ${TABLE}.clicks END;;
+  }
+
+  measure: ncd_clicks {
+    type: sum
+    value_format: "#,##0"
+    label: "Clicks"
+    sql: CASE WHEN ${device_type_category}='CTV' THEN 0 ELSE ${TABLE}.clicks END;;
+  }
+
+  measure: ncd_ctr {
+    type: number
+    label: "CTR 1P"
+    value_format: "0.00%"
+    sql: IFNULL(${ncd_clicks}/NULLIF(${impressions},0),0) ;;
   }
 
   #--------------------------------------------------pop-------------------------------------------------------
@@ -536,7 +561,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     view_label: "PoP"
     type: sum
     description: "Current period clicks"
-    sql: ${TABLE}.clicks  ;;
+    sql: ${ncd_clicks_dim}  ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
   }
@@ -545,7 +570,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     view_label: "PoP"
     type: sum
     description: "Previous period clicks"
-    sql: ${TABLE}.clicks  ;;
+    sql: ${ncd_clicks_dim}  ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
   }
@@ -603,7 +628,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     description: "Previous period VCR"
     sql:  IFNULL(${previous_period_complete_events}/nullif(${previous_period_impressions},0),0);;
     value_format: "0.00%"
-    #filters: [period_filtered_measures: "last"]
+    # filters: [period_filtered_measures: "last"]
   }
 
 
@@ -617,105 +642,140 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     value_format: "0.0%"
   }
 
-  measure: html_kpi_pacing {
-    type: count
-    hidden: yes
-    html:
-          <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+    measure: html_kpi_pacing {
+      type: count
+      hidden: yes
+      html:
+          <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
               Pacing
-              <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ total_pacing._rendered_value }}
               </div>
             </div>;;
-  }
+    }
 
-  measure: html_kpi_pacing_demo {
-    type: count
-    hidden: yes
-    html:
-           <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+    measure: html_kpi_pacing_demo {
+      type: count
+      hidden: yes
+      html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
               Pacing
-              <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 100%
               </div>
             </div>;;
-  }
+    }
 
-  measure: html_kpi_impressions {
-    type: count
-    hidden: yes
-    html:
-           <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-              Impressions
-              <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-                {{ impressions._rendered_value }}
+    measure: html_kpi_delivered_units {
+      type: count
+      # hidden: yes
+      html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Delivered Units
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ delivered_units._rendered_value }}
               </div>
             </div>;;
-  }
+    }
 
-  measure: impressions_demo {
-    type: number
-    hidden: yes
-    value_format: "#,##0"
-    sql:${impressions}  *10.2;;
-  }
+    measure: delivered_units_demo {
+      type: number
+      hidden: yes
+      value_format: "#,##0"
+      sql:${delivered_units}  *10.2;;
+    }
 
-  measure: html_kpi_impressions_demo {
-    type: count
-    hidden: yes
-    html:
-           <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-              Impressions
-              <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
-                {{ impressions_demo._rendered_value }}
+    measure: html_kpi_impressions_demo {
+      type: count
+      hidden: yes
+      html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Delivered Units
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ delivered_units_demo._rendered_value }}
               </div>
             </div>;;
-  }
+    }
 
 
-  measure: html_kpi_vcr {
-    type: count
-    hidden: yes
-    html:
-           <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+    measure: html_kpi_vcr {
+      type: count
+      hidden: yes
+      html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
               VCR
-              <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ VCR_1P._rendered_value }}
               </div>
             </div>;;
-  }
+    }
 
-  measure: html_kpi_delivered_spend {
-    type: count
-    hidden: yes
-    html:
-           <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+    measure: html_kpi_delivered_spend {
+      type: count
+      hidden: yes
+      html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
               Delivered Spend
-              <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ Delivered_Spend._rendered_value }}
               </div>
             </div>;;
-  }
+    }
 
-  measure: delivered_spend_demo {
-    type: number
-    hidden: yes
-    value_format: "$#,##0.00"
-    sql:${Delivered_Spend}  *11.7;;
-  }
+    measure: delivered_spend_demo {
+      type: number
+      hidden: yes
+      value_format: "$#,##0.00"
+      sql:${Delivered_Spend}  *11.7;;
+    }
 
-  measure: html_kpi_delivered_spend_demo {
-    type: count
-    hidden: yes
-    html:
-           <div style="color:#4D3D69; display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+    measure: html_kpi_delivered_spend_demo {
+      type: count
+      hidden: yes
+      html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
               Delivered Spend
-              <div style="color:#4D3D69; line-height: 15px; font-size: 23px; font-weight: 500;">
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ delivered_spend_demo._rendered_value }}
               </div>
             </div>;;
-  }
+    }
 
+    measure: html_kpi_clicks {
+      type: count
+      hidden: yes
+      html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Clicks
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ ncd_clicks._rendered_value }}
+              </div>
+            </div>;;
+    }
+
+    measure: html_kpi_complete_events {
+      type: count
+      hidden: yes
+      html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Complete Events
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ complete_events._rendered_value }}
+              </div>
+            </div>;;
+    }
+
+    measure: html_kpi_ctr {
+      type: count
+      hidden: yes
+      html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              CTR
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ ncd_ctr._rendered_value }}
+              </div>
+            </div>;;
+    }
 
 
 }

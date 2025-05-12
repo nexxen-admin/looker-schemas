@@ -2492,6 +2492,8 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0.00"
   }
 
+
+
   measure: margin_pop_change {
     view_label: "PoP"
     label: "Margin Previous {{_filters['compare_to']}} Change"
@@ -2597,6 +2599,131 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_cogs ;;
     value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_bid_rate {
+    view_label: "PoP"
+    type: number
+    description: "The current period's bid rate"
+    sql: (${current_period_responses}/NULLIF(${current_period_requests},0))*100 ;;
+    value_format: "0.00%"
+
+  }
+
+  measure: previous_period_bid_rate{
+    view_label: "PoP"
+    type: number
+    description: "The previous period's bid rate"
+    sql: (${previous_period_responses}/NULLIF(${previous_period_requests},0))*100  ;;
+    value_format: "0.00%"
+  }
+
+  measure: current_period_responses {
+    view_label: "PoP"
+    type: sum
+    description: "The current period's responses"
+    sql: ${TABLE}.sum_of_responses ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_responses{
+    view_label: "PoP"
+    type: sum
+    description: "The previous period's responses"
+    sql: ${TABLE}.sum_of_responses ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
+
+  measure: current_period_win_rate {
+    view_label: "PoP"
+    type: number
+    description: "The current period's win rate"
+    sql: (${current_period_impression_win}/NULLIF(${current_period_responses},0))*100 ;;
+  value_format: "0.00%"
+}
+
+measure: previous_period_win_rate{
+  view_label: "PoP"
+  type: number
+  description: "The previous period's win rate"
+  sql: (${previous_period_impression_win}/NULLIF(${previous_period_responses},0))*100  ;;
+value_format: "0.00%"
+}
+
+  measure: current_period_render_rate {
+    view_label: "PoP"
+    type: number
+    description: "The current period's render rate"
+    sql: (${current_period_impressions}/NULLIF(${current_period_impression_win},0))*100 ;;
+  value_format: "0.00%"
+}
+
+measure: previous_period_render_rate{
+  view_label: "PoP"
+  type: number
+  description: "The previous period's render rate"
+  sql: (${previous_period_impressions}/NULLIF(${previous_period_impression_win},0))*100 ;;
+value_format: "0.00%"
+}
+
+  measure: current_period_impression_win {
+    view_label: "PoP"
+    type: sum
+    description: "The current period's impression win"
+    sql: ${TABLE}.sum_of_impression_win ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_impression_win{
+    view_label: "PoP"
+    type: sum
+    description: "The previous period's impression win"
+    sql: ${TABLE}.sum_of_impression_win ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
+
+  measure: current_period_valid_responses {
+    view_label: "PoP"
+    type: sum
+    description: "The current period's valid responses"
+    sql: case when ${dim_response_status.response_status} = 'unknown' then ${TABLE}.sum_of_responses else 0 end ;;
+  value_format: "#,##0"
+  filters: [period_filtered_measures: "this"]
+  hidden: yes
+}
+
+measure: previous_period_valid_responses{
+  view_label: "PoP"
+  type: sum
+  description: "The previous periods valid responses"
+  sql: case when ${dim_response_status.response_status} = 'unknown' then ${TABLE}.sum_of_responses else 0 end ;;
+  value_format: "#,##0"
+filters: [period_filtered_measures: "last"]
+hidden: yes
+}
+
+  measure: current_period_valid_bid_rate {
+    view_label: "PoP"
+    type: number
+    description: "The current period's valid bid rate"
+    sql: (${current_period_valid_responses}/NULLIF(${current_period_requests},0))*100 ;;
+    value_format: "0.00%"
+  }
+
+  measure: previous_period_valid_bid_rate {
+    view_label: "PoP"
+    type: number
+    description: "The current period's valid bid rate"
+    sql: (${previous_period_valid_responses}/NULLIF(${previous_period_requests},0))*100 ;;
+    value_format: "0.00%"
   }
 
   measure: cost_pop_change {

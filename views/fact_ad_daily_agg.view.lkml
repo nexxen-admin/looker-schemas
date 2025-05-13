@@ -2605,7 +2605,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: number
     description: "The current period's bid rate"
-    sql: (${current_period_responses}/${current_period_requests})*100 ;;
+    sql: ${current_period_responses}/${current_period_requests} ;;
     value_format: "0.00%"
 
   }
@@ -2614,7 +2614,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: number
     description: "The previous period's bid rate"
-    sql: (${previous_period_responses}/${previous_period_requests})*100  ;;
+    sql: ${previous_period_responses}/${previous_period_requests}  ;;
     value_format: "0.00%"
   }
 
@@ -2642,7 +2642,7 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: number
     description: "The current period's win rate"
-    sql: (${current_period_impression_win}/NULLIF(${current_period_responses},0))*100 ;;
+    sql: ${current_period_impression_win}/NULLIF(${current_period_responses},0) ;;
   value_format: "0.00%"
 }
 
@@ -2650,7 +2650,7 @@ measure: previous_period_win_rate{
   view_label: "PoP"
   type: number
   description: "The previous period's win rate"
-  sql: (${previous_period_impression_win}/NULLIF(${previous_period_responses},0))*100  ;;
+  sql: ${previous_period_impression_win}/NULLIF(${previous_period_responses},0)  ;;
 value_format: "0.00%"
 }
 
@@ -2658,7 +2658,7 @@ value_format: "0.00%"
     view_label: "PoP"
     type: number
     description: "The current period's render rate"
-    sql: (${current_period_impressions}/NULLIF(${current_period_impression_win},0))*100 ;;
+    sql: ${current_period_impressions}/NULLIF(${current_period_impression_win},0) ;;
   value_format: "0.00%"
 }
 
@@ -2666,7 +2666,7 @@ measure: previous_period_render_rate{
   view_label: "PoP"
   type: number
   description: "The previous period's render rate"
-  sql: (${previous_period_impressions}/NULLIF(${previous_period_impression_win},0))*100 ;;
+  sql: ${previous_period_impressions}/NULLIF(${previous_period_impression_win},0) ;;
 value_format: "0.00%"
 }
 
@@ -2714,7 +2714,7 @@ hidden: yes
     view_label: "PoP"
     type: number
     description: "The current period's valid bid rate"
-    sql: (${current_period_valid_responses}/NULLIF(${current_period_requests},0))*100 ;;
+    sql: ${current_period_valid_responses}/NULLIF(${current_period_requests},0) ;;
     value_format: "0.00%"
   }
 
@@ -2722,7 +2722,7 @@ hidden: yes
     view_label: "PoP"
     type: number
     description: "The current period's valid bid rate"
-    sql: (${previous_period_valid_responses}/NULLIF(${previous_period_requests},0))*100 ;;
+    sql: ${previous_period_valid_responses}/NULLIF(${previous_period_requests},0) ;;
     value_format: "0.00%"
   }
 

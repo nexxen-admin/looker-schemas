@@ -10,6 +10,7 @@ view: ops_partners_das {
       PROVIDER_NAME,
       MARKET_ID,
       CATEGORY,
+      DATA_TYPE,
       case when DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end as source,
 
         SUM(IMPRESSION) as IMPRESSION,
@@ -17,7 +18,7 @@ view: ops_partners_das {
         SUM(ADJUSTED_NET_REVENUE) as ADJUSTED_NET_REVENUE,
         SUM(TURN_FEE) as TURN_FEE
 FROM bi_new.decom
-GROUP BY 1,2,3,4,5,6,7,8,9,10
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11
     ;;
 
 }
@@ -65,6 +66,12 @@ GROUP BY 1,2,3,4,5,6,7,8,9,10
     type: string
     sql: ${TABLE}.MARKET_ID ;;
     label: "Market ID"
+  }
+
+  dimension: DATA_TYPE {
+    type: string
+    sql: ${TABLE}.DATA_TYPE ;;
+    label: "Data Type"
   }
 
 
@@ -150,6 +157,7 @@ set: detail {
     PROVIDER_NAME,
     MARKET_ID,
     CATEGORY,
+    DATA_TYPE,
 
     IMPRESSION,
     GROSS_REVENUE,

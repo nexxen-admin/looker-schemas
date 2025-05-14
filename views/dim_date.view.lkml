@@ -7,6 +7,7 @@ view: dim_date {
     timeframes: [
       raw,
       date,
+      hour,
       week,
       month,
       quarter,

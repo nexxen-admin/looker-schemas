@@ -118,14 +118,14 @@ measure: IMPRESSION {
     type: sum
     sql: ${TABLE}.GROSS_REVENUE ;;
     value_format: "$#,##0"
-    label: "Gross Revenue"
+    label: "Gross Retained Revenue"
   }
 
   measure: ADJUSTED_NET_REVENUE {
     type: sum
     sql: ${TABLE}.ADJUSTED_NET_REVENUE ;;
     value_format: "$#,##0"
-    label: "Net Revenue"
+    label: "Net Retained Revenue"
   }
 
   measure: TURN_FEE {
@@ -140,7 +140,7 @@ measure: IMPRESSION {
     sql: SUM(CASE WHEN ${TABLE}.GROSS_REVENUE = 0 THEN 0 ELSE ${TABLE}.ADJUSTED_NET_REVENUE END)
       / NULLIF(SUM(${TABLE}.GROSS_REVENUE), 0) ;;
     value_format: "0.0%"
-    label: "Net Revenue / Gross Revenue %"
+    label: "Net Retained Revenue / Gross Retained Revenue %"
   }
 
 

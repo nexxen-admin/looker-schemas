@@ -1128,6 +1128,7 @@ view: fact_ad_daily_agg {
     type: time
     timeframes:
     [ date,
+      hour,
       month,
       week,
       year,
@@ -2617,6 +2618,8 @@ view: fact_ad_daily_agg {
     sql: ${previous_period_responses}/${previous_period_requests}  ;;
     value_format: "0.00%"
   }
+
+
 
   measure: current_period_responses {
     view_label: "PoP"

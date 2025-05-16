@@ -33,7 +33,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
 
   measure: complete_events  {
     type: sum
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     description: "1 for events that were completed"
     sql: ${TABLE}.complete_events  ;;
   }

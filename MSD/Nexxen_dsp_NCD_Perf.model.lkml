@@ -52,10 +52,10 @@ explore: fact_nexxen_ncd_perf_agency  {
   persist_with: CleanCash_datagroup
   label: "Nexxen DSP - NCD Agency"
   view_label: "Measures"
-  access_filter: {
-    field: ncd_fact_nexxen_dsp_test_raw_rev2.related_accounts_name
-    user_attribute: advertiser
-  }
+  # access_filter: {
+  #   field: ncd_fact_nexxen_dsp_test_raw_rev2.related_accounts_name
+  #   user_attribute: advertiser
+  # }
   #hidden: yes
 
      join: ncd_pacing {

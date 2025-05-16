@@ -10,12 +10,12 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
   }
   dimension: account_id {
     type: number
-    sql:  ${TABLE}.advertiser_id ;;
+    sql:  ${TABLE}.account_id ;;
     hidden: yes
   }
   dimension: account_name {
     type: string
-    sql: ${TABLE}.advertiser_name ;;
+    sql: ${TABLE}.account_name ;;
   }
   dimension: advertiser_id {
     type: number
@@ -188,6 +188,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
   dimension: related_accounts_id {
     type: number
     sql: ${TABLE}.related_accounts_id ;;
+    hidden: yes
   }
   dimension: related_accounts_name {
     type: string

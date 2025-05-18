@@ -578,6 +578,15 @@ view: fact_ad_hourly_agg {
     sql: (${impression_pixel}/NULLIF(${requests},0))*100 ;;
   }
 
+  measure: Win_Rate {
+    type: number
+    description: "Wins/Responses"
+    label: "Win Rate"
+    value_format: "0.00\%"
+    group_label: "Hourly Measures"
+    sql: (${impression_win}/NULLIF(${responses},0))*100;;
+  }
+
   measure: Net_Revenue {
     type: number
     label: "Net Revenue"

@@ -573,7 +573,7 @@ view: fact_ad_hourly_agg {
     type: number
     label: "Fill Rate"
     description: "Number of impressions out of the requests"
-    value_format: "0.00%"
+    value_format: "0.00\%"
     group_label: "Hourly Measures"
     sql: (${impression_pixel}/NULLIF(${requests},0))*100 ;;
   }

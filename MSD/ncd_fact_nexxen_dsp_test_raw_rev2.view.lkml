@@ -8,6 +8,20 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     sql: ${TABLE}.id ;;
     hidden: yes
   }
+  dimension: account_id {
+    type: number
+    sql:  ${TABLE}.account_id ;;
+    hidden: yes
+  }
+  dimension: account_name {
+    type: string
+    sql: ${TABLE}.account_name ;;
+  }
+  dimension: advertiser_id {
+    type: number
+    sql:  ${TABLE}.advertiser_id ;;
+    hidden: yes
+  }
   dimension: advertiser_name {
     type: string
     sql: ${TABLE}.advertiser_name ;;
@@ -19,7 +33,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
 
   measure: complete_events  {
     type: sum
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     description: "1 for events that were completed"
     sql: ${TABLE}.complete_events  ;;
   }
@@ -170,6 +184,11 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     type: string
     map_layer_name: us_states
     sql: ${TABLE}.region_name ;;
+  }
+  dimension: related_accounts_id {
+    type: number
+    sql: ${TABLE}.related_accounts_id ;;
+    hidden: yes
   }
   dimension: related_accounts_name {
     type: string

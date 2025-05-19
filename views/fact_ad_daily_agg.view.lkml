@@ -2939,8 +2939,8 @@ hidden: yes
     view_label: "PoP"
     type: number
     description: "Current period CPM"
-    sql: ${current_period_revenue}/nullif(${current_period_impressions},0) ;;
-    value_format: "0.00%"
+    sql: ${current_period_revenue}/nullif(${current_period_impressions}/1000,0) ;;
+    value_format: "$#,##0.00"
     #filters: [period_filtered_measures: "this"]
   }
 
@@ -2948,8 +2948,8 @@ hidden: yes
     view_label: "PoP"
     type: number
     description: "Previous Current period CPM"
-    sql: ${previous_period_revenue}/nullif(${previous_period_impressions},0);;
-    value_format: "0.00%"
+    sql: ${previous_period_revenue}/nullif(${previous_period_impressions}/1000,0);;
+    value_format: "$#,##0.00"
     #filters: [period_filtered_measures: "last"]
   }
 

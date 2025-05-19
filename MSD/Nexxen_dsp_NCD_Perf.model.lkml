@@ -18,7 +18,7 @@ explore: fact_nexxen_ncd_perf_advertiser  {
   label: "Nexxen DSP - NCD Advertiser"
   view_label: "Measures"
   access_filter: {
-    field: ncd_fact_nexxen_dsp_test_raw_rev2.advertiser_name
+    field: ncd_fact_nexxen_dsp_test_raw_rev2.advertiser_id
     user_attribute: advertiser
   }
   #hidden: yes
@@ -36,7 +36,7 @@ explore: fact_nexxen_ncd_perf_advertiser  {
 explore: fact_reach_advertiser {
   # required_access_grants: [can_view_all_tremor]
   view_name: fact_reach_frequency
-  label: "Nexxen dsp MSD= - Reach Advertiser"
+  label: "Nexxen DSP NCD - Reach Advertiser"
   persist_with: CleanCash_datagroup
   view_label: "Measures"
   # access_filter: {
@@ -52,10 +52,10 @@ explore: fact_nexxen_ncd_perf_agency  {
   persist_with: CleanCash_datagroup
   label: "Nexxen DSP - NCD Agency"
   view_label: "Measures"
-  # access_filter: {
-  #   field: ncd_fact_nexxen_dsp_test_raw_rev2.related_accounts_name
-  #   user_attribute: advertiser
-  # }
+  access_filter: {
+    field: ncd_fact_nexxen_dsp_test_raw_rev2.account_id
+    user_attribute: agency
+  }
   #hidden: yes
 
      join: ncd_pacing {
@@ -70,7 +70,7 @@ explore: fact_nexxen_ncd_perf_agency  {
 explore: fact_reach_agency {
   # required_access_grants: [can_view_all_tremor]
   view_name: fact_reach_frequency
-  label: "Nexxen dsp MSD - Reach Agency"
+  label: "Nexxen DSP NCD - Reach Agency"
   persist_with: CleanCash_datagroup
   view_label: "Measures"
   # access_filter: {

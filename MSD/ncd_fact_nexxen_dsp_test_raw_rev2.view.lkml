@@ -9,7 +9,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     hidden: yes
   }
   dimension: account_id {
-    type: number
+    type: string
     sql:  ${TABLE}.account_id ;;
     hidden: yes
   }
@@ -18,7 +18,7 @@ view: ncd_fact_nexxen_dsp_test_raw_rev2 {
     sql: ${TABLE}.account_name ;;
   }
   dimension: advertiser_id {
-    type: number
+    type: string
     sql:  ${TABLE}.advertiser_id ;;
     hidden: yes
   }

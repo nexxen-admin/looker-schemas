@@ -13,12 +13,12 @@ datagroup: CleanCash_datagroup {
 
 explore: fact_nexxen_ncd_perf_advertiser  {
   #required_access_grants: [advertiser_msd]
-  view_name: ncd_fact_nexxen_dsp_test_raw_rev2
+  view_name: ncd_fact_nexxen_dsp_state
   persist_with: CleanCash_datagroup
   label: "Nexxen DSP - NCD Advertiser"
   view_label: "Measures"
   access_filter: {
-    field: ncd_fact_nexxen_dsp_test_raw_rev2.advertiser_id
+    field: ncd_fact_nexxen_dsp_state.advertiser_id
     user_attribute: advertiser
   }
   #hidden: yes
@@ -27,7 +27,7 @@ explore: fact_nexxen_ncd_perf_advertiser  {
   join: ncd_pacing {
     type: inner
     view_label: "Salesforce Opportunity Line Item"
-    sql_on: ${ncd_pacing.opportunitylineitem_key}=${ncd_fact_nexxen_dsp_test_raw_rev2.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${ncd_fact_nexxen_dsp_test_raw_rev2.date_key_date};;
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${ncd_fact_nexxen_dsp_state.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${ncd_fact_nexxen_dsp_state.date_key_date};;
     relationship: many_to_one
   }
 
@@ -48,12 +48,12 @@ explore: fact_reach_advertiser {
 
 explore: fact_nexxen_ncd_perf_agency  {
   #required_access_grants: [advertiser_msd]
-  view_name: ncd_fact_nexxen_dsp_test_raw_rev2
+  view_name: ncd_fact_nexxen_dsp_state
   persist_with: CleanCash_datagroup
   label: "Nexxen DSP - NCD Agency"
   view_label: "Measures"
   access_filter: {
-    field: ncd_fact_nexxen_dsp_test_raw_rev2.account_id
+    field: ncd_fact_nexxen_dsp_state.account_id
     user_attribute: agency
   }
   #hidden: yes
@@ -61,7 +61,7 @@ explore: fact_nexxen_ncd_perf_agency  {
      join: ncd_pacing {
       type: inner
       view_label: "Salesforce Opportunity Line Item"
-      sql_on: ${ncd_pacing.opportunitylineitem_key}=${ncd_fact_nexxen_dsp_test_raw_rev2.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${ncd_fact_nexxen_dsp_test_raw_rev2.date_key_date};;
+      sql_on: ${ncd_pacing.opportunitylineitem_key}=${ncd_fact_nexxen_dsp_state.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${ncd_fact_nexxen_dsp_state.date_key_date};;
       relationship: many_to_one
     }
 

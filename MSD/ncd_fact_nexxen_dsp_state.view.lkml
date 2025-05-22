@@ -179,6 +179,7 @@ dimension: rate__c {
   type: number
   label: "Rate"
   sql: ${TABLE}.rate__c ;;
+  value_format: "$#,##0.00"
 }
 dimension: region_name {
   type: string
@@ -226,6 +227,7 @@ measure: budgeted_spend{
   type: sum
   label: "Budgeted Spend"
   sql: ${TABLE}.spend__c ;;
+  value_format: "$#,##0.00"
 }
 measure: budgeted_units {
   type: sum
@@ -234,9 +236,22 @@ measure: budgeted_units {
 }
 
 
+  measure: video_impressions {
+    hidden: yes
+    type: sum
+    value_format: "#,##0"
+    sql: CASE WHEN ${format}='Video' THEN ${TABLE}.impressions ELSE 0 END ;;
+  }
+  measure: video_complete_events  {
+    hidden: yes
+    type: sum
+    value_format: "#,##0"
+    sql: CASE WHEN ${format}='Video' THEN ${TABLE}.complete_events ELSE 0 END   ;;
+  }
+
 measure: VCR_1P {
   type: number
-  sql: IFNULL(${complete_events}/nullif(${impressions},0),0) ;;
+  sql: IFNULL(${video_complete_events}/nullif(${video_impressions},0),0) ;;
   value_format: "0.0%"
 }
 
@@ -258,12 +273,17 @@ measure: ncd_clicks {
   label: "Clicks"
   sql: CASE WHEN ${device_type_category}='CTV' THEN 0 ELSE ${TABLE}.clicks END;;
 }
-
+  measure: non_ctv_impressions {
+    hidden: yes
+    type: sum
+    value_format: "#,##0"
+    sql: CASE WHEN ${device_type_category}='CTV' THEN 0 ELSE ${TABLE}.impressions END ;;
+  }
 measure: ncd_ctr {
   type: number
   label: "CTR 1P"
   value_format: "0.00%"
-  sql: IFNULL(${ncd_clicks}/NULLIF(${impressions},0),0) ;;
+  sql: IFNULL(${ncd_clicks}/NULLIF(${non_ctv_impressions},0),0) ;;
 }
 
 #--------------------------------------------------pop-------------------------------------------------------

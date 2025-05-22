@@ -39,10 +39,10 @@ explore: fact_reach_advertiser {
   label: "Nexxen DSP NCD - Reach Advertiser"
   persist_with: CleanCash_datagroup
   view_label: "Measures"
-  # access_filter: {
-  #   field: dim_dsp_advertiser.advertiser_id
-  #   user_attribute: advertiser
-  # }
+  access_filter: {
+    field: fact_reach_frequency.advertiser_id
+    user_attribute: advertiser
+  }
   hidden: yes
 }
 
@@ -73,9 +73,9 @@ explore: fact_reach_agency {
   label: "Nexxen DSP NCD - Reach Agency"
   persist_with: CleanCash_datagroup
   view_label: "Measures"
-  # access_filter: {
-  #   field: dim_dsp_advertiser.advertiser_id
-  #   user_attribute: advertiser
-  # }
+  access_filter: {
+    field: fact_reach_frequency.account_id
+    user_attribute: agency
+  }
   hidden: yes
 }

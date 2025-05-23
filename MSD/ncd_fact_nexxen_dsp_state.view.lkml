@@ -240,13 +240,13 @@ measure: budgeted_units {
     hidden: yes
     type: sum
     value_format: "#,##0"
-    sql: CASE WHEN ${format}='Video' THEN ${TABLE}.impressions ELSE 0 END ;;
+    sql: CASE WHEN ${format} IN ('Video', 'Audio') THEN ${TABLE}.impressions ELSE 0 END ;;
   }
   measure: video_complete_events  {
     hidden: yes
     type: sum
     value_format: "#,##0"
-    sql: CASE WHEN ${format}='Video' THEN ${TABLE}.complete_events ELSE 0 END   ;;
+    sql: CASE WHEN ${format} IN ('Video', 'Audio') THEN ${TABLE}.complete_events ELSE 0 END   ;;
   }
 
 measure: VCR_1P {

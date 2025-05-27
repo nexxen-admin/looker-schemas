@@ -3175,7 +3175,7 @@ hidden: yes
     view_label: "PoP"
     type:   number
     description: "Previous Current period Ad eCPM"
-    sql:  ${current_period_revenue} / NULLIF((${previous_period_impressions}/ 1000), 0)),0);;
+    sql:  ${previous_period_revenue} / NULLIF((${previous_period_impressions}/ 1000), 0)),0);;
     value_format: "$#,##0.00"
 
   }

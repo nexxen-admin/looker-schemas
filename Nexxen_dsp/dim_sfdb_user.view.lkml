@@ -148,9 +148,9 @@ view: dim_sfdb_user {
     hidden: yes
   }
 
-  dimension: account_manager_name {
+  dimension: manager_name {
     type: string
-    label: "Account Manager Name"
+    label: "Manager Name"
     sql: ${TABLE}.firstname||' '||${TABLE}.lastname;;
   }
 

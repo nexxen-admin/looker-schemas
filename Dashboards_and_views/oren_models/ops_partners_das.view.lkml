@@ -1,7 +1,7 @@
 view: ops_partners_das {
   derived_table: {
     sql:
-    SELECT date(IMPRESSION_DATE) as DATE_PERIOD,
+SELECT date(IMPRESSION_DATE) as DATE_PERIOD,
        NS_VENDOR_ID,
        VENDOR_NAME,
       MARKET_NAME,
@@ -10,9 +10,8 @@ view: ops_partners_das {
       PROVIDER_NAME,
       MARKET_ID,
       CATEGORY,
-      DATA_TYPE,
       case when DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end as source,
-
+    REGION,
         SUM(IMPRESSION) as IMPRESSION,
         SUM(GROSS_REVENUE) as GROSS_REVENUE,
         SUM(ADJUSTED_NET_REVENUE) as ADJUSTED_NET_REVENUE,
@@ -105,6 +104,12 @@ GROUP BY 1,2,3,4,5,6,7,8,9,10,11
     label: "Source"
   }
 
+  dimension: REGION {
+    type: string
+    sql: ${TABLE}.REGION ;;
+    label: "Region"
+  }
+
 
 measure: IMPRESSION {
   type: sum
@@ -158,6 +163,7 @@ set: detail {
     MARKET_ID,
     CATEGORY,
     DATA_TYPE,
+    REGION,
 
     IMPRESSION,
     GROSS_REVENUE,

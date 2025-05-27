@@ -1613,6 +1613,25 @@ view: fact_ad_daily_agg {
   }
 
 
+  # measure: current_period_ad_ecpm {
+  #   view_label: "PoP"
+  #   type: sum
+  #   description: "Current period Ad eCPM"
+  #   sql: ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0) ;;
+  #   value_format: "$#,##0.00"
+  #   filters: [period_filtered_measures: "this"]
+  # }
+
+  # measure: previous_period_ad_ecpm {
+  #   view_label: "PoP"
+  #   type: sum
+  #   description: "Previous Current period Ad eCPM"
+  #   sql:  ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0)),0);;
+  #   value_format: "$#,##0.00"
+  #   filters: [period_filtered_measures: "last"]
+  # }
+
+
   measure:  Previous_day_Revenue {
     label: "Revenue Previous day "
     type: sum
@@ -2939,8 +2958,8 @@ hidden: yes
     view_label: "PoP"
     type: number
     description: "Current period CPM"
-    sql: ${current_period_revenue}/nullif(${current_period_impressions},0) ;;
-    value_format: "0.00%"
+    sql: ${current_period_revenue}/nullif(${current_period_impressions}/1000,0) ;;
+    value_format: "$#,##0.00"
     #filters: [period_filtered_measures: "this"]
   }
 
@@ -2948,8 +2967,8 @@ hidden: yes
     view_label: "PoP"
     type: number
     description: "Previous Current period CPM"
-    sql: ${previous_period_revenue}/nullif(${previous_period_impressions},0);;
-    value_format: "0.00%"
+    sql: ${previous_period_revenue}/nullif(${previous_period_impressions}/1000,0);;
+    value_format: "$#,##0.00"
     #filters: [period_filtered_measures: "last"]
   }
 
@@ -3143,6 +3162,23 @@ hidden: yes
     hidden: yes
   }
 
+  measure: current_period_ad_ecpm {
+    view_label: "PoP"
+    type: number
+    description: "Current period Ad eCPM"
+    sql: ${current_period_revenue}/ NULLIF((${current_period_impressions} / 1000), 0) ;;
+    value_format: "$#,##0.00"
+
+  }
+
+  measure: previous_period_ad_ecpm {
+    view_label: "PoP"
+    type: number
+    description: "Previous Current period Ad eCPM"
+    sql:  ${previous_period_revenue} / NULLIF((${previous_period_impressions}/ 1000), 0);;
+    value_format: "$#,##0.00"
+
+  }
 
   # parameter: choose_filter {
   #   type: unquoted

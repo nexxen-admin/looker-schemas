@@ -382,11 +382,11 @@ dimension: inventory_source_key {
 # }
 
 
-  # measure: inv_cost {
-  #   type: sum
-  #   value_format: "$#,##0.00"
-  #   sql: ${TABLE}.inv_cost ;;
-  # }
+#   measure: inv_cost {
+#     type: sum
+#     value_format: "$#,##0.00"
+#     sql: ${TABLE}.inv_cost ;;
+#   }
 
 # measure: nexxen_inventory_cost {
 #   type: sum

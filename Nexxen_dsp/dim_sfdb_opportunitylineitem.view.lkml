@@ -249,7 +249,7 @@ view: dim_sfdb_opportunitylineitem {
   dimension: delivery_manager__c {
     type: string
     sql: ${TABLE}.delivery_manager__c ;;
-    #hidden: yes
+    hidden: yes
   }
 
   dimension: description {

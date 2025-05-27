@@ -1,10 +1,10 @@
-connection: "looker_ms"
+connection: "ncd_vertica"
 
 include: "/**/*.view.lkml"
 include: "/**/*.dashboard.lookml"
 
 datagroup: CleanCash_datagroup {
-  sql_trigger: SELECT max(date_key_in_timezone) FROM BI_DSP.ncd_fact_nexxen_dsp_test_raw_rev2  ;;
+  sql_trigger: SELECT max(date_key_in_timezone) FROM BI_DSP.ncd_fact_nexxen_dsp_state  ;;
   max_cache_age: "15 hours"
   label: "Clean Cash Trigger"
   description: "Triggered when new date is added to ETL"

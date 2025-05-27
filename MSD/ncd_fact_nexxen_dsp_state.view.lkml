@@ -40,6 +40,7 @@ measure: complete_events  {
 dimension: country_name {
   type: string
   sql: ${TABLE}.country_name ;;
+  map_layer_name: countries
 }
 dimension: creative_group_a {
   type: string

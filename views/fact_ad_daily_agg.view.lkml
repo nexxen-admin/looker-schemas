@@ -3164,20 +3164,20 @@ hidden: yes
 
   measure: current_period_ad_ecpm {
     view_label: "PoP"
-    type: sum
+    type: number
     description: "Current period Ad eCPM"
-    sql: ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0) ;;
+    sql: ${current_period_revenue}/ NULLIF((${current_period_impressions} / 1000), 0) ;;
     value_format: "$#,##0.00"
-    filters: [period_filtered_measures: "this"]
+
   }
 
   measure: previous_period_ad_ecpm {
     view_label: "PoP"
-    type: sum
+    type:   number
     description: "Previous Current period Ad eCPM"
-    sql:  ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0)),0);;
+    sql:  ${current_period_revenue} / NULLIF((${previous_period_impressions}/ 1000), 0)),0);;
     value_format: "$#,##0.00"
-    filters: [period_filtered_measures: "last"]
+
   }
 
   # parameter: choose_filter {

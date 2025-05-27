@@ -56,8 +56,8 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.adjustment_billable_video_completes ;;
   }
 
-  measure: adv_invoice {
-    type: sum
+  dimension: adv_invoice {
+    type: number
     sql: ${TABLE}.adv_invoice ;;
     value_format: "#,##0.00"
   }
@@ -72,8 +72,8 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.booked_units ;;
   }
 
-  measure: capped_revenue_before_adj {
-    type: sum
+  dimension: capped_revenue_before_adj {
+    type: number
     sql: ${TABLE}.capped_revenue_before_adj_with_override ;;
     value_format: "#,##0.00"
   }
@@ -88,19 +88,19 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.modified_case_safe ;;
   }
 
-  measure: check_completeness_revenue_adj {
-    type: sum
+  dimension: check_completeness_revenue_adj {
+    type: number
     sql: ${TABLE}.check_completeness_revenue_adj ;;
     value_format: "#,##0.00"
   }
 
-  measure: clicks {
-    type: sum
+  dimension: clicks {
+    type: number
     sql: ${TABLE}.clicks ;;
   }
 
-  measure: complete_events {
-    type: sum
+  dimension: complete_events {
+    type: number
     sql: ${TABLE}.complete_events ;;
   }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
@@ -126,26 +126,26 @@ view: monthly_billing_locked_report {
     hidden: yes
   }
 
-  measure: disc_between_1p_and_final_billable_revenue_after_adj_usd {
-    type: sum
+  dimension: disc_between_1p_and_final_billable_revenue_after_adj_usd {
+    type: number
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd ;;
     value_format: "#,##0.00"
   }
 
-  measure: disc_between_1p_and_final_billable_revenue_after_adj_usd_precent {
-    type: sum
+  dimension: disc_between_1p_and_final_billable_revenue_after_adj_usd_precent {
+    type: number
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent ;;
     value_format: "0.00%"
   }
 
-  measure: discrepancy_between_1p_and_final_billable_revenue_after_adj {
-    type: sum
+  dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj {
+    type: number
     sql: ${TABLE}.discrepancy_between_1p_and_final_billable_revenue_after_adj ;;
     value_format: "#,##0.00"
   }
 
-  measure: discrepancy_between_1p_and_final_billable_revenue_after_adj_precent {
-    type: sum
+  dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj_precent {
+    type: number
     sql: ${TABLE}.discrepancy_between_1p_and_final_billable_revenue_after_adj_percent ;;
     value_format: "0.00%"
   }
@@ -194,26 +194,26 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.Adv_Invoice_AdOps_Override ;;
   }
 
-  measure: final_billable_revenue_after_adj {
-    type: sum
+  dimension: final_billable_revenue_after_adj {
+    type: number
     sql: ${TABLE}.final_billable_revenue_after_adj ;;
     value_format: "#,##0.00"
   }
 
-  measure: final_billable_revenue_after_adj_usd {
-    type: sum
+  dimension: final_billable_revenue_after_adj_usd {
+    type: number
     sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
     value_format: "#,##0.00"
   }
 
-  measure: final_billable_units_after_adj {
-    type: sum
+  dimension: final_billable_units_after_adj {
+    type: number
     sql: ${TABLE}.final_billable_units_after_adj ;;
     value_format: "#,##0"
   }
 
-  measure: impressions {
-    type: sum
+  dimension: impressions {
+    type: number
     sql: ${TABLE}.impressions ;;
   }
 
@@ -222,8 +222,8 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.industry ;;
   }
 
-  measure: inv_cost {
-    type: sum
+  dimension: inv_cost {
+    type: number
     sql: ${TABLE}.inv_cost ;;
     value_format: "#,##0.00"
   }
@@ -248,56 +248,56 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.line_item_status ;;
   }
 
-  measure: margin_amount {
-    type: sum
+  dimension: margin_amount {
+    type: number
     sql: ${TABLE}.margin_amount ;;
     value_format: "#,##0.00"
   }
 
-  measure: margin_amount_in_usd_precent {
-    type: sum
+  dimension: margin_amount_in_usd_precent {
+    type: number
     sql: ${TABLE}.margin_amount_percent_usd ;;
     value_format: "0.00%"
   }
 
-  measure: margin_amount_percent {
-    type: sum
+  dimension: margin_amount_percent {
+    type: number
     sql: ${TABLE}.margin_parcent ;;
     value_format: "0.00%"
   }
 
-  measure: margin_amount_usd {
-    type: sum
+  dimension: margin_amount_usd {
+    type: number
     sql: ${TABLE}.margin_amount_usd ;;
     value_format: "#,##0.00"
   }
 
-  measure: ns_remaining_amount {
-    type: sum
+  dimension: ns_remaining_amount {
+    type: number
     sql: ${TABLE}.ns_remaining_amount ;;
     value_format: "#,##0.00"
   }
 
-  measure: ns_remaining_units {
-    type: sum
+  dimension: ns_remaining_units {
+    type: number
     sql: ${TABLE}.ns_remaining_units ;;
     value_format: "#,##0"
   }
 
-  measure: od_delivery_units {
-    type: sum
+  dimension: od_delivery_units {
+    type: number
     sql: ${TABLE}.od_delivery_units ;;
     value_format: "#,##0"
   }
 
-  measure: one_p_rev {
-    type: sum
+  dimension: one_p_rev {
+    type: number
     sql: ${TABLE}.p_rev ;;
     value_format: "#,##0.00"
   }
 
-  measure: one_p_rev_usd {
-    type: sum
+  dimension: one_p_rev_usd {
+    type: number
     sql: ${TABLE}.p_rev_usd ;;
     value_format: "#,##0.00"
   }
@@ -343,14 +343,14 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.dsp_start_date ;;
   }
 
-  measure: over_delivery_amount {
-    type: sum
+  dimension: over_delivery_amount {
+    type: number
     sql: ${TABLE}.over_delivery_amount ;;
     value_format: "#,##0.00"
   }
 
-  measure: over_delivery_amount_in_usd {
-    type: sum
+  dimension: over_delivery_amount_in_usd {
+    type: number
     sql: ${TABLE}.over_delivery_amount_usd ;;
     value_format: "#,##0.00"
   }
@@ -360,18 +360,18 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.passed_bill_amount ;;
   }
 
-  measure: percent25events {
-    type: sum
+  dimension: percent25events {
+    type: number
     sql: ${TABLE}.percent25_events ;;
   }
 
-  measure: percent50events {
-    type: sum
+  dimension: percent50events {
+    type: number
     sql: ${TABLE}.percent50_events ;;
   }
 
-  measure: percent75events {
-    type: sum
+  dimension: percent75events {
+    type: number
     sql: ${TABLE}.percent75_events ;;
   }
 
@@ -415,20 +415,20 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.related_brand_name ;;
   }
 
-  measure: remaining_diff_between_1p_to_billing_3p_1p_discrepancy_local_currency {
-    type: sum
+  dimension: remaining_diff_between_1p_to_billing_3p_1p_discrepancy_local_currency {
+    type: number
     sql: ${TABLE}.remaining_diff_between_1p_to_billing_3p_vs_1p_discrepancy_local_currency ;;
     value_format: "#,##0.00"
   }
 
-  measure: remaining_diff_between_1p_to_billing_3p_1p_discrepancy_usd {
-    type: sum
+  dimension: remaining_diff_between_1p_to_billing_3p_1p_discrepancy_usd {
+    type: number
     sql: ${TABLE}.remaining_diff_between_1p_to_billing_3p_VS_1p_discrepancy_usd ;;
     value_format: "#,##0.00"
   }
 
-  measure: revenue_adj {
-    type: sum
+  dimension: revenue_adj {
+    type: number
     sql: ${TABLE}.revenue_adj ;;
     value_format: "#,##0.00"
   }
@@ -448,29 +448,29 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.spend ;;
   }
 
-  measure: tac {
-    type: sum
+  dimension: tac {
+    type: number
     sql: ${TABLE}.tac ;;
     value_format: "#,##0.00"
   }
 
-  measure: third_party_clicks {
-    type: sum
+  dimension: third_party_clicks {
+    type: number
     sql: ${TABLE}.third_party_clicks ;;
   }
 
-  measure: third_party_complete_events {
-    type: sum
+  dimension: third_party_complete_events {
+    type: number
     sql: ${TABLE}.third_party_complete_events ;;
   }
 
-  measure: third_party_impressions {
-    type: sum
+  dimension: third_party_impressions {
+    type: number
     sql: ${TABLE}.third_party_impressions ;;
   }
 
-  measure: total_billable_units_before_adj {
-    type: sum
+  dimension: total_billable_units_before_adj {
+    type: number
     sql: ${TABLE}.total_billable_units_before_adj_adops_override ;;
     value_format: "#,##0"
   }
@@ -480,44 +480,44 @@ view: monthly_billing_locked_report {
     sql: ${TABLE}.total_booked_budget ;;
   }
 
-  measure: uncapped_revenue_adj_adops {
-    type: sum
+  dimension: uncapped_revenue_adj_adops {
+    type: number
     sql: ${TABLE}.uncapped_revenue_adj_adops ;;
     value_format: "#,##0.00"
   }
 
-  measure: uncapped_revenue_after_adops_override {
-    type: sum
+  dimension: uncapped_revenue_after_adops_override {
+    type: number
     sql: ${TABLE}.uncapped_revenue_after_adops_override ;;
     value_format: "#,##0.00"
   }
 
-  measure: under_delivery_budget {
-    type: sum
+  dimension: under_delivery_budget {
+    type: number
     sql: ${TABLE}.under_delivery_budget ;;
     value_format: "#,##0.00"
   }
 
-  measure: under_delivery_budget_in_usd {
-    type: sum
+  dimension: under_delivery_budget_in_usd {
+    type: number
     sql: ${TABLE}.under_delivery_budget_usd ;;
     value_format: "#,##0.00"
   }
 
-  measure: under_delivery_units {
-    type: sum
+  dimension: under_delivery_units {
+    type: number
     sql: ${TABLE}.under_delivery_units ;;
     value_format: "#,##0"
   }
 
-  measure: units_adj {
-    type: sum
+  dimension: units_adj {
+    type: number
     sql: ${TABLE}.units_ADJ ;;
     value_format: "#,##0"
   }
 
-  measure: units_before_adj {
-    type: sum
+  dimension: units_before_adj {
+    type: number
     sql: ${TABLE}.units_before_adj_adops_override ;;
     value_format: "#,##0"
   }

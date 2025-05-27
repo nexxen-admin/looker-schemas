@@ -14,6 +14,7 @@ view: dim_dsp_country {
   dimension: country_name {
     type: string
     sql: ${TABLE}.country_name ;;
+    map_layer_name: countries
   }
   dimension_group: db_created {
     type: time

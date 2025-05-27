@@ -1613,23 +1613,23 @@ view: fact_ad_daily_agg {
   }
 
 
-  measure: current_period_ad_ecpm {
-    view_label: "PoP"
-    type: sum
-    description: "Current period Ad eCPM"
-    sql: ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0) ;;
-    value_format: "$#,##0.00"
-    filters: [period_filtered_measures: "this"]
-  }
+  # measure: current_period_ad_ecpm {
+  #   view_label: "PoP"
+  #   type: sum
+  #   description: "Current period Ad eCPM"
+  #   sql: ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0) ;;
+  #   value_format: "$#,##0.00"
+  #   filters: [period_filtered_measures: "this"]
+  # }
 
-  measure: previous_period_ad_ecpm {
-    view_label: "PoP"
-    type: sum
-    description: "Previous Current period Ad eCPM"
-    sql:  ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0)),0);;
-    value_format: "$#,##0.00"
-    filters: [period_filtered_measures: "last"]
-  }
+  # measure: previous_period_ad_ecpm {
+  #   view_label: "PoP"
+  #   type: sum
+  #   description: "Previous Current period Ad eCPM"
+  #   sql:  ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0)),0);;
+  #   value_format: "$#,##0.00"
+  #   filters: [period_filtered_measures: "last"]
+  # }
 
 
   measure:  Previous_day_Revenue {
@@ -3162,6 +3162,23 @@ hidden: yes
     hidden: yes
   }
 
+  measure: current_period_ad_ecpm {
+    view_label: "PoP"
+    type: sum
+    description: "Current period Ad eCPM"
+    sql: ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0) ;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_ad_ecpm {
+    view_label: "PoP"
+    type: sum
+    description: "Previous Current period Ad eCPM"
+    sql:  ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0)),0);;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "last"]
+  }
 
   # parameter: choose_filter {
   #   type: unquoted

@@ -1,6 +1,17 @@
 view: fact_reach_frequency {
   sql_table_name: BI_DSP.dim_reach_and_frequency ;;
 
+  dimension: account_id {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.account_id ;;
+  }
+  dimension: advertiser_id {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.advertiser_id ;;
+  }
+
   dimension: related_brand {
     type: string
     sql: ${TABLE}.related_brand_name ;;

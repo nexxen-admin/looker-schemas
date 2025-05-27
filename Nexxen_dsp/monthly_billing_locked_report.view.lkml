@@ -150,6 +150,50 @@ view: monthly_billing_locked_report {
     value_format: "0.00%"
   }
 
+  dimension: exchange_rate {
+    type: number
+    sql: ${TABLE}.exchange_rate ;;
+  }
+  dimension: exchange_rate_usd {
+    type: number
+    sql: ${TABLE}.exchange_rate_usd ;;
+  }
+  dimension: expected_revenue {
+    type: number
+    sql: ${TABLE}.Expected_Revenue ;;
+  }
+  dimension: units_before_adj_ad_ops_override {
+    type: number
+    sql: ${TABLE}.units_before_adj_AdOps_override ;;
+  }
+
+  dimension: ad_ops_override_approving_manager {
+    type: string
+    sql: ${TABLE}.AdOps_OverrideApprovingManager ;;
+  }
+  dimension: ad_ops_override_reason {
+    type: string
+    sql: ${TABLE}.AdOps_OverrideReason ;;
+  }
+
+  dimension: units_adj_override {
+    type: number
+    sql: ${TABLE}.units_adj_override ;;
+  }
+
+  dimension: unit_ad_ops_override_1_p {
+    type: number
+    sql: ${TABLE}.Unit_AdOps_Override_1P ;;
+  }
+  dimension: unit_ad_ops_override_3_p {
+    type: number
+    sql: ${TABLE}.Unit_AdOps_Override_3P ;;
+  }
+  dimension: adv_invoice_ad_ops_override {
+    type: number
+    sql: ${TABLE}.Adv_Invoice_AdOps_Override ;;
+  }
+
   measure: final_billable_revenue_after_adj {
     type: sum
     sql: ${TABLE}.final_billable_revenue_after_adj ;;
@@ -492,6 +536,4 @@ view: monthly_billing_locked_report {
   account_name,
   related_brand_name
   ]
-  }
-
-}
+  }}

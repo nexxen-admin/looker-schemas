@@ -1613,25 +1613,6 @@ view: fact_ad_daily_agg {
   }
 
 
-  # measure: current_period_ad_ecpm {
-  #   view_label: "PoP"
-  #   type: sum
-  #   description: "Current period Ad eCPM"
-  #   sql: ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0) ;;
-  #   value_format: "$#,##0.00"
-  #   filters: [period_filtered_measures: "this"]
-  # }
-
-  # measure: previous_period_ad_ecpm {
-  #   view_label: "PoP"
-  #   type: sum
-  #   description: "Previous Current period Ad eCPM"
-  #   sql:  ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0)),0);;
-  #   value_format: "$#,##0.00"
-  #   filters: [period_filtered_measures: "last"]
-  # }
-
-
   measure:  Previous_day_Revenue {
     label: "Revenue Previous day "
     type: sum
@@ -3177,6 +3158,19 @@ hidden: yes
     description: "Previous Current period Ad eCPM"
     sql:  ${previous_period_revenue} / NULLIF((${previous_period_impressions}/ 1000), 0);;
     value_format: "$#,##0.00"
+
+  }
+
+
+  measure:  current_period_ias_ivt_rate_calc{
+    view_label: "PoP"
+    type: number
+    label: "Current Period IAS IVT Rate"
+    group_label: "Daily Measures"
+    description: "ias ivt impressions / ias total impressions"
+    value_format: "0.00\%"
+    sql: (${ias_ivt_impression}/NULLIF(${ias_total_impression},0))*100
+    filters: [period_filtered_measures: "this"];;
 
   }
 

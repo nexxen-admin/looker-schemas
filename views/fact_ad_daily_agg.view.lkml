@@ -2425,6 +2425,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_ias_ivt_impression ;;
     # value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
+    hidden: yes
   }
 
   measure: previous_period_ias_ivt_impression  {
@@ -2436,6 +2437,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_ias_ivt_impression ;;
     # value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
+    hidden: yes
   }
 
 
@@ -2458,6 +2460,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_ias_total_impression ;;
     # value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
+    hidden: yes
   }
 
   measure: previous_period_ias_total_impression  {
@@ -2469,6 +2472,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_ias_total_impression ;;
     # value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]
+    hidden: yes
   }
 
 

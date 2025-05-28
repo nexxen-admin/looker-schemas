@@ -2416,6 +2416,16 @@ view: fact_ad_daily_agg {
 
   # Filtered measures
 
+  measure: current_period_ias_ivt_impression  {
+    view_label: "PoP"
+    label: "Current Period IAS IVT Impression  {{_filters['current_date_range']}} "
+    type: sum
+    description: "Specifies the ias ivt impression of the current period we are looking at, using the filter 'current date range' which has to be applied"
+    sql: ${TABLE}.sum_of_ias_ivt_impression ;;
+    # value_format: "$#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
   measure: current_period_revenue {
     view_label: "PoP"
     label: "Current Period Revenue  {{_filters['current_date_range']}} "
@@ -2426,6 +2436,15 @@ view: fact_ad_daily_agg {
     filters: [period_filtered_measures: "this"]
   }
 
+
+  # measure:: ias_ivt_impression {
+  #   type: sum
+  #   label: "IAS IVT Impressions"
+  #   group_label: "Daily Measures"
+  #   description: "Sum of ivt impressions from ias"
+  #   sql: ${TABLE}.sum_of_ias_ivt_impression ;;
+
+  # }
   measure: current_period_revenue_tmp {
     view_label: "PoP"
     type: sum
@@ -3162,17 +3181,17 @@ hidden: yes
   }
 
 
-  measure:  current_period_ias_ivt_rate_calc{
-    view_label: "PoP"
-    type: number
-    label: "Current Period IAS IVT Rate"
-    group_label: "Daily Measures"
-    description: "ias ivt impressions / ias total impressions"
-    value_format: "0.00\%"
-    sql: (${ias_ivt_impression}/NULLIF(${ias_total_impression},0))*100
-    filters: [period_filtered_measures: "this"];;
+  # measure: current_period_ias_ivt_rate_calc {
+  #   view_label: "PoP"
+  #   type: sum
+  #   label: "Current Period IAS IVT Rate"
+  #   group_label: "Daily Measures"
+  #   description: "IAS IVT impressions / IAS total impressions"
+  #   value_format: "0.00\\%"  # escaping the percent symbol correctly
+  #   sql: ((${ias_ivt_impression} / NULLIF(${ias_total_impression}, 0)) * 100) ;;
+  #   filters: [period_filtered_measures: "this"]
+  # }
 
-  }
 
   # parameter: choose_filter {
   #   type: unquoted

@@ -1613,25 +1613,6 @@ view: fact_ad_daily_agg {
   }
 
 
-  # measure: current_period_ad_ecpm {
-  #   view_label: "PoP"
-  #   type: sum
-  #   description: "Current period Ad eCPM"
-  #   sql: ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0) ;;
-  #   value_format: "$#,##0.00"
-  #   filters: [period_filtered_measures: "this"]
-  # }
-
-  # measure: previous_period_ad_ecpm {
-  #   view_label: "PoP"
-  #   type: sum
-  #   description: "Previous Current period Ad eCPM"
-  #   sql:  ${TABLE}.revenue / NULLIF((${TABLE}.impression_pixel / 1000), 0)),0);;
-  #   value_format: "$#,##0.00"
-  #   filters: [period_filtered_measures: "last"]
-  # }
-
-
   measure:  Previous_day_Revenue {
     label: "Revenue Previous day "
     type: sum
@@ -2435,6 +2416,31 @@ view: fact_ad_daily_agg {
 
   # Filtered measures
 
+  measure: current_period_ias_ivt_impression  {
+    view_label: "PoP"
+    label: "Current Period IAS IVT Impression "
+    # {{_filters['current_date_range']}} "
+    type: sum
+    description: "Specifies the ias ivt impression of the current period we are looking at, using the filter 'current date range' which has to be applied"
+    sql: ${TABLE}.sum_of_ias_ivt_impression ;;
+    # value_format: "$#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_ias_ivt_impression  {
+    view_label: "PoP"
+    label: "Previous Period IAS IVT Impression"
+    # {{_filters['previous_date_range']}} "
+    type: sum
+    description: "Specifies the ias ivt impression of the previous period we are looking at, using the filter 'current date range' which has to be applied"
+    sql: ${TABLE}.sum_of_ias_ivt_impression ;;
+    # value_format: "$#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
+
+
   measure: current_period_revenue {
     view_label: "PoP"
     label: "Current Period Revenue  {{_filters['current_date_range']}} "
@@ -2444,6 +2450,31 @@ view: fact_ad_daily_agg {
     value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
   }
+
+  measure: current_period_ias_total_impression  {
+    view_label: "PoP"
+    label: "Current Period IAS Total Impression "
+    # {{_filters['current_date_range']}} "
+    type: sum
+    description: "Specifies the ias Total impression of the current period we are looking at, using the filter 'current date range' which has to be applied"
+    sql: ${TABLE}.sum_of_ias_total_impression ;;
+    # value_format: "$#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: yes
+  }
+
+  measure: previous_period_ias_total_impression  {
+    view_label: "PoP"
+    label: "Previous Period IAS Total Impression "
+    # {{_filters['current_date_range']}} "
+    type: sum
+    description: "Specifies the ias Total impression of the previous period we are looking at, using the filter 'current date range' which has to be applied"
+    sql: ${TABLE}.sum_of_ias_total_impression ;;
+    # value_format: "$#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: yes
+  }
+
 
   measure: current_period_revenue_tmp {
     view_label: "PoP"
@@ -3179,6 +3210,30 @@ hidden: yes
     value_format: "$#,##0.00"
 
   }
+
+
+  measure: current_period_ias_ivt_rate_calc {
+    view_label: "PoP"
+    type: number
+    label: "Current Period IAS IVT Rate"
+    group_label: "Daily Measures"
+    description: "IAS IVT impressions / IAS total impressions"
+    value_format: "0.00%"  # escaping the percent symbol correctly
+    sql: ((${current_period_ias_ivt_impression} / NULLIF(${current_period_ias_total_impression}, 0)) * 100) ;;
+
+  }
+
+  measure: previous_period_ias_ivt_rate_calc {
+    view_label: "PoP"
+    type: number
+    label: "previous Period IAS IVT Rate"
+    group_label: "Daily Measures"
+    description: "IAS IVT impressions / IAS total impressions"
+    value_format: "0.00%"  # escaping the percent symbol correctly
+    sql: ((${previous_period_ias_ivt_impression} / NULLIF(${previous_period_ias_total_impression}, 0)) * 100) ;;
+
+  }
+
 
   # parameter: choose_filter {
   #   type: unquoted

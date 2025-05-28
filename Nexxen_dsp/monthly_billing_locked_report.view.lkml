@@ -128,12 +128,14 @@ view: monthly_billing_locked_report {
 
   dimension: disc_between_1p_and_final_billable_revenue_after_adj_usd {
     type: number
+    label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj USD"
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd ;;
     value_format: "#,##0.00"
   }
 
   dimension: disc_between_1p_and_final_billable_revenue_after_adj_usd_precent {
     type: number
+    label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj USD Percent"
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent ;;
     value_format: "0.00%"
   }
@@ -146,6 +148,7 @@ view: monthly_billing_locked_report {
 
   dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj_precent {
     type: number
+    label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj Percent"
     sql: ${TABLE}.discrepancy_between_1p_and_final_billable_revenue_after_adj_percent ;;
     value_format: "0.00%"
   }
@@ -351,6 +354,7 @@ view: monthly_billing_locked_report {
 
   dimension: over_delivery_amount_in_usd {
     type: number
+    label: "Over Delivery Amount USD"
     sql: ${TABLE}.over_delivery_amount_usd ;;
     value_format: "#,##0.00"
   }
@@ -417,6 +421,7 @@ view: monthly_billing_locked_report {
 
   dimension: remaining_diff_between_1p_to_billing_3p_1p_discrepancy_local_currency {
     type: number
+    label: "Remaining Diff Between 1 P to Billing 3 P Vs 1 P Discrepancy"
     sql: ${TABLE}.remaining_diff_between_1p_to_billing_3p_vs_1p_discrepancy_local_currency ;;
     value_format: "#,##0.00"
   }
@@ -471,6 +476,7 @@ view: monthly_billing_locked_report {
 
   dimension: total_billable_units_before_adj {
     type: number
+    label: "Total Billable Units Before Adj Adops Override"
     sql: ${TABLE}.total_billable_units_before_adj_adops_override ;;
     value_format: "#,##0"
   }

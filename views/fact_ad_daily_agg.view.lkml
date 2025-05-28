@@ -2476,24 +2476,6 @@ view: fact_ad_daily_agg {
   }
 
 
-  # measure:: ias_total_impression {
-  #   type: sum
-  #   label: "IAS Total Impression"
-  #   group_label: "Daily Measures"
-  #   description: "Sum of all impressions from ias"
-  #   sql: ${TABLE}.sum_of_ias_total_impression ;;
-
-  # }
-
-
-  # measure:: ias_ivt_impression {
-  #   type: sum
-  #   label: "IAS IVT Impressions"
-  #   group_label: "Daily Measures"
-  #   description: "Sum of ivt impressions from ias"
-  #   sql: ${TABLE}.sum_of_ias_ivt_impression ;;
-
-  # }
   measure: current_period_revenue_tmp {
     view_label: "PoP"
     type: sum

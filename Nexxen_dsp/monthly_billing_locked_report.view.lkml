@@ -417,6 +417,7 @@ view: monthly_billing_locked_report {
 
   dimension: remaining_diff_between_1p_to_billing_3p_1p_discrepancy_local_currency {
     type: number
+    label: "Remaining Diff Between 1 P to Billing 3 P Vs 1 P Discrepancy"
     sql: ${TABLE}.remaining_diff_between_1p_to_billing_3p_vs_1p_discrepancy_local_currency ;;
     value_format: "#,##0.00"
   }

@@ -2418,13 +2418,26 @@ view: fact_ad_daily_agg {
 
   measure: current_period_ias_ivt_impression  {
     view_label: "PoP"
-    label: "Current Period IAS IVT Impression  {{_filters['current_date_range']}} "
+    label: "Current Period IAS IVT Impression "
+    # {{_filters['current_date_range']}} "
     type: sum
     description: "Specifies the ias ivt impression of the current period we are looking at, using the filter 'current date range' which has to be applied"
     sql: ${TABLE}.sum_of_ias_ivt_impression ;;
     # value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
   }
+
+  measure: previous_period_ias_ivt_impression  {
+    view_label: "PoP"
+    label: "Previous Period IAS IVT Impression"
+    # {{_filters['previous_date_range']}} "
+    type: sum
+    description: "Specifies the ias ivt impression of the previous period we are looking at, using the filter 'current date range' which has to be applied"
+    sql: ${TABLE}.sum_of_ias_ivt_impression ;;
+    # value_format: "$#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
 
   measure: current_period_revenue {
     view_label: "PoP"

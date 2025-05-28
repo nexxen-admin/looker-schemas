@@ -13,6 +13,14 @@ view: billing_temp_nov {
     type: string
     sql: ${TABLE}.account_name ;;
   }
+  dimension: Over_Delivery_Units {
+    type: number
+    sql: ${TABLE}.Over_Delivery_Units ;;
+  }
+  dimension: Uncapped_Revenue {
+    type: number
+    sql: ${TABLE}.Uncapped_Revenue_Before_adops_Override ;;
+  }
   dimension: ad_ops_override_approving_manager {
     type: string
     sql: ${TABLE}.AdOps_OverrideApprovingManager ;;

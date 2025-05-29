@@ -287,9 +287,9 @@ view: monthly_billing_locked_report {
     value_format: "#,##0"
   }
 
-  dimension: od_delivery_units {
+  dimension: over_delivery_units {
     type: number
-    sql: ${TABLE}.od_delivery_units ;;
+    sql: ${TABLE}.over_delivery_units ;;
     value_format: "#,##0"
   }
 
@@ -352,11 +352,6 @@ view: monthly_billing_locked_report {
     value_format: "#,##0.00"
   }
 
-  dimension: over_delivery_units {
-    type: number
-    sql: ${TABLE}.over_delivery_units ;;
-    value_format: "#,##0.00"
-  }
 
   dimension: over_delivery_amount_in_usd {
     type: number

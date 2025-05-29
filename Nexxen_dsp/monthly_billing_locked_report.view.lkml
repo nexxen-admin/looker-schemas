@@ -352,6 +352,12 @@ view: monthly_billing_locked_report {
     value_format: "#,##0.00"
   }
 
+  dimension: over_delivery_units {
+    type: number
+    sql: ${TABLE}.over_delivery_units ;;
+    value_format: "#,##0.00"
+  }
+
   dimension: over_delivery_amount_in_usd {
     type: number
     label: "Over Delivery Amount USD"
@@ -489,6 +495,12 @@ view: monthly_billing_locked_report {
   dimension: uncapped_revenue_adj_adops {
     type: number
     sql: ${TABLE}.uncapped_revenue_adj_adops ;;
+    value_format: "#,##0.00"
+  }
+
+  dimension: uncapped_revenue{
+    type: number
+    sql: ${TABLE}.uncapped_revenue ;;
     value_format: "#,##0.00"
   }
 

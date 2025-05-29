@@ -52,21 +52,24 @@ view: bid_opti_all_models_no_resrictions {
         opti.margin,
         opti.demand_margin,
         opti.supply_margin,
-        opti.requests/dt.total_requests as split,
-        opti.margin/split as scaled_margin,
-        opti.requests/split as scaled_requests,
-        opti.impression/split as scaled_impression,
-        opti.revenue/split as scaled_revenue,
-        opti.demand_margin/split as scaled_demand_margin,
-        opti.supply_margin/split as scaled_supply_margin,
+        opti.requests/nullif(dt.total_requests,0) as split,
+        opti.margin/nullif(split,0) as scaled_margin,
+        opti.requests/nullif(split,0) as scaled_requests,
+        opti.impression/nullif(split,0) as scaled_impression,
+        opti.revenue/nullif(split,0) as scaled_revenue,
+        opti.demand_margin/nullif(split,0) as scaled_demand_margin,
+        opti.supply_margin/nullif(split,0) as scaled_supply_margin,
 
         (scaled_margin) / nullif((SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)),0)-1 as scaled_margin_ratio_to_no_opti,
+
         (scaled_margin) - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_margin_diff_to_no_opti,
 
         (scaled_supply_margin) / nullif((SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)),0)-1 as scaled_supply_margin_ratio_to_no_opti,
+
         (scaled_supply_margin) - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_supply_margin_diff_to_no_opti,
 
         (scaled_demand_margin) / nullif((SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)),0)-1 as scaled_demand_margin_ratio_to_no_opti,
+
         (scaled_demand_margin) - (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_demand_margin_diff_to_no_opti
 
 
@@ -75,8 +78,8 @@ view: bid_opti_all_models_no_resrictions {
         on opti.media_id = dt.media_id
         and opti.imp_type = dt.imp_type
         and opti.date_trunc = dt.date_trunc
-        where concat(concat(dt.media_id,dt.imp_type),dt.date_trunc)  in ( select media_imp_date from optis_list where optis=4)
-        order by dt.date_trunc,dt.media_id desc)
+        order by dt.date_trunc,dt.media_id desc
+        )
 
 
         SELECT sm.media_id as media_id,sm.placement_name as placement_name,sm.imp_type as imp_type,

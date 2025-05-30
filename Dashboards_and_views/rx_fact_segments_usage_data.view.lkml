@@ -49,6 +49,16 @@ view: rx_fact_segments_usage_data {
     sql: ${TABLE}.contract_cpm ;;
   }
 
+  dimension: deal_type {
+    type: string
+    sql: ${TABLE}.deal_type ;;
+  }
+
+  dimension: deal_partner {
+    type: string
+    sql: ${TABLE}.deal_partner ;;
+  }
+
   dimension: device_type {
     type: string
     sql: ${TABLE}.Device_Type ;;

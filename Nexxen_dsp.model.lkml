@@ -55,6 +55,10 @@ explore: monthly_billing_locked_report{
  label: "Locked Report"
 }
 
+explore: netsuite_revenue_us  {
+  label: "Netsuite Billing US"
+}
+
 
 
 

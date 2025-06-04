@@ -106,10 +106,10 @@ explore: sam {
 }
 
 explore: sam_lt_comm {
-  # access_filter: {
-  #   field: sam_lt_comm.operations_owner
-  #   user_attribute: allowed_users_sam_lt
-  # }
+  access_filter: {
+  field: sam_lt_comm.operations_owner
+  user_attribute: sam_lt_office_group
+  }
   label: "SAM LT Commision"
   #affecting bd comm - global, monthly metrics by ops owner
   #required_access_grants: [allowed_users_sam_lt,allowed_sales]

@@ -216,14 +216,14 @@ view: fact_nexxen_dsp {
 dimension: inventory_source_key {
   type: number
   sql: ${TABLE}.inventory_source_key ;;
-  hidden: no
+  hidden: yes
 }
 
-  # dimension: inventory_source_id {
-  #   type: number
-  #   sql: ${TABLE}.inventory_source_id ;;
-  #   hidden: yes
-  # }
+  dimension: inventory_source_id {
+    type: number
+    sql: ${TABLE}.inventory_source_id ;;
+    hidden: yes
+  }
 
   dimension: manual_adjustment_key {
     type: number
@@ -367,11 +367,11 @@ dimension: inventory_source_key {
   }
 
 
-#   measure: Nexxen_Inv_Cost {
-#     type: sum
-#     value_format: "$#,##0.00"
-#     sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inv_cost" else null end ;;
-#   }
+  # measure: Nexxen_Inv_Cost {
+  #   type: sum
+  #   value_format: "$#,##0.00"
+  #   sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inv_cost" else null end ;;
+  # }
 
 
 # measure: Nexxen_Inv_Cost_Percent {

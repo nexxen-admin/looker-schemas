@@ -361,6 +361,7 @@ view: monthly_billing_locked_report {
   }
 
   dimension: passed_bill_amount {
+    label: "Past Bill Amount"
     type: number
     sql: ${TABLE}.passed_bill_amount ;;
   }
@@ -401,6 +402,7 @@ view: monthly_billing_locked_report {
   }
 
   dimension: quantity {
+    label: "Past Bill Units"
     type: number
     sql: ${TABLE}.quantity ;;
   }

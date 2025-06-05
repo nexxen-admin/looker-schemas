@@ -1,6 +1,31 @@
 view: ncd_fact_nexxen_dsp_state {
-    sql_table_name: BI_DSP.ncd_fact_nexxen_dsp_state ;;
+    # sql_table_name: BI_DSP.ncd_fact_nexxen_dsp_state ;;
+    derived_table: {
+      sql: SELECT *,
+    CASE WHEN ROW_NUMBER() OVER (PARTITION BY opportunitylineitem_key ORDER BY opportunitylineitem_key)=1 THEN units__c ELSE 0 END AS units,
+    CASE WHEN ROW_NUMBER() OVER (PARTITION BY opportunitylineitem_key ORDER BY opportunitylineitem_key)=1 THEN spend__c ELSE 0 END AS spend
+FROM
+    "BI_DSP"."ncd_fact_nexxen_dsp_state" AS "ncd_fact_nexxen_dsp_state"
+  WHERE
+        {% condition date_filter %} ncd_fact_nexxen_dsp_state.date_key_in_timezone {% endcondition %}
+        AND
+        {% condition account_name_filter %} ncd_fact_nexxen_dsp_state.account_name {% endcondition %}
+        AND
+        {% condition advertiser_name_filter %} ncd_fact_nexxen_dsp_state.advertiser_name {% endcondition %}
+    ;;
+    }
 
+filter: date_filter {
+  type: date
+}
+
+filter: account_name_filter {
+  type:  string
+}
+
+filter: advertiser_name_filter {
+  type: string
+}
 
 dimension: id {
   primary_key: yes
@@ -134,7 +159,6 @@ dimension: line_item_group_c {
 dimension: line_item_name__c {
   type: string
   sql: ${TABLE}.line_item_name__c ;;
-  hidden: yes
 }
 dimension: line_item_nickname {
   type: string
@@ -227,13 +251,13 @@ measure: delivered_units {
 measure: budgeted_spend{
   type: sum
   label: "Budgeted Spend"
-  sql: ${TABLE}.spend__c ;;
+  sql: ${TABLE}.spend ;;
   value_format: "$#,##0.00"
 }
 measure: budgeted_units {
   type: sum
   label: "Budgeted Units"
-  sql: ${TABLE}.units__c ;;
+  sql: ${TABLE}.units ;;
 }
 
 

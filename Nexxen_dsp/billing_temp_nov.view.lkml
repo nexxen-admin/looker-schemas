@@ -244,6 +244,7 @@ view: billing_temp_nov {
     sql: ${TABLE}.p_rev_usd ;;
   }
   dimension: passed_bill_amount {
+    label: "Past Bill Amount"
     type: number
     sql: ${TABLE}.passed_bill_amount ;;
   }
@@ -280,6 +281,7 @@ view: billing_temp_nov {
     sql: ${TABLE}.product_sold ;;
   }
   dimension: quantity {
+    label: "Past Bill Units"
     type: number
     sql: ${TABLE}.quantity;;
   }

@@ -100,21 +100,12 @@ explore: fact_nexxen_dsp  {
     sql_on: ${fact_nexxen_dsp.inventory_source_key}=${dim_dsp_inventory_source.inventory_source_key} ;;
   }
 
-
   join: dim_dsp_environment {
     type: left_outer
     view_label: "Environment"
     relationship: many_to_one
     sql_on: ${fact_nexxen_dsp.environment_key}=${dim_dsp_environment.environment_key} ;;
   }
-
-  #join: dim_dsp_environment {
-   # type: left_outer
-    #view_label: "Environment"
-    #relationship: many_to_one
-    #sql_on: ${fact_nexxen_dsp.environment_key}=${dim_dsp_environment.environment_key} ;;
-  #}
-
 
   join: dim_dsp_format {
     type: left_outer
@@ -181,22 +172,6 @@ explore: fact_nexxen_dsp  {
     sql_on: ${dim_dsp_creative.creative_id_key}=${fact_nexxen_dsp.creative_id_key} ;;
     relationship: many_to_one
   }
-
-
-  # join: dim_dsp_environment {
-  #   type: left_outer
-  #   view_label: "Environment"
-  #   sql_on: ${dim_dsp_environment.environment_key}=${fact_nexxen_dsp.environment_key} ;;
-  #   relationship: many_to_one
-  # }
-
-  ##join: dim_dsp_environment {
-   ## type: left_outer
-    ##view_label: "Environment"
-    ##sql_on: ${dim_dsp_environment.environment_key}=${fact_nexxen_dsp.environment_key} ;;
-    ##relationship: many_to_one
-  ##}
-
 
   join: dim_dsp_creative_file {
     type:left_outer

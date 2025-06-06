@@ -64,8 +64,8 @@ view: Molson_Core_HEM_Statistics {
 
   measure: File_HEMS {
     type: sum
-    sql: ${TABLE}."File_HEMS"
-    value_format: "#,##0";;
+    sql: ${TABLE}."File_HEMS";;
+    value_format: "#,##0"
   }
 
   measure: Distinct_File_Hems {

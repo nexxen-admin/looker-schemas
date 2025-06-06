@@ -169,6 +169,17 @@ view: dim_publisher {
       hidden: yes
     }
 
+  dimension: external_domain {
+    type: string
+    sql: ${TABLE}.external_domain  ;;
+  }
+
+  dimension: external_name {
+    type: string
+    sql: ${TABLE}.external_name  ;;
+  }
+
+
     dimension: integration_type {
       label: "Integration Type"
       type: string

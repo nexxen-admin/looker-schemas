@@ -4,10 +4,10 @@ view: Molson_Core_HEM_Statistics {
     select HEM_File_Version,
        Graph_Run_Date,
        Is_Reportable,
-       File_HEMS,
        Create_Time,
        Update_Time,
 
+       File_HEMS,
        Distinct_File_Hems,
        Device_Matched_HEMs,
        Household_Matched_HEMs,
@@ -49,11 +49,6 @@ view: Molson_Core_HEM_Statistics {
     sql: ${TABLE}."Is_Reportable" ;;
   }
 
-  dimension: File_HEMS {
-    type: string
-    sql: ${TABLE}."File_HEMS" ;;
-  }
-
   dimension: Create_Time {
     type: string
     sql: ${TABLE}."Create_Time" ;;
@@ -67,7 +62,11 @@ view: Molson_Core_HEM_Statistics {
 
   # measures
 
-
+  measure: File_HEMS {
+    type: sum
+    sql: ${TABLE}."File_HEMS"
+    value_format: "#,##0";;
+  }
 
   measure: Distinct_File_Hems {
     type: average
@@ -184,10 +183,10 @@ view: Molson_Core_HEM_Statistics {
       HEM_File_Version,
        Graph_Run_Date,
        Is_Reportable,
-       File_HEMS,
        Create_Time,
        Update_Time,
 
+       File_HEMS,
        Distinct_File_Hems,
        Device_Matched_HEMs,
        Household_Matched_HEMs,

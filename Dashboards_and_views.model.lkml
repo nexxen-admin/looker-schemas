@@ -661,6 +661,11 @@ explore: Molson_Core_HEM_Statistics {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: MCBC_LR_Match_Statistics {
+  label: "MCBC_LR_Match_Statistics"
+  required_access_grants: [can_view_all_tremor]
+}
+
 
 explore: bid_opti_all_models_no_resrictions {
   label: "bid_opti_all_models_no_resrictions"

@@ -36,33 +36,28 @@ view: MCBC_LR_Match_Statistics {
   }
 
   #Measures
-  dimension: total_file_ids {
-    type: number
-    value_format_name: id
+  measure: total_file_ids {
+    type: sum
     sql: ${TABLE}.Total_File_IDs ;;
     value_format: "#,##0"
   }
-  dimension: distinct_file_ids {
-    type: number
-    value_format_name: id
+  measure: distinct_file_ids {
+    type: sum
     sql: ${TABLE}.Distinct_File_IDs ;;
     value_format: "#,##0"
   }
-  dimension: matched_graph_device_ids {
-    type: number
-    value_format_name: id
+  measure: matched_graph_device_ids {
+    type: sum
     sql: ${TABLE}.Matched_Graph_Device_IDs ;;
     value_format: "#,##0"
   }
-  dimension: matched_graph_person_ids {
-    type: number
-    value_format_name: id
+  measure: matched_graph_person_ids {
+    type: sum
     sql: ${TABLE}.Matched_Graph_Person_IDs ;;
     value_format: "#,##0"
   }
-  dimension: matched_graph_household_ids {
-    type: number
-    value_format_name: id
+  measure: matched_graph_household_ids {
+    type: sum
     sql: ${TABLE}.Matched_Graph_Household_IDs ;;
     value_format: "#,##0"
   }

@@ -373,6 +373,13 @@ dimension: inventory_source_key {
   #   sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inv_cost" else null end ;;
   # }
 
+#     measure: Nexxen_Inv_Cost {
+#     type: sum
+#     value_format: "$#,##0.00"
+#     sql: case when ${TABLE}.inventory_source_key=1,250,002 then ${TABLE}."inv_cost" else null end ;;
+#   }
+
+
 
 # measure: Nexxen_Inv_Cost_Percent {
 #   type: number

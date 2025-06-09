@@ -2652,6 +2652,39 @@ view: fact_ad_daily_agg {
     filters: [period_filtered_measures: "last"]
   }
 
+
+  # measure: current_period_cost {
+  #   view_label: "PoP"
+  #   type: sum
+  #   description: "The current period's cost"
+  #   sql: ${TABLE}.sum_of_cogs ;;
+  #   value_format: "$#,##0"
+  #   filters: [period_filtered_measures: "this"]
+  # }
+
+
+  measure: current_period_pub_request{
+    view_label: "PoP"
+    type: sum
+    description: "Requests sent to us from the publisher only to the exchange. This count is prior to any filtering and determination of which DSPs the requests are sent to and which Deals are attached to the request"
+    label: "Current Period Pub Requests"
+    #value_format: "#,##0.0,,\"\""
+    # group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_rmp_requests ;;
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_pub_request{
+    view_label: "PoP"
+    type: sum
+    description: "Requests sent to us from the publisher only to the exchange. This count is prior to any filtering and determination of which DSPs the requests are sent to and which Deals are attached to the request"
+    label: "Previous Period Pub Requests"
+    #value_format: "#,##0.0,,\"\""
+    # group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_rmp_requests ;;
+    filters: [period_filtered_measures: "last"]
+  }
+
   measure: current_period_bid_rate {
     view_label: "PoP"
     type: number

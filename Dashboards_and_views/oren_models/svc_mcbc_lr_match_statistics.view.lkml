@@ -1,7 +1,8 @@
 view: MCBC_LR_Match_Statistics {
     derived_table: {
       sql:
-          select Last_File_Update,
+          select Category
+            Last_File_Update,
             Graph_Match_Timestamp,
             Total_File_IDs,
             Distinct_File_IDs,
@@ -10,10 +11,15 @@ view: MCBC_LR_Match_Statistics {
             Matched_Graph_Household_IDs,
             Create_Time,
             Update_Time
-        from BI.SVC_MCBC_LR_Match_Statistics
+        from BI.SVC_MCBC_LR_Match_Statistics_by_Category
         ;;
     }
 
+
+  dimension: Category {
+    type: string
+    sql: ${TABLE}."Category" ;;
+  }
   dimension_group: last_file_update {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
@@ -64,6 +70,7 @@ view: MCBC_LR_Match_Statistics {
 
   set: detail {
     fields: [
+    Category,
     last_file_update_date,
     graph_match_timestamp_date,
     create_time_date,

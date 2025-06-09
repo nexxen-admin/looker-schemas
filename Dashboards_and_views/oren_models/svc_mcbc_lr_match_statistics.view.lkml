@@ -1,7 +1,7 @@
 view: MCBC_LR_Match_Statistics {
     derived_table: {
       sql:
-          select Category
+          select Category,
             Last_File_Update,
             Graph_Match_Timestamp,
             Total_File_IDs,

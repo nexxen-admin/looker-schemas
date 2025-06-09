@@ -282,7 +282,7 @@ measure: VCR_1P {
 
 measure: Delivered_Spend {
   type: sum
-  sql: ${TABLE}.impressions/1000*${TABLE}.rate__c;;
+  sql: ${TABLE}.uncapped_revenue;;
   value_format: "$#,##0.00"
 }
 

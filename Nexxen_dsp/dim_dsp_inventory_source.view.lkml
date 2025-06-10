@@ -22,7 +22,7 @@ view: dim_dsp_inventory_source {
   dimension: inventory_source_key {
     type: number
     sql: ${TABLE}.inventory_source_key ;;
-    hidden: no
+    hidden: yes
     }
   dimension: inventory_source_name {
     type: string

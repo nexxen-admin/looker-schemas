@@ -219,11 +219,11 @@ dimension: inventory_source_key {
   hidden: yes
 }
 
-  dimension: inventory_source_id {
-    type: number
-    sql: ${TABLE}.inventory_source_id ;;
-    hidden: yes
-  }
+  # dimension: inventory_source_id {
+  #   type: number
+  #   sql: ${TABLE}.inventory_source_id ;;
+  #   hidden: yes
+  # }
 
   dimension: manual_adjustment_key {
     type: number
@@ -757,6 +757,12 @@ dimension: inventory_source_key {
     hidden: yes
     #incorrect - might need to be calculated in the back
     }
+
+    # measure: Nexxen_inv {
+    #   type: number
+    #   sql: case when ${dim_dsp_inventory_source.inbentory_source_id}='158' then ${TABLE}.inv_cost
+    #   else 0 END;;
+    # }
 
   measure: Delivered_Spend {
     type: sum

@@ -158,6 +158,7 @@ explore: fact_nexxen_msd_advertiser  {
   }
 
 
+
   join: v_dim_dsp_date {
     type: inner
     view_label: "Time Frame"

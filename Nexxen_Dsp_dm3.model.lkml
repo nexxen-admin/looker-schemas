@@ -113,6 +113,13 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_inventory_source {
+    type: left_outer
+    view_label: "Inventory Source"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.inventory_source_key}=${dim_dsp_inventory_source.inventory_source_key} ;;
+  }
+
   join: dim_dsp_monthly_manual_adjustment {
     type:left_outer
     view_label: "Manual Billing ADJ"

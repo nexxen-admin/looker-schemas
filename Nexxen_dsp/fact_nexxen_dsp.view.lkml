@@ -758,11 +758,11 @@ dimension: inventory_source_key {
     #incorrect - might need to be calculated in the back
     }
 
-    # measure: Nexxen_inv {
-    #   type: number
-    #   sql: case when ${dim_dsp_inventory_source.inbentory_source_id}='158' then ${TABLE}.inv_cost
-    #   else 0 END;;
-    # }
+    measure: Nexxen_inv {
+      type: number
+      sql: case when ${dim_dsp_inventory_source.inventory_source_id}='158' then ${TABLE}.inv_cost
+      else 0 END;;
+    }
 
   measure: Delivered_Spend {
     type: sum

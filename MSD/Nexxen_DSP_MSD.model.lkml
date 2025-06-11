@@ -157,6 +157,12 @@ explore: fact_nexxen_msd_advertiser  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_inventory_source {
+    type: left_outer
+    view_label: "Inventory Source"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.inventory_source_key}=${dim_dsp_inventory_source.inventory_source_key} ;;
+  }
 
 
   join: v_dim_dsp_date {
@@ -373,6 +379,13 @@ explore: fact_nexxen_msd_agency  {
     view_label: "Insertion Order"
     sql_on: ${dim_dsp_line_item.insertion_order_id}=${dim_dsp_insertion_order.insertion_order_id} ;;
     relationship: many_to_one
+  }
+
+  join: dim_dsp_inventory_source {
+    type: left_outer
+    view_label: "Inventory Source"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.inventory_source_key}=${dim_dsp_inventory_source.inventory_source_key} ;;
   }
 
   join: dim_dsp_format {

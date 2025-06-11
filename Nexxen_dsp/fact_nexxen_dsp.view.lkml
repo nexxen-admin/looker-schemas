@@ -758,11 +758,18 @@ dimension: inventory_source_key {
     #incorrect - might need to be calculated in the back
     }
 
-    measure: Nexxen_inv {
+    measure: Nexxen_Inv_Cost {
       type: number
       sql: case when ${dim_dsp_inventory_source.inventory_source_id}='158' then ${TABLE}.inv_cost
       else 0 END;;
     }
+
+  measure: nexxen_inv_cost_percent {
+    type: number
+    label: "Nexxen inv cost %"
+    sql: ${Nexxen_Inv_Cost}/nullif(${inv_cost},0)  ;;
+    value_format: "0.00%"
+  }
 
   measure: Delivered_Spend {
     type: sum

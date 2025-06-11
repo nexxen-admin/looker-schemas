@@ -760,7 +760,7 @@ dimension: inventory_source_key {
 
     measure: Nexxen_Inv_Cost {
       type: number
-      sql: case when ${dim_dsp_inventory_source.inventory_source_id}='158' then ${TABLE}.inv_cost
+      sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}.inv_cost
       else 0 END;;
     }
 

@@ -69,109 +69,109 @@ view: Molson_Core_HEM_Statistics {
   }
 
   measure: Distinct_File_Hems {
-    type: average
+    type: sum
     sql: ${TABLE}.Distinct_File_Hems ;;
     value_format: "#,##0"
     label: "Distinct_File_Hems"
   }
 
   measure: Device_Matched_HEMs {
-    type: average
+    type: sum
     sql: ${TABLE}.Device_Matched_HEMs ;;
     value_format: "#,##0"
   }
 
   measure: Household_Matched_HEMs {
-    type: average
+    type: sum
     sql: ${TABLE}.Household_Matched_HEMs ;;
     value_format: "#,##0"
   }
 
   measure: Person_Matched_HEMs {
-    type: average
+    type: sum
     sql: ${TABLE}.Person_Matched_HEMs ;;
     value_format: "#,##0"
   }
 
   measure: Cookie_Count {
-    type: average
+    type: sum
     sql: ${TABLE}.Cookie_Count ;;
     value_format: "#,##0"
   }
 
   measure: Cookie_Persons {
-    type: average
+    type: sum
     sql: ${TABLE}.Cookie_Persons ;;
     value_format: "#,##0"
   }
   measure: Cookie_Households {
-    type: average
+    type: sum
     sql: ${TABLE}.Cookie_Households ;;
     value_format: "#,##0"
   }
   measure: Device_Count {
-    type: average
+    type: sum
     sql: ${TABLE}.Device_Count ;;
     value_format: "#,##0"
   }
   measure: Device_Persons {
-    type: average
+    type: sum
     sql: ${TABLE}.Device_Persons ;;
     value_format: "#,##0"
   }
   measure: Device_Households {
-    type: average
+    type: sum
     sql: ${TABLE}.Device_Households ;;
     value_format: "#,##0"
   }
   measure: RampID_Count {
-    type: average
+    type: sum
     sql: ${TABLE}.RampID_Count ;;
     value_format: "#,##0"
   }
   measure: RampID_Persons {
-    type: average
+    type: sum
     sql: ${TABLE}.RampID_Persons ;;
     value_format: "#,##0"
   }
   measure: RampID_Households {
-    type: average
+    type: sum
     sql: ${TABLE}.RampID_Households ;;
     value_format: "#,##0"
   }
   measure: IP_Count {
-    type: average
+    type: sum
     sql: ${TABLE}.IP_Count ;;
     value_format: "#,##0"
   }
   measure: IP_Persons {
-    type: average
+    type: sum
     sql: ${TABLE}.IP_Persons ;;
     value_format: "#,##0"
   }
 
   measure: IP_Households {
-    type: average
+    type: sum
     sql: ${TABLE}.IP_Households ;;
     value_format: "#,##0"
   }
   measure: UID_Count {
-    type: average
+    type: sum
     sql: ${TABLE}.UID_Count ;;
     value_format: "#,##0"
   }
   measure: UID_Persons {
-    type: average
+    type: sum
     sql: ${TABLE}.UID_Persons ;;
     value_format: "#,##0"
   }
   measure: UID_Households {
-    type: average
+    type: sum
     sql: ${TABLE}.UID_Households ;;
     value_format: "#,##0"
   }
   measure: Total_Graph_HEMs {
-    type: average
+    type: sum
     sql: ${TABLE}.Total_Graph_HEMs ;;
     value_format: "#,##0"
   }

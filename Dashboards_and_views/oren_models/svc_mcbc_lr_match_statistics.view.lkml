@@ -57,7 +57,7 @@ view: MCBC_LR_Match_Statistics {
     sql: ${TABLE}.Distinct_File_IDs ;;
     value_format: "#,##0"
   }
-  measure: Matched_Graph_TUIDs {
+  measure: matched_graph_tuids {
     type: sum
     sql: ${TABLE}.Matched_Graph_TUIDs ;;
     value_format: "#,##0"
@@ -88,7 +88,7 @@ view: MCBC_LR_Match_Statistics {
     update_time_date,
     total_file_ids,
     distinct_file_ids,
-    Matched_Graph_TUIDs,
+    matched_graph_tuids,
     matched_graph_device_ids,
     matched_graph_person_ids,
     matched_graph_household_ids

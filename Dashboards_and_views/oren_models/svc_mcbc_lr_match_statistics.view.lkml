@@ -12,8 +12,11 @@ view: MCBC_LR_Match_Statistics {
             Matched_Graph_Person_IDs,
             Matched_Graph_Household_IDs,
             Create_Time,
-            Update_Time
-        from BI.SVC_MCBC_Match_Statistics_by_Category_Source
+            Update_Time,
+            internal_category_id,
+            Category_Name,
+            Mapped_Source
+        from BI.SVC_MCBC_Match_Statistics_by_Category_Source_View
         ;;
     }
 
@@ -21,9 +24,22 @@ view: MCBC_LR_Match_Statistics {
   dimension: Data_Source {
     type: string
     sql: ${TABLE}."Data_Source" ;;
-  }dimension: Category {
+  }
+  dimension: Category {
     type: string
     sql: ${TABLE}."Category" ;;
+  }
+ dimension: internal_category_id {
+      type: string
+      sql: ${TABLE}."internal_category_id" ;;
+  }
+  dimension: Category_Name {
+    type: string
+    sql: ${TABLE}."Category_Name" ;;
+  }
+    dimension: mapped_source {
+      type: string
+      sql: ${TABLE}."mapped_source" ;;
   }
   dimension_group: last_file_update {
     type: time
@@ -82,6 +98,9 @@ view: MCBC_LR_Match_Statistics {
     fields: [
     Data_Source,
     Category,
+    internal_category_id,
+    Category_Name,
+    mapped_source,
     last_file_update_date,
     graph_match_timestamp_date,
     create_time_date,

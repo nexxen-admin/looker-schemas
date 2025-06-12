@@ -838,7 +838,7 @@ view: dim_sfdb_opportunity {
   dimension: super_region__c {
     type: string
     sql: ${TABLE}.super_region__c ;;
-    hidden: yes
+    hidden: no
   }
 
   dimension_group: systemmodstamp {

@@ -367,26 +367,25 @@ dimension: inventory_source_key {
   }
 
 
-  # measure: Nexxen_Inv_Cost {
-  #   type: sum
-  #   value_format: "$#,##0.00"
-  #   sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inv_cost" else null end ;;
+  measure: Nexxen_Inv_Cost {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inv_cost" else null end ;;
+  }
+
+  # measure: nexxen_inv_cost_percent {
+  #   type: number
+  #   label: "Nexxen inv cost %"
+  #   sql: ${Nexxen_Inv_Cost}/nullif(${inv_cost},0)  ;;
+  #   value_format: "0.00%"
   # }
 
-#     measure: Nexxen_Inv_Cost {
-#     type: sum
-#     value_format: "$#,##0.00"
-#     sql: case when ${TABLE}.inventory_source_key=1,250,002 then ${TABLE}."inv_cost" else null end ;;
-#   }
-
-
-
-# measure: Nexxen_Inv_Cost_Percent {
-#   type: number
-#   label: "Nexxen Inv Cost %"
-#   value_format:  "0.00%"
-#   sql: ${Nexxen_Inv_Cost}/nullif(${inv_cost},0);;
-# }
+measure: Nexxen_Inv_Cost_Percent {
+  type: number
+  label: "Nexxen Inv Cost %"
+  value_format:  "0.00%"
+  sql: ${Nexxen_Inv_Cost}/nullif(${inv_cost},0);;
+}
 
 
 #   measure: inv_cost {
@@ -758,18 +757,24 @@ dimension: inventory_source_key {
     #incorrect - might need to be calculated in the back
     }
 
-    measure: Nexxen_Inv_Cost {
-      type: number
-      sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}.inv_cost
-      else 0 END;;
-    }
+    # measure: Nexxen_Inv_Cost {
+    #   type: number
+    #   sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}.inv_cost
+    #   else 0 END;;
+    # }
 
-  measure: nexxen_inv_cost_percent {
-    type: number
-    label: "Nexxen inv cost %"
-    sql: ${Nexxen_Inv_Cost}/nullif(${inv_cost},0)  ;;
-    value_format: "0.00%"
-  }
+  # measure: Nexxen_Inv_Cost {
+  #   type: sum
+  #   value_format: "$#,##0.00"
+  #   sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inv_cost" else null end ;;
+  # }
+
+  # measure: nexxen_inv_cost_percent {
+  #   type: number
+  #   label: "Nexxen inv cost %"
+  #   sql: ${Nexxen_Inv_Cost}/nullif(${inv_cost},0)  ;;
+  #   value_format: "0.00%"
+  # }
 
   measure: Delivered_Spend {
     type: sum

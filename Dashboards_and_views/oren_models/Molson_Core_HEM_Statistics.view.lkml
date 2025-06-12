@@ -151,27 +151,27 @@ view: Molson_Core_HEM_Statistics {
   }
 
   measure: IP_Households {
-    type: average
+    type: sum
     sql: ${TABLE}.IP_Households ;;
     value_format: "#,##0"
   }
   measure: UID_Count {
-    type: average
+    type: sum
     sql: ${TABLE}.UID_Count ;;
     value_format: "#,##0"
   }
   measure: UID_Persons {
-    type: average
+    type: sum
     sql: ${TABLE}.UID_Persons ;;
     value_format: "#,##0"
   }
   measure: UID_Households {
-    type: average
+    type: sum
     sql: ${TABLE}.UID_Households ;;
     value_format: "#,##0"
   }
   measure: Total_Graph_HEMs {
-    type: average
+    type: sum
     sql: ${TABLE}.Total_Graph_HEMs ;;
     value_format: "#,##0"
   }

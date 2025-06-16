@@ -16,8 +16,7 @@ view: MCBC_LR_Match_Statistics {
             internal_category_id,
             Category_Name,
             Mapped_Source,
-            is_latest_record,
-            graph_match_date
+            is_latest_record
         from BI.SVC_MCBC_Match_Statistics_by_Category_Source_View
         ;;
     }
@@ -47,7 +46,7 @@ view: MCBC_LR_Match_Statistics {
     type: yesno
     sql: ${TABLE}."is_latest_record" ;;
   }
-  dimension: graph_match_date {
+  dimension: Graph_Match_Date {
     type: string
     sql: ${TABLE}."Graph_Match_Timestamp" ;;
   }
@@ -112,7 +111,7 @@ view: MCBC_LR_Match_Statistics {
     Category_Name,
     mapped_source,
     is_latest_record,
-    graph_match_date,
+    Graph_Match_Date,
     last_file_update_date,
     graph_match_timestamp_date,
     create_time_date,

@@ -16,7 +16,8 @@ view: MCBC_LR_Match_Statistics {
             internal_category_id,
             Category_Name,
             Mapped_Source,
-            is_latest_record
+            is_latest_record,
+            graph_match_date
         from BI.SVC_MCBC_Match_Statistics_by_Category_Source_View
         ;;
     }

@@ -46,6 +46,10 @@ view: MCBC_LR_Match_Statistics {
     type: yesno
     sql: ${TABLE}."is_latest_record" ;;
   }
+  dimension: graph_match_date {
+    type: string
+    sql: ${TABLE}."Graph_Match_Timestamp" ;;
+  }
   dimension_group: last_file_update {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
@@ -107,6 +111,7 @@ view: MCBC_LR_Match_Statistics {
     Category_Name,
     mapped_source,
     is_latest_record,
+    graph_match_date,
     last_file_update_date,
     graph_match_timestamp_date,
     create_time_date,

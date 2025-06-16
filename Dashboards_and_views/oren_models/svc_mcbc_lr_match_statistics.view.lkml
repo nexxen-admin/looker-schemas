@@ -48,7 +48,7 @@ view: MCBC_LR_Match_Statistics {
   }
   dimension: Graph_Match_Date {
     type: string
-    sql: ${TABLE}."Graph_Match_Timestamp" ;;
+    sql: TO_CHAR(${TABLE}.Graph_Match_Timestamp, 'YYYY-MM-DD') ;;
   }
   dimension_group: last_file_update {
     type: time

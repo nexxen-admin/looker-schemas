@@ -663,12 +663,12 @@ explore: revenue_prediction_report_v1 {
 
 explore: Molson_Core_HEM_Statistics {
   label: "Molson_Core_HEM_Statistics"
-  required_access_grants: [can_view_all_tremor, molson_coors]
+ # required_access_grants: [can_view_all_tremor, molson_coors]
 }
 
 explore: MCBC_LR_Match_Statistics {
   label: "MCBC_LR_Match_Statistics"
-  required_access_grants: [can_view_all_tremor, molson_coors]
+#  required_access_grants: [can_view_all_tremor, molson_coors]
 }
 
 

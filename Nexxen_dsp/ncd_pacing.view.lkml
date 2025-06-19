@@ -73,9 +73,18 @@ dimension: daily_goal{
   hidden: yes
 }
 
+dimension_group: adj_max_date {
+  type: time
+  timeframes: [raw, date, week, month, quarter, year]
+  convert_tz: no
+  datatype: date
+  sql: CASE WHEN ${TABLE}.max_date_key_in_timezone=CURRENT_DATE() THEN ${TABLE}.max_date_key_in_timezone-1  ELSE ${TABLE}.max_date_key_in_timezone END ;;
+  hidden: yes
+}
+
 dimension: pacing_dim {
   type: number
-  sql: CASE WHEN ${TABLE}.date_key_in_timezone=${TABLE}.max_date_key_in_timezone THEN ${TABLE}.run_total_delivered/(${daily_goal}*${day_of_campaign}) END ;;
+  sql: CASE WHEN ${TABLE}.date_key_in_timezone=${adj_max_date_date} THEN ${TABLE}.run_total_delivered/(${daily_goal}*${day_of_campaign}) END ;;
   hidden: yes
 }
 

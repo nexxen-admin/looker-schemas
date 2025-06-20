@@ -71,5 +71,12 @@ view: dim_country {
     sql: ${TABLE}.RI_Info ;;
   }
 
+  dimension: country_filter {
+    type: string
+    sql: CASE WHEN ${TABLE}.Country_Name IN ('China', 'Indonesia', 'Pakistan', 'Bangladesh', 'Philippines', 'Vietnam', 'Iran', 'Turkey', 'Thailand', 'Myanmar', 'South Korea', 'Iraq', 'Afghanistan', 'Yemen', 'Uzbekistan', 'Malaysia', 'Saudi Arabia', 'Nepal', 'North Korea', 'Syria', 'Sri Lanka', 'Kazakhstan', 'Cambodia', 'Jordan', 'United Arab Emirates', 'Tajikistan', 'Azerbaijan', 'Israel', 'Laos', 'Turkmenistan', 'Kyrgyzstan', 'Singapore', 'Lebanon', 'State of Palestine', 'Oman', 'Kuwait', 'Georgia', 'Mongolia', 'Qatar', 'Armenia', 'Bahrain', 'Timor-Leste', 'Cyprus', 'Bhutan', 'Maldives', 'Brunei', 'Taiwan', 'Hong Kong', 'Macao', 'Papua New Guinea', 'Fiji', 'Solomon Islands', 'Vanuatu', 'Samoa', 'Kiribati', 'Micronesia', 'Tonga', 'Marshall Islands', 'Palau', 'Nauru', 'Tuvalu', 'New Caledonia', 'French Polynesia', 'Guam', 'American Samoa', 'Northern Mariana Islands', 'Cook Islands', 'Wallis & Futuna', 'Tokelau', 'Niue'
+      ) THEN 'Asia & Oceania' ELSE ${TABLE}.Country_Name  END ;;
+    hidden: yes
+  }
+
 
 }

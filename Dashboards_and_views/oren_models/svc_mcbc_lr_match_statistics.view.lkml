@@ -7,12 +7,17 @@ view: MCBC_LR_Match_Statistics {
             Graph_Match_Timestamp,
             Total_File_IDs,
             Distinct_File_IDs,
+            Matched_Graph_TUIDs,
             Matched_Graph_Device_IDs,
             Matched_Graph_Person_IDs,
             Matched_Graph_Household_IDs,
             Create_Time,
-            Update_Time
-        from BI.SVC_MCBC_Match_Statistics_by_Category_Source
+            Update_Time,
+            internal_category_id,
+            Category_Name,
+            Mapped_Source,
+            is_latest_record
+        from BI.SVC_MCBC_Match_Statistics_by_Category_Source_View
         ;;
     }
 
@@ -20,9 +25,30 @@ view: MCBC_LR_Match_Statistics {
   dimension: Data_Source {
     type: string
     sql: ${TABLE}."Data_Source" ;;
-  }dimension: Category {
+  }
+  dimension: Category {
     type: string
     sql: ${TABLE}."Category" ;;
+  }
+ dimension: internal_category_id {
+      type: string
+      sql: ${TABLE}."internal_category_id" ;;
+  }
+  dimension: Category_Name {
+    type: string
+    sql: ${TABLE}."Category_Name" ;;
+  }
+    dimension: mapped_source {
+      type: string
+      sql: ${TABLE}."mapped_source" ;;
+  }
+  dimension: is_latest_record {
+    type: yesno
+    sql: ${TABLE}."is_latest_record" ;;
+  }
+  dimension: Graph_Match_Date {
+    type: string
+    sql: TO_CHAR(${TABLE}.Graph_Match_Timestamp, 'YYYY-MM-DD') ;;
   }
   dimension_group: last_file_update {
     type: time
@@ -56,6 +82,11 @@ view: MCBC_LR_Match_Statistics {
     sql: ${TABLE}.Distinct_File_IDs ;;
     value_format: "#,##0"
   }
+  measure: matched_graph_tuids {
+    type: sum
+    sql: ${TABLE}.Matched_Graph_TUIDs ;;
+    value_format: "#,##0"
+  }
   measure: matched_graph_device_ids {
     type: sum
     sql: ${TABLE}.Matched_Graph_Device_IDs ;;
@@ -76,12 +107,18 @@ view: MCBC_LR_Match_Statistics {
     fields: [
     Data_Source,
     Category,
+    internal_category_id,
+    Category_Name,
+    mapped_source,
+    is_latest_record,
+    Graph_Match_Date,
     last_file_update_date,
     graph_match_timestamp_date,
     create_time_date,
     update_time_date,
     total_file_ids,
     distinct_file_ids,
+    matched_graph_tuids,
     matched_graph_device_ids,
     matched_graph_person_ids,
     matched_graph_household_ids

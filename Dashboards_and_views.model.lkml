@@ -67,6 +67,11 @@ access_grant: can_view_opti_report {
   allowed_values: ["opti_ssp_report"]
 }
 
+access_grant: molson_coors {
+  user_attribute: molson_coors
+  allowed_values: ["yes"]
+}
+
 # for opti report
 #access_grant: can_view_opti_report {
 #  user_attribute: opti_ssp_report
@@ -658,12 +663,12 @@ explore: revenue_prediction_report_v1 {
 
 explore: Molson_Core_HEM_Statistics {
   label: "Molson_Core_HEM_Statistics"
-  required_access_grants: [can_view_all_tremor]
+ # required_access_grants: [can_view_all_tremor, molson_coors]
 }
 
 explore: MCBC_LR_Match_Statistics {
   label: "MCBC_LR_Match_Statistics"
-  required_access_grants: [can_view_all_tremor]
+#  required_access_grants: [can_view_all_tremor, molson_coors]
 }
 
 

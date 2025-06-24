@@ -9,6 +9,7 @@ SELECT date(IMPRESSION_DATE) as DATE_PERIOD,
       ENVIRONMENT,
       PROVIDER_NAME,
       MARKET_ID,
+      DATA_TYPE,
       CATEGORY,
       case when DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end as source,
     REGION,
@@ -17,7 +18,7 @@ SELECT date(IMPRESSION_DATE) as DATE_PERIOD,
         SUM(ADJUSTED_NET_REVENUE) as ADJUSTED_NET_REVENUE,
         SUM(TURN_FEE) as TURN_FEE
 FROM bi_new.decom
-GROUP BY 1,2,3,4,5,6,7,8,9,10,11
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
     ;;
 
 }

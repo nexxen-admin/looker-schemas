@@ -58,8 +58,8 @@ view: email_processing_log {
 
   measure: latest_file_processed_per_message {
     type: max
-    sql: ${file_processed_raw} ;;
-    label: "Latest File Processed Time per Message ID"
+    sql: ${fetched_raw}} ;;
+    label: "Latest Fetched Time per Message ID"
   }
 
   measure: count {

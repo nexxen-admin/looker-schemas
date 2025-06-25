@@ -55,6 +55,14 @@ view: email_processing_log {
     sql: ${TABLE}.source_folder ;;
     # hidden: yes
   }
+
+  measure: latest_file_processed_at {
+    type: max
+    sql: ${file_processed_raw} ;;
+    label: "Latest File Processed Time"
+    description: "Shows the most recent file_processed_at timestamp per ID"
+  }
+
   measure: count {
     type: count
     drill_fields: [id, filename]

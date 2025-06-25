@@ -56,11 +56,11 @@ view: email_processing_log {
     # hidden: yes
   }
 
-  measure: latest_file_processed_at {
+  measure: latest_file_processed_per_message {
     type: max
     sql: ${file_processed_raw} ;;
-    label: "Latest File Processed Time"
-    description: "Shows the most recent file_processed_at timestamp per ID"
+    label: "Latest File Processed Time per Message ID"
+    description: "Shows the latest time the file was processed for each message_id"
   }
 
   measure: count {

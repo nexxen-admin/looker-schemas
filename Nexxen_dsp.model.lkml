@@ -60,7 +60,9 @@ explore: netsuite_revenue_us  {
 }
 
 
-
+explore: email_processing_log  {
+  label: "Email Processing log"
+}
 
 
 #explore: v_monthly_billing_report_diff_live_locked {

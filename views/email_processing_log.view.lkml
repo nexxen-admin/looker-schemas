@@ -56,11 +56,11 @@ view: email_processing_log {
     # hidden: yes
   }
 
-  # measure: latest_ fetched_per_message {
-  #   type: max
-  #   sql: ${fetched_raw}} ;;
-  #   label: "Latest Fetched Time per Message ID"
-  # }
+  measure: latest_fetched_per_message {
+    type: max
+    sql: ${fetched_raw}} ;;
+    label: "Latest Fetched Time per Message ID"
+  }
 
   measure: count {
     type: count

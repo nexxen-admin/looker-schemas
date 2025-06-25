@@ -61,7 +61,7 @@ explore: netsuite_revenue_us  {
 
 
 explore: email_processing_log  {
-  label: "Email Processing log"
+  label: "3P Email Ingestion log"
 }
 
 

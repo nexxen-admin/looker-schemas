@@ -715,7 +715,7 @@ measure: html_kpi_pacing {
   hidden: yes
   html:
           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-              Pacing
+              Campaign to Date Pacing
               <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ total_pacing._rendered_value }}
               </div>

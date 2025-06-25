@@ -53,6 +53,7 @@ view: email_processing_log {
   dimension: source_folder {
     type: string
     sql: ${TABLE}.source_folder ;;
+    hidden: yes
   }
   measure: count {
     type: count

@@ -58,6 +58,7 @@ view: purple_labs_audience_quality {
   measure: count {
     type: count
     drill_fields: [detail*]
+    hidden:  yes
   }
 
   dimension: cohort_start_date {

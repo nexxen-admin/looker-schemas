@@ -714,8 +714,9 @@ measure: html_kpi_pacing {
   type: count
   hidden: yes
   html:
-          <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+          <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em; vertical-align: middle;">
               Campaign to Date Pacing
+                <div style="width: 15px; height: 15px; border: 2px solid #6c5d8c; border-radius: 50%; color: #6c5d8c; text-align: center; line-height: 12px; display: inline-block; vertical-align: middle;  font-weight: bold; font-size: 10px;" title=" If a package was active during a selected time frame, it will calculate pacing from the IO start date through the MAX date in the table which will always be yesterday regardless of the package length."> i</div>
               <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ total_pacing._rendered_value }}
               </div>

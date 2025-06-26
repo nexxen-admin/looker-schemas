@@ -168,6 +168,12 @@ explore: buyer_cohort {
   hidden: no
 }
 
+explore: purple_labs_audience_quality {
+  label: "Purple Labs Audience Quality"
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
+
 explore: bid_details_in_app {
   label: "Bid Details - In App"
   required_access_grants: [can_view_all_tremor]

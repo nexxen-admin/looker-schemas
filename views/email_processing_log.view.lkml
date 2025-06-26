@@ -40,15 +40,15 @@ view: email_processing_log {
     type: string
     label: "Error Reason"
     sql:
- CASE
-  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%unmapped columns%' THEN 'Unmapped Columns'
-  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%header not found%' OR
-       LOWER(email_processing_log.file_processing_error_reason) LIKE '%header columns not found in file%' THEN 'Missing Header'
-  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%extra column found%' THEN 'Extra Column Found'
-  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%missing tpa_external_id%' OR
-       LOWER(email_processing_log.file_processing_error_reason) LIKE '%missing ''tpa_external_id'' or ''date'' after mapping%' THEN 'Missing tpa_external_id or date'
-  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%empty file%' THEN 'Empty File'
-  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%email is empty%' THEN 'Email is Empty'
+CASE
+  WHEN LOWER(CAST(email_processing_log.file_processing_error_reason AS VARCHAR)) LIKE '%unmapped columns%' THEN 'Unmapped Columns'
+  WHEN LOWER(CAST(email_processing_log.file_processing_error_reason AS VARCHAR)) LIKE '%header not found%' OR
+       LOWER(CAST(email_processing_log.file_processing_error_reason AS VARCHAR)) LIKE '%header columns not found in file%' THEN 'Missing Header'
+  WHEN LOWER(CAST(email_processing_log.file_processing_error_reason AS VARCHAR)) LIKE '%extra column found%' THEN 'Extra Column Found'
+  WHEN LOWER(CAST(email_processing_log.file_processing_error_reason AS VARCHAR)) LIKE '%missing tpa_external_id%' OR
+       LOWER(CAST(email_processing_log.file_processing_error_reason AS VARCHAR)) LIKE '%missing ''tpa_external_id'' or ''date'' after mapping%' THEN 'Missing tpa_external_id or date'
+  WHEN LOWER(CAST(email_processing_log.file_processing_error_reason AS VARCHAR)) LIKE '%empty file%' THEN 'Empty File'
+  WHEN LOWER(CAST(email_processing_log.file_processing_error_reason AS VARCHAR)) LIKE '%email is empty%' THEN 'Email is Empty'
   ELSE 'Other'
 END ;;
   }

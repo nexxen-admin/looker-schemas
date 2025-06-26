@@ -40,18 +40,17 @@ view: email_processing_log {
     type: string
     label: "Error Reason"
     sql:
-    CASE
-      WHEN LOWER(${file_processing_error_reason}) LIKE '%unmapped columns%' THEN 'Unmapped Columns'
-      WHEN LOWER(${file_processing_error_reason}) LIKE '%header not found%' OR
-           LOWER(${file_processing_error_reason}) LIKE '%header columns not found in file%' THEN 'Missing Header'
-      WHEN LOWER(${file_processing_error_reason}) LIKE '%extra column found%' THEN 'Extra Column Found'
-      WHEN LOWER(${file_processing_error_reason}) LIKE '%missing tpa_external_id%' OR
-           LOWER(${file_processing_error_reason}) LIKE '%missing \'tpa_external_id\' or \'date\' after mapping%' THEN 'Missing tpa_external_id or date'
-      WHEN LOWER(${file_processing_error_reason}) LIKE '%empty file%' THEN 'Empty File'
-      WHEN LOWER(${file_processing_error_reason}) LIKE '%email is empty%' THEN 'Email is Empty'
-      ELSE 'Other'
-    END
-  ;;
+ CASE
+  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%unmapped columns%' THEN 'Unmapped Columns'
+  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%header not found%' OR
+       LOWER(email_processing_log.file_processing_error_reason) LIKE '%header columns not found in file%' THEN 'Missing Header'
+  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%extra column found%' THEN 'Extra Column Found'
+  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%missing tpa_external_id%' OR
+       LOWER(email_processing_log.file_processing_error_reason) LIKE '%missing ''tpa_external_id'' or ''date'' after mapping%' THEN 'Missing tpa_external_id or date'
+  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%empty file%' THEN 'Empty File'
+  WHEN LOWER(email_processing_log.file_processing_error_reason) LIKE '%email is empty%' THEN 'Email is Empty'
+  ELSE 'Other'
+END ;;
   }
 
 

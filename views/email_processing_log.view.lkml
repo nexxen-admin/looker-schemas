@@ -62,6 +62,12 @@ view: email_processing_log {
     label: "Latest Fetched Time per Message ID"
   }
 
+  # measure: count_message_id {
+  #   type: count
+  #   sql: ${message_id} ;;
+  #   label: "Count of Message IDs"
+  # }
+
   measure: count {
     type: count
     drill_fields: [id, filename]

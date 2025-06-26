@@ -40,18 +40,18 @@ view: email_processing_log {
     type: string
     label: "Error Reason"
     sql:
-CASE
-  WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%unmapped columns%' THEN 'Unmapped Columns'
-  WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%header not found%' OR
-       LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%header columns not found in file%' THEN 'Missing Header'
-  WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%extra column found%' THEN 'Extra Column Found'
-  WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%missing tpa_external_id%' OR
-       LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%missing ''tpa_external_id'' or ''date'' after mapping%' THEN 'Missing tpa_external_id or date'
-  WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%empty file%' THEN 'Empty File'
-  WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%email is empty%' THEN 'Email is Empty'
-  ELSE 'Other'
-END
- ;;
+        CASE
+            WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%unmapped columns%' THEN 'Unmapped Columns'
+            WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%header not found%' OR
+                 LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%header columns not found in file%' THEN 'Missing Header'
+            WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%extra column found%' THEN 'Extra Column Found'
+            WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%missing tpa_external_id%' OR
+                 LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%Missing%'  OR
+                 LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%missing ''tpa_external_id'' or ''date'' after mapping%' THEN 'Missing tpa_external_id or date'
+            WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%empty file%' THEN 'Empty File'
+            WHEN LOWER(SUBSTRING(CAST(${file_processing_error_reason} AS VARCHAR(10000)) FROM 1 FOR 10000)) LIKE '%email is empty%' THEN 'Email is Empty'
+            ELSE 'Other'
+            END;;
   }
 
 

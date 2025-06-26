@@ -46,12 +46,13 @@ view: purple_labs_audience_quality {
       p.execution_id as execution_id,
       p.coverage as coverage,
       p.unique_patient_count as unique_patient_count,
-      f.impressions as impressions,
-      f.cost as cost
+      SUM(f.impressions) as impressions,
+      SUM(f.cost) as cost
       FROM firstp_data f
         FULL OUTER JOIN purplelabs_data p on f.cohort_start_date = p.date
                           AND f.line_item_id = p.grouper_value
-      ORDER BY f.cohort_start_date ASC ;;
+      GROUP BY 1,2,3,4,5,6,7,8,9
+      ORDER BY cohort_start_date ASC ;;
   }
 
   measure: count {
@@ -105,12 +106,12 @@ view: purple_labs_audience_quality {
   }
 
   measure: impressions {
-    type: number
+    type: sum
     sql: ${TABLE}.impressions ;;
   }
 
   measure: cost {
-    type: number
+    type: sum
     sql: ${TABLE}.cost ;;
   }
 

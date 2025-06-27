@@ -57,7 +57,7 @@ view: purple_labs_audience_quality {
       FROM firstp_data f
         FULL OUTER JOIN purplelabs_data p on f.cohort_start_date = p.date
                           AND f.line_item_id = p.grouper_value
-      GROUP BY 1,2,3,4,5,6,7,8,9
+      GROUP BY 1,2,3,4,5,6,7
       ORDER BY cohort_start_date ASC ;;
   }
 

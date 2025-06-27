@@ -44,8 +44,14 @@ view: purple_labs_audience_quality {
       f.line_item_name as line_item_name,
       p.client_id as client_id,
       p.execution_id as execution_id,
-      p.coverage as coverage,
-      p.unique_patient_count as unique_patient_count,
+      SUM(CASE
+        WHEN p.coverage = 'Less than 100 patients in CG' THEN NULL
+        ELSE CAST(REPLACE(p.coverage, '%', '') AS FLOAT) / 100
+        END) AS coverage,
+      SUM(CASE
+        WHEN p.unique_patient_count = 'Too small to measure' THEN NULL
+        ELSE CAST(p.unique_patient_count AS INTEGER)
+        END) AS unique_patient_count,
       SUM(f.impressions) as impressions,
       SUM(f.cost) as cost
       FROM firstp_data f
@@ -96,14 +102,16 @@ view: purple_labs_audience_quality {
     sql: ${TABLE}.execution_id ;;
   }
 
-  dimension: coverage {
-    type: string
+  measure: coverage {
+    type: sum
     sql: ${TABLE}.coverage ;;
+    value_format: "0.00%"
   }
 
-  dimension: unique_patient_count {
-    type: string
+  measure: unique_patient_count {
+    type: sum
     sql: ${TABLE}.unique_patient_count ;;
+    value_format: "#,##0"
   }
 
   measure: impressions {

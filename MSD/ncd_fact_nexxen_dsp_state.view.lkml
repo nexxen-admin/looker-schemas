@@ -714,8 +714,9 @@ measure: html_kpi_pacing {
   type: count
   hidden: yes
   html:
-          <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-              Campaign to Date Pacing
+          <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em; vertical-align: middle;">
+              Pacing
+                <div style="width: 15px; height: 15px; border: 2px solid #6c5d8c; border-radius: 50%; color: #6c5d8c; text-align: center; line-height: 12px; display: inline-block; vertical-align: middle;  font-weight: bold; font-size: 10px;" title="Pacing for campaigns active in the selected time frame, calculated from the start of the campaign to the latest date."> i</div>
               <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ total_pacing._rendered_value }}
               </div>

@@ -41,3 +41,7 @@ explore: dim_dsp_monthly_enterprise_targets  {
 explore: monthly_strategic_targets_changes  {
   label: "Monthly Strategic Targets Changes"
 }
+
+explore: monthly_enterprise_targets_changes {
+  label: "Monthly Enterprise Targets Changes"
+}

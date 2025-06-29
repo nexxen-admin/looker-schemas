@@ -33,3 +33,7 @@ access_grant: can_view_all_tremor {
 explore: dim_dsp_monthly_strategic_targets  {
   label: "Monthly Strategic Targets"
 }
+
+explore: dim_dsp_monthly_enterprise_targets  {
+  label: "Monthly Strategic Targets"
+}

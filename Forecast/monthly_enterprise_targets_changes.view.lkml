@@ -21,7 +21,7 @@ view: monthly_enterprise_targets_changes {
     type: string
     sql: ${TABLE}.Generalist_Rep_Name ;;
   }
-  dimension: gross_revenue {
+  measure: gross_revenue {
     type: number
     sql: ${TABLE}.Gross_Revenue ;;
   }
@@ -33,7 +33,7 @@ view: monthly_enterprise_targets_changes {
     type: number
     sql: ${TABLE}."Month" ;;
   }
-  dimension: net_revenue {
+  measure: net_revenue {
     type: number
     sql: ${TABLE}.Net_Revenue ;;
   }

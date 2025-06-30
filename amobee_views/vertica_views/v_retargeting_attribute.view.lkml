@@ -47,7 +47,7 @@ view: v_retargeting_attribute {
     ]
     description: "Date Segment was Created in local time accounting DST."
     label: "[DST] Local Created"
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name}, ${TABLE}.CREATEDON)
+    sql: case when ${v_platform_client.use_daylight_saving} then (${TABLE}.CREATEDON) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.CREATEDON end ;;
   }
 

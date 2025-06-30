@@ -28,7 +28,7 @@ view: v_demo_provider {
     type: date
     label: "[DST] Provider Local Created Date"
     description: "The date the provider was created in the system in local time accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} convert_timezone('UTC', ${v_timezone.timezone_name}, ${TABLE}.CREATED_ON)
+    sql: case when ${v_platform_client.use_daylight_saving} then ( ${TABLE}.CREATED_ON) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.CREATED_ON end ;;
   }
 

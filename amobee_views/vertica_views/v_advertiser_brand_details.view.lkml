@@ -30,8 +30,8 @@ view: v_advertiser_brand_details {
     view_label: "Advertiser"
     label: "[DST] Advertiser Local Created Date"
     description: "The date the advertiser was created in the system in local time accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name} ,${TABLE}.ADVERTISER_CREATEDON)
-      else ${TABLE}.ADVERTISER_CREATEDON end ;;
+    sql: case when ${v_platform_client.use_daylight_saving} then (${TABLE}.ADVERTISER_CREATEDON) AT TIMEZONE ${v_timezone.timezone_name}
+    else ${TABLE}.ADVERTISER_CREATEDON end ;;
   }
 
   dimension: advertiser_id {
@@ -73,8 +73,8 @@ view: v_advertiser_brand_details {
     type: date
     label: "[DST] Brand Local Created Date"
     description: "The date the Brand was created in the system in local time accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name} ,${TABLE}.BRAND_CREATEDON)
-      else ${TABLE}.BRAND_CREATEDON end ;;
+    sql: case when ${v_platform_client.use_daylight_saving} then (${TABLE}.BRAND_CREATEDON) AT TIMEZONE ${v_timezone.timezone_name}
+    else ${TABLE}.BRAND_CREATEDON end ;;
   }
 
   dimension: brand_createdon {

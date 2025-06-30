@@ -72,7 +72,7 @@ view: v_pl_plan {
     view_label: "Plan"
     label: "[DST] Plan Local Created Date"
     description: "Date in which the Plan was created in local time accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name}, ${TABLE}.CREATEDON)
+    sql: case when ${v_platform_client.use_daylight_saving} then (${TABLE}.CREATEDON) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.CREATEDON end ;;
   }
 

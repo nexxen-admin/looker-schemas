@@ -43,7 +43,7 @@ view: v_hourly_exchange_rates{
     label: "[DST] Local"
     view_label: "Exchange rates"
     timeframes: [raw, date, month]
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name}, ${TABLE}.keydate)
+    sql: case when ${v_platform_client.use_daylight_saving} then (${TABLE}.keydate) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.keydate end ;;
   }
 

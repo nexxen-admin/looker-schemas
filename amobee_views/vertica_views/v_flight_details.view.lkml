@@ -297,7 +297,7 @@ view: v_flight_details {
     ]
     label: "[DST] Flight Local Begin"
     description: "The start date of the flight in local time accountin DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('GMT', ${v_timezone.timezone_name}, TIMESTAMPADD(HOUR, COALESCE(-${v_timezone.utc_offset}, 0), ${TABLE}.BEGIN_DATETIME_LOCAL))
+    sql: case when ${v_platform_client.use_daylight_saving} then (TIMESTAMPADD(HOUR, COALESCE(-${v_timezone.utc_offset}, 0), ${TABLE}.BEGIN_DATETIME_LOCAL)) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.BEGIN_DATETIME_LOCAL end ;;
   }
 
@@ -330,7 +330,7 @@ view: v_flight_details {
     ]
     label: "[DST] Flight Local End"
     description: "The end date of the flight in local time accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('GMT', ${v_timezone.timezone_name}, TIMESTAMPADD(HOUR, COALESCE(-${v_timezone.utc_offset}, 0), TIMESTAMPADD(minute, -1,${TABLE}.END_DATETIME_LOCAL)))
+    sql: case when ${v_platform_client.use_daylight_saving} then (TIMESTAMPADD(HOUR, COALESCE(-${v_timezone.utc_offset}, 0), TIMESTAMPADD(minute, -1,${TABLE}.END_DATETIME_LOCAL))) AT TIMEZONE ${v_timezone.timezone_name}
       else TIMESTAMPADD(minute, -1,${TABLE}.END_DATETIME_LOCAL) end ;;
   }
 

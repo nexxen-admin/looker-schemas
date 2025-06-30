@@ -22,7 +22,7 @@ view: v_flight_media_details_base {
     timeframes: [raw, time, hour]
     label: "[DST] FM Begin Date - Local"
     description: "The begin date of the Flight Media in the demand timezone accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('GMT', ${v_timezone.timezone_name}, TIMESTAMPADD(hour, -${v_timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL))
+    sql: case when ${v_platform_client.use_daylight_saving} then (TIMESTAMPADD(hour, -${v_timezone.utc_offset}, ${TABLE}.BEGIN_DATETIME_LOCAL)) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.BEGIN_DATETIME_LOCAL end ;;
   }
 
@@ -46,7 +46,7 @@ view: v_flight_media_details_base {
     type: date_hour
     label: "[DST] FM Begin Date"
     description: "The begin date of the Flight Media in local time accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name}, ${TABLE}.BEGIN_DATETM)
+    sql: case when ${v_platform_client.use_daylight_saving} then (${TABLE}.BEGIN_DATETM) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.BEGIN_DATETM end ;;
   }
 
@@ -143,7 +143,7 @@ view: v_flight_media_details_base {
     type: date_time
     label: "[DST] Flight Media Local Created"
     description: "The date the flight media was created in the system in local time accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name}, ${TABLE}.CREATEDON)
+    sql: case when ${v_platform_client.use_daylight_saving} then (${TABLE}.CREATEDON) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.CREATEDON end ;;
   }
 
@@ -227,7 +227,7 @@ view: v_flight_media_details_base {
     timeframes: [raw, time, hour]
     label: "[DST] FM End Date - Local"
     description: "The end date of the Flight Media in the demand timezone accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('GMT', ${v_timezone.timezone_name}, TIMESTAMPADD(hour, (-${v_timezone.utc_offset}::Integer), ${TABLE}.END_DATETIME_LOCAL))
+    sql: case when ${v_platform_client.use_daylight_saving} then (TIMESTAMPADD(hour, (-${v_timezone.utc_offset}::Integer), ${TABLE}.END_DATETIME_LOCAL)) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.END_DATETIME_LOCAL end ;;
   }
 
@@ -251,7 +251,7 @@ view: v_flight_media_details_base {
     type: date_hour
     label: "[DST] FM End Date"
     description: "The end date of the Flight Media in local time accounting DST."
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name}, ${TABLE}.END_DATETM)
+    sql: case when ${v_platform_client.use_daylight_saving} then (${TABLE}.END_DATETM) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.END_DATETM end ;;
   }
 

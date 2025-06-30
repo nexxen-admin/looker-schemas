@@ -75,7 +75,7 @@ view: v_insertion_order_details {
     label: "[DST] Local Created Date"
     description: "The date the Insertion Order was created in the system in local time accounting DST."
     #hidden: yes
-    sql: case when ${v_platform_client.use_daylight_saving} then convert_timezone('UTC', ${v_timezone.timezone_name}, ${TABLE}.CREATEDON)
+    sql: case when ${v_platform_client.use_daylight_saving} then (${TABLE}.CREATEDON) AT TIMEZONE ${v_timezone.timezone_name}
       else ${TABLE}.CREATEDON end ;;
   }
 

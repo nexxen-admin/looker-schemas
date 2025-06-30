@@ -26,7 +26,7 @@ view: dim_dsp_monthly_enterprise_targets {
     type: string
     sql: ${TABLE}.Generalist_Rep_Name ;;
   }
-  dimension: gross_revenue {
+  measure: gross_revenue {
     type: number
     sql: ${TABLE}.Gross_Revenue ;;
   }
@@ -38,7 +38,7 @@ view: dim_dsp_monthly_enterprise_targets {
     type: number
     sql: ${TABLE}.monthly_enterprise_targets_key ;;
   }
-  dimension: net_revenue {
+  measure: net_revenue {
     type: number
     sql: ${TABLE}.Net_Revenue ;;
   }

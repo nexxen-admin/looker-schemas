@@ -13,7 +13,7 @@ view: monthly_strategic_targets_changes {
     datatype: date
     sql: ${TABLE}.event_month ;;
   }
-  measure: gross_revenue {
+  dimension: gross_revenue {
     type: number
     sql: ${TABLE}.Gross_Revenue ;;
   }
@@ -25,7 +25,7 @@ view: monthly_strategic_targets_changes {
     type: number
     sql: ${TABLE}."Month" ;;
   }
-  measure: net_revenue {
+  dimension: net_revenue {
     type: number
     sql: ${TABLE}.Net_Revenue ;;
   }

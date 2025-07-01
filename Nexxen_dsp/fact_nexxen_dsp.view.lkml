@@ -942,7 +942,7 @@ measure: Nexxen_Inv_Cost_Percent {
   }
 
   measure: vendor_cost {
-    type: number
+    type: sum
     label: "Vendor Cost"
     sql: ${TABLE}.vendor_cost ;;
     value_format: "#,##0"

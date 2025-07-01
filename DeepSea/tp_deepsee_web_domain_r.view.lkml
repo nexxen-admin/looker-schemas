@@ -119,7 +119,7 @@ view: tp_deepsee_web_domain_r {
     sql: ${TABLE}.event_time ;;
   }
   dimension: has_malware {
-    type: yesno
+    type: number
     sql: ${TABLE}.has_malware ;;
   }
   dimension: has_porn_script {

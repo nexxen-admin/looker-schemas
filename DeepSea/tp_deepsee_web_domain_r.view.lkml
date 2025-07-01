@@ -17,6 +17,22 @@ view: tp_deepsee_web_domain_r {
     type: number
     sql: ${TABLE}.ads_txt_size_pctl ;;
   }
+  dimension: web_domain_compliance_status {
+    type: string
+    sql:
+    CASE
+      WHEN ${TABLE}.high_risk_violations = 1 THEN 'Rejected'
+      ELSE 'OK'
+    END ;;
+  }
+  dimension: web_domain_rejected_reason {
+    type: string
+    sql:
+    CASE
+      WHEN ${TABLE}.high_risk_violations = 1 THEN 'High Risk'
+      ELSE NULL
+    END ;;
+  }
   dimension: ads_txt_verifiable {
     type: string
     sql: ${TABLE}.ads_txt_verifiable ;;

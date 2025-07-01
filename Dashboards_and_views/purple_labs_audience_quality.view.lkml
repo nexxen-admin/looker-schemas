@@ -87,6 +87,16 @@ view: purple_labs_audience_quality {
     sql: ${TABLE}.advertiser_name ;;
   }
 
+  dimension: insertion_order_id {
+    type: string
+    sql: ${TABLE}.insertion_order_id ;;
+  }
+
+  dimension: insertion_order_name {
+    type: string
+    sql: ${TABLE}.insertion_order_name ;;
+  }
+
   dimension: grouper_value {
     type: number
     sql: ${TABLE}.grouper_value ;;

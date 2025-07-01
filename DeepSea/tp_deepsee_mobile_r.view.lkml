@@ -21,6 +21,29 @@ view: tp_deepsee_mobile_r {
     type: string
     sql: ${TABLE}.age_group ;;
   }
+
+  dimension: compliance_status {
+    type: string
+    sql:
+    CASE
+      WHEN ${TABLE}.privacy_policy_url IS NULL
+        OR ${TABLE}.has_app_ads_txt = FALSE
+        OR ${TABLE}.delisted = TRUE
+      THEN 'Rejected'
+      ELSE 'OK'
+    END ;;
+  }
+
+  dimension: rejected_reason {
+    type: string
+    sql:
+    CASE
+      WHEN ${TABLE}.privacy_policy_url IS NULL THEN 'No Privacy Policy'
+      WHEN ${TABLE}.has_app_ads_txt = FALSE THEN 'No Ads.txt'
+      WHEN ${TABLE}.delisted = TRUE THEN 'Delisted in App Store'
+      ELSE NULL
+    END ;;
+  }
   dimension: bundle_id {
     type: string
     sql: ${TABLE}.bundle_id ;;

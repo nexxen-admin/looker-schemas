@@ -941,6 +941,13 @@ measure: Nexxen_Inv_Cost_Percent {
     sql: (${3p_iv_ia_billable_impressions}*${dim_sfdb_opportunitylineitem.booked_rate})/1000 ;;
   }
 
+  measure: vendor_cost {
+    type: sum
+    label: "Vendor Cost"
+    sql: ${TABLE}.vendor_cost ;;
+    value_format: "#,##0"
+  }
+
 
   measure: primary_kpi_result {
     label: "Primary KPI Result"

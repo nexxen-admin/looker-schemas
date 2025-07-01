@@ -234,10 +234,6 @@ view: tp_deepsee_web_domain_r {
     type: yesno
     sql: ${TABLE}.possible_misinfo ;;
   }
-  dimension: privacy_policy_detected {
-    type: yesno
-    sql: ${TABLE}.privacy_policy_detected ;;
-  }
   dimension: refresh_avg {
     type: number
     sql: ${TABLE}.refresh_avg ;;

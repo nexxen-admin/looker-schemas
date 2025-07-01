@@ -116,13 +116,13 @@ GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
   dimension: COUNTRY_ID {
     type: string
     sql: ${TABLE}.COUNTRY_ID ;;
-    label: "Source"
+    label: "Country ID"
   }
 
   dimension: COUNTRY_NAME {
     type: string
     sql: ${TABLE}.COUNTRY_NAME ;;
-    label: "Region"
+    label: "Country Name"
   }
 
 

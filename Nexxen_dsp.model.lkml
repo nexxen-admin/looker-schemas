@@ -64,6 +64,9 @@ explore: email_processing_log  {
   label: "3P Email Ingestion log"
 }
 
+explore: tpa_email_via_system_activity  {
+  label: "TPA Email Via System Activity"
+}
 
 #explore: v_monthly_billing_report_diff_live_locked {
 # required_access_grants: [billing_report_group]

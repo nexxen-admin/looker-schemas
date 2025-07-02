@@ -11,6 +11,8 @@ SELECT date(IMPRESSION_DATE) as DATE_PERIOD,
       MARKET_ID,
       DATA_TYPE,
       CATEGORY,
+      COUNTRY_ID,
+      COUNTRY_NAME,
       case when DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end as source,
     REGION,
         SUM(IMPRESSION) as IMPRESSION,
@@ -18,7 +20,7 @@ SELECT date(IMPRESSION_DATE) as DATE_PERIOD,
         SUM(ADJUSTED_NET_REVENUE) as ADJUSTED_NET_REVENUE,
         SUM(TURN_FEE) as TURN_FEE
 FROM bi_new.decom
-GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
+GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
     ;;
 
 }
@@ -111,6 +113,18 @@ GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
     label: "Region"
   }
 
+  dimension: COUNTRY_ID {
+    type: string
+    sql: ${TABLE}.COUNTRY_ID ;;
+    label: "Country ID"
+  }
+
+  dimension: COUNTRY_NAME {
+    type: string
+    sql: ${TABLE}.COUNTRY_NAME ;;
+    label: "Country Name"
+  }
+
 
 measure: IMPRESSION {
   type: sum
@@ -165,7 +179,8 @@ set: detail {
     CATEGORY,
     DATA_TYPE,
     REGION,
-
+    COUNTRY_ID,
+    COUNTRY_NAME,
     IMPRESSION,
     GROSS_REVENUE,
     ADJUSTED_NET_REVENUE,

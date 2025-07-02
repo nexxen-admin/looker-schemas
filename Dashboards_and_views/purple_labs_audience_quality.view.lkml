@@ -7,17 +7,20 @@ view: purple_labs_audience_quality {
       dda.advertiser_name,
       ddli.line_item_id AS line_item_id,
       ddli.line_item_name as line_item_name,
+      ddio.insertion_order_id as insertion_order_id,
+      ddio.insertion_order_name as insertion_order_name,
       SUM(fnd.impressions) as impressions,
       SUM(fnd.cost) as cost
       FROM BI_DSP.fact_nexxen_dsp fnd
         inner join BI_DSP.dim_dsp_advertiser dda on dda.advertiser_id_key = fnd.advertiser_id_key
         inner join BI_DSP.dim_dsp_line_item ddli on ddli.line_item_id_key = fnd.line_item_key
+        inner join BI_DSP.dim_dsp_insertion_order ddio on ddio.insertion_order_id = ddli.insertion_order_id
       WHERE fnd.date_key >= '2025-05-01'
         AND fnd.date_key < current_date()
         AND ddli.line_item_id IN (1609876096,1609876102,1609876160,1609876166,1609876168,1609868158,1609988099,1609876169,
                            1609988097,1609951513,1609872634,1609988098,1609951662,1609876164)
         AND (impressions > 0 or cost > 0)
-      GROUP BY 1,2,3,4,5
+      GROUP BY 1,2,3,4,5,6,7
       ORDER BY 1 ASC
       ),
 
@@ -42,6 +45,8 @@ view: purple_labs_audience_quality {
       f.advertiser_name as advertiser_name,
       COALESCE(f.line_item_id, p.grouper_value) as grouper_value,
       f.line_item_name as line_item_name,
+      f.insertion_order_id as insertion_order_id,
+      f.insertion_order_name as insertion_order_name,
       p.client_id as client_id,
       p.execution_id as execution_id,
       SUM(CASE
@@ -57,7 +62,7 @@ view: purple_labs_audience_quality {
       FROM firstp_data f
         FULL OUTER JOIN purplelabs_data p on f.cohort_start_date = p.date
                           AND f.line_item_id = p.grouper_value
-      GROUP BY 1,2,3,4,5,6,7
+      GROUP BY 1,2,3,4,5,6,7,8,9
       ORDER BY cohort_start_date ASC ;;
   }
 
@@ -80,6 +85,16 @@ view: purple_labs_audience_quality {
   dimension: advertiser_name {
     type: string
     sql: ${TABLE}.advertiser_name ;;
+  }
+
+  dimension: insertion_order_id {
+    type: string
+    sql: ${TABLE}.insertion_order_id ;;
+  }
+
+  dimension: insertion_order_name {
+    type: string
+    sql: ${TABLE}.insertion_order_name ;;
   }
 
   dimension: grouper_value {

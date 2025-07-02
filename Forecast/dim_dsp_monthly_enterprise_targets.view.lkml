@@ -26,16 +26,16 @@ view: dim_dsp_monthly_enterprise_targets {
     type: string
     sql: ${TABLE}.Generalist_Rep_Name ;;
   }
-  # dimension: gross_revenue {
-  #   type: number
-  #   sql: ${TABLE}.Gross_Revenue ;;
-  # }
-
-  measure: gross_revenue {
-    type: sum
-    sql: ${TABLE}.gross_revenue ;;
-    value_format: "#,##0.00"
+  dimension: gross_revenue {
+    type: number
+    sql: ${TABLE}.Gross_Revenue ;;
   }
+
+  # measure: gross_revenue {
+  #   type: sum
+  #   sql: ${TABLE}.gross_revenue ;;
+  #   value_format: "#,##0.00"
+  # }
 
   dimension: lob {
     type: string
@@ -45,16 +45,16 @@ view: dim_dsp_monthly_enterprise_targets {
     type: number
     sql: ${TABLE}.monthly_enterprise_targets_key ;;
   }
-  # dimension: net_revenue {
-  #   type: number
-  #   sql: ${TABLE}.Net_Revenue ;;
-  # }
+  dimension: net_revenue {
+    type: number
+    sql: ${TABLE}.Net_Revenue ;;
+  }
 
-  measure: net_revenue {
-    type: sum
-    sql: ${TABLE}.net_revenue ;;
-    value_format: "#,##0.00"
-   }
+  # measure: net_revenue {
+  #   type: sum
+  #   sql: ${TABLE}.net_revenue ;;
+  #   value_format: "#,##0.00"
+  # }
 
   dimension: related_brand {
     type: string

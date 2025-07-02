@@ -18,16 +18,16 @@ view: dim_dsp_monthly_strategic_targets {
     datatype: date
     sql: ${TABLE}.event_month ;;
   }
-  # dimension: gross_revenue {
-  #   type: number
-  #   sql: ${TABLE}.Gross_Revenue ;;
-  # }
-
-  measure: gross_revenue {
-    type: sum
-    sql: ${TABLE}.gross_revenue ;;
-    value_format: "#,##0.00"
+  dimension: gross_revenue {
+    type: number
+    sql: ${TABLE}.Gross_Revenue ;;
   }
+
+  # measure: gross_revenue {
+  #   type: sum
+  #   sql: ${TABLE}.gross_revenue ;;
+  #   value_format: "#,##0.00"
+  # }
 
   dimension: lob {
     type: string
@@ -38,16 +38,16 @@ view: dim_dsp_monthly_strategic_targets {
     sql: ${TABLE}.monthly_strategic_targets_key ;;
   }
 
-  # dimension: net_revenue {
-  #   type: number
-  #   sql: ${TABLE}.Net_Revenue ;;
-  # }
-
-  measure: net_revenue {
-    type: sum
-    sql: ${TABLE}.net_revenue ;;
-    value_format: "#,##0.00"
+  dimension: net_revenue {
+    type: number
+    sql: ${TABLE}.Net_Revenue ;;
   }
+
+  # measure: net_revenue {
+  #   type: sum
+  #   sql: ${TABLE}.net_revenue ;;
+  #   value_format: "#,##0.00"
+  # }
 
   dimension: opportunity_owner {
     type: string

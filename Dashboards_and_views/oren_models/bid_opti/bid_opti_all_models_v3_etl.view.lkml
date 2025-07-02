@@ -67,7 +67,7 @@ view: bid_opti_all_models_v3_etl {
         (scaled_supply_margin) - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_supply_margin_diff_to_no_opti,
 
         (scaled_demand_margin) / nullif((SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)),0)-1 as scaled_demand_margin_ratio_to_no_opti,
-        (scaled_demand_margin) - (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_demand_margin_diff_to_no_opti
+        (scaled_demand_margin) - (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_demand_margin_diff_to_no_opti,
 
         (scaled_revenue) / nullif((SUM(case when opti='no_opti' then scaled_revenue else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)),0)-1 as scaled_revenue_ratio_to_no_opti,
         (scaled_revenue) - (SUM(case when opti='no_opti' then scaled_revenue else 0 end) over (partition by dt.media_id,dt.imp_type,dt.date_trunc)) as scaled_revenue_diff_to_no_opti
@@ -88,7 +88,7 @@ view: bid_opti_all_models_v3_etl {
                scaled_margin_ratio_to_no_opti,scaled_margin_diff_to_no_opti,
                scaled_supply_margin_ratio_to_no_opti,scaled_supply_margin_diff_to_no_opti,
                scaled_demand_margin_ratio_to_no_opti,scaled_demand_margin_diff_to_no_opti,
-               scaled_revenue_ratio_to_no_opti,scaled_revenue_diff_to_no_opti
+               scaled_revenue_ratio_to_no_opti,scaled_revenue_diff_to_no_opti,scaled_revenue,
 
                CASE WHEN AD.enabled=1 THEN 'Bidfloor V2 + PubCost V1'
                     WHEN AD.enabled=0 THEN 'Bidfloor V1 + PubCost V1'

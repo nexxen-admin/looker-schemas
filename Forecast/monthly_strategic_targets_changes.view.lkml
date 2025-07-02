@@ -13,10 +13,19 @@ view: monthly_strategic_targets_changes {
     datatype: date
     sql: ${TABLE}.event_month ;;
   }
+
   dimension: gross_revenue {
     type: number
     sql: ${TABLE}.Gross_Revenue ;;
   }
+
+  # measure: gross_revenue {
+  #   type: sum
+  #   sql: ${TABLE}.gross_revenue ;;
+  #   value_format: "#,##0.00"
+  # }
+
+
   dimension: lob {
     type: string
     sql: ${TABLE}.LOB ;;
@@ -25,10 +34,18 @@ view: monthly_strategic_targets_changes {
     type: number
     sql: ${TABLE}."Month" ;;
   }
+
   dimension: net_revenue {
     type: number
     sql: ${TABLE}.Net_Revenue ;;
   }
+
+  # measure: net_revenue {
+  #   type: sum
+  #   sql: ${TABLE}.net_revenue ;;
+  #   value_format: "#,##0.00"
+  # }
+
   dimension: opportunity_owner {
     type: string
     sql: ${TABLE}.Opportunity_Owner ;;

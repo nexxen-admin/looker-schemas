@@ -45,3 +45,15 @@ explore: monthly_strategic_targets_changes  {
 explore: monthly_enterprise_targets_changes {
   label: "Monthly Enterprise Targets Changes"
 }
+
+#### FORECAST JOINED TABLE ####
+explore: forecast_dim_sfdb_opportunitylineitemschedule  {
+  label: "Forecast Opportunity Line Item Schedule"
+
+
+join: forecast_dim_sfdb_opportunitylineitem  {
+  type: left_outer
+  sql_on: ${forecast_dim_sfdb_opportunitylineitemschedule.opportunitylineitemid }=${forecast_dim_sfdb_opportunitylineitem.opportunitylineitem_aid__c} ;;
+  relationship: many_to_one
+  }
+}

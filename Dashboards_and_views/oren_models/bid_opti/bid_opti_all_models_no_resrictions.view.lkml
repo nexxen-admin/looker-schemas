@@ -1,10 +1,22 @@
 view: bid_opti_all_models_no_resrictions {
     derived_table: {
       sql: with raw_data_4_models as (
-              select *
+              select supply_margin,cost,demand_margin,margin,revenue,impression,requests,bizdev_owner_name ,operations_owner_name,date_trunc,publisher_name,pub_id,imp_type,ssp_name,placement_name,media_id,
+                     CASE  WHEN opti = 'null_bucket' THEN 'null_bucket'
+                           WHEN opti = 'bidfloor' THEN 'BF_ONLY' --1
+                           WHEN opti = 'pubcost' THEN 'PC_ONLY' --2
+                           WHEN opti = 'pubcost_bidfloor' THEN 'BF_PC' --3
+                           WHEN opti = 'no_opti' THEN 'no_opti' --4
+                           WHEN opti = 5 THEN 'BFV2-All_NoPC' --5
+                           WHEN opti = 6 THEN 'BFV2-All_PC' --6
+                           WHEN opti = 7 THEN 'BFV2-Mix_NoPC' --7
+                           WHEN opti = 8 THEN 'BFV2-Mix_PC' --8
+                           WHEN opti = 9 THEN 'BFV2-None_NoPC' --9
+                           WHEN opti = 10 THEN 'BFV2-None_PC' --10
+                           ELSE opti
+                           END as opti
               from bi.opti_bid_raw_v1
-              where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
-                    AND lower(ssp_name) like'%rmp%'
+              where lower(ssp_name) like'%rmp%'
               ),
 
 
@@ -94,11 +106,18 @@ view: bid_opti_all_models_no_resrictions {
         WHEN AD.enabled=0 THEN 'Bidfloor V1 + PubCost V1'
         ELSE 'Not in Opti Table' END as is_enabled,
 
-        CASE WHEN opti = 'no_opti' THEN 1
-        WHEN opti = 'bidfloor' THEN 2
-        WHEN opti = 'pubcost' THEN 3
-        WHEN opti = 'pubcost_bidfloor' THEN 4
-        ELSE 5 END as rank_model
+        CASE  WHEN opti = 'null_bucket' THEN 0
+              WHEN opti = 'BF_ONLY' THEN 1
+              WHEN opti = 'PC_ONLY' THEN 2
+              WHEN opti = 'BF_PC' THEN 3
+              WHEN opti = 'NO_OPTI' THEN 4
+              WHEN opti = 'BFV2-All_NoPC' THEN 5
+              WHEN opti = 'BFV2-All_PC' THEN 6
+              WHEN opti = 'BFV2-Mix_NoPC' THEN 7
+              WHEN opti = 'BFV2-Mix_PC' THEN 8
+              WHEN opti = 'BFV2-None_NoPC' THEN 9
+              WHEN opti = 'BFV2-None_PC' THEN 10
+              END as rank_model
 
         FROM scaled_margin SM
         LEFT JOIN andromeda.rx_dim_supply_placement_bidfloor_model_opti_r AD

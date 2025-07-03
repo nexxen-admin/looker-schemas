@@ -25,6 +25,10 @@ view: forecast_dim_sfdb_user_opportunity_account_manager {
     type: number
     sql: ${TABLE}.user_key_id ;;
   }
+  dimension: opp_account_manager_userroleid {
+    type: string
+    sql: ${TABLE}.opp_account_manager_userroleid ;;
+  }
   measure: count {
     type: count
     drill_fields: [opp_account_manager_user_name, opp_account_manager_full_name, opp_account_manager_company_name]

@@ -47,19 +47,6 @@ explore: monthly_enterprise_targets_changes {
 }
 
 #### FORECAST JOINED TABLE ####
-# explore: forecast_dim_sfdb_opportunitylineitemschedule  {
-#   # label: "Forecast Opportunity Line Item Schedule"
-# # }
-
-# join: forecast_dim_sfdb_opportunitylineitem  {
-#   type: left_outer
-#   sql_on: ${forecast_dim_sfdb_opportunitylineitemschedule.opportunitylineitemid }=${forecast_dim_sfdb_opportunitylineitem.opportunitylineitem_aid__c} ;;
-#   relationship: one_to_one
-#   }
-# }
-
-
-
 explore: forecast_dim_sfdb_opportunity {
 
   # label: "Forecast Opportunity Line Item Schedule"
@@ -75,4 +62,23 @@ explore: forecast_dim_sfdb_opportunity {
     sql_on: ${forecast_dim_sfdb_opportunitylineitemschedule.opportunitylineitemid} = ${forecast_dim_sfdb_opportunitylineitem.opportunitylineitem_aid__c} ;;
     relationship: many_to_one
   }
+
+  join: forecast_dim_sfdb_account {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_opportunity.accountid} = ${forecast_dim_sfdb_account.account_aid__c} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_user_opportunity_account_manager {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_user_opportunity_account_manager.opp_account_manager_id} = ${forecast_dim_sfdb_opportunity.account_manager__c} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_userrole_account_manager {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_userrole_account_manager.id} = ${forecast_dim_sfdb_user_opportunity_account_manager.opp_account_manager_userroleid} ;;
+    relationship: many_to_one
+  }
+
 }

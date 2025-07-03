@@ -1,5 +1,6 @@
 view: forecast_dim_sfdb_opportunitylineitem {
   sql_table_name: BI_DSP.dim_sfdb_opportunitylineitem ;;
+  # label: "forecast_dim_sfdb_opportunitylineitem"
   drill_fields: [id]
 
   dimension: id {

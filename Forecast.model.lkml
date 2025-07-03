@@ -47,13 +47,32 @@ explore: monthly_enterprise_targets_changes {
 }
 
 #### FORECAST JOINED TABLE ####
-explore: forecast_dim_sfdb_opportunitylineitemschedule  {
-  label: "Forecast Opportunity Line Item Schedule"
+# explore: forecast_dim_sfdb_opportunitylineitemschedule  {
+#   # label: "Forecast Opportunity Line Item Schedule"
+# # }
+
+# join: forecast_dim_sfdb_opportunitylineitem  {
+#   type: left_outer
+#   sql_on: ${forecast_dim_sfdb_opportunitylineitemschedule.opportunitylineitemid }=${forecast_dim_sfdb_opportunitylineitem.opportunitylineitem_aid__c} ;;
+#   relationship: one_to_one
+#   }
+# }
 
 
-join: forecast_dim_sfdb_opportunitylineitem  {
-  type: left_outer
-  sql_on: ${forecast_dim_sfdb_opportunitylineitemschedule.opportunitylineitemid }=${forecast_dim_sfdb_opportunitylineitem.opportunitylineitem_aid__c} ;;
-  relationship: many_to_one
+
+explore: forecast_dim_sfdb_opportunity {
+
+  # label: "Forecast Opportunity Line Item Schedule"
+
+  join: forecast_dim_sfdb_opportunitylineitem {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_opportunity.opportunity_aid__c} = ${forecast_dim_sfdb_opportunitylineitem.opportunityid} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_opportunitylineitemschedule {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_opportunitylineitemschedule.opportunitylineitemid} = ${forecast_dim_sfdb_opportunitylineitem.opportunitylineitem_aid__c} ;;
+    relationship: many_to_one
   }
 }

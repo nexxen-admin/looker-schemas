@@ -81,4 +81,15 @@ explore: forecast_dim_sfdb_opportunity {
     relationship: many_to_one
   }
 
+  join: forecast_dim_sfdb_user_opportunity_owner {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_user_opportunity_owner.opp_owner_id} = ${forecast_dim_sfdb_opportunity.ownerid} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_userrole_owner {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_userrole_owner.id} = ${forecast_dim_sfdb_user_opportunity_owner.opp_owner_userroleid} ;;
+    relationship: many_to_one
+  }
 }

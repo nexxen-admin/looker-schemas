@@ -25,6 +25,12 @@ view: forecast_dim_sfdb_user_opportunity_owner {
     type: number
     sql: ${TABLE}.user_key_id ;;
   }
+
+  dimension: opp_owner_userroleid {
+    type: string
+    sql: ${TABLE}.opp_owner_userroleid ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [opp_owner_user_name, opp_owner_company_name, opp_owner_full_name]

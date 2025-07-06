@@ -98,4 +98,58 @@ explore: forecast_dim_sfdb_opportunity {
     sql_on: ${forecast_dim_sfdb_user_opportunity_delivery_manager.opp_delivery_manager_id} = ${forecast_dim_sfdb_opportunity.delivery_manager__c} ;;
     relationship: many_to_one
   }
+
+  join: forecast_dim_sfdb_userrole_delivery_manager {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_userrole_delivery_manager.id} = ${forecast_dim_sfdb_user_opportunity_delivery_manager.opp_delivery_manager_userroleid} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_opportunity_employee {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_opportunity_employee.opportunity_id} = ${forecast_dim_sfdb_opportunity.opportunity_aid__c} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_account_brand {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_account_brand.account_aid__c} = ${forecast_dim_sfdb_opportunity.related_account_aid__c} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_price_type__c {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_price_type__c.id} = ${forecast_dim_sfdb_opportunitylineitem.price_type__c} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_product_configuration__c {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_opportunitylineitem.product_configuration__c} = ${forecast_dim_sfdb_product_configuration__c.id} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_legal_entity__c {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_legal_entity__c.id} = ${forecast_dim_sfdb_account.legal_entity__c} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_corp_entity__c {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_corp_entity__c.id} = ${forecast_dim_sfdb_opportunity.corp_entity__c} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_dim_sfdb_opp_team_member__c {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_opp_team_member__c.opportunity__c} = ${forecast_dim_sfdb_opportunity.opportunity_aid__c} ;;
+    relationship: many_to_one
+  }
+
+  join: forecast_user_member_c {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_opp_team_member__c.member__c} = ${forecast_user_member_c.aid__c} ;;
+    relationship: many_to_one
+  }
 }

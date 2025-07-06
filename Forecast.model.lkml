@@ -92,4 +92,10 @@ explore: forecast_dim_sfdb_opportunity {
     sql_on: ${forecast_dim_sfdb_userrole_owner.id} = ${forecast_dim_sfdb_user_opportunity_owner.opp_owner_userroleid} ;;
     relationship: many_to_one
   }
+
+  join: forecast_dim_sfdb_user_opportunity_delivery_manager {
+    type: left_outer
+    sql_on: ${forecast_dim_sfdb_user_opportunity_delivery_manager.opp_delivery_manager_id} = ${forecast_dim_sfdb_opportunity.delivery_manager__c} ;;
+    relationship: many_to_one
+  }
 }

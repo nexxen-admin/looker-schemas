@@ -46,6 +46,10 @@ explore: monthly_enterprise_targets_changes {
   label: "Monthly Enterprise Targets Changes"
 }
 
+explore: fact_sfdb_forecast_snapshot {
+  label: "Fact sfdb Forecast Snapshot"
+}
+
 #### FORECAST JOINED TABLE ####
 explore: forecast_dim_sfdb_opportunity {
 

@@ -118,6 +118,7 @@ view: fact_sfdb_forecast_snapshot {
   dimension: snapshot_nr_forecast_full_credit {
     type: number
     sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
+    label: "NR Forecast Full Credit"
   }
   dimension: social_specialist {
     type: string

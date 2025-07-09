@@ -32,7 +32,11 @@ view: fact_sfdb_forecast_snapshot {
   }
   dimension: gr_forecast_full_credit {
     type: number
-    sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+    sql: CASE
+           WHEN ${TABLE}.GR_Forecast_Full_Credit IS NULL THEN 0
+           ELSE ${TABLE}.GR_Forecast_Full_Credit
+         END ;;
+    label: "GR Forecast Full Credit"
   }
   dimension: holding_company {
     type: string

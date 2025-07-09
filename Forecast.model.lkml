@@ -52,6 +52,7 @@ explore: fact_sfdb_forecast_snapshot {
 
 #### FORECAST JOINED TABLE ####
 explore: forecast_dim_sfdb_opportunity {
+  label: "Forecasting"
 
   # label: "Forecast Opportunity Line Item Schedule"
 

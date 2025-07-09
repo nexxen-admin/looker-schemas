@@ -32,7 +32,11 @@ view: fact_sfdb_forecast_snapshot {
   }
   dimension: gr_forecast_full_credit {
     type: number
-    sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+    sql: CASE
+           WHEN ${TABLE}.GR_Forecast_Full_Credit IS NULL THEN 0
+           ELSE ${TABLE}.GR_Forecast_Full_Credit
+         END ;;
+    label: "GR Forecast Full Credit"
   }
   dimension: holding_company {
     type: string
@@ -118,6 +122,7 @@ view: fact_sfdb_forecast_snapshot {
   dimension: snapshot_nr_forecast_full_credit {
     type: number
     sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
+    label: "NR Forecast Full Credit"
   }
   dimension: social_specialist {
     type: string
@@ -135,6 +140,47 @@ view: fact_sfdb_forecast_snapshot {
     type: string
     sql: ${TABLE}.TV_Specialist ;;
   }
+
+  # measure: gr_forecast_for_start_filter {
+  #   type: sum
+  #   label: "GR Forecast Full Credit (Start Date)"
+  #   sql: CASE
+  #       WHEN ${schedule_revenue_start_date} IS NOT NULL
+  #       THEN COALESCE(${TABLE}.GR_Forecast_Full_Credit, 0)
+  #       ELSE 0
+  #     END ;;
+  #     }
+
+  measure: gr_forecast_start_filtered {
+    type: sum
+    label: "GR Forecast (Start Date Filtered)"
+    sql: CASE
+         WHEN {% condition schedule_revenue_start_date %} ${schedule_revenue_start_date} {% endcondition %}
+         THEN COALESCE(${TABLE}.GR_Forecast_Full_Credit, 0)
+         ELSE 0
+       END ;;
+  }
+
+  # measure: gr_forecast_for_end_filter {
+  #   type: sum
+  #   label: "GR Forecast Full Credit (End Date)"
+  #   sql: CASE
+  #       WHEN ${schedule_revenue_end_date} IS NOT NULL
+  #       THEN COALESCE(${TABLE}.GR_Forecast_Full_Credit, 0)
+  #       ELSE 0
+  #     END ;;
+  # }
+
+  measure: gr_forecast_end_filtered {
+    type: sum
+    label: "GR Forecast (End Date Filtered)"
+    sql: CASE
+         WHEN {% condition schedule_revenue_end_date %} ${schedule_revenue_end_date} {% endcondition %}
+         THEN COALESCE(${TABLE}.GR_Forecast_Full_Credit, 0)
+         ELSE 0
+       END ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [related_brand_name, account_name, opportunity_name, io_group_name]

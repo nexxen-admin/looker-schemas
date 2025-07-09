@@ -123,10 +123,18 @@ view: dim_sfdb_opportunitylineitemschedule {
     sql: ${TABLE}.useredits__c ;;
     hidden: yes
   }
+
+  measure: margin {
+    type: sum
+    label: "Margin"
+    sql: ${TABLE}.opportunity_margin ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id]
     hidden: yes
   }
+
 
 }

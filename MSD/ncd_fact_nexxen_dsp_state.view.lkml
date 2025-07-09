@@ -723,19 +723,6 @@ measure: html_kpi_pacing {
             </div>;;
 }
 
-measure: html_kpi_pacing_demo {
-  type: count
-  hidden: yes
-  html:
-          <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em; vertical-align: middle;">
-              Pacing
-                <div style="width: 15px; height: 15px; border: 2px solid #6c5d8c; border-radius: 50%; color: #6c5d8c; text-align: center; line-height: 12px; display: inline-block; vertical-align: middle;  font-weight: bold; font-size: 10px;" title="Pacing for campaigns active in the selected time frame, calculated from the start of the campaign to the latest date."> i</div>
-              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
-                100%
-              </div>
-            </div>;;
-}
-
 measure: html_kpi_delivered_units {
   type: count
   hidden: yes
@@ -744,25 +731,6 @@ measure: html_kpi_delivered_units {
               Delivered Units
               <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ delivered_units._rendered_value }}
-              </div>
-            </div>;;
-}
-
-measure: delivered_units_demo {
-  type: number
-  hidden: yes
-  value_format: "#,##0"
-  sql:${delivered_units}  *10.2;;
-}
-
-measure: html_kpi_delivered_units_demo {
-  type: count
-  hidden: yes
-  html:
-           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-              Delivered Units
-              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
-                {{ delivered_units_demo._rendered_value }}
               </div>
             </div>;;
 }
@@ -792,24 +760,6 @@ measure: html_kpi_delivered_spend {
             </div>;;
 }
 
-measure: delivered_spend_demo {
-  type: number
-  hidden: yes
-  value_format: "$#,##0.00"
-  sql:${Delivered_Spend}  *11.7;;
-}
-
-measure: html_kpi_delivered_spend_demo {
-  type: count
-  hidden: yes
-  html:
-           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-              Delivered Spend
-              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
-                {{ delivered_spend_demo._rendered_value }}
-              </div>
-            </div>;;
-}
 
 measure: html_kpi_clicks {
   type: count
@@ -847,5 +797,120 @@ measure: html_kpi_ctr {
             </div>;;
 }
 
+#---------------------------------------NCD DEMO---------------------------
+  measure: html_kpi_pacing_demo {
+    type: count
+    hidden: yes
+    html:
+          <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em; vertical-align: middle;">
+              Pacing
+                <div style="width: 15px; height: 15px; border: 2px solid #6c5d8c; border-radius: 50%; color: #6c5d8c; text-align: center; line-height: 12px; display: inline-block; vertical-align: middle;  font-weight: bold; font-size: 10px;" title="Pacing for campaigns active in the selected time frame, calculated from the start of the campaign to the latest date."> i</div>
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                100%
+              </div>
+            </div>;;
+  }
 
+
+  measure: delivered_units_demo {
+    type: number
+    hidden: yes
+    value_format: "#,##0"
+    sql:${delivered_units}  *10.2;;
+  }
+
+  measure: html_kpi_delivered_units_demo {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Delivered Units
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ delivered_units_demo._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: delivered_spend_demo {
+    type: number
+    hidden: yes
+    value_format: "$#,##0.00"
+    sql:${Delivered_Spend}  *11.7;;
+  }
+
+  measure: html_kpi_delivered_spend_demo {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Delivered Spend
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ delivered_spend_demo._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: ncd_clicks_demo {
+    type: sum
+    hidden: yes
+    value_format: "#,##0"
+    sql: CASE WHEN ${device_type_category}='CTV' THEN 0 ELSE ${TABLE}.clicks*13.8 END;;
+  }
+
+  measure: html_kpi_clicks_demo {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Clicks
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ ncd_clicks_demo._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: complete_events_demo  {
+    type: sum
+    hidden: yes
+    value_format: "#,##0"
+    sql: ${TABLE}.complete_events*9.6  ;;
+  }
+
+  measure: html_kpi_complete_events_demo {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Complete Events
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ complete_events_demo._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: ncd_ctr_demo {
+    type: number
+    hidden: yes
+    value_format: "0.00%"
+    sql: ${ncd_ctr}*12.3 ;;
+  }
+
+  measure: html_kpi_ctr_demo {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              CTR
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ ncd_ctr_demo._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: impressions_demo {
+    type: sum
+    hidden: yes
+    value_format: "#,##0"
+    sql: ${TABLE}.impressions*9.2 ;;
+  }
 }

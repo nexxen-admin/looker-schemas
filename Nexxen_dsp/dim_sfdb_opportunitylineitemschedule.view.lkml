@@ -130,6 +130,12 @@ view: dim_sfdb_opportunitylineitemschedule {
     sql: ${TABLE}.opportunity_margin ;;
   }
 
+  measure: net_revenue_booked {
+    type: sum
+    label: "Net Revenue (Booked)"
+    sql: ${TABLE}.net_revenue_booked ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id]

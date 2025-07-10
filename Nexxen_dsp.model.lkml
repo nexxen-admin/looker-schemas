@@ -322,7 +322,7 @@ explore: fact_nexxen_dsp  {
     from: dim_sfdb_user
     view_label: "Employee - Delivery"
     sql_on: ${dim_sfdb_user_delivery.id}=${dim_sfdb_opportunitylineitem.delivery_manager__c};;
-    relationship: one_to_many
+    relationship: many_to_one
   }
 
   join: datorama_dsp_third_party {

@@ -141,45 +141,53 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${TABLE}.TV_Specialist ;;
   }
 
-  # measure: gr_forecast_for_start_filter {
-  #   type: sum
-  #   label: "GR Forecast Full Credit (Start Date)"
-  #   sql: CASE
-  #       WHEN ${schedule_revenue_start_date} IS NOT NULL
-  #       THEN COALESCE(${TABLE}.GR_Forecast_Full_Credit, 0)
-  #       ELSE 0
-  #     END ;;
-  #     }
-
-  measure: gr_forecast_start_filtered {
+  measure:sum_snapshot_nr_forecast_full_credit {
     type: sum
-    label: "GR Forecast (Start Date Filtered)"
-    sql: CASE
-         WHEN {% condition schedule_revenue_start_date %} ${schedule_revenue_start_date} {% endcondition %}
-         THEN COALESCE(${TABLE}.GR_Forecast_Full_Credit, 0)
-         ELSE 0
-       END ;;
+    sql: ${TABLE}.snapshot_nr_forecast_full_credit ;;
+    label: "Sum NR Forecast Full Credit"
   }
 
-  # measure: gr_forecast_for_end_filter {
-  #   type: sum
-  #   label: "GR Forecast Full Credit (End Date)"
-  #   sql: CASE
-  #       WHEN ${schedule_revenue_end_date} IS NOT NULL
-  #       THEN COALESCE(${TABLE}.GR_Forecast_Full_Credit, 0)
-  #       ELSE 0
-  #     END ;;
-  # }
-
-  measure: gr_forecast_end_filtered {
+  measure:sum_gr_forecast_full_credit {
     type: sum
-    label: "GR Forecast (End Date Filtered)"
-    sql: CASE
-         WHEN {% condition schedule_revenue_end_date %} ${schedule_revenue_end_date} {% endcondition %}
-         THEN COALESCE(${TABLE}.GR_Forecast_Full_Credit, 0)
-         ELSE 0
-       END ;;
+    sql: ${TABLE}.gr_forecast_full_credit ;;
   }
+
+  measure:sum_revenue {
+    type: sum
+    sql: ${TABLE}.revenue ;;
+  }
+
+  measure:sum_snapshot_net_revenue_booked {
+    type: sum
+    sql: ${TABLE}.snapshot_net_revenue_booked ;;
+  }
+
+  measure:sum_snapshot_booked_full_credit {
+    type: sum
+    sql: ${TABLE}.gr_snapshot_booked_full_credit ;;
+  }
+
+  # --- New Measures for Min/Max Date Comparison ---
+  # These measures use Liquid templating to directly get the min/max date from the applied filter.
+
+  measure: sum_revenue_at_min_date {
+    type: sum
+    sql: CASE WHEN ${snapshot_date} = {% date_start fact_sfdb_forecast_snapshot.snapshot_date %} THEN ${TABLE}.revenue ELSE NULL END ;; # Corrected: Removed sql: | and outer DATE() cast
+    value_format_name: usd
+    label: "Sum Revenue (Min Date)"
+    description: "Sum of revenue for the earliest date selected in the filter on the 'snapshot' dimension."
+  }
+
+  measure: sum_revenue_at_max_date {
+    type: sum
+    sql: CASE WHEN ${snapshot_date} = {% date_end fact_sfdb_forecast_snapshot.snapshot_date %} THEN ${TABLE}.revenue ELSE NULL END ;; # Corrected: Removed sql: | and outer DATE() cast
+    value_format_name: usd
+    label: "Sum Revenue (Max Date)"
+    description: "Sum of revenue for the latest date selected in the filter on the 'snapshot' dimension."
+  }
+
+
+
 
   measure: count {
     type: count

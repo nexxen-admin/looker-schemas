@@ -215,6 +215,7 @@ view: forecast_dim_sfdb_account {
   dimension: legal_name__c {
     type: string
     sql: ${TABLE}.legal_name__c ;;
+    label: "Legal Name"
   }
   dimension: msa_margin__c {
     type: number
@@ -223,10 +224,12 @@ view: forecast_dim_sfdb_account {
   dimension: name {
     type: string
     sql: ${TABLE}."name" ;;
+    label: "Account Name"
   }
   dimension: ns_id__c {
     type: string
     sql: ${TABLE}.ns_id__c ;;
+    label: "NetSuite ID"
   }
   dimension: numberofemployees {
     type: number
@@ -337,6 +340,7 @@ view: forecast_dim_sfdb_account {
   dimension: type {
     type: string
     sql: ${TABLE}."type" ;;
+    label: "Account Type"
   }
   dimension: vat_tax__c {
     type: number
@@ -345,6 +349,7 @@ view: forecast_dim_sfdb_account {
   dimension: website {
     type: string
     sql: ${TABLE}.website ;;
+    label: "Account Website"
   }
   measure: count {
     type: count

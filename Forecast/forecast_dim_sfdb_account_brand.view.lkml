@@ -223,6 +223,7 @@ view: forecast_dim_sfdb_account_brand {
   dimension: name {
     type: string
     sql: ${TABLE}."name" ;;
+    label: "Related Brand Name"
   }
   dimension: ns_id__c {
     type: string

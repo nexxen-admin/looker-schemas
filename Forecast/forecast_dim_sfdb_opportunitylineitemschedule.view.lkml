@@ -158,11 +158,13 @@ view: forecast_dim_sfdb_opportunitylineitemschedule {
   measure: sum_gr_forecast_full_credit {
     type: sum
     sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+    label: "GR Forecast"
   }
 
   measure: sum_nr_forecast_full_credit {
     type: sum
     sql: ${TABLE}.NR_Forecast_Full_Credit ;;
+    label: "NR Forecast"
   }
 
   measure: sum_net_revenue_booked {

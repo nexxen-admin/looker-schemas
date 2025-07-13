@@ -145,6 +145,32 @@ view: forecast_dim_sfdb_opportunitylineitemschedule {
     type: number
     sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
   }
+
+
+       #####--MEASURES---####
+
+  measure: sum_booked_full_credit {
+    type: sum
+    sql: ${TABLE}.Booked_Full_Credit ;;
+    label: "GR Booked"
+  }
+
+  measure: sum_gr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+  }
+
+  measure: sum_nr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.NR_Forecast_Full_Credit ;;
+  }
+
+  measure: sum_net_revenue_booked {
+    type: sum
+    sql: ${TABLE}.Net_Revenue_Booked;;
+    label: "NR Booked"
+    }
+
   measure: count {
     type: count
     drill_fields: [id]

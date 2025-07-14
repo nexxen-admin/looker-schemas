@@ -148,10 +148,15 @@ view: fact_target_forecast_enterprise_summary {
     sql: ${TABLE}.net_revenue_target ;;
   }
 
-  # measure: gr_booked_to_forecast_delta {
-  #   type: number
-  #   sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
-  # }
+  measure:sum_gr_booked_to_forecast_delta {
+    type: sum
+    sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
+  }
+
+  measure:sum_nr_booked_to_forecast_delta {
+    type: sum
+    sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
+  }
 
   # measure: delta_nr_forecast {
   #   type: number

@@ -50,6 +50,12 @@ explore: fact_sfdb_forecast_snapshot {
   label: "Fact sfdb Forecast Snapshot"
 }
 
+explore: fact_target_forecast_strategy_summary  {
+}
+
+explore: fact_target_forecast_enterprise_summary  {
+}
+
 #### FORECAST JOINED TABLE ####
 explore: forecast_dim_sfdb_opportunity {
   label: "Forecasting"

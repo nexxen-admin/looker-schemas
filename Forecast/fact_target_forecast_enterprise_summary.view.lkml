@@ -118,6 +118,47 @@ view: fact_target_forecast_enterprise_summary {
     type: number
     sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
   }
+
+  ###--MEASURES--###
+
+  measure: sum_gr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+  }
+
+  measure: sum_nr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.NR_Forecast_Full_Credit ;;
+  }
+
+  measure: sum_booked_full_credit {
+    type: sum
+    sql: ${TABLE}.Booked_Full_Credit ;;
+    label: "GR Booked"
+  }
+
+  measure: sum_net_revenue_booked {
+    type: sum
+    sql: ${TABLE}.Net_Revenue_Booked ;;
+    label: "NR Booked"
+  }
+
+  measure: sum_net_revenue_target {
+    type: sum
+    sql: ${TABLE}.net_revenue_target ;;
+  }
+
+  # measure: gr_booked_to_forecast_delta {
+  #   type: number
+  #   sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
+  # }
+
+  # measure: delta_nr_forecast {
+  #   type: number
+  #   label: "Delta NR Forecast"
+  #   sql: ${sum_nr_forecast_full_credit} - ${sum_net_revenue_target} ;;
+  # }
+
   measure: count {
     type: count
     drill_fields: [account_name, generalist_name]

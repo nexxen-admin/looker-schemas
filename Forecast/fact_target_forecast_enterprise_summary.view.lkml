@@ -124,11 +124,13 @@ view: fact_target_forecast_enterprise_summary {
   measure: sum_gr_forecast_full_credit {
     type: sum
     sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+    label: "GR Forecast"
   }
 
   measure: sum_nr_forecast_full_credit {
     type: sum
     sql: ${TABLE}.NR_Forecast_Full_Credit ;;
+    label: "NR Forecast"
   }
 
   measure: sum_booked_full_credit {
@@ -146,6 +148,13 @@ view: fact_target_forecast_enterprise_summary {
   measure: sum_net_revenue_target {
     type: sum
     sql: ${TABLE}.net_revenue_target ;;
+    label: "NR Target"
+  }
+
+  measure: sum_gross_revenue_target {
+    type: sum
+    sql: ${TABLE}.gross_revenue_target ;;
+    label: "NR Target"
   }
 
   measure:sum_gr_booked_to_forecast_delta {

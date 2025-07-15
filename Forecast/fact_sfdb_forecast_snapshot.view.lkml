@@ -552,6 +552,19 @@ view: fact_sfdb_forecast_snapshot {
     filters: [period_filtered_measures: "last"]
   }
 
+  measure: delta_gr_Booked_Full_Credit {
+    type: number
+    sql: ${current_period_snapshot_booked_full_credit} - ${previous_period_snapshot_booked_full_credit} ;;
+    label: "GR Booked Full Credit Delta"
+  }
+
+  measure: percent_gr_Booked_Full_Credit {
+    type: number
+    sql: (100.0 * (${current_period_snapshot_booked_full_credit} - ${previous_period_snapshot_booked_full_credit}) / NULLIF(${previous_period_snapshot_booked_full_credit}, 0)) ;;
+    value_format_name: percent_2
+    label: "% Change in GR Booked Full Credit"
+  }
+
 
   #
   measure: sum_revenue_current {

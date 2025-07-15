@@ -252,6 +252,8 @@ view: fact_sfdb_forecast_snapshot {
     allowed_value: {value: "month"}
 
   }
+
+
   dimension: pop_pivot {
     view_label: "PoP"
     description: "Takes the 'choose comparison' parameter and adds a suitable parameter to it"

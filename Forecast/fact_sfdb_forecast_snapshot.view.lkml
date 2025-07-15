@@ -119,8 +119,10 @@ view: fact_sfdb_forecast_snapshot {
   dimension: snapshot_net_revenue_booked {
     type: number
     sql: ${TABLE}.snapshot_net_revenue_booked ;;
+    label: "NR Booked Full Credit"
   }
-  label: "NR Booked Full Credit"
+
+
   dimension: snapshot_nr_forecast_full_credit {
     type: number
     sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
@@ -158,19 +160,18 @@ view: fact_sfdb_forecast_snapshot {
     label: "Current Date Range"
     description: "Select the current date range you are interested in. Make sure any other filter on Time covers this period, or is removed."
     sql: ${period} IS NOT NULL ;;
+ }
 
+  # dimension:  date_for_html {
+  #   type: date
+  #   view_label: "PoP"
+  #   sql: ${current_date_range} ;;
+  #   html:
+  #   <ul>
+  #       <li> value: {{ rendered_value }} </li>
+  #   </ul> ;;
 
-  }
-  dimension:  date_for_html {
-    type: date
-    view_label: "PoP"
-    sql: ${current_date_range} ;;
-    html:
-    <ul>
-         <li> value: {{ rendered_value }} </li>
-    </ul> ;;
-
-  }
+  # }
 
 
 

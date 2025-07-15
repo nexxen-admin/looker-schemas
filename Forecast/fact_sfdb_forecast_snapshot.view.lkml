@@ -120,6 +120,7 @@ view: fact_sfdb_forecast_snapshot {
     type: number
     sql: ${TABLE}.snapshot_net_revenue_booked ;;
   }
+  label: "NR Booked Full Credit"
   dimension: snapshot_nr_forecast_full_credit {
     type: number
     sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
@@ -464,6 +465,62 @@ view: fact_sfdb_forecast_snapshot {
   }
 
 
+    measure: current_period_snapshot_nr_forecast_full_credit {
+      view_label: "PoP"
+      type: sum
+      description: "Current NR Forecast Full Credit"
+      sql: ${TABLE}.snapshot_NR_forecast_full_credit  ;;
+      value_format: "#,##0"
+      filters: [period_filtered_measures: "this"]
+    }
+
+    measure: previous_period_snapshot_nr_forecast_full_credit {
+      view_label: "PoP"
+      type: sum
+      description: "Previous NR Forecast Full Credit"
+      sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
+      value_format: "#,##0"
+      filters: [period_filtered_measures: "last"]
+    }
+
+
+
+  measure: current_period_GR_Forecast_Full_Credit {
+    view_label: "PoP"
+    type: sum
+    description: "Current GR Forecast Full Credit"
+    sql: ${TABLE}.GR_Forecast_Full_Credit  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_GR_Forecast_Full_Credit {
+    view_label: "PoP"
+    type: sum
+    description: "Previous GR Forecast Full Credit"
+    sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
+
+  measure: current_period_snapshot_booked_full_credit {
+    view_label: "PoP"
+    type: sum
+    description: "Current GR Booked Full Credit"
+    sql: ${TABLE}.snapshot_booked_full_credit  ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_snapshot_booked_full_credit {
+    view_label: "PoP"
+    type: sum
+    description: "Previous GR Booked Full Credit"
+    sql: ${TABLE}.snapshot_booked_full_credit ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
 
 
   ### ---  Measures  ---###

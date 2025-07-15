@@ -533,32 +533,36 @@ view: fact_sfdb_forecast_snapshot {
     filters: [period_filtered_measures: "last"]
   }
 
-
+  # view_label: "GR Booked Full Credit POP"
   measure: current_period_snapshot_booked_full_credit {
-    view_label: "PoP"
+    view_label: "GR Booked Full Credit POP"
     type: sum
     description: "Current GR Booked Full Credit"
     sql: ${TABLE}.snapshot_booked_full_credit  ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
+    label: "GR Booked Full Credit (Current)"
   }
 
   measure: previous_period_snapshot_booked_full_credit {
-    view_label: "PoP"
+    view_label: "GR Booked Full Credit POP"
     type: sum
     description: "Previous GR Booked Full Credit"
     sql: ${TABLE}.snapshot_booked_full_credit ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
+    label: "GR Booked Full Credit (Previous)"
   }
 
   measure: delta_gr_Booked_Full_Credit {
+    view_label: "GR Booked Full Credit POP"
     type: number
     sql: ${current_period_snapshot_booked_full_credit} - ${previous_period_snapshot_booked_full_credit} ;;
     label: "GR Booked Full Credit Delta"
   }
 
   measure: percent_gr_Booked_Full_Credit {
+    view_label: "GR Booked Full Credit POP"
     type: number
     sql: (100.0 * (${current_period_snapshot_booked_full_credit} - ${previous_period_snapshot_booked_full_credit}) / NULLIF(${previous_period_snapshot_booked_full_credit}, 0)) ;;
     value_format_name: percent_2
@@ -566,8 +570,9 @@ view: fact_sfdb_forecast_snapshot {
   }
 
 
-  #
+  # view_label: "Revenue POP"
   measure: sum_revenue_current {
+    view_label: "Revenue POP"
     type: sum
     sql: ${revenue} ;;
     filters: [period: "Current"]
@@ -575,6 +580,7 @@ view: fact_sfdb_forecast_snapshot {
   }
 
   measure: sum_revenue_previous {
+    view_label: "Revenue POP"
     type: sum
     sql: ${revenue} ;;
     filters: [period: "Previous"]
@@ -583,12 +589,14 @@ view: fact_sfdb_forecast_snapshot {
 
 
   measure: delta_revenue {
+    view_label: "Revenue POP"
     type: number
     sql: ${sum_revenue_current} - ${sum_revenue_previous} ;;
     label: "Revenue Delta"
   }
 
   measure: percent_change_revenue {
+    view_label: "Revenue POP"
     type: number
     sql: (100.0 * (${sum_revenue_current} - ${sum_revenue_previous}) / NULLIF(${sum_revenue_previous}, 0)) ;;
     value_format_name: percent_2

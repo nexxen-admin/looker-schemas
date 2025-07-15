@@ -162,6 +162,16 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${period} IS NOT NULL ;;
  }
 
+#
+  filter: previous_date_range {
+    type: date
+    view_label: "PoP"
+    label: "Previous Date Range"
+    description: "Manually choose the date range for comparison"
+    sql: ${period} IS NOT NULL ;;
+  }
+
+
   # dimension:  date_for_html {
   #   type: date
   #   view_label: "PoP"
@@ -409,26 +419,43 @@ view: fact_sfdb_forecast_snapshot {
   }
 
 
+  # dimension: period {
+  #   view_label: "PoP"
+  #   label: "Period"
+  #   description: "Pivot me! Returns the period the metric covers, i.e. either the 'This Period' or 'Previous Period'"
+  #   type: string
+  #   hidden: yes
+  #   order_by_field: order_for_period
+  #   sql:
+  #           {% if current_date_range._is_filtered %}
+  #               CASE
+  #               WHEN {% condition current_date_range %} ${date_key_in_timezone_raw} {% endcondition %}
+  #               THEN 'This {% parameter compare_to %}'
+  #               WHEN ${date_key_in_timezone_raw} between ${period_2_start} and ${period_2_end}
+  #               THEN 'Last {% parameter compare_to %}'
+  #               END
+  #           {% else %}
+  #               NULL
+  #           {% endif %}
+  #           ;;
+  # }
+
+
   dimension: period {
     view_label: "PoP"
     label: "Period"
-    description: "Pivot me! Returns the period the metric covers, i.e. either the 'This Period' or 'Previous Period'"
+    # hidden: yes
     type: string
-    hidden: yes
-    order_by_field: order_for_period
     sql:
-            {% if current_date_range._is_filtered %}
-                CASE
-                WHEN {% condition current_date_range %} ${date_key_in_timezone_raw} {% endcondition %}
-                THEN 'This {% parameter compare_to %}'
-                WHEN ${date_key_in_timezone_raw} between ${period_2_start} and ${period_2_end}
-                THEN 'Last {% parameter compare_to %}'
-                END
-            {% else %}
-                NULL
-            {% endif %}
-            ;;
+    CASE
+      WHEN {% condition current_date_range %} ${snapshot_date} {% endcondition %}
+        THEN 'Current'
+      WHEN {% condition previous_date_range %} ${snapshot_date} {% endcondition %}
+        THEN 'Previous'
+      ELSE NULL
+    END ;;
   }
+
 
 
   ## ---------------------- TO CREATE FILTERED MEASURES ---------------------------- ##
@@ -521,6 +548,36 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${TABLE}.snapshot_booked_full_credit ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
+  }
+
+
+  #
+  measure: sum_revenue_current {
+    type: sum
+    sql: ${revenue} ;;
+    filters: [period: "Current"]
+    label: "Revenue (Current)"
+  }
+
+  measure: sum_revenue_previous {
+    type: sum
+    sql: ${revenue} ;;
+    filters: [period: "Previous"]
+    label: "Revenue (Previous)"
+  }
+
+
+  measure: delta_revenue {
+    type: number
+    sql: ${sum_revenue_current} - ${sum_revenue_previous} ;;
+    label: "Revenue Delta"
+  }
+
+  measure: percent_change_revenue {
+    type: number
+    sql: (100.0 * (${sum_revenue_current} - ${sum_revenue_previous}) / NULLIF(${sum_revenue_previous}, 0)) ;;
+    value_format_name: percent_2
+    label: "% Change in Revenue"
   }
 
 

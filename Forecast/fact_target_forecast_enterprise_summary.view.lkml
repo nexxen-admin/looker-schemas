@@ -65,6 +65,7 @@ view: fact_target_forecast_enterprise_summary {
   dimension: percent_of_target_gr_forecast {
     type: number
     sql: ${TABLE}.percent_of_target_gr_forecast ;;
+    value_format: "0.0%"
   }
   dimension: percent_of_target_nr_forecast {
     type: number
@@ -154,7 +155,7 @@ view: fact_target_forecast_enterprise_summary {
   measure: sum_gross_revenue_target {
     type: sum
     sql: ${TABLE}.gross_revenue_target ;;
-    label: "NR Target"
+    label: "GR Target"
   }
 
   measure:sum_gr_booked_to_forecast_delta {
@@ -167,11 +168,23 @@ view: fact_target_forecast_enterprise_summary {
     sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
   }
 
-  # measure: delta_nr_forecast {
-  #   type: number
-  #   label: "Delta NR Forecast"
-  #   sql: ${sum_nr_forecast_full_credit} - ${sum_net_revenue_target} ;;
-  # }
+  measure: p_of_target_gr_forecast {
+    type: number
+    sql: ${TABLE}.percent_of_target_gr_forecast ;;
+    value_format: "0.0%"
+  }
+
+  measure: delta_nr_forecast {
+    type: number
+    label: "Delta NR Forecast"
+    sql: ${sum_nr_forecast_full_credit} - ${sum_net_revenue_target} ;;
+  }
+
+  measure: delta_nr_booked {
+    type: number
+    label: "Delta NR Booked"
+    sql: ${sum_net_revenue_booked} - ${sum_net_revenue_target} ;;
+  }
 
   measure: count {
     type: count

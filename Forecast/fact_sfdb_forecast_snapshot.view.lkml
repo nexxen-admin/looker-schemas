@@ -462,78 +462,153 @@ view: fact_sfdb_forecast_snapshot {
 
   ## ---------------------- TO CREATE FILTERED MEASURES ---------------------------- ##
 
+  # dimension: period_filtered_measures {
+  #   hidden: yes
+  #   description: "We are just using this for the filtered measures"
+  #   type: string
+  #   sql:
+  #           {% if current_date_range._is_filtered %}
+  #               CASE
+  #               WHEN {% condition current_date_range %} ${date_key_in_timezone_raw} {% endcondition %} THEN 'this'
+  #               WHEN ${date_key_in_timezone_raw} between ${period_2_start} and ${period_2_end} THEN 'last' END
+  #           {% else %} NULL {% endif %} ;;
+  # }
+
   dimension: period_filtered_measures {
     hidden: yes
-    description: "We are just using this for the filtered measures"
+    description: "Used to split current and previous periods"
     type: string
     sql:
-            {% if current_date_range._is_filtered %}
-                CASE
-                WHEN {% condition current_date_range %} ${date_key_in_timezone_raw} {% endcondition %} THEN 'this'
-                WHEN ${date_key_in_timezone_raw} between ${period_2_start} and ${period_2_end} THEN 'last' END
-            {% else %} NULL {% endif %} ;;
+    CASE
+      WHEN {% condition current_date_range %} ${snapshot_date} {% endcondition %} THEN 'this'
+      WHEN {% condition previous_date_range %} ${snapshot_date} {% endcondition %} THEN 'last'
+      ELSE NULL
+    END ;;
   }
 
-###----POP MEASURE---###
+
+          ###----NR Booked Full Credit POP---###
 
   measure: current_period_net_revenue_booked {
-    view_label: "PoP"
+    view_label: "NR Booked Full Credit POP"
     type: sum
     description: "Current period NR Booked"
     sql: ${TABLE}.snapshot_net_revenue_booked   ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
+    label: "NR Booked Full Credit (Current)"
   }
 
   measure: previous_period_net_revenue_booked {
-    view_label: "PoP"
+    view_label: "NR Booked Full Credit POP"
     type: sum
     description: "Previous period NR Booked"
     sql: ${TABLE}.snapshot_net_revenue_booked  ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
+    label: "NR Booked Full Credit (Previous)"
+  }
+
+  measure: delta_nr_booked_Full_Credit {
+    view_label: "NR Booked Full Credit POP"
+    type: number
+    sql: ${current_period_net_revenue_booked} - ${previous_period_net_revenue_booked} ;;
+    label: "NR Booked Full Credit Delta"
+  }
+
+  measure: percent_nr_booked_Full_Credit {
+    view_label: "NR Booked Full Credit POP"
+    type: number
+    sql: (100.0 * (${current_period_net_revenue_booked} - ${previous_period_net_revenue_booked}) / NULLIF(${previous_period_net_revenue_booked}, 0)) ;;
+    value_format_name: percent_2
+    label: "% Change in NR Booked Full Credit"
   }
 
 
+
+
+
+      ####- view_label: NR Forecast Full Credit POP"-#####
+
+
     measure: current_period_snapshot_nr_forecast_full_credit {
-      view_label: "PoP"
+      view_label: "NR Forecast Full Credit POP"
       type: sum
       description: "Current NR Forecast Full Credit"
       sql: ${TABLE}.snapshot_NR_forecast_full_credit  ;;
       value_format: "#,##0"
       filters: [period_filtered_measures: "this"]
+      label: "NR Forecast Full Credit (Current)"
     }
 
     measure: previous_period_snapshot_nr_forecast_full_credit {
-      view_label: "PoP"
+      view_label: "NR Forecast Full Credit POP"
       type: sum
       description: "Previous NR Forecast Full Credit"
       sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
       value_format: "#,##0"
       filters: [period_filtered_measures: "last"]
+      label: "NR Forecast Full Credit (Previous)"
+    }
+
+    measure: delta_nr_forecast_Full_Credit {
+      view_label: "NR Forecast Full Credit POP"
+      type: number
+      sql: ${current_period_snapshot_nr_forecast_full_credit} - ${previous_period_snapshot_nr_forecast_full_credit} ;;
+      label: "NR Forecast Full Credit Delta"
+    }
+
+    measure: percent_nr_forecast_Full_Credit {
+      view_label: "NR Forecast Full Credit POP"
+      type: number
+      sql: (100.0 * (${current_period_snapshot_nr_forecast_full_credit} - ${previous_period_snapshot_nr_forecast_full_credit}) / NULLIF(${previous_period_snapshot_nr_forecast_full_credit}, 0)) ;;
+      value_format_name: percent_2
+      label: "% Change in NR Forecast Full Credit"
     }
 
 
 
+
+  ####-"GR Forecast Full Credit POP"-####
+
   measure: current_period_GR_Forecast_Full_Credit {
-    view_label: "PoP"
+    view_label:"GR Forecast Full Credit POP"
     type: sum
     description: "Current GR Forecast Full Credit"
     sql: ${TABLE}.GR_Forecast_Full_Credit  ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
+    label: "GR Forecast Full Credit (Current)"
   }
 
   measure: previous_period_GR_Forecast_Full_Credit {
-    view_label: "PoP"
+    view_label: "GR Forecast Full Credit POP"
     type: sum
     description: "Previous GR Forecast Full Credit"
     sql: ${TABLE}.GR_Forecast_Full_Credit ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
+    label: "GR Forecast Full Credit (Previous)"
   }
 
+  measure: delta_gr_forecast_Full_Credit {
+    view_label: "GR Forecast Full Credit POP"
+    type: number
+    sql: ${current_period_GR_Forecast_Full_Credit} - ${previous_period_GR_Forecast_Full_Credit} ;;
+    label: "GR Forecast Full Credit Delta"
+  }
+
+  measure: percent_gr_forecast_Full_Credit {
+    view_label: "GR Forecast Full Credit POP"
+    type: number
+    sql: (100.0 * (${current_period_GR_Forecast_Full_Credit} - ${previous_period_GR_Forecast_Full_Credit}) / NULLIF(${previous_period_GR_Forecast_Full_Credit}, 0)) ;;
+    value_format_name: percent_2
+    label: "% Change in GR Forecast Full Credit"
+  }
+
+
   # view_label: "GR Booked Full Credit POP"
+
   measure: current_period_snapshot_booked_full_credit {
     view_label: "GR Booked Full Credit POP"
     type: sum
@@ -570,7 +645,10 @@ view: fact_sfdb_forecast_snapshot {
   }
 
 
+
+
   # view_label: "Revenue POP"
+
   measure: sum_revenue_current {
     view_label: "Revenue POP"
     type: sum

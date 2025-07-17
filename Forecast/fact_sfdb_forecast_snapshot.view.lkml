@@ -487,6 +487,7 @@ view: fact_sfdb_forecast_snapshot {
   }
 
 
+
           ###----NR Booked Full Credit POP---###
 
   measure: current_period_net_revenue_booked {
@@ -709,26 +710,45 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${TABLE}.gr_snapshot_booked_full_credit ;;
   }
 
-  # --- New Measures for Min/Max Date Comparison ---
-  # These measures use Liquid templating to directly get the min/max date from the applied filter.
-
-  # measure: sum_revenue_at_min_date {
-  #   type: sum
-  #   sql: CASE WHEN ${snapshot_date} = {% date_start fact_sfdb_forecast_snapshot.snapshot_date %} THEN ${TABLE}.revenue ELSE NULL END ;; # Corrected: Removed sql: | and outer DATE() cast
-  #   value_format_name: usd
-  #   label: "Sum Revenue (Min Date)"
-  #   description: "Sum of revenue for the earliest date selected in the filter on the 'snapshot' dimension."
-  # }
-
-  # measure: sum_revenue_at_max_date {
-  #   type: sum
-  #   sql: CASE WHEN ${snapshot_date} = {% date_end fact_sfdb_forecast_snapshot.snapshot_date %} THEN ${TABLE}.revenue ELSE NULL END ;; # Corrected: Removed sql: | and outer DATE() cast
-  #   value_format_name: usd
-  #   label: "Sum Revenue (Max Date)"
-  #   description: "Sum of revenue for the latest date selected in the filter on the 'snapshot' dimension."
-  # }
 
 
+  ###---QTD Comparison---###
+
+  dimension: period_filtered_measures_qtd {
+    hidden: yes
+    description: "Used only for comparing TODAY vs 1st day of current quarter"
+    type: string
+    sql:
+    CASE
+      WHEN ${snapshot_date} = CURRENT_DATE THEN 'this'
+      WHEN ${snapshot_date} = DATE_TRUNC('quarter', CURRENT_DATE) THEN 'last'
+      ELSE NULL
+    END ;;
+  }
+
+  measure: qtd_today_snapshot_nr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
+    filters: [period_filtered_measures_qtd: "this"]
+    label: "NR Forecast Full Credit (Today)"
+    view_label: "QTD Comparison"
+  }
+
+  measure: qtd_start_snapshot_nr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
+    filters: [period_filtered_measures_qtd: "last"]
+    label: "NR Forecast Full Credit (QTD Start)"
+    view_label: "QTD Comparison"
+  }
+
+  measure: qtd_delta_snapshot_nr_forecast_full_credit {
+    type: number
+    sql: ${qtd_today_snapshot_nr_forecast_full_credit} - ${qtd_start_snapshot_nr_forecast_full_credit} ;;
+    label: "Delta (Today vs QTD Start)"
+    value_format: "#,##0"
+    view_label: "QTD Comparison"
+  }
 
 
   measure: count {

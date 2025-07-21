@@ -1,6 +1,13 @@
 view: fact_sfdb_forecast_snapshot {
   sql_table_name: BI_DSP.fact_sfdb_forecast_snapshot ;;
 
+  # dimension: io_super_region {
+  #   type: string
+  #   sql: ${TABLE}.IO_Super_Region ;;
+  # }
+
+  # sql_always_where: ${io_super_region} = 'NAM' ;;
+
   dimension: account_manager {
     type: string
     sql: ${TABLE}.Account_Manager ;;

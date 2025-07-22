@@ -48,7 +48,9 @@ explore: monthly_enterprise_targets_changes {
 
 explore: fact_sfdb_forecast_snapshot {
   label: "Fact sfdb Forecast Snapshot"
-     sql_always_where: ${fact_sfdb_forecast_snapshot.io_super_region} = 'NAM' ;;
+     sql_always_where: ${fact_sfdb_forecast_snapshot.io_super_region} = 'NAM'
+                        AND ${fact_sfdb_forecast_snapshot.io_type} <> 'PMP'
+                        AND ${fact_sfdb_forecast_snapshot.io_type} IS NOT NULL ;;
 }
 
 explore: fact_target_forecast_strategy_summary  {

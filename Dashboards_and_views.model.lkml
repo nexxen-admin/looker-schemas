@@ -683,6 +683,14 @@ explore: bid_opti_all_models_no_resrictions {
   required_access_grants: [can_view_all_tremor]
 }
 
+
+explore: bid_opti_all_models_summary_no_opti_pubcost {
+  label: "bid_opti_all_models_summary_no_opti_pubcost"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
+
 explore: buyer_mapping_master {
   label: "Buyer Mapping Master"
   required_access_grants: [can_view_all_tremor]

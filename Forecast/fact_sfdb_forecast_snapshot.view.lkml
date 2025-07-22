@@ -160,6 +160,7 @@ view: fact_sfdb_forecast_snapshot {
   dimension: Strat_Sales_RVP {
     type: string
     sql: ${TABLE}.Strat_Sales_RVP ;;
+    drill_fields: [opportunity_owner]
   }
 
   dimension: date_key_in_timezone_raw {

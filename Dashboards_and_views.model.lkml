@@ -632,6 +632,12 @@ explore: bid_opti_bottom_5_placement_v3_etl {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: bid_opti_all_models_summary_no_opti_bidfloor {
+  label: "bid_opti_all_models_summary_no_opti_bidfloor"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
 explore: tvi_dsp_v1 {
   label: "tvi_dsp_v1"
   required_access_grants: [can_view_all_tremor]
@@ -682,6 +688,14 @@ explore: bid_opti_all_models_no_resrictions {
   label: "bid_opti_all_models_no_resrictions"
   required_access_grants: [can_view_all_tremor]
 }
+
+
+explore: bid_opti_all_models_summary_no_opti_pubcost {
+  label: "bid_opti_all_models_summary_no_opti_pubcost"
+  required_access_grants: [can_view_all_tremor]
+}
+
+
 
 explore: buyer_mapping_master {
   label: "Buyer Mapping Master"

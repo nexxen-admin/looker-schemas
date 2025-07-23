@@ -178,11 +178,11 @@ view: fact_target_forecast_enterprise_summary {
     sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
   }
 
-  measure: p_of_target_gr_forecast {
-    type: number
-    sql: ${TABLE}.percent_of_target_gr_forecast ;;
-    value_format: "0.0%"
-  }
+  # measure: p_of_target_gr_forecast {
+  #   type: number
+  #   sql: ${TABLE}.percent_of_target_gr_forecast ;;
+  #   value_format: "0.0%"
+  # }
 
   measure: delta_nr_forecast {
     type: number
@@ -194,7 +194,7 @@ view: fact_target_forecast_enterprise_summary {
 
   measure: delta_nr_booked {
     type: number
-    label: "Delta NR Booked"
+    label: "Delta Between NR Booked and Target"
     sql: ${sum_net_revenue_booked} - ${sum_net_revenue_target} ;;
     value_format: "#,##0.00"
     view_label: "NR Booked"

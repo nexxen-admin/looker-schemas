@@ -163,6 +163,11 @@ view: fact_sfdb_forecast_snapshot {
     drill_fields: [opportunity_owner]
   }
 
+  dimension: new_enterprise_team {
+    type: string
+    sql: ${TABLE}.new_enterprise_team ;;
+  }
+
   dimension: date_key_in_timezone_raw {
     hidden: yes
     type: date

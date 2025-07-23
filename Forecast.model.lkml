@@ -50,6 +50,7 @@ explore: fact_sfdb_forecast_snapshot {
   label: "Fact sfdb Forecast Snapshot"
      sql_always_where: ${fact_sfdb_forecast_snapshot.io_super_region} = 'NAM'
                         AND ${fact_sfdb_forecast_snapshot.io_type} <> 'PMP'
+                        AND ${fact_sfdb_forecast_snapshot.new_enterprise_team} <> 'EMEA'
                         AND ${fact_sfdb_forecast_snapshot.io_type} IS NOT NULL ;;
 }
 

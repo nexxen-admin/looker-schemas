@@ -228,6 +228,18 @@ view: forecast_user_member_c {
     type: string
     sql: ${TABLE}.usertype ;;
   }
+
+  dimension: Strat_Sales_RVP {
+    type: string
+    sql: ${TABLE}.Strat_Sales_RVP ;;
+  }
+
+  dimension: new_enterprise_team {
+    type: string
+    sql: ${TABLE}.new_enterprise_team ;;
+  }
+
+
   measure: count {
     type: count
     drill_fields: [id, firstname, lastname, username, companyname]

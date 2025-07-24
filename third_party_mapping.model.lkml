@@ -10,11 +10,6 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
-access_grant: can_view_pub_come_looker {
-  user_attribute: admins
-  allowed_values: ["Looker_Admins"]
-}
-
 explore: third_party_reporting_fields_mapping {
   required_access_grants: [can_view_all_tremor]
   label: "third_party_reporting_fields_mapping"

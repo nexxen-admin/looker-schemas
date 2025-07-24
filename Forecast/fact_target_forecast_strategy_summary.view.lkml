@@ -110,6 +110,52 @@ view: fact_target_forecast_strategy_summary {
     type: number
     sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
   }
+
+    dimension: Strat_Sales_Team {
+      type: string
+      sql: ${TABLE}.Strat_Sales_Team ;;
+  }
+
+  dimension: Strat_Sales_RVP {
+    type: string
+    sql: ${TABLE}.Strat_Sales_RVP ;;
+  }
+
+  ###--MEASURES--###
+
+
+  measure: sum_gr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+    value_format: "#,##0.00"
+    label: "GR Forecast"
+    view_label: "GR Forecast"
+  }
+
+  measure: sum_nr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.NR_Forecast_Full_Credit ;;
+    value_format: "#,##0.00"
+    label: "NR Forecast"
+    view_label: "Target"
+  }
+
+  measure: sum_net_revenue_target {
+    type: sum
+    sql: ${TABLE}.net_revenue_target ;;
+    value_format: "#,##0.00"
+    label: "NR Target"
+    view_label: "NR Forecast"
+  }
+
+  measure: sum_gross_revenue_target {
+    type: sum
+    sql: ${TABLE}.gross_revenue_target ;;
+    value_format: "#,##0.00"
+    label: "GR Target"
+    view_label: "Target"
+  }
+
   measure: count {
     type: count
   }

@@ -138,6 +138,39 @@ view: fact_target_forecast_enterprise_summary {
     view_label: "NR Forecast"
   }
 
+  measure: sum_unweighted_nr_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Unweighted_NR_Upside_New_Forecast_v2 ;;
+    value_format: "#,##0.00"
+    label: "NR Unweighted Upside"
+    view_label: "NR Forecast"
+  }
+
+  measure: sum_weighted_nr_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Weighted_NR_Upside_New_Forecast_v2 ;;
+    value_format: "#,##0.00"
+    label: "NR weighted Upside"
+    view_label: "NR Forecast"
+  }
+
+  measure: sum_unweighted_tl_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Unweighted_TL_Upside_New_Forecast_v2 ;;
+    value_format: "#,##0.00"
+    label: "GR Unweighted Upside"
+    view_label: "GR Forecast"
+  }
+
+  measure: sum_weighted_tl_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
+    value_format: "#,##0.00"
+    label: "GR weighted Upside"
+    view_label: "GR Forecast"
+  }
+
+
   measure: sum_booked_full_credit {
     type: sum
     sql: ${TABLE}.Booked_Full_Credit ;;

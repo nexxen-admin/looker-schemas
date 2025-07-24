@@ -16,6 +16,7 @@ access_grant: can_view_pub_come_looker {
 }
 
 explore: third_party_reporting_fields_mapping {
+  required_access_grants: [can_view_all_tremor]
   label: "third_party_reporting_fields_mapping"
   hidden: no
 }

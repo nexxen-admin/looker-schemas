@@ -816,7 +816,7 @@ measure: html_kpi_ctr {
     type: number
     hidden: yes
     value_format: "#,##0"
-    sql:${delivered_units}  *10.2;;
+    sql:${delivered_units}  *5.1;;
   }
 
   measure: html_kpi_delivered_units_demo {
@@ -835,7 +835,7 @@ measure: html_kpi_ctr {
     type: number
     hidden: yes
     value_format: "$#,##0.00"
-    sql:${Delivered_Spend}  *11.7;;
+    sql:${Delivered_Spend}  *5.8;;
   }
 
   measure: html_kpi_delivered_spend_demo {
@@ -854,7 +854,7 @@ measure: html_kpi_ctr {
     type: sum
     hidden: yes
     value_format: "#,##0"
-    sql: CASE WHEN ${device_type_category}='CTV' THEN 0 ELSE ${TABLE}.clicks*13.8 END;;
+    sql: CASE WHEN ${device_type_category}='CTV' THEN 0 ELSE ${TABLE}.clicks*6.9 END;;
   }
 
   measure: html_kpi_clicks_demo {
@@ -873,7 +873,7 @@ measure: html_kpi_ctr {
     type: sum
     hidden: yes
     value_format: "#,##0"
-    sql: ${TABLE}.complete_events*9.6  ;;
+    sql: ${TABLE}.complete_events*4.8  ;;
   }
 
   measure: html_kpi_complete_events_demo {
@@ -892,7 +892,7 @@ measure: html_kpi_ctr {
     type: number
     hidden: yes
     value_format: "0.00%"
-    sql: ${ncd_ctr}*12.3 ;;
+    sql: ${ncd_ctr}*1.25 ;;
   }
 
   measure: html_kpi_ctr_demo {
@@ -911,6 +911,6 @@ measure: html_kpi_ctr {
     type: sum
     hidden: yes
     value_format: "#,##0"
-    sql: ${TABLE}.impressions*9.2 ;;
+    sql: ${TABLE}.impressions*4.6 ;;
   }
 }

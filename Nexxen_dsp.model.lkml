@@ -68,6 +68,10 @@ explore: tpa_email_via_system_activity  {
   label: "TPA Email Via System Activity"
 }
 
+explore: v_adjustments_and_media_billing_intl {
+  label: "Monthly Billing INTL Override Data"
+}
+
 explore: comparison_datorama_vs_3p_solution  {
   # label: "TPA Email Via System Activity"
 }

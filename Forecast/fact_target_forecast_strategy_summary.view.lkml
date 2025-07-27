@@ -57,10 +57,14 @@ view: fact_target_forecast_strategy_summary {
   dimension: percent_of_target_gr_forecast {
     type: number
     sql: ${TABLE}.percent_of_target_gr_forecast ;;
+    value_format: "0.00%"
+    label: "% Of Target GR Forecast"
   }
   dimension: percent_of_target_nr_forecast {
     type: number
     sql: ${TABLE}.percent_of_target_nr_forecast ;;
+    value_format: "0.00%"
+    label: "% Of Target NR Forecast"
   }
   dimension: region {
     type: string

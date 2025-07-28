@@ -121,7 +121,24 @@ view: fact_target_forecast_enterprise_summary {
     sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
   }
 
+  dimension: Strat_Sales_Team {
+    type: string
+    sql: ${TABLE}.Strat_Sales_Team ;;
+  }
+
+  dimension: new_enterprise_team {
+    type: string
+    sql: ${TABLE}.new_enterprise_team ;;
+  }
+
+  dimension: Strat_Sales_RVP {
+    type: string
+    sql: ${TABLE}.Strat_Sales_RVP ;;
+  }
+
   ###--MEASURES--###
+
+  ###--"GR Forecast"--###
 
   measure: sum_gr_forecast_full_credit {
     type: sum
@@ -131,6 +148,31 @@ view: fact_target_forecast_enterprise_summary {
     view_label: "GR Forecast"
   }
 
+  measure: sum_unweighted_tl_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Unweighted_TL_Upside_New_Forecast_v2 ;;
+    value_format: "#,##0.00"
+    label: "GR Unweighted Upside"
+    view_label: "GR Forecast"
+  }
+
+  measure: sum_weighted_tl_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
+    value_format: "#,##0.00"
+    label: "GR weighted Upside"
+    view_label: "GR Forecast"
+  }
+
+  measure: sum_percent_of_target_gr_forecast {
+    type: sum
+    sql: ${TABLE}.percent_of_target_gr_forecast ;;
+    value_format: "0.00%"
+    label: "% Of Target GR Forecast"
+    view_label: "GR Forecast"
+  }
+
+  ###--"NR Forecast"--###
   measure: sum_nr_forecast_full_credit {
     type: sum
     sql: ${TABLE}.NR_Forecast_Full_Credit ;;
@@ -155,22 +197,26 @@ view: fact_target_forecast_enterprise_summary {
     view_label: "NR Forecast"
   }
 
-  measure: sum_unweighted_tl_upside_new_forecast_v2 {
-    type: sum
-    sql: ${TABLE}.Unweighted_TL_Upside_New_Forecast_v2 ;;
+  measure: delta_nr_forecast {
+    type: number
+    label: "Delta Between NR Forecast and Target"
+    sql: ${sum_nr_forecast_full_credit} - ${sum_net_revenue_target} ;;
     value_format: "#,##0.00"
-    label: "GR Unweighted Upside"
-    view_label: "GR Forecast"
+    view_label: "NR Forecast"
   }
 
-  measure: sum_weighted_tl_upside_new_forecast_v2 {
+  measure: sum_percent_of_target_nr_forecast {
     type: sum
-    sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
-    value_format: "#,##0.00"
-    label: "GR weighted Upside"
-    view_label: "GR Forecast"
+    sql: ${TABLE}.percent_of_target_nr_forecast ;;
+    value_format: "0.00%"
+    label: "% Of Target NR Forecast"
+    view_label: "NR Forecast"
   }
 
+
+
+
+     ###--"GR Booked"--###
 
   measure: sum_booked_full_credit {
     type: sum
@@ -180,6 +226,16 @@ view: fact_target_forecast_enterprise_summary {
     view_label: "GR Booked"
   }
 
+
+  measure:sum_gr_booked_to_forecast_delta {
+    type: sum
+    sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
+    view_label: "GR Booked"
+  }
+
+
+
+    ###--"NR Booked"--###
   measure: sum_net_revenue_booked {
     type: sum
     sql: ${TABLE}.Net_Revenue_Booked ;;
@@ -188,6 +244,30 @@ view: fact_target_forecast_enterprise_summary {
     view_label: "NR Booked"
   }
 
+  measure:sum_nr_booked_to_forecast_delta {
+    type: sum
+    sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
+    view_label: "NR Booked"
+  }
+
+  measure: delta_nr_booked {
+    type: number
+    label: "Delta Between NR Booked and Target"
+    sql: ${sum_net_revenue_booked} - ${sum_net_revenue_target} ;;
+    value_format: "#,##0.00"
+    view_label: "NR Booked"
+  }
+
+  measure: P_of_Target_NR_Booked {
+    type: number
+    label: "% of Target NR Booked"
+    sql: (${fact_target_forecast_enterprise_summary.sum_net_revenue_booked}-${fact_target_forecast_enterprise_summary.sum_net_revenue_target})/${fact_target_forecast_enterprise_summary.sum_nr_forecast_full_credit} ;;
+    value_format: "0.00%"
+    view_label: "NR Booked"
+  }
+
+
+        ###--"Target"--###
   measure: sum_net_revenue_target {
     type: sum
     sql: ${TABLE}.net_revenue_target ;;
@@ -202,52 +282,7 @@ view: fact_target_forecast_enterprise_summary {
     label: "GR Target"
   }
 
-  measure:sum_gr_booked_to_forecast_delta {
-    type: sum
-    sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
-  }
 
-  measure:sum_nr_booked_to_forecast_delta {
-    type: sum
-    sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
-  }
-
-  # measure: p_of_target_gr_forecast {
-  #   type: number
-  #   sql: ${TABLE}.percent_of_target_gr_forecast ;;
-  #   value_format: "0.0%"
-  # }
-
-  measure: delta_nr_forecast {
-    type: number
-    label: "Delta Between NR Forecast and Target"
-    sql: ${sum_nr_forecast_full_credit} - ${sum_net_revenue_target} ;;
-    value_format: "#,##0.00"
-    view_label: "NR Forecast"
-  }
-
-  measure: delta_nr_booked {
-    type: number
-    label: "Delta Between NR Booked and Target"
-    sql: ${sum_net_revenue_booked} - ${sum_net_revenue_target} ;;
-    value_format: "#,##0.00"
-    view_label: "NR Booked"
-  }
-
-  measure: sum_percent_of_target_gr_forecast {
-    type: sum
-    sql: ${TABLE}.percent_of_target_gr_forecast ;;
-    value_format: "0.00%"
-    label: "% Of Target GR Forecast"
-    view_label: "GR Forecast"
-  }
-  measure: sum_percent_of_target_nr_forecast {
-    type: sum
-    sql: ${TABLE}.percent_of_target_nr_forecast ;;
-    value_format: "0.00%"
-    label: "% Of Target NR Forecast"
-    view_label: "NR Forecast"
-  }
   measure: count {
     type: count
     drill_fields: [account_name, generalist_name]

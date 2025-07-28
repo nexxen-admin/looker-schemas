@@ -17,8 +17,8 @@ view: purple_labs_audience_quality {
         inner join BI_DSP.dim_dsp_insertion_order ddio on ddio.insertion_order_id = ddli.insertion_order_id
       WHERE fnd.date_key >= '2025-05-01'
         AND fnd.date_key < current_date()
-        AND ddli.line_item_id IN (1609876096,1609876102,1609876160,1609876166,1609876168,1609868158,1609988099,1609876169,
-                           1609988097,1609951513,1609872634,1609988098,1609951662,1609876164)
+       -- AND ddli.line_item_id IN (1609876096,1609876102,1609876160,1609876166,1609876168,1609868158,1609988099,1609876169,
+         --                  1609988097,1609951513,1609872634,1609988098,1609951662,1609876164)
         AND (impressions > 0 or cost > 0)
       GROUP BY 1,2,3,4,5,6,7
       ORDER BY 1 ASC
@@ -34,8 +34,8 @@ view: purple_labs_audience_quality {
       FROM SunFlower.purplelab_audience_quality
       WHERE date >= '2025-05-01'
         AND date < current_date()
-        AND grouper_value IN (1609876096,1609876102,1609876160,1609876166,1609876168,1609868158,1609988099,1609876169,
-                           1609988097,1609951513,1609872634,1609988098,1609951662,1609876164)
+       -- AND grouper_value IN (1609876096,1609876102,1609876160,1609876166,1609876168,1609868158,1609988099,1609876169,
+        --                   1609988097,1609951513,1609872634,1609988098,1609951662,1609876164)
       ORDER BY 1 ASC
       )
 

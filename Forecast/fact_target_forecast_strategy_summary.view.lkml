@@ -58,13 +58,13 @@ view: fact_target_forecast_strategy_summary {
     type: number
     sql: ${TABLE}.percent_of_target_gr_forecast ;;
     value_format: "0.00%"
-    label: "% Of Target GR Forecast"
+    # label: "% Of Target GR Forecast"
   }
   dimension: percent_of_target_nr_forecast {
     type: number
     sql: ${TABLE}.percent_of_target_nr_forecast ;;
     value_format: "0.00%"
-    label: "% Of Target NR Forecast"
+    # label: "% Of Target NR Forecast"
   }
   dimension: region {
     type: string
@@ -123,6 +123,7 @@ view: fact_target_forecast_strategy_summary {
   dimension: Strat_Sales_RVP {
     type: string
     sql: ${TABLE}.Strat_Sales_RVP ;;
+    drill_fields: [revenue_line, Strat_Sales_Team]
   }
 
   ###--MEASURES--###
@@ -189,6 +190,21 @@ view: fact_target_forecast_strategy_summary {
     sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
     value_format: "#,##0.00"
     label: "NR Booked to Forecast (Delta)"
+    view_label: "NR"
+  }
+
+  measure: sum_percent_of_target_gr_forecast {
+    type: sum
+    sql: ${TABLE}.percent_of_target_gr_forecast ;;
+    value_format: "0.00%"
+    label: "% Of Target GR Forecast"
+    view_label: "GR"
+  }
+  measure: sum_percent_of_target_nr_forecast {
+    type: sum
+    sql: ${TABLE}.percent_of_target_nr_forecast ;;
+    value_format: "0.00%"
+    label: "% Of Target NR Forecast"
     view_label: "NR"
   }
 

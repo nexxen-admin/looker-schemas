@@ -61,11 +61,12 @@ view: fact_target_forecast_enterprise_summary {
   dimension: nr_forecast_nr_upside_weighted_new {
     type: number
     sql: ${TABLE}.NR_Forecast_NR_Upside_Weighted_NEW ;;
+    value_format: "0.00%"
   }
   dimension: percent_of_target_gr_forecast {
     type: number
     sql: ${TABLE}.percent_of_target_gr_forecast ;;
-    value_format: "0.0%"
+    value_format: "0.00%"
   }
   dimension: percent_of_target_nr_forecast {
     type: number
@@ -233,6 +234,20 @@ view: fact_target_forecast_enterprise_summary {
     view_label: "NR Booked"
   }
 
+  measure: sum_percent_of_target_gr_forecast {
+    type: sum
+    sql: ${TABLE}.percent_of_target_gr_forecast ;;
+    value_format: "0.00%"
+    label: "% Of Target GR Forecast"
+    view_label: "GR Forecast"
+  }
+  measure: sum_percent_of_target_nr_forecast {
+    type: sum
+    sql: ${TABLE}.percent_of_target_nr_forecast ;;
+    value_format: "0.00%"
+    label: "% Of Target NR Forecast"
+    view_label: "NR Forecast"
+  }
   measure: count {
     type: count
     drill_fields: [account_name, generalist_name]

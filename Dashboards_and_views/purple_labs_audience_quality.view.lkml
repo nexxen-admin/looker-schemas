@@ -16,9 +16,11 @@ view: purple_labs_audience_quality {
     INNER JOIN BI_DSP.dim_dsp_advertiser dda ON dda.advertiser_id_key = fnd.advertiser_id_key
     INNER JOIN BI_DSP.dim_dsp_line_item ddli ON ddli.line_item_id_key = fnd.line_item_key
     INNER JOIN BI_DSP.dim_dsp_insertion_order ddio ON ddio.insertion_order_id = ddli.insertion_order_id
+    INNER JOIN BI_DSP.dim_dsp_market m on m.market_id_key = fnd.market_id_key
   WHERE fnd.date_key >= '2025-05-01'
     AND fnd.date_key < CURRENT_DATE
     AND (fnd.impressions > 0 OR fnd.cost > 0)
+    and m.market_id = 2139
   GROUP BY 1,2,3,4,5,6,7
 ),
 

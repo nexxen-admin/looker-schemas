@@ -26,9 +26,9 @@ view: ncd_mapping_debugging {
                   ELSE 'OK'END AS creative_group_a_status,
             f.creative_group_b,
             f.creative_group_c,
-            SUM(f.impressions) as Impressions     
+            SUM(f.impressions) as Impressions
       FROM BI_DSP.ncd_fact_nexxen_dsp_state f
-        INNER JOIN BI_DSP.dim_dsp_line_item li on f.line_item_id_key = li.line_item_id_key 
+        INNER JOIN BI_DSP.dim_dsp_line_item li on f.line_item_id_key = li.line_item_id_key
         INNER JOIN BI_DSP.dim_dsp_package p on f.package_id_key = p.package_id_key
         LEFT JOIN BI_DSP.dim_dsp_creative c on f.creative_id_key = c.creative_id_key
       WHERE date > '2025-01-01'
@@ -152,36 +152,36 @@ view: ncd_mapping_debugging {
     sql: ${TABLE}.creative_group_c ;;
   }
 
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.Impressions ;;
+    value_format: "#,##0"
   }
 
   set: detail {
     fields: [
         date,
-	account_name,
-	advertiser_name,
-	insertion_order_id,
-	line_item_id,
-	line_item_name__c,
-	line_item_nickname,
-	line_item_nickname_status,
-	line_item_group_b,
-	line_item_group_c,
-	package_id,
-	package_name,
-	package_nickname,
-	package_nickname_status,
-	package_group_b,
-	package_group_c,
-	creative_id,
-	creative_name,
-	creative_group_a,
-	creative_group_a_status,
-	creative_group_b,
-	creative_group_c,
-	impressions
+  account_name,
+  advertiser_name,
+  insertion_order_id,
+  line_item_id,
+  line_item_name__c,
+  line_item_nickname,
+  line_item_nickname_status,
+  line_item_group_b,
+  line_item_group_c,
+  package_id,
+  package_name,
+  package_nickname,
+  package_nickname_status,
+  package_group_b,
+  package_group_c,
+  creative_id,
+  creative_name,
+  creative_group_a,
+  creative_group_a_status,
+  creative_group_b,
+  creative_group_c
     ]
   }
 }

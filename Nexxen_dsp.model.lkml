@@ -88,7 +88,9 @@ explore: comparison_datorama_vs_3p_solution  {
   # hidden: yes
 #}
 
-
+explore: ncd_mapping_debugging {
+  label: "NCD Mapping Debugging"
+}
 
 explore: fact_reach_frequency {
   required_access_grants: [can_view_all_tremor]

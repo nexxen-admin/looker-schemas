@@ -138,6 +138,8 @@ view: fact_target_forecast_enterprise_summary {
 
   ###--MEASURES--###
 
+
+
   ###--"GR Forecast"--###
 
   measure: sum_gr_forecast_full_credit {
@@ -261,10 +263,16 @@ view: fact_target_forecast_enterprise_summary {
   measure: P_of_Target_NR_Booked {
     type: number
     label: "% of Target NR Booked"
-    sql: (${fact_target_forecast_enterprise_summary.sum_net_revenue_booked}-${fact_target_forecast_enterprise_summary.sum_net_revenue_target})/${fact_target_forecast_enterprise_summary.sum_nr_forecast_full_credit} ;;
+    sql: CASE
+          WHEN ${fact_target_forecast_enterprise_summary.sum_net_revenue_target} = 0 THEN 0
+          ELSE
+            (${fact_target_forecast_enterprise_summary.sum_net_revenue_booked} - ${fact_target_forecast_enterprise_summary.sum_net_revenue_target})
+            / NULLIF(${fact_target_forecast_enterprise_summary.sum_nr_forecast_full_credit}, 0)
+       END ;;
     value_format: "0.00%"
     view_label: "NR Booked"
   }
+
 
 
         ###--"Target"--###

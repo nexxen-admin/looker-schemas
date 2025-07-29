@@ -965,7 +965,7 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: media_margin_overall {
     type: number
     label: "Media Margin"
-    sql: (${capped_revenue} - (${fdw_cost}+${vendor_cost})/${capped_revenue});;
+    sql: (${capped_revenue} - (${fdw_cost}+${vendor_cost}))/${capped_revenue};;
     value_format: "0.00%"
   }
 

@@ -173,6 +173,12 @@ view: forecast_dim_sfdb_opportunitylineitemschedule {
     label: "NR Booked"
     }
 
+  measure: sum_nr_upside_weighted {
+    type: sum
+    sql: ${TABLE}.Weighted_NR_Upside_New_Forecast_v2;;
+    label: "NR Upside (Weighted)"
+  }
+
   measure: count {
     type: count
     drill_fields: [id]

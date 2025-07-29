@@ -20,45 +20,45 @@ view: purple_labs_audience_quality {
     AND fnd.date_key < CURRENT_DATE
     AND (fnd.impressions > 0 OR fnd.cost > 0)
   GROUP BY 1,2,3,4,5,6,7
-  ORDER BY 1 ASC
 ),
 
-purplelabs_data AS (
+agg_purplelabs_data AS (
   SELECT
     date::DATE AS date,
-    client_id,
-    coverage,
-    execution_id,
     grouper_value,
-    unique_patient_count
+    MAX(client_id) AS client_id,
+    MAX(execution_id) AS execution_id,
+    AVG(CASE WHEN coverage = 'Less than 100 patients in CG' THEN NULL
+             ELSE REPLACE(coverage, '%', '')::FLOAT / 100
+        END) AS coverage,
+    SUM(CASE WHEN unique_patient_count = 'Too small to measure' THEN 0
+             ELSE unique_patient_count::INT
+        END) AS unique_patient_count
   FROM SunFlower.purplelab_audience_quality
   WHERE date >= '2025-05-01'
     AND date < CURRENT_DATE
-  ORDER BY 1 ASC
+  GROUP BY 1, 2
 )
 
 SELECT
   p.date AS cohort_start_date,
-  p.client_id,
-  p.execution_id,
-  p.grouper_value,
-  p.coverage,
-  p.unique_patient_count,
-
   f.advertiser_id,
   f.advertiser_name,
-  f.line_item_id,
-  f.line_item_name,
   f.insertion_order_id,
   f.insertion_order_name,
-  f.impressions,
-  f.cost
-
-FROM purplelabs_data p
-  LEFT JOIN firstp_data f
-    ON f.cohort_start_date = p.date
-    AND f.line_item_id = p.grouper_value
-ORDER BY p.date ASC ;;
+  p.grouper_value,
+  f.line_item_name,
+  p.client_id,
+  p.execution_id,
+  p.coverage,
+  p.unique_patient_count,
+  COALESCE(f.impressions, 0) AS impressions,
+  COALESCE(f.cost, 0) AS cost
+FROM agg_purplelabs_data p
+LEFT JOIN firstp_data f
+  ON p.date = f.cohort_start_date
+ AND p.grouper_value = f.line_item_id
+;;
   }
 
   measure: count {
@@ -136,7 +136,6 @@ ORDER BY p.date ASC ;;
 
   set: detail {
     fields: [
-        cohort_start_date,
   advertiser_id,
   advertiser_name,
   grouper_value,

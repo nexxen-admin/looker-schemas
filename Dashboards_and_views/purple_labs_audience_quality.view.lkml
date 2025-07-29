@@ -1,69 +1,64 @@
 
 view: purple_labs_audience_quality {
   derived_table: {
-    sql: WITH firstp_data as (
-      SELECT TIMESTAMPADD('day', 7 * CAST(FLOOR(TIMESTAMPDIFF('day', DATE '2025-05-01', fnd.date_key) / 7) AS INT),DATE '2025-05-01')::date AS cohort_start_date,
-      dda.advertiser_id,
-      dda.advertiser_name,
-      ddli.line_item_id AS line_item_id,
-      ddli.line_item_name as line_item_name,
-      ddio.insertion_order_id as insertion_order_id,
-      ddio.insertion_order_name as insertion_order_name,
-      SUM(fnd.impressions) as impressions,
-      SUM(fnd.cost) as cost
-      FROM BI_DSP.fact_nexxen_dsp fnd
-        inner join BI_DSP.dim_dsp_advertiser dda on dda.advertiser_id_key = fnd.advertiser_id_key
-        inner join BI_DSP.dim_dsp_line_item ddli on ddli.line_item_id_key = fnd.line_item_key
-        inner join BI_DSP.dim_dsp_insertion_order ddio on ddio.insertion_order_id = ddli.insertion_order_id
-      WHERE fnd.date_key >= '2025-05-01'
-        AND fnd.date_key < current_date()
-       -- AND ddli.line_item_id IN (1609876096,1609876102,1609876160,1609876166,1609876168,1609868158,1609988099,1609876169,
-         --                  1609988097,1609951513,1609872634,1609988098,1609951662,1609876164)
-        AND (impressions > 0 or cost > 0)
-      GROUP BY 1,2,3,4,5,6,7
-      ORDER BY 1 ASC
-      ),
+    sql: WITH firstp_data AS (
+  SELECT
+    TIMESTAMPADD('day', 7 * CAST(FLOOR(TIMESTAMPDIFF('day', DATE '2025-05-01', fnd.date_key) / 7) AS INT), DATE '2025-05-01')::DATE AS cohort_start_date,
+    dda.advertiser_id,
+    dda.advertiser_name,
+    ddli.line_item_id AS line_item_id,
+    ddli.line_item_name AS line_item_name,
+    ddio.insertion_order_id AS insertion_order_id,
+    ddio.insertion_order_name AS insertion_order_name,
+    SUM(fnd.impressions) AS impressions,
+    SUM(fnd.cost) AS cost
+  FROM BI_DSP.fact_nexxen_dsp fnd
+    INNER JOIN BI_DSP.dim_dsp_advertiser dda ON dda.advertiser_id_key = fnd.advertiser_id_key
+    INNER JOIN BI_DSP.dim_dsp_line_item ddli ON ddli.line_item_id_key = fnd.line_item_key
+    INNER JOIN BI_DSP.dim_dsp_insertion_order ddio ON ddio.insertion_order_id = ddli.insertion_order_id
+  WHERE fnd.date_key >= '2025-05-01'
+    AND fnd.date_key < CURRENT_DATE
+    AND (fnd.impressions > 0 OR fnd.cost > 0)
+  GROUP BY 1,2,3,4,5,6,7
+  ORDER BY 1 ASC
+),
 
-      purplelabs_data as (
-      SELECT date::date as date,
-      client_id,
-      coverage,
-      execution_id,
-      grouper_value,
-      unique_patient_count
-      FROM SunFlower.purplelab_audience_quality
-      WHERE date >= '2025-05-01'
-        AND date < current_date()
-       -- AND grouper_value IN (1609876096,1609876102,1609876160,1609876166,1609876168,1609868158,1609988099,1609876169,
-        --                   1609988097,1609951513,1609872634,1609988098,1609951662,1609876164)
-      ORDER BY 1 ASC
-      )
+purplelabs_data AS (
+  SELECT
+    date::DATE AS date,
+    client_id,
+    coverage,
+    execution_id,
+    grouper_value,
+    unique_patient_count
+  FROM SunFlower.purplelab_audience_quality
+  WHERE date >= '2025-05-01'
+    AND date < CURRENT_DATE
+  ORDER BY 1 ASC
+)
 
-      SELECT
-      COALESCE(f.cohort_start_date, p.date) as cohort_start_date,
-      f.advertiser_id as advertiser_id,
-      f.advertiser_name as advertiser_name,
-      COALESCE(f.line_item_id, p.grouper_value) as grouper_value,
-      f.line_item_name as line_item_name,
-      f.insertion_order_id as insertion_order_id,
-      f.insertion_order_name as insertion_order_name,
-      p.client_id as client_id,
-      p.execution_id as execution_id,
-      SUM(CASE
-        WHEN p.coverage = 'Less than 100 patients in CG' THEN NULL
-        ELSE CAST(REPLACE(p.coverage, '%', '') AS FLOAT) / 100
-        END) AS coverage,
-      SUM(CASE
-        WHEN p.unique_patient_count = 'Too small to measure' THEN NULL
-        ELSE CAST(p.unique_patient_count AS INTEGER)
-        END) AS unique_patient_count,
-      SUM(f.impressions) as impressions,
-      SUM(f.cost) as cost
-      FROM firstp_data f
-        FULL OUTER JOIN purplelabs_data p on f.cohort_start_date = p.date
-                          AND f.line_item_id = p.grouper_value
-      GROUP BY 1,2,3,4,5,6,7,8,9
-      ORDER BY cohort_start_date ASC ;;
+SELECT
+  p.date AS cohort_start_date,
+  p.client_id,
+  p.execution_id,
+  p.grouper_value,
+  p.coverage,
+  p.unique_patient_count,
+
+  f.advertiser_id,
+  f.advertiser_name,
+  f.line_item_id,
+  f.line_item_name,
+  f.insertion_order_id,
+  f.insertion_order_name,
+  f.impressions,
+  f.cost
+
+FROM purplelabs_data p
+  LEFT JOIN firstp_data f
+    ON f.cohort_start_date = p.date
+    AND f.line_item_id = p.grouper_value
+ORDER BY p.date ASC ;;
   }
 
   measure: count {

@@ -1,11 +1,14 @@
 view: bid_opti_all_models_summary_no_opti_bidfloor  {
   derived_table: {
     sql: with raw_data_4_models as (
-              select *
-              from bi.opti_bid_raw_v1
+              select aa.*
+              from bi.opti_bid_raw_v1 aa
+              LEFT JOIN (select distinct placement_id,imp_type,enabled from andromeda.rx_dim_supply_placement_bidfloor_model_opti_r) AD
+              ON (aa.media_id = AD.placement_id AND aa.imp_type = AD.imp_type)
               where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
                     AND lower(ssp_name) like'%rmp%'
                     and requests>0
+                    AND ad.enabled = 1
               ),
 
 

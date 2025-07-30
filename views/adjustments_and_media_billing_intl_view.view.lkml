@@ -5,9 +5,9 @@ view: v_adjustments_and_media_billing_intl {
     type: string
     sql: ${TABLE}.account_id ;;
   }
-  dimension: account_manager_name {
+  dimension: account_manager {
     type: string
-    sql: ${TABLE}.account_manager_name ;;
+    sql: ${TABLE}.account_manager ;;
   }
   dimension: account_name {
     type: string
@@ -16,6 +16,14 @@ view: v_adjustments_and_media_billing_intl {
   dimension: actions {
     type: number
     sql: ${TABLE}.actions ;;
+  }
+  dimension: adj_actions {
+    type: number
+    sql: ${TABLE}.adj_actions ;;
+  }
+  dimension: adj_clicks {
+    type: number
+    sql: ${TABLE}.adj_clicks ;;
   }
   dimension: adj_cost {
     type: number
@@ -28,6 +36,14 @@ view: v_adjustments_and_media_billing_intl {
     datatype: date
     sql: ${TABLE}.adj_end_date ;;
   }
+  dimension: adj_impressions {
+    type: number
+    sql: ${TABLE}.adj_impressions ;;
+  }
+  dimension: adj_revenue {
+    type: number
+    sql: ${TABLE}.adj_revenue ;;
+  }
   dimension_group: adj_start {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
@@ -35,25 +51,9 @@ view: v_adjustments_and_media_billing_intl {
     datatype: date
     sql: ${TABLE}.adj_start_date ;;
   }
-  dimension: adjustment_billable_actions {
+  dimension: adj_video_completes {
     type: number
-    sql: ${TABLE}.adjustment_billable_actions ;;
-  }
-  dimension: adjustment_billable_clicks {
-    type: number
-    sql: ${TABLE}.adjustment_billable_clicks ;;
-  }
-  dimension: adjustment_billable_impressions {
-    type: number
-    sql: ${TABLE}.adjustment_billable_impressions ;;
-  }
-  dimension: adjustment_billable_revenue {
-    type: number
-    sql: ${TABLE}.adjustment_billable_revenue ;;
-  }
-  dimension: adjustment_billable_video_completes {
-    type: number
-    sql: ${TABLE}.adjustment_billable_video_completes ;;
+    sql: ${TABLE}.adj_video_completes ;;
   }
   dimension: billing_cost {
     type: number
@@ -67,13 +67,25 @@ view: v_adjustments_and_media_billing_intl {
     type: number
     sql: ${TABLE}.billing_revenue ;;
   }
+  dimension: booked_budget {
+    type: number
+    sql: ${TABLE}.booked_budget ;;
+  }
+  dimension: booked_budget_total {
+    type: number
+    sql: ${TABLE}."booked_budget_(total)" ;;
+  }
+  dimension: booked_rate {
+    type: number
+    sql: ${TABLE}.booked_rate ;;
+  }
   dimension: booked_units {
     type: number
     sql: ${TABLE}.booked_units ;;
   }
-  dimension: capped_revenue_before_adj_with_override {
+  dimension: capped_revenue {
     type: number
-    sql: ${TABLE}.capped_revenue_before_adj_with_override ;;
+    sql: ${TABLE}.capped_revenue ;;
   }
   dimension: corp_entity {
     type: string
@@ -84,6 +96,18 @@ view: v_adjustments_and_media_billing_intl {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.date_key ;;
   }
+  dimension: discount_amount {
+    type: string
+    sql: ${TABLE}.discount_amount ;;
+  }
+  dimension: discount_applies_to {
+    type: string
+    sql: ${TABLE}.discount_applies_to ;;
+  }
+  dimension: do_not_bill {
+    type: string
+    sql: ${TABLE}.do_not_bill ;;
+  }
   dimension: expected_revenue {
     type: number
     sql: ${TABLE}.expected_revenue ;;
@@ -92,13 +116,31 @@ view: v_adjustments_and_media_billing_intl {
     type: number
     sql: ${TABLE}.impressions ;;
   }
-  dimension: io_currency {
+  dimension: IO_Number {
+    type: string
+    sql: ${TABLE}."io_#" ;;
+  }
+  dimension: IO_currency {
     type: string
     sql: ${TABLE}.io_currency ;;
   }
-  dimension: io_key {
+  dimension_group: IO_end {
+    type: time
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.io_end_date ;;
+  }
+  dimension: IO_key {
     type: string
     sql: ${TABLE}.io_key ;;
+  }
+  dimension_group: IO_Start {
+    type: time
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.io_start_date ;;
   }
   dimension: legal_entity {
     type: string
@@ -108,125 +150,81 @@ view: v_adjustments_and_media_billing_intl {
     type: string
     sql: ${TABLE}.line_item_name ;;
   }
-  dimension: line_item_status {
-    type: string
-    sql: ${TABLE}.line_item_status ;;
-  }
   dimension: manual_discount {
     type: number
     sql: ${TABLE}.manual_discount ;;
   }
-  dimension: ns_remaining_amount {
+  dimension: netsuite_booked_budget_remaining {
     type: number
-    sql: ${TABLE}.ns_remaining_amount ;;
+    sql: ${TABLE}.netsuite_booked_budget_remaining ;;
   }
-  dimension_group: opportunity_end {
-    type: time
-    timeframes: [raw, date, week, month, quarter, year]
-    convert_tz: no
-    datatype: date
-    sql: ${TABLE}.opportunity_end_date ;;
+  dimension: netsuite_past_billed_amount {
+    type: number
+    sql: ${TABLE}.netsuite_past_billed_amount ;;
   }
   dimension: opportunity_name {
     type: string
     sql: ${TABLE}.opportunity_name ;;
   }
-  dimension: opportunity_number {
+  dimension: opportunity_owner {
     type: string
-    sql: ${TABLE}.opportunity_number ;;
-  }
-  dimension: opportunity_owner_name {
-    type: string
-    sql: ${TABLE}.opportunity_owner_name ;;
-  }
-  dimension_group: opportunity_start {
-    type: time
-    timeframes: [raw, date, week, month, quarter, year]
-    convert_tz: no
-    datatype: date
-    sql: ${TABLE}.opportunity_start_date ;;
+    sql: ${TABLE}.opportunity_owner ;;
   }
   dimension: overall_discount {
     type: number
     sql: ${TABLE}.overall_discount ;;
   }
-  dimension: passed_bill_amount {
-    type: number
-    sql: ${TABLE}.passed_bill_amount ;;
+  dimension: PO_number {
+    type: string
+    sql: ${TABLE}."po_#" ;;
   }
-  dimension: po_currency {
+  dimension: PO_Currency {
     type: string
     sql: ${TABLE}.po_currency ;;
   }
-  dimension: po_name {
+  dimension: PO_Name {
     type: string
     sql: ${TABLE}.po_name ;;
   }
-  dimension: po_number {
+  dimension: price_type {
     type: string
-    sql: ${TABLE}.po_number ;;
+    sql: ${TABLE}.price_type ;;
   }
-  dimension: price_type_name {
+  dimension: product_level_I {
     type: string
-    sql: ${TABLE}.price_type_name ;;
+    sql: ${TABLE}.product_level_i ;;
   }
-  dimension: product_level_1 {
+  dimension: product_level_II {
     type: string
-    sql: ${TABLE}.product_level_1 ;;
+    sql: ${TABLE}.product_level_ii ;;
   }
-  dimension: product_level_2 {
+  dimension: publisher_account_name {
     type: string
-    sql: ${TABLE}.product_level_2 ;;
-  }
-  dimension: rate {
-    type: number
-    sql: ${TABLE}.rate ;;
+    sql: ${TABLE}.publisher_account_name ;;
   }
   dimension: rate_card_discount {
     type: number
     sql: ${TABLE}.rate_card_discount ;;
   }
+  dimension: related_brand {
+    type: string
+    sql: ${TABLE}.related_brand ;;
+  }
   dimension: related_brand_id {
     type: string
     sql: ${TABLE}.related_brand_id ;;
-  }
-  dimension: related_brand_name {
-    type: string
-    sql: ${TABLE}.related_brand_name ;;
   }
   dimension: stage {
     type: string
     sql: ${TABLE}.stage ;;
   }
-  dimension: total_booked_budget {
+  dimension: uncapped_revenue {
     type: number
-    sql: ${TABLE}.total_booked_budget ;;
-  }
-  dimension: uncapped_revenue_after_adops_override {
-    type: number
-    sql: ${TABLE}.uncapped_revenue_after_adops_override ;;
+    sql: ${TABLE}.uncapped_revenue ;;
   }
   dimension: undiscounted_spend {
     type: number
     sql: ${TABLE}.undiscounted_spend ;;
-  }
-  measure: count {
-    type: count
-    drill_fields: [detail*]
-  }
-
-  # ----- Sets of fields for drilling ------
-  set: detail {
-    fields: [
-  opportunity_owner_name,
-  po_name,
-  account_name,
-  related_brand_name,
-  opportunity_name,
-  price_type_name,
-  line_item_name,
-  account_manager_name
-  ]
   }
 
 }

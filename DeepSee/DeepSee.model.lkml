@@ -1,4 +1,4 @@
-connection: "bi_stby"
+connection: "vertica_iad"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"                 # include all views in this project
@@ -37,8 +37,8 @@ explore: tp_deepsee_mobile_r {
   required_access_grants: [can_view_all_tremor]
   hidden: no
 }
-explore: tp_deepsee_web_domain_r {
-  label: "DeepSee Web Domain"
-  required_access_grants: [can_view_all_tremor]
-  hidden: no
-}
+#explore: tp_deepsee_web_domain_r_testing {
+ # label: "DeepSee Web Domain"
+  #required_access_grants: [can_view_all_tremor]
+  #hidden: no
+#}

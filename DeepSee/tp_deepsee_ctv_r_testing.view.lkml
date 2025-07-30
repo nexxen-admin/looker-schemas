@@ -1,27 +1,26 @@
-view: tp_deepsee_mobile_r {
-  sql_table_name: Andromeda.tp_deepsee_mobile_r ;;
+view: tp_deepsee_ctv_r_testing {
+  sql_table_name: Andromeda.tp_deepsee_ctv_r ;;
 
-  dimension: 30_day_download_count_growth {
+  dimension: _30_day_download_count_growth {
     type: number
-    sql: ${TABLE}."30_day_download_count_growth" ;;
+    sql: ${TABLE}._30_day_download_count_growth ;;
   }
-  dimension: 30_day_review_count_growth {
+  dimension: _30_day_review_count_growth {
     type: number
-    sql: ${TABLE}."30_day_review_count_growth" ;;
+    sql: ${TABLE}._30_day_review_count_growth ;;
   }
-  dimension: 90_day_download_count_growth {
+  dimension: _90_day_download_count_growth {
     type: number
-    sql: ${TABLE}."90_day_download_count_growth" ;;
+    sql: ${TABLE}._90_day_download_count_growth ;;
   }
-  dimension: 90_day_review_count_growth {
+  dimension: _90_day_review_count_growth {
     type: number
-    sql: ${TABLE}."90_day_review_count_growth" ;;
+    sql: ${TABLE}._90_day_review_count_growth ;;
   }
   dimension: age_group {
     type: string
     sql: ${TABLE}.age_group ;;
   }
-
   dimension: compliance_status {
     type: string
     sql:
@@ -44,30 +43,22 @@ view: tp_deepsee_mobile_r {
       ELSE NULL
     END ;;
   }
-  dimension: bundle_id {
+  dimension: app_id {
     type: string
-    sql: ${TABLE}.bundle_id ;;
+    sql: ${TABLE}.app_id ;;
   }
-  dimension: category_array {
+  dimension: brand_safety_risk {
     type: string
-    sql: ${TABLE}.category_array ;;
+    sql: ${TABLE}.brand_safety_risk ;;
   }
-  dimension_group: crawl {
+  dimension: categories {
+    type: string
+    sql: ${TABLE}.categories ;;
+  }
+  dimension_group: crawled {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.crawl_date ;;
-  }
-  dimension: declared_brand_safety_advisories {
-    type: string
-    sql: ${TABLE}.declared_brand_safety_advisories ;;
-  }
-  dimension: declares_contains_ads {
-    type: yesno
-    sql: ${TABLE}.declares_contains_ads ;;
-  }
-  dimension: deepsee_brand_safety_risk {
-    type: string
-    sql: ${TABLE}.deepsee_brand_safety_risk ;;
+    sql: ${TABLE}.crawled_date ;;
   }
   dimension: delisted {
     type: yesno
@@ -85,30 +76,34 @@ view: tp_deepsee_mobile_r {
     type: string
     sql: ${TABLE}.developer_name ;;
   }
-  dimension: downloads {
-    type: number
-    sql: ${TABLE}.downloads ;;
-  }
   dimension_group: event {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.event_time ;;
   }
+  dimension: free_install {
+    type: yesno
+    sql: ${TABLE}.free_install ;;
+  }
   dimension: has_app_ads_txt {
     type: yesno
     sql: ${TABLE}.has_app_ads_txt ;;
+  }
+  dimension: has_inapp_purchases {
+    type: yesno
+    sql: ${TABLE}.has_inapp_purchases ;;
   }
   dimension: malicious_sdks_detected {
     type: yesno
     sql: ${TABLE}.malicious_sdks_detected ;;
   }
-  dimension: price {
-    type: number
-    sql: ${TABLE}.price ;;
-  }
-  dimension: primary_category {
+  dimension: monetization_types {
     type: string
-    sql: ${TABLE}.primary_category ;;
+    sql: ${TABLE}.monetization_types ;;
+  }
+  dimension: offers_free_content {
+    type: yesno
+    sql: ${TABLE}.offers_free_content ;;
   }
   dimension: privacy_policy_url {
     type: string
@@ -131,30 +126,18 @@ view: tp_deepsee_mobile_r {
     type: number
     sql: ${TABLE}.review_sentiment ;;
   }
-  dimension: store {
-    type: string
-    sql: ${TABLE}.store ;;
-  }
-  dimension: store_url {
-    type: string
-    sql: ${TABLE}.store_url ;;
+  dimension: store_id {
+    type: number
+    sql: ${TABLE}.store_id ;;
   }
   dimension: title {
     type: string
     sql: ${TABLE}.title ;;
   }
-  dimension: track_id {
-    type: number
-    sql: ${TABLE}.track_id ;;
-  }
   dimension_group: update {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.update_date ;;
-  }
-  dimension: website {
-    type: string
-    sql: ${TABLE}.website ;;
   }
   measure: count {
     type: count

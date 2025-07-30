@@ -1,4 +1,4 @@
-view: tp_deepsee_web_domain_r {
+view: tp_deepsee_web_domain_r_testing {
   sql_table_name: Andromeda.tp_deepsee_web_domain_r ;;
 
   dimension: ad_clutter {

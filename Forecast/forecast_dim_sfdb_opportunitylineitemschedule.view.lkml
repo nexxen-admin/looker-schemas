@@ -179,6 +179,36 @@ view: forecast_dim_sfdb_opportunitylineitemschedule {
     label: "NR Upside (Weighted)"
   }
 
+  measure: sum_unweighted_tl_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Unweighted_TL_Upside_New_Forecast_v2 ;;
+    label: "Unweighted TL Upside"
+  }
+
+  measure: sum_unweighted_nr_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.unweighted_nr_upside_new_forecast_v2 ;;
+    label: "Unweighted NR Upside"
+  }
+
+  measure: sum_weighted_nr_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Weighted_NR_Upside_New_Forecast_v2 ;;
+    label: "Weighted NR Upside"
+  }
+
+  measure: sum_weighted_tl_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
+    label: "Weighted TL Upside"
+  }
+
+  measure: sum_schedule_converted_revenue_v2 {
+    type: sum
+    sql: ${TABLE}.schedule_converted_revenue_v2 ;;
+    label: "Schedule Converted Revenue v2"
+  }
+
   measure: count {
     type: count
     drill_fields: [id]

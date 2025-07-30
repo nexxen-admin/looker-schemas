@@ -150,57 +150,73 @@ view: forecast_dim_sfdb_opportunitylineitemschedule {
        #####--MEASURES---####
 
   measure: sum_booked_full_credit {
+    value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.Booked_Full_Credit ;;
     label: "GR Booked"
   }
 
   measure: sum_gr_forecast_full_credit {
+    value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.GR_Forecast_Full_Credit ;;
     label: "GR Forecast"
   }
 
   measure: sum_nr_forecast_full_credit {
+    value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.NR_Forecast_Full_Credit ;;
     label: "NR Forecast"
   }
 
   measure: sum_net_revenue_booked {
+    value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.Net_Revenue_Booked;;
     label: "NR Booked"
     }
 
   measure: sum_unweighted_tl_upside_new_forecast_v2 {
+    value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.Unweighted_TL_Upside_New_Forecast_v2 ;;
     label: "Unweighted TL Upside"
   }
 
   measure: sum_unweighted_nr_upside_new_forecast_v2 {
+    value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.unweighted_nr_upside_new_forecast_v2 ;;
     label: "Unweighted NR Upside"
   }
 
   measure: sum_weighted_nr_upside_new_forecast_v2 {
+    value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.Weighted_NR_Upside_New_Forecast_v2 ;;
     label: "Weighted NR Upside"
   }
 
   measure: sum_weighted_tl_upside_new_forecast_v2 {
+    value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
     label: "Weighted TL Upside"
   }
 
   measure: sum_schedule_converted_revenue_v2 {
+    value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.schedule_converted_revenue_v2 ;;
     label: "Schedule Converted Revenue v2"
+  }
+
+  measure: sum_forecast_and_upside_weighted {
+    value_format: "#,##0.00"
+    type: number
+    label: "NR Forecast + NR Upside (Weighted)"
+    sql: ${sum_nr_forecast_full_credit}+${sum_weighted_nr_upside_new_forecast_v2} ;;
   }
 
   measure: count {

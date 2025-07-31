@@ -3254,7 +3254,7 @@ hidden: yes
     type: number
     sql: (
       (
-        COALESCE(${TABLE}.revenue / (1 +
+        COALESCE(${TABLE}.sum_of_revenue / (1 +
           CASE
             WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
               CASE

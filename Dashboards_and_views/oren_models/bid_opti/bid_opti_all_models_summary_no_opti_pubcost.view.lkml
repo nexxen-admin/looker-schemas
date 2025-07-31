@@ -13,7 +13,7 @@ view: bid_opti_all_models_summary_no_opti_pubcost {
               from bi.opti_bid_raw_v1 aa
               inner join placement_enabled bb
               ON (aa.media_id = bb.placement_id AND aa.imp_type = bb.imp_type)
-              where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+              where opti IN ('pubcost','no_opti')
                     AND lower(ssp_name) like'%rmp%'
                     and requests>0
 

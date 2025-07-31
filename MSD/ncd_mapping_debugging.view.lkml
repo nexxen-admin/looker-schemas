@@ -26,7 +26,8 @@ view: ncd_mapping_debugging {
                   ELSE 'OK'END AS creative_group_a_status,
             f.creative_group_b,
             f.creative_group_c,
-            SUM(f.impressions) as Impressions
+            SUM(f.impressions) as Impressions,
+            SUM(f.delivery_units) as Delivered_Units
       FROM BI_DSP.ncd_fact_nexxen_dsp_state f
         INNER JOIN BI_DSP.dim_dsp_line_item li on f.line_item_id_key = li.line_item_id_key
         INNER JOIN BI_DSP.dim_dsp_package p on f.package_id_key = p.package_id_key
@@ -155,6 +156,13 @@ view: ncd_mapping_debugging {
   measure: impressions {
     type: sum
     sql: ${TABLE}.Impressions ;;
+    value_format: "#,##0"
+  }
+
+  measure: Delivered_Units {
+    type: sum
+    label: "Delivered Units"
+    sql: ${TABLE}.Delivered_Units ;;
     value_format: "#,##0"
   }
 

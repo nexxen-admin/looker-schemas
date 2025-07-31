@@ -126,6 +126,13 @@ view: fact_target_forecast_strategy_summary {
     drill_fields: [revenue_line, Strat_Sales_Team]
   }
 
+
+  dimension: new_enterprise_team {
+    type: string
+    sql: ${TABLE}.new_enterprise_team ;;
+  }
+
+
   ###--MEASURES--###
 
 

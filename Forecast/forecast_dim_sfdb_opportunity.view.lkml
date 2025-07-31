@@ -339,17 +339,42 @@ view: forecast_dim_sfdb_opportunity {
     type: string
     sql: ${TABLE}.new_msa_market_status__c ;;
   }
-  dimension: new_vs_existing_customer {
+  # dimension: new_vs_existing_customer {
+  #   type: string
+  #   sql: ${TABLE}.new_vs_existing_customer ;;
+  # }
+    dimension: new_vs_existing_customer {
     type: string
-    sql: ${TABLE}.new_vs_existing_customer ;;
+    sql: CASE ${TABLE}.deal_type__c
+    WHEN 'New Customer' THEN 'New'
+    WHEN 'Existing' THEN 'Existing'
+    WHEN 'New Line of Business' THEN 'Existing'
+    END;;
   }
   dimension: nextstep {
     type: string
     sql: ${TABLE}.nextstep ;;
   }
+  # dimension: numbered_stage {
+  #   type: string
+  #   sql: ${TABLE}.numbered_stage ;;
+  # }
   dimension: numbered_stage {
     type: string
-    sql: ${TABLE}.numbered_stage ;;
+    sql: CASE ${TABLE}.stagename
+    WHEN 'Draft' THEN 'a. Draft'
+    WHEN 'Discovery Meeting' THEN 'b. Discovery Meeting'
+    WHEN 'LowEngage' THEN 'c. LowEngage'
+    WHEN 'RFP/RFI Received'THEN 'd. RFP/RFI Received'
+    WHEN 'HighEngage' THEN 'e. HighEngage'
+    WHEN 'Proposal Discussion' THEN 'f. Proposal Discussion'
+    WHEN 'Proposal' THEN 'g. Proposal'
+    WHEN 'Proposal Ready' THEN 'h. Proposal Ready'
+    WHEN 'Proposal Sent' THEN 'i. Proposal Sent'
+    WHEN 'Verbal' THEN 'j. Verbal'
+    WHEN 'IO Ready' THEN 'k. IO Ready'
+    WHEN 'Final Approval' THEN 'l. Final Approval'
+    END;;
   }
   dimension: opportunity_aid__c {
     type: string
@@ -583,8 +608,26 @@ view: forecast_dim_sfdb_opportunity {
     type: string
     sql: ${TABLE}.win_reason_details__c ;;
   }
-  measure: count {
-    type: count
-    drill_fields: [id, stagename, name]
+
+  dimension: opportunity_link {
+    type: string
+    sql: CONCAT('https://amobee-sfv.lightning.force.com/', ${TABLE}.id) ;;
+  }
+
+  dimension: probability_level {
+    type: number
+    label: "Probability Level"
+    sql:
+    CASE
+      WHEN ${confidence_level__c} IS NOT NULL
+           AND ${confidence_level__c} ~ '^[0-9]+(\.[0-9]+)?$' THEN CAST(${confidence_level__c} AS FLOAT)
+      ELSE CAST(${probability} AS FLOAT)
+    END ;;
+  }
+
+  measure: count_of_opps {
+    type: count_distinct
+    label: "# of Opps"
+    sql: ${TABLE}.id;;
   }
 }

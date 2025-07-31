@@ -355,6 +355,15 @@ explore: extend_Inbound_Exchange {
     relationship: many_to_one
   }
 
+  join: rx_dim_supply_publisher_deal_r {
+    type: left_outer
+    view_label: "supply publisher deal"
+    sql_on: ${rx_dim_supply_publisher_deal_r.external_deal_id}=${dim_deal.deal_id} ;;
+    relationship: many_to_one
+
+
+  }
+
 
   join: dim_deal_type {
     type: inner
@@ -704,6 +713,15 @@ explore: fact_ad_daily_agg{
     view_label: "Deal"
     sql_on: ${dim_deal.deal_key}=${fact_ad_daily_agg.deal_key};;
     relationship: many_to_one
+  }
+
+  join: rx_dim_supply_publisher_deal_r {
+    type: left_outer
+    view_label: "supply publisher deal"
+    sql_on: ${rx_dim_supply_publisher_deal_r.external_deal_id}=${dim_deal.deal_id} ;;
+    relationship: many_to_one
+
+
   }
 
 

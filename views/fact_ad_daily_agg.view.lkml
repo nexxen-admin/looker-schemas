@@ -3170,28 +3170,121 @@ hidden: yes
 
       ;;
   }
+  dimension: rebate_percent {
+    type: number
+    sql:
+      CASE
+        WHEN ${dim_deal_type.deal_type_name} = 'pub' AND (
+          LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%' OR
+          LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%' OR
+          LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+        ) THEN 0.02
+
+      WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' AND ${dim_deal_type.deal_type_name} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
+      CASE
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
+      ELSE 0
+      END
+
+      WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' AND ${dim_deal_type.deal_type_name} != 'pub' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%')
+      AND ${dim_date.date_key_raw} >= DATE '2025-04-01' AND ${dim_date.date_key_raw} < DATE '2025-04-18' THEN 0.075
+
+      WHEN ${dim_deal_partner.deal_partner_id} = '2' AND ${dim_deal_type.deal_type_id} = 12 THEN 0.30
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_brand.deal_brand_id} = '1036' THEN 0.20
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' THEN 0.50
+
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%T-Mobile%' THEN 0.25
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%lovesac%' THEN 0.25
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%tinuiti%' THEN 0.25
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' THEN 0.20
+
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Orion%' THEN 0.24
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Agyle%' THEN 0.15
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Evergreen%' THEN 0.20
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Anchor%' THEN 0.15
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%NYIAX%' THEN 0.10
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Tingley Lane%' THEN 0.15
+      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%UM Technologies%' THEN 0.10
+      ELSE 0
+      END ;;
+    description: "Rebate % based on agency, deal type, revenue type, seat, and time"
+    hidden: yes
+  }
+
+  dimension: barter_agency {
+    type: string
+    sql:
+      CASE
+        WHEN ${dim_deal_partner.deal_partner_id} = '2' AND ${dim_deal_type.deal_type_id} = 12 THEN 'LG Ads'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_brand.deal_brand_id} = '1036' THEN 'Active - Reckitt'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' THEN 'Active'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%T-Mobile%' THEN 'Icon T-Mobile'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%lovesac%' THEN 'Icon Lovesac'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%tinuiti%' THEN 'Icon Tinuiti'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' THEN 'Icon'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Orion%' THEN 'Orion'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Agyle%' THEN 'Agyle'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Evergreen%' THEN 'Evergreen'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Anchor%' THEN 'Anchor'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%NYIAX%' THEN 'NYIAX'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Tingley Lane%' THEN 'Tingley Lane'
+        WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%UM Technologies%' THEN 'UM Technologies'
+        ELSE 'Other'
+      END ;;
+      hidden: yes
+  }
+
+  measure: gross_revenue {
+    type: sum
+    sql: ${TABLE}.sum_of_revenue ;;
+    value_format: "$#,##0.00"
+    hidden: yes
+  }
+
+  measure: deal_data_fee_barter_fees {
+    type: sum
+    sql: CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN ${TABLE}.sum_of_deal_data_fee ELSE 0 END ;;
+    value_format: "$#,##0.00"
+    hidden: yes
+  }
 
   measure: barter_fee {
-    type: sum
-    sql: case when ${dim_deal_partner.deal_partner_id} = '2' and ${dim_deal_type.deal_type_id} = 12 then
-              ${TABLE}.sum_of_revenue*0.3
-              when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_deal_brand.deal_brand_id} = '1036' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.2
-              when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.5
-              when ${dim_deal_agency.deal_agency_name} like '%iNvolved%' and ${dim_date.date_key_raw} < '2024-10-01' then ${TABLE}.sum_of_revenue*0.2
-              when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} < '2024-10-01' then ${TABLE}.sum_of_revenue*0.15
-              when ${dim_deal_agency.deal_agency_name} like '%Orion%' and ${dim_date.date_key_raw} >= '2024-10-01' then ${TABLE}.sum_of_revenue*0.24
-              when ${dim_deal_agency.deal_agency_name} like '%ICON%' and ${dim_deal_agency.deal_agency_name} like '%T-Mobile%' then ${TABLE}.sum_of_revenue*0.25
-              when ${dim_deal_agency.deal_agency_name} like '%ICON%' and ${dim_deal_agency.deal_agency_name} like '%lovesac%' then ${TABLE}.sum_of_revenue*0.25
-              when ${dim_deal_agency.deal_agency_name} like '%ICON%' then ${TABLE}.sum_of_revenue*0.2
-              when ${dim_deal_agency.deal_agency_name} like '%Agyle%' then ${TABLE}.sum_of_revenue*0.15
-              when ${dim_deal_agency.deal_agency_name} like '%Evergreen%' then ${TABLE}.sum_of_revenue*0.2
-              when ${dim_deal_agency.deal_agency_name} like '%Anchor%' then ${TABLE}.sum_of_revenue*0.15
-              when ${dim_deal_agency.deal_agency_name} like '%UM Technologies%' then ${TABLE}.sum_of_revenue*0.1
-              when ${dim_deal_agency.deal_agency_name} like '%NYIAX%' then ${TABLE}.sum_of_revenue*0.1
-              when ${dim_deal_agency.deal_agency_name} like '%Tingley Lane%' then ${TABLE}.sum_of_revenue*0.15
-              end;;
+    type: number
+    sql: (
+      (
+        COALESCE(${TABLE}.revenue / (1 +
+          CASE
+            WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
+              CASE
+                WHEN ${dim_deal_type.deal_type_name} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
+                  CASE
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
+                    ELSE 0
+                  END
+                WHEN ${dim_deal_type.deal_type_name} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
+                  CASE
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.008615
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.034746
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.034567
+                    ELSE 0
+                  END
+                ELSE 0
+              END
+            ELSE 0
+          END
+        ), 0)
+        - COALESCE(
+            CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN ${TABLE}.deal_data_fee_barter_fees ELSE 0 END,
+            0
+          )
+      ) * ${rebate_percent} * -1
+    ) ;;
     value_format: "$#,##0.00"
-    description: "A monetary incentive or discount to an agency or buyer in exchange for meeting specified spending thresholds or for directing a set volume of ad spend to their platform."
+    description: "Barter rebate calculated by applying rebate % to net revenue (gross - data fee), A monetary incentive or discount to an agency or buyer in exchange for meeting specified spending thresholds or for directing a set volume of ad spend to their platform."
   }
 
   # measure: sum_user_matched {

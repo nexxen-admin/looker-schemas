@@ -1,23 +1,11 @@
 view: bid_opti_all_models_summary_no_opti_pubcost {
     derived_table: {
-      sql: with
-      placement_enabled as (
-                select distinct placement_id,imp_type
-                from andromeda.rx_dim_supply_placement_bidfloor_model_opti_r
-                where enabled=1),
-
-
-
-      raw_data_4_models as (
-              select aa.*
-              from bi.opti_bid_raw_v1 aa
-              inner join placement_enabled bb
-              ON (aa.media_id = bb.placement_id AND aa.imp_type = bb.imp_type)
-              where opti IN ('pubcost','no_opti')
+      sql: with raw_data_4_models as (
+              select *
+              from bi.opti_bid_raw_v1
+              where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
                     AND lower(ssp_name) like'%rmp%'
                     and requests>0
-
-
               ),
 
 
@@ -99,13 +87,13 @@ view: bid_opti_all_models_summary_no_opti_pubcost {
         fin_tab_before_tot as (
 
         SELECT *,
-        scaled_margin / NULLIF(SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc),0)-1 as scaled_margin_ratio_to_no_opti,
+        scaled_margin / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_margin_ratio_to_no_opti,
         scaled_margin - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_margin_diff_to_no_opti,
 
-        scaled_supply_margin / NULLIF(SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc),0)-1 as scaled_supply_margin_ratio_to_no_opti,
+        scaled_supply_margin / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_supply_margin_ratio_to_no_opti,
         scaled_supply_margin - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_supply_margin_diff_to_no_opti,
 
-        scaled_demand_margin / NULLIF(SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc),0)-1 as scaled_demand_margin_ratio_to_no_opti,
+        scaled_demand_margin / (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_demand_margin_ratio_to_no_opti,
         scaled_demand_margin - (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_demand_margin_diff_to_no_opti,
 
         CASE WHEN opti = 'no_opti' THEN 1

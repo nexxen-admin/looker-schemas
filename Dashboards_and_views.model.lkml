@@ -170,7 +170,6 @@ explore: buyer_cohort {
 
 explore: purple_labs_audience_quality {
   label: "Purple Labs Audience Quality"
-  required_access_grants: [can_view_all_tremor]
   hidden: no
 }
 

@@ -3251,7 +3251,7 @@ hidden: yes
   }
 
   measure: barter_fee {
-    type: number
+    type: sum
     sql: (
       (
         COALESCE(${TABLE}.sum_of_revenue / (1 +
@@ -3278,7 +3278,7 @@ hidden: yes
           END
         ), 0)
         - COALESCE(
-            CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN ${deal_data_fee_barter_fees} ELSE 0 END,
+            CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
             0
           )
       ) * ${rebate_percent} * -1

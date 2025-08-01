@@ -1623,7 +1623,7 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "2 days ago"]
   }
 
-  measure:  Previous_day_Cogs{
+  measure:  Previous_day_Cogs {
     label: "Cogs Previous day "
     type: sum
     description: "The cogs of 2 days ago"
@@ -1631,7 +1631,7 @@ view: fact_ad_daily_agg {
     group_label: "Time Shifted Measures"
     value_format: "$#,##0.00"
     filters: [date_key_date: "2 days ago"]
-  }
+}
 
   measure:  Previous_day_Pub_Platform_Fee {
     label: "Pub Platform Fee Previous day "
@@ -1854,6 +1854,45 @@ view: fact_ad_daily_agg {
     label: "Attempts previous day "
     type: sum
     sql: ${TABLE}.sum_of_slot_attempts ;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0"
+    filters: [date_key_date: "2 days ago"]
+
+  }
+
+  measure:  previous_day_barter_rebate {
+    label: "Barter Rebate previous day "
+    type: sum
+    sql: : (
+      (
+        COALESCE(${TABLE}.sum_of_revenue / (1 + CASE
+            WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
+              CASE
+                WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
+                  CASE
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
+                    ELSE 0
+                  END
+                WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
+                  CASE
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.008615
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.034746
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.034567
+                    ELSE 0
+                  END
+                ELSE 0
+              END
+            ELSE 0
+          END
+        ), 0)
+        - COALESCE(
+            CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
+            0
+          )
+      ) * ${rebate_percent} * -1
+    ) ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0"
     filters: [date_key_date: "2 days ago"]
@@ -2461,6 +2500,89 @@ view: fact_ad_daily_agg {
     # value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
     hidden: yes
+  }
+
+  measure: current_period_barter_rebate  {
+    view_label: "PoP"
+    label: "Current Period Barter Rebate"
+    # {{_filters['current_date_range']}} "
+    type: sum
+    description: "Current period Barter Fee"
+    sql: : (
+      (
+        COALESCE(${TABLE}.sum_of_revenue / (1 + CASE
+            WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
+              CASE
+                WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
+                  CASE
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
+                    ELSE 0
+                  END
+                WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
+                  CASE
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.008615
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.034746
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.034567
+                    ELSE 0
+                  END
+                ELSE 0
+              END
+            ELSE 0
+          END
+        ), 0)
+        - COALESCE(
+            CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
+            0
+          )
+      ) * ${rebate_percent} * -1
+    ) ;;
+    # value_format: "$#,##0"
+    filters: [period_filtered_measures: "this"]
+    hidden: no
+  }
+
+
+  measure: previous_period_barter_rebate  {
+    view_label: "PoP"
+    label: "Previous Period Barter Rebate "
+    # {{_filters['current_date_range']}} "
+    type: sum
+    description: "previous period barter fee"
+    sql:: (
+      (
+        COALESCE(${TABLE}.sum_of_revenue / (1 + CASE
+            WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
+              CASE
+                WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
+                  CASE
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
+                    ELSE 0
+                  END
+                WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
+                  CASE
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.008615
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.034746
+                    WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.034567
+                    ELSE 0
+                  END
+                ELSE 0
+              END
+            ELSE 0
+          END
+        ), 0)
+        - COALESCE(
+            CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
+            0
+          )
+      ) * ${rebate_percent} * -1
+    ) ;;
+    # value_format: "$#,##0"
+    filters: [period_filtered_measures: "last"]
+    hidden: no
   }
 
   measure: previous_period_ias_total_impression  {

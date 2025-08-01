@@ -227,4 +227,60 @@ view: v_adjustments_and_media_billing_intl {
     sql: ${TABLE}.undiscounted_spend ;;
   }
 
+  dimension: 1P_Impressions {
+    type: number
+    sql: ${TABLE}."1p_impressions" ;;
+  }
+
+  dimension: 1P_Clicks {
+    type: number
+    sql: ${TABLE}."1p_clicks" ;;
+  }
+
+  dimension: 1P_Actions {
+    type: number
+    sql: ${TABLE}."1p_actions" ;;
+  }
+
+  dimension: complete_events {
+    type: number
+    sql: ${TABLE}.complete_events ;;
+  }
+
+  dimension: advertiser_invoice {
+    type: number
+    sql: ${TABLE}.advertiser_invoice ;;
+  }
+
+  dimension: percent_25_events {
+    type: number
+    sql: ${TABLE}.percent_25_events ;;
+  }
+
+  dimension: percent_50_events {
+    type: number
+    sql: ${TABLE}.percent_50_events ;;
+  }
+
+  dimension: percent_75_events {
+    type: number
+    sql: ${TABLE}.percent_75_events ;;
+  }
+
+  dimension_group: DSP_Start {
+    type: time
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.dsp_start_date ;;
+  }
+
+  dimension_group: DSD_End {
+    type: time
+    timeframes: [raw, date, week, month, quarter, year]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.dsp_end_date ;;
+  }
+
 }

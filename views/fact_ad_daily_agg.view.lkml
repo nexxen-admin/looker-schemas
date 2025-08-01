@@ -3194,18 +3194,18 @@ hidden: yes
       ELSE
         CASE
           WHEN ${dim_deal_partner.deal_partner_id} = '2' AND ${dim_deal_type.deal_type_id} = 12 THEN 0.30
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_brand.deal_brand_id} = '1036' THEN 0.20
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' THEN 0.50
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%T-Mobile%' THEN 0.25
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%lovesac%' THEN 0.25
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' THEN 0.20
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Orion%' THEN 0.24
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Agyle%' THEN 0.15
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Evergreen%' THEN 0.20
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Anchor%' THEN 0.15
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%NYIAX%' THEN 0.10
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Tingley Lane%' THEN 0.15
-          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%UM Technologies%' THEN 0.10
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_brand.deal_brand_id} = '1036' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.20
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.50
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%T-Mobile%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.25
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%lovesac%'AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.25
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.20
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Orion%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.24
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Agyle%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.15
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Evergreen%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.20
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Anchor%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.15
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%NYIAX%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.10
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Tingley Lane%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.15
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%UM Technologies%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.10
           ELSE 0
         END
       END;;

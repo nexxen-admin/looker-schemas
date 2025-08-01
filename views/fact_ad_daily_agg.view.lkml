@@ -3170,47 +3170,47 @@ hidden: yes
 
       ;;
   }
+
+  dimension: tinuiti_deal_ids {
+    type: string
+    sql: CASE WHEN (LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%' OR
+          LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%' OR
+          LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%') THEN ${rx_dim_supply_publisher_deal_r.external_deal_id} END ;;
+          hidden: yes
+  }
+
   dimension: rebate_percent {
     type: number
     sql:
       CASE
-        WHEN ${dim_deal_type.deal_type_name} = 'pub' AND (
-          LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%' OR
-          LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%' OR
-          LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
-        ) THEN 0.02
+        WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND (
+          ${dim_dsp_seat.seat_id} = '2147' OR ${tinuiti_deal_ids} is not NULL
+        )
 
-      WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' AND ${dim_deal_type.deal_type_name} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
-      CASE
-      WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
-      WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
-      WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
-      ELSE 0
-      END
-
-      WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' AND ${dim_deal_type.deal_type_name} != 'pub' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%')
-      AND ${dim_date.date_key_raw} >= DATE '2025-04-01' AND ${dim_date.date_key_raw} < DATE '2025-04-18' THEN 0.075
-
-      WHEN ${dim_deal_partner.deal_partner_id} = '2' AND ${dim_deal_type.deal_type_id} = 12 THEN 0.30
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_brand.deal_brand_id} = '1036' THEN 0.20
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' THEN 0.50
-
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%T-Mobile%' THEN 0.25
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%lovesac%' THEN 0.25
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%tinuiti%' THEN 0.25
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' THEN 0.20
-
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Orion%' THEN 0.24
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Agyle%' THEN 0.15
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Evergreen%' THEN 0.20
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Anchor%' THEN 0.15
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%NYIAX%' THEN 0.10
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Tingley Lane%' THEN 0.15
-      WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%UM Technologies%' THEN 0.10
-      ELSE 0
-      END ;;
+          THEN 0.02
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' AND ${dim_date.date_key_raw} < DATE '2025-04-18'
+        AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%')
+        AND ${dim_dsp_deal_type.dsp_deal_type} != 'pub'AND ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN 0.075
+      ELSE
+        CASE
+          WHEN ${dim_deal_partner.deal_partner_id} = '2' AND ${dim_deal_type.deal_type_id} = 12 THEN 0.30
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_brand.deal_brand_id} = '1036' THEN 0.20
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' THEN 0.50
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%T-Mobile%' THEN 0.25
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%lovesac%' THEN 0.25
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' THEN 0.20
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Orion%' THEN 0.24
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Agyle%' THEN 0.15
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Evergreen%' THEN 0.20
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Anchor%' THEN 0.15
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%NYIAX%' THEN 0.10
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Tingley Lane%' THEN 0.15
+          WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%UM Technologies%' THEN 0.10
+          ELSE 0
+        END
+      END;;
     description: "Rebate % based on agency, deal type, revenue type, seat, and time"
-    hidden: yes
+    # hidden: yes
   }
 
   dimension: barter_agency {
@@ -3254,18 +3254,17 @@ hidden: yes
     type: sum
     sql: (
       (
-        COALESCE(${TABLE}.sum_of_revenue / (1 +
-          CASE
+        COALESCE(${TABLE}.sum_of_revenue / (1 + CASE
             WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
               CASE
-                WHEN ${dim_deal_type.deal_type_name} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
+                WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
                   CASE
                     WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
                     WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
                     WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
                     ELSE 0
                   END
-                WHEN ${dim_deal_type.deal_type_name} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
+                WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
                   CASE
                     WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.008615
                     WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.034746

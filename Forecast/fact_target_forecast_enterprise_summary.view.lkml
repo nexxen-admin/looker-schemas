@@ -150,6 +150,7 @@ view: fact_target_forecast_enterprise_summary {
       WHEN ${account_name} LIKE '%Rescue Agency%' THEN 'Tech Services - Strategic Sales'
       ELSE 'Tech Services - Enterprise Sales'
     END ;;
+    label: "Enterprise Technical Services"
   }
 
 

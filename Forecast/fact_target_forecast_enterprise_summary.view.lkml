@@ -136,6 +136,23 @@ view: fact_target_forecast_enterprise_summary {
     sql: ${TABLE}.Strat_Sales_RVP ;;
   }
 
+
+  dimension: tech_services_group {
+    type: string
+    sql:
+    CASE
+      WHEN ${account_name} = 'ITV' THEN NULL
+      WHEN ${account_name} = 'LG Electronics' THEN NULL
+      WHEN ${account_name} LIKE '%Klick Health%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} LIKE '%301 Digital Media%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} LIKE '%Good Karma Brands%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} LIKE '%Guru%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} LIKE '%Rescue Agency%' THEN 'Tech Services - Strategic Sales'
+      ELSE 'Tech Services - Enterprise Sales'
+    END ;;
+  }
+
+
   ###--MEASURES--###
 
 

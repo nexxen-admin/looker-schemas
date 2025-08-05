@@ -1891,7 +1891,7 @@ view: fact_ad_daily_agg {
             CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
             0
           )
-      ) * ${rebate_percent} * -1
+      ) * ${rebate_percent} * 1
     ) ;;
     group_label: "Time Shifted Measures"
     value_format: "$#,##0"
@@ -2536,7 +2536,7 @@ view: fact_ad_daily_agg {
             CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
             0
           )
-      ) * ${rebate_percent} * -1
+      ) * ${rebate_percent} * 1
     ) ;;
     # value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
@@ -2578,7 +2578,7 @@ view: fact_ad_daily_agg {
             CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
             0
           )
-      ) * ${rebate_percent} * -1
+      ) * ${rebate_percent} * 1
     ) ;;
     # value_format: "$#,##0"
     filters: [period_filtered_measures: "last"]

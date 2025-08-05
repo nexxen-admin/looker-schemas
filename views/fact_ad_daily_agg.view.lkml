@@ -3402,7 +3402,7 @@ hidden: yes
             CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
             0
           )
-      ) * ${rebate_percent} * -1
+      ) * ${rebate_percent} * 1
     ) ;;
     value_format: "$#,##0.00"
     description: "Barter rebate calculated by applying rebate % to net revenue (gross - data fee), A monetary incentive or discount to an agency or buyer in exchange for meeting specified spending thresholds or for directing a set volume of ad spend to their platform."

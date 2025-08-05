@@ -224,14 +224,14 @@ view: forecast_dim_sfdb_opportunitylineitemschedule {
     value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
-    view_label: "GR Booked To Forecast Delta"
+    label:"GR Booked To Forecast Delta"
   }
 
   measure:sum_nr_booked_to_forecast_delta {
     value_format: "#,##0.00"
     type: sum
     sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
-    view_label: "NR Booked To Forecast Delta"
+    label: "NR Booked To Forecast Delta"
   }
   measure: count {
     type: count

@@ -23,16 +23,12 @@ view: dim_dsp_monthly_strategic_targets {
     sql: ${TABLE}.Gross_Revenue ;;
   }
 
-  # measure: gross_revenue {
-  #   type: sum
-  #   sql: ${TABLE}.gross_revenue ;;
-  #   value_format: "#,##0.00"
-  # }
 
   dimension: lob {
     type: string
     sql: ${TABLE}.LOB ;;
   }
+
   dimension: monthly_strategic_targets_key {
     type: number
     sql: ${TABLE}.monthly_strategic_targets_key ;;
@@ -43,16 +39,30 @@ view: dim_dsp_monthly_strategic_targets {
     sql: ${TABLE}.Net_Revenue ;;
   }
 
-  # measure: net_revenue {
-  #   type: sum
-  #   sql: ${TABLE}.net_revenue ;;
-  #   value_format: "#,##0.00"
-  # }
+
 
   dimension: opportunity_owner {
     type: string
     sql: ${TABLE}.Opportunity_Owner ;;
   }
+
+  ###---MAESURES---###
+
+  measure: sum_gross_revenue {
+    type: sum
+    sql: ${TABLE}.gross_revenue ;;
+    value_format: "#,##0.00"
+    label: "GR Revenue"
+  }
+
+  measure: sum_net_revenue {
+    type: sum
+    sql: ${TABLE}.net_revenue ;;
+    value_format: "#,##0.00"
+    label: "NR Revenue"
+  }
+
+
   measure: count {
     type: count
   }

@@ -19,12 +19,6 @@ view: monthly_strategic_targets_changes {
     sql: ${TABLE}.Gross_Revenue ;;
   }
 
-  # measure: gross_revenue {
-  #   type: sum
-  #   sql: ${TABLE}.gross_revenue ;;
-  #   value_format: "#,##0.00"
-  # }
-
 
   dimension: lob {
     type: string
@@ -40,11 +34,6 @@ view: monthly_strategic_targets_changes {
     sql: ${TABLE}.Net_Revenue ;;
   }
 
-  # measure: net_revenue {
-  #   type: sum
-  #   sql: ${TABLE}.net_revenue ;;
-  #   value_format: "#,##0.00"
-  # }
 
   dimension: opportunity_owner {
     type: string
@@ -54,6 +43,23 @@ view: monthly_strategic_targets_changes {
     type: number
     sql: ${TABLE}."Year" ;;
   }
+
+  ###---MAESURES---###
+
+  measure: sum_gross_revenue {
+    type: sum
+    sql: ${TABLE}.gross_revenue ;;
+    value_format: "#,##0.00"
+    label: "GR Revenue"
+  }
+
+  measure: sum_net_revenue {
+    type: sum
+    sql: ${TABLE}.net_revenue ;;
+    value_format: "#,##0.00"
+    label: "NR Revenue"
+  }
+
   measure: count {
     type: count
   }

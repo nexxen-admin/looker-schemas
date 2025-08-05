@@ -137,6 +137,66 @@ view: fact_target_forecast_enterprise_summary {
   }
 
 
+  # dimension: sales_team_chance_org{
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN ${new_enterprise_team} IN (
+  #       'Enterprise Sales House Accounts',
+  #       'West',
+  #       'East',
+  #       'Central',
+  #       'Political',
+  #       'ATV',
+  #       'ITV',
+  #       'Linear TV (Maloy)'
+  #     ) THEN CONCAT('Enterprise Sales - ', ${new_enterprise_team})
+
+  #     WHEN ${Strat_Sales_Team} LIKE '%Strat Sales%' THEN CONCAT('Strategic Sales - ', ${Strat_Sales_RVP})
+
+  #     ELSE NULL
+  #   END ;;
+  #   label: "Sales Team (Chance Org)"
+  # }
+
+  # dimension: Chance_Sales_Team_Consolidated {
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN ${sales_team_chance_org} LIKE '%Enterprise Sales%' THEN 'Enterprise Sales'
+  #     WHEN ${sales_team_chance_org} LIKE '%Strategic Sales%' THEN 'Strategic Sales'
+  #     ELSE NULL
+  #   END ;;
+  #   label: "Chance Sales Team (Consolidated)"
+  # }
+
+  # dimension: tech_services_group {
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN ${account_name} = 'ITV' THEN NULL
+  #     WHEN ${account_name} = 'LG Electronics' THEN NULL
+
+  #     WHEN ${Chance_Sales_Team_Consolidated} LIKE '%Enterprise Sales%' AND ${sales_team_chance_org} != 'Enterprise Sales - Linear TV (Maloy)'
+  #       THEN 'Tech Services - Enterprise Sales'
+
+  #     WHEN ${sales_team_chance_org} LIKE '%Strategic Sales%'
+  #       THEN 'Tech Services - Strategic Sales'
+
+  #     WHEN ${account_name} LIKE '%Klick Health%' THEN 'Tech Services - Strategic Sales'
+  #     WHEN ${account_name} LIKE '%301 Digital Media%' THEN 'Tech Services - Strategic Sales'
+  #     WHEN ${account_name} LIKE '%Good Karma Brands%' THEN 'Tech Services - Strategic Sales'
+  #     WHEN ${account_name} LIKE '%Guru%' THEN 'Tech Services - Strategic Sales'
+  #     WHEN ${account_name} LIKE '%Rescue Agency%' THEN 'Tech Services - Strategic Sales'
+
+  #     ELSE NULL
+  #   END ;;
+  #   label: "Enterprise Technical Services"
+  # }
+
+
+
+
   dimension: tech_services_group {
     type: string
     sql:

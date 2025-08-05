@@ -219,6 +219,19 @@ view: forecast_dim_sfdb_opportunitylineitemschedule {
     sql: ${sum_nr_forecast_full_credit}+${sum_weighted_nr_upside_new_forecast_v2} ;;
   }
 
+  measure:sum_gr_booked_to_forecast_delta {
+    value_format: "#,##0.00"
+    type: sum
+    sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
+    view_label: "GR Booked To Forecast Delta"
+  }
+
+  measure:sum_nr_booked_to_forecast_delta {
+    value_format: "#,##0.00"
+    type: sum
+    sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
+    view_label: "NR Booked To Forecast Delta"
+  }
   measure: count {
     type: count
     drill_fields: [id]

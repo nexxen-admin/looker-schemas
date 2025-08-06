@@ -67,8 +67,8 @@ view: purplelabs_script_metrics {
         COALESCE(f.actions, 0) AS actions
       FROM agg_purplelabs_data p
           right JOIN firstp_data f ON p.date::date = f.date::date
-                        AND p.adgroup_id = f.insertion_order_id
-                                       and p.campaign_id = f.line_item_id
+                        AND p.adgroup_id = f.line_item_id
+                                 and p.campaign_id = f.insertion_order_id
       WHERE adgroup_id IS NOT NULL
       ORDER BY p.date ASC ;;
   }

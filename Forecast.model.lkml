@@ -48,13 +48,17 @@ explore: monthly_enterprise_targets_changes {
 
 explore: fact_sfdb_forecast_snapshot {
   label: "Fact sfdb Forecast Snapshot"
-     sql_always_where: ${fact_sfdb_forecast_snapshot.io_super_region} = 'NAM'
-                        AND ${fact_sfdb_forecast_snapshot.io_type} <> 'PMP'
-                        AND ${fact_sfdb_forecast_snapshot.revenue_line} <> 'Missing'
-                        AND ${fact_sfdb_forecast_snapshot.revenue_line} <> 'PMP'
-                        AND ${fact_sfdb_forecast_snapshot.new_enterprise_team} <> 'EMEA'
-                        AND ${fact_sfdb_forecast_snapshot.io_type} IS NOT NULL;;
+
+  sql_always_where:
+    ${io_super_region} = 'NAM'
+    AND ${io_type} <> 'PMP'
+    AND ${revenue_line} <> 'Missing'
+    AND ${revenue_line} <> 'PMP'
+    AND ${new_enterprise_team} <> 'EMEA'
+    AND ${io_type} IS NOT NULL
+    AND ${Snapshot_Forecast_Checkbox} = 1 ;;
 }
+
 
 explore: fact_target_forecast_strategy_summary  {
 }

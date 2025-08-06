@@ -46,6 +46,13 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: deal_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.deal_key ;;
+    hidden: yes
+  }
+
   dimension: city_key {
     type: number
     value_format_name: id

@@ -168,6 +168,11 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${TABLE}.new_enterprise_team ;;
   }
 
+  dimension: Snapshot_Forecast_Checkbox  {
+    type: number
+    sql: ${TABLE}.Snapshot_Forecast_Checkbox  ;;
+  }
+
   dimension: date_key_in_timezone_raw {
     hidden: yes
     type: date

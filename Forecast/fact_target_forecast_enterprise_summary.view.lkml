@@ -301,6 +301,13 @@ view: fact_target_forecast_enterprise_summary {
     view_label: "NR Forecast"
   }
 
+  measure: sum_weighted_nr_upside_and_nr_forecast_to_target {
+    type: average
+    sql: (${TABLE}.Weighted_NR_Upside_New_Forecast_v2 + ${TABLE}.NR_Forecast_Full_Credit)/${TABLE}.net_revenue_target;;
+    value_format: "0.00%"
+    label: "NR Forecast + NR Upside % to Target"
+    view_label: "NR Forecast"
+  }
 
 
 

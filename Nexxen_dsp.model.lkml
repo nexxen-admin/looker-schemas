@@ -80,8 +80,8 @@ explore: third_party_raw_table  {
   label: "Third Party Raw Table"
 
   join: email_processing_log {
-    type: left_outer
-    sql_on: ${third_party_raw_table.id} = ${email_processing_log.id} ;;
+    type: inner
+    sql_on: ${third_party_raw_table.message_id} = ${email_processing_log.message_id} ;;
     relationship: many_to_one
   }
 }

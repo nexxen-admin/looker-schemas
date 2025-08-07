@@ -285,11 +285,24 @@ view: fact_target_forecast_enterprise_summary {
     view_label: "NR Forecast"
   }
 
+  # measure: sum_percent_of_target_nr_forecast {
+  #   type: sum
+  #   sql: ${TABLE}.percent_of_target_nr_forecast ;;
+  #   value_format: "0.00%"
+  #   label: "% Of Target NR Forecast"
+  #   view_label: "NR Forecast"
+  # }
+
+
   measure: sum_percent_of_target_nr_forecast {
-    type: sum
-    sql: ${TABLE}.percent_of_target_nr_forecast ;;
+    type: number
+    label: "% of Target NR Forecast"
+    sql: CASE
+          WHEN ${fact_target_forecast_enterprise_summary.sum_net_revenue_target} = 0 THEN 0
+          ELSE ${fact_target_forecast_enterprise_summary.sum_nr_forecast_full_credit}
+               / NULLIF(${fact_target_forecast_enterprise_summary.sum_net_revenue_target}, 0)
+       END ;;
     value_format: "0.00%"
-    label: "% Of Target NR Forecast"
     view_label: "NR Forecast"
   }
 
@@ -357,11 +370,10 @@ view: fact_target_forecast_enterprise_summary {
     type: number
     label: "% of Target NR Booked"
     sql: CASE
-          WHEN ${fact_target_forecast_enterprise_summary.sum_net_revenue_target} = 0 THEN 0
-          ELSE
-            (${fact_target_forecast_enterprise_summary.sum_net_revenue_booked} - ${fact_target_forecast_enterprise_summary.sum_net_revenue_target})
-            / NULLIF(${fact_target_forecast_enterprise_summary.sum_nr_forecast_full_credit}, 0)
-       END ;;
+    WHEN ${fact_target_forecast_enterprise_summary.sum_net_revenue_target} = 0 THEN 0
+    ELSE ${fact_target_forecast_enterprise_summary.sum_net_revenue_booked}
+    / NULLIF(${fact_target_forecast_enterprise_summary.sum_net_revenue_target}, 0)
+    END ;;
     value_format: "0.00%"
     view_label: "NR Booked"
   }

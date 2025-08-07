@@ -200,18 +200,43 @@ view: fact_target_forecast_strategy_summary {
     view_label: "NR"
   }
 
+  # measure: sum_percent_of_target_gr_forecast {
+  #   type: sum
+  #   sql: ${TABLE}.percent_of_target_gr_forecast ;;
+  #   value_format: "0.00%"
+  #   label: "% Of Target GR Forecast"
+  #   view_label: "GR"
+  # }
+
   measure: sum_percent_of_target_gr_forecast {
-    type: sum
-    sql: ${TABLE}.percent_of_target_gr_forecast ;;
+    type: number
+    label: "% of Target GR Forecast"
+    sql: CASE
+          WHEN ${fact_target_forecast_strategy_summary.sum_gross_revenue_target} = 0 THEN 0
+          ELSE ${fact_target_forecast_strategy_summary.sum_gr_forecast_full_credit}
+              / NULLIF(${fact_target_forecast_strategy_summary.sum_gross_revenue_target}, 0)
+      END ;;
     value_format: "0.00%"
-    label: "% Of Target GR Forecast"
     view_label: "GR"
   }
+
+  # measure: sum_percent_of_target_nr_forecast {
+  #   type: sum
+  #   sql: ${TABLE}.percent_of_target_nr_forecast ;;
+  #   value_format: "0.00%"
+  #   label: "% Of Target NR Forecast"
+  #   view_label: "NR"
+  # }
+
   measure: sum_percent_of_target_nr_forecast {
-    type: sum
-    sql: ${TABLE}.percent_of_target_nr_forecast ;;
+    type: number
+    label: "% of Target NR Forecast"
+    sql: CASE
+          WHEN ${fact_target_forecast_strategy_summary.sum_net_revenue_target} = 0 THEN 0
+          ELSE ${fact_target_forecast_strategy_summary.sum_nr_forecast_full_credit}
+              / NULLIF(${fact_target_forecast_strategy_summary.sum_net_revenue_target}, 0)
+      END ;;
     value_format: "0.00%"
-    label: "% Of Target NR Forecast"
     view_label: "NR"
   }
 

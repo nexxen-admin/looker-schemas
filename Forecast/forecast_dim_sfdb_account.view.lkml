@@ -226,6 +226,24 @@ view: forecast_dim_sfdb_account {
     sql: ${TABLE}."name" ;;
     label: "Account Name"
   }
+
+  dimension: tech_services_group {
+    type: string
+    sql:
+    CASE
+      WHEN ${name} = 'ITV' THEN NULL
+      WHEN ${name} = 'LG Electronics' THEN NULL
+      WHEN ${name} LIKE '%Klick Health%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${name} LIKE '%301 Digital Media%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${name} LIKE '%Good Karma Brands%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${name} LIKE '%Guru%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${name} LIKE '%Rescue Agency%' THEN 'Tech Services - Strategic Sales'
+      ELSE 'Tech Services - Enterprise Sales'
+    END ;;
+    label: "Enterprise Technical Services"
+  }
+
+
   dimension: ns_id__c {
     type: string
     sql: ${TABLE}.ns_id__c ;;

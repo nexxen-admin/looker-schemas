@@ -76,6 +76,10 @@ explore: comparison_datorama_vs_3p_solution  {
   # label: "TPA Email Via System Activity"
 }
 
+explore: v_netsuite_international_report {
+  label: "NetSuite INTL Report"
+}
+
 explore: third_party_raw_table  {
   label: "Third Party Raw Table"
 

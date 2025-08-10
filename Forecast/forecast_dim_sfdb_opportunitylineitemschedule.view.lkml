@@ -233,6 +233,11 @@ view: forecast_dim_sfdb_opportunitylineitemschedule {
     sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
     label: "NR Booked To Forecast Delta"
   }
+
+  measure: sum_weighted_forecasted_spend_tremor_leadership {
+    type: sum
+    sql: ${TABLE}.Weighted_Forecasted_Spend_Tremor_Leadership ;;
+  }
   measure: count {
     type: count
     drill_fields: [id]

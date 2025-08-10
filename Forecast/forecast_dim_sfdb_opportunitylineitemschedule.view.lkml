@@ -238,6 +238,17 @@ view: forecast_dim_sfdb_opportunitylineitemschedule {
     type: sum
     sql: ${TABLE}.Weighted_Forecasted_Spend_Tremor_Leadership ;;
   }
+
+  measure: sum_unweighted_nr_forecast_tremor_leadership {
+    type: sum
+    sql: ${TABLE}.Unweighted_NR_Forecast_Tremor_Leadership ;;
+  }
+
+  measure: sum_weighted_nr_forecast_tremor_leadership {
+    type: sum
+    sql: ${TABLE}.Weighted_NR_Forecast_Tremor_Leadership ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id]

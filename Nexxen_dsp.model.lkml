@@ -76,6 +76,10 @@ explore: comparison_datorama_vs_3p_solution  {
   # label: "TPA Email Via System Activity"
 }
 
+explore: v_netsuite_international_report {
+  label: "NetSuite INTL Report"
+}
+
 explore: third_party_raw_table  {
   label: "Third Party Raw Table"
 
@@ -85,6 +89,65 @@ explore: third_party_raw_table  {
     relationship: many_to_one
   }
 }
+
+explore: dim_dsp_market  {
+  required_access_grants: [can_view_all_tremor]
+  view_name: dim_dsp_market
+  persist_with: CleanCash_datagroup
+  label: "Market 2147 Brand Safety Report"
+  view_label: "Market"
+  # hidden: yes
+
+  join: dim_dsp_entity {
+    type: inner
+    sql_on: ${dim_dsp_market.market_id} = ${dim_dsp_entity.home_market_id} ;;
+    relationship: many_to_one
+    view_label: "Entity"
+  }
+
+  join: dim_dsp_advertiser {
+    type: inner
+    sql_on: ${dim_dsp_entity.entity_id} = ${dim_dsp_advertiser.entity_id} ;;
+    relationship: many_to_one
+    view_label: "Advertiser"
+  }
+
+  join: dim_dsp_line_item {
+    type: inner
+    sql_on: ${dim_dsp_advertiser.advertiser_id} = ${dim_dsp_line_item.advertiser_id} ;;
+    relationship: many_to_one
+    view_label: "Line Item"
+  }
+
+  join: dim_dsp_insertion_order {
+    type: inner
+    sql_on: ${dim_dsp_line_item.insertion_order_id} = ${dim_dsp_insertion_order.insertion_order_id} ;;
+    relationship: many_to_one
+    view_label: "Insertion Order"
+  }
+
+  join: dim_dsp_package {
+    type: inner
+    sql_on: ${dim_dsp_line_item.package_id} = ${dim_dsp_package.package_id} ;;
+    relationship: many_to_one
+    view_label: "Package"
+  }
+
+  join: dim_dsp_target_deal {
+    type: inner
+    sql_on: ${dim_dsp_line_item.line_item_id} = ${dim_dsp_target_deal.line_item_id} ;;
+    relationship: many_to_one
+    view_label: "Target Deal"
+  }
+
+  join: dim_dsp_publisher_deal {
+    type: inner
+    sql_on: ${dim_dsp_target_deal.publisher_deal_id} = ${dim_dsp_publisher_deal.publisher_deal_id} ;;
+    relationship: many_to_one
+    view_label: "Publisher Deal"
+  }
+
+  }
 
 
 #explore: v_monthly_billing_report_diff_live_locked {

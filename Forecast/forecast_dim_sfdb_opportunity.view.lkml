@@ -185,6 +185,26 @@ view: forecast_dim_sfdb_opportunity {
     type: number
     sql: ${TABLE}.expected_revenue__c ;;
   }
+
+  measure: Full_Pipeline {
+    type: number
+    label: "Full Pipeline"
+    sql:
+    CASE
+      WHEN SUM(${line_item_count__c}) = 0 THEN SUM(${proposed_spend__c})
+      ELSE 0
+    END + SUM(${expected_revenue__c}) ;;
+    value_format: "$#,##0"
+  }
+
+
+  measure: weighted_pipeline {
+    type: number
+    label: "Weighted Pipeline"
+    sql: (sum (${probability}) * ${Full_Pipeline}) / 100 ;;
+    value_format: "$#,##0"
+  }
+
   dimension: expectedrevenue {
     type: number
     sql: ${TABLE}.expectedrevenue ;;

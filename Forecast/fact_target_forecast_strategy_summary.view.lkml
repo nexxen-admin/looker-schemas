@@ -167,6 +167,30 @@ view: fact_target_forecast_strategy_summary {
     view_label: "NR"
     }
 
+  measure: sum_unweighted_nr_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Unweighted_NR_Upside_New_Forecast_v2 ;;
+    value_format: "$#,##0.00"
+    label: "NR Unweighted Upside"
+    view_label: "NR"
+  }
+
+  measure: sum_weighted_nr_upside_new_forecast_v2 {
+    type: sum
+    sql: ${TABLE}.Weighted_NR_Upside_New_Forecast_v2 ;;
+    value_format: "$#,##0.00"
+    label: "NR Weighted Upside"
+    view_label: "NR"
+  }
+
+  measure: delta_nr_forecast {
+    type: number
+    label: "Delta Between NR Forecast and Target"
+    sql: ${sum_nr_forecast_full_credit} - ${sum_net_revenue_target} ;;
+    value_format: "$#,##0.00"
+    view_label: "NR"
+  }
+
   measure: sum_net_revenue_target {
     type: sum
     sql: ${TABLE}.net_revenue_target ;;

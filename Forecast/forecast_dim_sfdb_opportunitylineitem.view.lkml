@@ -1,5 +1,10 @@
 view: forecast_dim_sfdb_opportunitylineitem {
-  sql_table_name: BI_DSP.dim_sfdb_opportunitylineitem ;;
+  derived_table: {
+    sql: SELECT *
+          FROM BI_DSP.dim_sfdb_opportunitylineitem
+          WHERE is_deleted=0;;
+  }
+  # sql_table_name: BI_DSP.dim_sfdb_opportunitylineitem ;;
   # label: "forecast_dim_sfdb_opportunitylineitem"
   drill_fields: [id]
 

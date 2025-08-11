@@ -645,6 +645,11 @@ view: forecast_dim_sfdb_opportunity {
     END ;;
   }
 
+  dimension: forecast_checkbox {
+    type: number
+    sql: ${TABLE}.forecast_opp__c ;;
+  }
+
   measure: count_of_opps {
     type: count_distinct
     label: "# of Opps"

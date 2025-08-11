@@ -50,15 +50,14 @@ explore: fact_sfdb_forecast_snapshot {
   label: "Fact sfdb Forecast Snapshot"
 
   sql_always_where:
-    ${io_super_region} = 'NAM'
-    AND ${io_type} <> 'PMP'
-    AND ${revenue_line} <> 'Missing'
-    AND ${revenue_line} <> 'PMP'
-    AND ${new_enterprise_team} <> 'EMEA'
-    AND ${io_type} IS NOT NULL
-    AND ${Snapshot_Forecast_Checkbox} = 1 ;;
-}
-
+  ${io_super_region} ILIKE '%NAM%'
+  AND UPPER(${io_type}) <> 'PMP'
+  AND UPPER(${revenue_line}) <> 'MISSING'
+  AND UPPER(${revenue_line}) <> 'PMP'
+  AND UPPER(${new_enterprise_team}) <> 'Unknown'
+  AND ${io_type} IS NOT NULL
+  AND ${Snapshot_Forecast_Checkbox} = 1 ;;
+  }
 
 explore: fact_target_forecast_strategy_summary  {
 }

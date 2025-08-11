@@ -722,13 +722,14 @@ view: fact_sfdb_forecast_snapshot {
   measure:sum_snapshot_nr_forecast_full_credit {
     type: sum
     sql: ${TABLE}.snapshot_nr_forecast_full_credit ;;
-    label: "Sum NR Forecast Full Credit"
+    label: "NR Forecast Full Credit"
     value_format: "#,##0.00"
   }
 
   measure:sum_gr_forecast_full_credit {
     type: sum
     sql: ${TABLE}.gr_forecast_full_credit ;;
+    label:"GR Forecast Full Credit"
     value_format: "#,##0.00"
   }
 
@@ -741,6 +742,7 @@ view: fact_sfdb_forecast_snapshot {
   measure:sum_snapshot_net_revenue_booked {
     type: sum
     sql: ${TABLE}.snapshot_net_revenue_booked ;;
+    label: "NR Booked Full Credit"
     value_format: "#,##0.00"
   }
 
@@ -753,7 +755,7 @@ view: fact_sfdb_forecast_snapshot {
   measure: sum_snapshot_booked_full_credit {
     type: sum
     sql: ${TABLE}.snapshot_booked_full_credit ;;
-    label:"Sum GR Booked Full Credit"
+    label:"GR Booked Full Credit"
   }
 
 

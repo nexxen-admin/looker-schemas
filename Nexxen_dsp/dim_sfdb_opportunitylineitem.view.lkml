@@ -551,6 +551,15 @@ view: dim_sfdb_opportunitylineitem {
     #hidden: yes
   }
 
+  dimension: primary_kpi_metric_clean {
+    type: number
+    label: "Primary KPI Value - Clean"
+    sql: CASE WHEN REPLACE(${TABLE}.primary_kpi_metric__c, '%', '!PERCENTAGE!') LIKE '%!PERCENTAGE!%' THEN SUBSTR(${TABLE}.primary_kpi_metric__c,1, LENGTH(${TABLE}.primary_kpi_metric__c)-1)::!float
+    WHEN ${TABLE}.primary_kpi_metric__c LIKE '%$%' THEN SUBSTR(${TABLE}.primary_kpi_metric__c,2)::!float
+    ELSE ${TABLE}.primary_kpi_metric__c::!float END ;;
+    hidden: yes
+  }
+
   dimension: product_configuration__c {
     type: string
     sql: ${TABLE}.product_configuration__c ;;

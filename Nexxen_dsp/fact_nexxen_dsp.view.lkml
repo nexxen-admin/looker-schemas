@@ -990,6 +990,18 @@ measure: Nexxen_Inv_Cost_Percent {
               ELSE 0 END,2);;
   }
 
+  measure: primary_kpi_check {
+    label: "KPI Check"
+    type: number
+    sql: CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%best%' OR
+    (${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CTR', 'Completion Rate', 'CVR', 'Site Visit Rate', 'Engagement  Rate', 'In Audience %', 'in View %', 'ROAS') AND ${primary_kpi_result}>${dim_sfdb_opportunitylineitem.primary_kpi_metric_clean}) OR
+    (${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit',  'Cost Per View (IV or Complete)') AND ${primary_kpi_result}<${dim_sfdb_opportunitylineitem.primary_kpi_metric_clean}) OR
+    (${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} ILIKE '%pacing%' AND ${primary_kpi_result}>${dim_sfdb_opportunitylineitem.primary_kpi_metric_clean}) OR
+    (${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' AND ${primary_kpi_result}>(${dim_sfdb_opportunitylineitem.primary_kpi_metric_clean}/100.0))
+    THEN 1
+    ELSE 0 END;;
+  }
+
   measure: secondary_kpi_result {
     label: "Secondary KPI Result"
     type: number

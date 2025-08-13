@@ -87,6 +87,33 @@ view: forecast_data {
     sql: ${TABLE}.stage ;;
   }
 
+  dimension: related_brand_name {
+    type: string
+    sql: ${TABLE}.related_brand_name ;;
+  }
+  dimension: account_name {
+    type: string
+    sql: ${TABLE}.Account_Name ;;
+  }
+
+  dimension: Deal_Type {
+    type: string
+    sql: ${TABLE}.Deal_Type ;;
+  }
+
+  dimension: GR_Forecast_Full_Credit {
+    type: string
+    sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+  }
+  dimension: Unweighted_TL_Upside_New_Forecast_v2 {
+    type: string
+    sql: ${TABLE}.Unweighted_TL_Upside_New_Forecast_v2 ;;
+  }
+  dimension: Weighted_TL_Upside_New_Forecast_v2 {
+    type: string
+    sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
+  }
+
   dimension: numbered_stage {
     type: string
     sql:  CASE ${TABLE}.stage WHEN 'Draft' THEN 'a. Draft' WHEN 'Discovery Meeting' THEN 'b. Discovery Meeting' WHEN 'LowEngage' THEN 'c. LowEngage' WHEN 'RFP/RFI Received'THEN 'd. RFP/RFI Received' WHEN 'HighEngage' THEN 'e. HighEngage' WHEN 'Proposal Discussion' THEN 'f. Proposal Discussion' WHEN 'Proposal' THEN 'g. Proposal' WHEN 'Proposal Ready' THEN 'h. Proposal Ready' WHEN 'Proposal Sent' THEN 'i. Proposal Sent' WHEN 'Verbal' THEN 'j. Verbal' WHEN 'IO Ready' THEN 'k. IO Ready' WHEN 'Final Approval' THEN 'l. Final Approval' END;;

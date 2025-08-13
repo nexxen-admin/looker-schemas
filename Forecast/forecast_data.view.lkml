@@ -32,7 +32,7 @@ view: forecast_data {
     sql: ${TABLE}.opportunity_end_date ;;
   }
 
-  dimension_group: opportunity_close {
+  dimension_group: opportunity_closed {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no

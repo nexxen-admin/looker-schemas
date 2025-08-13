@@ -102,7 +102,7 @@ view: forecast_data {
   }
 
   dimension: GR_Forecast_Full_Credit {
-    type: string
+    type: number
     sql: ${TABLE}.GR_Forecast_Full_Credit ;;
   }
   dimension: Unweighted_TL_Upside_New_Forecast_v2 {

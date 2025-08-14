@@ -1,5 +1,10 @@
 view: forecast_dim_sfdb_opportunity {
-  sql_table_name: BI_DSP.dim_sfdb_opportunity ;;
+  derived_table: {
+    sql: SELECT *
+    FROM BI_DSP.dim_sfdb_opportunity
+    WHERE is_deleted=0;;
+  }
+  # sql_table_name: BI_DSP.dim_sfdb_opportunity ;;
   drill_fields: [id]
 
   dimension: id {

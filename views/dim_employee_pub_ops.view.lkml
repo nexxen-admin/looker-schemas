@@ -154,7 +154,7 @@ view: v_dim_employee_pub_ops {
               OR ${TABLE}.Employee_Name='Omri Lender' OR ${TABLE}.Employee_Name='Rom Lubianiker' then 'Web'
               when ${TABLE}.Employee_name='Mikayla Skarzynski' OR
               ${TABLE}.Employee_name='Rachel Gargett' OR ${TABLE}.Employee_name='Hannah Quigley'
-              OR ${TABLE}.Employee_name='Raffaele Santambrogio'  then 'UK'
+              OR ${TABLE}.Employee_name='Raffaele Santambrogio' OR ${TABLE}.Employee_name='Andrew Styles' then 'UK'
               else 'null' end
  ;;
   }

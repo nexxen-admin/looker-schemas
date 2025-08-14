@@ -185,7 +185,7 @@ view: forecast_data {
     type: sum
     sql: CASE WHEN ${has_opportunitylineitem} = 0 THEN
     ${TABLE}.Weighted_NR_Upside_New_Forecast_v2*${opportunity_probability}/100
-    ELSE ${TABLE}.Weighted_NR_Upside_New_Forecast_v2;;
+    ELSE ${TABLE}.Weighted_NR_Upside_New_Forecast_v2 END;;
     label: "Weighted NR Upside"
   }
 

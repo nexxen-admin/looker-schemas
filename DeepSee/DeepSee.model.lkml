@@ -37,8 +37,8 @@ explore: tp_deepsee_mobile_r {
   required_access_grants: [can_view_all_tremor]
   hidden: no
 }
-#explore: tp_deepsee_web_domain_r_testing {
- # label: "DeepSee Web Domain"
-  #required_access_grants: [can_view_all_tremor]
-  #hidden: no
-#}
+explore: tp_deepsee_web_domain_r {
+  label: "DeepSee Web Domain"
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
+}

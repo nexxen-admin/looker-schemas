@@ -30,6 +30,10 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
+explore: forecast_data {
+  label: "Forecast"
+}
+
 explore: dim_dsp_monthly_strategic_targets  {
   label: "Monthly Strategic Targets"
 }

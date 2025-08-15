@@ -80,6 +80,10 @@ explore: v_netsuite_international_report {
   label: "NetSuite INTL Report"
 }
 
+explore: dim_dsp_monthly_billing_intl_override_data {
+  label: "Monthly Billing Intl Override Data"
+}
+
 explore: third_party_raw_table  {
   label: "Third Party Raw Table"
 

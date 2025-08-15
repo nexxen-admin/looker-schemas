@@ -585,10 +585,9 @@ view: dim_sfdb_opportunity {
     hidden: yes
   }
 
-  dimension: owner_code__c {
+  dimension: owner_code {
     type: string
     sql: ${TABLE}.owner_code__c ;;
-    hidden: yes
   }
 
   dimension: ownerid {

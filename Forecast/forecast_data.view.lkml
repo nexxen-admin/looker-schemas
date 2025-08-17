@@ -129,7 +129,7 @@ view: forecast_data {
   }
   dimension: New_Vs_Existing_Customer {
     type: string
-    sql: CASE ${TABLE}.Deal_Type WHEN 'New Customer' THEN 'New' WHEN 'Existing' THEN 'Existing' WHEN 'New Line of Business' THEN 'Existing' END;;
+    sql: CASE ${TABLE}.Deal_Type WHEN 'New Customer' THEN 'New' WHEN 'Existing' THEN 'Existing' WHEN 'New Line of Business' THEN 'Existing' else '--' END;;
     }
 
 

@@ -8,7 +8,7 @@ view: forecast_data {
   dimension: has_opportunitylineitem {
     type: number
     sql: ${TABLE}.has_opportunitylineitem ;;
-    hidden: yes
+
   }
   dimension: io_super_region {
     type: string

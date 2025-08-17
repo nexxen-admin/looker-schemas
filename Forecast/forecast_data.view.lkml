@@ -183,7 +183,7 @@ view: forecast_data {
   measure: sum_weighted_nr_upside_new_forecast_v2 {
     value_format: "$#,##0.00"
     type: sum
-    sql: CASE WHEN ${has_opportunitylineitem} = 0 THEN
+    sql:
     ${TABLE}.Weighted_NR_Upside_New_Forecast_v2;;
     label: "Weighted NR Upside"
   }

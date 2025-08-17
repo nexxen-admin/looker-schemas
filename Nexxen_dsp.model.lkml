@@ -81,7 +81,7 @@ explore: v_netsuite_international_report {
 }
 
 explore: dim_dsp_monthly_billing_intl_override_data {
-  label: "Monthly Billing Intl Override Data"
+  label: "INTL Override Audit Insights"
 }
 
 explore: third_party_raw_table  {

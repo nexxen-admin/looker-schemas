@@ -472,21 +472,6 @@ view: fact_sfdb_forecast_snapshot {
   # }
 
 
-  # dimension: period {
-  #   view_label: "PoP"
-  #   label: "Period"
-  #   # hidden: yes
-  #   type: string
-  #   sql:
-  #   CASE
-  #     WHEN {% condition current_date_range %} ${snapshot_date} {% endcondition %}
-  #       THEN 'Current'
-  #     WHEN {% condition previous_date_range %} ${snapshot_date} {% endcondition %}
-  #       THEN 'Previous'
-  #     ELSE NULL
-  #   END ;;
-  # }
-
   dimension: period {
     view_label: "PoP"
     label: "Period"
@@ -494,13 +479,28 @@ view: fact_sfdb_forecast_snapshot {
     type: string
     sql:
     CASE
-      WHEN {% condition current_date_range %} ${schedule_revenue_start_date} {% endcondition %}
+      WHEN {% condition current_date_range %} ${snapshot_date} {% endcondition %}
         THEN 'Current'
-      WHEN {% condition previous_date_range %} ${schedule_revenue_start_date} {% endcondition %}
+      WHEN {% condition previous_date_range %} ${snapshot_date} {% endcondition %}
         THEN 'Previous'
       ELSE NULL
     END ;;
   }
+
+  # dimension: period {
+  #   view_label: "PoP"
+  #   label: "Period"
+  #   # hidden: yes
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN {% condition current_date_range %} ${schedule_revenue_start_date} {% endcondition %}
+  #       THEN 'Current'
+  #     WHEN {% condition previous_date_range %} ${schedule_revenue_start_date} {% endcondition %}
+  #       THEN 'Previous'
+  #     ELSE NULL
+  #   END ;;
+  # }
 
 
   ## ---------------------- TO CREATE FILTERED MEASURES ---------------------------- ##
@@ -517,29 +517,29 @@ view: fact_sfdb_forecast_snapshot {
   #           {% else %} NULL {% endif %} ;;
   # }
 
-  # dimension: period_filtered_measures {
-  #   hidden: yes
-  #   description: "Used to split current and previous periods"
-  #   type: string
-  #   sql:
-  #   CASE
-  #     WHEN {% condition current_date_range %} ${snapshot_date} {% endcondition %} THEN 'this'
-  #     WHEN {% condition previous_date_range %} ${snapshot_date} {% endcondition %} THEN 'last'
-  #     ELSE NULL
-  #   END ;;
-  # }
-
   dimension: period_filtered_measures {
     hidden: yes
     description: "Used to split current and previous periods"
     type: string
     sql:
     CASE
-      WHEN {% condition current_date_range %} ${schedule_revenue_start_date} {% endcondition %} THEN 'this'
-      WHEN {% condition previous_date_range %} ${schedule_revenue_start_date} {% endcondition %} THEN 'last'
+      WHEN {% condition current_date_range %} ${snapshot_date} {% endcondition %} THEN 'this'
+      WHEN {% condition previous_date_range %} ${snapshot_date} {% endcondition %} THEN 'last'
       ELSE NULL
     END ;;
   }
+
+  # dimension: period_filtered_measures {
+  #   hidden: yes
+  #   description: "Used to split current and previous periods"
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN {% condition current_date_range %} ${schedule_revenue_start_date} {% endcondition %} THEN 'this'
+  #     WHEN {% condition previous_date_range %} ${schedule_revenue_start_date} {% endcondition %} THEN 'last'
+  #     ELSE NULL
+  #   END ;;
+  # }
 
           ###----NR Booked Full Credit POP---###
 

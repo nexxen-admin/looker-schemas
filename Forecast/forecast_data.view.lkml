@@ -132,6 +132,26 @@ view: forecast_data {
     sql: CASE ${TABLE}.Deal_Type WHEN 'New Customer' THEN 'New' WHEN 'Existing' THEN 'Existing' WHEN 'New Line of Business' THEN 'Existing' else '--' END;;
     }
 
+  dimension: strat_sales_rvp {
+    type: string
+    sql: ${TABLE}.strat_sales_rvp ;;
+    label: "Strat Sales RVP"
+  }
+
+  dimension: strat_sales_team {
+    type: string
+    sql: ${TABLE}.strat_sales_team ;;
+  }
+
+  dimension: opportunity_owner {
+    type: string
+    sql: ${TABLE}.opportunity_owner ;;
+  }
+
+  dimension: account_manager {
+    type: string
+    sql: ${TABLE}.account_manager ;;
+  }
 
   dimension: numbered_stage {
     type: string
@@ -214,6 +234,13 @@ view: forecast_data {
     type: number
     label: "NR Forecast + NR Upside (Weighted)"
     sql: ${sum_nr_forecast_full_credit}+${sum_weighted_nr_upside_new_forecast_v2} ;;
+  }
+
+  measure: sum_schedule_converted_revenue_v2 {
+    value_format: "$#,##0.00"
+    type: sum
+    sql: ${TABLE}.schedule_converted_revenue_v2 ;;
+    label: "Schedule Converted Revenue v2"
   }
 
   measure: count_of_opps {

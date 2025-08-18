@@ -614,15 +614,20 @@ view: fact_sfdb_forecast_snapshot {
       value_format: "#,##0.00"
     }
 
-    measure: percent_nr_forecast_Full_Credit {
-      view_label: "NR Forecast Full Credit POP"
-      type: number
-      sql: (100.0 * (${current_period_snapshot_nr_forecast_full_credit} - ${previous_period_snapshot_nr_forecast_full_credit}) / NULLIF(${previous_period_snapshot_nr_forecast_full_credit}, 0)) ;;
-      value_format_name: percent_2
-      label: "% Change in NR Forecast Full Credit"
-    }
+  measure: percent_nr_forecast_Full_Credit {
+    view_label: "NR Forecast Full Credit POP"
+    type: number
+    sql: ((${current_period_snapshot_nr_forecast_full_credit} - ${previous_period_snapshot_nr_forecast_full_credit})
+      / NULLIF(${previous_period_snapshot_nr_forecast_full_credit}, 0)) ;;
+    value_format: "0.00%"
+    label: "% Change in NR Forecast Full Credit"
+  }
 
 
+  # sql: (
+  # ( ${current_period_GR_Forecast_Full_Credit} - ${previous_period_GR_Forecast_Full_Credit} )
+  # / NULLIF(${previous_period_GR_Forecast_Full_Credit}, 0)
+  # )
 
 
   ####-"GR Forecast Full Credit POP"-####
@@ -655,13 +660,39 @@ view: fact_sfdb_forecast_snapshot {
     value_format: "#,##0.00"
   }
 
-  measure: percent_gr_forecast_Full_Credit {
+  # measure: percent_gr_forecast_full_credit {
+  #   type: number
+  #   sql: CASE
+  #         WHEN ${previous_period_GR_Forecast_Full_Credit} = 0 THEN NULL
+  #         ELSE (
+  #           (${current_period_GR_Forecast_Full_Credit} - ${previous_period_GR_Forecast_Full_Credit})
+  #           / NULLIF(${previous_period_GR_Forecast_Full_Credit}, 0)
+  #         )
+  #     END ;;
+  #   value_format_name: percent_2
+  #   label: "% Change in GR Forecast Full Credit"
+  #   view_label: "GR Forecast Full Credit POP"
+  # }
+
+  #   measure: percent_gr_forecast_Full_Credit {
+  #   view_label: "GR Forecast Full Credit POP"
+  #   type: sum
+  #   sql:  ${delta_gr_forecast_Full_Credit } ;;
+  #   value_format_name: percent_2
+  #   label: "% Change in GR Forecast Full Credit"
+  # }
+
+  measure: percent_change_gr_forecast_full_credit {
     view_label: "GR Forecast Full Credit POP"
     type: number
-    sql: (100.0 * (${current_period_GR_Forecast_Full_Credit} - ${previous_period_GR_Forecast_Full_Credit}) / NULLIF(${previous_period_GR_Forecast_Full_Credit}, 0)) ;;
-    value_format_name: percent_2
+    sql: (
+          ( ${current_period_GR_Forecast_Full_Credit} - ${previous_period_GR_Forecast_Full_Credit} )
+          / NULLIF(${previous_period_GR_Forecast_Full_Credit}, 0)
+        ) ;;
+    value_format: "0.00%"
     label: "% Change in GR Forecast Full Credit"
   }
+
 
 
   # view_label: "GR Booked Full Credit POP"

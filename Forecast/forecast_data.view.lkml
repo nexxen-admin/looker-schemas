@@ -8,7 +8,7 @@ view: forecast_data {
   dimension: has_opportunitylineitem {
     type: number
     sql: ${TABLE}.has_opportunitylineitem ;;
-    hidden: yes
+
   }
   dimension: io_super_region {
     type: string
@@ -129,7 +129,7 @@ view: forecast_data {
   }
   dimension: New_Vs_Existing_Customer {
     type: string
-    sql: CASE ${TABLE}.Deal_Type WHEN 'New Customer' THEN 'New' WHEN 'Existing' THEN 'Existing' WHEN 'New Line of Business' THEN 'Existing' END;;
+    sql: CASE ${TABLE}.Deal_Type WHEN 'New Customer' THEN 'New' WHEN 'Existing' THEN 'Existing' WHEN 'New Line of Business' THEN 'Existing' else '--' END;;
     }
 
 
@@ -183,9 +183,8 @@ view: forecast_data {
   measure: sum_weighted_nr_upside_new_forecast_v2 {
     value_format: "$#,##0.00"
     type: sum
-    sql: CASE WHEN ${has_opportunitylineitem} = 0 THEN
-    ${TABLE}.Weighted_NR_Upside_New_Forecast_v2*${opportunity_probability}/100
-    ELSE ${TABLE}.Weighted_NR_Upside_New_Forecast_v2 END;;
+    sql:
+    ${TABLE}.Weighted_NR_Upside_New_Forecast_v2;;
     label: "Weighted NR Upside"
   }
 

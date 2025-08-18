@@ -180,6 +180,10 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${snapshot_date} ;;
   }
 
+  dimension: exchange_rate {
+    type: number
+    sql: ${TABLE}.exchange_rate ;;
+  }
 
 
   #--------------------------------------------------pop-------------------------------------------------------

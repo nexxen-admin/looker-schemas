@@ -30,6 +30,11 @@ view: fact_target_forecast_enterprise_summary {
     type: string
     sql: ${TABLE}.Generalist_Name ;;
   }
+  dimension: generalist_name_key {
+    type: string
+    sql: LOWER(${TABLE}.Generalist_Name) ;;
+    hidden: yes
+  }
   dimension: gr_booked_to_forecast_delta {
     type: number
     sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
@@ -123,12 +128,12 @@ view: fact_target_forecast_enterprise_summary {
 
   dimension: Strat_Sales_Team {
     type: string
-    sql: ${TABLE}.Strat_Sales_Team ;;
+    sql: COALESCE(${forecast_dim_sfdb_user.sales_team__c}, ${TABLE}.Strat_Sales_Team)  ;;
   }
 
   dimension: new_enterprise_team {
     type: string
-    sql: ${TABLE}.new_enterprise_team ;;
+    sql: COALESCE(${forecast_dim_sfdb_user.new_enterprise_team}, ${TABLE}.new_enterprise_team) ;;
   }
 
   dimension: Strat_Sales_RVP {

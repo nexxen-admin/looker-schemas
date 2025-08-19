@@ -224,6 +224,16 @@ view: forecast_data {
       END ;;
   }
 
+  dimension: pmp_y_n {
+    label: "PMP Y/N"
+    type: string
+    sql: CASE
+          WHEN ${TABLE}.opportunity_name IS NULL THEN 'no'
+          WHEN ${TABLE}.opportunity_name ILIKE '%PMP%' THEN 'yes'
+          ELSE 'no'
+        END ;;
+  }
+
   # dimension: probability_level {
   #   type: number
   #   label: "Probability Level"

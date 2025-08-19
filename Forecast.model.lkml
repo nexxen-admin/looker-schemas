@@ -58,9 +58,12 @@ explore: fact_sfdb_forecast_snapshot {
   AND UPPER(${io_type}) <> 'PMP'
   AND UPPER(${revenue_line}) <> 'MISSING'
   AND UPPER(${revenue_line}) <> 'PMP'
-  AND (${new_enterprise_team}) <> 'Unknown'
+   --AND (${new_enterprise_team}) <> 'Unknown'
   AND ${io_type} IS NOT NULL
-  AND ${Snapshot_Forecast_Checkbox} = 1 ;;
+  AND ${Snapshot_Forecast_Checkbox} = 1
+  AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
+  AND ${opportunity_margin}>0
+  AND ${opportunity_probability_level}>0;;
   }
 
 explore: fact_target_forecast_strategy_summary  {

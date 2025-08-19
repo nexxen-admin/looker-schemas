@@ -339,7 +339,7 @@ view: forecast_data {
   measure: unweighted_gr_pipeline {
     label: "Unweighted GR Pipeline"
     type: sum
-    sql: ${TABLE}.schedule_converted_revenue_v2 ;;
+    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2, 0) ;;
 }
 
 

@@ -196,6 +196,11 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${TABLE}.opportunity_probability  ;;
   }
 
+  dimension: opportunity_probability_level  {
+    type: number
+    sql: ${TABLE}.opportunity_probability_level  ;;
+  }
+
   dimension: opportunity_record_type {
     type: string
     sql: ${TABLE}.opportunity_record_type ;;

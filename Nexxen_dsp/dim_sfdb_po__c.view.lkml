@@ -146,7 +146,7 @@ view: dim_sfdb_po__c {
   dimension: name {
     type: string
     sql: ${TABLE}."name" ;;
-    hidden: yes
+    label: "Purchase Name"
   }
 
   dimension: net_rate__c {
@@ -182,7 +182,7 @@ view: dim_sfdb_po__c {
   dimension: po_number__c {
     type: string
     sql: ${TABLE}.po_number__c ;;
-    label: "Purchae Number"
+    label: "Purchase Number"
   }
 
   dimension: rate__c {

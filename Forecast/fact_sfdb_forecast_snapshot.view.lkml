@@ -180,6 +180,31 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${snapshot_date} ;;
   }
 
+  dimension: exchange_rate {
+    type: number
+    sql: ${TABLE}.exchange_rate ;;
+  }
+
+  dimension: opportunity_margin {
+    type: number
+    sql: ${TABLE}.opportunity_margin ;;
+  }
+
+
+  dimension: opportunity_probability  {
+    type: number
+    sql: ${TABLE}.opportunity_probability  ;;
+  }
+
+  dimension: opportunity_probability_level  {
+    type: number
+    sql: ${TABLE}.opportunity_probability_level  ;;
+  }
+
+  dimension: opportunity_record_type {
+    type: string
+    sql: ${TABLE}.opportunity_record_type ;;
+  }
 
 
   #--------------------------------------------------pop-------------------------------------------------------
@@ -472,21 +497,6 @@ view: fact_sfdb_forecast_snapshot {
   # }
 
 
-  # dimension: period {
-  #   view_label: "PoP"
-  #   label: "Period"
-  #   # hidden: yes
-  #   type: string
-  #   sql:
-  #   CASE
-  #     WHEN {% condition current_date_range %} ${snapshot_date} {% endcondition %}
-  #       THEN 'Current'
-  #     WHEN {% condition previous_date_range %} ${snapshot_date} {% endcondition %}
-  #       THEN 'Previous'
-  #     ELSE NULL
-  #   END ;;
-  # }
-
   dimension: period {
     view_label: "PoP"
     label: "Period"
@@ -494,13 +504,28 @@ view: fact_sfdb_forecast_snapshot {
     type: string
     sql:
     CASE
-      WHEN {% condition current_date_range %} ${schedule_revenue_start_date} {% endcondition %}
+      WHEN {% condition current_date_range %} ${snapshot_date} {% endcondition %}
         THEN 'Current'
-      WHEN {% condition previous_date_range %} ${schedule_revenue_start_date} {% endcondition %}
+      WHEN {% condition previous_date_range %} ${snapshot_date} {% endcondition %}
         THEN 'Previous'
       ELSE NULL
     END ;;
   }
+
+  # dimension: period {
+  #   view_label: "PoP"
+  #   label: "Period"
+  #   # hidden: yes
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN {% condition current_date_range %} ${schedule_revenue_start_date} {% endcondition %}
+  #       THEN 'Current'
+  #     WHEN {% condition previous_date_range %} ${schedule_revenue_start_date} {% endcondition %}
+  #       THEN 'Previous'
+  #     ELSE NULL
+  #   END ;;
+  # }
 
 
   ## ---------------------- TO CREATE FILTERED MEASURES ---------------------------- ##
@@ -517,29 +542,29 @@ view: fact_sfdb_forecast_snapshot {
   #           {% else %} NULL {% endif %} ;;
   # }
 
-  # dimension: period_filtered_measures {
-  #   hidden: yes
-  #   description: "Used to split current and previous periods"
-  #   type: string
-  #   sql:
-  #   CASE
-  #     WHEN {% condition current_date_range %} ${snapshot_date} {% endcondition %} THEN 'this'
-  #     WHEN {% condition previous_date_range %} ${snapshot_date} {% endcondition %} THEN 'last'
-  #     ELSE NULL
-  #   END ;;
-  # }
-
   dimension: period_filtered_measures {
     hidden: yes
     description: "Used to split current and previous periods"
     type: string
     sql:
     CASE
-      WHEN {% condition current_date_range %} ${schedule_revenue_start_date} {% endcondition %} THEN 'this'
-      WHEN {% condition previous_date_range %} ${schedule_revenue_start_date} {% endcondition %} THEN 'last'
+      WHEN {% condition current_date_range %} ${snapshot_date} {% endcondition %} THEN 'this'
+      WHEN {% condition previous_date_range %} ${snapshot_date} {% endcondition %} THEN 'last'
       ELSE NULL
     END ;;
   }
+
+  # dimension: period_filtered_measures {
+  #   hidden: yes
+  #   description: "Used to split current and previous periods"
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN {% condition current_date_range %} ${schedule_revenue_start_date} {% endcondition %} THEN 'this'
+  #     WHEN {% condition previous_date_range %} ${schedule_revenue_start_date} {% endcondition %} THEN 'last'
+  #     ELSE NULL
+  #   END ;;
+  # }
 
           ###----NR Booked Full Credit POP---###
 
@@ -614,13 +639,15 @@ view: fact_sfdb_forecast_snapshot {
       value_format: "#,##0.00"
     }
 
-    measure: percent_nr_forecast_Full_Credit {
-      view_label: "NR Forecast Full Credit POP"
-      type: number
-      sql: (100.0 * (${current_period_snapshot_nr_forecast_full_credit} - ${previous_period_snapshot_nr_forecast_full_credit}) / NULLIF(${previous_period_snapshot_nr_forecast_full_credit}, 0)) ;;
-      value_format_name: percent_2
-      label: "% Change in NR Forecast Full Credit"
-    }
+  measure: percent_nr_forecast_Full_Credit {
+    view_label: "NR Forecast Full Credit POP"
+    type: number
+    sql: ((${current_period_snapshot_nr_forecast_full_credit} - ${previous_period_snapshot_nr_forecast_full_credit})
+      / NULLIF(${previous_period_snapshot_nr_forecast_full_credit}, 0)) ;;
+    value_format: "0.00%"
+    label: "% Change in NR Forecast Full Credit"
+  }
+
 
 
 
@@ -631,7 +658,7 @@ view: fact_sfdb_forecast_snapshot {
     view_label:"GR Forecast Full Credit POP"
     type: sum
     description: "Current GR Forecast Full Credit"
-    sql: ${TABLE}.GR_Forecast_Full_Credit  ;;
+    sql: ${TABLE}.gr_forecast_full_credit;;
     value_format: "#,##0.00"
     filters: [period_filtered_measures: "this"]
     label: "GR Forecast Full Credit (Current)"
@@ -641,7 +668,7 @@ view: fact_sfdb_forecast_snapshot {
     view_label: "GR Forecast Full Credit POP"
     type: sum
     description: "Previous GR Forecast Full Credit"
-    sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+    sql: ${TABLE}.gr_forecast_full_credit;;
     value_format: "#,##0.00"
     filters: [period_filtered_measures: "last"]
     label: "GR Forecast Full Credit (Previous)"
@@ -655,13 +682,18 @@ view: fact_sfdb_forecast_snapshot {
     value_format: "#,##0.00"
   }
 
-  measure: percent_gr_forecast_Full_Credit {
+
+  measure: percent_change_gr_forecast_full_credit {
     view_label: "GR Forecast Full Credit POP"
     type: number
-    sql: (100.0 * (${current_period_GR_Forecast_Full_Credit} - ${previous_period_GR_Forecast_Full_Credit}) / NULLIF(${previous_period_GR_Forecast_Full_Credit}, 0)) ;;
-    value_format_name: percent_2
+    sql: (
+          ( ${current_period_GR_Forecast_Full_Credit} - ${previous_period_GR_Forecast_Full_Credit} )
+          / NULLIF(${previous_period_GR_Forecast_Full_Credit}, 0)
+        ) ;;
+    value_format: "0.00%"
     label: "% Change in GR Forecast Full Credit"
   }
+
 
 
   # view_label: "GR Booked Full Credit POP"

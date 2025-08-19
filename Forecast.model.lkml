@@ -58,15 +58,25 @@ explore: fact_sfdb_forecast_snapshot {
   AND UPPER(${io_type}) <> 'PMP'
   AND UPPER(${revenue_line}) <> 'MISSING'
   AND UPPER(${revenue_line}) <> 'PMP'
-  AND UPPER(${new_enterprise_team}) <> 'Unknown'
+   --AND (${new_enterprise_team}) <> 'Unknown'
   AND ${io_type} IS NOT NULL
-  AND ${Snapshot_Forecast_Checkbox} = 1 ;;
+  AND ${Snapshot_Forecast_Checkbox} = 1
+  AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
+  AND ${opportunity_margin}>0
+  AND ${opportunity_probability_level}>0;;
   }
 
 explore: fact_target_forecast_strategy_summary  {
 }
 
 explore: fact_target_forecast_enterprise_summary  {
+
+  join: forecast_dim_sfdb_user {
+    type: left_outer
+    sql_on: ${fact_target_forecast_enterprise_summary.generalist_name_key} = ${forecast_dim_sfdb_user.fullname_key} ;;
+    relationship: many_to_one
+  }
+
 }
 
 #### FORECAST JOINED TABLE ####

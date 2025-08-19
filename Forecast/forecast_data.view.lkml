@@ -321,13 +321,13 @@ view: forecast_data {
   measure: unweighted_nr_pipeline {
     label: "Unweighted NR Pipeline"
     type: number
-    sql: ${TABLE}.schedule_converted_revenue_v2 * ${TABLE}.opportunity_Margin / 100 ;;
+    sql: COALESCE((${TABLE}.schedule_converted_revenue_v2 * ${TABLE}.opportunity_Margin / 100),0) ;;
   }
 
   measure: weighted_gr_pipeline {
     label: "Weighted GR Pipeline"
     type: number
-    sql: ${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.opportunity_probability / 100 ;;
+    sql: COALESCE((${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.opportunity_probability / 100),0) ;;
   }
 
   measure: weighted_nr_pipeline {

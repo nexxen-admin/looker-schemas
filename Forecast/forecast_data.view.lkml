@@ -318,6 +318,31 @@ view: forecast_data {
     label: "Schedule Converted Revenue v2"
   }
 
+  measure: unweighted_nr_pipeline {
+    label: "Unweighted NR Pipeline"
+    type: number
+    sql: ${TABLE}.schedule_converted_revenue_v2 * ${TABLE}.opportunity_Margin / 100 ;;
+  }
+
+  measure: weighted_gr_pipeline {
+    label: "Weighted GR Pipeline"
+    type: number
+    sql: ${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.opportunity_probability / 100 ;;
+  }
+
+  measure: weighted_nr_pipeline {
+    label: "Weighted NR Pipeline"
+    type: number
+    sql: ${unweighted_nr_pipeline} * ${TABLE}.opportunity_Margin / 100 ;;
+  }
+
+  measure: unweighted_gr_pipeline {
+    label: "Unweighted GR Pipeline"
+    type: number
+    sql: ${sum_schedule_converted_revenue_v2}
+  }
+
+
   measure: count_of_opps {
     type: count_distinct
     label: "# of Opps"

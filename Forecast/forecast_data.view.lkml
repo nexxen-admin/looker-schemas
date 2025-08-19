@@ -339,8 +339,8 @@ view: forecast_data {
   measure: unweighted_gr_pipeline {
     label: "Unweighted GR Pipeline"
     type: number
-    sql: ${sum_schedule_converted_revenue_v2}
-  }
+    sql: ${TABLE}.schedule_converted_revenue_v2 ;;
+}
 
 
   measure: count_of_opps {

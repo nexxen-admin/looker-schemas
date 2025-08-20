@@ -49,6 +49,7 @@ view: datorama_dsp_third_party {
   dimension: reporting {
     type: string
     sql: ${TABLE}.reporting ;;
+    hidden: yes
   }
 
   dimension: third_party_key {

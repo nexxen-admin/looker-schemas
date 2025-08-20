@@ -206,6 +206,10 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${TABLE}.opportunity_record_type ;;
   }
 
+  dimension: opportunitylineitem_id  {
+    type: string
+    sql: ${TABLE}.opportunitylineitem_id  ;;
+  }
 
   #--------------------------------------------------pop-------------------------------------------------------
   filter: current_date_range {

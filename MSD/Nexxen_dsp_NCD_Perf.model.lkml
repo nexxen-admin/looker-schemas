@@ -79,3 +79,12 @@ explore: fact_reach_agency {
   }
   hidden: yes
 }
+
+explore: manual_valvoline{
+  # required_access_grants: [can_view_all_tremor]
+  view_name: manual_valvoline
+  label: "Nexxen DSP - NCD Valvoline"
+  persist_with: CleanCash_datagroup
+  view_label: "Measures"
+  hidden: yes
+}

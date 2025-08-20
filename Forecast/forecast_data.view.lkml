@@ -158,6 +158,81 @@ view: forecast_data {
     sql:  CASE ${TABLE}.stage WHEN 'Draft' THEN 'a. Draft' WHEN 'Discovery Meeting' THEN 'b. Discovery Meeting' WHEN 'LowEngage' THEN 'c. LowEngage' WHEN 'RFP/RFI Received'THEN 'd. RFP/RFI Received' WHEN 'HighEngage' THEN 'e. HighEngage' WHEN 'Proposal Discussion' THEN 'f. Proposal Discussion' WHEN 'Proposal' THEN 'g. Proposal' WHEN 'Proposal Ready' THEN 'h. Proposal Ready' WHEN 'Proposal Sent' THEN 'i. Proposal Sent' WHEN 'Verbal' THEN 'j. Verbal' WHEN 'IO Ready' THEN 'k. IO Ready' WHEN 'Final Approval' THEN 'l. Final Approval' END;;
     }
 
+  dimension: revenue_line_v2 {
+    label: "Revenue Line v2"
+    type: string
+    sql: CASE
+          WHEN ${TABLE}.io_type = 'All - Market Expectation' THEN 'All - Market Expectation'
+          WHEN ${TABLE}.io_type = 'Non-Media Reports, Services' THEN 'Non-Media Reports, Services'
+
+      WHEN ${TABLE}.io_type IN (
+      'Amobee TV Media Managed',
+      'Amobee TV Platform Managed',
+      'Amobee TV Platform HOK',
+      'Amobee TV Platform ATD',
+      'Amobee TV',
+      'TV Supply',
+      'TV',
+      'TV Demand - Media Managed',
+      'TV Demand - Platform Managed',
+      'TV Demand - HOK'
+      ) THEN 'TV'
+
+      WHEN ${TABLE}.io_type = 'Media Managed' THEN 'MS'
+      WHEN ${TABLE}.io_type = 'Platform Managed' THEN 'DSP (Self-Service & Managed)'
+      WHEN ${TABLE}.io_type ILIKE '%Media%' THEN 'MS'
+      WHEN ${TABLE}.io_type ILIKE '%MS%' THEN 'MS'
+
+      WHEN ${TABLE}.io_type IN (
+      'Platform ATD',
+      'Platform MSP',
+      'Platform HOK',
+      'SS'
+      ) THEN 'DSP (Self-Service & Managed)'
+      WHEN ${TABLE}.io_type ILIKE '%Platform%' THEN 'DSP (Self-Service & Managed)'
+
+      WHEN ${TABLE}.io_type IN (
+      'Social Managed',
+      'Social ATD',
+      'Social MSP',
+      'Social HOK'
+      ) THEN 'Social'
+      WHEN ${TABLE}.io_type ILIKE '%Social%' THEN 'Social'
+
+      WHEN ${TABLE}.io_type ILIKE '%PMP%' THEN 'PMP'
+      WHEN ${TABLE}.io_type ILIKE '%OMP%' THEN 'PMP'
+
+      ELSE 'Missing'
+      END ;;
+  }
+
+
+  dimension: revenue_stage_leadership {
+    label: "Revenue Stage"
+    type: string
+    sql: CASE
+          WHEN ${TABLE}.stage ILIKE '%Closed Won%' THEN 'Booked'
+          WHEN ${TABLE}.stage ILIKE '%Closed Lost%' THEN 'Lost'
+
+          WHEN ${TABLE}.stage = 'Verbal' THEN 'Committed'
+          WHEN ${TABLE}.stage = 'Final Approval' THEN 'Committed'
+
+      WHEN ${TABLE}.stage = 'Discovery Meeting' THEN 'Pre-Pipeline'
+      WHEN ${TABLE}.stage = 'Draft' THEN 'Pre-Pipeline'
+
+      ELSE 'Pipeline'
+      END ;;
+  }
+
+  dimension: pmp_y_n {
+    label: "PMP Y/N"
+    type: string
+    sql: CASE
+          WHEN ${TABLE}.opportunity_name IS NULL THEN 'no'
+          WHEN ${TABLE}.opportunity_name ILIKE '%PMP%' THEN 'yes'
+          ELSE 'no'
+        END ;;
+  }
 
   # dimension: probability_level {
   #   type: number
@@ -242,6 +317,31 @@ view: forecast_data {
     sql: ${TABLE}.schedule_converted_revenue_v2 ;;
     label: "Schedule Converted Revenue v2"
   }
+
+  measure: unweighted_nr_pipeline {
+    label: "Unweighted NR Pipeline"
+    type: number
+    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2 * ${TABLE}.opportunity_Margin / 100,0) ;;
+  }
+
+  measure: weighted_gr_pipeline {
+    label: "Weighted GR Pipeline"
+    type: number
+    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.opportunity_probability / 100,0) ;;
+  }
+
+  measure: weighted_nr_pipeline {
+    label: "Weighted NR Pipeline"
+    type: number
+    sql: COALESCE(${unweighted_nr_pipeline} * ${TABLE}.opportunity_Margin / 100,0) ;;
+  }
+
+  measure: unweighted_gr_pipeline {
+    label: "Unweighted GR Pipeline"
+    type: number
+    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2, 0) ;;
+}
+
 
   measure: count_of_opps {
     type: count_distinct

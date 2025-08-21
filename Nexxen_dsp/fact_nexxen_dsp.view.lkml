@@ -1015,6 +1015,16 @@ measure: Nexxen_Inv_Cost_Percent {
               ELSE 0 END,2);;
   }
 
+  measure: data_fee_cost {
+    label: "Data Fee Cost"
+    type: sum
+    value_format: "$#,##0.00"
+    sql: CASE WHEN ${dim_sfdb_opportunitylineitem.price_type_name__c}='CPM' THEN ${TABLE}.third_party_impressions*${dim_sfdb_opportunitylineitem.booked_rate}/1000
+              WHEN ${dim_sfdb_opportunitylineitem.price_type_name__c}='Flat Fee' THEN ${dim_sfdb_opportunitylineitem.booked_rate}
+              WHEN ${dim_sfdb_opportunitylineitem.price_type_name__c}='Unknown' THEN ${TABLE}.third_party_impressions*${dim_sfdb_opportunitylineitem.booked_rate}/1000
+              ELSE 0 END;;
+  }
+
   #--------------------------------------------------pop-------------------------------------------------------
   filter: current_date_range {
     type: date

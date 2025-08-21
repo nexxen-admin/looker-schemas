@@ -31,7 +31,7 @@ access_grant: can_view_all_tremor {
 }
 
 explore: forecast_data {
-  label: "Forecast"
+  label: "Forecast New"
 }
 
 explore: dim_dsp_monthly_strategic_targets  {

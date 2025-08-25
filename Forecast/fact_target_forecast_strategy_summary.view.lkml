@@ -82,6 +82,11 @@ view: fact_target_forecast_strategy_summary {
     type: string
     sql: ${TABLE}.seller ;;
   }
+  dimension: seller_key {
+    type: string
+    sql: LOWER(${TABLE}.seller) ;;
+    hidden: yes
+  }
   dimension: unweighted_nr_forecast_tremor_leadership {
     type: number
     sql: ${TABLE}.Unweighted_NR_Forecast_Tremor_Leadership ;;
@@ -115,21 +120,20 @@ view: fact_target_forecast_strategy_summary {
     sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
   }
 
-    dimension: Strat_Sales_Team {
-      type: string
-      sql: ${TABLE}.Strat_Sales_Team ;;
+  dimension: Strat_Sales_Team {
+    type: string
+    sql: COALESCE(${forecast_dim_sfdb_user.sales_team__c}, ${TABLE}.Strat_Sales_Team)  ;;
+  }
+
+  dimension: new_enterprise_team {
+    type: string
+    sql: COALESCE(${forecast_dim_sfdb_user.new_enterprise_team}, ${TABLE}.new_enterprise_team) ;;
   }
 
   dimension: Strat_Sales_RVP {
     type: string
     sql: ${TABLE}.Strat_Sales_RVP ;;
     drill_fields: [revenue_line, Strat_Sales_Team]
-  }
-
-
-  dimension: new_enterprise_team {
-    type: string
-    sql: ${TABLE}.new_enterprise_team ;;
   }
 
 

@@ -162,6 +162,7 @@ view: forecast_dim_sfdb_user {
   dimension: lastname {
     type: string
     sql: ${TABLE}.lastname ;;
+    hidden: yes
   }
   dimension: lob__c {
     type: string

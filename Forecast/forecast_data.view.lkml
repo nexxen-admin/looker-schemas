@@ -70,6 +70,14 @@ view: forecast_data {
     type: number
     sql: ${TABLE}.opportunity_probability ;;
   }
+  dimension: schedule_converted_revenue_v2 {
+    type: number
+    sql: ${TABLE}.schedule_converted_revenue_v2 ;;
+  }
+  dimension: Probability_level {
+    type: number
+    sql: ${TABLE}.Probability_level ;;
+  }
   dimension: opportunity_proposed_spend {
     type: number
     sql: ${TABLE}.opportunity_proposed_spend ;;

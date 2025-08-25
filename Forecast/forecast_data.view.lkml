@@ -417,6 +417,42 @@ view: forecast_data {
     label: "GR Booked (Factored)"
   }
 
+  measure: delta_gr_booked_to_forecast {
+    value_format: "$#,##0.00"
+    type: number
+    sql: ${sum_booked_full_credit}-${sum_gr_forecast_full_credit};;
+    label: "GR Booked to Forecast (Delta)"
+  }
+
+  measure: delta_nr_booked_to_forecast {
+    value_format: "$#,##0.00"
+    type: number
+    sql: ${sum_net_revenue_booked}-${sum_nr_forecast_full_credit};;
+    label: "NR Booked to Forecast (Delta)"
+  }
+
+  measure: p_of_gr_booked_to_forecast {
+    type: number
+    sql: CASE
+          WHEN ${sum_gr_forecast_full_credit} = 0 THEN 0
+          ELSE ${sum_booked_full_credit}
+          / NULLIF(${sum_gr_forecast_full_credit}, 0)
+          END ;;
+    value_format: "0.00%"
+    label: " % GR Booked to Forecast"
+  }
+
+  measure: p_of_nr_booked_to_forecast {
+    type: number
+    sql: CASE
+          WHEN ${sum_nr_forecast_full_credit} = 0 THEN 0
+          ELSE ${sum_net_revenue_booked}
+          / NULLIF(${sum_nr_forecast_full_credit}, 0)
+          END ;;
+    value_format: "0.00%"
+    label: " % NR Booked to Forecast"
+  }
+
 
   measure: count_of_opps {
     type: count_distinct

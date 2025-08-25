@@ -86,6 +86,13 @@ explore: fact_sfdb_forecast_snapshot {
   }
 
 explore: fact_target_forecast_strategy_summary  {
+
+  join: forecast_dim_sfdb_user {
+    type: left_outer
+    sql_on: ${fact_target_forecast_strategy_summary.seller_key} = ${forecast_dim_sfdb_user.fullname_key} ;;
+    relationship: many_to_one
+  }
+
 }
 
 explore: fact_target_forecast_enterprise_summary  {

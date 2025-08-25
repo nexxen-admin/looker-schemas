@@ -151,6 +151,30 @@ view: forecast_data {
     sql: ${TABLE}.strat_sales_team ;;
   }
 
+  dimension: strat_sales_cs_region {
+    type: string
+    sql: CASE
+          WHEN ${account_name} LIKE '%Klick Health%' AND ${revenue_line_v2} = 'DSP (Self-Service & Managed)' THEN NULL
+          WHEN ${account_name} LIKE '%Guru%' AND ${revenue_line_v2} = 'DSP (Self-Service & Managed)' THEN NULL
+          WHEN ${account_name} LIKE '%301 Digital%' AND ${revenue_line_v2} = 'DSP (Self-Service & Managed)' THEN NULL
+          WHEN ${account_name} LIKE '%Rescue Agency%' AND ${revenue_line_v2} = 'DSP (Self-Service & Managed)' THEN NULL
+
+          WHEN ${strat_sales_rvp} = 'East' THEN 'Strat Sales CS East'
+          WHEN ${strat_sales_rvp} = 'West' THEN 'Strat Sales CS West'
+          WHEN ${strat_sales_rvp} = 'Central' THEN 'Strat Sales CS Central'
+          WHEN ${strat_sales_rvp} = 'Canada' THEN 'Strat Sales CS Canada'
+          WHEN ${strat_sales_rvp} = 'South' THEN 'Strat Sales CS South'
+
+          WHEN ${account_manager} = 'Strat Sales CS East' THEN 'Strat Sales CS East'
+          WHEN ${account_manager} = 'Strat Sales CS West' THEN 'Strat Sales CS West'
+          WHEN ${account_manager} = 'Strat Sales CS Central' THEN 'Strat Sales CS Central'
+          WHEN ${account_manager} = 'Strat Sales CS Canada' THEN 'Strat Sales CS Canada'
+          WHEN ${account_manager} = 'Strat Sales CS South' THEN 'Strat Sales CS South'
+        ELSE NULL
+        END ;;
+    label: "Strategic Sales CS Region"
+  }
+
   dimension: opportunity_owner {
     type: string
     sql: ${TABLE}.opportunity_owner ;;
@@ -239,6 +263,25 @@ view: forecast_data {
           WHEN ${TABLE}.opportunity_name IS NULL THEN 'no'
           WHEN ${TABLE}.opportunity_name ILIKE '%PMP%' THEN 'yes'
           ELSE 'no'
+        END ;;
+  }
+
+  dimension: forecast {
+    type: number
+    hidden: yes
+    sql: CASE
+          WHEN ${stage} = 'Closed Lost' THEN 0
+          WHEN ${Probability_level} < 50 THEN 0
+          ELSE ${schedule_converted_revenue_v2} * ${Probability_level} / 100
+        END ;;
+  }
+
+  dimension: booked {
+    type: number
+    hidden: yes
+    sql: CASE
+          WHEN ${stage} in ('Closed Won', 'Closed Won - EDIT', 'Closed Won - APPROVAL') THEN ${schedule_converted_revenue_v2} * ${Probability_level} / 100
+          ELSE 0
         END ;;
   }
 
@@ -349,6 +392,30 @@ view: forecast_data {
     type: sum
     sql: COALESCE(${TABLE}.schedule_converted_revenue_v2, 0) ;;
 }
+
+  measure: sum_gr_forecast_factored {
+    value_format: "$#,##0.00"
+    type: sum
+    sql: CASE
+          WHEN ${strat_sales_team} LIKE '%Strat Sales%' AND (
+            ${io_type} IN ('Platform HOK', 'Platform Managed') OR ${revenue_line_v2} IN ('PMP', 'Hybrid/Transparent', 'SS'))
+          THEN ${forecast} * 0.7
+          ELSE ${forecast}
+         END ;;
+    label: "GR Forecast (Factored)"
+  }
+
+  measure: sum_gr_booked_factored {
+    value_format: "$#,##0.00"
+    type: sum
+    sql: CASE
+          WHEN ${strat_sales_team} LIKE '%Strat Sales%' AND (
+            ${io_type} IN ('Platform HOK', 'Platform Managed') OR ${revenue_line_v2} IN ('PMP', 'Hybrid/Transparent', 'SS'))
+          THEN ${booked} * 0.7
+          ELSE ${booked}
+        END ;;
+    label: "GR Booked (Factored)"
+  }
 
 
   measure: count_of_opps {

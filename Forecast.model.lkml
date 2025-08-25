@@ -53,35 +53,20 @@ explore: monthly_enterprise_targets_changes {
 explore: fact_sfdb_forecast_snapshot {
   label: "Fact sfdb Forecast Snapshot"
 
-  # sql_always_where:
-  # ${io_super_region} ILIKE '%NAM%'
-  # AND UPPER(${io_type}) <> 'PMP'
-  # AND UPPER(${revenue_line}) <> 'MISSING'
-  # AND UPPER(${revenue_line}) <> 'PMP'
-  # -- AND (${new_enterprise_team}) <> 'Unknown'
-  # AND ${io_type} IS NOT NULL
-  # AND ${Snapshot_Forecast_Checkbox} = 1
-  # AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
-  # AND ${opportunity_margin} > 0
-  # AND ${opportunity_probability_level} > 0
-  # AND (
-  # ${io_sales_team} ILIKE '%Strat Sales%'
-  # OR ${io_sales_team} ILIKE '%Enterprise Sales%'
-  # )}
-  # ;;
-
   sql_always_where:
   ${io_super_region} ILIKE '%NAM%'
   AND UPPER(${io_type}) <> 'PMP'
+  AND UPPER(${io_type}) IS NOT NULL
   AND UPPER(${revenue_line}) <> 'MISSING'
   AND UPPER(${revenue_line}) <> 'PMP'
-  --AND (${new_enterprise_team}) <> 'Unknown'
+  AND ${stage} NOT ILIKE '%Closed Lost%'
+  AND (${new_enterprise_team}) <> 'Unknown'
   AND ${io_type} IS NOT NULL
   AND ${Snapshot_Forecast_Checkbox} = 1
   AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
-  --AND ${opportunity_margin}>0
-  --AND ${opportunity_probability_level}>50
-  --AND lower(opportunitylineitem_id) != lower('0063m00000oEsjcAAC')
+  AND ${opportunity_record_type} NOT ILIKE '%Upsell Opportunity%'
+  AND ${Snapshot_Forecast_Checkbox} = 1
+  AND ${opportunity_name} NOT ilike '%PMP%'
   ;;
   }
 

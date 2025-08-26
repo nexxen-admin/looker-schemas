@@ -32,28 +32,33 @@ access_grant: can_view_all_tremor {
 
 explore: forecast_data {
   label: "Forecast New"
+  required_access_grants: [can_view_pub_come_looker, can_view_all_tremor]
   sql_always_where: ${io_super_region} ILIKE '%NAM%' AND ${snapshot_forecast_checkbox} = 1;;
 }
 
 explore: dim_dsp_monthly_strategic_targets  {
+  required_access_grants: [can_view_pub_come_looker, can_view_all_tremor]
   label: "Monthly Strategic Targets"
 }
 
 explore: dim_dsp_monthly_enterprise_targets  {
+  required_access_grants: [can_view_pub_come_looker, can_view_all_tremor]
   label: "Monthly Enterprise Targets"
 }
 
 explore: monthly_strategic_targets_changes  {
+  required_access_grants: [can_view_pub_come_looker, can_view_all_tremor]
   label: "Monthly Strategic Targets Changes"
 }
 
 explore: monthly_enterprise_targets_changes {
+  required_access_grants: [can_view_pub_come_looker, can_view_all_tremor]
   label: "Monthly Enterprise Targets Changes"
 }
 
 explore: fact_sfdb_forecast_snapshot {
+  required_access_grants: [can_view_pub_come_looker, can_view_all_tremor]
   label: "Fact sfdb Forecast Snapshot"
-  required_access_grants: [can_view_all_tremor]
 
   sql_always_where:
   ${io_super_region} ILIKE '%NAM%'
@@ -73,6 +78,7 @@ explore: fact_sfdb_forecast_snapshot {
   }
 
 explore: fact_target_forecast_strategy_summary  {
+  required_access_grants: [can_view_pub_come_looker, can_view_all_tremor]
 
   join: forecast_dim_sfdb_user {
     type: left_outer
@@ -83,6 +89,7 @@ explore: fact_target_forecast_strategy_summary  {
 }
 
 explore: fact_target_forecast_enterprise_summary  {
+  required_access_grants: [can_view_pub_come_looker, can_view_all_tremor]
 
   join: forecast_dim_sfdb_user {
     type: left_outer
@@ -94,6 +101,7 @@ explore: fact_target_forecast_enterprise_summary  {
 
 #### FORECAST JOINED TABLE ####
 explore: forecast_dim_sfdb_opportunity {
+  required_access_grants: [can_view_pub_come_looker, can_view_all_tremor]
   label: "Forecasting"
 
   # label: "Forecast Opportunity Line Item Schedule"

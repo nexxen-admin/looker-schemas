@@ -70,6 +70,14 @@ view: forecast_data {
     type: number
     sql: ${TABLE}.opportunity_probability ;;
   }
+  dimension: schedule_converted_revenue_v2 {
+    type: number
+    sql: ${TABLE}.schedule_converted_revenue_v2 ;;
+  }
+  dimension: Probability_level {
+    type: number
+    sql: ${TABLE}.Probability_level ;;
+  }
   dimension: opportunity_proposed_spend {
     type: number
     sql: ${TABLE}.opportunity_proposed_spend ;;
@@ -123,6 +131,22 @@ view: forecast_data {
     sql: ${TABLE}.Account_Name ;;
   }
 
+  dimension: tech_services_group {
+    type: string
+    sql:
+    CASE
+      WHEN ${account_name} = 'ITV' THEN NULL
+      WHEN ${account_name} = 'LG Electronics' THEN NULL
+      WHEN ${account_name} LIKE '%Klick Health%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} LIKE '%301 Digital Media%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} LIKE '%Good Karma Brands%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} LIKE '%Guru%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} LIKE '%Rescue Agency%' THEN 'Tech Services - Strategic Sales'
+      ELSE 'Tech Services - Enterprise Sales'
+    END ;;
+    label: "Enterprise Technical Services"
+  }
+
   dimension: Deal_Type {
     type: string
     sql: ${TABLE}.Deal_Type ;;
@@ -143,6 +167,30 @@ view: forecast_data {
     sql: ${TABLE}.strat_sales_team ;;
   }
 
+  dimension: strat_sales_cs_region {
+    type: string
+    sql: CASE
+          WHEN ${account_name} LIKE '%Klick Health%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
+          WHEN ${account_name} LIKE '%Guru%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
+          WHEN ${account_name} LIKE '%301 Digital%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
+          WHEN ${account_name} LIKE '%Rescue Agency%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
+
+          WHEN ${strat_sales_rvp} = 'East' THEN 'Strat Sales CS East'
+          WHEN ${strat_sales_rvp} = 'West' THEN 'Strat Sales CS West'
+          WHEN ${strat_sales_rvp} = 'Central' THEN 'Strat Sales CS Central'
+          WHEN ${strat_sales_rvp} = 'Canada' THEN 'Strat Sales CS Canada'
+          WHEN ${strat_sales_rvp} = 'South' THEN 'Strat Sales CS South'
+
+          WHEN ${account_manager} = 'Strat Sales CS East' THEN 'Strat Sales CS East'
+          WHEN ${account_manager} = 'Strat Sales CS West' THEN 'Strat Sales CS West'
+          WHEN ${account_manager} = 'Strat Sales CS Central' THEN 'Strat Sales CS Central'
+          WHEN ${account_manager} = 'Strat Sales CS Canada' THEN 'Strat Sales CS Canada'
+          WHEN ${account_manager} = 'Strat Sales CS South' THEN 'Strat Sales CS South'
+        ELSE NULL
+        END ;;
+    label: "Strategic Sales CS Region"
+  }
+
   dimension: opportunity_owner {
     type: string
     sql: ${TABLE}.opportunity_owner ;;
@@ -157,54 +205,6 @@ view: forecast_data {
     type: string
     sql:  CASE ${TABLE}.stage WHEN 'Draft' THEN 'a. Draft' WHEN 'Discovery Meeting' THEN 'b. Discovery Meeting' WHEN 'LowEngage' THEN 'c. LowEngage' WHEN 'RFP/RFI Received'THEN 'd. RFP/RFI Received' WHEN 'HighEngage' THEN 'e. HighEngage' WHEN 'Proposal Discussion' THEN 'f. Proposal Discussion' WHEN 'Proposal' THEN 'g. Proposal' WHEN 'Proposal Ready' THEN 'h. Proposal Ready' WHEN 'Proposal Sent' THEN 'i. Proposal Sent' WHEN 'Verbal' THEN 'j. Verbal' WHEN 'IO Ready' THEN 'k. IO Ready' WHEN 'Final Approval' THEN 'l. Final Approval' END;;
     }
-
-  dimension: revenue_line_v2 {
-    label: "Revenue Line v2"
-    type: string
-    sql: CASE
-          WHEN ${TABLE}.io_type = 'All - Market Expectation' THEN 'All - Market Expectation'
-          WHEN ${TABLE}.io_type = 'Non-Media Reports, Services' THEN 'Non-Media Reports, Services'
-
-      WHEN ${TABLE}.io_type IN (
-      'Amobee TV Media Managed',
-      'Amobee TV Platform Managed',
-      'Amobee TV Platform HOK',
-      'Amobee TV Platform ATD',
-      'Amobee TV',
-      'TV Supply',
-      'TV',
-      'TV Demand - Media Managed',
-      'TV Demand - Platform Managed',
-      'TV Demand - HOK'
-      ) THEN 'TV'
-
-      WHEN ${TABLE}.io_type = 'Media Managed' THEN 'MS'
-      WHEN ${TABLE}.io_type = 'Platform Managed' THEN 'DSP (Self-Service & Managed)'
-      WHEN ${TABLE}.io_type ILIKE '%Media%' THEN 'MS'
-      WHEN ${TABLE}.io_type ILIKE '%MS%' THEN 'MS'
-
-      WHEN ${TABLE}.io_type IN (
-      'Platform ATD',
-      'Platform MSP',
-      'Platform HOK',
-      'SS'
-      ) THEN 'DSP (Self-Service & Managed)'
-      WHEN ${TABLE}.io_type ILIKE '%Platform%' THEN 'DSP (Self-Service & Managed)'
-
-      WHEN ${TABLE}.io_type IN (
-      'Social Managed',
-      'Social ATD',
-      'Social MSP',
-      'Social HOK'
-      ) THEN 'Social'
-      WHEN ${TABLE}.io_type ILIKE '%Social%' THEN 'Social'
-
-      WHEN ${TABLE}.io_type ILIKE '%PMP%' THEN 'PMP'
-      WHEN ${TABLE}.io_type ILIKE '%OMP%' THEN 'PMP'
-
-      ELSE 'Missing'
-      END ;;
-  }
 
 
   dimension: revenue_stage_leadership {
@@ -234,6 +234,25 @@ view: forecast_data {
         END ;;
   }
 
+  dimension: forecast {
+    type: number
+    hidden: yes
+    sql: CASE
+          WHEN ${stage} = 'Closed Lost' THEN 0
+          WHEN ${Probability_level} < 50 THEN 0
+          ELSE ${schedule_converted_revenue_v2} * ${Probability_level} / 100
+        END ;;
+  }
+
+  dimension: booked {
+    type: number
+    hidden: yes
+    sql: CASE
+          WHEN ${stage} in ('Closed Won', 'Closed Won - EDIT', 'Closed Won - APPROVAL') THEN ${schedule_converted_revenue_v2} * ${Probability_level} / 100
+          ELSE 0
+        END ;;
+  }
+
   # dimension: probability_level {
   #   type: number
   #   label: "Probability Level"
@@ -248,35 +267,35 @@ view: forecast_data {
          #####--MEASURES---####
 
   measure: sum_booked_full_credit {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.snapshot_Booked_Full_Credit ;;
     label: "GR Booked"
   }
 
   measure: sum_net_revenue_booked {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.snapshot_Net_Revenue_Booked;;
     label: "NR Booked"
   }
 
   measure: sum_unweighted_tl_upside_new_forecast_v2 {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.Unweighted_TL_Upside_New_Forecast_v2 ;;
     label: "Unweighted TL Upside"
   }
 
   measure: sum_unweighted_nr_upside_new_forecast_v2 {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.unweighted_nr_upside_new_forecast_v2 ;;
     label: "Unweighted NR Upside"
   }
 
   measure: sum_weighted_nr_upside_new_forecast_v2 {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql:
     ${TABLE}.Weighted_NR_Upside_New_Forecast_v2;;
@@ -284,35 +303,35 @@ view: forecast_data {
   }
 
   measure: sum_weighted_tl_upside_new_forecast_v2 {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
     label: "Weighted TL Upside"
   }
 
   measure: sum_gr_forecast_full_credit {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.GR_Forecast_Full_Credit ;;
     label: "GR Forecast"
   }
 
   measure: sum_nr_forecast_full_credit {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.snapshot_NR_Forecast_Full_Credit ;;
     label: "NR Forecast"
   }
 
   measure: sum_forecast_and_upside_weighted {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: number
     label: "NR Forecast + NR Upside (Weighted)"
     sql: ${sum_nr_forecast_full_credit}+${sum_weighted_nr_upside_new_forecast_v2} ;;
   }
 
   measure: sum_schedule_converted_revenue_v2 {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.schedule_converted_revenue_v2 ;;
     label: "Schedule Converted Revenue v2"
@@ -341,6 +360,66 @@ view: forecast_data {
     type: sum
     sql: COALESCE(${TABLE}.schedule_converted_revenue_v2, 0) ;;
 }
+
+  measure: sum_gr_forecast_factored {
+    value_format: "$#,##0"
+    type: sum
+    sql: CASE
+          WHEN ${strat_sales_team} LIKE '%Strat Sales%' AND (
+            ${io_type} IN ('Platform HOK', 'Platform Managed') OR ${revenue_line} IN ('PMP', 'Hybrid/Transparent', 'SS'))
+          THEN ${forecast} * 0.7
+          ELSE ${forecast}
+         END ;;
+    label: "GR Forecast (Factored)"
+  }
+
+  measure: sum_gr_booked_factored {
+    value_format: "$#,##0"
+    type: sum
+    sql: CASE
+          WHEN ${strat_sales_team} LIKE '%Strat Sales%' AND (
+            ${io_type} IN ('Platform HOK', 'Platform Managed') OR ${revenue_line} IN ('PMP', 'Hybrid/Transparent', 'SS'))
+          THEN ${booked} * 0.7
+          ELSE ${booked}
+        END ;;
+    label: "GR Booked (Factored)"
+  }
+
+  measure: delta_gr_booked_to_forecast {
+    value_format: "$#,##0"
+    type: number
+    sql: ${sum_booked_full_credit}-${sum_gr_forecast_full_credit};;
+    label: "GR Booked to Forecast (Delta)"
+  }
+
+  measure: delta_nr_booked_to_forecast {
+    value_format: "$#,##0"
+    type: number
+    sql: ${sum_net_revenue_booked}-${sum_nr_forecast_full_credit};;
+    label: "NR Booked to Forecast (Delta)"
+  }
+
+  measure: p_of_gr_booked_to_forecast {
+    type: number
+    sql: CASE
+          WHEN ${sum_gr_forecast_full_credit} = 0 THEN 0
+          ELSE ${sum_booked_full_credit}
+          / NULLIF(${sum_gr_forecast_full_credit}, 0)
+          END ;;
+    value_format: "0%"
+    label: " % GR Booked to Forecast"
+  }
+
+  measure: p_of_nr_booked_to_forecast {
+    type: number
+    sql: CASE
+          WHEN ${sum_nr_forecast_full_credit} = 0 THEN 0
+          ELSE ${sum_net_revenue_booked}
+          / NULLIF(${sum_nr_forecast_full_credit}, 0)
+          END ;;
+    value_format: "0%"
+    label: " % NR Booked to Forecast"
+  }
 
 
   measure: count_of_opps {

@@ -32,6 +32,7 @@ access_grant: can_view_all_tremor {
 
 explore: forecast_data {
   label: "Forecast New"
+  sql_always_where: ${io_super_region} ILIKE '%NAM%' AND ${snapshot_forecast_checkbox} = 1;;
 }
 
 explore: dim_dsp_monthly_strategic_targets  {
@@ -54,39 +55,31 @@ explore: fact_sfdb_forecast_snapshot {
   label: "Fact sfdb Forecast Snapshot"
   required_access_grants: [can_view_all_tremor]
 
-  # sql_always_where:
-  # ${io_super_region} ILIKE '%NAM%'
-  # AND UPPER(${io_type}) <> 'PMP'
-  # AND UPPER(${revenue_line}) <> 'MISSING'
-  # AND UPPER(${revenue_line}) <> 'PMP'
-  # -- AND (${new_enterprise_team}) <> 'Unknown'
-  # AND ${io_type} IS NOT NULL
-  # AND ${Snapshot_Forecast_Checkbox} = 1
-  # AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
-  # AND ${opportunity_margin} > 0
-  # AND ${opportunity_probability_level} > 0
-  # AND (
-  # ${io_sales_team} ILIKE '%Strat Sales%'
-  # OR ${io_sales_team} ILIKE '%Enterprise Sales%'
-  # )}
-  # ;;
-
   sql_always_where:
   ${io_super_region} ILIKE '%NAM%'
   AND UPPER(${io_type}) <> 'PMP'
+  AND UPPER(${io_type}) IS NOT NULL
   AND UPPER(${revenue_line}) <> 'MISSING'
   AND UPPER(${revenue_line}) <> 'PMP'
+  AND ${stage} NOT ILIKE '%Closed Lost%'
   --AND (${new_enterprise_team}) <> 'Unknown'
   AND ${io_type} IS NOT NULL
   AND ${Snapshot_Forecast_Checkbox} = 1
   AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
-  --AND ${opportunity_margin}>0
-  --AND ${opportunity_probability_level}>50
-  --AND lower(opportunitylineitem_id) != lower('0063m00000oEsjcAAC')
+  AND ${opportunity_record_type} NOT ILIKE '%Upsell Opportunity%'
+  AND ${Snapshot_Forecast_Checkbox} = 1
+  AND ${opportunity_name} NOT ilike '%PMP%'
   ;;
   }
 
 explore: fact_target_forecast_strategy_summary  {
+
+  join: forecast_dim_sfdb_user {
+    type: left_outer
+    sql_on: ${fact_target_forecast_strategy_summary.seller_key} = ${forecast_dim_sfdb_user.fullname_key} ;;
+    relationship: many_to_one
+  }
+
 }
 
 explore: fact_target_forecast_enterprise_summary  {

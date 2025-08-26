@@ -57,13 +57,13 @@ view: fact_target_forecast_strategy_summary {
   dimension: percent_of_target_gr_forecast {
     type: number
     sql: ${TABLE}.percent_of_target_gr_forecast ;;
-    value_format: "0.00%"
+    value_format: "0%"
     # label: "% Of Target GR Forecast"
   }
   dimension: percent_of_target_nr_forecast {
     type: number
     sql: ${TABLE}.percent_of_target_nr_forecast ;;
-    value_format: "0.00%"
+    value_format: "0%"
     # label: "% Of Target NR Forecast"
   }
   dimension: region {
@@ -81,6 +81,11 @@ view: fact_target_forecast_strategy_summary {
   dimension: seller {
     type: string
     sql: ${TABLE}.seller ;;
+  }
+  dimension: seller_key {
+    type: string
+    sql: LOWER(${TABLE}.seller) ;;
+    hidden: yes
   }
   dimension: unweighted_nr_forecast_tremor_leadership {
     type: number
@@ -115,9 +120,14 @@ view: fact_target_forecast_strategy_summary {
     sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
   }
 
-    dimension: Strat_Sales_Team {
-      type: string
-      sql: ${TABLE}.Strat_Sales_Team ;;
+  dimension: Strat_Sales_Team {
+    type: string
+    sql: COALESCE(${forecast_dim_sfdb_user.sales_team__c}, ${TABLE}.Strat_Sales_Team)  ;;
+  }
+
+  dimension: new_enterprise_team {
+    type: string
+    sql: COALESCE(${forecast_dim_sfdb_user.new_enterprise_team}, ${TABLE}.new_enterprise_team) ;;
   }
 
   dimension: Strat_Sales_RVP {
@@ -127,19 +137,13 @@ view: fact_target_forecast_strategy_summary {
   }
 
 
-  dimension: new_enterprise_team {
-    type: string
-    sql: ${TABLE}.new_enterprise_team ;;
-  }
-
-
   ###--MEASURES--###
 
 
   measure: sum_gr_forecast_full_credit {
     type: sum
     sql: ${TABLE}.GR_Forecast_Full_Credit ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "GR Forecast"
     view_label: "GR"
   }
@@ -147,14 +151,14 @@ view: fact_target_forecast_strategy_summary {
   measure: sum_unweighted_tl_upside_new_forecast_v2 {
     type: sum
     sql: ${TABLE}.Unweighted_TL_Upside_New_Forecast_v2 ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "GR Unweighted Upside"
     view_label: "GR"
   }
   measure: sum_weighted_tl_upside_new_forecast_v2 {
     type: sum
     sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "GR Weighted Upside"
     view_label: "GR"
   }
@@ -162,7 +166,7 @@ view: fact_target_forecast_strategy_summary {
   measure: sum_nr_forecast_full_credit {
     type: sum
     sql: ${TABLE}.NR_Forecast_Full_Credit ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "NR Forecast"
     view_label: "NR"
     }
@@ -170,7 +174,7 @@ view: fact_target_forecast_strategy_summary {
   measure: sum_unweighted_nr_upside_new_forecast_v2 {
     type: sum
     sql: ${TABLE}.Unweighted_NR_Upside_New_Forecast_v2 ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "NR Unweighted Upside"
     view_label: "NR"
   }
@@ -178,7 +182,7 @@ view: fact_target_forecast_strategy_summary {
   measure: sum_weighted_nr_upside_new_forecast_v2 {
     type: sum
     sql: ${TABLE}.Weighted_NR_Upside_New_Forecast_v2 ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "NR Weighted Upside"
     view_label: "NR"
   }
@@ -187,14 +191,14 @@ view: fact_target_forecast_strategy_summary {
     type: number
     label: "Delta Between NR Forecast and Target"
     sql: ${sum_nr_forecast_full_credit} - ${sum_net_revenue_target} ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     view_label: "NR"
   }
 
   measure: sum_net_revenue_target {
     type: sum
     sql: ${TABLE}.net_revenue_target ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "NR Target"
     view_label: "Target"
   }
@@ -202,7 +206,7 @@ view: fact_target_forecast_strategy_summary {
   measure: sum_gross_revenue_target {
     type: sum
     sql: ${TABLE}.gross_revenue_target ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "GR Target"
     view_label: "Target"
   }
@@ -210,7 +214,7 @@ view: fact_target_forecast_strategy_summary {
   measure: sum_booked_full_credit {
     type: sum
     sql: ${TABLE}.Booked_Full_Credit ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "GR Booked"
     view_label: "GR"
   }
@@ -218,7 +222,7 @@ view: fact_target_forecast_strategy_summary {
   measure:sum_net_revenue_booked {
     type: sum
     sql: ${TABLE}.Net_Revenue_Booked ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "NR Booked"
     view_label: "NR"
   }
@@ -226,15 +230,27 @@ view: fact_target_forecast_strategy_summary {
   measure: sum_gr_booked_to_forecast_delta {
     type: sum
     sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "GR Booked to Forecast (Delta)"
+    view_label: "GR"
+  }
+
+  measure: p_of_gr_booked_to_forecast {
+    type: number
+    sql: CASE
+          WHEN ${sum_gr_forecast_full_credit} = 0 THEN 0
+          ELSE ${sum_booked_full_credit}
+          / NULLIF(${sum_gr_forecast_full_credit}, 0)
+          END ;;
+    value_format: "0%"
+    label: " % GR Booked to Forecast"
     view_label: "GR"
   }
 
   measure: sum_nr_booked_to_forecast_delta {
     type: sum
     sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "NR Booked to Forecast (Delta)"
     view_label: "NR"
   }
@@ -243,7 +259,7 @@ view: fact_target_forecast_strategy_summary {
     type: number
     label: "Delta Between NR Booked and Target"
     sql: ${sum_net_revenue_booked} - ${sum_net_revenue_target} ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     view_label: "NR"
   }
   measure: P_of_Target_NR_Booked {
@@ -254,14 +270,26 @@ view: fact_target_forecast_strategy_summary {
           ELSE ${fact_target_forecast_strategy_summary.sum_net_revenue_booked}
           / NULLIF(${fact_target_forecast_strategy_summary.sum_net_revenue_target}, 0)
           END ;;
-    value_format: "0.00%"
+    value_format: "0%"
+    view_label: "NR"
+  }
+
+  measure: p_of_nr_booked_to_forecast {
+    type: number
+    sql: CASE
+          WHEN ${sum_nr_forecast_full_credit} = 0 THEN 0
+          ELSE ${sum_net_revenue_booked}
+          / NULLIF(${sum_nr_forecast_full_credit}, 0)
+          END ;;
+    value_format: "0%"
+    label: " % NR Booked to Forecast"
     view_label: "NR"
   }
 
   # measure: sum_percent_of_target_gr_forecast {
   #   type: sum
   #   sql: ${TABLE}.percent_of_target_gr_forecast ;;
-  #   value_format: "0.00%"
+  #   value_format: "0%"
   #   label: "% Of Target GR Forecast"
   #   view_label: "GR"
   # }
@@ -274,14 +302,14 @@ view: fact_target_forecast_strategy_summary {
           ELSE ${fact_target_forecast_strategy_summary.sum_gr_forecast_full_credit}
               / NULLIF(${fact_target_forecast_strategy_summary.sum_gross_revenue_target}, 0)
       END ;;
-    value_format: "0.00%"
+    value_format: "0%"
     view_label: "GR"
   }
 
   # measure: sum_percent_of_target_nr_forecast {
   #   type: sum
   #   sql: ${TABLE}.percent_of_target_nr_forecast ;;
-  #   value_format: "0.00%"
+  #   value_format: "0%"
   #   label: "% Of Target NR Forecast"
   #   view_label: "NR"
   # }
@@ -294,14 +322,14 @@ view: fact_target_forecast_strategy_summary {
           ELSE ${fact_target_forecast_strategy_summary.sum_nr_forecast_full_credit}
               / NULLIF(${fact_target_forecast_strategy_summary.sum_net_revenue_target}, 0)
       END ;;
-    value_format: "0.00%"
+    value_format: "0%"
     view_label: "NR"
   }
 
   measure: sum_weighted_nr_upside_and_nr_forecast {
     type: sum
     sql: ${TABLE}.Weighted_NR_Upside_New_Forecast_v2 + ${TABLE}.NR_Forecast_Full_Credit;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     label: "NR Forecast + NR Upside (Weighted)"
     view_label: "NR"
   }
@@ -313,7 +341,7 @@ view: fact_target_forecast_strategy_summary {
           ELSE (${TABLE}.Weighted_NR_Upside_New_Forecast_v2 + ${TABLE}.NR_Forecast_Full_Credit)
               / NULLIF(${TABLE}.net_revenue_target, 0)
       END ;;
-    value_format: "0.00%"
+    value_format: "0%"
     label: "NR Forecast + NR Upside % to Target"
     view_label: "NR"
   }

@@ -52,6 +52,7 @@ explore: monthly_enterprise_targets_changes {
 
 explore: fact_sfdb_forecast_snapshot {
   label: "Fact sfdb Forecast Snapshot"
+  required_access_grants: [can_view_all_tremor]
 
   # sql_always_where:
   # ${io_super_region} ILIKE '%NAM%'

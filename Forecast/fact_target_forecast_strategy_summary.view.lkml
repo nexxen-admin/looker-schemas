@@ -235,6 +235,18 @@ view: fact_target_forecast_strategy_summary {
     view_label: "GR"
   }
 
+  measure: p_of_gr_booked_to_forecast {
+    type: number
+    sql: CASE
+          WHEN ${sum_gr_forecast_full_credit} = 0 THEN 0
+          ELSE ${sum_booked_full_credit}
+          / NULLIF(${sum_gr_forecast_full_credit}, 0)
+          END ;;
+    value_format: "0.00%"
+    label: " % GR Booked to Forecast"
+    view_label: "GR"
+  }
+
   measure: sum_nr_booked_to_forecast_delta {
     type: sum
     sql: ${TABLE}.NR_Booked_to_Forecast_Delta ;;
@@ -259,6 +271,18 @@ view: fact_target_forecast_strategy_summary {
           / NULLIF(${fact_target_forecast_strategy_summary.sum_net_revenue_target}, 0)
           END ;;
     value_format: "0.00%"
+    view_label: "NR"
+  }
+
+  measure: p_of_nr_booked_to_forecast {
+    type: number
+    sql: CASE
+          WHEN ${sum_nr_forecast_full_credit} = 0 THEN 0
+          ELSE ${sum_net_revenue_booked}
+          / NULLIF(${sum_nr_forecast_full_credit}, 0)
+          END ;;
+    value_format: "0.00%"
+    label: " % NR Booked to Forecast"
     view_label: "NR"
   }
 

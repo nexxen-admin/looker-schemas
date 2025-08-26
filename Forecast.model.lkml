@@ -32,6 +32,7 @@ access_grant: can_view_all_tremor {
 
 explore: forecast_data {
   label: "Forecast New"
+  sql_always_where: ${io_super_region} ILIKE '%NAM%' AND ${snapshot_forecast_checkbox} = 1;;
 }
 
 explore: dim_dsp_monthly_strategic_targets  {

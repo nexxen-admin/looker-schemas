@@ -315,35 +315,35 @@ view: forecast_data {
          #####--MEASURES---####
 
   measure: sum_booked_full_credit {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.snapshot_Booked_Full_Credit ;;
     label: "GR Booked"
   }
 
   measure: sum_net_revenue_booked {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.snapshot_Net_Revenue_Booked;;
     label: "NR Booked"
   }
 
   measure: sum_unweighted_tl_upside_new_forecast_v2 {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.Unweighted_TL_Upside_New_Forecast_v2 ;;
     label: "Unweighted TL Upside"
   }
 
   measure: sum_unweighted_nr_upside_new_forecast_v2 {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.unweighted_nr_upside_new_forecast_v2 ;;
     label: "Unweighted NR Upside"
   }
 
   measure: sum_weighted_nr_upside_new_forecast_v2 {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql:
     ${TABLE}.Weighted_NR_Upside_New_Forecast_v2;;
@@ -351,35 +351,35 @@ view: forecast_data {
   }
 
   measure: sum_weighted_tl_upside_new_forecast_v2 {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.Weighted_TL_Upside_New_Forecast_v2 ;;
     label: "Weighted TL Upside"
   }
 
   measure: sum_gr_forecast_full_credit {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.GR_Forecast_Full_Credit ;;
     label: "GR Forecast"
   }
 
   measure: sum_nr_forecast_full_credit {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.snapshot_NR_Forecast_Full_Credit ;;
     label: "NR Forecast"
   }
 
   measure: sum_forecast_and_upside_weighted {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: number
     label: "NR Forecast + NR Upside (Weighted)"
     sql: ${sum_nr_forecast_full_credit}+${sum_weighted_nr_upside_new_forecast_v2} ;;
   }
 
   measure: sum_schedule_converted_revenue_v2 {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: ${TABLE}.schedule_converted_revenue_v2 ;;
     label: "Schedule Converted Revenue v2"
@@ -410,7 +410,7 @@ view: forecast_data {
 }
 
   measure: sum_gr_forecast_factored {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: CASE
           WHEN ${strat_sales_team} LIKE '%Strat Sales%' AND (
@@ -422,7 +422,7 @@ view: forecast_data {
   }
 
   measure: sum_gr_booked_factored {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: sum
     sql: CASE
           WHEN ${strat_sales_team} LIKE '%Strat Sales%' AND (
@@ -434,14 +434,14 @@ view: forecast_data {
   }
 
   measure: delta_gr_booked_to_forecast {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: number
     sql: ${sum_booked_full_credit}-${sum_gr_forecast_full_credit};;
     label: "GR Booked to Forecast (Delta)"
   }
 
   measure: delta_nr_booked_to_forecast {
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     type: number
     sql: ${sum_net_revenue_booked}-${sum_nr_forecast_full_credit};;
     label: "NR Booked to Forecast (Delta)"
@@ -454,7 +454,7 @@ view: forecast_data {
           ELSE ${sum_booked_full_credit}
           / NULLIF(${sum_gr_forecast_full_credit}, 0)
           END ;;
-    value_format: "0.00%"
+    value_format: "0%"
     label: " % GR Booked to Forecast"
   }
 
@@ -465,7 +465,7 @@ view: forecast_data {
           ELSE ${sum_net_revenue_booked}
           / NULLIF(${sum_nr_forecast_full_credit}, 0)
           END ;;
-    value_format: "0.00%"
+    value_format: "0%"
     label: " % NR Booked to Forecast"
   }
 

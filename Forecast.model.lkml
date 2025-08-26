@@ -60,7 +60,7 @@ explore: fact_sfdb_forecast_snapshot {
   AND UPPER(${revenue_line}) <> 'MISSING'
   AND UPPER(${revenue_line}) <> 'PMP'
   AND ${stage} NOT ILIKE '%Closed Lost%'
-  AND (${new_enterprise_team}) <> 'Unknown'
+  --AND (${new_enterprise_team}) <> 'Unknown'
   AND ${io_type} IS NOT NULL
   AND ${Snapshot_Forecast_Checkbox} = 1
   AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'

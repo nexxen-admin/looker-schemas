@@ -170,10 +170,10 @@ view: forecast_data {
   dimension: strat_sales_cs_region {
     type: string
     sql: CASE
-          WHEN ${account_name} LIKE '%Klick Health%' AND ${revenue_line_v2} = 'DSP (Self-Service & Managed)' THEN NULL
-          WHEN ${account_name} LIKE '%Guru%' AND ${revenue_line_v2} = 'DSP (Self-Service & Managed)' THEN NULL
-          WHEN ${account_name} LIKE '%301 Digital%' AND ${revenue_line_v2} = 'DSP (Self-Service & Managed)' THEN NULL
-          WHEN ${account_name} LIKE '%Rescue Agency%' AND ${revenue_line_v2} = 'DSP (Self-Service & Managed)' THEN NULL
+          WHEN ${account_name} LIKE '%Klick Health%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
+          WHEN ${account_name} LIKE '%Guru%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
+          WHEN ${account_name} LIKE '%301 Digital%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
+          WHEN ${account_name} LIKE '%Rescue Agency%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
 
           WHEN ${strat_sales_rvp} = 'East' THEN 'Strat Sales CS East'
           WHEN ${strat_sales_rvp} = 'West' THEN 'Strat Sales CS West'
@@ -205,54 +205,6 @@ view: forecast_data {
     type: string
     sql:  CASE ${TABLE}.stage WHEN 'Draft' THEN 'a. Draft' WHEN 'Discovery Meeting' THEN 'b. Discovery Meeting' WHEN 'LowEngage' THEN 'c. LowEngage' WHEN 'RFP/RFI Received'THEN 'd. RFP/RFI Received' WHEN 'HighEngage' THEN 'e. HighEngage' WHEN 'Proposal Discussion' THEN 'f. Proposal Discussion' WHEN 'Proposal' THEN 'g. Proposal' WHEN 'Proposal Ready' THEN 'h. Proposal Ready' WHEN 'Proposal Sent' THEN 'i. Proposal Sent' WHEN 'Verbal' THEN 'j. Verbal' WHEN 'IO Ready' THEN 'k. IO Ready' WHEN 'Final Approval' THEN 'l. Final Approval' END;;
     }
-
-  dimension: revenue_line_v2 {
-    label: "Revenue Line v2"
-    type: string
-    sql: CASE
-          WHEN ${TABLE}.io_type = 'All - Market Expectation' THEN 'All - Market Expectation'
-          WHEN ${TABLE}.io_type = 'Non-Media Reports, Services' THEN 'Non-Media Reports, Services'
-
-      WHEN ${TABLE}.io_type IN (
-      'Amobee TV Media Managed',
-      'Amobee TV Platform Managed',
-      'Amobee TV Platform HOK',
-      'Amobee TV Platform ATD',
-      'Amobee TV',
-      'TV Supply',
-      'TV',
-      'TV Demand - Media Managed',
-      'TV Demand - Platform Managed',
-      'TV Demand - HOK'
-      ) THEN 'TV'
-
-      WHEN ${TABLE}.io_type = 'Media Managed' THEN 'MS'
-      WHEN ${TABLE}.io_type = 'Platform Managed' THEN 'DSP (Self-Service & Managed)'
-      WHEN ${TABLE}.io_type ILIKE '%Media%' THEN 'MS'
-      WHEN ${TABLE}.io_type ILIKE '%MS%' THEN 'MS'
-
-      WHEN ${TABLE}.io_type IN (
-      'Platform ATD',
-      'Platform MSP',
-      'Platform HOK',
-      'SS'
-      ) THEN 'DSP (Self-Service & Managed)'
-      WHEN ${TABLE}.io_type ILIKE '%Platform%' THEN 'DSP (Self-Service & Managed)'
-
-      WHEN ${TABLE}.io_type IN (
-      'Social Managed',
-      'Social ATD',
-      'Social MSP',
-      'Social HOK'
-      ) THEN 'Social'
-      WHEN ${TABLE}.io_type ILIKE '%Social%' THEN 'Social'
-
-      WHEN ${TABLE}.io_type ILIKE '%PMP%' THEN 'PMP'
-      WHEN ${TABLE}.io_type ILIKE '%OMP%' THEN 'PMP'
-
-      ELSE 'Missing'
-      END ;;
-  }
 
 
   dimension: revenue_stage_leadership {
@@ -414,7 +366,7 @@ view: forecast_data {
     type: sum
     sql: CASE
           WHEN ${strat_sales_team} LIKE '%Strat Sales%' AND (
-            ${io_type} IN ('Platform HOK', 'Platform Managed') OR ${revenue_line_v2} IN ('PMP', 'Hybrid/Transparent', 'SS'))
+            ${io_type} IN ('Platform HOK', 'Platform Managed') OR ${revenue_line} IN ('PMP', 'Hybrid/Transparent', 'SS'))
           THEN ${forecast} * 0.7
           ELSE ${forecast}
          END ;;
@@ -426,7 +378,7 @@ view: forecast_data {
     type: sum
     sql: CASE
           WHEN ${strat_sales_team} LIKE '%Strat Sales%' AND (
-            ${io_type} IN ('Platform HOK', 'Platform Managed') OR ${revenue_line_v2} IN ('PMP', 'Hybrid/Transparent', 'SS'))
+            ${io_type} IN ('Platform HOK', 'Platform Managed') OR ${revenue_line} IN ('PMP', 'Hybrid/Transparent', 'SS'))
           THEN ${booked} * 0.7
           ELSE ${booked}
         END ;;

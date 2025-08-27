@@ -20,6 +20,12 @@ view: forecast_data {
     label: "Type"
     sql: ${TABLE}.IO_Type ;;
   }
+
+  dimension: schedule_is_free {
+    type: string
+    sql: ${TABLE}.schedule_is_free ;;
+  }
+
   dimension: new_enterprise_team {
     type: string
     sql: ${TABLE}.new_enterprise_team ;;

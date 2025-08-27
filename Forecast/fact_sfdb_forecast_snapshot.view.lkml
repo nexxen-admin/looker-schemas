@@ -65,6 +65,16 @@ view: fact_sfdb_forecast_snapshot {
     type: string
     sql: ${TABLE}.IO_Sales_Team ;;
   }
+  dimension: strategic_sales_cs_region {
+    type: string
+    label: "Snapshot Strategic Sales CS Region"
+    sql: CASE WHEN ${TABLE}.IO_Sales_Team ILIKE '%East%' THEN 'Strat Sales CS East'
+    WHEN ${TABLE}.IO_Sales_Team ILIKE '%South%' THEN 'Strat Sales CS South'
+    WHEN ${TABLE}.IO_Sales_Team ILIKE '%West%' THEN 'Strat Sales CS West'
+    WHEN ${TABLE}.IO_Sales_Team ILIKE '%Central%' THEN 'Strat Sales CS Central'
+    WHEN ${TABLE}.IO_Sales_Team ILIKE '%Canada%' THEN 'Strat Sales CS Canada'
+    END;;
+  }
   dimension: io_super_region {
     type: string
     sql: ${TABLE}.IO_Super_Region ;;

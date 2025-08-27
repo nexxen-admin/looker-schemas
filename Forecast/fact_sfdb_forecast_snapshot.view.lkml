@@ -81,6 +81,10 @@ view: fact_sfdb_forecast_snapshot {
     type: string
     sql: ${TABLE}.opportunity_name ;;
   }
+  dimension: opportunity_link {
+    type: string
+    sql: CONCAT('https://amobee-sfv.lightning.force.com/', ${TABLE}.Opportunity_ID) ;;
+  }
   dimension: opportunity_owner {
     type: string
     sql: ${TABLE}.Opportunity_Owner ;;

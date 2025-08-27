@@ -34,7 +34,10 @@ access_grant: can_view_all_tremor {
 explore: forecast_data {
   label: "Forecast New"
   required_access_grants: [can_view_all_tremor]
-  sql_always_where: ${io_super_region} ILIKE '%NAM%' AND ${snapshot_forecast_checkbox} = 1;;
+  sql_always_where: ${io_super_region} ILIKE '%NAM%'
+  AND ${snapshot_forecast_checkbox} = 1
+  AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
+  AND ${opportunity_record_type} NOT ILIKE '%Upsell Opportunity%';;
 }
 
 explore: dim_dsp_monthly_strategic_targets  {

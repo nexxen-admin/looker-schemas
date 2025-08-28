@@ -107,6 +107,10 @@ view: fact_sfdb_forecast_snapshot {
     type: string
     sql: ${TABLE}.related_brand_name ;;
   }
+  dimension: schedule_is_free {
+    type: number
+    sql: ${TABLE}.schedule_is_free ;;
+  }
   dimension: revenue {
     type: number
     sql: ${TABLE}.revenue ;;

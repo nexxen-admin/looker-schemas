@@ -75,6 +75,7 @@ explore: fact_sfdb_forecast_snapshot {
   --AND (${new_enterprise_team}) <> 'Unknown'
   AND ${io_type} IS NOT NULL
   AND ${Snapshot_Forecast_Checkbox} = 1
+  AND ${schedule_is_free} = 0
   AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
   AND ${opportunity_record_type} NOT ILIKE '%Upsell Opportunity%'
   AND ${Snapshot_Forecast_Checkbox} = 1

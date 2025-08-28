@@ -259,6 +259,12 @@ view: forecast_data {
         END ;;
   }
 
+  dimension: legal_entity {
+    label: "Legal Entity"
+    type: string
+    sql: ${TABLE}.legal_entity ;;
+  }
+
   # dimension: probability_level {
   #   type: number
   #   label: "Probability Level"

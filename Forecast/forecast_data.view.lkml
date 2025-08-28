@@ -84,8 +84,9 @@ view: forecast_data {
     type: number
     sql: ${TABLE}.Probability_level ;;
   }
-  dimension: opportunity_proposed_spend {
-    type: number
+  measure: opportunity_proposed_spend {
+    type: sum
+    value_format: "$#,##0"
     sql: ${TABLE}.opportunity_proposed_spend ;;
   }
   dimension: opportunity_record_type {

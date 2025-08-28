@@ -22,7 +22,7 @@ view: forecast_data {
   }
 
   dimension: schedule_is_free {
-    type: string
+    type: number
     sql: ${TABLE}.schedule_is_free ;;
   }
 

@@ -259,7 +259,7 @@ view: forecast_data {
         END ;;
   }
 
-<<<<<<< HEAD
+
 
   dimension: Enterprise_CS_Regional_Pods {
     type: string
@@ -297,13 +297,13 @@ view: forecast_data {
       THEN 'West'
 
       ELSE NULL
-      END ;;
-=======
+      END ;;}
+
   dimension: legal_entity {
     label: "Legal Entity"
     type: string
     sql: ${TABLE}.legal_entity ;;
->>>>>>> 3752c4abf14cdd774748c8640ee40e4b0e56baa6
+
   }
 
   # dimension: probability_level {

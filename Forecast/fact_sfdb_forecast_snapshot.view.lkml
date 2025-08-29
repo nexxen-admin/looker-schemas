@@ -595,7 +595,7 @@ view: fact_sfdb_forecast_snapshot {
     type: sum
     description: "Current period NR Booked"
     sql: ${TABLE}.snapshot_net_revenue_booked   ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
     label: "NR Booked Full Credit (Current)"
   }
@@ -605,7 +605,7 @@ view: fact_sfdb_forecast_snapshot {
     type: sum
     description: "Previous period NR Booked"
     sql: ${TABLE}.snapshot_net_revenue_booked  ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
     label: "NR Booked Full Credit (Previous)"
   }
@@ -615,14 +615,14 @@ view: fact_sfdb_forecast_snapshot {
     type: number
     sql: ${current_period_net_revenue_booked} - ${previous_period_net_revenue_booked} ;;
     label: "NR Booked Full Credit Delta"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: percent_nr_booked_Full_Credit {
     view_label: "NR Booked Full Credit POP"
     type: number
     sql: (100.0 * (${current_period_net_revenue_booked} - ${previous_period_net_revenue_booked}) / NULLIF(${previous_period_net_revenue_booked}, 0)) ;;
-    value_format_name: percent_2
+    value_format: "0%"
     label: "% Change in NR Booked Full Credit"
   }
 
@@ -638,7 +638,7 @@ view: fact_sfdb_forecast_snapshot {
       type: sum
       description: "Current NR Forecast Full Credit"
       sql: ${TABLE}.snapshot_NR_forecast_full_credit  ;;
-      value_format: "#,##0.00"
+      value_format: "#,##0"
       filters: [period_filtered_measures: "this"]
       label: "NR Forecast Full Credit (Current)"
     }
@@ -648,7 +648,7 @@ view: fact_sfdb_forecast_snapshot {
       type: sum
       description: "Previous NR Forecast Full Credit"
       sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
-      value_format: "#,##0.00"
+      value_format: "#,##0"
       filters: [period_filtered_measures: "last"]
       label: "NR Forecast Full Credit (Previous)"
     }
@@ -658,7 +658,7 @@ view: fact_sfdb_forecast_snapshot {
       type: number
       sql: ${current_period_snapshot_nr_forecast_full_credit} - ${previous_period_snapshot_nr_forecast_full_credit} ;;
       label: "NR Forecast Full Credit Delta"
-      value_format: "#,##0.00"
+      value_format: "#,##0"
     }
 
   measure: percent_nr_forecast_Full_Credit {
@@ -666,7 +666,7 @@ view: fact_sfdb_forecast_snapshot {
     type: number
     sql: ((${current_period_snapshot_nr_forecast_full_credit} - ${previous_period_snapshot_nr_forecast_full_credit})
       / NULLIF(${previous_period_snapshot_nr_forecast_full_credit}, 0)) ;;
-    value_format: "0.00%"
+    value_format: "0%"
     label: "% Change in NR Forecast Full Credit"
   }
 
@@ -681,7 +681,7 @@ view: fact_sfdb_forecast_snapshot {
     type: sum
     description: "Current GR Forecast Full Credit"
     sql: ${TABLE}.gr_forecast_full_credit;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
     label: "GR Forecast Full Credit (Current)"
   }
@@ -691,7 +691,7 @@ view: fact_sfdb_forecast_snapshot {
     type: sum
     description: "Previous GR Forecast Full Credit"
     sql: ${TABLE}.gr_forecast_full_credit;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
     label: "GR Forecast Full Credit (Previous)"
   }
@@ -701,7 +701,7 @@ view: fact_sfdb_forecast_snapshot {
     type: number
     sql: ${current_period_GR_Forecast_Full_Credit} - ${previous_period_GR_Forecast_Full_Credit} ;;
     label: "GR Forecast Full Credit Delta"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
 
@@ -712,7 +712,7 @@ view: fact_sfdb_forecast_snapshot {
           ( ${current_period_GR_Forecast_Full_Credit} - ${previous_period_GR_Forecast_Full_Credit} )
           / NULLIF(${previous_period_GR_Forecast_Full_Credit}, 0)
         ) ;;
-    value_format: "0.00%"
+    value_format: "0%"
     label: "% Change in GR Forecast Full Credit"
   }
 
@@ -725,7 +725,7 @@ view: fact_sfdb_forecast_snapshot {
     type: sum
     description: "Current GR Booked Full Credit"
     sql: ${TABLE}.snapshot_booked_full_credit  ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
     label: "GR Booked Full Credit (Current)"
   }
@@ -735,7 +735,7 @@ view: fact_sfdb_forecast_snapshot {
     type: sum
     description: "Previous GR Booked Full Credit"
     sql: ${TABLE}.snapshot_booked_full_credit ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     filters: [period_filtered_measures: "last"]
     label: "GR Booked Full Credit (Previous)"
   }
@@ -745,14 +745,14 @@ view: fact_sfdb_forecast_snapshot {
     type: number
     sql: ${current_period_snapshot_booked_full_credit} - ${previous_period_snapshot_booked_full_credit} ;;
     label: "GR Booked Full Credit Delta"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: percent_gr_Booked_Full_Credit {
     view_label: "GR Booked Full Credit POP"
     type: number
     sql: (100.0 * (${current_period_snapshot_booked_full_credit} - ${previous_period_snapshot_booked_full_credit}) / NULLIF(${previous_period_snapshot_booked_full_credit}, 0)) ;;
-    value_format_name: percent_2
+    value_format: "0%"
     label: "% Change in GR Booked Full Credit"
   }
 
@@ -767,7 +767,7 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${revenue} ;;
     filters: [period: "Current"]
     label: "Revenue (Current)"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: sum_revenue_previous {
@@ -776,7 +776,7 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${revenue} ;;
     filters: [period: "Previous"]
     label: "Revenue (Previous)"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
 
@@ -785,14 +785,14 @@ view: fact_sfdb_forecast_snapshot {
     type: number
     sql: ${sum_revenue_current} - ${sum_revenue_previous} ;;
     label: "Revenue Delta"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: percent_change_revenue {
     view_label: "Revenue POP"
     type: number
     sql: (100.0 * (${sum_revenue_current} - ${sum_revenue_previous}) / NULLIF(${sum_revenue_previous}, 0)) ;;
-    value_format_name: percent_2
+    value_format: "0%"
     label: "% Change in Revenue"
   }
 
@@ -802,33 +802,33 @@ view: fact_sfdb_forecast_snapshot {
     type: sum
     sql: ${TABLE}.snapshot_nr_forecast_full_credit ;;
     label: "NR Forecast Full Credit"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure:sum_gr_forecast_full_credit {
     type: sum
     sql: ${TABLE}.gr_forecast_full_credit ;;
     label:"GR Forecast Full Credit"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure:sum_revenue {
     type: sum
     sql: ${TABLE}.revenue ;;
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure:sum_snapshot_net_revenue_booked {
     type: sum
     sql: ${TABLE}.snapshot_net_revenue_booked ;;
     label: "NR Booked Full Credit"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   # measure:sum_snapshot_booked_full_credit {
   #   type: sum
   #   sql: ${TABLE}.gr_snapshot_booked_full_credit ;;
-  #   value_format: "#,##0.00"
+  #   value_format: "#,##0"
   # }
 
   measure: sum_snapshot_booked_full_credit {
@@ -859,7 +859,7 @@ view: fact_sfdb_forecast_snapshot {
     filters: [period_filtered_measures_qtd: "this"]
     label: "NR Forecast Full Credit (Today)"
     view_label: "NR QTD Comparison"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: qtd_start_snapshot_nr_forecast_full_credit {
@@ -868,14 +868,14 @@ view: fact_sfdb_forecast_snapshot {
     filters: [period_filtered_measures_qtd: "last"]
     label: "NR Forecast Full Credit (QTD Start)"
     view_label: "NR QTD Comparison"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: qtd_delta_snapshot_nr_forecast_full_credit {
     type: number
     sql: ${qtd_today_snapshot_nr_forecast_full_credit} - ${qtd_start_snapshot_nr_forecast_full_credit} ;;
     label: "NR Forecast Delta (Today vs QTD Start)"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     view_label: "NR QTD Comparison"
   }
 
@@ -887,7 +887,7 @@ view: fact_sfdb_forecast_snapshot {
     filters: [period_filtered_measures_qtd: "this"]
     label: "GR Forecast Full Credit (Today)"
     view_label: "GR QTD Comparison"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: qtd_start_snapshot_gr_forecast_full_credit {
@@ -896,14 +896,14 @@ view: fact_sfdb_forecast_snapshot {
     filters: [period_filtered_measures_qtd: "last"]
     label: "GR Forecast Full Credit (QTD Start)"
     view_label: "GR QTD Comparison"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
   }
 
   measure: qtd_delta_snapshot_gr_forecast_full_credit {
     type: number
     sql: ${qtd_today_snapshot_gr_forecast_full_credit} - ${qtd_start_snapshot_gr_forecast_full_credit} ;;
     label: "GR Forecast Delta (Today vs QTD Start)"
-    value_format: "#,##0.00"
+    value_format: "#,##0"
     view_label: "GR QTD Comparison"
   }
 

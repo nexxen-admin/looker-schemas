@@ -41,6 +41,11 @@ explore: forecast_data {
   AND ${opportunity_record_type} NOT ILIKE '%Upsell Opportunity%';;
 }
 
+explore: market_expectation {
+  label: "Forecast Market Expectation"
+  required_access_grants: [can_view_all_tremor]
+}
+
 explore: dim_dsp_monthly_strategic_targets  {
   required_access_grants: [can_view_all_tremor]
   label: "Monthly Strategic Targets"

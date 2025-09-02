@@ -3,7 +3,9 @@ view: market_expectation {
 
   dimension: chance_team {
     type: string
-    sql: ${TABLE}.Chance_Team ;;
+    sql: CASE WHEN ${TABLE}.Chance_Team='ENTER' THEN 'Enterprise Sales'
+              WHEN ${TABLE}.Chance_Team='STRAT' THEN 'Strategic Sales'
+              WHEN ${TABLE}.Chance_Team='ALL' THEN 'All' END;;
   }
 
 
@@ -20,6 +22,13 @@ view: market_expectation {
     value_format: "$#,##0"
     sql: ${TABLE}.NR_Booked ;;
   }
+  measure: nr_booked_cleared {
+    type: sum
+    label: "NR Booked"
+    value_format: "$#,##0"
+    sql: CASE WHEN ${TABLE}.chance_team='ALL' THEN null ELSE  ${TABLE}.NR_Booked END ;;
+    # hidden: yes
+  }
   measure: nr_budget {
     type: sum
     label: "NR Budget"
@@ -30,6 +39,6 @@ view: market_expectation {
     type: average
     label: "NR Pace %"
     value_format: "0%"
-    sql: ${TABLE}.NR_PACING ;;
+    sql: CASE WHEN ${TABLE}.NR_PACING=0 THEN null ELSE ${TABLE}.NR_PACING END  ;;
   }
 }

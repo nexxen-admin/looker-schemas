@@ -19,6 +19,15 @@ view: dim_dsp_inventory_source {
     sql: ${TABLE}.inventory_source_id ;;
     # hidden: yes
     }
+
+  dimension: inventory_src_name {
+    type: string
+    label: "Inventory Src Name"
+    description: "Daily Tracker Unruly dimension"
+    sql: CASE WHEN ${inventory_source_id} in (12, 115, 50, 8, 158, 9, 179, 16, 202, 6, 11, 40, 97, 191, 37, 200, 195)
+      THEN ${inventory_source_name} ELSE 'Misc Small Volume Exchanges' END ;;
+  }
+
   dimension: inventory_source_key {
     type: number
     sql: ${TABLE}.inventory_source_key ;;

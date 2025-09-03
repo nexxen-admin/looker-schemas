@@ -16,19 +16,19 @@ dimension: actions {
 dimension: billing_clicks {
   type: number
   sql: ${TABLE}.billing_clicks ;;
-  label: "Billing Clicks"
+  label: "Final Clicks"
 }
 
 dimension: billing_cost {
   type: number
   sql: ${TABLE}.billing_cost ;;
-  label: "Billing Cost"
+  label: "Cost"
 }
 
 dimension: booked_rate {
   type: number
   sql: ${TABLE}.booked_rate ;;
-  label: "Booked Rate"
+  label: "Rate"
 }
 
 dimension_group: date_key {
@@ -48,18 +48,19 @@ dimension_group: IO_End {
   type: time
   timeframes: [raw, time, date, week, month, quarter, year]
   sql: ${TABLE}.io_end_date ;;
+  label: "Opp Line Item End Date"
 }
 
 dimension: io_id {
   type: string
   sql: ${TABLE}.io_id ;;
-  label: "IO ID"
+  label: "Opportunity ID"
 }
 
 dimension: io_key {
   type: string
   sql: ${TABLE}.io_key ;;
-  label: "IO Key"
+  label: "Case Safe Opp Line Item ID"
 }
 
 dimension: legal_entity {
@@ -82,37 +83,37 @@ dimension: netsuite_billing_revenue {
 dimension: netsuite_final_impressions {
   type: number
   sql: ${TABLE}.netsuite_final_impressions ;;
-  label: "NetSuite Final Impressions"
+  label: "Final Impressions"
 }
 
 dimension: partner_account_for_netsuite_revenue_feed {
   type: string
   sql: ${TABLE}.partner_account_for_netsuite_revenue_feed ;;
-  label: "Partner Account for NetSuite Revenue Feed"
+  label: "Partner Account"
 }
 
 dimension: po_item_price_fixed_local_for_netsuite_revenue_feed {
   type: string
   sql: ${TABLE}.po_item_price_fixed_local_for_netsuite_revenue_feed ;;
-  label: "PO Item Price (Fixed) (LOCAL) for NetSuite Revenue Feed"
+  label: "PO Item Price (Fixed) (LOCAL)"
 }
 
 dimension: po_item_price_type_for_netsuite_revenue_feed {
   type: string
   sql: ${TABLE}.po_item_price_type_for_netsuite_revenue_feed ;;
-  label: "PO Item Price Type for NetSuite Revenue Feed"
+  label: "PO Item Price Type"
 }
 
 dimension: po_number_for_netsuite_revenue_feed {
   type: string
   sql: ${TABLE}.po_number_for_netsuite_revenue_feed ;;
-  label: "PO # for NetSuite Revenue Feed"
+  label: "Purchase Order"
 }
 
 dimension: price_type {
   type: string
   sql: ${TABLE}.price_type ;;
-  label: "Price Type"
+  label: "Price Type Name"
 }
 
 dimension: io_type {

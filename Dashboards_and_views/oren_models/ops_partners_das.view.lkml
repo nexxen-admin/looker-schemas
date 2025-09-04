@@ -14,11 +14,12 @@ SELECT date(IMPRESSION_DATE) as DATE_PERIOD,
       COUNTRY_ID,
       COUNTRY_NAME,
       case when DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end as source,
-    REGION,
+      REGION,
         SUM(IMPRESSION) as IMPRESSION,
         SUM(GROSS_REVENUE) as GROSS_REVENUE,
         SUM(ADJUSTED_NET_REVENUE) as ADJUSTED_NET_REVENUE,
-        SUM(TURN_FEE) as TURN_FEE
+        SUM(TURN_FEE) as TURN_FEE,
+        SUM(CONTRA_REVENUE) as CONTRA_REVENUE
 FROM bi_new.decom
 GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
     ;;
@@ -163,6 +164,13 @@ measure: IMPRESSION {
     label: "Net Retained Revenue / Gross Retained Revenue %"
   }
 
+  measure: CONTRA_REVENUE {
+    type: sum
+    sql: ${TABLE}.CONTRA_REVENUE ;;
+    value_format: "$#,##0"
+    label: "Contra Revenue"
+    description: "Represents reductions from gross revenue"
+  }
 
 
 set: detail {

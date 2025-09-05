@@ -128,7 +128,7 @@ view: fact_target_forecast_enterprise_summary {
 
   dimension: Strat_Sales_Team {
     type: string
-    sql: COALESCE(${forecast_dim_sfdb_user.sales_team__c}, ${TABLE}.Strat_Sales_Team)  ;;
+    sql: COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team)  ;;
   }
 
   dimension: new_enterprise_team {

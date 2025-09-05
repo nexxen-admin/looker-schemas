@@ -236,9 +236,9 @@ view: forecast_dim_sfdb_user {
     sql: ${TABLE}.region__c ;;
     hidden: yes
   }
-  dimension: sales_team__c {
+  dimension: strat_sales_team {
     type: string
-    sql: ${TABLE}.sales_team__c ;;
+    sql: ${TABLE}.strat_sales_team ;;
     hidden: yes
   }
   dimension: state {

@@ -309,6 +309,23 @@ view: forecast_data {
 
   }
 
+  dimension: sales_team_chance_org {
+    type: string
+    label: "Sales Team (Chance Org)"
+    sql: CASE WHEN ${new_enterprise_team} ILIKE '%Enterprise Sales%' THEN ${new_enterprise_team}
+              WHEN ${strat_sales_team}  ILIKE '%Barter Direct%' THEN ${strat_sales_team}
+            ELSE CONCAT('Strategic Sales - ', ${strat_sales_rvp}) END ;;
+  }
+
+  dimension: chance_team {
+    type: string
+    label: "Chance Team (Consolidated)"
+    sql: CASE WHEN ${sales_team_chance_org} ILIKE '%Enterprise Sales%' THEN 'Enterprise Sales'
+              WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%' THEN 'Strategic Sales'
+              WHEN ${sales_team_chance_org} ILIKE '%Barter Direct%' THEN 'Barter Direct'
+            END;;
+  }
+
   # dimension: probability_level {
   #   type: number
   #   label: "Probability Level"

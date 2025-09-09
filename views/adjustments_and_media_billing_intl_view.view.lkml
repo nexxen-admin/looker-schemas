@@ -29,6 +29,14 @@ view: v_adjustments_and_media_billing_intl {
     type: number
     sql: ${TABLE}.adj_cost ;;
   }
+  dimension: type {
+  type: string
+  sql: ${TABLE}.type ;;
+  }
+  dimension: modified_case_safe {
+    type: string
+    sql: ${TABLE}.modified_case_safe ;;
+  }
   dimension_group: adj_end {
     type: time
     timeframes: [raw, date, week, month, quarter, year]

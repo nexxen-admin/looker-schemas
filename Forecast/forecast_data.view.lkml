@@ -262,45 +262,29 @@ view: forecast_data {
         END ;;
   }
 
-
-
-  dimension: Enterprise_CS_Regional_Pods {
+  dimension: enterprise_cs_regional_pods {
     type: string
-    sql:
-    CASE
-      WHEN ${account_name} ILIKE '%Coegi%'
-        OR ${account_name} ILIKE '%Underscore Marketing%'
-        OR ${account_name} ILIKE '%Klick Health%'
-        OR ${account_name} ILIKE '%Grapeseed Media%'
-        OR ${account_manager} = 'East/Central'
-        OR ${account_manager} = 'Allison Parrott'
-        OR ${account_manager} = 'Catherine Dauphin'
-        OR ${account_manager} = 'Kelsey Hudler'
-        OR ${account_manager} = 'Kelsey Fogelsong'
-        OR ${account_manager} = 'Anya Talukdar'
-        OR ${account_manager} = 'Greg McLean'
-        OR ${account_manager} = 'Jason Doriat'
-        OR ${account_manager} = 'Melissa Garcia'
-        OR ${account_manager} = 'Richard Tang'
-        OR ${account_manager} = 'Kaitlyn Doyle'
-        OR ${account_manager} = 'Zachary Testa'
-        OR ${account_manager} = 'Siman Wilson'
-        OR ${account_manager} = 'Sims Wilson'
-        OR ${account_manager} = 'Courtney Hickson'
-      THEN 'East/Central'
+    sql: CASE
+          WHEN ${account_name} LIKE '%Coegi%' THEN 'East/Central'
+          WHEN ${account_name} LIKE '%Underscore Marketing%' THEN 'East/Central'
+          WHEN ${account_name} LIKE '%Klick Health%' THEN 'East/Central'
+          WHEN ${account_name} LIKE '%Grapeseed Media%' THEN 'East/Central'
+          WHEN ${new_enterprise_team} = 'Enterprise Sales - East' THEN 'East/Central'
+          WHEN ${new_enterprise_team} = 'Enterprise Sales - Central' THEN 'East/Central'
 
-      WHEN ${account_manager} = 'West'
-      OR ${account_manager} = 'Anna Campos'
-      OR ${account_manager} = 'Brunilda Hasa'
-      OR ${account_manager} = 'Jessica Nasca'
-      OR ${account_manager} = 'Annissa De Leon'
-      OR ${account_manager} = 'Alexandra Vo'
-      OR ${account_manager} = 'Kelly Nguyen'
-      OR ${account_manager} = 'Natalie Lynam'
-      THEN 'West'
+      WHEN ${new_enterprise_team} = 'Enterprise Sales - West' THEN 'West'
+
+      WHEN ${new_enterprise_team} = 'Enterprise Sales House Accounts' THEN 'Rest'
+      WHEN ${new_enterprise_team} = 'Enterprise Services - National' THEN 'Rest'
+      WHEN ${new_enterprise_team} = 'Political' THEN 'Rest'
+      WHEN ${new_enterprise_team} = 'Linear TV (Maloy)' THEN 'Rest'
+
+      WHEN ${new_enterprise_team} = 'Unknown' THEN 'Unknown'
 
       ELSE NULL
-      END ;;}
+      END ;;
+    label: "Enterprise CS Regional Pods"
+  }
 
   dimension: legal_entity {
     label: "Legal Entity"

@@ -313,6 +313,7 @@ view: forecast_data {
     type: string
     label: "Sales Team (Chance Org)"
     sql: CASE WHEN ${new_enterprise_team} ILIKE '%Enterprise Sales%' THEN ${new_enterprise_team}
+              WHEN  ${new_enterprise_team} ILIKE '%Political%' THEN 'Enterprise Sales - Political'
               WHEN ${strat_sales_team}  ILIKE '%Barter Direct%' THEN ${strat_sales_team}
             ELSE CONCAT('Strategic Sales - ', ${strat_sales_rvp}) END ;;
   }

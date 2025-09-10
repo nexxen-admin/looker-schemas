@@ -34,6 +34,10 @@ explore: billing_temp_nov {
   # hidden: yes
 }
 
+explore: billing_international_media_io {
+  label: "Billing International"
+}
+
 explore: monthly_billing_override_data {
   required_access_grants: [billing_report_group]
   label: "Monthly Billing Override Data"

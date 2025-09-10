@@ -16,10 +16,22 @@ view: billing_international_media_io {
     sql: ${TABLE}.account_manager_name ;;
   }
 
+  dimension: adjustment_billable_actions {
+    label: "Billable Actions after Finance Adj"
+    type: number
+    sql: ${TABLE}.adjustment_billable_actions ;;
+  }
+
   dimension: adjustment_billable_clicks {
     label: "Billable Clicks after Finance Adj"
     type: number
     sql: ${TABLE}.adjustment_billable_clicks ;;
+  }
+
+  dimension: adjustment_billable_video_completes {
+    label: "Billable Complete events after Finance Adj"
+    type: number
+    sql: ${TABLE}.adjustment_billable_video_completes ;;
   }
 
   dimension: adjustment_billable_impressions {
@@ -43,6 +55,12 @@ view: billing_international_media_io {
     sql: ${TABLE}.booked_units ;;
   }
 
+  dimension: capped_revenue_before_adj_with_override {
+    label: "Capped Revenue (Before finance Adj, after AdOps adj)"
+    type: number
+    sql: ${TABLE}.capped_revenue_before_adj_with_override ;;
+  }
+
   dimension: case_safe_opp_line_item_id {
     type: string
     sql: ${TABLE}.case_safe_opp_line_item_id ;;
@@ -63,9 +81,45 @@ view: billing_international_media_io {
     sql: ${TABLE}.corp_entity ;;
   }
 
+  dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj {
+    label: "Discrepancy Between 1P and Final Billable Revenue After Adj"
+    type: number
+    sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj ;;
+  }
+
+  dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj_percent {
+    label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj Percent"
+    type: number
+    sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj_percent ;;
+  }
+
+  dimension: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd {
+    label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj USD"
+    type: number
+    sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd ;;
+  }
+
   dimension: expected_revenue {
     type: number
     sql: ${TABLE}.Expected_Revenue ;;
+  }
+
+  dimension: final_billable_units_after_adj {
+    label: "Final Billable Units After Finance Adj"
+    type: number
+    sql: ${TABLE}.final_billable_units_after_adj ;;
+  }
+
+  dimension: final_billable_revenue_after_adj {
+    label: "Final Billable Revenue After Finance Adj"
+    type: number
+    sql: ${TABLE}.final_billable_revenue_after_adj ;;
+  }
+
+  dimension: final_billable_revenue_after_adj_usd {
+    label: "Final Billable Revenue After Finance Adj USD"
+    type: number
+    sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
   }
 
   dimension: industry {
@@ -114,6 +168,11 @@ view: billing_international_media_io {
     sql: ${TABLE}.ns_remaining_amount ;;
   }
 
+  dimension: ns_remaining_units {
+    type: number
+    sql: ${TABLE}.ns_remaining_units ;;
+  }
+
   dimension: opportunity_region {
     type: string
     sql: ${TABLE}.region ;;
@@ -144,9 +203,19 @@ view: billing_international_media_io {
     sql: ${TABLE}.overall_discount ;;
   }
 
+  dimension: over_delivery_units {
+    type: number
+    sql: ${TABLE}.Over_Delivery_Units ;;
+  }
+
   dimension: past_bill_amount {
     type: number
     sql: ${TABLE}.past_bill_amount ;;
+  }
+
+  dimension: past_bill_units {
+    type: number
+    sql: ${TABLE}.quantity ;;
   }
 
   dimension: percent25_events {
@@ -179,6 +248,18 @@ view: billing_international_media_io {
     sql: ${TABLE}.product_level_2 ;;
   }
 
+  dimension: p_rev {
+    label: "1st Party Revenue"
+    type: number
+    sql: ${TABLE}.p_rev ;;
+  }
+
+  dimension: p_rev_usd {
+    label: "1st Party Revenue USD"
+    type: number
+    sql: ${TABLE}.p_rev_usd ;;
+  }
+
   dimension: rate {
     type: number
     sql: ${TABLE}.rate ;;
@@ -197,6 +278,12 @@ view: billing_international_media_io {
   dimension: related_brand_id {
     type: string
     sql: ${TABLE}.related_brand_id ;;
+  }
+
+  dimension: revenue_adj {
+    label: "Finance revenue adj"
+    type: number
+    sql: ${TABLE}.revenue_adj ;;
   }
 
   dimension: sales_team {
@@ -229,6 +316,22 @@ view: billing_international_media_io {
     sql: ${TABLE}.total_billable_units_before_adj_adops_override ;;
   }
 
+  dimension: uncapped_revenue_adj_adops {
+    type: number
+    sql: ${TABLE}.UncappeD_Revenue_adj_adops ;;
+  }
+
+  dimension: uncapped_revenue_before_ad_ops_override {
+    label: "Uncapped Revenue"
+    type: number
+    sql: ${TABLE}.uncapped_revenue_bedore_AdOps_Override ;;
+  }
+
+  dimension: uncapped_revenue_after_ad_ops_override {
+    type: number
+    sql: ${TABLE}.uncapped_revenue_after_AdOps_Override ;;
+  }
+
   dimension: undiscounted_spend {
     type: number
     sql: ${TABLE}.undiscounted_spend ;;
@@ -238,6 +341,11 @@ view: billing_international_media_io {
     label: "1P Unit after Ad Ops Override"
     type: number
     sql: ${TABLE}.Unit_AdOps_Override_1P ;;
+  }
+
+  dimension: under_delivery_units {
+    type: number
+    sql: ${TABLE}.Under_Delivery_Units ;;
   }
 
   dimension: units_adj {

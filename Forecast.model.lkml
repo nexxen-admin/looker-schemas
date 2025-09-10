@@ -83,7 +83,7 @@ explore: fact_sfdb_forecast_snapshot {
   AND ${schedule_is_free} = 0
   AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
   AND ${opportunity_record_type} NOT ILIKE '%Upsell Opportunity%'
-  AND ${Snapshot_Forecast_Checkbox} = 1
+  --AND ${Snapshot_Forecast_Checkbox} = 1
   AND ${opportunity_name} NOT ilike '%PMP%'
   ;;
   }

@@ -299,7 +299,7 @@ view: forecast_data {
     sql: CASE WHEN ${new_enterprise_team} ILIKE '%Enterprise Sales%' THEN ${new_enterprise_team}
               WHEN  ${new_enterprise_team} ILIKE '%Political%' THEN 'Enterprise Sales - Political'
               WHEN ${strat_sales_team}  ILIKE '%Barter Direct%' THEN ${strat_sales_team}
-            ELSE CONCAT('Strategic Sales - ', ${strat_sales_rvp}) END ;;
+            ELSE CONCAT('Strategic Sales - ', ${strat_sales_team}) END ;;
   }
 
   dimension: chance_team {
@@ -406,15 +406,16 @@ view: forecast_data {
     label: "Weighted GR Pipeline"
     value_format: "$#,##0"
     type: sum
-    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.opportunity_probability / 100,0) ;;
+    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.Probability_level / 100,0) ;;
   }
 
   measure: weighted_nr_pipeline {
     label: "Weighted NR Pipeline"
     value_format: "$#,##0"
     type: sum
-    sql: COALESCE((${TABLE}.schedule_converted_revenue_v2 * ${TABLE}.opportunity_Margin / 100) * ${TABLE}.opportunity_Margin / 100,0) ;;
+    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.Probability_level / 100)* ${TABLE}.opportunity_Margin /100;;
   }
+
 
   measure: unweighted_gr_pipeline {
     label: "Unweighted GR Pipeline"

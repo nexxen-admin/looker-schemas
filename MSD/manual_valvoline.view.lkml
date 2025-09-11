@@ -88,10 +88,7 @@ view: manual_valvoline {
     type: string
     sql: ${TABLE}.package_name ;;
   }
-  dimension: transaction_amount {
-    type: number
-    sql: ${TABLE}.transaction_amount ;;
-  }
+
   dimension: turn_tpc {
     type: number
     sql: ${TABLE}.turn_tpc ;;
@@ -149,5 +146,9 @@ view: manual_valvoline {
   measure: shopping_cart_value_vta {
     type: average
     sql: ${TABLE}.shopping_cart_value_vta ;;
+  }
+  measure: transaction_amount {
+    type: sum
+    sql:  ${TABLE}.transaction_amount ;;
   }
 }

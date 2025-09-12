@@ -78,8 +78,7 @@ dimension_group: adj_max_date {
   timeframes: [raw, date, week, month, quarter, year]
   convert_tz: no
   datatype: date
-  sql: CASE WHEN ${advertiser_id_key}=11933750001 THEN '2025-08-07'
-  WHEN ${TABLE}.max_date_key_in_timezone=CURRENT_DATE() THEN ${TABLE}.max_date_key_in_timezone-1  ELSE ${TABLE}.max_date_key_in_timezone END ;;
+  sql: CASE WHEN ${TABLE}.max_date_key_in_timezone=CURRENT_DATE() THEN ${TABLE}.max_date_key_in_timezone-1  ELSE ${TABLE}.max_date_key_in_timezone END ;;
   hidden: yes
 }
 

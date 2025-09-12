@@ -785,7 +785,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: Delivered_Spend {
     type: sum
-    sql: ${TABLE}.impressions/1000*${dim_sfdb_opportunitylineitem.rate__c};;
+    sql: ${TABLE}.delivery_units/1000*${dim_sfdb_opportunitylineitem.rate__c};;
     value_format: "$#,##0.00"
   }
 

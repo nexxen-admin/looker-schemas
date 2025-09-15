@@ -3,7 +3,7 @@ view: purple_labs_audience_quality {
   derived_table: {
     sql: WITH firstp_data AS (
   SELECT
-    TIMESTAMPADD('day', 7 * CAST(FLOOR(TIMESTAMPDIFF('day', DATE '2025-05-01', fnd.date_key) / 7) AS INT), DATE '2025-05-01')::DATE AS cohort_start_date,
+    TIMESTAMPADD('day', 7 * CAST(FLOOR(TIMESTAMPDIFF('day', DATE '2025-05-01', fnd.date_key_in_timezone) / 7) AS INT), DATE '2025-05-01')::DATE AS cohort_start_date,
     dda.advertiser_id,
     dda.advertiser_name,
     ddli.line_item_id AS line_item_id,
@@ -17,8 +17,8 @@ view: purple_labs_audience_quality {
     INNER JOIN BI_DSP.dim_dsp_line_item ddli ON ddli.line_item_id_key = fnd.line_item_key
     INNER JOIN BI_DSP.dim_dsp_insertion_order ddio ON ddio.insertion_order_id = ddli.insertion_order_id
     INNER JOIN BI_DSP.dim_dsp_market m on m.market_id_key = fnd.market_id_key
-  WHERE fnd.date_key >= '2025-05-01'
-    AND fnd.date_key < CURRENT_DATE
+  WHERE fnd.date_key_in_timezone >= '2025-05-01'
+    AND fnd.date_key_in_timezone < CURRENT_DATE
     AND (fnd.impressions > 0 OR fnd.cost > 0)
     and m.market_id = 2139
   GROUP BY 1,2,3,4,5,6,7

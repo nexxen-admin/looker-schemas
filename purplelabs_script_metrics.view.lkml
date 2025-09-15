@@ -3,7 +3,7 @@ view: purplelabs_script_metrics {
   derived_table: {
     sql: WITH firstp_data AS (
         SELECT
-          fnd.date_key::date AS date,
+          fnd.date_key_in_timezone::date AS date,
           dda.advertiser_id,
           dda.advertiser_name,
           ddli.line_item_id AS line_item_id,
@@ -19,8 +19,8 @@ view: purplelabs_script_metrics {
           INNER JOIN BI_DSP.dim_dsp_line_item ddli ON ddli.line_item_id_key = fnd.line_item_key
           INNER JOIN BI_DSP.dim_dsp_insertion_order ddio ON ddio.insertion_order_id = ddli.insertion_order_id
           INNER JOIN BI_DSP.dim_dsp_market m on m.market_id_key = fnd.market_id_key
-        WHERE fnd.date_key >= '2025-05-01'
-          AND fnd.date_key < CURRENT_DATE
+        WHERE fnd.date_key_in_timezone >= '2025-05-01'
+          AND fnd.date_key_in_timezone < CURRENT_DATE
           AND (fnd.impressions > 0 OR fnd.cost > 0)
           AND m.market_id = 2139
         GROUP BY 1,2,3,4,5,6,7
@@ -42,18 +42,22 @@ view: purplelabs_script_metrics {
         WHERE date >= '2025-05-01'
           AND date < CURRENT_DATE
         GROUP BY 1, 2,3
-      )
+      ),
 
-      SELECT
-        p.date AS cohort_start_date,
+      purplelabs_line_items AS (
+      Select adgroup_id
+      From agg_purplelabs_data
+      Group by 1)
+
+      SELECT coalesce(p.date,f.date) AS cohort_start_date,
         f.advertiser_id,
         f.advertiser_name,
         f.insertion_order_id,
         f.insertion_order_name,
-        p.adgroup_id,
+        coalesce(p.adgroup_id,f.line_item_id) as adgroup_id,
         f.line_item_name,
         f.line_item_id,
-        p.campaign_id,
+        coalesce(p.campaign_id,f.insertion_order_id) as campaign_id,
         p.new_prescribers as new_prescribers,
         p.nrx_dispensed as nrx_dispensed,
         p.nrx_dispensed_patient_cnt as nrx_dispensed_patient_cnt,
@@ -65,12 +69,12 @@ view: purplelabs_script_metrics {
         COALESCE(f.cost, 0) AS cost,
         COALESCE(f.clicks, 0) AS clicks,
         COALESCE(f.actions, 0) AS actions
-      FROM agg_purplelabs_data p
-          right JOIN firstp_data f ON p.date::date = f.date::date
+      From firstp_data f
+        inner join purplelabs_line_items pli on pli.adgroup_id = f.line_item_id
+        left outer join agg_purplelabs_data p ON p.date::date = f.date::date
                         AND p.adgroup_id = f.line_item_id
                                  and p.campaign_id = f.insertion_order_id
-      WHERE adgroup_id IS NOT NULL
-      ORDER BY p.date ASC ;;
+      ORDER BY 1 ;;
   }
 
   measure: count {

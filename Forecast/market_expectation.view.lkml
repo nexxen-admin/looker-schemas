@@ -8,6 +8,11 @@ view: market_expectation {
               WHEN ${TABLE}.Chance_Team='ALL' THEN 'All' END;;
   }
 
+  dimension: new_vs_exisiting_customer {
+    type: string
+    sql: ${TABLE}.New_VS_Exisitng ;;
+  }
+
 
   dimension_group: report_month {
     type: time

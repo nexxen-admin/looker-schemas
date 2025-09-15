@@ -16,6 +16,21 @@ view: billing_international_media_io {
     sql: ${TABLE}.account_manager_name ;;
   }
 
+  dimension: ad_ops_override_approving_manager {
+    type: string
+    sql: '' ;;
+  }
+
+  dimension: ad_ops_override_reason {
+    type: string
+    sql: '' ;;
+  }
+
+  dimension: adj_3p_cost {
+    type: string
+    sql: '' ;;
+  }
+
   dimension: adjustment_billable_actions {
     label: "Billable Actions after Finance Adj"
     type: number
@@ -35,6 +50,7 @@ view: billing_international_media_io {
   }
 
   dimension: adjustment_billable_revenue {
+    hidden: yes
     label: "Finance revenue adj"
     type: number
     sql: ${TABLE}.adjustment_billable_revenue ;;
@@ -49,6 +65,26 @@ view: billing_international_media_io {
   dimension: adv_invoice {
     type: number
     sql: ${TABLE}.adv_invoice ;;
+  }
+
+  dimension: adv_invoice_after_ad_ops_override {
+    type: string
+    sql: '' ;;
+  }
+
+  dimension: billable_percent_25_complete_events_after_finance_adj {
+    type: string
+    sql: '' ;;
+  }
+
+  dimension: billable_percent_50_complete_events_after_finance_adj {
+    type: string
+    sql: '' ;;
+  }
+
+  dimension: billable_percent_75_complete_events_after_finance_adj {
+    type: string
+    sql: '' ;;
   }
 
   dimension: billing_instructions {
@@ -132,12 +168,6 @@ view: billing_international_media_io {
     sql: ${TABLE}.Expected_Revenue ;;
   }
 
-  dimension: final_billable_units_after_adj {
-    label: "Final Billable Units After Finance Adj"
-    type: number
-    sql: ${TABLE}.final_billable_units_after_adj ;;
-  }
-
   dimension: final_billable_revenue_after_adj {
     label: "Final Billable Revenue After Finance Adj"
     type: number
@@ -148,6 +178,17 @@ view: billing_international_media_io {
     label: "Final Billable Revenue After Finance Adj USD"
     type: number
     sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
+  }
+
+  dimension: final_billable_revenue_local_currency {
+    type: string
+    sql: '' ;;
+  }
+
+  dimension: final_billable_units_after_adj {
+    label: "Final Billable Units After Finance Adj"
+    type: number
+    sql: ${TABLE}.final_billable_units_after_adj ;;
   }
 
   dimension: industry {

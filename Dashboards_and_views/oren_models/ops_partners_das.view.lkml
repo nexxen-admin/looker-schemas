@@ -137,9 +137,9 @@ measure: IMPRESSION {
 
   measure: GROSS_REVENUE {
     type: sum
-    sql: ${TABLE}.GROSS_REVENUE ;;
+    sql: ${TABLE}.GROSS_REVENUE - ${TABLE}.CONTRA_REVENUE ;;
     value_format: "$#,##0"
-    label: "Gross Retained Revenue"
+    label: "Gross Retained Revenue, calculated as gross revenue less contra revenue (e.g., discounts, returns, or allowances)"
   }
 
   measure: ADJUSTED_NET_REVENUE {
@@ -169,7 +169,7 @@ measure: IMPRESSION {
     sql: ${TABLE}.CONTRA_REVENUE ;;
     value_format: "$#,##0"
     label: "Contra Revenue"
-    description: "Represents reductions from gross revenue"
+    description: "Agreed reductions (credits, bad debt, make-goods) that lower vendor payout, by reducing the revshare base (e.g. Gross Revenue), but don’t change what advertisers are billed."
   }
 
 

@@ -137,7 +137,7 @@ measure: IMPRESSION {
 
   measure: GROSS_REVENUE {
     type: sum
-    sql: ${TABLE}.GROSS_REVENUE - ${TABLE}.CONTRA_REVENUE ;;
+    sql: ${TABLE}.GROSS_REVENUE - COALESCE(${TABLE}.CONTRA_REVENUE, 0) ;;
     value_format: "$#,##0"
     label: "Gross Retained Revenue, calculated as gross revenue less contra revenue (e.g., discounts, returns, or allowances)"
   }

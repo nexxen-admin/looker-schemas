@@ -17,18 +17,6 @@ view: v_adjustments_and_media_billing_intl {
     type: number
     sql: ${TABLE}.actions ;;
   }
-  dimension: adj_actions {
-    type: number
-    sql: ${TABLE}.adj_actions ;;
-  }
-  dimension: adj_clicks {
-    type: number
-    sql: ${TABLE}.adj_clicks ;;
-  }
-  dimension: adj_cost {
-    type: number
-    sql: ${TABLE}.adj_cost ;;
-  }
   dimension: type {
   type: string
   sql: ${TABLE}.type ;;
@@ -44,14 +32,6 @@ view: v_adjustments_and_media_billing_intl {
     datatype: date
     sql: ${TABLE}.adj_end_date ;;
   }
-  dimension: adj_impressions {
-    type: number
-    sql: ${TABLE}.adj_impressions ;;
-  }
-  dimension: adj_revenue {
-    type: number
-    sql: ${TABLE}.adj_revenue ;;
-  }
   dimension_group: adj_start {
     type: time
     timeframes: [raw, date, week, month, quarter, year]
@@ -59,25 +39,9 @@ view: v_adjustments_and_media_billing_intl {
     datatype: date
     sql: ${TABLE}.adj_start_date ;;
   }
-  dimension: adj_video_completes {
-    type: number
-    sql: ${TABLE}.adj_video_completes ;;
-  }
-  dimension: billing_cost {
-    type: number
-    sql: ${TABLE}.billing_cost ;;
-  }
   dimension: billing_instructions {
     type: string
     sql: ${TABLE}.billing_instructions ;;
-  }
-  dimension: billing_revenue {
-    type: number
-    sql: ${TABLE}.billing_revenue ;;
-  }
-  dimension: booked_budget {
-    type: number
-    sql: ${TABLE}.booked_budget ;;
   }
   dimension: booked_budget_total {
     type: number
@@ -86,14 +50,6 @@ view: v_adjustments_and_media_billing_intl {
   dimension: booked_rate {
     type: number
     sql: ${TABLE}.booked_rate ;;
-  }
-  dimension: booked_units {
-    type: number
-    sql: ${TABLE}.booked_units ;;
-  }
-  dimension: capped_revenue {
-    type: number
-    sql: ${TABLE}.capped_revenue ;;
   }
   dimension: corp_entity {
     type: string
@@ -104,25 +60,17 @@ view: v_adjustments_and_media_billing_intl {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.date_key ;;
   }
-  dimension: discount_amount {
-    type: string
-    sql: ${TABLE}.discount_amount ;;
-  }
   dimension: discount_applies_to {
     type: string
     sql: ${TABLE}.discount_applies_to ;;
   }
+  dimension: discount_amount {
+    type: number
+    sql: ${TABLE}.discount_amount ;;
+  }
   dimension: do_not_bill {
     type: string
     sql: ${TABLE}.do_not_bill ;;
-  }
-  dimension: expected_revenue {
-    type: number
-    sql: ${TABLE}.expected_revenue ;;
-  }
-  dimension: impressions {
-    type: number
-    sql: ${TABLE}.impressions ;;
   }
   dimension: IO_Number {
     type: string
@@ -161,14 +109,6 @@ view: v_adjustments_and_media_billing_intl {
   dimension: manual_discount {
     type: number
     sql: ${TABLE}.manual_discount ;;
-  }
-  dimension: netsuite_booked_budget_remaining {
-    type: number
-    sql: ${TABLE}.netsuite_booked_budget_remaining ;;
-  }
-  dimension: netsuite_past_billed_amount {
-    type: number
-    sql: ${TABLE}.netsuite_past_billed_amount ;;
   }
   dimension: opportunity_name {
     type: string
@@ -226,54 +166,6 @@ view: v_adjustments_and_media_billing_intl {
     type: string
     sql: ${TABLE}.stage ;;
   }
-  dimension: uncapped_revenue {
-    type: number
-    sql: ${TABLE}.uncapped_revenue ;;
-  }
-  dimension: undiscounted_spend {
-    type: number
-    sql: ${TABLE}.undiscounted_spend ;;
-  }
-
-  dimension: 1P_Impressions {
-    type: number
-    sql: ${TABLE}."1p_impressions" ;;
-  }
-
-  dimension: 1P_Clicks {
-    type: number
-    sql: ${TABLE}."1p_clicks" ;;
-  }
-
-  dimension: 1P_Actions {
-    type: number
-    sql: ${TABLE}."1p_actions" ;;
-  }
-
-  dimension: complete_events {
-    type: number
-    sql: ${TABLE}.complete_events ;;
-  }
-
-  dimension: advertiser_invoice {
-    type: number
-    sql: ${TABLE}.advertiser_invoice ;;
-  }
-
-  dimension: percent_25_events {
-    type: number
-    sql: ${TABLE}.percent_25_events ;;
-  }
-
-  dimension: percent_50_events {
-    type: number
-    sql: ${TABLE}.percent_50_events ;;
-  }
-
-  dimension: percent_75_events {
-    type: number
-    sql: ${TABLE}.percent_75_events ;;
-  }
 
   dimension_group: DSP_Start {
     type: time
@@ -289,6 +181,131 @@ view: v_adjustments_and_media_billing_intl {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.dsp_end_date ;;
+  }
+
+  measure: 1P_Impressions {
+    type: sum
+    sql: ${TABLE}."1p_impressions" ;;
+  }
+
+  measure: 1P_Clicks {
+    type: sum
+    sql: ${TABLE}."1p_clicks" ;;
+  }
+
+  measure: 1P_Actions {
+    type: sum
+    sql: ${TABLE}."1p_actions" ;;
+  }
+
+  measure: adj_actions {
+    type: sum
+    sql: ${TABLE}.adj_actions ;;
+  }
+
+  measure: adj_clicks {
+    type: sum
+    sql: ${TABLE}.adj_clicks ;;
+  }
+
+  measure: adj_cost {
+    type: sum
+    sql: ${TABLE}.adj_cost ;;
+  }
+
+  measure: adj_impressions {
+    type: sum
+    sql: ${TABLE}.adj_impressions ;;
+  }
+
+  measure: adj_revenue {
+    type: sum
+    sql: ${TABLE}.adj_revenue ;;
+  }
+
+  measure: adj_video_completes {
+    type: sum
+    sql: ${TABLE}.adj_video_completes ;;
+  }
+
+  measure: advertiser_invoice {
+    type: sum
+    sql: ${TABLE}.advertiser_invoice ;;
+  }
+
+  measure: billing_cost {
+    type: sum
+    sql: ${TABLE}.billing_cost ;;
+  }
+
+  measure: billing_revenue {
+    type: sum
+    sql: ${TABLE}.billing_revenue ;;
+  }
+
+  measure: booked_budget {
+    type: sum
+    sql: ${TABLE}.booked_budget ;;
+  }
+
+  measure: booked_units {
+    type: sum
+    sql: ${TABLE}.booked_units ;;
+  }
+
+  measure: capped_revenue {
+    type: sum
+    sql: ${TABLE}.capped_revenue ;;
+  }
+
+  measure: complete_events {
+    type: sum
+    sql: ${TABLE}.complete_events ;;
+  }
+
+  measure: expected_revenue {
+    type: sum
+    sql: ${TABLE}.expected_revenue ;;
+  }
+
+  measure: impressions {
+    type: sum
+    sql: ${TABLE}.impressions ;;
+  }
+
+  measure: netsuite_booked_budget_remaining {
+    type: sum
+    sql: ${TABLE}.netsuite_booked_budget_remaining ;;
+  }
+
+  measure: netsuite_past_billed_amount {
+    type: sum
+    sql: ${TABLE}.netsuite_past_billed_amount ;;
+  }
+
+  measure: percent_25_events {
+    type: sum
+    sql: ${TABLE}.percent_25_events ;;
+  }
+
+  measure: percent_50_events {
+    type: sum
+    sql: ${TABLE}.percent_50_events ;;
+  }
+
+  measure: percent_75_events {
+    type: sum
+    sql: ${TABLE}.percent_75_events ;;
+  }
+
+  measure: uncapped_revenue {
+    type: sum
+    sql: ${TABLE}.uncapped_revenue ;;
+  }
+
+  measure: undiscounted_spend {
+    type: sum
+    sql: ${TABLE}.undiscounted_spend ;;
   }
 
 }

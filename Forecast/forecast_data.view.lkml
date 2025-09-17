@@ -445,7 +445,7 @@ view: forecast_data {
     label: "Weighted NR Pipeline"
     value_format: "$#,##0"
     type: sum
-    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.Probability_level / 100)* ${TABLE}.opportunity_Margin /100;;
+    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.opportunity_Margin / 100)* ${TABLE}.Probability_level /100;;
   }
 
 

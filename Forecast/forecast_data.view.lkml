@@ -8,7 +8,14 @@ view: forecast_data {
   dimension: has_opportunitylineitem {
     type: number
     sql: ${TABLE}.has_opportunitylineitem ;;
-
+  }
+  dimension: monthly_proposed_spend {
+    type: number
+    sql: ${TABLE}.monthly_proposed_spend ;;
+  }
+  dimension: schedule_expected_revenue {
+    type: number
+    sql: ${TABLE}.schedule_expected_revenue ;;
   }
   dimension: io_super_region {
     type: string
@@ -343,6 +350,16 @@ view: forecast_data {
             END;;
   }
 
+  dimension: Full_Pipeline {
+    type: number
+    sql:
+    (CASE
+      WHEN ${has_opportunitylineitem} = 0 THEN ${monthly_proposed_spend}
+      ELSE 0
+    END) + ${schedule_expected_revenue} ;;
+  }
+
+
   # dimension: probability_level {
   #   type: number
   #   label: "Probability Level"
@@ -355,6 +372,12 @@ view: forecast_data {
   # }
 
          #####--MEASURES---####
+
+  measure: weighted_pipeline {
+    type: sum
+    sql: ( ${Probability_level} * ${Full_Pipeline} ) / 100 ;;
+    label: "Weighted Pipeline"
+  }
 
   measure: sum_booked_full_credit {
     value_format: "$#,##0"

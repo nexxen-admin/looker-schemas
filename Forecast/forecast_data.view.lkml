@@ -8,7 +8,14 @@ view: forecast_data {
   dimension: has_opportunitylineitem {
     type: number
     sql: ${TABLE}.has_opportunitylineitem ;;
-
+  }
+  dimension: monthly_proposed_spend {
+    type: number
+    sql: ${TABLE}.monthly_proposed_spend ;;
+  }
+  dimension: schedule_expected_revenue {
+    type: number
+    sql: ${TABLE}.schedule_expected_revenue ;;
   }
   dimension: io_super_region {
     type: string

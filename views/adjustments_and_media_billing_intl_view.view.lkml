@@ -13,13 +13,9 @@ view: v_adjustments_and_media_billing_intl {
     type: string
     sql: ${TABLE}.account_name ;;
   }
-  dimension: actions {
-    type: number
-    sql: ${TABLE}.actions ;;
-  }
   dimension: type {
-  type: string
-  sql: ${TABLE}.type ;;
+    type: string
+    sql: ${TABLE}.type ;;
   }
   dimension: modified_case_safe {
     type: string
@@ -63,10 +59,6 @@ view: v_adjustments_and_media_billing_intl {
   dimension: discount_applies_to {
     type: string
     sql: ${TABLE}.discount_applies_to ;;
-  }
-  dimension: discount_amount {
-    type: number
-    sql: ${TABLE}.discount_amount ;;
   }
   dimension: do_not_bill {
     type: string
@@ -198,6 +190,11 @@ view: v_adjustments_and_media_billing_intl {
     sql: ${TABLE}."1p_actions" ;;
   }
 
+  measure: actions {
+    type: sum
+    sql: ${TABLE}.actions ;;
+  }
+
   measure: adj_actions {
     type: sum
     sql: ${TABLE}.adj_actions ;;
@@ -261,6 +258,11 @@ view: v_adjustments_and_media_billing_intl {
   measure: complete_events {
     type: sum
     sql: ${TABLE}.complete_events ;;
+  }
+
+  measure: discount_amount {
+    type: sum
+    sql: COALESCE(CAST(NULLIF(${TABLE}.discount_amount, '') AS int), 0)  ;;
   }
 
   measure: expected_revenue {

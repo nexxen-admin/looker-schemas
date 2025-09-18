@@ -10,12 +10,14 @@ view: forecast_data {
     sql: ${TABLE}.has_opportunitylineitem ;;
   }
   dimension: monthly_proposed_spend {
+    value_format: "$#,##0"
     type: number
-    sql: ${TABLE}.monthly_proposed_spend ;;
+    sql:COALESCE(${TABLE}.monthly_proposed_spend,0) ;;
   }
   dimension: schedule_expected_revenue {
+    value_format: "$#,##0"
     type: number
-    sql: ${TABLE}.schedule_expected_revenue ;;
+    sql: COALESCE(${TABLE}.schedule_expected_revenue, 0);;
   }
   dimension: io_super_region {
     type: string
@@ -350,7 +352,8 @@ view: forecast_data {
             END;;
   }
 
-  dimension: Full_Pipeline {
+  dimension: full_pipeline {
+    value_format: "$#,##0"
     type: number
     sql:
     (CASE
@@ -359,26 +362,15 @@ view: forecast_data {
     END) + ${schedule_expected_revenue} ;;
   }
 
-
-  # dimension: probability_level {
-  #   type: number
-  #   label: "Probability Level"
-  #   sql:
-  #   CASE
-  #     WHEN ${confidence_level__c} IS NOT NULL
-  #         AND ${confidence_level__c} ~ '^[0-9]+(\.[0-9]+)?$' THEN CAST(${confidence_level__c} AS FLOAT)
-  #     ELSE CAST(${probability} AS FLOAT)
-  #   END ;;
-  # }
-
-         #####--MEASURES---####
-
   measure: weighted_pipeline {
-    type: sum
-    sql: ( ${Probability_level} * ${Full_Pipeline} ) / 100 ;;
+    value_format: "$#,##0"
+    type: number
+    sql: (${Probability_level} * ${full_pipeline}) / 100 ;;
     label: "Weighted Pipeline"
   }
 
+
+    ####----MEASURES----####
   measure: sum_booked_full_credit {
     value_format: "$#,##0"
     type: sum

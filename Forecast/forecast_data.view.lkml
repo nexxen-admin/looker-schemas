@@ -364,7 +364,7 @@ view: forecast_data {
 
   measure: weighted_pipeline {
     value_format: "$#,##0"
-    type: number
+    type: sum
     sql: (${Probability_level} * ${full_pipeline}) / 100 ;;
     label: "Weighted Pipeline"
   }

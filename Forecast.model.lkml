@@ -39,6 +39,12 @@ explore: forecast_data {
   AND ${schedule_is_free} = 0
   AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
   AND ${opportunity_record_type} NOT ILIKE '%Upsell Opportunity%';;
+
+  join: forecast_dim_sfdb_opportunity {
+    type: left_outer
+    sql_on: ${forecast_data.opportunity_id} = ${forecast_dim_sfdb_opportunity.id} ;;
+    relationship: many_to_one
+  }
 }
 
 explore: market_expectation {

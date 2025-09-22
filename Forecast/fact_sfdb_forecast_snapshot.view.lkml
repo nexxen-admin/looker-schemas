@@ -166,6 +166,11 @@ view: fact_sfdb_forecast_snapshot {
     type: string
     sql: ${TABLE}.status ;;
   }
+  dimension: status_reason {
+    type: string
+    sql: ${TABLE}.opportunity_status_reason ;;
+  }
+
   dimension: tv_specialist {
     type: string
     sql: ${TABLE}.TV_Specialist ;;

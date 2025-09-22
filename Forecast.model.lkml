@@ -1,4 +1,4 @@
-connection: "vertica_iad"
+connection: "bi_stby"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"                 # include all views in this project
@@ -90,6 +90,7 @@ explore: fact_sfdb_forecast_snapshot {
 
 explore: fact_target_forecast_strategy_summary  {
   required_access_grants: [can_view_all_tremor]
+  sql_always_where: ${Strat_Sales_Team}!='Unknown' ;;
 
   join: forecast_dim_sfdb_user {
     type: left_outer
@@ -101,6 +102,7 @@ explore: fact_target_forecast_strategy_summary  {
 
 explore: fact_target_forecast_enterprise_summary  {
   required_access_grants: [can_view_all_tremor]
+  sql_always_where: ${new_enterprise_team}!='Unknown' ;;
 
   join: forecast_dim_sfdb_user {
     type: left_outer

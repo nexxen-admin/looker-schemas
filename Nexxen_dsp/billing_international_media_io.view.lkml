@@ -27,8 +27,8 @@ view: billing_international_media_io {
   }
 
   dimension: adj_3p_cost {
-    type: string
-    sql: '' ;;
+    type: number
+    sql: 0 ;;
   }
 
   dimension: adjustment_billable_actions {
@@ -50,7 +50,6 @@ view: billing_international_media_io {
   }
 
   dimension: adjustment_billable_revenue {
-    hidden: yes
     label: "Finance revenue adj"
     type: number
     sql: ${TABLE}.adjustment_billable_revenue ;;
@@ -73,18 +72,18 @@ view: billing_international_media_io {
   }
 
   dimension: billable_percent_25_complete_events_after_finance_adj {
-    type: string
-    sql: '' ;;
+    type: number
+    sql: 0 ;;
   }
 
   dimension: billable_percent_50_complete_events_after_finance_adj {
-    type: string
-    sql: '' ;;
+    type: number
+    sql: 0 ;;
   }
 
   dimension: billable_percent_75_complete_events_after_finance_adj {
-    type: string
-    sql: '' ;;
+    type: number
+    sql: 0 ;;
   }
 
   dimension: billing_instructions {
@@ -400,7 +399,7 @@ view: billing_international_media_io {
   }
 
   dimension: revenue_adj {
-    label: "Finance revenue adj"
+    label: "Revenue adj"
     type: number
     sql: ${TABLE}.revenue_adj ;;
   }

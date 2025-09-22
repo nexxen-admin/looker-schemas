@@ -8,7 +8,16 @@ view: forecast_data {
   dimension: has_opportunitylineitem {
     type: number
     sql: ${TABLE}.has_opportunitylineitem ;;
-
+  }
+  dimension: monthly_proposed_spend {
+    value_format: "$#,##0"
+    type: number
+    sql:COALESCE(${TABLE}.monthly_proposed_spend,0) ;;
+  }
+  dimension: schedule_expected_revenue {
+    value_format: "$#,##0"
+    type: number
+    sql: COALESCE(${TABLE}.schedule_expected_revenue, 0);;
   }
   dimension: io_super_region {
     type: string
@@ -140,21 +149,52 @@ view: forecast_data {
     sql: ${TABLE}.Account_Name ;;
   }
 
+  # dimension: tech_services_group {
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN ${account_name} = 'ITV' THEN NULL
+  #     WHEN ${account_name} = 'LG Electronics' THEN NULL
+  #     WHEN ${account_name} LIKE '%Klick Health%' THEN 'Tech Services - Strategic Sales'
+  #     WHEN ${account_name} LIKE '%301 Digital Media%' THEN 'Tech Services - Strategic Sales'
+  #     WHEN ${account_name} LIKE '%Good Karma Brands%' THEN 'Tech Services - Strategic Sales'
+  #     WHEN ${account_name} LIKE '%Guru%' THEN 'Tech Services - Strategic Sales'
+  #     WHEN ${account_name} LIKE '%Rescue Agency%' THEN 'Tech Services - Strategic Sales'
+  #     ELSE 'Tech Services - Enterprise Sales'
+  #   END ;;
+  #   label: "Enterprise Technical Services"
+  # }
+
+
   dimension: tech_services_group {
     type: string
     sql:
     CASE
       WHEN ${account_name} = 'ITV' THEN NULL
       WHEN ${account_name} = 'LG Electronics' THEN NULL
-      WHEN ${account_name} LIKE '%Klick Health%' THEN 'Tech Services - Strategic Sales'
-      WHEN ${account_name} LIKE '%301 Digital Media%' THEN 'Tech Services - Strategic Sales'
-      WHEN ${account_name} LIKE '%Good Karma Brands%' THEN 'Tech Services - Strategic Sales'
-      WHEN ${account_name} LIKE '%Guru%' THEN 'Tech Services - Strategic Sales'
-      WHEN ${account_name} LIKE '%Rescue Agency%' THEN 'Tech Services - Strategic Sales'
-      ELSE 'Tech Services - Enterprise Sales'
-    END ;;
+
+      -- Enterprise Sales condition
+      WHEN ${chance_team} ILIKE '%Enterprise Sales%'
+      AND ${sales_team_chance_org} <> 'Enterprise Sales - Linear TV (Maloy)'
+      THEN 'Tech Services - Enterprise Sales'
+
+      -- Strategic Sales condition
+      WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%'
+      AND ${enterprise_cs_regional_pods} IS NOT NULL
+      THEN 'Tech Services - Strategic Sales'
+
+      -- Specific Account_Name mappings to Strategic Sales
+      WHEN ${account_name} ILIKE '%Klick Health%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} ILIKE '%301 Digital Media%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} ILIKE '%Good Karma Brands%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} ILIKE '%Guru%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} ILIKE '%Rescue Agency%' THEN 'Tech Services - Strategic Sales'
+
+      ELSE NULL
+      END ;;
     label: "Enterprise Technical Services"
   }
+
 
   dimension: Deal_Type {
     type: string
@@ -297,6 +337,7 @@ view: forecast_data {
     type: string
     label: "Sales Team (Chance Org)"
     sql: CASE WHEN ${new_enterprise_team} ILIKE '%Enterprise Sales%' THEN ${new_enterprise_team}
+              --WHEN ${new_enterprise_team} ILIKE '%Enterprise Services - National%' THEN 'Enterprise Sales'
               WHEN  ${new_enterprise_team} ILIKE '%Political%' THEN 'Enterprise Sales - Political'
               WHEN ${strat_sales_team}  ILIKE '%Barter Direct%' THEN ${strat_sales_team}
             ELSE CONCAT('Strategic Sales - ', ${strat_sales_team}) END ;;
@@ -311,19 +352,25 @@ view: forecast_data {
             END;;
   }
 
-  # dimension: probability_level {
-  #   type: number
-  #   label: "Probability Level"
-  #   sql:
-  #   CASE
-  #     WHEN ${confidence_level__c} IS NOT NULL
-  #         AND ${confidence_level__c} ~ '^[0-9]+(\.[0-9]+)?$' THEN CAST(${confidence_level__c} AS FLOAT)
-  #     ELSE CAST(${probability} AS FLOAT)
-  #   END ;;
-  # }
+  dimension: full_pipeline {
+    value_format: "$#,##0"
+    type: number
+    sql:
+    (CASE
+      WHEN ${has_opportunitylineitem} = 0 THEN ${monthly_proposed_spend}
+      ELSE 0
+    END) + ${schedule_expected_revenue} ;;
+  }
 
-         #####--MEASURES---####
+  measure: weighted_pipeline {
+    value_format: "$#,##0"
+    type: sum
+    sql: (${Probability_level} * ${full_pipeline}) / 100 ;;
+    label: "Weighted Pipeline"
+  }
 
+
+    ####----MEASURES----####
   measure: sum_booked_full_credit {
     value_format: "$#,##0"
     type: sum
@@ -413,7 +460,7 @@ view: forecast_data {
     label: "Weighted NR Pipeline"
     value_format: "$#,##0"
     type: sum
-    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.Probability_level / 100)* ${TABLE}.opportunity_Margin /100;;
+    sql: COALESCE(${TABLE}.schedule_converted_revenue_v2  * ${TABLE}.opportunity_Margin / 100)* ${TABLE}.Probability_level /100;;
   }
 
 

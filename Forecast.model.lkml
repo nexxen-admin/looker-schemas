@@ -44,6 +44,14 @@ explore: forecast_data {
     type: left_outer
     sql_on: ${forecast_data.opportunity_id} = ${forecast_dim_sfdb_opportunity.id} ;;
     relationship: many_to_one
+    fields: [
+      vertical,
+      status_reason__c,
+      win_reason__c,
+      win_reason_details__c,
+      loss_reason__c,
+      loss_reason_details__c
+    ]
   }
 }
 

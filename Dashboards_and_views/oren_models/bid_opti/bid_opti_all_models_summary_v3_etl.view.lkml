@@ -82,6 +82,15 @@ view: bid_opti_all_models_summary_v3_etl {
         from scaled_margin
         GROUP BY 1,2,3),
 
+        /* adding check to ensure no division by zero errors */
+        aggr_tab_check as (
+        select *
+        From aggr_tab
+        where demand_margin > 0
+          and supply_margin > 0
+          and margin > 0
+        ),
+
         fin_tab_before_tot as (
 
         SELECT *,
@@ -100,7 +109,7 @@ view: bid_opti_all_models_summary_v3_etl {
         WHEN opti = 'pubcost_bidfloor' THEN 4
         ELSE 5 END as rank_model
 
-        FROM aggr_tab),
+        FROM aggr_tab_check),
 
         tot_for_vis as (
         select imp_type,

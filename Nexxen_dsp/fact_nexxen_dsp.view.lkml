@@ -531,12 +531,14 @@ measure: Nexxen_Inv_Cost_Percent {
   }
 
   measure: pacing {
+    description: "Current pacing based on expected delivery vs. actual delivery and total days vs. remaining days. Calculation is: ((delivered units/total flight days) - Days Remaining + .0000001) * (Total Flight Days/Booked Units)"
     type: average
     value_format: "0.00\%"
     sql: ${TABLE}.pacing ;;
   }
 
   measure: yesterday_pacing {
+    description: "Yesterday’s pacing, comparing the daily expected goal with the actual units delivered yesterday. Calculation is: yesterday's delivered units / daily units needed"
     type: average
     value_format: "0.00\%"
     sql: ${TABLE}.pacing ;;
@@ -544,6 +546,7 @@ measure: Nexxen_Inv_Cost_Percent {
   }
 
   measure: delivered_units {
+    description: "The number of units delivered on the campaign."
     type: sum
     sql: ${TABLE}.delivery_units ;;
     value_format: "#,##0"
@@ -641,6 +644,7 @@ measure: Nexxen_Inv_Cost_Percent {
   }
 
   measure: yesterday_units {
+    description: "The number of units delivered on the campaign yesterday."
     type: sum
     sql: ${TABLE}.delivery_units ;;
     filters: [date_key_in_timezone_date: "yesterday"]
@@ -791,6 +795,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
 
   measure: daily_units_needed {
+    description: "The number of units required daily to stay on track."
     type: average
     value_format: "#,##0"
     sql: ${TABLE}.daily_units_needed;;
@@ -976,7 +981,6 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "0.00%"
   }
 
-
   measure: primary_kpi_result {
     label: "Primary KPI Result"
     type: number
@@ -987,6 +991,32 @@ measure: Nexxen_Inv_Cost_Percent {
               WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN ${eCPA_1P}
               WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${pacing}*100
               WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${uncapped_revenue}/${actions}
+              ELSE 0 END,2);;
+  }
+
+  measure: primary_kpi_result_new {
+    label: "Primary KPI Result New"
+    type: number
+    sql: ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR'
+                    THEN IFNULL((COALESCE(SUM(${TABLE}.clicks), 0)) / nullif((COALESCE(SUM(${TABLE}.impressions), 0)), 0), 0) * 100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate'
+                    THEN IFNULL((COALESCE(SUM(${TABLE}.complete_events), 0)) / nullif((COALESCE(SUM(${TABLE}.impressions),0)),0),0) * 100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate')
+                    THEN ((COALESCE(SUM(${TABLE}.actions), 0)) / nullif((COALESCE(SUM(${TABLE}.impressions),0)), 0) ) * 100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%'
+                    THEN ((COALESCE(SUM(${TABLE}.actions), 0)) / nullif( (COALESCE(SUM(${TABLE}.impressions),0)),0) )
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit')
+                    THEN ((COALESCE(SUM(${TABLE}.capped_revenue), 0)) / nullif((COALESCE(SUM(${TABLE}.actions), 0)), 0) )
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%'
+                    THEN (AVG(${TABLE}.pacing)) * 100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%'
+                    THEN (COALESCE(SUM(${TABLE}.uncapped_revenue), 0)) / (COALESCE(SUM(${TABLE}.actions), 0))
               ELSE 0 END,2);;
   }
 

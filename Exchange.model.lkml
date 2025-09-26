@@ -743,12 +743,6 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_publisher_traffic_source.pub_ts_key}=${dim_placement.pub_ts_key};;
     relationship: many_to_one
   }
-  join: dim_supply_publisher_seller {
-    type: left_outer
-    view_label: "Publishers"
-    sql_on: ${dim_publisher_traffic_source.seller_id}=${dim_supply_publisher_seller.seller_id} ;;
-    relationship: many_to_one
-  }
 
   join: dim_traffic_source {
     type: inner

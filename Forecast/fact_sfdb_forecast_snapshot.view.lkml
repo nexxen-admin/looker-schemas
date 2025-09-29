@@ -270,19 +270,6 @@ view: fact_sfdb_forecast_snapshot {
   }
 
 
-  # dimension:  date_for_html {
-  #   type: date
-  #   view_label: "PoP"
-  #   sql: ${current_date_range} ;;
-  #   html:
-  #   <ul>
-  #       <li> value: {{ rendered_value }} </li>
-  #   </ul> ;;
-
-  # }
-
-
-
   parameter: compare_to {
     view_label: "PoP"
     description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
@@ -311,6 +298,16 @@ view: fact_sfdb_forecast_snapshot {
     default_value: "Period"
   }
 
+  dimension: first_day_of_month {
+    type: date
+    sql: TRUNC(${schedule_revenue_start_date}, 'MONTH') ;;
+  }
+
+  dimension: last_day_of_month {
+    type: date
+    sql: LAST_DAY(${schedule_revenue_start_date}) ;;
+  }
+
   parameter: choose_breakdown {
     label: "Choose Grouping"
     view_label: "PoP"
@@ -319,6 +316,18 @@ view: fact_sfdb_forecast_snapshot {
     allowed_value: {label:"daily" value:"day_of_month"}
     allowed_value: {label:"monthly" value: "month_name"}
   }
+
+  # parameter: choose_breakdown {
+  #   label: "Choose Grouping"
+  #   view_label: "PoP"
+  #   type: unquoted
+  #   default_value: "day_of_month"
+
+  #   allowed_value: { label: "Daily" value: "day_of_month" }
+  #   allowed_value: { label: "Monthly" value: "month_name" }
+  #   allowed_value: { label: "First Day of Month" value: "first_day_of_month" }
+  #   allowed_value: { label: "Last Day of Month" value: "last_day_of_month" }
+  # }
 
 
 ## ------------------ HIDDEN HELPER DIMENSIONS  ------------------ ##
@@ -847,11 +856,6 @@ view: fact_sfdb_forecast_snapshot {
     value_format: "$#,##0"
   }
 
-  # measure:sum_snapshot_booked_full_credit {
-  #   type: sum
-  #   sql: ${TABLE}.gr_snapshot_booked_full_credit ;;
-  #   value_format: "#,##0"
-  # }
 
   measure: sum_snapshot_booked_full_credit {
     type: sum
@@ -929,6 +933,39 @@ view: fact_sfdb_forecast_snapshot {
     value_format: "#,##0"
     view_label: "GR QTD Comparison"
   }
+
+####--- mesures for Snapshot by Month - TL&NR---####
+  # measure: gr_forecast_first_day {
+  #   type: sum
+  #   sql: (
+  #         CASE
+  #           WHEN ${schedule_revenue_start_date} = (
+  #             SELECT MIN(t2.schedule_revenue_start_date)
+  #             FROM ${TABLE} t2
+  #             WHERE TRUNC(t2.schedule_revenue_start_date, 'MONTH') = TRUNC(${schedule_revenue_start_date}, 'MONTH')
+  #           )
+  #           THEN ${TABLE}.GR_Forecast_Full_Credit
+  #           ELSE 0
+  #         END
+  #       ) ;;
+  #   value_format: "$#,##0"
+  # }
+
+  # measure: gr_forecast_last_day {
+  #   type: sum
+  #   sql: (
+  #         CASE
+  #           WHEN ${schedule_revenue_start_date} = (
+  #             SELECT MAX(t2.schedule_revenue_start_date)
+  #             FROM ${TABLE} t2
+  #             WHERE TRUNC(t2.schedule_revenue_start_date, 'MONTH') = TRUNC(${schedule_revenue_start_date}, 'MONTH')
+  #           )
+  #           THEN ${TABLE}.GR_Forecast_Full_Credit
+  #           ELSE 0
+  #         END
+  #       ) ;;
+  #   value_format: "$#,##0"
+  # }
 
 
   measure: count {

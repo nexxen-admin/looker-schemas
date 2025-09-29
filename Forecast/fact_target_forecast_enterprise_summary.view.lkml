@@ -250,7 +250,7 @@ view: fact_target_forecast_enterprise_summary {
             END;;
   }
 
-  dimension: tech_services_sales_team {
+  dimension: enterprise_technical_services {
     type: string
     sql:
     CASE

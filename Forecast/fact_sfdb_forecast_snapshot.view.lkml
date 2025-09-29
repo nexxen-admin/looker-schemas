@@ -867,72 +867,72 @@ view: fact_sfdb_forecast_snapshot {
 
   ###---QTD Comparison NR_forecast---###
 
-  # dimension: period_filtered_measures_qtd {
-  #   # hidden: yes
-  #   description: "Used only for comparing TODAY vs 1st day of current quarter"
-  #   type: string
-  #   sql:
-  #   CASE
-  #     WHEN ${snapshot_date} = CURRENT_DATE THEN 'this'
-  #     WHEN ${snapshot_date} = DATE_TRUNC('quarter', CURRENT_DATE) THEN 'last'
-  #     ELSE NULL
-  #   END ;;
-  #   view_label: "NR QTD Comparison"
-  # }
+  dimension: period_filtered_measures_qtd {
+    # hidden: yes
+    description: "Used only for comparing TODAY vs 1st day of current quarter"
+    type: string
+    sql:
+    CASE
+      WHEN ${snapshot_date} = CURRENT_DATE THEN 'this'
+      WHEN ${snapshot_date} = DATE_TRUNC('quarter', CURRENT_DATE) THEN 'last'
+      ELSE NULL
+    END ;;
+    view_label: "NR QTD Comparison"
+  }
 
-  # measure: qtd_today_snapshot_nr_forecast_full_credit {
-  #   type: sum
-  #   sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
-  #   filters: [period_filtered_measures_qtd: "this"]
-  #   label: "NR Forecast Full Credit (Today)"
-  #   view_label: "NR QTD Comparison"
-  #   value_format: "#,##0"
-  # }
+  measure: qtd_today_snapshot_nr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
+    filters: [period_filtered_measures_qtd: "this"]
+    label: "NR Forecast Full Credit (Today)"
+    view_label: "NR QTD Comparison"
+    value_format: "#,##0"
+  }
 
-  # measure: qtd_start_snapshot_nr_forecast_full_credit {
-  #   type: sum
-  #   sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
-  #   filters: [period_filtered_measures_qtd: "last"]
-  #   label: "NR Forecast Full Credit (QTD Start)"
-  #   view_label: "NR QTD Comparison"
-  #   value_format: "#,##0"
-  # }
+  measure: qtd_start_snapshot_nr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.snapshot_NR_forecast_full_credit ;;
+    filters: [period_filtered_measures_qtd: "last"]
+    label: "NR Forecast Full Credit (QTD Start)"
+    view_label: "NR QTD Comparison"
+    value_format: "#,##0"
+  }
 
-  # measure: qtd_delta_snapshot_nr_forecast_full_credit {
-  #   type: number
-  #   sql: ${qtd_today_snapshot_nr_forecast_full_credit} - ${qtd_start_snapshot_nr_forecast_full_credit} ;;
-  #   label: "NR Forecast Delta (Today vs QTD Start)"
-  #   value_format: "#,##0"
-  #   view_label: "NR QTD Comparison"
-  # }
+  measure: qtd_delta_snapshot_nr_forecast_full_credit {
+    type: number
+    sql: ${qtd_today_snapshot_nr_forecast_full_credit} - ${qtd_start_snapshot_nr_forecast_full_credit} ;;
+    label: "NR Forecast Delta (Today vs QTD Start)"
+    value_format: "#,##0"
+    view_label: "NR QTD Comparison"
+  }
 
-  # ###---QTD Comparison GR_forecast---###
+  ###---QTD Comparison GR_forecast---###
 
-  # measure: qtd_today_snapshot_gr_forecast_full_credit {
-  #   type: sum
-  #   sql: ${TABLE}.GR_Forecast_Full_Credit ;;
-  #   filters: [period_filtered_measures_qtd: "this"]
-  #   label: "GR Forecast Full Credit (Today)"
-  #   view_label: "GR QTD Comparison"
-  #   value_format: "#,##0"
-  # }
+  measure: qtd_today_snapshot_gr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+    filters: [period_filtered_measures_qtd: "this"]
+    label: "GR Forecast Full Credit (Today)"
+    view_label: "GR QTD Comparison"
+    value_format: "#,##0"
+  }
 
-  # measure: qtd_start_snapshot_gr_forecast_full_credit {
-  #   type: sum
-  #   sql: ${TABLE}.GR_Forecast_Full_Credit ;;
-  #   filters: [period_filtered_measures_qtd: "last"]
-  #   label: "GR Forecast Full Credit (QTD Start)"
-  #   view_label: "GR QTD Comparison"
-  #   value_format: "#,##0"
-  # }
+  measure: qtd_start_snapshot_gr_forecast_full_credit {
+    type: sum
+    sql: ${TABLE}.GR_Forecast_Full_Credit ;;
+    filters: [period_filtered_measures_qtd: "last"]
+    label: "GR Forecast Full Credit (QTD Start)"
+    view_label: "GR QTD Comparison"
+    value_format: "#,##0"
+  }
 
-  # measure: qtd_delta_snapshot_gr_forecast_full_credit {
-  #   type: number
-  #   sql: ${qtd_today_snapshot_gr_forecast_full_credit} - ${qtd_start_snapshot_gr_forecast_full_credit} ;;
-  #   label: "GR Forecast Delta (Today vs QTD Start)"
-  #   value_format: "#,##0"
-  #   view_label: "GR QTD Comparison"
-  # }
+  measure: qtd_delta_snapshot_gr_forecast_full_credit {
+    type: number
+    sql: ${qtd_today_snapshot_gr_forecast_full_credit} - ${qtd_start_snapshot_gr_forecast_full_credit} ;;
+    label: "GR Forecast Delta (Today vs QTD Start)"
+    value_format: "#,##0"
+    view_label: "GR QTD Comparison"
+  }
 
 ####--- mesures for Snapshot by Month - TL&NR---####
   # measure: gr_forecast_first_day {

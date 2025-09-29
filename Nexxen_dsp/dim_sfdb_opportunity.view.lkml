@@ -158,7 +158,7 @@ view: dim_sfdb_opportunity {
   dimension: corp_entity__c {
     type: string
     sql: ${TABLE}.corp_entity__c ;;
-    hidden: yes
+    hidden: no
   }
 
   dimension: createdbyid {

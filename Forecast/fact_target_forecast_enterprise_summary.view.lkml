@@ -141,7 +141,6 @@ view: fact_target_forecast_enterprise_summary {
     sql: ${TABLE}.Strat_Sales_RVP ;;
   }
 
-
   dimension: CS_pod {
     type: string
     sql: ${TABLE}.CS_pod ;;

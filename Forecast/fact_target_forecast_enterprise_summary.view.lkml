@@ -230,22 +230,48 @@ view: fact_target_forecast_enterprise_summary {
   # }
 
 
+  dimension: sales_team_chance_org {
+    type: string
+    label: "Sales Team (Chance Org)"
+    sql: CASE WHEN ${new_enterprise_team} ILIKE '%Enterprise Sales%' THEN ${new_enterprise_team}
+              --WHEN ${new_enterprise_team} ILIKE '%Enterprise Services - National%' THEN 'Enterprise Sales'
+              WHEN  ${new_enterprise_team} ILIKE '%Political%' THEN 'Enterprise Sales - Political'
+              WHEN ${Strat_Sales_Team}  ILIKE '%Barter Direct%' THEN ${Strat_Sales_Team}
+            ELSE CONCAT('Strategic Sales - ', ${Strat_Sales_Team}) END ;;
+  }
 
+  dimension: chance_team {
+    type: string
+    label: "Chance Team (Consolidated)"
+    sql: CASE WHEN ${sales_team_chance_org} ILIKE '%Enterprise Sales%' THEN 'Enterprise Sales'
+              WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%' THEN 'Strategic Sales'
+              WHEN ${sales_team_chance_org} ILIKE '%Barter Direct%' THEN 'Barter Direct'
+            END;;
+  }
 
-  dimension: tech_services_group {
+  dimension: enterprise_technical_services {
     type: string
     sql:
     CASE
       WHEN ${account_name} = 'ITV' THEN NULL
       WHEN ${account_name} = 'LG Electronics' THEN NULL
-      WHEN ${account_name} LIKE '%Klick Health%' THEN 'Tech Services - Strategic Sales'
-      WHEN ${account_name} LIKE '%301 Digital Media%' THEN 'Tech Services - Strategic Sales'
-      WHEN ${account_name} LIKE '%Good Karma Brands%' THEN 'Tech Services - Strategic Sales'
-      WHEN ${account_name} LIKE '%Guru%' THEN 'Tech Services - Strategic Sales'
-      WHEN ${account_name} LIKE '%Rescue Agency%' THEN 'Tech Services - Strategic Sales'
-      ELSE 'Tech Services - Enterprise Sales'
-    END ;;
-    label: "Enterprise Technical Services"
+
+      WHEN ${chance_team} ILIKE '%Enterprise Sales%'
+      AND ${sales_team_chance_org} != 'Enterprise Sales - Linear TV (Maloy)'
+      THEN 'Tech Services - Enterprise Sales'
+
+      WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%'
+      AND ${CS_pod} IS NOT NULL
+      THEN 'Tech Services - Strategic Sales'
+
+      WHEN ${account_name} ILIKE '%Klick Health%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} ILIKE '%301 Digital Media%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} ILIKE '%Good Karma Brands%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} ILIKE '%Guru%' THEN 'Tech Services - Strategic Sales'
+      WHEN ${account_name} ILIKE '%Rescue Agency%' THEN 'Tech Services - Strategic Sales'
+
+      ELSE NULL
+      END ;;
   }
 
 

@@ -2,26 +2,25 @@
 view: purple_labs_audience_quality {
   derived_table: {
     sql: WITH firstp_data AS (
-  SELECT
-    TIMESTAMPADD('day', 7 * CAST(FLOOR(TIMESTAMPDIFF('day', DATE '2025-05-01', fnd.date_key_in_timezone) / 7) AS INT), DATE '2025-05-01')::DATE AS cohort_start_date,
-    dda.advertiser_id,
-    dda.advertiser_name,
-    ddli.line_item_id AS line_item_id,
-    ddli.line_item_name AS line_item_name,
-    ddio.insertion_order_id AS insertion_order_id,
-    ddio.insertion_order_name AS insertion_order_name,
-    SUM(fnd.impressions) AS impressions,
-    SUM(fnd.cost) AS cost
-  FROM BI_DSP.fact_nexxen_dsp fnd
-    INNER JOIN BI_DSP.dim_dsp_advertiser dda ON dda.advertiser_id_key = fnd.advertiser_id_key
-    INNER JOIN BI_DSP.dim_dsp_line_item ddli ON ddli.line_item_id_key = fnd.line_item_key
-    INNER JOIN BI_DSP.dim_dsp_insertion_order ddio ON ddio.insertion_order_id = ddli.insertion_order_id
-    INNER JOIN BI_DSP.dim_dsp_market m on m.market_id_key = fnd.market_id_key
-  WHERE fnd.date_key_in_timezone >= '2025-05-01'
-    AND fnd.date_key_in_timezone < CURRENT_DATE
-    AND (fnd.impressions > 0 OR fnd.cost > 0)
-    and m.market_id = 2139
-  GROUP BY 1,2,3,4,5,6,7
+  Select
+      TIMESTAMPADD('day', 7 * CAST(FLOOR(TIMESTAMPDIFF('day', DATE '2025-05-01', amd.event_time) / 7) AS INT), DATE '2025-05-01')::DATE AS cohort_start_date,
+      amd.advertiser_id,
+      a.advertiser_name,
+      amd.line_item_id as line_item_id,
+      li.line_item_name as line_item_name,
+      amd.insertion_order_id,
+      io.insertion_order_name as insertion_order_name,
+      sum(amd.impressions) as impressions,
+      sum(amd.cost) as Cost
+   From SunFlower.amobee_media_daily_mtz_ui amd
+    left outer join SunFlower.dim_advertiser a on a.advertiser_id = amd.advertiser_id
+    left outer join SunFlower.dim_lineitem li on li.line_item_id = amd.line_item_id
+    left outer join SunFlower.dim_io io on io.insertion_order_id = amd.insertion_order_id
+Where amd.event_time >= '2025-05-01'
+  and amd.event_time < CURRENT_DATE
+  and (amd.impressions > 0 or amd.cost >0)
+  and amd.market_id = 2139
+Group by 1, 2, 3, 4, 5, 6, 7
 ),
 
 agg_purplelabs_data AS (

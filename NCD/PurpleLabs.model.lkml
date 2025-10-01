@@ -1,4 +1,4 @@
-connection: "ncd_vertica"
+connection: "purple_labs"
 
 include: "/**/*.view.lkml"
 include: "/**/*.dashboard.lookml"

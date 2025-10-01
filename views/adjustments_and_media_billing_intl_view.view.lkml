@@ -35,6 +35,10 @@ view: v_adjustments_and_media_billing_intl {
     datatype: date
     sql: ${TABLE}.adj_start_date ;;
   }
+  dimension: server_reporting {
+  type: string
+  sql: ${TABLE}.server_reporting ;;
+  }
   dimension: billing_instructions {
     type: string
     sql: ${TABLE}.billing_instructions ;;

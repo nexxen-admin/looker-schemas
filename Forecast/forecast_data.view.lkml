@@ -304,25 +304,7 @@ view: forecast_data {
 
   dimension: enterprise_cs_regional_pods {
     type: string
-    sql: CASE
-          WHEN ${account_name} LIKE '%Coegi%' THEN 'East/Central'
-          WHEN ${account_name} LIKE '%Underscore Marketing%' THEN 'East/Central'
-          WHEN ${account_name} LIKE '%Klick Health%' THEN 'East/Central'
-          WHEN ${account_name} LIKE '%Grapeseed Media%' THEN 'East/Central'
-          WHEN ${new_enterprise_team} = 'Enterprise Sales - East' THEN 'East/Central'
-          WHEN ${new_enterprise_team} = 'Enterprise Sales - Central' THEN 'East/Central'
-
-      WHEN ${new_enterprise_team} = 'Enterprise Sales - West' THEN 'West'
-
-      WHEN ${new_enterprise_team} = 'Enterprise Sales House Accounts' THEN 'Rest'
-      WHEN ${new_enterprise_team} = 'Enterprise Services - National' THEN 'Rest'
-      WHEN ${new_enterprise_team} = 'Political' THEN 'Rest'
-      WHEN ${new_enterprise_team} = 'Linear TV (Maloy)' THEN 'Rest'
-
-      WHEN ${new_enterprise_team} = 'Unknown' THEN 'Unknown'
-
-      ELSE NULL
-      END ;;
+    sql: ${TABLE}.account_manager_sales_team ;;
     label: "Enterprise CS Regional Pods"
   }
 

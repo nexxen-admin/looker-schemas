@@ -132,7 +132,7 @@ view: fact_target_forecast_strategy_summary {
 
   dimension: Strat_Sales_RVP {
     type: string
-    sql: ${TABLE}.Strat_Sales_RVP ;;
+    sql: COALESCE(${forecast_dim_sfdb_user.RVP_Sales_team}, ${TABLE}.Strat_Sales_RVP) ;;
     drill_fields: [revenue_line, Strat_Sales_Team]
   }
 

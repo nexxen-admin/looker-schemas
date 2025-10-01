@@ -57,6 +57,12 @@ view: forecast_dim_sfdb_user {
     sql: ${TABLE}.db_updated_date ;;
     hidden: yes
   }
+
+  dimension: RVP_Sales_team  {
+  type: string
+  sql: ${TABLE}.RVP_Sales_team ;;
+  }
+
   dimension: deal_review_approver__c {
     type: number
     sql: ${TABLE}.deal_review_approver__c ;;

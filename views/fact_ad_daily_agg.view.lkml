@@ -1516,7 +1516,7 @@ view: fact_ad_daily_agg {
   measure: deal_data_fee {
     type: sum
     label: "Deal Data Fee"
-    value_format: "#,##0"
+    value_format: "$#,##0.00"
     group_label: "Daily Measures"
     sql: ${TABLE}.sum_of_deal_data_fee;;
   }

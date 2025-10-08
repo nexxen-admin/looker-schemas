@@ -175,12 +175,12 @@ view: forecast_data {
 
       -- Enterprise Sales condition
       WHEN ${chance_team} ILIKE '%Enterprise Sales%'
-      AND ${sales_team_chance_org} <> 'Enterprise Sales - Linear TV (Maloy)'
+      AND ${sales_team_chance_org}!='Enterprise Sales - Linear TV (Maloy)'
       THEN 'Tech Services - Enterprise Sales'
 
       -- Strategic Sales condition
       WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%'
-      AND ${enterprise_cs_regional_pods} IS NOT NULL
+      AND ${enterprise_cs_regional_pods} != NULL
       THEN 'Tech Services - Strategic Sales'
 
       -- Specific Account_Name mappings to Strategic Sales

@@ -59,6 +59,11 @@ view: dim_o_domain {
     hidden: yes
   }
 
+  dimension: comscore_checked {
+    type: yesno
+    sql: ${dim_svc_comscore_checked_domains.origin_domain_bi_key} IS NOT NULL ;;
+  }
+
   measure: count {
     type: count
     drill_fields: []

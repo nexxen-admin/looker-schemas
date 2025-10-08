@@ -642,12 +642,6 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "0.0%"
   }
 
-  measure: yesterday_VCR_1P {
-    type: number
-    sql: IFNULL(${Last_day_1p_complete_events}/nullif(${Last_day_1p_impressions},0),0) ;;
-    value_format: "0.0%"
-  }
-
   measure: VCR_3P {
     type: number
     sql: ${third_party_complete_events}/nullif(${third_party_impressions},0) ;;
@@ -1038,19 +1032,6 @@ measure: Nexxen_Inv_Cost_Percent {
               ELSE 0 END,2);;
   }
 
-  measure: yesterday_primary_kpi_result {
-    label: "Yesterday Primary KPI Result"
-    type: number
-    sql: ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN ${yesterday_CTR_1P}*100
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN ${yesterday_VCR_1P}*100
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN ${yesterday_1P_CVR}*100
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${yesterday_1P_CVR}
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN ${yesterday_eCPA_1P}
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${yesterday_pacing}*100
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${yesterday_uncapped_revenue}/${yesterday_actions}
-              ELSE 0 END,2);;
-  }
-
   measure: primary_kpi_check {
     label: "KPI Check"
     type: number
@@ -1389,6 +1370,60 @@ measure: Nexxen_Inv_Cost_Percent {
     filters: [period_filtered_measures: "last"]
   }
 
+  measure: current_period_pacing {
+    view_label: "PoP"
+    type: average
+    description: "The current period's pacing"
+    sql: ${TABLE}.pacing ;;
+    value_format: "0.00\%"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_pacing{
+    view_label: "PoP"
+    type: average
+    description: "The previous period's pacing"
+    sql: ${TABLE}.pacing ;;
+    value_format: "0.00\%"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_capped_revenue {
+    view_label: "PoP"
+    type: sum
+    description: "The current period's capped revenue"
+    sql: ${TABLE}.capped_revenue ;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_capped_revenue{
+    view_label: "PoP"
+    type: sum
+    description: "The previous period's capped revenue"
+    sql: ${TABLE}.capped_revenue ;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_uncapped_revenue {
+    view_label: "PoP"
+    type: sum
+    description: "The current period's uncapped revenue"
+    sql: ${TABLE}.uncapped_revenue ;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_uncapped_revenue{
+    view_label: "PoP"
+    type: sum
+    description: "The previous period's uncapped revenue"
+    sql: ${TABLE}.uncapped_revenue ;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "last"]
+  }
+
   measure: cost_pop_change {
     view_label: "PoP"
     label: "Total cost period-over-period % change"
@@ -1473,6 +1508,34 @@ measure: Nexxen_Inv_Cost_Percent {
     #filters: [period_filtered_measures: "last"]
   }
 
+  measure: current_period_primary_kpi_result {
+    view_label: "PoP"
+    type: number
+    description: "Current period Primary KPI Result"
+    sql:  ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN ${current_period_ctr}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN ${current_period_vcr}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN ${current_period_cvr}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${current_period_cvr}
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN ${current_period_eCPA}
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${current_period_pacing}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${current_period_uncapped_revenue}/${current_period_actions}
+              ELSE 0 END,2);;
+  }
+
+  measure: previous_period_primary_kpi_result {
+    view_label: "PoP"
+    type: number
+    description: "Previous period Primary KPI Result"
+    sql:  ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN ${previous_period_ctr}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN ${previous_period_vcr}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN ${previous_period_cvr}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${previous_period_cvr}
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN ${previous_period_eCPA}
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${previous_period_pacing}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${previous_period_uncapped_revenue}/${previous_period_actions}
+              ELSE 0 END,2);;
+  }
+
   measure: previous_period_impressions{
     view_label: "PoP"
     type: sum
@@ -1500,6 +1563,24 @@ measure: Nexxen_Inv_Cost_Percent {
     filters: [period_filtered_measures: "last"]
   }
 
+  measure: current_period_actions {
+    view_label: "PoP"
+    type: sum
+    description: "Current period actions"
+    sql:   ${TABLE}.actions;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_actions {
+    view_label: "PoP"
+    type: sum
+    description: "Previous period actions"
+    sql:   ${TABLE}.actions ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
   measure: current_period_vcr {
     view_label: "PoP"
     type: number
@@ -1516,6 +1597,38 @@ measure: Nexxen_Inv_Cost_Percent {
     sql:  IFNULL(${previous_period_complete_events}/nullif(${previous_period_impressions},0),0);;
     value_format: "0.00%"
     #filters: [period_filtered_measures: "last"]
+  }
+
+  measure: current_period_cvr {
+    view_label: "PoP"
+    type: number
+    description: "Current period CVR"
+    sql:  IFNULL(${current_period_actions}/nullif(${current_period_impressions},0),0);;
+    value_format: "0.00%"
+  }
+
+  measure: previous_period_cvr {
+    view_label: "PoP"
+    type: number
+    description: "Previous period CVR"
+    sql:  IFNULL(${previous_period_actions}/nullif(${previous_period_impressions},0),0);;
+    value_format: "0.00%"
+  }
+
+  measure: current_period_eCPA {
+    view_label: "PoP"
+    type: number
+    description: "Current period eCPA"
+    sql:  IFNULL(${current_period_capped_revenue}/nullif(${current_period_actions},0),0);;
+    value_format: "0.00%"
+  }
+
+  measure: previous_period_eCPA {
+    view_label: "PoP"
+    type: number
+    description: "Previous period eCPA"
+    sql:  IFNULL(${previous_period_capped_revenue}/nullif(${previous_period_actions},0),0);;
+    value_format: "0.00%"
   }
 
 

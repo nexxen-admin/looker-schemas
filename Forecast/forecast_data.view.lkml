@@ -17,7 +17,7 @@ view: forecast_data {
   dimension: schedule_expected_revenue {
     value_format: "$#,##0"
     type: number
-    sql: COALESCE(${TABLE}.schedule_expected_revenue, 0);;
+    sql: COALESCE(${TABLE}.schedule_expected_revenue,0);;
   }
   dimension: io_super_region {
     type: string
@@ -343,6 +343,8 @@ view: forecast_data {
       ELSE 0
     END) + ${schedule_expected_revenue} ;;
   }
+
+
 
   measure: weighted_pipeline {
     value_format: "$#,##0"

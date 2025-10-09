@@ -86,5 +86,6 @@ explore: manual_valvoline{
   label: "Nexxen DSP - NCD Valvoline"
   persist_with: CleanCash_datagroup
   view_label: "Measures"
+  sql_always_where: ${dma} not ilike 'Unknown' and ${custom_customer_type} not ilike 'Unknown' and ${franchise} not ilike 'Unknown';;
   hidden: yes
 }

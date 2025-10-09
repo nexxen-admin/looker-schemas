@@ -36,7 +36,7 @@ explore: forecast_data {
   required_access_grants: [can_view_all_tremor]
   sql_always_where: ${io_super_region} ILIKE '%NAM%'
   AND ${snapshot_forecast_checkbox} = 1
-  AND ${schedule_is_free} = 0
+  --AND ${schedule_is_free} = 0
   AND ${opportunity_record_type} NOT ILIKE '%MSA Contract Opportunity%'
   AND ${opportunity_record_type} NOT ILIKE '%Upsell Opportunity%';;
 

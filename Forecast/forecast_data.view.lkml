@@ -17,7 +17,7 @@ view: forecast_data {
   dimension: schedule_expected_revenue {
     value_format: "$#,##0"
     type: number
-    sql: COALESCE(${TABLE}.schedule_expected_revenue, 0);;
+    sql: COALESCE(${TABLE}.schedule_expected_revenue,0);;
   }
   dimension: io_super_region {
     type: string
@@ -175,12 +175,12 @@ view: forecast_data {
 
       -- Enterprise Sales condition
       WHEN ${chance_team} ILIKE '%Enterprise Sales%'
-      AND ${sales_team_chance_org} <> 'Enterprise Sales - Linear TV (Maloy)'
+      AND ${sales_team_chance_org}!='Enterprise Sales - Linear TV (Maloy)'
       THEN 'Tech Services - Enterprise Sales'
 
       -- Strategic Sales condition
       WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%'
-      AND ${enterprise_cs_regional_pods} IS NOT NULL
+      AND ${enterprise_cs_regional_pods} != NULL
       THEN 'Tech Services - Strategic Sales'
 
       -- Specific Account_Name mappings to Strategic Sales
@@ -334,14 +334,24 @@ view: forecast_data {
             END;;
   }
 
+  # dimension: full_pipeline {
+  #   value_format: "$#,##0"
+  #   type: number
+  #   sql:
+  #   (CASE
+  #     WHEN ${has_opportunitylineitem} = 0 THEN ${monthly_proposed_spend}
+  #     ELSE 0
+  #   END) + ${schedule_expected_revenue} ;;
+  # }
+
   dimension: full_pipeline {
     value_format: "$#,##0"
     type: number
     sql:
     (CASE
-      WHEN ${has_opportunitylineitem} = 0 THEN ${monthly_proposed_spend}
+      WHEN ${has_opportunitylineitem} = 0 THEN ${opportunity_proposed_spend}
       ELSE 0
-    END) + ${schedule_expected_revenue} ;;
+    END) + ${schedule_converted_revenue_v2} ;;
   }
 
   measure: weighted_pipeline {

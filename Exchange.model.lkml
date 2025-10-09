@@ -708,6 +708,12 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_o_domain.o_domain_key}=${fact_ad_daily_agg.o_domain_key};;
     relationship: many_to_one
   }
+  join: dim_svc_comscore_checked_domains  {
+    type: left_outer
+    view_label: "Domain"
+    sql_on: ${dim_o_domain.o_domain_key}=${dim_svc_comscore_checked_domains.origin_domain_bi_key};;
+    relationship: one_to_one
+  }
   join: dim_deal {
     type: inner
     view_label: "Deal"
@@ -1092,6 +1098,12 @@ explore: fact_ad_hourly_agg{
     sql_on: ${dim_o_domain.o_domain_key}=${fact_ad_hourly_agg.o_domain_key};;
     relationship: many_to_one
   }
+  join: dim_svc_comscore_checked_domains  {
+    type: left_outer
+    view_label: "Domain"
+    sql_on: ${dim_o_domain.o_domain_key}=${dim_svc_comscore_checked_domains.origin_domain_bi_key};;
+    relationship: one_to_one
+  }
   join: dim_deal {
     type: inner
     view_label: "Deal"
@@ -1346,6 +1358,12 @@ explore: fact_ad_bid_request_daily_agg{
     view_label: "Domain"
     sql_on: ${dim_o_domain.o_domain_key}= ${fact_ad_bid_request_daily_agg.o_domain_key};;
     relationship: many_to_one
+  }
+  join: dim_svc_comscore_checked_domains  {
+    type: left_outer
+    view_label: "Domain"
+    sql_on: ${dim_o_domain.o_domain_key}=${dim_svc_comscore_checked_domains.origin_domain_bi_key};;
+    relationship: one_to_one
   }
   join: dim_deal {
     type: inner

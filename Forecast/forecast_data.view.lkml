@@ -334,17 +334,25 @@ view: forecast_data {
             END;;
   }
 
+  # dimension: full_pipeline {
+  #   value_format: "$#,##0"
+  #   type: number
+  #   sql:
+  #   (CASE
+  #     WHEN ${has_opportunitylineitem} = 0 THEN ${monthly_proposed_spend}
+  #     ELSE 0
+  #   END) + ${schedule_expected_revenue} ;;
+  # }
+
   dimension: full_pipeline {
     value_format: "$#,##0"
     type: number
     sql:
     (CASE
-      WHEN ${has_opportunitylineitem} = 0 THEN ${monthly_proposed_spend}
+      WHEN ${has_opportunitylineitem} = 0 THEN ${opportunity_proposed_spend}
       ELSE 0
-    END) + ${schedule_expected_revenue} ;;
+    END) + ${schedule_converted_revenue_v2} ;;
   }
-
-
 
   measure: weighted_pipeline {
     value_format: "$#,##0"

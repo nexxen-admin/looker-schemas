@@ -2,12 +2,6 @@ view: drr {
 
   sql_table_name: BI.svc_DRR_Daily_Revenue_Report ;;
 
-  dimension: Event_Date {
-    description: "Event_Date"
-    type: string
-    sql: ${TABLE}.Event_Date ;;
-  }
-
   dimension: Event_Date_Dt {
     description: "Event_Date"
     type: date
@@ -15,7 +9,7 @@ view: drr {
   }
 
   dimension: Event_Date_Formatted {
-    sql: ${Event_Date} ;;
+    sql: ${TABLE}.Event_Date ;;
     html: {% assign formatted_date = rendered_value | date: "%B %d, %Y" %}
           {{ formatted_date }}
         ;;
@@ -57,13 +51,6 @@ view: drr {
     sql: ${TABLE}.Impression_Type ;;
   }
 
-  measure: Revenue {
-    description: "Revenue"
-    type: number
-    sql: ${TABLE}.Revenue ;;
-    value_format: "$#,##0"
-  }
-
   measure: Revenue_Previous_Day {
     type: number
     sql:
@@ -73,31 +60,16 @@ view: drr {
             THEN ${TABLE}.Revenue
           END
         ) ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0;($#,##0)"
     label: "Revenue of One Day Ago"
-  }
-
-  measure: Cost{
-    description: "Cost"
-    type: number
-    sql: ${TABLE}.Cost ;;
-    value_format: "$#,##0"
-  }
-
-  measure: NetRevenue{
-    description: "Net_Revenue"
-    label: "NetRevenue"
-    type: number
-    sql: ${TABLE}.Revenue - ${TABLE}.Cost ;;
-    value_format: "$#,##0"
   }
 
   measure: Sum_Revenue {
     description: "Total revenue across category, subcategory, region"
-    label: "Gross Revenue"
+    label: "Total Gross Revenue"
     type: sum
     sql: ${TABLE}.Revenue ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0;($#,##0)"
   }
 
   measure: Sum_Cost {
@@ -105,15 +77,15 @@ view: drr {
     label: "Total Cost"
     type: sum
     sql: ${TABLE}.Cost ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0;($#,##0)"
   }
 
   measure: Sum_Net_Revenue {
     description: "Total Net_Revenue across category, subcategory, region"
-    label: "Net Revenue"
+    label: "Total Net Revenue"
     type: sum
     sql: ${TABLE}.Revenue - ${TABLE}.Cost ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0;($#,##0)"
   }
 
   measure: Gross_Profit_Perc{

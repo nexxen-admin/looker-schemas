@@ -1,30 +1,5 @@
 view: ops_partners_das {
-  derived_table: {
-    sql:
-SELECT date(IMPRESSION_DATE) as DATE_PERIOD,
-       NS_VENDOR_ID,
-       VENDOR_NAME,
-      MARKET_NAME,
-      ADVERTISER_NAME,
-      ENVIRONMENT,
-      PROVIDER_NAME,
-      MARKET_ID,
-      DATA_TYPE,
-      CATEGORY,
-      COUNTRY_ID,
-      COUNTRY_NAME,
-      case when DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end as source,
-      REGION,
-        SUM(IMPRESSION) as IMPRESSION,
-        SUM(GROSS_REVENUE) as GROSS_REVENUE,
-        SUM(ADJUSTED_NET_REVENUE) as ADJUSTED_NET_REVENUE,
-        SUM(TURN_FEE) as TURN_FEE,
-        SUM(CONTRA_REVENUE) as CONTRA_REVENUE
-FROM bi_new.decom
-GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
-    ;;
-
-}
+  sql_table_name: bi_new.decom ;;
 
   dimension_group: time_frame {
     type: time
@@ -36,13 +11,13 @@ GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
       quarter,
       year
     ]
-    sql: ${TABLE}.DATE_PERIOD ;;
+    sql: ${DATE_PERIOD} ;;
     label: "Time Frame"
   }
 
   dimension: DATE_PERIOD {
     type: date
-    sql: ${TABLE}.DATE_PERIOD ;;
+    sql: date(${TABLE}.IMPRESSION_DATE) ;;
     label: "Date"
   }
 
@@ -104,7 +79,7 @@ GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13,14
 
   dimension: source {
     type: string
-    sql: ${TABLE}.source ;;
+    sql: case when ${TABLE}.DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end ;;
     label: "Source"
   }
 
@@ -159,8 +134,15 @@ measure: IMPRESSION {
 
   measure: rev_dev_gross_percentage {
     type: number
-    sql: SUM(CASE WHEN ${TABLE}.GROSS_REVENUE = 0 THEN 0 ELSE ${TABLE}.ADJUSTED_NET_REVENUE END)
-      / NULLIF(SUM(${TABLE}.GROSS_REVENUE), 0) ;;
+    sql: CASE
+      WHEN
+        (SUM(CASE WHEN ${TABLE}.GROSS_REVENUE = 0 THEN 0 ELSE ${TABLE}.ADJUSTED_NET_REVENUE END)
+        / NULLIF(SUM(${TABLE}.GROSS_REVENUE), 0)) > 1
+      THEN 1
+      ELSE
+        (SUM(CASE WHEN ${TABLE}.GROSS_REVENUE = 0 THEN 0 ELSE ${TABLE}.ADJUSTED_NET_REVENUE END)
+        / NULLIF(SUM(${TABLE}.GROSS_REVENUE), 0))
+      END ;;
     value_format: "0.0%"
     label: "Net Retained Revenue / Gross Retained Revenue %"
   }
@@ -195,6 +177,6 @@ set: detail {
     ADJUSTED_NET_REVENUE,
     TURN_FEE,
     rev_dev_gross_percentage
-  ]
+  ]}
+
 }
-    }

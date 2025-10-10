@@ -44,8 +44,12 @@ Group by 1, 2, 3, 4, 5, 6, 7
       ),
 
       purplelabs_line_items AS (
-      Select adgroup_id
-      From agg_purplelabs_data
+      Select grouper_value as adgroup_id
+      From SunFlower.purplelab_audience_quality paq
+      Group by 1
+      UNION
+      Select adgroup_id as adgroup_id
+      From SunFlower.purplelab_script_metrics psm
       Group by 1)
 
       SELECT coalesce(p.date,f.date) AS cohort_start_date,

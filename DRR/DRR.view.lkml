@@ -64,6 +64,31 @@ view: drr {
     label: "Revenue of One Day Ago"
   }
 
+  parameter: report_date {
+    type: date
+    description: "Choose a date that you want to see data on."
+  }
+
+  measure: gross_revenue_new {
+    type: sum
+    sql: CASE WHEN ${TABLE}.event_date={% parameter report_date %} THEN ${TABLE}.Revenue ELSE 0 END ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: gross_revenue_last_day_new {
+    type: sum
+    sql: CASE WHEN ${TABLE}.event_date={% parameter report_date %}-1 THEN ${TABLE}.Revenue ELSE 0 END ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: gross_revenue_mtd {
+    type: sum
+    label: "Gross Revenue MTD"
+    sql: CASE WHEN DATE_TRUNC('MONTH', ${TABLE}.event_date)=DATE_TRUNC('MONTH',{% parameter report_date %}) AND ${TABLE}.event_date<={% parameter report_date %} THEN ${TABLE}.Revenue ELSE 0 END ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+
   measure: Sum_Revenue {
     description: "Total revenue across category, subcategory, region"
     label: "Total Gross Revenue"

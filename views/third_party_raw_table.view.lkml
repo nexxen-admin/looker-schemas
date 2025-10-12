@@ -58,6 +58,19 @@ view: third_party_raw_table {
     datatype: date
     sql: ${TABLE}."date" ;;
   }
+
+  # dimension: my_date {
+  #   type: date
+  #   sql: "${TABLE}"."date" ;;
+  # }
+
+  # measure: max_date {
+  #   type: date  # Change the type from 'max' to 'date'
+  #   sql: MAX(${date_raw}) ;; # Explicitly use the SQL MAX function
+  #   # value_format: "YYYY-MM-DD" # Add a format if you want a specific display
+  # }
+
+
   dimension_group: db_inserted {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
@@ -216,13 +229,15 @@ view: third_party_raw_table {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	id,
-	advertiser_name,
-	source_name,
-	creative_name,
-	placement_name,
-	insertion_order_name
-	]
+  id,
+  advertiser_name,
+  source_name,
+  creative_name,
+  placement_name,
+  insertion_order_name
+  ]
   }
+
+
 
 }

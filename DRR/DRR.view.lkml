@@ -60,7 +60,7 @@ view: drr {
   measure: Gross_Revenue {
     label: "Gross Revenue"
     type: sum
-    sql: CASE WHEN ${TABLE}.event_date=CAST('{% parameter Report_Run_Date %}' AS DATE) THEN ${TABLE}.Revenue ELSE 0 END ;;
+    sql: CASE WHEN ${TABLE}.event_date={% parameter Report_Run_Date %} THEN ${TABLE}.Revenue ELSE 0 END ;;
     value_format: "$#,##0;($#,##0)"
   }
 

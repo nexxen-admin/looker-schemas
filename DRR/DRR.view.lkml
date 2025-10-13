@@ -2,6 +2,12 @@ view: drr {
 
   sql_table_name: BI.svc_DRR_Daily_Revenue_Report ;;
 
+  parameter: Report_Run_Date {
+    type: date
+    label: "Report run date:"
+    description: "Choose a date that you want to see data on."
+  }
+
   dimension: Event_Date_Dt {
     description: "Event_Date"
     type: date
@@ -9,7 +15,7 @@ view: drr {
   }
 
   dimension: Event_Date_Formatted {
-    sql: ${TABLE}.Event_Date ;;
+    sql: {% parameter Report_Run_Date %} ;;
     html: {% assign formatted_date = rendered_value | date: "%B %d, %Y" %}
           {{ formatted_date }}
         ;;
@@ -51,72 +57,61 @@ view: drr {
     sql: ${TABLE}.Impression_Type ;;
   }
 
-  measure: Revenue_Previous_Day {
-    type: number
-    sql:
-        SUM(
-          CASE
-            WHEN ${Event_Date_Dt} = (${Event_Date_Dt} - INTERVAL '1 day')
-            THEN ${TABLE}.Revenue
-          END
-        ) ;;
-    value_format: "$#,##0;($#,##0)"
-    label: "Revenue of One Day Ago"
-  }
-
-  parameter: report_date {
-    type: date
-    description: "Choose a date that you want to see data on."
-  }
-
-  measure: gross_revenue_new {
+  measure: Gross_Revenue {
+    label: "Gross Revenue"
     type: sum
-    sql: CASE WHEN ${TABLE}.event_date={% parameter report_date %} THEN ${TABLE}.Revenue ELSE 0 END ;;
+    sql: CASE WHEN ${TABLE}.event_date=CAST('{% parameter Report_Run_Date %}' AS DATE) THEN ${TABLE}.Revenue ELSE 0 END ;;
     value_format: "$#,##0;($#,##0)"
   }
 
-  measure: gross_revenue_last_day_new {
+  measure: Gross_Revenue_Previous_Day {
+    label: "Gross Revenue Previous Day"
     type: sum
-    sql: CASE WHEN ${TABLE}.event_date={% parameter report_date %}-1 THEN ${TABLE}.Revenue ELSE 0 END ;;
+    sql: CASE WHEN ${TABLE}.event_date={% parameter Report_Run_Date %}-1 THEN ${TABLE}.Revenue ELSE 0 END ;;
     value_format: "$#,##0;($#,##0)"
   }
 
-  measure: gross_revenue_mtd {
+  measure: Gross_Revenue_MTD {
     type: sum
     label: "Gross Revenue MTD"
-    sql: CASE WHEN DATE_TRUNC('MONTH', ${TABLE}.event_date)=DATE_TRUNC('MONTH',{% parameter report_date %}) AND ${TABLE}.event_date<={% parameter report_date %} THEN ${TABLE}.Revenue ELSE 0 END ;;
+    sql: CASE WHEN DATE_TRUNC('MONTH', ${TABLE}.event_date)=DATE_TRUNC('MONTH',{% parameter Report_Run_Date %}) AND ${TABLE}.event_date<={% parameter Report_Run_Date %} THEN ${TABLE}.Revenue ELSE 0 END ;;
     value_format: "$#,##0;($#,##0)"
   }
 
-
-  measure: Sum_Revenue {
-    description: "Total revenue across category, subcategory, region"
-    label: "Total Gross Revenue"
-    type: sum
-    sql: ${TABLE}.Revenue ;;
-    value_format: "$#,##0;($#,##0)"
-  }
-
-  measure: Sum_Cost {
+  measure: Cost {
     description: "Total Cost across category, subcategory, region"
     label: "Total Cost"
     type: sum
-    sql: ${TABLE}.Cost ;;
+    sql: CASE WHEN ${TABLE}.event_date={% parameter Report_Run_Date %} THEN ${TABLE}.Cost ELSE 0 END ;;
     value_format: "$#,##0;($#,##0)"
   }
 
-  measure: Sum_Net_Revenue {
-    description: "Total Net_Revenue across category, subcategory, region"
-    label: "Total Net Revenue"
+  measure: Cost_Previous_Day {
     type: sum
-    sql: ${TABLE}.Revenue - ${TABLE}.Cost ;;
+    sql: CASE WHEN ${TABLE}.event_date={% parameter Report_Run_Date %}-1 THEN ${TABLE}.Cost ELSE 0 END ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Net_Revenue {
+    description: "Total Net_Revenue across category, subcategory, region"
+    label: "Net Revenue"
+    type: sum
+    sql: CASE WHEN ${TABLE}.event_date={% parameter Report_Run_Date %} THEN ${TABLE}.Revenue - ${TABLE}.Cost ELSE 0 END ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Net_Revenue_Previous_Day {
+    description: "Total Net_Revenue across category, subcategory, region"
+    label: "Net Revenue Previous Day"
+    type: number
+    sql: ${Gross_Revenue_Previous_Day} - ${Cost_Previous_Day} ;;
     value_format: "$#,##0;($#,##0)"
   }
 
   measure: Gross_Profit_Perc{
     label: "GP %"
     type: number
-    sql: ((${Sum_Revenue} - ${Sum_Cost}) / NULLIF(${Sum_Revenue}, 0)) ;;
+    sql: ((${Gross_Revenue} - ${Cost}) / NULLIF(${Gross_Revenue}, 0)) ;;
     value_format_name: percent_1
   }
  }

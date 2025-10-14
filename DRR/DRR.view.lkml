@@ -1,6 +1,75 @@
 view: drr {
-
-  sql_table_name: BI.svc_DRR_Daily_Revenue_Report ;;
+  # Or, you could make this view a derived table, like this:
+  derived_table: {
+    sql: WITH BASE_DATA AS (
+         SELECT Event_Date
+                  , Region
+                  , Category
+                  , Subcategory
+                  , Device_Type
+                  , SUM(Revenue) AS Revenue
+                  , SUM(Cost) AS Cost
+                  , SUM(Revenue - Cost) AS Net_Revenue
+                  , TRUNC(Event_Date, 'MM') AS Month_Start
+                  , TRUNC(Event_Date, 'Q') AS Quarter_Start
+                  , TRUNC(Event_Date, 'Y') AS Year_Start
+         FROM BI.svc_DRR_Daily_Revenue_Report drr
+         GROUP BY Event_Date, Region, Category, Subcategory, Device_Type
+      ),
+      BASE_DATA_WINDOWS AS (
+        SELECT Event_Date
+                      , Region
+                      , Category
+                      , Subcategory
+                      , Device_Type
+                      , Revenue
+                      , LAG(Revenue) OVER w_base AS LAG_Revenue
+                      , SUM(Revenue) OVER w_month AS Revenue_MTD
+                      , SUM(Revenue) OVER w_quarter AS Revenue_QTD
+                      , SUM(Revenue) OVER w_year AS Revenue_YTD
+                      , Cost
+                      , LAG(Cost) OVER w_base AS LAG_Cost
+                      , SUM(Cost) OVER w_month AS Cost_MTD
+                      , SUM(Cost) OVER w_quarter AS Cost_QTD
+                      , SUM(Cost) OVER w_year AS Cost_YTD
+                      , Net_Revenue
+                      , LAG(Net_Revenue) OVER w_base AS LAG_Net_Revenue
+                      , SUM(Net_Revenue) OVER w_month AS Net_Revenue_MTD
+                      , SUM(Net_Revenue) OVER w_quarter AS Net_Revenue_QTD
+                      , SUM(Net_Revenue) OVER w_year AS Net_Revenue_YTD
+                      , Month_Start
+                      , Quarter_Start
+                      , Year_Start
+        FROM BASE_DATA
+        WINDOW
+              w_base    AS (PARTITION BY Region, Category, Subcategory, Device_Type ORDER BY Event_Date),
+              w_month   AS (PARTITION BY Region, Category, Subcategory, Device_Type, Month_Start ORDER BY Event_Date),
+              w_quarter AS (PARTITION BY Region, Category, Subcategory, Device_Type, Quarter_Start ORDER BY Event_Date),
+              w_year    AS (PARTITION BY Region, Category, Subcategory, Device_Type, Year_Start ORDER BY Event_Date)
+      )
+      SELECT Event_Date
+              , Region
+              , Category
+              , Subcategory
+              , Device_Type
+              , Revenue
+              , LAG_Revenue
+              , Revenue_MTD
+              , Revenue_QTD
+              , Revenue_YTD
+              , Cost
+              , LAG_Cost
+              , Cost_MTD
+              , Cost_QTD
+              , Cost_YTD
+              , Net_Revenue
+              , LAG_Net_Revenue
+              , Net_Revenue_MTD
+              , Net_Revenue_QTD
+              , Net_Revenue_YTD
+      FROM BASE_DATA_WINDOWS bd
+      ;;
+  }
 
   parameter: Report_Run_Date {
     type: date
@@ -15,7 +84,7 @@ view: drr {
   }
 
   dimension: Event_Date_Formatted {
-    sql: {% parameter Report_Run_Date %} ;;
+    sql: ${Event_Date_Dt} ;;
     html: {% assign formatted_date = rendered_value | date: "%B %d, %Y" %}
           {{ formatted_date }}
         ;;
@@ -39,73 +108,113 @@ view: drr {
     sql: ${TABLE}.Subcategory ;;
   }
 
-  dimension: Media_Type {
-    description: "Media type"
-    type: string
-    sql: ${TABLE}.Media_Type ;;
-  }
-
   dimension: Device_Type {
     description: "Device type"
     type: string
     sql: ${TABLE}.Device_Type ;;
   }
 
-  dimension: Impression_Type{
-    description: "Impression type"
-    type: string
-    sql: ${TABLE}.Impression_Type ;;
-  }
-
   measure: Gross_Revenue {
-    label: "Gross Revenue"
-    type: sum
-    sql: CASE WHEN ${TABLE}.event_date={% parameter Report_Run_Date %} THEN ${TABLE}.Revenue ELSE 0 END ;;
-    value_format: "$#,##0;($#,##0)"
+  description: "Total Revenue across category, subcategory, region"
+  type: sum
+  sql: ${TABLE}.Revenue ;;
+  value_format: "$#,##0;($#,##0)"
   }
 
   measure: Gross_Revenue_Previous_Day {
-    label: "Gross Revenue Previous Day"
     type: sum
-    sql: CASE WHEN ${TABLE}.event_date={% parameter Report_Run_Date %}-1 THEN ${TABLE}.Revenue ELSE 0 END ;;
+    sql: ${TABLE}.LAG_Revenue ;;
     value_format: "$#,##0;($#,##0)"
   }
 
   measure: Gross_Revenue_MTD {
     type: sum
-    label: "Gross Revenue MTD"
-    sql: CASE WHEN DATE_TRUNC('MONTH', ${TABLE}.event_date)=DATE_TRUNC('MONTH',{% parameter Report_Run_Date %}) AND ${TABLE}.event_date<={% parameter Report_Run_Date %} THEN ${TABLE}.Revenue ELSE 0 END ;;
+    sql: ${TABLE}.Revenue_MTD ;;
     value_format: "$#,##0;($#,##0)"
+    label: "Gross Rev MTD"
+  }
+
+  measure: Gross_Revenue_QTD {
+    type: sum
+    sql: ${TABLE}.Revenue_QTD ;;
+    value_format: "$#,##0;($#,##0)"
+    label: "Gross Rev QTD"
+  }
+
+  measure: Gross_Revenue_YTD {
+    type: sum
+    sql: ${TABLE}.Revenue_YTD ;;
+    value_format: "$#,##0;($#,##0)"
+    label: "Gross Rev YTD"
   }
 
   measure: Cost {
     description: "Total Cost across category, subcategory, region"
-    label: "Total Cost"
     type: sum
-    sql: CASE WHEN ${TABLE}.event_date={% parameter Report_Run_Date %} THEN ${TABLE}.Cost ELSE 0 END ;;
+    sql: ${TABLE}.Cost;;
     value_format: "$#,##0;($#,##0)"
   }
 
   measure: Cost_Previous_Day {
+    label: "Gross Revenue Previous Day"
     type: sum
-    sql: CASE WHEN ${TABLE}.event_date={% parameter Report_Run_Date %}-1 THEN ${TABLE}.Cost ELSE 0 END ;;
+    sql: ${TABLE}.LAG_Cost ;;
     value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Cost_MTD {
+    type: sum
+    sql: ${TABLE}.Cost_MTD ;;
+    value_format: "$#,##0;($#,##0)"
+    label: "Cost MTD"
+  }
+
+  measure: Cost_QTD {
+    type: sum
+    sql: ${TABLE}.Cost_QTD ;;
+    value_format: "$#,##0;($#,##0)"
+    label: "Cost QTD"
+  }
+
+  measure: Cost_YTD {
+    type: sum
+    sql: ${TABLE}.Cost_YTD ;;
+    value_format: "$#,##0;($#,##0)"
+    label: "Cost YTD"
   }
 
   measure: Net_Revenue {
     description: "Total Net_Revenue across category, subcategory, region"
-    label: "Net Revenue"
     type: sum
-    sql: CASE WHEN ${TABLE}.event_date={% parameter Report_Run_Date %} THEN ${TABLE}.Revenue - ${TABLE}.Cost ELSE 0 END ;;
+    sql: ${TABLE}.Net_Revenue ;;
     value_format: "$#,##0;($#,##0)"
   }
 
   measure: Net_Revenue_Previous_Day {
-    description: "Total Net_Revenue across category, subcategory, region"
-    label: "Net Revenue Previous Day"
-    type: number
-    sql: ${Gross_Revenue_Previous_Day} - ${Cost_Previous_Day} ;;
+    type: sum
+    sql: ${TABLE}.LAG_Net_Revenue ;;
     value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Net_Revenue_MTD {
+    type: sum
+    sql: ${TABLE}.Net_Revenue_MTD ;;
+    value_format: "$#,##0;($#,##0)"
+    label: "Net Rev MTD"
+  }
+
+  measure: Net_Revenue_QTD {
+    type: sum
+    sql: ${TABLE}.Net_Revenue_QTD ;;
+    value_format: "$#,##0;($#,##0)"
+    label: "Net Rev QTD"
+  }
+
+  measure: Net_Revenue_YTD {
+    type: sum
+    sql: ${TABLE}.Net_Revenue_YTD ;;
+    value_format: "$#,##0;($#,##0)"
+    label: "Net Rev YTD"
   }
 
   measure: Gross_Profit_Perc{

@@ -54,6 +54,7 @@ view: manual_valvoline {
   }
   dimension: dma {
     type: string
+    map_layer_name: us_states
     sql: ${TABLE}.dma ;;
   }
   dimension: franchise {
@@ -150,5 +151,18 @@ view: manual_valvoline {
   measure: transaction_amount {
     type: sum
     sql:  ${TABLE}.transaction_amount ;;
+    value_format: "#,##0"
+  }
+
+  measure: html_kpi_transaction_amount {
+    type: count
+    # hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Transaction Amount
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ transaction_amount._rendered_value }}
+              </div>
+            </div>;;
   }
 }

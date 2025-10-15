@@ -68,67 +68,6 @@ view: third_party_raw_table {
     sql: ${date_raw} = (SELECT MAX(t."date") FROM "BI_DSP"."third_party_raw_table" AS t) ;;
   }
 
-  # measure: max_date_value {
-  #   # Use type: date for max/min measures when the result is a date.
-  #   type: date
-
-  #   # Explicitly use the SQL MAX() function on the 'raw' timeframe to find the latest date.
-  #   # Using ${date_raw} ensures you're aggregating the underlying date column.
-  #   sql: MAX(${date_raw}) ;;
-
-  #   label: "Maximum Date"
-  # }
-
-  # dimension: global_max_date {
-  #   type: string # Use type: string for reliable display of an aggregated date value
-  #   label: "Global Max Date"
-
-  #   # Use the Vertica-compatible syntax for a Window Function:
-  #   # MAX() OVER () calculates the maximum over all rows, ignoring the GROUP BY clauses.
-  #   sql: MAX(${date_raw}) OVER () ;;
-  # }
-
-  # dimension: my_date {
-  #   type: date
-  #   sql: "${TABLE}"."date" ;;
-  # }
-
-  # measure: max_date {
-  #   type: date  # Change the type from 'max' to 'date'
-  #   sql: MAX(${date_raw}) ;; # Explicitly use the SQL MAX function
-  #   # value_format: "YYYY-MM-DD" # Add a format if you want a specific display
-  # }
-
-  # measure: max_days_since_epoch {
-  #   type: max
-  #   # Use simple date subtraction for Vertica to get the difference in days.
-  #   # Vertica automatically returns the difference in days when subtracting two dates.
-  #   sql: ${third_party_raw_table.date_date} - DATE('1970-01-01') ;;
-
-  #   label: "Max Days Since Epoch"
-  #   value_format: "0"
-  # }
-
-  # dimension: days_since_epoch {
-  #   type: number
-  #   # Vertica compatible: simple date subtraction.
-  #   sql: ${date_date} - DATE('1970-01-01') ;;
-  # }
-
-  # dimension: is_max_date_flag {
-  #   type: number
-  #   # Use a CASE statement to compare the row-level date difference
-  #   # with the aggregated maximum date difference measure.
-  #   sql: |
-  #         CASE
-  #           WHEN ${days_since_epoch} = ${max_days_since_epoch}
-  #           THEN 1
-  #           ELSE 0
-  #         END
-  #       ;;
-  #   value_format: "0"
-  #   group_label: "Date Max Flags"
-  # }
 
   dimension_group: db_inserted {
     type: time

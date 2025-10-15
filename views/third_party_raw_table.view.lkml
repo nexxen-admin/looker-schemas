@@ -59,6 +59,15 @@ view: third_party_raw_table {
     sql: ${TABLE}."date" ;;
   }
 
+
+  dimension: is_latest_date {
+    type: yesno
+    label: "Is Latest Date"
+
+    # Ensure the subquery uses ${TABLE} for the FROM clause.
+    sql: ${date_raw} = (SELECT MAX(t."date") FROM ${TABLE} AS t) ;;
+  }
+
   # measure: max_date_value {
   #   # Use type: date for max/min measures when the result is a date.
   #   type: date

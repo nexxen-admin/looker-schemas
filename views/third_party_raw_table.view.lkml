@@ -64,8 +64,8 @@ view: third_party_raw_table {
     type: yesno
     label: "Is Latest Date"
 
-    # Ensure the subquery uses ${TABLE} for the FROM clause.
-    sql: ${date_raw} = (SELECT MAX(t."date") FROM ${TABLE} AS t) ;;
+    # Hardcode the fully qualified name (Schema.Table) to ensure Vertica finds the relation.
+    sql: ${date_raw} = (SELECT MAX(t."date") FROM "BI_DSP"."third_party_raw_table" AS t) ;;
   }
 
   # measure: max_date_value {

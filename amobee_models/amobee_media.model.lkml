@@ -1,4 +1,4 @@
-connection: "amobee_prod"
+connection: "vertica_iad"
 
 include: "/amobee_views/*.view.lkml"
 

@@ -180,7 +180,7 @@ view: forecast_data {
 
       -- Strategic Sales condition
       WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%'
-      AND ${enterprise_cs_regional_pods} != NULL
+      AND ${account_manager_sales_team} != NULL
       THEN 'Tech Services - Strategic Sales'
 
       -- Specific Account_Name mappings to Strategic Sales
@@ -302,10 +302,10 @@ view: forecast_data {
         END ;;
   }
 
-  dimension: enterprise_cs_regional_pods {
+  dimension: account_manager_sales_team {
     type: string
     sql: ${TABLE}.account_manager_sales_team ;;
-    label: "Enterprise CS Regional Pods"
+    description: "Sales team as listed on Salesforce User table"
   }
 
   dimension: legal_entity {

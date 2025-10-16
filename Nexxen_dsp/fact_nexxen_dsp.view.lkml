@@ -1032,6 +1032,35 @@ measure: Nexxen_Inv_Cost_Percent {
               ELSE 0 END,2);;
   }
 
+  measure: yesterday_primary_kpi_result {
+    label: "Yesterday Primary KPI Result"
+    type: number
+    sql:
+            ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR'
+                    THEN ${yesterday_CTR_1P}*100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate'
+                    THEN ${Last_day_1p_complete_events} / ${Last_day_1p_impressions} * 100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate')
+                    THEN ${yesterday_1P_CVR} * 100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%'
+                    THEN ${yesterday_1P_CVR}
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit')
+                    THEN ${yesterday_eCPA_1P}
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%'
+                    THEN ${yesterday_pacing} * 100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%'
+                    THEN ${yesterday_uncapped_revenue} / ${yesterday_actions}
+              ELSE 0 END,2)
+
+            ;;
+  }
+
   measure: primary_kpi_check {
     label: "KPI Check"
     type: number

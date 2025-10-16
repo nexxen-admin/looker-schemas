@@ -155,6 +155,15 @@ view: manual_valvoline {
     value_format: "$#,##0"
   }
 
+  measure: transaction_amount_derived_actions {
+    type: sum
+    sql:  ${TABLE}.transaction_amount ;;
+    hidden: yes
+    label: "Tooltip Transaction Amount % Customers"
+    value_format: "$#,##0"
+    html:  Transaction amount: {{ transaction_amount._rendered_value }} | Customers {{ derived_actions._rendered_value }};;
+  }
+
   measure: html_kpi_transaction_amount {
     type: count
     hidden: yes
@@ -166,6 +175,7 @@ view: manual_valvoline {
               </div>
             </div>;;
   }
+
 
   measure: html_kpi_derived_actions {
     type: count

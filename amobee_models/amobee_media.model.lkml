@@ -7,7 +7,6 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
-
 access_grant: can_view_all_tremor {
   user_attribute: all_tremor
   allowed_values: ["all_tremor"]

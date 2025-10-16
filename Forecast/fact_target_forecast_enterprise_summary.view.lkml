@@ -29,6 +29,7 @@ view: fact_target_forecast_enterprise_summary {
   dimension: generalist_name {
     type: string
     sql: ${TABLE}.Generalist_Name ;;
+    bypass_suggest_restrictions: yes
   }
   dimension: generalist_name_key {
     type: string

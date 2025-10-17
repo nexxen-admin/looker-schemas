@@ -132,7 +132,7 @@ view: fact_target_forecast_strategy_summary {
 
   dimension: Strat_Sales_RVP {
     type: string
-    sql: COALESCE(${forecast_dim_sfdb_user.RVP_Sales_team}, ${TABLE}.Strat_Sales_RVP) ;;
+    sql: CASE WHEN ${TABLE}.seller='Taylor Kiefer' THEN 'Strat Sales - East' ELSE COALESCE(${forecast_dim_sfdb_user.RVP_Sales_team}, ${TABLE}.Strat_Sales_RVP) END;;
     drill_fields: [revenue_line, Strat_Sales_Team]
   }
 

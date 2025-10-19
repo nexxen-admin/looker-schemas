@@ -285,6 +285,14 @@ dimension: inventory_source_key {
     sql: ${TABLE}.impressions ;;
   }
 
+  measure: last_3_days_impressions_raw {
+    type: sum
+    label: "Last 3 Days 1P Impressions"
+    value_format: "#,##0"
+    sql: ${TABLE}.impressions ;; # Reference the underlying column
+    filters: [date_key_in_timezone_date: "3 days ago for 3 days"]
+  }
+
   measure: third_party_impressions {
     type: sum
     label: "3P Impressions"
@@ -985,14 +993,15 @@ measure: Nexxen_Inv_Cost_Percent {
     filters: [date_key_in_timezone_date: "yesterday"]
   }
 
+
   measure: Yesterday_Media_Margin {
     type: number
     label: "Yesterday's Media Margin"
-    sql:
-    (NULLIF(${yesterday_uncapped_revenue}, 0) - ${yesterday_fdw_cost})
-    / NULLIF(${yesterday_uncapped_revenue}, 0) ;;
+    sql: (${yesterday_uncapped_revenue} - ${yesterday_fdw_cost})/ ${yesterday_uncapped_revenue} ;;
     value_format: "0.00%"
   }
+
+
 
   measure: fraud_rate {
     type: number

@@ -977,6 +977,23 @@ measure: Nexxen_Inv_Cost_Percent {
     sql: ${TABLE}.fdw_cost ;;
   }
 
+  measure: yesterday_fdw_cost {
+    type: sum
+    label: "Yesterday FDW Cost"
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.fdw_cost ;;
+    filters: [date_key_in_timezone_date: "yesterday"]
+  }
+
+  measure: Yesterday_Media_Margin {
+    type: number
+    label: "Yesterday's Media Margin"
+    sql:
+    (NULLIF(${yesterday_uncapped_revenue}, 0) - ${yesterday_fdw_cost})
+    / NULLIF(${yesterday_uncapped_revenue}, 0) ;;
+    value_format: "0.00%"
+  }
+
   measure: fraud_rate {
     type: number
     sql:  CASE WHEN ${3p_impressions_analyzed}!=0 AND ${3p_impressions_analyzed} IS NOT NULL

@@ -814,6 +814,59 @@ measure: Nexxen_Inv_Cost_Percent {
   #   value_format: "0.00%"
   # }
 
+
+  measure: hybrid_video_completes {
+    type: sum
+    label: "Hybrid Video Completes"
+    value_format: "#,##0"
+    sql:
+    CASE
+      WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee','Nexxen')
+        THEN ${TABLE}.third_party_complete_events
+      ELSE ${TABLE}.complete_events
+    END ;;
+  }
+
+  measure: hybrid_impressions_delivered {
+    type: sum
+    label: "Hybrid Impressions Delivered"
+    value_format: "#,##0"
+    sql:
+    CASE
+      WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee','Nexxen')
+        THEN ${TABLE}.complete_events
+      ELSE ${TABLE}.impressions
+    END ;;
+  }
+
+  measure: hybrid_vcr_overall {
+    type: number
+    label: "Hybrid VCR Overall"
+    value_format_name: "percent_2"
+    sql:
+    CASE
+      WHEN ${complete_events} > 0
+        THEN ${hybrid_video_completes} / NULLIF(${complete_events}, 0)
+      ELSE ${hybrid_video_completes} / NULLIF(${hybrid_impressions_delivered}, 0)
+    END ;;
+  }
+
+
+  # measure: yesterday_hybrid_vcr_overall {
+  #   type: number
+  #   label: "Yesterday Hybrid VCR Overall"
+  #   value_format_name: "percent_2"
+  #   sql:
+  #   CASE
+  #     WHEN SUM(${complete_events}) > 0
+  #       THEN SUM(${hybrid_video_completes}) / NULLIF(SUM(${complete_events}), 0)
+  #     ELSE SUM(${hybrid_video_completes}) / NULLIF(SUM(${hybrid_impressions_delivered}), 0)
+  #   END ;;
+  #   filters: [date_key_in_timezone_date: "yesterday"]
+  # }
+
+
+
   measure: Delivered_Spend {
     type: sum
     sql: ${TABLE}.delivery_units/1000*${dim_sfdb_opportunitylineitem.rate__c};;

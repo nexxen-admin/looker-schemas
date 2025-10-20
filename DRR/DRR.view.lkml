@@ -1,16 +1,6 @@
 view: drr {
   derived_table: {
-    sql: WITH YEARLY_CATEGORIES AS (
-                     SELECT Region
-                              , Category
-                              , Subcategory
-                              , Device_Type
-                     FROM BI.svc_DRR_Daily_Revenue_Report drr
-                     WHERE TRUNC(Event_Date, 'Y')=TRUNC({% parameter Report_Run_Date %}::DATE, 'Y')
-                     GROUP BY Region, Category, Subcategory, Device_Type
-                )
-                --SELECT * FROM YEARLY_CATEGORIES;
-                ,BASE_DATA AS (
+    sql: WITH BASE_DATA AS (
                       SELECT Event_Date
                                , Region
                                , Category
@@ -101,8 +91,6 @@ view: drr {
                            , Net_Revenue
                    FROM BASE_DATA bd
                    where Event_Date >= ({% parameter Report_Run_Date %}::date - INTERVAL '90' DAY) AND Event_Date <= {% parameter Report_Run_Date %}::date
-                   WINDOW
-                        w_base AS (PARTITION BY Region, Category, Subcategory, Device_Type ORDER BY Event_Date)
                 )
                 --SELECT * FROM NINTY_DAY_DATA;
                 , DAILY_DATA_FILTERED AS (
@@ -228,10 +216,10 @@ view: drr {
                 UNION
                 SELECT 'POP metrics' AS Data_Type
                         , NULL AS Event_Date
-                        , YC.Region
-                        , YC.Category
-                        , YC.Subcategory
-                        , YC.Device_Type
+                        , PD_Y.Region
+                        , PD_Y.Category
+                        , PD_Y.Subcategory
+                        , PD_Y.Device_Type
                         , DD.Revenue
                         , DD.Cost
                         , DD.Net_Revenue
@@ -247,11 +235,10 @@ view: drr {
                         , PD_MM.Revenue_MTD
                         , PD_MM.Cost_MTD
                         , PD_MM.Net_Revenue_MTD
-                FROM YEARLY_CATEGORIES YC
-                LEFT JOIN DAILY_DATA_FILTERED DD ON YC.Region = DD.Region AND YC.Category = DD.Category AND YC.Subcategory = DD.Subcategory AND YC.Device_Type = DD.Device_Type
-                LEFT JOIN PERIODS_DATA_YEAR PD_Y ON YC.Region = PD_Y.Region AND YC.Category = PD_Y.Category AND YC.Subcategory = PD_Y.Subcategory AND YC.Device_Type = PD_Y.Device_Type
-                LEFT JOIN PERIODS_DATA_QUARTER PD_Q ON YC.Region = PD_Q.Region AND YC.Category = PD_Q.Category AND YC.Subcategory = PD_Q.Subcategory AND YC.Device_Type = PD_Q.Device_Type
-                LEFT JOIN PERIODS_DATA_MONTH PD_MM ON YC.Region = PD_MM.Region AND YC.Category = PD_MM.Category AND YC.Subcategory = PD_MM.Subcategory AND YC.Device_Type = PD_MM.Device_Type
+                FROM PERIODS_DATA_YEAR PD_Y
+                LEFT JOIN PERIODS_DATA_QUARTER PD_Q ON PD_Y.Region = PD_Q.Region AND PD_Y.Category = PD_Q.Category AND PD_Y.Subcategory = PD_Q.Subcategory AND PD_Y.Device_Type = PD_Q.Device_Type
+                LEFT JOIN PERIODS_DATA_MONTH PD_MM ON PD_Y.Region = PD_MM.Region AND PD_Y.Category = PD_MM.Category AND PD_Y.Subcategory = PD_MM.Subcategory AND PD_Y.Device_Type = PD_MM.Device_Type
+                LEFT JOIN DAILY_DATA_FILTERED DD ON PD_Y.Region = DD.Region AND PD_Y.Category = DD.Category AND PD_Y.Subcategory = DD.Subcategory AND PD_Y.Device_Type = DD.Device_Type
       ;;
   }
 

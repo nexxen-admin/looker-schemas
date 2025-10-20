@@ -126,6 +126,7 @@ view: manual_valvoline {
   }
   measure: derived_actions {
     type: sum
+    label: "Customers"
     sql: ${TABLE}.derived_actions ;;
   }
   measure: household_actions {
@@ -151,17 +152,39 @@ view: manual_valvoline {
   measure: transaction_amount {
     type: sum
     sql:  ${TABLE}.transaction_amount ;;
-    value_format: "#,##0"
+    value_format: "$#,##0"
+  }
+
+  measure: transaction_amount_derived_actions {
+    type: sum
+    sql:  ${TABLE}.transaction_amount ;;
+    hidden: yes
+    label: "Tooltip Transaction Amount % Customers"
+    value_format: "$#,##0"
+    html:  Transaction amount: {{ transaction_amount._rendered_value }} | Customers {{ derived_actions._rendered_value }};;
   }
 
   measure: html_kpi_transaction_amount {
     type: count
-    # hidden: yes
+    hidden: yes
     html:
            <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
               Transaction Amount
               <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ transaction_amount._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+
+  measure: html_kpi_derived_actions {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Customers
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ derived_actions._rendered_value }}
               </div>
             </div>;;
   }

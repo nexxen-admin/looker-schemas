@@ -180,7 +180,7 @@ view: forecast_data {
 
       -- Strategic Sales condition
       WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%'
-      AND ${enterprise_cs_regional_pods} != NULL
+      AND ${account_manager_sales_team} != NULL
       THEN 'Tech Services - Strategic Sales'
 
       -- Specific Account_Name mappings to Strategic Sales
@@ -224,17 +224,17 @@ view: forecast_data {
           WHEN ${account_name} LIKE '%301 Digital%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
           WHEN ${account_name} LIKE '%Rescue Agency%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
 
-          WHEN ${strat_sales_rvp} = 'East' THEN 'Strat Sales CS East'
-          WHEN ${strat_sales_rvp} = 'West' THEN 'Strat Sales CS West'
-          WHEN ${strat_sales_rvp} = 'Central' THEN 'Strat Sales CS Central'
-          WHEN ${strat_sales_rvp} = 'Canada' THEN 'Strat Sales CS Canada'
-          WHEN ${strat_sales_rvp} = 'South' THEN 'Strat Sales CS South'
+          WHEN ${strat_sales_rvp} LIKE '%East%' THEN 'Strat Sales CS East'
+          WHEN ${strat_sales_rvp} LIKE '%West%' THEN 'Strat Sales CS West'
+          WHEN ${strat_sales_rvp} LIKE '%Central%' THEN 'Strat Sales CS Central'
+          WHEN ${strat_sales_rvp} LIKE '%Canada%' THEN 'Strat Sales CS Canada'
+          WHEN ${strat_sales_rvp} LIKE '%South%' THEN 'Strat Sales CS South'
 
-          WHEN ${account_manager} = 'Strat Sales CS East' THEN 'Strat Sales CS East'
-          WHEN ${account_manager} = 'Strat Sales CS West' THEN 'Strat Sales CS West'
-          WHEN ${account_manager} = 'Strat Sales CS Central' THEN 'Strat Sales CS Central'
-          WHEN ${account_manager} = 'Strat Sales CS Canada' THEN 'Strat Sales CS Canada'
-          WHEN ${account_manager} = 'Strat Sales CS South' THEN 'Strat Sales CS South'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % East%' THEN 'Strat Sales CS East'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % West%' THEN 'Strat Sales CS West'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % Central%' THEN 'Strat Sales CS Central'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % Canada%' THEN 'Strat Sales CS Canada'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % South%' THEN 'Strat Sales CS South'
         ELSE NULL
         END ;;
     label: "Strategic Sales CS Region"
@@ -283,6 +283,12 @@ view: forecast_data {
         END ;;
   }
 
+  dimension: tv_team_y_n {
+    label: "TV Team"
+    type: string
+    sql: CASE WHEN ${TABLE}.opportunity_name ILIKE '%TV%' THEN 'yes' ELSE 'no' END ;;
+  }
+
   dimension: forecast {
     type: number
     hidden: yes
@@ -302,10 +308,10 @@ view: forecast_data {
         END ;;
   }
 
-  dimension: enterprise_cs_regional_pods {
+  dimension: account_manager_sales_team {
     type: string
     sql: ${TABLE}.account_manager_sales_team ;;
-    label: "Enterprise CS Regional Pods"
+    description: "Sales team as listed on Salesforce User table"
   }
 
   dimension: legal_entity {
@@ -319,18 +325,20 @@ view: forecast_data {
     type: string
     label: "Sales Team (Chance Org)"
     sql: CASE WHEN ${new_enterprise_team} ILIKE '%Enterprise Sales%' THEN ${new_enterprise_team}
-              --WHEN ${new_enterprise_team} ILIKE '%Enterprise Services - National%' THEN 'Enterprise Sales'
+              WHEN ${new_enterprise_team} ILIKE '%Enterprise Services - National%' THEN 'Enterprise Sales'
               WHEN  ${new_enterprise_team} ILIKE '%Political%' THEN 'Enterprise Sales - Political'
               WHEN ${strat_sales_team}  ILIKE '%Barter Direct%' THEN ${strat_sales_team}
-            ELSE CONCAT('Strategic Sales - ', ${strat_sales_team}) END ;;
+            WHEN ${strat_sales_rvp} ILIKE '%Strat Sales%' THEN ${strat_sales_rvp}
+            ELSE 'Unknown' END ;;
   }
 
   dimension: chance_team {
     type: string
     label: "Chance Team (Consolidated)"
     sql: CASE WHEN ${sales_team_chance_org} ILIKE '%Enterprise Sales%' THEN 'Enterprise Sales'
-              WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%' THEN 'Strategic Sales'
+              WHEN ${sales_team_chance_org} ILIKE '%Strat Sales%' THEN 'Strategic Sales'
               WHEN ${sales_team_chance_org} ILIKE '%Barter Direct%' THEN 'Barter Direct'
+              WHEN ${sales_team_chance_org} ILIKE 'Unknown' THEN 'Unknown'
             END;;
   }
 

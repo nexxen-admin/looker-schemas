@@ -285,6 +285,14 @@ dimension: inventory_source_key {
     sql: ${TABLE}.impressions ;;
   }
 
+  measure: last_3_days_impressions_raw {
+    type: sum
+    label: "Last 3 Days 1P Impressions"
+    value_format: "#,##0"
+    sql: ${TABLE}.impressions ;; # Reference the underlying column
+    filters: [date_key_in_timezone_date: "3 days ago for 3 days"]
+  }
+
   measure: third_party_impressions {
     type: sum
     label: "3P Impressions"
@@ -806,6 +814,90 @@ measure: Nexxen_Inv_Cost_Percent {
   #   value_format: "0.00%"
   # }
 
+
+  measure: hybrid_video_completes {
+    type: sum
+    label: "Hybrid Video Completes"
+    value_format: "#,##0"
+    sql:
+    CASE
+      WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee','Nexxen')
+        THEN ${TABLE}.third_party_complete_events
+      ELSE ${TABLE}.complete_events
+    END ;;
+  }
+
+  measure: hybrid_impressions_delivered {
+    type: sum
+    label: "Hybrid Impressions Delivered"
+    value_format: "#,##0"
+    sql:
+    CASE
+      WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee','Nexxen')
+        THEN ${TABLE}.complete_events
+      ELSE ${TABLE}.impressions
+    END ;;
+  }
+
+  measure: hybrid_vcr_overall {
+    type: number
+    label: "Hybrid VCR Overall"
+    value_format_name: "percent_2"
+    sql:
+    CASE
+      WHEN ${complete_events} > 0
+        THEN ${hybrid_video_completes} / NULLIF(${complete_events}, 0)
+      ELSE ${hybrid_video_completes} / NULLIF(${hybrid_impressions_delivered}, 0)
+    END ;;
+  }
+
+  measure: hybrid_video_completes_yesterday {
+    type: sum
+    label: "Hybrid Video Completes (Yesterday)"
+    value_format: "#,##0"
+    sql:
+    CASE
+      WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee','Nexxen')
+        THEN ${TABLE}.third_party_complete_events
+      ELSE ${TABLE}.complete_events
+    END ;;
+    filters: [date_key_in_timezone_date: "yesterday"]
+  }
+
+  measure: hybrid_impressions_delivered_yesterday {
+    type: sum
+    label: "Hybrid Impressions Delivered (Yesterday)"
+    value_format: "#,##0"
+    sql:
+    CASE
+      WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee','Nexxen')
+        THEN ${TABLE}.complete_events
+      ELSE ${TABLE}.impressions
+    END ;;
+    filters: [date_key_in_timezone_date: "yesterday"]
+  }
+
+  measure: complete_events_yesterday {
+    type: sum
+    label: "Complete Events (Yesterday)"
+    value_format: "#,##0"
+    sql: ${TABLE}.complete_events ;;
+    filters: [date_key_in_timezone_date: "yesterday"]
+  }
+
+  measure: hybrid_vcr_overall_yesterday {
+    type: number
+    label: "Hybrid VCR Overall (Yesterday)"
+    value_format_name: "percent_2"
+    sql:
+    CASE
+      WHEN ${complete_events_yesterday} > 0
+        THEN ${hybrid_video_completes_yesterday} / NULLIF(${complete_events_yesterday}, 0)
+      ELSE ${hybrid_video_completes_yesterday} / NULLIF(${hybrid_impressions_delivered_yesterday}, 0)
+    END ;;
+  }
+
+
   measure: Delivered_Spend {
     type: sum
     sql: ${TABLE}.delivery_units/1000*${dim_sfdb_opportunitylineitem.rate__c};;
@@ -977,6 +1069,24 @@ measure: Nexxen_Inv_Cost_Percent {
     sql: ${TABLE}.fdw_cost ;;
   }
 
+  measure: yesterday_fdw_cost {
+    type: sum
+    label: "Yesterday FDW Cost"
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.fdw_cost ;;
+    filters: [date_key_in_timezone_date: "yesterday"]
+  }
+
+
+  measure: Yesterday_Media_Margin {
+    type: number
+    label: "Yesterday's Media Margin"
+    sql: (${yesterday_uncapped_revenue} - ${yesterday_fdw_cost})/ ${yesterday_uncapped_revenue} ;;
+    value_format: "0.00%"
+  }
+
+
+
   measure: fraud_rate {
     type: number
     sql:  CASE WHEN ${3p_impressions_analyzed}!=0 AND ${3p_impressions_analyzed} IS NOT NULL
@@ -1014,7 +1124,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: media_margin_overall {
     type: number
-    label: "Media Margin"
+    label: "Media Margin (overall)"
     sql: (${capped_revenue} - (${fdw_cost}+${vendor_cost}))/${capped_revenue};;
     value_format: "0.00%"
   }
@@ -1030,6 +1140,35 @@ measure: Nexxen_Inv_Cost_Percent {
               WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${pacing}*100
               WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${uncapped_revenue}/${actions}
               ELSE 0 END,2);;
+  }
+
+  measure: yesterday_primary_kpi_result {
+    label: "Yesterday Primary KPI Result"
+    type: number
+    sql:
+            ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR'
+                    THEN ${yesterday_CTR_1P}*100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate'
+                    THEN ${Last_day_1p_complete_events} / ${Last_day_1p_impressions} * 100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate')
+                    THEN ${yesterday_1P_CVR} * 100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%'
+                    THEN ${yesterday_1P_CVR}
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit')
+                    THEN ${yesterday_eCPA_1P}
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%'
+                    THEN ${yesterday_pacing} * 100
+
+                    WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%'
+                    THEN ${yesterday_uncapped_revenue} / ${yesterday_actions}
+              ELSE 0 END,2)
+
+            ;;
   }
 
   measure: primary_kpi_check {

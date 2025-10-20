@@ -75,10 +75,10 @@ view: fact_sfdb_forecast_snapshot {
     WHEN ${TABLE}.IO_Sales_Team ILIKE '%Canada%' THEN 'Strat Sales CS Canada'
     END;;
   }
-  dimension: enterprise_cs_regional_pods {
+  dimension: account_manager_sales_team {
     type: string
     sql: ${TABLE}.account_manager_sales_team ;;
-    label: "Enterprise CS Regional Pods"
+    description: "Sales team as listed on Salesforce User table"
   }
   dimension: io_super_region {
     type: string

@@ -224,17 +224,17 @@ view: forecast_data {
           WHEN ${account_name} LIKE '%301 Digital%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
           WHEN ${account_name} LIKE '%Rescue Agency%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
 
-          WHEN ${strat_sales_rvp} = 'East' THEN 'Strat Sales CS East'
-          WHEN ${strat_sales_rvp} = 'West' THEN 'Strat Sales CS West'
-          WHEN ${strat_sales_rvp} = 'Central' THEN 'Strat Sales CS Central'
-          WHEN ${strat_sales_rvp} = 'Canada' THEN 'Strat Sales CS Canada'
-          WHEN ${strat_sales_rvp} = 'South' THEN 'Strat Sales CS South'
+          WHEN ${strat_sales_rvp} LIKE '%East%' THEN 'Strat Sales CS East'
+          WHEN ${strat_sales_rvp} LIKE '%West%' THEN 'Strat Sales CS West'
+          WHEN ${strat_sales_rvp} LIKE '%Central%' THEN 'Strat Sales CS Central'
+          WHEN ${strat_sales_rvp} LIKE '%Canada%' THEN 'Strat Sales CS Canada'
+          WHEN ${strat_sales_rvp} LIKE '%South%' THEN 'Strat Sales CS South'
 
-          WHEN ${account_manager} = 'Strat Sales CS East' THEN 'Strat Sales CS East'
-          WHEN ${account_manager} = 'Strat Sales CS West' THEN 'Strat Sales CS West'
-          WHEN ${account_manager} = 'Strat Sales CS Central' THEN 'Strat Sales CS Central'
-          WHEN ${account_manager} = 'Strat Sales CS Canada' THEN 'Strat Sales CS Canada'
-          WHEN ${account_manager} = 'Strat Sales CS South' THEN 'Strat Sales CS South'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % East%' THEN 'Strat Sales CS East'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % West%' THEN 'Strat Sales CS West'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % Central%' THEN 'Strat Sales CS Central'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % Canada%' THEN 'Strat Sales CS Canada'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % South%' THEN 'Strat Sales CS South'
         ELSE NULL
         END ;;
     label: "Strategic Sales CS Region"

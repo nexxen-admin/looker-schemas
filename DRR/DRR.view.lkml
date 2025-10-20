@@ -1,80 +1,271 @@
 view: drr {
-  # Or, you could make this view a derived table, like this:
   derived_table: {
-    sql: WITH BASE_DATA AS (
-         SELECT Event_Date
-                  , Region
-                  , Category
-                  , Subcategory
-                  , Device_Type
-                  , SUM(Revenue) AS Revenue
-                  , SUM(Cost) AS Cost
-                  , SUM(Revenue - Cost) AS Net_Revenue
-                  , TRUNC(Event_Date, 'MM') AS Month_Start
-                  , TRUNC(Event_Date, 'Q') AS Quarter_Start
-                  , TRUNC(Event_Date, 'Y') AS Year_Start
-         FROM BI.svc_DRR_Daily_Revenue_Report drr
-         GROUP BY Event_Date, Region, Category, Subcategory, Device_Type
-      ),
-      BASE_DATA_WINDOWS AS (
-        SELECT Event_Date
-                      , Region
-                      , Category
-                      , Subcategory
-                      , Device_Type
-                      , Revenue
-                      , LAG(Revenue) OVER w_base AS LAG_Revenue
-                      , SUM(Revenue) OVER w_month AS Revenue_MTD
-                      , SUM(Revenue) OVER w_quarter AS Revenue_QTD
-                      , SUM(Revenue) OVER w_year AS Revenue_YTD
-                      , Cost
-                      , LAG(Cost) OVER w_base AS LAG_Cost
-                      , SUM(Cost) OVER w_month AS Cost_MTD
-                      , SUM(Cost) OVER w_quarter AS Cost_QTD
-                      , SUM(Cost) OVER w_year AS Cost_YTD
-                      , Net_Revenue
-                      , LAG(Net_Revenue) OVER w_base AS LAG_Net_Revenue
-                      , SUM(Net_Revenue) OVER w_month AS Net_Revenue_MTD
-                      , SUM(Net_Revenue) OVER w_quarter AS Net_Revenue_QTD
-                      , SUM(Net_Revenue) OVER w_year AS Net_Revenue_YTD
-                      , Month_Start
-                      , Quarter_Start
-                      , Year_Start
-        FROM BASE_DATA
-        WINDOW
-              w_base    AS (PARTITION BY Region, Category, Subcategory, Device_Type ORDER BY Event_Date),
-              w_month   AS (PARTITION BY Region, Category, Subcategory, Device_Type, Month_Start ORDER BY Event_Date),
-              w_quarter AS (PARTITION BY Region, Category, Subcategory, Device_Type, Quarter_Start ORDER BY Event_Date),
-              w_year    AS (PARTITION BY Region, Category, Subcategory, Device_Type, Year_Start ORDER BY Event_Date)
-      )
-      SELECT Event_Date
-              , Region
-              , Category
-              , Subcategory
-              , Device_Type
-              , Revenue
-              , LAG_Revenue
-              , Revenue_MTD
-              , Revenue_QTD
-              , Revenue_YTD
-              , Cost
-              , LAG_Cost
-              , Cost_MTD
-              , Cost_QTD
-              , Cost_YTD
-              , Net_Revenue
-              , LAG_Net_Revenue
-              , Net_Revenue_MTD
-              , Net_Revenue_QTD
-              , Net_Revenue_YTD
-      FROM BASE_DATA_WINDOWS bd
+    sql: WITH YEARLY_CATEGORIES AS (
+                     SELECT Region
+                              , Category
+                              , Subcategory
+                              , Device_Type
+                     FROM BI.svc_DRR_Daily_Revenue_Report drr
+                     WHERE TRUNC(Event_Date, 'Y')=TRUNC({% parameter Report_Run_Date %}::DATE, 'Y')
+                     GROUP BY Region, Category, Subcategory, Device_Type
+                )
+                --SELECT * FROM YEARLY_CATEGORIES;
+                ,BASE_DATA AS (
+                      SELECT Event_Date
+                               , Region
+                               , Category
+                               , Subcategory
+                               , Device_Type
+                               , SUM(Revenue) AS Revenue
+                               , SUM(Cost) AS Cost
+                               , SUM(Revenue - Cost) AS Net_Revenue
+                               , TRUNC(Event_Date, 'MM')::date AS Month_Start
+                               , TRUNC(Event_Date, 'Q')::date AS Quarter_Start
+                               , TRUNC(Event_Date, 'Y')::date AS Year_Start
+                      FROM BI.svc_DRR_Daily_Revenue_Report drr
+                      WHERE Event_Date>=(TRUNC({% parameter Report_Run_Date %}::DATE, 'Y') - INTERVAL '90 DAY')
+                      GROUP BY Event_Date, Region, Category, Subcategory, Device_Type
+                )
+                --SELECT * FROM BASE_DATA;
+                , PERIODS_DATA_YEAR AS (
+                    SELECT Year_Start
+                            , Region
+                            , Category
+                            , Subcategory
+                            , Device_Type
+                            , SUM(Revenue) AS Revenue_YTD
+                            , SUM(Cost) AS Cost_YTD
+                            , SUM(Net_Revenue) AS Net_Revenue_YTD
+                    FROM BASE_DATA
+                    WHERE Event_Date >= TRUNC({% parameter Report_Run_Date %}::DATE, 'Y')::date AND Event_Date <= {% parameter Report_Run_Date %}::DATE
+                    GROUP BY Region, Category, Subcategory, Device_Type, Year_Start
+                )
+                --SELECT * FROM PERIODS_DATA_YEAR;
+                , PERIODS_DATA_QUARTER AS (
+                    SELECT Quarter_Start
+                            , Region
+                            , Category
+                            , Subcategory
+                            , Device_Type
+                            , SUM(Revenue) AS Revenue_QTD
+                            , SUM(Cost) AS Cost_QTD
+                            , SUM(Net_Revenue) AS Net_Revenue_QTD
+                    FROM BASE_DATA
+                    WHERE Event_Date >= TRUNC({% parameter Report_Run_Date %}::DATE, 'Q')::date AND Event_Date <= {% parameter Report_Run_Date %}::DATE
+                    GROUP BY Region, Category, Subcategory, Device_Type, Quarter_Start
+                )
+                --SELECT * FROM PERIODS_DATA_QUARTER;
+                , PERIODS_DATA_MONTH AS (
+                    SELECT Month_Start
+                            , Region
+                            , Category
+                            , Subcategory
+                            , Device_Type
+                            , SUM(Revenue) AS Revenue_MTD
+                            , SUM(Cost) AS Cost_MTD
+                            , SUM(Net_Revenue) AS Net_Revenue_MTD
+                    FROM BASE_DATA
+                    WHERE Event_Date >= TRUNC({% parameter Report_Run_Date %}::DATE, 'MM')::date AND Event_Date <= {% parameter Report_Run_Date %}::DATE
+                    GROUP BY Region, Category, Subcategory, Device_Type, Month_Start
+                )
+                --SELECT * FROM PERIODS_DATA_MONTH;
+                , DAILY_DATA AS (
+                   SELECT Event_Date
+                           , Region
+                           , Category
+                           , Subcategory
+                           , Device_Type
+                           , Revenue
+                           , LAG(Revenue) OVER w_base AS LAG_Revenue
+                           , Cost
+                           , LAG(Cost) OVER w_base AS LAG_Cost
+                           , Net_Revenue
+                           , LAG(Net_Revenue) OVER w_base AS LAG_Net_Revenue
+                           , Month_Start
+                           , Quarter_Start
+                           , Year_Start
+                   FROM BASE_DATA bd
+                   where Event_Date >= ({% parameter Report_Run_Date %}::date - INTERVAL '1 day') AND Event_Date <= {% parameter Report_Run_Date %}::date
+                   WINDOW
+                        w_base AS (PARTITION BY Region, Category, Subcategory, Device_Type ORDER BY Event_Date)
+                )
+                --SELECT * FROM DAILY_DATA;
+                , NINTY_DAY_DATA AS (
+                   SELECT Event_Date
+                           , Region
+                           , Category
+                           , Subcategory
+                           , Device_Type
+                           , Revenue
+                           , Cost
+                           , Net_Revenue
+                   FROM BASE_DATA bd
+                   where Event_Date >= ({% parameter Report_Run_Date %}::date - INTERVAL '90' DAY) AND Event_Date <= {% parameter Report_Run_Date %}::date
+                   WINDOW
+                        w_base AS (PARTITION BY Region, Category, Subcategory, Device_Type ORDER BY Event_Date)
+                )
+                --SELECT * FROM NINTY_DAY_DATA;
+                , DAILY_DATA_FILTERED AS (
+                    SELECT *
+                    FROM DAILY_DATA
+                    WHERE Event_Date={% parameter Report_Run_Date %}
+                )
+                --SELECT * FROM DAILY_DATA_FILTERED;
+                SELECT  'Yearly metrics' as Data_Type
+                        , NULL AS Event_Date
+                        , Region
+                        , Category
+                        , Subcategory
+                        , Device_Type
+                        , NULL AS Revenue
+                        , NULL AS Cost
+                        , NULL AS Net_Revenue
+                        , NULL AS LAG_Revenue
+                        , NULL AS LAG_Cost
+                        , NULL AS LAG_Net_Revenue
+                        , Revenue_YTD AS Revenue_YTD
+                        , Cost_YTD AS Cost_YTD
+                        , Net_Revenue_YTD AS Net_Revenue_YTD
+                        , NULL AS Revenue_QTD
+                        , NULL AS Cost_QTD
+                        , NULL AS Net_Revenue_QTD
+                        , NULL AS Revenue_MTD
+                        , NULL AS Cost_MTD
+                        , NULL AS Net_Revenue_MTD
+                FROM PERIODS_DATA_YEAR
+                UNION
+                SELECT  'Quarterly metrics' as Data_Type
+                        , NULL AS Event_Date
+                        , Region
+                        , Category
+                        , Subcategory
+                        , Device_Type
+                        , NULL AS Revenue
+                        , NULL AS Cost
+                        , NULL AS Net_Revenue
+                        , NULL AS LAG_Revenue
+                        , NULL AS LAG_Cost
+                        , NULL AS LAG_Net_Revenue
+                        , NULL AS Revenue_YTD
+                        , NULL AS Cost_YTD
+                        , NULL AS Net_Revenue_YTD
+                        , Revenue_QTD AS Revenue_QTD
+                        , Cost_QTD AS Cost_QTD
+                        , Net_Revenue_QTD AS Net_Revenue_QTD
+                        , NULL AS Revenue_MTD
+                        , NULL AS Cost_MTD
+                        , NULL AS Net_Revenue_MTD
+                FROM PERIODS_DATA_QUARTER
+                UNION
+                SELECT  'Monthly metrics' as Data_Type
+                        , NULL AS Event_Date
+                        , Region
+                        , Category
+                        , Subcategory
+                        , Device_Type
+                        , NULL AS Revenue
+                        , NULL AS Cost
+                        , NULL AS Net_Revenue
+                        , NULL AS LAG_Revenue
+                        , NULL AS LAG_Cost
+                        , NULL AS LAG_Net_Revenue
+                        , NULL AS Revenue_YTD
+                        , NULL AS Cost_YTD
+                        , NULL AS Net_Revenue_YTD
+                        , NULL AS Revenue_QTD
+                        , NULL AS Cost_QTD
+                        , NULL AS Net_Revenue_QTD
+                        , Revenue_MTD AS Revenue_MTD
+                        , Cost_MTD AS Cost_MTD
+                        , Net_Revenue_MTD AS Net_Revenue_MTD
+                FROM PERIODS_DATA_MONTH
+                UNION
+                SELECT 'Daily metrics' as Data_Type
+                        , Event_Date as Event_Date
+                        , Region
+                        , Category
+                        , Subcategory
+                        , Device_Type
+                        , Revenue
+                        , Cost
+                        , Net_Revenue
+                        , LAG_Revenue
+                        , LAG_Cost
+                        , LAG_Net_Revenue
+                        , NULL AS Revenue_YTD
+                        , NULL AS Cost_YTD
+                        , NULL AS Net_Revenue_YTD
+                        , NULL AS Revenue_QTD
+                        , NULL AS Cost_QTD
+                        , NULL AS Net_Revenue_QTD
+                        , NULL AS Revenue_MTD
+                        , NULL AS Cost_MTD
+                        , NULL AS Net_Revenue_MTD
+                FROM DAILY_DATA_FILTERED D
+                UNION
+                SELECT 'Ninty days metrics' as Data_Type
+                        , Event_Date as Event_Date
+                        , Region
+                        , Category
+                        , Subcategory
+                        , Device_Type
+                        , Revenue
+                        , Cost
+                        , Net_Revenue
+                        , NULL AS LAG_Revenue
+                        , NULL AS LAG_Cost
+                        , NULL AS LAG_Net_Revenue
+                        , NULL AS Revenue_YTD
+                        , NULL AS Cost_YTD
+                        , NULL AS Net_Revenue_YTD
+                        , NULL AS Revenue_QTD
+                        , NULL AS Cost_QTD
+                        , NULL AS Net_Revenue_QTD
+                        , NULL AS Revenue_MTD
+                        , NULL AS Cost_MTD
+                        , NULL AS Net_Revenue_MTD
+                FROM NINTY_DAY_DATA N
+                UNION
+                SELECT 'POP metrics' AS Data_Type
+                        , NULL AS Event_Date
+                        , YC.Region
+                        , YC.Category
+                        , YC.Subcategory
+                        , YC.Device_Type
+                        , DD.Revenue
+                        , DD.Cost
+                        , DD.Net_Revenue
+                        , NULL AS LAG_Revenue
+                        , NULL AS LAG_Cost
+                        , NULL AS LAG_Net_Revenue
+                        , PD_Y.Revenue_YTD
+                        , PD_Y.Cost_YTD
+                        , PD_Y.Net_Revenue_YTD
+                        , PD_Q.Revenue_QTD
+                        , PD_Q.Cost_QTD
+                        , PD_Q.Net_Revenue_QTD
+                        , PD_MM.Revenue_MTD
+                        , PD_MM.Cost_MTD
+                        , PD_MM.Net_Revenue_MTD
+                FROM YEARLY_CATEGORIES YC
+                LEFT JOIN DAILY_DATA_FILTERED DD ON YC.Region = DD.Region AND YC.Category = DD.Category AND YC.Subcategory = DD.Subcategory AND YC.Device_Type = DD.Device_Type
+                LEFT JOIN PERIODS_DATA_YEAR PD_Y ON YC.Region = PD_Y.Region AND YC.Category = PD_Y.Category AND YC.Subcategory = PD_Y.Subcategory AND YC.Device_Type = PD_Y.Device_Type
+                LEFT JOIN PERIODS_DATA_QUARTER PD_Q ON YC.Region = PD_Q.Region AND YC.Category = PD_Q.Category AND YC.Subcategory = PD_Q.Subcategory AND YC.Device_Type = PD_Q.Device_Type
+                LEFT JOIN PERIODS_DATA_MONTH PD_MM ON YC.Region = PD_MM.Region AND YC.Category = PD_MM.Category AND YC.Subcategory = PD_MM.Subcategory AND YC.Device_Type = PD_MM.Device_Type
       ;;
   }
 
   parameter: Report_Run_Date {
     type: date
+    hidden: no
     label: "Report run date:"
     description: "Choose a date that you want to see data on."
+  }
+
+  dimension: Data_Type {
+    description: "Data_Type"
+    type: string
+    sql: ${TABLE}.Data_Type ;;
   }
 
   dimension: Event_Date_Dt {
@@ -114,11 +305,12 @@ view: drr {
     sql: ${TABLE}.Device_Type ;;
   }
 
-  measure: Gross_Revenue {
-  description: "Total Revenue across category, subcategory, region"
-  type: sum
-  sql: ${TABLE}.Revenue ;;
-  value_format: "$#,##0;($#,##0)"
+  measure: Gross_Revenue_Daily {
+    description: "Total Revenue across category, subcategory, region"
+    label: "Gross Rev Daily"
+    type: sum
+    sql: ${TABLE}.Revenue ;;
+    value_format: "$#,##0;($#,##0)"
   }
 
   measure: Gross_Revenue_Previous_Day {
@@ -148,15 +340,16 @@ view: drr {
     label: "Gross Rev YTD"
   }
 
-  measure: Cost {
+  measure: Cost_Daily {
     description: "Total Cost across category, subcategory, region"
+    label: "Cost Daily"
     type: sum
     sql: ${TABLE}.Cost;;
     value_format: "$#,##0;($#,##0)"
   }
 
   measure: Cost_Previous_Day {
-    label: "Gross Revenue Previous Day"
+    label: "Cost Revenue Previous Day"
     type: sum
     sql: ${TABLE}.LAG_Cost ;;
     value_format: "$#,##0;($#,##0)"
@@ -183,8 +376,9 @@ view: drr {
     label: "Cost YTD"
   }
 
-  measure: Net_Revenue {
+  measure: Net_Revenue_Daily {
     description: "Total Net_Revenue across category, subcategory, region"
+    label: "Net Rev Daily"
     type: sum
     sql: ${TABLE}.Net_Revenue ;;
     value_format: "$#,##0;($#,##0)"
@@ -216,11 +410,4 @@ view: drr {
     value_format: "$#,##0;($#,##0)"
     label: "Net Rev YTD"
   }
-
-  measure: Gross_Profit_Perc{
-    label: "GP %"
-    type: number
-    sql: ((${Gross_Revenue} - ${Cost}) / NULLIF(${Gross_Revenue}, 0)) ;;
-    value_format_name: percent_1
-  }
- }
+}

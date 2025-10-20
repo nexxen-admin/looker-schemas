@@ -402,6 +402,7 @@ view: billing_international_media_io {
     label: "Revenue adj"
     type: number
     sql: ${TABLE}.revenue_adj ;;
+    description: "final_billable_revenue_after_adj - capped_revenue_before_adj_with_override"
   }
 
   dimension: sales_team {

@@ -26,10 +26,6 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.acc_aud_sec ;;
   }
-  dimension: action {
-    type: number
-    sql: ${TABLE}."action" ;;
-  }
   dimension: ad_code_id {
     type: number
     sql: ${TABLE}.ad_code_id ;;
@@ -74,34 +70,13 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.app_id ;;
   }
-  dimension: auction_discount_cost {
-    type: number
-    sql: ${TABLE}.auction_discount_cost ;;
-  }
   dimension: auction_type {
     type: number
     sql: ${TABLE}.auction_type ;;
   }
-  dimension: audio_mute_events {
-    type: number
-    sql: ${TABLE}.audio_mute_events ;;
-  }
-  dimension: audio_unmute_events {
-    type: number
-    sql: ${TABLE}.audio_unmute_events ;;
-  }
-  dimension: avoc_imp {
-    type: number
-    sql: ${TABLE}.avoc_imp ;;
-  }
   dimension: beacon_id {
     type: number
     sql: ${TABLE}.beacon_id ;;
-  }
-  dimension: bid {
-    type: number
-    value_format_name: id
-    sql: ${TABLE}.bid ;;
   }
   dimension: bid_price {
     type: number
@@ -139,42 +114,6 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.city_name ;;
   }
-  dimension: click {
-    type: number
-    sql: ${TABLE}.click ;;
-  }
-  dimension: click_through_action {
-    type: number
-    sql: ${TABLE}.click_through_action ;;
-  }
-  dimension: cogs {
-    type: number
-    sql: ${TABLE}.cogs ;;
-  }
-  dimension: collapse_events {
-    type: number
-    sql: ${TABLE}.collapse_events ;;
-  }
-  dimension: complete_events {
-    type: number
-    sql: ${TABLE}.complete_events ;;
-  }
-  dimension: concatenated_brand_intelligence_data_cost {
-    type: number
-    sql: ${TABLE}.concatenated_brand_intelligence_data_cost ;;
-  }
-  dimension: content_data_cost {
-    type: number
-    sql: ${TABLE}.content_data_cost ;;
-  }
-  dimension: contextual_data_cost {
-    type: number
-    sql: ${TABLE}.contextual_data_cost ;;
-  }
-  dimension: cost {
-    type: number
-    sql: ${TABLE}.cost ;;
-  }
   dimension: country_id {
     type: number
     sql: ${TABLE}.country_id ;;
@@ -195,10 +134,6 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.cpc_goal ;;
   }
-  dimension: creative_engagement_events {
-    type: number
-    sql: ${TABLE}.creative_engagement_events ;;
-  }
   dimension: creative_id {
     type: number
     sql: ${TABLE}.creative_id ;;
@@ -211,25 +146,9 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.creative_size ;;
   }
-  dimension: cross_device_action {
-    type: number
-    sql: ${TABLE}.cross_device_action ;;
-  }
-  dimension: cross_device_assigned_cpa_action {
-    type: number
-    sql: ${TABLE}.cross_device_assigned_cpa_action ;;
-  }
-  dimension: cross_device_click_through_action {
-    type: number
-    sql: ${TABLE}.cross_device_click_through_action ;;
-  }
   dimension: cross_device_cta_value {
     type: number
     sql: ${TABLE}.cross_device_cta_value ;;
-  }
-  dimension: cross_device_view_through_action {
-    type: number
-    sql: ${TABLE}.cross_device_view_through_action ;;
   }
   dimension: cross_device_vta_value {
     type: number
@@ -238,14 +157,6 @@ view: amobee_media_daily_mtz_view {
   dimension: cta_value {
     type: number
     sql: ${TABLE}.cta_value ;;
-  }
-  dimension: current_bid_price {
-    type: number
-    sql: ${TABLE}.current_bid_price ;;
-  }
-  dimension: deal_floor_price {
-    type: number
-    sql: ${TABLE}.deal_floor_price ;;
   }
   dimension: deal_id {
     type: string
@@ -309,10 +220,6 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.exchange_publisher_name ;;
   }
-  dimension: expand_events {
-    type: number
-    sql: ${TABLE}.expand_events ;;
-  }
   dimension: ext_app {
     type: number
     sql: ${TABLE}.ext_app ;;
@@ -324,10 +231,6 @@ view: amobee_media_daily_mtz_view {
   dimension: external_tpa_id {
     type: string
     sql: ${TABLE}.external_tpa_id ;;
-  }
-  dimension: first_party_cost {
-    type: number
-    sql: ${TABLE}.first_party_cost ;;
   }
   dimension: format {
     type: string
@@ -341,21 +244,9 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.gross_video_ad_call ;;
   }
-  dimension: groupm_viewable_imp {
-    type: number
-    sql: ${TABLE}.groupm_viewable_imp ;;
-  }
   dimension: home_market_name {
     type: string
     sql: ${TABLE}.home_market_name ;;
-  }
-  dimension: household_action {
-    type: number
-    sql: ${TABLE}.household_action ;;
-  }
-  dimension: household_click_through_action {
-    type: number
-    sql: ${TABLE}.household_click_through_action ;;
   }
   dimension: household_cta_value {
     type: number
@@ -385,10 +276,6 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.iab_category_name ;;
   }
-  dimension: impression {
-    type: number
-    sql: ${TABLE}.impression ;;
-  }
   dimension: insertion_order_id {
     type: number
     sql: ${TABLE}.insertion_order_id ;;
@@ -396,14 +283,6 @@ view: amobee_media_daily_mtz_view {
   dimension: insertion_order_name {
     type: string
     sql: ${TABLE}.insertion_order_name ;;
-  }
-  dimension: inv_cost {
-    type: number
-    sql: ${TABLE}.inv_cost ;;
-  }
-  dimension: inventory_cost {
-    type: number
-    sql: ${TABLE}.inventory_cost ;;
   }
   dimension: inventory_source_id {
     type: number
@@ -443,10 +322,6 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.margin_on_inventory ;;
   }
-  dimension: market_audience_data_cost {
-    type: number
-    sql: ${TABLE}.market_audience_data_cost ;;
-  }
   dimension: market_default_local_currency_exchange_rate {
     type: number
     sql: ${TABLE}.market_default_local_currency_exchange_rate ;;
@@ -459,17 +334,9 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.market_id ;;
   }
-  dimension: market_third_party_cost {
-    type: number
-    sql: ${TABLE}.market_third_party_cost ;;
-  }
   dimension: market_timezone {
     type: string
     sql: ${TABLE}.market_timezone ;;
-  }
-  dimension: measurable_imp {
-    type: number
-    sql: ${TABLE}.measurable_imp ;;
   }
   dimension: media_channel_id {
     type: number
@@ -490,10 +357,6 @@ view: amobee_media_daily_mtz_view {
   dimension: mobile_device_type_id {
     type: number
     sql: ${TABLE}.mobile_device_type_id ;;
-  }
-  dimension: non_ssl_ad_serving_fee {
-    type: number
-    sql: ${TABLE}.non_ssl_ad_serving_fee ;;
   }
   dimension: os_type {
     type: string
@@ -541,14 +404,6 @@ view: amobee_media_daily_mtz_view {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.package_start_date ;;
   }
-  dimension: page_quality_data_cost {
-    type: number
-    sql: ${TABLE}.page_quality_data_cost ;;
-  }
-  dimension: partner_fee {
-    type: number
-    sql: ${TABLE}.partner_fee ;;
-  }
   dimension: partner_markup {
     type: number
     sql: ${TABLE}.partner_markup ;;
@@ -557,29 +412,9 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.partner_reserve ;;
   }
-  dimension: pause_events {
-    type: number
-    sql: ${TABLE}.pause_events ;;
-  }
-  dimension: percent25_events {
-    type: number
-    sql: ${TABLE}.percent25_events ;;
-  }
-  dimension: percent50_events {
-    type: number
-    sql: ${TABLE}.percent50_events ;;
-  }
-  dimension: percent75_events {
-    type: number
-    sql: ${TABLE}.percent75_events ;;
-  }
   dimension: performance_reserve {
     type: number
     sql: ${TABLE}.performance_reserve ;;
-  }
-  dimension: pmp_fee {
-    type: number
-    sql: ${TABLE}.pmp_fee ;;
   }
   dimension: postal_code {
     type: string
@@ -605,14 +440,6 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.region_name ;;
   }
-  dimension: resume_events {
-    type: number
-    sql: ${TABLE}.resume_events ;;
-  }
-  dimension: rewind_events {
-    type: number
-    sql: ${TABLE}.rewind_events ;;
-  }
   dimension: rtbexchange_bid {
     type: number
     value_format_name: id
@@ -629,14 +456,6 @@ view: amobee_media_daily_mtz_view {
   dimension: shopping_cart_value_vta {
     type: number
     sql: ${TABLE}.shopping_cart_value_vta ;;
-  }
-  dimension: skip_events {
-    type: number
-    sql: ${TABLE}.skip_events ;;
-  }
-  dimension: ssl_ad_serving_fee {
-    type: number
-    sql: ${TABLE}.ssl_ad_serving_fee ;;
   }
   dimension: tac {
     type: number
@@ -730,18 +549,6 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.video_skippable ;;
   }
-  dimension: view_through_action {
-    type: number
-    sql: ${TABLE}.view_through_action ;;
-  }
-  dimension: viewability_video_duration {
-    type: number
-    sql: ${TABLE}.viewability_video_duration ;;
-  }
-  dimension: viewable_imp {
-    type: number
-    sql: ${TABLE}.viewable_imp ;;
-  }
   dimension: vta_value {
     type: number
     sql: ${TABLE}.vta_value ;;
@@ -771,29 +578,223 @@ view: amobee_media_daily_mtz_view {
     drill_fields: [detail*]
   }
 
+  measure: action {
+    type: sum
+    sql: ${TABLE}."action" ;;
+  }
+  measure: audio_mute_events {
+    type: sum
+    sql: ${TABLE}.audio_mute_events ;;
+  }
+  measure: audio_unmute_events {
+    type: sum
+    sql: ${TABLE}.audio_unmute_events ;;
+  }
+  measure: avoc_imp {
+    type: sum
+    sql: ${TABLE}.avoc_imp ;;
+  }
+  measure: auction_discount_cost {
+    type: sum
+    sql: ${TABLE}.auction_discount_cost ;;
+  }
+  measure: bid {
+    type: sum
+    sql: ${TABLE}.bid ;;
+  }
+  measure: click {
+    type: sum
+    sql: ${TABLE}.click ;;
+  }
+  measure: click_through_action {
+    type: sum
+    sql: ${TABLE}.click_through_action ;;
+  }
+  measure: cogs {
+    type: sum
+    sql: ${TABLE}.cogs ;;
+  }
+  measure: collapse_events {
+    type: sum
+    sql: ${TABLE}.collapse_events ;;
+  }
+  measure: complete_events {
+    type: sum
+    sql: ${TABLE}.complete_events ;;
+  }
+  measure: concatenated_brand_intelligence_data_cost {
+    type: sum
+    sql: ${TABLE}.concatenated_brand_intelligence_data_cost ;;
+  }
+  measure: content_data_cost {
+    type: sum
+    sql: ${TABLE}.content_data_cost ;;
+  }
+  measure: contextual_data_cost {
+    type: sum
+    sql: ${TABLE}.contextual_data_cost ;;
+  }
+  measure: cost {
+    type: sum
+    sql: ${TABLE}.cost ;;
+  }
+  measure: creative_engagement_events {
+    type: sum
+    sql: ${TABLE}.creative_engagement_events ;;
+  }
+  measure: cross_device_action {
+    type: sum
+    sql: ${TABLE}.cross_device_action ;;
+  }
+  measure: cross_device_assigned_cpa_action {
+    type: sum
+    sql: ${TABLE}.cross_device_assigned_cpa_action ;;
+  }
+  measure: cross_device_click_through_action {
+    type: sum
+    sql: ${TABLE}.cross_device_click_through_action ;;
+  }
+  measure: cross_device_view_through_action {
+    type: sum
+    sql: ${TABLE}.cross_device_view_through_action ;;
+  }
+  measure: current_bid_price {
+    type: sum
+    sql: ${TABLE}.current_bid_price ;;
+  }
+  measure: deal_floor_price {
+    type: sum
+    sql: ${TABLE}.deal_floor_price ;;
+  }
+  measure: expand_events {
+    type: sum
+    sql: ${TABLE}.expand_events ;;
+  }
+  measure: first_party_cost {
+    type: sum
+    sql: ${TABLE}.first_party_cost ;;
+  }
+  measure: groupm_viewable_imp {
+    type: sum
+    sql: ${TABLE}.groupm_viewable_imp ;;
+  }
+  measure: household_action {
+    type: sum
+    sql: ${TABLE}.household_action ;;
+  }
+  measure: household_click_through_action {
+    type: sum
+    sql: ${TABLE}.household_click_through_action ;;
+  }
+  measure: impression {
+    type: sum
+    sql: ${TABLE}.impression ;;
+  }
+  measure: inv_cost {
+    type: sum
+    sql: ${TABLE}.inv_cost ;;
+  }
+  measure: inventory_cost {
+    type: sum
+    sql: ${TABLE}.inventory_cost ;;
+  }
+  measure: market_audience_data_cost {
+    type: sum
+    sql: ${TABLE}.market_audience_data_cost ;;
+  }
+  measure: market_third_party_cost {
+    type: sum
+    sql: ${TABLE}.market_third_party_cost ;;
+  }
+  measure: measurable_imp {
+    type: sum
+    sql: ${TABLE}.measurable_imp ;;
+  }
+  measure: non_ssl_ad_serving_fee {
+    type: sum
+    sql: ${TABLE}.non_ssl_ad_serving_fee ;;
+  }
+  measure: page_quality_data_cost {
+    type: sum
+    sql: ${TABLE}.page_quality_data_cost ;;
+  }
+  measure: partner_fee {
+    type: sum
+    sql: ${TABLE}.partner_fee ;;
+  }
+  measure: pause_events {
+    type: sum
+    sql: ${TABLE}.pause_events ;;
+  }
+  measure: percent25_events {
+    type: sum
+    sql: ${TABLE}.percent25_events ;;
+  }
+  measure: percent50_events {
+    type: sum
+    sql: ${TABLE}.percent50_events ;;
+  }
+  measure: percent75_events {
+    type: sum
+    sql: ${TABLE}.percent75_events ;;
+  }
+  measure: pmp_fee {
+    type: sum
+    sql: ${TABLE}.pmp_fee ;;
+  }
+  measure: resume_events {
+    type: sum
+    sql: ${TABLE}.resume_events ;;
+  }
+  measure: rewind_events {
+    type: sum
+    sql: ${TABLE}.rewind_events ;;
+  }
+  measure: skip_events {
+    type: sum
+    sql: ${TABLE}.skip_events ;;
+  }
+  measure: ssl_ad_serving_fee {
+    type: sum
+    sql: ${TABLE}.ssl_ad_serving_fee ;;
+  }
+  measure: view_through_action {
+    type: sum
+    sql: ${TABLE}.view_through_action ;;
+  }
+  measure: viewability_video_duration {
+    type: sum
+    sql: ${TABLE}.viewability_video_duration ;;
+  }
+  measure: viewable_imp {
+    type: sum
+    sql: ${TABLE}.viewable_imp ;;
+  }
+
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	region_name,
-	country_name,
-	iab_category_name,
-	deal_name,
-	city_name,
-	advertiser_name,
-	deal_type_name,
-	publisher_name,
-	insertion_order_name,
-	mobile_app_name,
-	home_market_name,
-	exchange_publisher_name,
-	os_version_name,
-	campaign_name,
-	inventory_source_name,
-	line_item_name,
-	creative_name,
-	media_channel_name,
-	dma_name
-	]
+  region_name,
+  country_name,
+  iab_category_name,
+  deal_name,
+  city_name,
+  advertiser_name,
+  deal_type_name,
+  publisher_name,
+  insertion_order_name,
+  mobile_app_name,
+  home_market_name,
+  exchange_publisher_name,
+  os_version_name,
+  campaign_name,
+  inventory_source_name,
+  line_item_name,
+  creative_name,
+  media_channel_name,
+  dma_name
+  ]
   }
 
 }

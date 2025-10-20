@@ -325,18 +325,20 @@ view: forecast_data {
     type: string
     label: "Sales Team (Chance Org)"
     sql: CASE WHEN ${new_enterprise_team} ILIKE '%Enterprise Sales%' THEN ${new_enterprise_team}
-              --WHEN ${new_enterprise_team} ILIKE '%Enterprise Services - National%' THEN 'Enterprise Sales'
+              WHEN ${new_enterprise_team} ILIKE '%Enterprise Services - National%' THEN 'Enterprise Sales'
               WHEN  ${new_enterprise_team} ILIKE '%Political%' THEN 'Enterprise Sales - Political'
               WHEN ${strat_sales_team}  ILIKE '%Barter Direct%' THEN ${strat_sales_team}
-            ELSE CONCAT('Strategic Sales - ', ${strat_sales_team}) END ;;
+            WHEN ${strat_sales_rvp} ILIKE '%Strat Sales%' THEN ${strat_sales_rvp}
+            ELSE 'Unknown' END ;;
   }
 
   dimension: chance_team {
     type: string
     label: "Chance Team (Consolidated)"
     sql: CASE WHEN ${sales_team_chance_org} ILIKE '%Enterprise Sales%' THEN 'Enterprise Sales'
-              WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%' THEN 'Strategic Sales'
+              WHEN ${sales_team_chance_org} ILIKE '%Strat Sales%' THEN 'Strategic Sales'
               WHEN ${sales_team_chance_org} ILIKE '%Barter Direct%' THEN 'Barter Direct'
+              WHEN ${sales_team_chance_org} ILIKE 'Unknown' THEN 'Unknown'
             END;;
   }
 

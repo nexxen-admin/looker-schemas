@@ -925,10 +925,20 @@ measure: Nexxen_Inv_Cost_Percent {
   }
 
 
-  measure: Avg_3_day_needed_imp {
+  measure: avg_3_day_needed_imp {
     type: number
     label: "Avg 3 Day Needed Imp"
     sql: (${hybrid_impressions_needed_yesterday} * 3) ;;
+  }
+
+
+  measure: min_incremental_spend {
+    type: number
+    label: "Min Incremental Spend"
+    sql:
+    (
+      (${last_3_days_impressions_raw} / NULLIF(${avg_3_day_needed_imp}, 0)) * ${dim_sfdb_opportunitylineitem.total_booked_budget_meas}
+    ) - ${dim_sfdb_opportunitylineitem.total_booked_budget_meas} ;;
   }
 
 

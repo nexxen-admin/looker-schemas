@@ -911,6 +911,20 @@ measure: Nexxen_Inv_Cost_Percent {
     sql: ${hybrid_impressions_remaining} + ${hybrid_impressions_delivered_yesterday} ;;
   }
 
+
+  measure: hybrid_impressions_needed_yesterday {
+    type: number
+    label: "Hybrid Impressions Per Remaining Day"
+    value_format_name: "decimal_0"
+    sql:
+    CASE
+      WHEN (${hybrid_impressions_remaining_yesterday} / NULLIF(${dim_sfdb_opportunitylineitem.item_days_left} + 1, 0)) < 0
+        THEN 0
+      ELSE (${hybrid_impressions_remaining_yesterday} / NULLIF(${dim_sfdb_opportunitylineitem.item_days_left} + 1, 0))
+    END ;;
+  }
+
+
   measure: Delivered_Spend {
     type: sum
     sql: ${TABLE}.delivery_units/1000*${dim_sfdb_opportunitylineitem.rate__c};;

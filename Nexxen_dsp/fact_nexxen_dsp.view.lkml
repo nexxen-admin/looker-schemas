@@ -898,6 +898,58 @@ measure: Nexxen_Inv_Cost_Percent {
   }
 
 
+  measure: hybrid_impressions_remaining {
+    type: number
+    label: "Hybrid Impressions Remaining"
+    sql: ${dim_sfdb_opportunitylineitem.units__c} - ${hybrid_impressions_delivered} ;;
+  }
+
+
+  measure: hybrid_impressions_remaining_yesterday {
+    type: number
+    label: "Hybrid Impressions Remaining Yesterday"
+    sql: ${hybrid_impressions_remaining} + ${hybrid_impressions_delivered_yesterday} ;;
+  }
+
+
+  measure: hybrid_impressions_needed_yesterday {
+    type: number
+    label: "Hybrid Impressions Per Remaining Day"
+    value_format_name: "decimal_0"
+    sql:
+    CASE
+      WHEN (${hybrid_impressions_remaining_yesterday} / NULLIF(${dim_sfdb_opportunitylineitem.item_days_left} + 1, 0)) < 0
+        THEN 0
+      ELSE (${hybrid_impressions_remaining_yesterday} / NULLIF(${dim_sfdb_opportunitylineitem.item_days_left} + 1, 0))
+    END ;;
+  }
+
+
+  measure: avg_3_day_needed_imp {
+    type: number
+    label: "Avg 3 Day Needed Imp"
+    sql: (${hybrid_impressions_needed_yesterday} * 3) ;;
+  }
+
+
+  measure: min_incremental_spend {
+    type: number
+    label: "Min Incremental Spend"
+    sql:
+    (
+      (${last_3_days_impressions_raw} / NULLIF(${avg_3_day_needed_imp}, 0)) * ${dim_sfdb_opportunitylineitem.total_booked_budget_meas}
+    ) - ${dim_sfdb_opportunitylineitem.total_booked_budget_meas} ;;
+  }
+
+  measure: min_incremental_impression_amount {
+    type: number
+    label: "Min Incremental Impression Amount"
+    sql:
+    (
+      (${last_3_days_impressions_raw} / NULLIF(${avg_3_day_needed_imp}, 0)) * ${dim_sfdb_opportunitylineitem.units__c}
+    ) - ${dim_sfdb_opportunitylineitem.units__c} ;;
+  }
+
   measure: Delivered_Spend {
     type: sum
     sql: ${TABLE}.delivery_units/1000*${dim_sfdb_opportunitylineitem.rate__c};;

@@ -905,6 +905,12 @@ measure: Nexxen_Inv_Cost_Percent {
   }
 
 
+  measure: hybrid_impressions_remaining_yesterday {
+    type: number
+    label: "Hybrid Impressions Remaining Yesterday"
+    sql: ${hybrid_impressions_remaining} + ${hybrid_impressions_delivered_yesterday} ;;
+  }
+
   measure: Delivered_Spend {
     type: sum
     sql: ${TABLE}.delivery_units/1000*${dim_sfdb_opportunitylineitem.rate__c};;

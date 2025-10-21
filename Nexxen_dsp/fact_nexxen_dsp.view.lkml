@@ -898,6 +898,13 @@ measure: Nexxen_Inv_Cost_Percent {
   }
 
 
+  measure: hybrid_impressions_remaining {
+    type: number
+    label: "Hybrid Impressions Remaining"
+    sql: ${dim_sfdb_opportunitylineitem.units__c} - ${hybrid_impressions_delivered} ;;
+  }
+
+
   measure: Delivered_Spend {
     type: sum
     sql: ${TABLE}.delivery_units/1000*${dim_sfdb_opportunitylineitem.rate__c};;

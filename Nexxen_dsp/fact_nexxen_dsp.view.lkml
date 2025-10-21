@@ -925,6 +925,13 @@ measure: Nexxen_Inv_Cost_Percent {
   }
 
 
+  measure: Avg_3_day_needed_imp {
+    type: number
+    label: "Avg 3 Day Needed Imp"
+    sql: (${hybrid_impressions_needed_yesterday} * 3) ;;
+  }
+
+
   measure: Delivered_Spend {
     type: sum
     sql: ${TABLE}.delivery_units/1000*${dim_sfdb_opportunitylineitem.rate__c};;

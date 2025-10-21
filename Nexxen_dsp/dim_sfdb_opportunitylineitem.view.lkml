@@ -280,6 +280,18 @@ view: dim_sfdb_opportunitylineitem {
     hidden: yes
   }
 
+
+  dimension: days_elapsed_today_opportunitylineitem {
+    type: number
+    label: "Days Elapsed Today opportunitylineitem"
+    sql:
+    CASE
+      WHEN DATEDIFF('day', ${TABLE}.start_date__c, CURRENT_DATE) < 0
+        THEN 0
+      ELSE DATEDIFF('day', ${TABLE}.start_date__c, CURRENT_DATE)
+    END ;;
+  }
+
   dimension:  live_campaign_filter{
     type: string
     label: "Is Campaign Live"

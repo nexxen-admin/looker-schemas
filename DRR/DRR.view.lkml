@@ -13,7 +13,7 @@ view: drr {
                                , TRUNC(Event_Date, 'Q')::date AS Quarter_Start
                                , TRUNC(Event_Date, 'Y')::date AS Year_Start
                       FROM BI.svc_DRR_Daily_Revenue_Report drr
-                      WHERE Event_Date>=(TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'Y') - INTERVAL '90 DAY')
+                      WHERE Event_Date>=(TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'Y') - INTERVAL '90 DAY')
                       GROUP BY Event_Date, Region, Category, Subcategory, Device_Type
                 )
                 --SELECT * FROM BASE_DATA;
@@ -27,7 +27,7 @@ view: drr {
                             , SUM(Cost) AS Cost_YTD
                             , SUM(Net_Revenue) AS Net_Revenue_YTD
                     FROM BASE_DATA
-                    WHERE Event_Date >= TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'Y')::date AND Event_Date <= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
+                    WHERE Event_Date >= TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'Y')::date AND Event_Date <= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
                     GROUP BY Region, Category, Subcategory, Device_Type, Year_Start
                 )
                 --SELECT * FROM PERIODS_DATA_YEAR;
@@ -41,7 +41,7 @@ view: drr {
                             , SUM(Cost) AS Cost_QTD
                             , SUM(Net_Revenue) AS Net_Revenue_QTD
                     FROM BASE_DATA
-                    WHERE Event_Date >= TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'Q')::date AND Event_Date <= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
+                    WHERE Event_Date >= TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'Q')::date AND Event_Date <= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
                     GROUP BY Region, Category, Subcategory, Device_Type, Quarter_Start
                 )
                 --SELECT * FROM PERIODS_DATA_QUARTER;
@@ -55,7 +55,7 @@ view: drr {
                             , SUM(Cost) AS Cost_MTD
                             , SUM(Net_Revenue) AS Net_Revenue_MTD
                     FROM BASE_DATA
-                    WHERE Event_Date >= TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'MM')::date AND Event_Date <= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
+                    WHERE Event_Date >= TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'MM')::date AND Event_Date <= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
                     GROUP BY Region, Category, Subcategory, Device_Type, Month_Start
                 )
                 --SELECT * FROM PERIODS_DATA_MONTH;
@@ -75,7 +75,7 @@ view: drr {
                            , Quarter_Start
                            , Year_Start
                    FROM BASE_DATA bd
-                   where Event_Date >= ((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::date - INTERVAL '2 DAY') AND Event_Date <= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::date
+                   where Event_Date >= ((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::date - INTERVAL '1 DAY') AND Event_Date <= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::date
                    WINDOW
                         w_base AS (PARTITION BY Region, Category, Subcategory, Device_Type ORDER BY Event_Date)
                 )
@@ -90,13 +90,13 @@ view: drr {
                            , Cost
                            , Net_Revenue
                    FROM BASE_DATA bd
-                   where Event_Date >= ((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::date - INTERVAL '90' DAY) AND Event_Date <= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::date
+                   where Event_Date >= ((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::date - INTERVAL '90' DAY) AND Event_Date <= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::date
                 )
                 --SELECT * FROM NINTY_DAY_DATA;
                 , DAILY_DATA_FILTERED AS (
                     SELECT *
                     FROM DAILY_DATA
-                    WHERE Event_Date=(CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)
+                    WHERE Event_Date=(CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)
                 )
                 --SELECT * FROM DAILY_DATA_FILTERED;
                 SELECT  'Yearly metrics' as Data_Type

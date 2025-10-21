@@ -941,6 +941,14 @@ measure: Nexxen_Inv_Cost_Percent {
     ) - ${dim_sfdb_opportunitylineitem.total_booked_budget_meas} ;;
   }
 
+  measure: min_incremental_impression_amount {
+    type: number
+    label: "Min Incremental Impression Amount"
+    sql:
+    (
+      (${last_3_days_impressions_raw} / NULLIF(${avg_3_day_needed_imp}, 0)) * ${dim_sfdb_opportunitylineitem.units__c}
+    ) - ${dim_sfdb_opportunitylineitem.units__c} ;;
+  }
 
   measure: Delivered_Spend {
     type: sum

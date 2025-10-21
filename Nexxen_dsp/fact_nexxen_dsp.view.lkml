@@ -901,7 +901,7 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: hybrid_impressions_remaining {
     type: number
     label: "Hybrid Impressions Remaining"
-    sql: ${dim_sfdb_opportunitylineitem.units__c} - ${hybrid_impressions_delivered} ;;
+    sql: ${dim_sfdb_opportunitylineitem.budgeted_units} - ${hybrid_impressions_delivered} ;;
   }
 
 
@@ -911,17 +911,15 @@ measure: Nexxen_Inv_Cost_Percent {
     sql: ${hybrid_impressions_remaining} + ${hybrid_impressions_delivered_yesterday} ;;
   }
 
-
   measure: hybrid_impressions_needed_yesterday {
     type: number
-    label: "Hybrid Impressions Per Remaining Day"
     value_format_name: "decimal_0"
     sql:
-    CASE
-      WHEN (${hybrid_impressions_remaining_yesterday} / NULLIF(${dim_sfdb_opportunitylineitem.item_days_left} + 1, 0)) < 0
-        THEN 0
-      ELSE (${hybrid_impressions_remaining_yesterday} / NULLIF(${dim_sfdb_opportunitylineitem.item_days_left} + 1, 0))
-    END ;;
+    GREATEST(
+      ${hybrid_impressions_remaining_yesterday} / NULLIF(MAX(${dim_sfdb_opportunitylineitem.item_days_left}) + 1, 0),
+      0
+    )
+    ;;
   }
 
 
@@ -934,6 +932,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: min_incremental_spend {
     type: number
+    value_format_name: "decimal_0"
     label: "Min Incremental Spend"
     sql:
     (
@@ -943,12 +942,25 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: min_incremental_impression_amount {
     type: number
+    value_format_name: "decimal_0"
     label: "Min Incremental Impression Amount"
     sql:
     (
-      (${last_3_days_impressions_raw} / NULLIF(${avg_3_day_needed_imp}, 0)) * ${dim_sfdb_opportunitylineitem.units__c}
-    ) - ${dim_sfdb_opportunitylineitem.units__c} ;;
+      (${last_3_days_impressions_raw} / NULLIF(${avg_3_day_needed_imp}, 0)) * ${dim_sfdb_opportunitylineitem.budgeted_units}
+    ) - ${dim_sfdb_opportunitylineitem.budgeted_units} ;;
   }
+
+  measure: hybrid_clicks {
+    type: number
+    label: "Hybrid Clicks"
+    sql:
+    CASE
+      WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen')
+        THEN ${third_party_clicks}
+      ELSE ${clicks}
+    END ;;
+  }
+
 
   measure: Delivered_Spend {
     type: sum

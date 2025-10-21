@@ -159,7 +159,7 @@ view: manual_valvoline {
     type: sum
     sql:  ${TABLE}.transaction_amount ;;
     hidden: yes
-    label: "Tooltip Transaction Amount % Customers"
+    label: " "
     value_format: "$#,##0"
     html:  Transaction amount: {{ transaction_amount._rendered_value }} | Customers {{ derived_actions._rendered_value }};;
   }

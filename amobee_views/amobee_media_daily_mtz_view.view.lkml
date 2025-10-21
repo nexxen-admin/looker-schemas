@@ -636,6 +636,7 @@ view: amobee_media_daily_mtz_view {
   }
   measure: cost {
     type: sum
+    value_format: "#,##0.00"
     sql: ${TABLE}.cost ;;
   }
   measure: creative_engagement_events {
@@ -692,18 +693,22 @@ view: amobee_media_daily_mtz_view {
   }
   measure: inv_cost {
     type: sum
+    value_format: "#,##0.00"
     sql: ${TABLE}.inv_cost ;;
   }
   measure: inventory_cost {
     type: sum
+    value_format: "#,##0.00"
     sql: ${TABLE}.inventory_cost ;;
   }
   measure: market_audience_data_cost {
     type: sum
+    value_format: "#,##0.00"
     sql: ${TABLE}.market_audience_data_cost ;;
   }
   measure: market_third_party_cost {
     type: sum
+    value_format: "#,##0.00"
     sql: ${TABLE}.market_third_party_cost ;;
   }
   measure: measurable_imp {
@@ -716,6 +721,7 @@ view: amobee_media_daily_mtz_view {
   }
   measure: page_quality_data_cost {
     type: sum
+    value_format: "#,##0.00"
     sql: ${TABLE}.page_quality_data_cost ;;
   }
   measure: partner_fee {

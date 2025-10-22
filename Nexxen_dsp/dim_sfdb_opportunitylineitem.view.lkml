@@ -266,11 +266,19 @@ view: dim_sfdb_opportunitylineitem {
     description: "End date of line item in salesforce"
   }
 
+  # dimension: item_days {
+  #   type: number
+  #   description: "The difference in days between the io start and end date."
+  #   sql: DATEDIFF(day, start_date__c, end_date__c) ;;
+  #   # hidden: yes
+  # }
+
   dimension: item_days {
     type: number
     description: "The difference in days between the io start and end date."
-    sql: DATEDIFF(day, start_date__c, end_date__c) ;;
-    hidden: yes
+    # Use the LookML reference for the 'date' timeframe of the dimension groups
+    sql: DATEDIFF(day, ${start_date__c_date}, ${end_date__c_date}) ;;
+    # hidden: yes
   }
 
   dimension: item_days_left {

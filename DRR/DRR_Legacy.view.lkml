@@ -12,7 +12,7 @@ view: drr_legacy {
                                , TRUNC(Event_Date, 'MM')::date AS Month_Start
                                , TRUNC(Event_Date, 'Q')::date AS Quarter_Start
                                , TRUNC(Event_Date, 'Y')::date AS Year_Start
-                      FROM BI.DRR_Daily_Revenue_Report drr
+                      FROM BI.svc_DRR_Daily_Revenue_Report drr
                       WHERE Event_Date>=(TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'Y') - INTERVAL '90 DAY')
                       GROUP BY Event_Date, Region, Category, Subcategory, Device_Type
                 )

@@ -284,7 +284,7 @@ view: dim_sfdb_opportunitylineitem {
   dimension: item_days_left {
     type: number
     description: "The difference in days between the io end date and current date."
-    sql: DATEDIFF(day, now(), end_date__c) ;;
+    sql: DATEDIFF(day, now(), ${end_date__c_date}) ;;
     hidden: yes
   }
 

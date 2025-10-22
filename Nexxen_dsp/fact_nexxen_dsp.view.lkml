@@ -1195,7 +1195,7 @@ measure: Nexxen_Inv_Cost_Percent {
                     THEN ${yesterday_CTR_1P}*100
 
                     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate'
-                    THEN ${Last_day_1p_complete_events} / ${Last_day_1p_impressions} * 100
+                    THEN (${Last_day_1p_complete_events} / NULLIF(${Last_day_1p_impressions}, 0)) * 100
 
                     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate')
                     THEN ${yesterday_1P_CVR} * 100
@@ -1210,7 +1210,7 @@ measure: Nexxen_Inv_Cost_Percent {
                     THEN ${yesterday_pacing} * 100
 
                     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%'
-                    THEN ${yesterday_uncapped_revenue} / ${yesterday_actions}
+                    THEN ${yesterday_uncapped_revenue} / NULLIF(${yesterday_actions}, 0)
               ELSE 0 END,2)
 
             ;;

@@ -254,6 +254,12 @@ explore: active_inactive_publishers {
   hidden: yes
 }
 
+explore: supply_signals_audit_daily {
+  label: "Supply Signals Audit Daily"
+  #required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
+
 
 explore:  exchange_daily_report_component{
   label: "Exchange Daily Report Component"

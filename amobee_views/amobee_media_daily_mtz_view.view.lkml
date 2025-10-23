@@ -640,7 +640,7 @@ view: amobee_media_daily_mtz_view {
   }
   measure: cost {
     type: sum
-    value_format: "#,##0.00"
+    value_format: "$#,##0.00"
     sql: ${TABLE}.cost ;;
   }
   measure: creative_engagement_events {

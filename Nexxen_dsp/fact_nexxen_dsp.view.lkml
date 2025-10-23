@@ -969,6 +969,38 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "0.0%"
   }
 
+  measure: hybrid_CTR_overall {
+    type: number
+    label: "Hybrid CTR Overall"
+    sql:
+    SUM(
+      CASE
+        WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen')
+          THEN ${TABLE}.clicks
+        ELSE ${TABLE}.third_party_clicks
+      END
+    )
+    /
+    NULLIF(
+      SUM(
+        CASE
+          WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee','Nexxen')
+            THEN ${TABLE}.complete_events
+          ELSE ${TABLE}.impressions
+        END
+      ), 0
+    ) ;;
+    value_format: "0.0%"
+  }
+
+
+
+  # measure: hybrid_CTR_overall {
+  #   type: number
+  #   label: "Hybrid CTR Overall"
+  #   sql: ${hybrid_clicks} / NULLIF(${hybrid_impressions_delivered}, 0) ;;
+  #   value_format: "0.0%"
+  # }
 
   measure: Delivered_Spend {
     type: sum

@@ -356,6 +356,18 @@ view: dim_sfdb_opportunitylineitem {
     #hidden: yes
   }
 
+  dimension: Booked_Spend {
+    type: number
+    label: "Booked Spend"
+    sql:
+    CASE
+      WHEN ${free__c} IN ('Hidden/Included', 'Added Value', 'Make Good')
+        THEN 0
+      ELSE ${gross_billable__c}
+    END ;;
+  }
+
+
   dimension: has_product_config__c {
     type: number
     sql: ${TABLE}.has_product_config__c ;;

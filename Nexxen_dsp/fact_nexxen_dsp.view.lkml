@@ -937,8 +937,8 @@ measure: Nexxen_Inv_Cost_Percent {
     sql:
     CASE
       WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen')
-        THEN ${third_party_clicks}
-      ELSE ${clicks}
+        THEN ${clicks}
+      ELSE ${third_party_clicks}
     END ;;
   }
 

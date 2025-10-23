@@ -289,6 +289,12 @@ view: dim_sfdb_opportunitylineitem {
   }
 
 
+  dimension: days_remaining {
+    type: number
+    description: "Days remaining until IO End Date, minimum 0 days."
+    sql: GREATEST( DATEDIFF(day, CURRENT_DATE(), ${end_date__c_date}) + 1, 0 ) ;;
+  }
+
   dimension: days_elapsed_today_opportunitylineitem {
     type: number
     label: "Days Elapsed Today opportunitylineitem"

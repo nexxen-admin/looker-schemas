@@ -166,9 +166,13 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.deal_name ;;
   }
-  dimension: deal_type {
+  dimension: deal_type_number {
     type: number
     sql: ${TABLE}.deal_type ;;
+  }
+  dimension: deal_type {
+    type: string
+    sql: CASE WHEN ${TABLE}.deal_type_name IS NULL THEN 'Open' ELSE 'PMP' END ;;
   }
   dimension: deal_type_name {
     type: string

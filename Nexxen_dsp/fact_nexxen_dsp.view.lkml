@@ -943,6 +943,21 @@ measure: Nexxen_Inv_Cost_Percent {
   }
 
 
+  measure: hybrid_impressions_pacing_to_date {
+    type: number
+    label: "Hybrid Impressions Pacing To Date"
+    sql:
+    ${hybrid_impressions_delivered}
+    / (
+      ( ${dim_sfdb_opportunity.total_units__c} / NULLIF(${dim_sfdb_opportunitylineitem.item_days}, 0) )
+      * CASE
+          WHEN ${${dim_sfdb_opportunitylineitem.days_remaining}} > 0 THEN ${${dim_sfdb_opportunitylineitem.days_elapsed_today}
+          ELSE ${dim_sfdb_opportunitylineitem.item_days}
+        END
+    ) ;;
+  }
+
+
   measure: Delivered_Spend {
     type: sum
     sql: ${TABLE}.delivery_units/1000*${dim_sfdb_opportunitylineitem.rate__c};;

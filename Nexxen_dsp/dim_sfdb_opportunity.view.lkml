@@ -750,7 +750,7 @@ view: dim_sfdb_opportunity {
   dimension: sales_team__c {
     type: string
     sql: ${TABLE}.sales_team__c ;;
-    hidden: yes
+    # hidden: yes
   }
 
   dimension: signed_io_attachment__c {

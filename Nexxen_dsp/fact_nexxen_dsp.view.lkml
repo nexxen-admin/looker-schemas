@@ -946,7 +946,7 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: hybrid_impressions_pacing_to_date {
     type: number
     label: "Hybrid Impressions Pacing To Date"
-    value_format_name: "percent_2"
+    value_format_name: "percent_1"
     sql:
           ${hybrid_impressions_delivered}
           / (
@@ -959,6 +959,14 @@ measure: Nexxen_Inv_Cost_Percent {
             END
           )
         ;;
+  }
+
+
+  measure: hybrid_impressions_pacing_yesterday {
+    type: number
+    label: "Hybrid Impressions Pacing Yesterday"
+    sql: ${hybrid_impressions_delivered_yesterday} / NULLIF(${hybrid_impressions_needed_yesterday}, 0) ;;
+    value_format: "0.0%"
   }
 
 

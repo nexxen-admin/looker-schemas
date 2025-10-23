@@ -48,14 +48,4 @@ view: dim_dsp_insertion_order {
     sql: ${TABLE}.workflow_status_id ;;
   }
 
-  dimension: days_elapsed_today {
-    type: number
-    label: "Days Elapsed Today"
-    sql:
-    CASE
-      WHEN DATEDIFF('day', ${TABLE}.io_start_date, CURRENT_DATE) < 0
-        THEN 0
-      ELSE DATEDIFF('day', ${TABLE}.io_start_date, CURRENT_DATE)
-    END ;;
-  }
 }

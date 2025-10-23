@@ -295,9 +295,9 @@ view: dim_sfdb_opportunitylineitem {
     sql: GREATEST( DATEDIFF(day, CURRENT_DATE(), ${end_date__c_date}) + 1, 0 ) ;;
   }
 
-  dimension: days_elapsed_today_opportunitylineitem {
+  dimension: days_elapsed_today{
     type: number
-    label: "Days Elapsed Today opportunitylineitem"
+    label: "Days Elapsed Today"
     sql:
     CASE
       WHEN DATEDIFF('day', ${TABLE}.start_date__c, CURRENT_DATE) < 0

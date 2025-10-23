@@ -942,6 +942,19 @@ measure: Nexxen_Inv_Cost_Percent {
     END ;;
   }
 
+  # measure: hybrid_clicks_yesterday {
+  #   type: sum
+  #   label: "Hybrid Clicks Yesterday"
+  #   sql:
+  #   CASE
+  #     WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen')
+  #       THEN ${clicks}
+  #     ELSE ${third_party_clicks}
+  #   END ;;
+  #   filters: [date_key_in_timezone_date: "yesterday"]
+  # }
+
+
 
   measure: hybrid_impressions_pacing_to_date {
     type: number
@@ -992,6 +1005,70 @@ measure: Nexxen_Inv_Cost_Percent {
     ) ;;
     value_format: "0.0%"
   }
+
+    measure: hybrid_CTR_yesterday {
+      type: number
+      label: "Hybrid CTR Yesterday"
+      value_format: "0.0%"
+      sql:
+          SUM(
+            CASE
+              -- Filter the Clicks to only include yesterday's data
+              WHEN ${date_key_in_timezone_date} = DATE_TRUNC('day', CURRENT_DATE() - INTERVAL '1 day')
+              THEN
+                (CASE
+                   WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen')
+                     THEN ${TABLE}.clicks
+                     ELSE ${TABLE}.third_party_clicks
+                 END)
+              ELSE NULL
+            END
+          )
+          /
+          NULLIF(
+            SUM(
+              CASE
+                -- Filter the Impressions/Events to only include yesterday's data
+                WHEN ${date_key_in_timezone_date} = DATE_TRUNC('day', CURRENT_DATE() - INTERVAL '1 day')
+                THEN
+                  (CASE
+                     WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee','Nexxen')
+                       THEN ${TABLE}.complete_events
+                       ELSE ${TABLE}.impressions
+                   END)
+                ELSE NULL
+              END
+            ), 0
+          )
+        ;;
+    }
+
+# measure: hybrid_CTR_yesterday {
+#   type: number
+#   label: "Hybrid CTR Yesterday"
+#   value_format: "0.0%"
+#   sql:
+#     SUM(
+#       CASE
+#         WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee','Nexxen')
+#           THEN ${TABLE}.clicks
+#         ELSE ${TABLE}.third_party_clicks
+#       END
+#     )
+#     /
+#     NULLIF(
+#       SUM(
+#         CASE
+#           WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee','Nexxen')
+#             THEN ${TABLE}.complete_events
+#           ELSE ${TABLE}.impressions
+#         END
+#       ),
+#       0
+#     )
+#     ;;
+#   filters: [date_key_in_timezone_date: "yesterday"]
+# }
 
 
 

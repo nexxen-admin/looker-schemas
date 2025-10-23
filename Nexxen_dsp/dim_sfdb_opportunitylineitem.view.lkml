@@ -288,6 +288,18 @@ view: dim_sfdb_opportunitylineitem {
     hidden: yes
   }
 
+  measure: days_till_campaign_midpoint {
+    type: number
+    label: "Days till Campaign Midpoint"
+    sql:
+          DATEDIFF(
+            'day',
+            CURRENT_DATE(),
+            -- Use native Vertica INTERVAL math instead of DATEADD to calculate the midpoint date
+            MAX(${start_date__c_date}) + (FLOOR(DATEDIFF('day', MAX(${start_date__c_date}), MAX(${end_date__c_date})) / 2) * INTERVAL '1 day')
+          )
+        ;;
+  }
 
   dimension: days_remaining {
     type: number

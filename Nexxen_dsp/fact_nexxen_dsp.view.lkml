@@ -910,6 +910,12 @@ measure: Nexxen_Inv_Cost_Percent {
     sql: (${hybrid_impressions_needed_yesterday} * 3) ;;
   }
 
+  measure: Last_3_day_impression_pacing {
+    type: number
+    value_format_name: "decimal_0"
+    label: "Last 3 day impression pacing"
+    sql: (${last_3_days_impressions_raw} /NULLIF(${avg_3_day_needed_imp},0)) ;;
+  }
 
   measure: min_incremental_spend {
     type: number

@@ -946,15 +946,19 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: hybrid_impressions_pacing_to_date {
     type: number
     label: "Hybrid Impressions Pacing To Date"
+    value_format_name: "percent_2"
     sql:
-    ${hybrid_impressions_delivered}
-    / (
-      ( ${dim_sfdb_opportunity.total_units__c} / NULLIF(${dim_sfdb_opportunitylineitem.item_days}, 0) )
-      * CASE
-          WHEN ${${dim_sfdb_opportunitylineitem.days_remaining}} > 0 THEN ${${dim_sfdb_opportunitylineitem.days_elapsed_today}
-          ELSE ${dim_sfdb_opportunitylineitem.item_days}
-        END
-    ) ;;
+          ${hybrid_impressions_delivered}
+          / (
+            ( MAX(${dim_sfdb_opportunity.total_units__c}) / NULLIF(MAX(${dim_sfdb_opportunitylineitem.item_days}), 0) )
+            *
+            CASE
+              WHEN MAX(${dim_sfdb_opportunitylineitem.days_remaining}) > 0
+              THEN MAX(${dim_sfdb_opportunitylineitem.days_elapsed_today})
+              ELSE MAX(${dim_sfdb_opportunitylineitem.item_days})
+            END
+          )
+        ;;
   }
 
 

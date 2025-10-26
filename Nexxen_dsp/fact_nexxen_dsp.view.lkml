@@ -220,6 +220,13 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 
+  dimension: date_key_year_number {
+    type: number
+    label: "Year (Number)"
+    sql: EXTRACT(YEAR FROM ${date_key_in_timezone_raw}) ;;
+  }
+
+
 dimension: inventory_source_key {
   type: number
   sql: ${TABLE}.inventory_source_key ;;

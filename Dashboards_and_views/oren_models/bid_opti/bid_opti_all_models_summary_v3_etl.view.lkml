@@ -64,13 +64,13 @@ with raw_data_4_models as (
         opti.margin,
         opti.demand_margin,
         opti.supply_margin,
-        opti.requests/dt.total_requests as split,
-        opti.margin/split as scaled_margin,
-        opti.requests/split as scaled_requests,
-        opti.impression/split as scaled_impression,
-        opti.revenue/split as scaled_revenue,
-        opti.demand_margin/split as scaled_demand_margin,
-        opti.supply_margin/split as scaled_supply_margin
+        opti.requests/nullif(dt.total_requests,0) as split,
+        opti.margin/nullif(split,0) as scaled_margin,
+        opti.requests/nullif(split,0) as scaled_requests,
+        opti.impression/nullif(split,0) as scaled_impression,
+        opti.revenue/nullif(split,0) as scaled_revenue,
+        opti.demand_margin/nullif(split,0) as scaled_demand_margin,
+        opti.supply_margin/nullif(split,0) as scaled_supply_margin
 
         from data_totals as dt
         inner join raw_data_4_models as opti

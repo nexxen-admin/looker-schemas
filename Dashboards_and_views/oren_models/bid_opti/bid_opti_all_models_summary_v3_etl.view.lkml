@@ -2,12 +2,28 @@ view: bid_opti_all_models_summary_v3_etl {
     derived_table: {
       sql:
 
-      --Old Query, switched for new below on 10/9/2025
-      /*with raw_data_4_models as (
-      select *
+with raw_data_4_models as (
+      select --* Changed to remove SSP endpoint 10/25/25
+        opti,
+        media_id,
+        --placement_name,
+        imp_type,
+        pub_id,
+        --publisher_name,
+        date_trunc,
+        --oeprations_owner_name,
+        --bizdev_owner_name,
+        sum(requests) as Requests,
+        sum(impression) as Impression,
+        sum(revenue) as revenue,
+        sum(margin) as Margin,
+        sum(demand_margin) as demand_margin,
+        sum(cost) as Cost,
+        sum(supply_margin) as supply_margin
       from bi.opti_bid_raw_v1
       where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
             AND lower(ssp_name) like'%rmp%'
+      Group by 1, 2, 3, 4, 5
       ),
 
 
@@ -97,13 +113,16 @@ view: bid_opti_all_models_summary_v3_etl {
         fin_tab_before_tot as (
 
         SELECT *,
-        scaled_margin / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_margin_ratio_to_no_opti,
+        --scaled_margin / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_margin_ratio_to_no_opti,
+        scaled_margin / nullif((SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc)),0)-1 as scaled_margin_ratio_to_no_opti,
         scaled_margin - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_margin_diff_to_no_opti,
 
-        scaled_supply_margin / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_supply_margin_ratio_to_no_opti,
+        --scaled_supply_margin / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_supply_margin_ratio_to_no_opti,
+        scaled_supply_margin / nullif((SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc)),0)-1 as scaled_supply_margin_ratio_to_no_opti,
         scaled_supply_margin - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_supply_margin_diff_to_no_opti,
 
-        scaled_demand_margin / (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_demand_margin_ratio_to_no_opti,
+        --scaled_demand_margin / (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_demand_margin_ratio_to_no_opti,
+        scaled_demand_margin / nullif((SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc)),0)-1 as scaled_demand_margin_ratio_to_no_opti,
         scaled_demand_margin - (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_demand_margin_diff_to_no_opti,
 
         CASE WHEN opti = 'no_opti' THEN 1
@@ -151,235 +170,7 @@ view: bid_opti_all_models_summary_v3_etl {
         union all
         select *
         from tot_for_vis
-        */
-
-        WITH raw_data_4_models AS (
-  SELECT *
-  FROM bi.opti_bid_raw_v1
-  WHERE opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
-    AND LOWER(ssp_name) LIKE '%rmp%'
-),
-
-data_totals AS (
-  -- Provides the total sum of metrics across all opti buckets
-SELECT
-  media_id,
-  imp_type,
-  pub_id,
-  date_trunc,
-  -- measures
-  SUM(requests) AS total_requests,
-  SUM(revenue) - SUM(cost) AS total_demand_margin
-FROM
-  raw_data_4_models
-GROUP BY
-  1,
-  2,
-  3,
-  4
-),
-
-optis_list AS (
-  -- checks the number of buckets for each placement
-SELECT
-  CONCAT(CONCAT(media_id, imp_type), date_trunc) AS media_imp_date,
-  COUNT(DISTINCT CASE WHEN requests > 0 THEN opti ELSE NULL END) AS optis
-FROM
-  raw_data_4_models
-GROUP BY
-  1
-),
-
-scaled_margin AS (
--- scales the data, guard all divisions (no div-by-zero)
-  SELECT
-  dt.media_id,
-  dt.imp_type,
-  opti.opti,
-  dt.date_trunc,
-  opti.requests,
-  opti.impression,
-  opti.revenue,
-  opti.margin,
-  opti.demand_margin,
-  opti.supply_margin,
-  -- split = requests / total_requests (guard total_requests)
-    CASE
-    WHEN dt.total_requests > 0 THEN opti.requests::FLOAT / dt.total_requests
-    ELSE NULL
-  END AS split,
-  -- Use NULLIF(split,0) as divisor to avoid div-by-zero
-  opti.margin / NULLIF( CASE
-    WHEN dt.total_requests > 0 THEN opti.requests::FLOAT / dt.total_requests
-  END ,
-  0) AS scaled_margin,
-  opti.requests / NULLIF( CASE
-    WHEN dt.total_requests > 0 THEN opti.requests::FLOAT / dt.total_requests
-  END ,
-  0) AS scaled_requests,
-  opti.impression / NULLIF( CASE
-    WHEN dt.total_requests > 0 THEN opti.requests::FLOAT / dt.total_requests
-  END ,
-  0) AS scaled_impression,
-  opti.revenue / NULLIF( CASE
-    WHEN dt.total_requests > 0 THEN opti.requests::FLOAT / dt.total_requests
-  END ,
-  0) AS scaled_revenue,
-  opti.demand_margin / NULLIF( CASE
-    WHEN dt.total_requests > 0 THEN opti.requests::FLOAT / dt.total_requests
-  END ,
-  0) AS scaled_demand_margin,
-  opti.supply_margin / NULLIF( CASE
-    WHEN dt.total_requests > 0 THEN opti.requests::FLOAT / dt.total_requests
-  END ,
-  0) AS scaled_supply_margin
-FROM
-  data_totals AS dt
-INNER JOIN raw_data_4_models AS opti
-    ON
-  opti.media_id = dt.media_id
-  AND opti.imp_type = dt.imp_type
-  AND opti.date_trunc = dt.date_trunc
-WHERE
-  CONCAT(CONCAT(dt.media_id, dt.imp_type), dt.date_trunc) IN (
-  SELECT
-    media_imp_date
-  FROM
-    optis_list
-  WHERE
-    optis = 4
-  )
-ORDER BY
-  dt.total_demand_margin DESC
-),
-
-aggr_tab AS (
-SELECT
-  imp_type,
-  opti,
-  date_trunc,
-  COUNT(*) AS placment_count,
-  SUM(requests) AS requests,
-  SUM(impression) AS impression,
-  SUM(revenue) AS revenue,
-  SUM(margin) AS margin,
-  SUM(demand_margin) AS demand_margin,
-  SUM(supply_margin) AS supply_margin,
-  SUM(scaled_margin) AS scaled_margin,
-  SUM(scaled_requests) AS scaled_requests,
-  SUM(scaled_impression) AS scaled_impression,
-  SUM(scaled_revenue) AS scaled_revenue,
-  SUM(scaled_demand_margin) AS scaled_demand_margin,
-  SUM(scaled_supply_margin) AS scaled_supply_margin
-FROM
-  scaled_margin
-GROUP BY
-  1,
-  2,
-  3
-),
-
-/* adding check to ensure no division by zero errors */
-aggr_tab_check AS (
-SELECT
-  *
-FROM
-  aggr_tab
-WHERE
-  demand_margin > 0
-  AND supply_margin > 0
-  AND margin > 0
-),
-
- fin_tab_before_tot as (
-SELECT
-  atc.*,
-
-  -- ratios vs no_opti: guard denominators with NULLIF(...,0)
-  atc.scaled_margin /
-    NULLIF(
-      SUM(CASE WHEN atc.opti = 'no_opti' THEN atc.scaled_margin ELSE 0 END)
-      OVER (PARTITION BY atc.imp_type, atc.date_trunc),
-    0) - 1 AS scaled_margin_ratio_to_no_opti,
-
-  atc.scaled_margin -
-    (SUM(CASE WHEN atc.opti = 'no_opti' THEN atc.scaled_margin ELSE 0 END)
-     OVER (PARTITION BY atc.imp_type, atc.date_trunc))
-    AS scaled_margin_diff_to_no_opti,
-
-  atc.scaled_supply_margin /
-    NULLIF(
-      SUM(CASE WHEN atc.opti = 'no_opti' THEN atc.scaled_supply_margin ELSE 0 END)
-      OVER (PARTITION BY atc.imp_type, atc.date_trunc),
-    0) - 1 AS scaled_supply_margin_ratio_to_no_opti,
-
-  atc.scaled_supply_margin -
-    (SUM(CASE WHEN atc.opti = 'no_opti' THEN atc.scaled_supply_margin ELSE 0 END)
-     OVER (PARTITION BY atc.imp_type, atc.date_trunc))
-    AS scaled_supply_margin_diff_to_no_opti,
-
-  atc.scaled_demand_margin /
-    NULLIF(
-      SUM(CASE WHEN atc.opti = 'no_opti' THEN atc.scaled_demand_margin ELSE 0 END)
-      OVER (PARTITION BY atc.imp_type, atc.date_trunc),
-    0) - 1 AS scaled_demand_margin_ratio_to_no_opti,
-
-  atc.scaled_demand_margin -
-    (SUM(CASE WHEN atc.opti = 'no_opti' THEN atc.scaled_demand_margin ELSE 0 END)
-     OVER (PARTITION BY atc.imp_type, atc.date_trunc))
-    AS scaled_demand_margin_diff_to_no_opti,
-
-  CASE
-    WHEN atc.opti = 'no_opti' THEN 1
-    WHEN atc.opti = 'bidfloor' THEN 2
-    WHEN atc.opti = 'pubcost' THEN 3
-    WHEN atc.opti = 'pubcost_bidfloor' THEN 4
-    ELSE 5
-  END AS rank_model
-FROM aggr_tab_check AS atc),
-
-
-tot_for_vis as (
-select
-  imp_type,
-  'Total*' as opti,
-  date_trunc,
-  sum(case when opti = 'no_opti' then placment_count else 0 end) as placment_count,
-  sum(requests) as requests,
-  sum(impression) as impression,
-  sum(revenue) as revenue,
-  sum(margin) as margin,
-  sum(demand_margin) as demand_margin,
-  sum(supply_margin) as supply_margin,
-  null::FLOAT as scaled_margin,
-  null::FLOAT as scaled_requests,
-  null::FLOAT as scaled_impression,
-  null::FLOAT as scaled_revenue,
-  null::FLOAT as scaled_demand_margin,
-  null::FLOAT as scaled_supply_margin,
-  (sum(margin) - sum(case when opti = 'no_opti' then scaled_margin else 0 end))/(sum(margin)) as scaled_margin_ratio_to_no_opti,
-  sum(margin) - sum(case when opti = 'no_opti' then scaled_margin else 0 end) as scaled_margin_diff_to_no_opti,
-  (sum(supply_margin) - sum(case when opti = 'no_opti' then scaled_supply_margin else 0 end))/(sum(supply_margin)) as scaled_supply_margin_ratio_to_no_opti,
-  sum(supply_margin) - sum(case when opti = 'no_opti' then scaled_supply_margin else 0 end) as scaled_supply_margin_diff_to_no_opti,
-  (sum(demand_margin) - sum(case when opti = 'no_opti' then scaled_demand_margin else 0 end))/(sum(demand_margin)) as scaled_demand_margin_ratio_to_no_opti,
-  sum(demand_margin) - sum(case when opti = 'no_opti' then scaled_demand_margin else 0 end) as scaled_demand_margin_diff_to_no_opti,
-  5 as rank_model
-from
-  fin_tab_before_tot
-group by
-  1,
-  2,
-  3)
-
-    select
-  *
-from
-  fin_tab_before_tot
-union all
-    select
-  *
-from
-  tot_for_vis;;
+;;
 
     }
 

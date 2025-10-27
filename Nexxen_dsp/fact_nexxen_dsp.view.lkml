@@ -226,6 +226,13 @@ view: fact_nexxen_dsp {
     sql: EXTRACT(YEAR FROM ${date_key_in_timezone_raw}) ;;
   }
 
+  dimension: date_key_year_month {
+    type: string
+    label: "Year-Month (YYYY-MM)"
+    sql: TO_CHAR(${date_key_in_timezone_raw}, 'YYYY-MM') ;;
+  }
+
+
 
 dimension: inventory_source_key {
   type: number

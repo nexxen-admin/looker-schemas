@@ -1,11 +1,26 @@
 view: bid_opti_all_models_summary_no_opti_bidfloor  {
   derived_table: {
     sql: with raw_data_4_models as (
-              select *
-              from bi.opti_bid_raw_v1
-              where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
-                    AND lower(ssp_name) like'%rmp%'
-                    and requests>0
+              select opti,
+        media_id,
+        --placement_name,
+        imp_type,
+        pub_id,
+        --publisher_name,
+        date_trunc,
+        --oeprations_owner_name,
+        --bizdev_owner_name,
+        sum(requests) as Requests,
+        sum(impression) as Impression,
+        sum(revenue) as revenue,
+        sum(margin) as Margin,
+        sum(demand_margin) as demand_margin,
+        sum(cost) as Cost,
+        sum(supply_margin) as supply_margin
+      from bi.opti_bid_raw_v1
+      where opti IN ('bidfloor','pubcost','pubcost_bidfloor','no_opti')
+            AND lower(ssp_name) like'%rmp%'
+      Group by 1, 2, 3, 4, 5
               ),
 
 
@@ -47,13 +62,13 @@ view: bid_opti_all_models_summary_no_opti_bidfloor  {
       opti.margin,
       opti.demand_margin,
       opti.supply_margin,
-      opti.requests/ifnull(dt.total_requests,0) as split,
-      opti.margin/split as scaled_margin,
-      opti.requests/split as scaled_requests,
-      opti.impression/split as scaled_impression,
-      opti.revenue/split as scaled_revenue,
-      opti.demand_margin/split as scaled_demand_margin,
-      opti.supply_margin/split as scaled_supply_margin
+      opti.requests/nullif(dt.total_requests,0) as split,
+      opti.margin/nullif(split,0) as scaled_margin,
+      opti.requests/nullif(split,0) as scaled_requests,
+      opti.impression/nullif(split,0) as scaled_impression,
+      opti.revenue/nullif(split,0) as scaled_revenue,
+      opti.demand_margin/nullif(split,0) as scaled_demand_margin,
+      opti.supply_margin/nullif(split,0) as scaled_supply_margin
 
       from data_totals as dt
       inner join raw_data_4_models as opti
@@ -84,16 +99,25 @@ view: bid_opti_all_models_summary_no_opti_bidfloor  {
       from scaled_margin
       GROUP BY 1,2,3),
 
+       -- adding check to ensure no division by zero errors
+        aggr_tab_check as (
+        select *
+        From aggr_tab
+        where demand_margin > 0
+          and supply_margin > 0
+          and margin > 0
+        ),
+
       fin_tab_before_tot as (
 
       SELECT *,
-      scaled_margin / (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_margin_ratio_to_no_opti,
+      scaled_margin / nullif((SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc)),0)-1 as scaled_margin_ratio_to_no_opti,
       scaled_margin - (SUM(case when opti='no_opti' then scaled_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_margin_diff_to_no_opti,
 
-      scaled_supply_margin / (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_supply_margin_ratio_to_no_opti,
+      scaled_supply_margin / nullif((SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc)),0)-1 as scaled_supply_margin_ratio_to_no_opti,
       scaled_supply_margin - (SUM(case when opti='no_opti' then scaled_supply_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_supply_margin_diff_to_no_opti,
 
-      scaled_demand_margin / (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc))-1 as scaled_demand_margin_ratio_to_no_opti,
+      scaled_demand_margin / nullif((SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc)),0)-1 as scaled_demand_margin_ratio_to_no_opti,
       scaled_demand_margin - (SUM(case when opti='no_opti' then scaled_demand_margin else 0 end) over (partition by imp_type,date_trunc)) as scaled_demand_margin_diff_to_no_opti,
 
       CASE WHEN opti = 'no_opti' THEN 1
@@ -102,7 +126,7 @@ view: bid_opti_all_models_summary_no_opti_bidfloor  {
       WHEN opti = 'pubcost_bidfloor' THEN 4
       ELSE 5 END as rank_model
 
-      FROM aggr_tab),
+      FROM aggr_tab_check),
 
       tot_for_vis as (
       select imp_type,

@@ -59,6 +59,13 @@ view: third_party_raw_table {
     sql: ${TABLE}."date" ;;
   }
 
+  dimension: max_tpr_date_by_dimension {
+    label: "Max Date (By Dimension)"
+    type: date
+    sql: ${date_date} ;; # This re-uses the existing date field
+    group_label: "Date Validation"
+    description: "The most recent date for the selected grouping dimension (e.g., Email Subject). Sort Descending with a Row Limit of 1 to find the max date for each group."
+  }
 
   dimension: is_latest_date {
     type: yesno

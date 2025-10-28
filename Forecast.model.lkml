@@ -55,6 +55,10 @@ explore: forecast_data {
   }
 }
 
+explore: forecast_top20_opp_view {
+
+}
+
 explore: market_expectation {
   label: "Forecast Market Expectation"
   required_access_grants: [can_view_all_tremor]

@@ -142,11 +142,17 @@ view: fact_target_forecast_enterprise_summary {
     sql: ${TABLE}.Strat_Sales_RVP ;;
   }
 
-  dimension: CS_pod {
+  dimension: CS_Pod {
     type: string
-    sql: ${TABLE}.CS_pod ;;
+    sql: ${TABLE}.CS_Pod ;;
     label: "Enterprise CS Regional Pods"
   }
+
+  # dimension: CS_Pod {
+  #   type: string
+  #   sql: ${TABLE}.CS_Pod ;;
+  #   # label: "Enterprise CS Regional Pods"
+  # }
 
   # dimension: enterprise_cs_regional_pods {
   #   type: string
@@ -262,7 +268,7 @@ view: fact_target_forecast_enterprise_summary {
       THEN 'Tech Services - Enterprise Sales'
 
       WHEN ${sales_team_chance_org} ILIKE '%Strategic Sales%'
-      AND ${CS_pod} IS NOT NULL
+      AND ${CS_Pod} IS NOT NULL
       THEN 'Tech Services - Strategic Sales'
 
       WHEN ${account_name} ILIKE '%Klick Health%' THEN 'Tech Services - Strategic Sales'

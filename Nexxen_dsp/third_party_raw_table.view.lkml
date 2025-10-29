@@ -61,21 +61,48 @@ view: third_party_raw_table {
 
   dimension: max_tpr_date_by_dimension {
     label: "Max Date (By Dimension)"
+    hidden: yes
     type: date
     sql: ${date_date} ;; # This re-uses the existing date field
     group_label: "Date Validation"
     description: "The most recent date for the selected grouping dimension (e.g., Email Subject). Sort Descending with a Row Limit of 1 to find the max date for each group."
   }
 
-
-  measure: latest_data_date {
-    label: "Latest Data Date"
-    type: max
-    sql: ${date_date} ;;
-    value_format: "YYYY-MM-DD"
-    group_label: "Date Validation"
-    description: "The most recent date for any selected grouping dimension (e.g., Email Subject). Use this in a Pivot Table or with a single grouping dimension to check data recency."
+  dimension: max_tpr_date_dimension_sql {
+    label: "Max Date by Subject (SQL)"
+    hidden: yes
+    type: date
+    sql: MAX(DATE(${TABLE}."date")) ;;
   }
+
+
+  measure: max_date_final{
+    label: "Max Data Date"
+    type: string
+    group_label: "Date Validation"
+    description: "The most recent date for the selected dimension."
+    sql: MAX(TO_CHAR(${date_date}, 'YYYY-MM-DD')) ;;
+  }
+
+
+
+  # measure: max_tpr_date_measure {
+  #   label: "Max Date by Subject"
+  #   type: max
+  #   # Use the raw SQL column name directly to guarantee the correct column is used.
+  #   # This matches the core aggregation logic in your desired SQL.
+  #   sql: ${TABLE}."date" ;;
+  #   # You can keep type:max and Looker will wrap this in MAX()
+  #   # If it still returns NULL, try changing type:max to type:dimension and put MAX(DATE(${TABLE}."date")) in sql:
+
+  #   # For maximum compatibility and clarity:
+  #   # Let Looker handle the MAX, but ensure the field it aggregates is correct.
+  #   # If ${date_date} (from the dimension group) is the problem, this fixes it.
+
+  #   value_format: "YYYY-MM-DD"
+  #   group_label: "Date Validation"
+  #   description: "The most recent date for the selected grouping dimension (e.g., Email Subject)."
+  # }
 
   # dimension: is_latest_date {
   #   type: yesno
@@ -252,7 +279,6 @@ view: third_party_raw_table {
   insertion_order_name
   ]
   }
-
 
 
 }

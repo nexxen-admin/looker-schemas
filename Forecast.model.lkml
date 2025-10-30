@@ -32,6 +32,16 @@ access_grant: can_view_all_tremor {
 
 
 explore: forecast_data {
+
+  access_filter: {
+    field: forecast_data.strat_sales_team
+    user_attribute: forecast_strat
+  }
+  access_filter: {
+    field: forecast_data.new_enterprise_team
+    user_attribute: forecast_enterprise
+  }
+
   label: "Forecast New"
   required_access_grants: [can_view_all_tremor]
   sql_always_where: ${io_super_region} ILIKE '%NAM%'

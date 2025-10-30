@@ -86,33 +86,6 @@ view: third_party_raw_table {
 
 
 
-  # measure: max_tpr_date_measure {
-  #   label: "Max Date by Subject"
-  #   type: max
-  #   # Use the raw SQL column name directly to guarantee the correct column is used.
-  #   # This matches the core aggregation logic in your desired SQL.
-  #   sql: ${TABLE}."date" ;;
-  #   # You can keep type:max and Looker will wrap this in MAX()
-  #   # If it still returns NULL, try changing type:max to type:dimension and put MAX(DATE(${TABLE}."date")) in sql:
-
-  #   # For maximum compatibility and clarity:
-  #   # Let Looker handle the MAX, but ensure the field it aggregates is correct.
-  #   # If ${date_date} (from the dimension group) is the problem, this fixes it.
-
-  #   value_format: "YYYY-MM-DD"
-  #   group_label: "Date Validation"
-  #   description: "The most recent date for the selected grouping dimension (e.g., Email Subject)."
-  # }
-
-  # dimension: is_latest_date {
-  #   type: yesno
-  #   label: "Is Latest Date"
-
-  #   # Hardcode the fully qualified name (Schema.Table) to ensure Vertica finds the relation.
-  #   sql: ${date_raw} = (SELECT MAX(t."date") FROM "BI_DSP"."third_party_raw_table" AS t) ;;
-  # }
-
-
   dimension_group: db_inserted {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]

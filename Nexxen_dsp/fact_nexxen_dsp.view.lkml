@@ -167,11 +167,12 @@ view: fact_nexxen_dsp {
 
   dimension_group: date_key {
     type: time
+    label: "Date Key UTC"
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
     datatype: date
     sql: ${TABLE}.date_key ;;
-    hidden: yes
+    # hidden: yes
   }
 
 

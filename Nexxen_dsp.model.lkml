@@ -324,13 +324,13 @@ explore: fact_nexxen_dsp  {
   }
 
 
-  join: v_dim_dsp_date_utc {
-    type: inner
-    view_label: "Time UTC"
-    sql_on: ${v_dim_dsp_date_utc.date_key_raw} = ${fact_nexxen_dsp.date_key_in_timezone_raw} ;;
-    relationship: many_to_one
+  # join: v_dim_dsp_date_utc {
+  #   type: inner
+  #   view_label: "Time UTC"
+  #   sql_on: ${v_dim_dsp_date_utc.date_key_raw} = ${fact_nexxen_dsp.date_key} ;;
+  #   relationship: many_to_one
 
-  }
+  # }
 
   join: dim_sfdb_legal_entity {
     type: inner

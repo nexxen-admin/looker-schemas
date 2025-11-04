@@ -147,9 +147,30 @@ explore: fact_target_forecast_strategy_summary  {
 # }
 
 
-explore: fact_target_forecast_enterprise_summary  {
+# explore: fact_target_forecast_enterprise_summary  {
+#   required_access_grants: [can_view_all_tremor]
+#   sql_always_where: ${new_enterprise_team}!='Unknown' OR ${account_name} ILIKE ('Klick Health', '301 Digital Media', 'Good Karma Brands', 'Guru', 'Rescue Agency') ;;
+
+#   join: forecast_dim_sfdb_user {
+#     type: left_outer
+#     sql_on: ${fact_target_forecast_enterprise_summary.generalist_name_key} = ${forecast_dim_sfdb_user.fullname_key} ;;
+#     relationship: many_to_one
+#   }
+# }
+
+explore: fact_target_forecast_enterprise_summary {
   required_access_grants: [can_view_all_tremor]
-  sql_always_where: ${new_enterprise_team}!='Unknown' OR ${account_name} IN ('Klick Health', '301 Digital Media', 'Good Karma Brands', 'Guru', 'Rescue Agency') ;;
+  # UPDATED sql_always_where CLAUSE using ILIKE
+  sql_always_where: ${new_enterprise_team}!='Unknown' OR (
+    ${account_name} ILIKE '%Klick Health%' OR
+    ${account_name} ILIKE '%301 Digital Media%' OR
+    ${account_name} ILIKE '%Good Karma Brands%' OR
+    ${account_name} ILIKE '%Guru%' OR
+    ${account_name} ILIKE '%U.S. HealthConnect%' OR
+    ${account_name} ILIKE '%Active International%'OR
+    ${account_name} ILIKE '%Starcom - US%'OR
+    ${account_name} ILIKE '%Rescue Agency%'
+  ) ;;
 
   join: forecast_dim_sfdb_user {
     type: left_outer
@@ -157,8 +178,6 @@ explore: fact_target_forecast_enterprise_summary  {
     relationship: many_to_one
   }
 }
-
-
 
 #### FORECAST JOINED TABLE ####
 explore: forecast_dim_sfdb_opportunity {

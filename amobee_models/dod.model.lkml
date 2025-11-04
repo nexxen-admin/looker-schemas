@@ -18,7 +18,7 @@ explore: social_media {
 }
 
 explore: dsp_media_and_bids {
-
+hidden: yes
 }
 
 explore: dod_partner_ops {}

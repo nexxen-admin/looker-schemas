@@ -74,6 +74,12 @@ explore: market_expectation {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: fact_forecast_full_summary {
+  label: "Forecast Joined Teams"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
 explore: dim_dsp_monthly_strategic_targets  {
   required_access_grants: [can_view_all_tremor]
   label: "Monthly Strategic Targets"

@@ -288,7 +288,7 @@ explore: fact_nexxen_dsp  {
   join: ncd_pacing {
     type: inner
     view_label: "Salesforce Opportunity Line Item"
-    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${fact_nexxen_dsp.date_key_date};;
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${fact_nexxen_dsp.date_key_in_timezone_date};;
     relationship: many_to_one
   }
 

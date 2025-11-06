@@ -61,7 +61,7 @@ view: third_party_raw_table {
 
   dimension: max_tpr_date_by_dimension {
     label: "Max Date (By Dimension)"
-    hidden: no
+    hidden: yes
     type: date
     sql: ${date_date} ;; # This re-uses the existing date field
     group_label: "Date Validation"
@@ -70,7 +70,7 @@ view: third_party_raw_table {
 
   dimension: max_tpr_date_dimension_sql {
     label: "Max Date by Subject (SQL)"
-    hidden: no
+    hidden: yes
     type: date
     sql: MAX(DATE(${TABLE}."date")) ;;
   }

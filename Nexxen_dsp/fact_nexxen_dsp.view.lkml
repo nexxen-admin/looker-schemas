@@ -392,14 +392,14 @@ dimension: inventory_source_key {
 
   measure: inv_cost {
     type: sum
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: ${TABLE}.inv_cost ;;
   }
 
 
   measure: Nexxen_Inv_Cost {
     type: sum
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inv_cost" else null end ;;
   }
 

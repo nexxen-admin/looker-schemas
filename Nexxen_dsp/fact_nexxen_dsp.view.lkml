@@ -175,6 +175,18 @@ view: fact_nexxen_dsp {
     # hidden: yes
   }
 
+  dimension: date_key_year_month_utc {
+    type: string
+    label: "Year-Month (YYYY-MM) UTC"
+    sql: TO_CHAR(${date_key_raw}, 'YYYY-MM') ;;
+  }
+
+
+  dimension: date_key_year_number_utc {
+    type: number
+    label: "Year (Number) UTC"
+    sql: EXTRACT(YEAR FROM ${date_key_raw}) ;;
+  }
 
   parameter: date_granularity {
 

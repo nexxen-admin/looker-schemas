@@ -188,6 +188,27 @@ view: fact_nexxen_dsp {
     sql: EXTRACT(YEAR FROM ${date_key_raw}) ;;
   }
 
+
+  # dimension: date_key_utc {
+  #   label: "Date Key UTC Granularity"
+  #   sql:  CASE
+  #     WHEN {% parameter date_granularity %} = 'Day'
+  #       THEN ${date_key_date}
+  #     When {% parameter date_granularity %} ='Week'
+  #       THEN ${date_key_week}
+  #     WHEN {% parameter date_granularity %} = 'Month'
+  #       THEN ${date_key_month}
+  #     WHEN {% parameter date_granularity %} = 'Quarter'
+  #       THEN ${date_key_quarter}
+  #     WHEN {% parameter date_granularity %} = 'Year'
+  #       THEN ${date_key_year}
+  #     ELSE NULL
+  #   END ;;
+
+  #   hidden:  no
+  # }
+
+
   parameter: date_granularity {
 
     label: "Date Granularity Filter (D/W/M/Q/Y)"

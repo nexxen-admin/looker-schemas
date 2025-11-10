@@ -2,22 +2,6 @@ connection: "bi_stby"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"                 # include all views in this project
- #include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
-
-# # Select the views that should be a part of this model,
-# # and define the joins that connect them together.
-#
-# explore: order_items {
-#   join: orders {
-#     relationship: many_to_one
-#     sql_on: ${orders.id} = ${order_items.order_id} ;;
-#   }
-#
-#   join: users {
-#     relationship: many_to_one
-#     sql_on: ${users.id} = ${orders.user_id} ;;
-#   }
-# }
 
 access_grant: can_view_pub_come_looker {
   user_attribute: admins
@@ -33,10 +17,10 @@ access_grant: can_view_all_tremor {
 
 explore: forecast_data {
 
-  # access_filter: {
-  #   field: forecast_data.strat_sales_team
-  #   user_attribute: forecast_strat
-  # }
+  access_filter: {
+    field: forecast_data.strat_sales_team
+    user_attribute: forecast_strat
+  }
   access_filter: {
     field: forecast_data.new_enterprise_team
     user_attribute: forecast_enterprise

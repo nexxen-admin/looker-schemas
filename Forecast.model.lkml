@@ -119,6 +119,12 @@ explore: fact_sfdb_forecast_snapshot {
   }
 
 explore: fact_target_forecast_strategy_summary  {
+
+  access_filter: {
+    field: fact_target_forecast_strategy_summary.Strat_Sales_Team
+    user_attribute: forecast_strat
+  }
+
   required_access_grants: [can_view_all_tremor]
   sql_always_where: ${Strat_Sales_Team}!='Unknown' ;;
 
@@ -155,6 +161,12 @@ explore: fact_target_forecast_strategy_summary  {
 # }
 
 explore: fact_target_forecast_enterprise_summary {
+
+  access_filter: {
+    field: fact_target_forecast_enterprise_summary.new_enterprise_team
+    user_attribute: forecast_enterprise
+  }
+
   required_access_grants: [can_view_all_tremor]
   # UPDATED sql_always_where CLAUSE using ILIKE
   sql_always_where: ${new_enterprise_team}!='Unknown' OR (

@@ -85,8 +85,20 @@ explore: monthly_enterprise_targets_changes {
 }
 
 explore: fact_sfdb_forecast_snapshot {
+
+  access_filter: {
+    field: fact_sfdb_forecast_snapshot.Strat_Sales_Team
+    user_attribute: forecast_strat
+  }
+  access_filter: {
+    field: fact_sfdb_forecast_snapshot.new_enterprise_team
+    user_attribute: forecast_enterprise
+  }
+
   required_access_grants: [can_view_all_tremor]
   label: "Fact sfdb Forecast Snapshot"
+
+
 
   sql_always_where:
   ${io_super_region} ILIKE '%NAM%'

@@ -18,7 +18,7 @@ access_grant: can_view_all_tremor {
 explore: forecast_data {
 
   access_filter: {
-    field: forecast_data.strat_sales_team
+    field: forecast_data.strat_sales_rvp
     user_attribute: forecast_strat
   }
   access_filter: {
@@ -87,7 +87,7 @@ explore: monthly_enterprise_targets_changes {
 explore: fact_sfdb_forecast_snapshot {
 
   access_filter: {
-    field: fact_sfdb_forecast_snapshot.Strat_Sales_Team
+    field: fact_sfdb_forecast_snapshot.Strat_Sales_RVP
     user_attribute: forecast_strat
   }
   access_filter: {
@@ -121,7 +121,7 @@ explore: fact_sfdb_forecast_snapshot {
 explore: fact_target_forecast_strategy_summary  {
 
   access_filter: {
-    field: fact_target_forecast_strategy_summary.Strat_Sales_Team
+    field: fact_target_forecast_strategy_summary.Strat_Sales_RVP
     user_attribute: forecast_strat
   }
 

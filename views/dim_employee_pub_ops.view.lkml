@@ -148,7 +148,8 @@ view: v_dim_employee_pub_ops {
     required_access_grants: [can_view_aniview]
     sql: case when ${TABLE}.Employee_Name='Itamar Bilu' OR ${TABLE}.Employee_Name='Stav Ezer' OR
                    ${TABLE}.Employee_Name='Ashleigh Fisher' OR ${TABLE}.Employee_Name='Noa Krashniak' OR ${TABLE}.Employee_Name='Gonni Kern' OR
-                  ${TABLE}.Employee_Name='Lihi Katabi' then 'In App'
+                   ${TABLE}.Employee_Name='Hanoch Melamed Cohen' OR ${TABLE}.Employee_Name='Amit Mazor' OR ${TABLE}.Employee_Name='Sarah Herskovics' OR
+                   ${TABLE}.Employee_Name='Lihi Katabi' then 'In App'
               when ${TABLE}.Employee_Name='Itzik Vaknin' OR ${TABLE}.Employee_Name='Yovel Modlin' OR ${TABLE}.Employee_Name='Bar Wolkowiski' OR ${TABLE}.Employee_Name='Noa Karako'
               OR ${TABLE}.Employee_Name='Shir Elzam' OR ${TABLE}.Employee_Name='Shachar Laufer'
               OR ${TABLE}.Employee_Name='Omri Lender' OR ${TABLE}.Employee_Name='Rom Lubianiker' then 'Web'

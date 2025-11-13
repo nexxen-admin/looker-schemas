@@ -50,6 +50,7 @@ explore: forecast_data {
 }
 
 explore: forecast_top20_opp_view {
+  hidden: yes
 
 }
 

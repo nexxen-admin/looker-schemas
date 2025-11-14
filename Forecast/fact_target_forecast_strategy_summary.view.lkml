@@ -136,6 +136,17 @@ view: fact_target_forecast_strategy_summary {
     drill_fields: [revenue_line, Strat_Sales_Team]
   }
 
+  dimension: strategic_sales_cs_region {
+    type: string
+    label: "Strategic Sales CS Region"
+    sql: CASE
+          WHEN ${Strat_Sales_RVP} ILIKE '%East%' THEN 'Strat Sales CS East'
+          WHEN ${Strat_Sales_RVP} ILIKE '%South%' THEN 'Strat Sales CS South'
+          WHEN ${Strat_Sales_RVP} ILIKE '%West%' THEN 'Strat Sales CS West'
+          WHEN ${Strat_Sales_RVP} ILIKE '%Central%' THEN 'Strat Sales CS Central'
+          WHEN ${Strat_Sales_RVP} ILIKE '%Canada%' THEN 'Strat Sales CS Canada'
+          END;;
+  }
 
   ###--MEASURES--###
 

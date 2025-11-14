@@ -239,8 +239,8 @@ view: fact_target_forecast_strategy_summary {
   }
 
   measure: sum_gr_booked_to_forecast_delta {
-    type: sum
-    sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
+    type: number
+    sql: ${sum_booked_full_credit} - ${sum_gr_forecast_full_credit};;
     value_format: "$#,##0"
     label: "GR Booked to Forecast (Delta)"
     view_label: "GR"

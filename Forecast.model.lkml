@@ -85,6 +85,8 @@ explore: monthly_enterprise_targets_changes {
   label: "Monthly Enterprise Targets Changes"
 }
 
+
+####---fact_sfdb_forecast_snapshot-----####
 explore: fact_sfdb_forecast_snapshot {
 
   access_filter: {
@@ -98,8 +100,6 @@ explore: fact_sfdb_forecast_snapshot {
 
   required_access_grants: [can_view_all_tremor]
   label: "Fact sfdb Forecast Snapshot"
-
-
 
   sql_always_where:
   ${io_super_region} ILIKE '%NAM%'
@@ -118,6 +118,8 @@ explore: fact_sfdb_forecast_snapshot {
   AND ${opportunity_name} NOT ilike '%PMP%'
   ;;
   }
+
+
 
 explore: fact_target_forecast_strategy_summary  {
 

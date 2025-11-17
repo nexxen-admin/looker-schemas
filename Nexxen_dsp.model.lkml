@@ -1,4 +1,4 @@
-connection: "vertica_iad"
+connection: "vertica_dm3"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"

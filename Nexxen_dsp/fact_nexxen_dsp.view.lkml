@@ -220,6 +220,15 @@ view: fact_nexxen_dsp {
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 
+  dimension: date_key_in_timezone_temp {
+    type: date
+    #timeframes: [raw, date, week, month, quarter, year]
+    #convert_tz: no
+    #datatype: date
+    label: "Date in Timezone Temp"
+    sql: ${TABLE}.date_key_in_timezone ;;
+  }
+
 dimension: inventory_source_key {
   type: number
   sql: ${TABLE}.inventory_source_key ;;

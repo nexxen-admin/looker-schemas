@@ -254,6 +254,12 @@ measure: budgeted_spend{
   sql: ${TABLE}.spend ;;
   value_format: "$#,##0.00"
 }
+  measure: budgeted_spend_cad{
+    type: sum
+    label: "Budgeted Spend (CAD)"
+    sql: ${TABLE}.spend/1.4 ;;
+    value_format: "$#,##0.00"
+  }
 measure: budgeted_units {
   type: sum
   label: "Budgeted Units"
@@ -285,6 +291,12 @@ measure: Delivered_Spend {
   sql: ${TABLE}.uncapped_revenue;;
   value_format: "$#,##0.00"
 }
+  measure: Delivered_Spend_cad {
+    type: sum
+    label: "Delivered Spend (CAD)"
+    sql: ${TABLE}.uncapped_revenue/1.4;;
+    value_format: "$#,##0.00"
+  }
 
 dimension: ncd_clicks_dim {
   type: number
@@ -759,6 +771,18 @@ measure: html_kpi_delivered_spend {
               </div>
             </div>;;
 }
+
+  measure: html_kpi_delivered_spend_cad {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Delivered Spend (CAD)
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ Delivered_Spend_cad._rendered_value }}
+              </div>
+            </div>;;
+  }
 
 
 measure: html_kpi_clicks {

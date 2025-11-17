@@ -48,7 +48,7 @@ view: market_expectation {
   }
   measure: status {
     type: number
-    value_format: "0%"
+    value_format: "0.00%"
     hidden: yes
     sql: ${nr_booked_cleared}/${nr_budget}  ;;
   }

@@ -74,17 +74,6 @@ view: fact_forecast_full_summary {
               </div>
             </div>;;
   }
-  measure: html_kpi_gr_pace {
-    type: count
-    hidden: yes
-    html:
-           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-              GR Pace %
-              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
-                {{ gr_pace._rendered_value }}
-              </div>
-            </div>;;
-  }
   measure: html_kpi_nr_booked {
     type: count
     hidden: yes
@@ -104,17 +93,6 @@ view: fact_forecast_full_summary {
               NR Budget
               <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ net_revenue_budget._rendered_value }}
-              </div>
-            </div>;;
-  }
-  measure: html_kpi_nr_pace {
-    type: count
-    hidden: yes
-    html:
-           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-              NR Pace %
-              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
-                {{ nr_pace._rendered_value }}
               </div>
             </div>;;
   }

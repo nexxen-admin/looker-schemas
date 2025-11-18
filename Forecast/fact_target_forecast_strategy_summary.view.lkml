@@ -122,7 +122,7 @@ view: fact_target_forecast_strategy_summary {
 
   dimension: Strat_Sales_Team {
     type: string
-    sql: COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team)  ;;
+    sql: CASE WHEN COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team)='Strat Sales - Southwast' THEN 'Strat Sales - Southwest' ELSE COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team) END  ;;
   }
 
   dimension: new_enterprise_team {

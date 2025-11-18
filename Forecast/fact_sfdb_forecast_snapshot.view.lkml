@@ -221,7 +221,7 @@ view: fact_sfdb_forecast_snapshot {
 
   dimension: Strat_Sales_Team {
     type: string
-    sql: ${TABLE}.Strat_Sales_Team ;;
+    sql: CASE WHEN ${TABLE}.Strat_Sales_Team='Strat Sales - Southwast' THEN 'Strat Sales - Southwest' ELSE ${TABLE}.Strat_Sales_Team END ;;
   }
 
   dimension: Strat_Sales_RVP {

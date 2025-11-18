@@ -652,7 +652,7 @@ view: dim_sfdb_opportunitylineitem {
   dimension: related_line_items__c {
     type: string
     sql: ${TABLE}.related_line_items__c ;;
-    hidden: yes
+    #hidden: yes
   }
 
   dimension: reporting__c {

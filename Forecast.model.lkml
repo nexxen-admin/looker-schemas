@@ -44,7 +44,8 @@ explore: forecast_data {
       win_reason__c,
       win_reason_details__c,
       loss_reason__c,
-      loss_reason_details__c
+      loss_reason_details__c,
+      max_database_update_timestamp
     ]
   }
 }

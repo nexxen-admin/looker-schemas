@@ -151,6 +151,12 @@ view: forecast_dim_sfdb_opportunity {
 
   }
 
+
+  dimension: calculated_margin__c {
+    type: number
+    sql: ${TABLE}.calculated_margin__c ;;
+  }
+
   dimension: deal_review_approved__c {
     type: number
     sql: ${TABLE}.deal_review_approved__c ;;

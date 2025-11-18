@@ -141,6 +141,16 @@ view: forecast_dim_sfdb_opportunity {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.db_updated_date ;;
   }
+
+  measure: max_database_update_timestamp {
+    type: max
+    sql: ${db_updated_time} ;;
+    value_format: "yyyy-mm-dd hh:mm:ss"
+    label: "Database Last Update"
+    # description: "The most recent timestamp recorded in the base table."
+
+  }
+
   dimension: deal_review_approved__c {
     type: number
     sql: ${TABLE}.deal_review_approved__c ;;

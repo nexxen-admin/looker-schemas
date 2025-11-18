@@ -310,6 +310,12 @@ view: dim_sfdb_opportunity {
     hidden: yes
   }
 
+  dimension: calculated_margin__c {
+    type: number
+    sql: ${TABLE}.calculated_margin__c ;;
+    hidden: no
+  }
+
   dimension: fiscal {
     type: string
     sql: ${TABLE}.fiscal ;;
@@ -546,6 +552,12 @@ view: dim_sfdb_opportunity {
   dimension: opportunity_margin__c {
     type: number
     sql: ${TABLE}.opportunity_margin__c ;;
+    hidden: no
+  }
+
+  dimension: vertical {
+    type: string
+    sql: ${TABLE}.vertical ;;
     hidden: no
   }
 

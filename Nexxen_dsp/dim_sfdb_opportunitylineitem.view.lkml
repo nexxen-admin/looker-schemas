@@ -30,6 +30,12 @@ view: dim_sfdb_opportunitylineitem {
     hidden: yes
   }
 
+  dimension: calculated_margin__c {
+    type: number
+    sql: ${TABLE}.calculated_margin__c ;;
+    hidden: no
+  }
+
   dimension: cloned_from_line_item__c {
     type: string
     sql: ${TABLE}.cloned_from_line_item__c ;;

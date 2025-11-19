@@ -47,6 +47,7 @@ explore: forecast_data {
       loss_reason_details__c,
       db_updated_date,
       db_updated_time,
+      db_updated_number,
       max_database_update_timestamp
     ]
   }

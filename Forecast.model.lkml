@@ -48,8 +48,7 @@ explore: forecast_data {
       db_updated_date,
       db_updated_time,
       db_updated_number,
-      final_database_last_update,
-      max_database_update_timestamp
+      final_database_last_update
     ]
   }
 }

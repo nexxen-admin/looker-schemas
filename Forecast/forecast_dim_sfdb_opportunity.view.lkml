@@ -145,25 +145,19 @@ view: forecast_dim_sfdb_opportunity {
 # Convert the full timestamp to a sortable number (Unix seconds)
   dimension: db_updated_number {
     type: number
-    # *** CORRECT VERTICA SYNTAX ***
-    # EXTRACT(EPOCH FROM timestamp) returns the number of seconds since 1970-01-01.
     sql: EXTRACT(EPOCH FROM ${db_updated_raw}) ;;
     label: "DB Updated Unix Time"
     hidden: yes
   }
 
-  # Find the MAX of the sortable number (This measure remains the same)
   measure: max_database_update_timestamp {
     type: max
     sql: ${db_updated_number} ;;
-    label: "Max DB Update (Internal Unix Time)"
-    # hidden: yes # Hide this, we'll use a final dimension for display
+    label: "Max DB Update"
+    hidden: yes
   }
 
 
-# Convert the MAX number back to a readable TIMESTAMP for display
-
-# Create a FINAL measure (NOT a dimension) that converts the max Unix value back to a string for display
   measure: final_database_last_update {
     type: string # Must be string or number for this method
     # Use a Vertica function to convert the max number (seconds) back to a formatted string

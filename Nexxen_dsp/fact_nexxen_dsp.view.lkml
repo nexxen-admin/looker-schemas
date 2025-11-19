@@ -632,6 +632,8 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "$#,##0.00"
   }
 
+
+
   measure: yesterday_uncapped_revenue {
     type: sum
     sql: ${TABLE}.uncapped_revenue ;;
@@ -646,11 +648,28 @@ measure: Nexxen_Inv_Cost_Percent {
     filters: [date_key_in_timezone_date: "last month"]
   }
 
+  # measure: capped_revenue {
+  #   type: sum
+  #   sql: ${TABLE}.capped_revenue ;;
+  #   value_format: "$#,##0.00"
+  # }
+
+
   measure: capped_revenue {
-    type: sum
-    sql: ${TABLE}.capped_revenue ;;
-    value_format: "$#,##0.00"
+    type: number
+    sql:
+    CASE
+      WHEN
+        ${dim_sfdb_opportunitylineitem.total_booked_budget_meas} - ${dim_dsp_netsuite_invoice.passed_bill_amount_measure}
+        < SUM(${TABLE}.uncapped_revenue)
+      THEN
+        ${dim_sfdb_opportunitylineitem.total_booked_budget_meas} - ${dim_dsp_netsuite_invoice.passed_bill_amount_measure}
+      ELSE SUM(${TABLE}.uncapped_revenue)
+    END
+  ;;
   }
+
+
 
   measure: yesterday_capped_revenue {
     type: sum

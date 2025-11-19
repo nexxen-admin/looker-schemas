@@ -673,7 +673,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: yesterday_capped_revenue {
     type: sum
-    sql: ${TABLE}.capped_revenue ;;
+    sql: ${capped_revenue} ;;
     value_format: "$#,##0.00"
     filters: [date_key_in_timezone_date: "yesterday"]
   }
@@ -1785,7 +1785,7 @@ measure: Nexxen_Inv_Cost_Percent {
     view_label: "PoP"
     type: sum
     description: "The current period's capped revenue"
-    sql: ${TABLE}.capped_revenue ;;
+    sql: ${capped_revenue} ;;
     value_format: "$#,##0.00"
     filters: [period_filtered_measures: "this"]
   }
@@ -1794,7 +1794,7 @@ measure: Nexxen_Inv_Cost_Percent {
     view_label: "PoP"
     type: sum
     description: "The previous period's capped revenue"
-    sql: ${TABLE}.capped_revenue ;;
+    sql: ${capped_revenue};;
     value_format: "$#,##0.00"
     filters: [period_filtered_measures: "last"]
   }

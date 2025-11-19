@@ -61,29 +61,29 @@ view: third_party_raw_table {
 
   dimension: max_tpr_date_by_dimension {
     label: "Max Date (By Dimension)"
+    hidden: yes
     type: date
     sql: ${date_date} ;; # This re-uses the existing date field
     group_label: "Date Validation"
     description: "The most recent date for the selected grouping dimension (e.g., Email Subject). Sort Descending with a Row Limit of 1 to find the max date for each group."
   }
 
-
-  measure: latest_data_date {
-    label: "Latest Data Date"
-    type: max
-    sql: ${date_date} ;;
-    value_format: "YYYY-MM-DD"
-    group_label: "Date Validation"
-    description: "The most recent date for any selected grouping dimension (e.g., Email Subject). Use this in a Pivot Table or with a single grouping dimension to check data recency."
+  dimension: max_tpr_date_dimension_sql {
+    label: "Max Date by Subject (SQL)"
+    hidden: yes
+    type: date
+    sql: MAX(DATE(${TABLE}."date")) ;;
   }
 
-  # dimension: is_latest_date {
-  #   type: yesno
-  #   label: "Is Latest Date"
 
-  #   # Hardcode the fully qualified name (Schema.Table) to ensure Vertica finds the relation.
-  #   sql: ${date_raw} = (SELECT MAX(t."date") FROM "BI_DSP"."third_party_raw_table" AS t) ;;
-  # }
+  measure: max_date_final{
+    label: "Max Data Date"
+    type: string
+    group_label: "Date Validation"
+    description: "The most recent date for the selected dimension."
+    sql: MAX(TO_CHAR(${date_date}, 'YYYY-MM-DD')) ;;
+  }
+
 
 
   dimension_group: db_inserted {
@@ -252,7 +252,6 @@ view: third_party_raw_table {
   insertion_order_name
   ]
   }
-
 
 
 }

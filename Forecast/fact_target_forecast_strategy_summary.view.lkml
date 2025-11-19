@@ -122,7 +122,7 @@ view: fact_target_forecast_strategy_summary {
 
   dimension: Strat_Sales_Team {
     type: string
-    sql: COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team)  ;;
+    sql: CASE WHEN COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team)='Strat Sales - Southwast' THEN 'Strat Sales - Southwest' ELSE COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team) END  ;;
   }
 
   dimension: new_enterprise_team {
@@ -136,6 +136,17 @@ view: fact_target_forecast_strategy_summary {
     drill_fields: [revenue_line, Strat_Sales_Team]
   }
 
+  dimension: strategic_sales_cs_region {
+    type: string
+    label: "Strategic Sales CS Region"
+    sql: CASE
+          WHEN ${Strat_Sales_RVP} ILIKE '%East%' THEN 'Strat Sales CS East'
+          WHEN ${Strat_Sales_RVP} ILIKE '%South%' THEN 'Strat Sales CS South'
+          WHEN ${Strat_Sales_RVP} ILIKE '%West%' THEN 'Strat Sales CS West'
+          WHEN ${Strat_Sales_RVP} ILIKE '%Central%' THEN 'Strat Sales CS Central'
+          WHEN ${Strat_Sales_RVP} ILIKE '%Canada%' THEN 'Strat Sales CS Canada'
+          END;;
+  }
 
   ###--MEASURES--###
 
@@ -228,8 +239,8 @@ view: fact_target_forecast_strategy_summary {
   }
 
   measure: sum_gr_booked_to_forecast_delta {
-    type: sum
-    sql: ${TABLE}.GR_Booked_to_Forecast_Delta ;;
+    type: number
+    sql: ${sum_booked_full_credit} - ${sum_gr_forecast_full_credit};;
     value_format: "$#,##0"
     label: "GR Booked to Forecast (Delta)"
     view_label: "GR"

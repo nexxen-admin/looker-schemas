@@ -65,16 +65,54 @@ view: fact_sfdb_forecast_snapshot {
     type: string
     sql: ${TABLE}.IO_Sales_Team ;;
   }
+  # dimension: strategic_sales_cs_region_old {
+  #   type: string
+  #   label: "Snapshot Strategic Sales CS Region Old"
+  #   sql: CASE WHEN ${TABLE}.IO_Sales_Team ILIKE '%East%' THEN 'Strat Sales CS East'
+  #   WHEN ${TABLE}.IO_Sales_Team ILIKE '%South%' THEN 'Strat Sales CS South'
+  #   WHEN ${TABLE}.IO_Sales_Team ILIKE '%West%' THEN 'Strat Sales CS West'
+  #   WHEN ${TABLE}.IO_Sales_Team ILIKE '%Central%' THEN 'Strat Sales CS Central'
+  #   WHEN ${TABLE}.IO_Sales_Team ILIKE '%Canada%' THEN 'Strat Sales CS Canada'
+  #   END;;
+  # }
+
   dimension: strategic_sales_cs_region {
     type: string
     label: "Snapshot Strategic Sales CS Region"
-    sql: CASE WHEN ${TABLE}.IO_Sales_Team ILIKE '%East%' THEN 'Strat Sales CS East'
-    WHEN ${TABLE}.IO_Sales_Team ILIKE '%South%' THEN 'Strat Sales CS South'
-    WHEN ${TABLE}.IO_Sales_Team ILIKE '%West%' THEN 'Strat Sales CS West'
-    WHEN ${TABLE}.IO_Sales_Team ILIKE '%Central%' THEN 'Strat Sales CS Central'
-    WHEN ${TABLE}.IO_Sales_Team ILIKE '%Canada%' THEN 'Strat Sales CS Canada'
-    END;;
+
+    sql:
+    CASE
+      WHEN ${TABLE}.io_sales_team IN (
+        'Strat Services - East', 'Strat Sales - East 1', 'Strat Sales - East 2',
+        'Strat Sales - East 3', 'Strat Sales - East 4', 'Strat Sales - East 6',
+        'Strat Sales – East 3', 'Strat Sales – East 4'
+        ,'Strat Sales – East 5', 'Strat Sales – East 6'
+      ) THEN 'Strat Sales CS East'
+
+      WHEN ${TABLE}.io_sales_team IN (
+      'Strat Services - South', 'Strat Sales - Southeast 1',
+      'Strat Sales - Southwest 1', 'Strat Sales - Southwest 2'
+      ) THEN 'Strat Sales CS South'
+
+      WHEN ${TABLE}.io_sales_team IN (
+      'Strat Services - West', 'Strat Sales - West 1', 'Strat Sales - West 2',
+      'Strat Sales - West 3'
+      ) THEN 'Strat Sales CS West'
+
+      WHEN ${TABLE}.io_sales_team IN (
+      'Strat Services - Central', 'Strat Sales - Central 1',
+      'Strat Sales - Central 2', 'Strat Sales - Central 3',
+      'Strat Sales - Central 4'
+      ) THEN 'Strat Sales CS Central'
+
+      WHEN ${TABLE}.io_sales_team IN ('Strat Sales - Canada')
+      THEN 'Strat Sales CS Canada'
+
+      ELSE NULL
+      END ;;
   }
+
+
   dimension: account_manager_sales_team {
     type: string
     sql: ${TABLE}.account_manager_sales_team ;;
@@ -183,7 +221,7 @@ view: fact_sfdb_forecast_snapshot {
 
   dimension: Strat_Sales_Team {
     type: string
-    sql: ${TABLE}.Strat_Sales_Team ;;
+    sql: CASE WHEN ${TABLE}.Strat_Sales_Team='Strat Sales - Southwast' THEN 'Strat Sales - Southwest' ELSE ${TABLE}.Strat_Sales_Team END ;;
   }
 
   dimension: Strat_Sales_RVP {

@@ -2,22 +2,6 @@ connection: "bi_stby"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"                 # include all views in this project
- #include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
-
-# # Select the views that should be a part of this model,
-# # and define the joins that connect them together.
-#
-# explore: order_items {
-#   join: orders {
-#     relationship: many_to_one
-#     sql_on: ${orders.id} = ${order_items.order_id} ;;
-#   }
-#
-#   join: users {
-#     relationship: many_to_one
-#     sql_on: ${users.id} = ${orders.user_id} ;;
-#   }
-# }
 
 access_grant: can_view_pub_come_looker {
   user_attribute: admins
@@ -32,6 +16,16 @@ access_grant: can_view_all_tremor {
 
 
 explore: forecast_data {
+
+  access_filter: {
+    field: forecast_data.strat_sales_rvp
+    user_attribute: forecast_strat
+  }
+  access_filter: {
+    field: forecast_data.new_enterprise_team
+    user_attribute: forecast_enterprise
+  }
+
   label: "Forecast New"
   required_access_grants: [can_view_all_tremor]
   sql_always_where: ${io_super_region} ILIKE '%NAM%'
@@ -50,18 +44,30 @@ explore: forecast_data {
       win_reason__c,
       win_reason_details__c,
       loss_reason__c,
-      loss_reason_details__c
+      loss_reason_details__c,
+      db_updated_date,
+      db_updated_time,
+      db_updated_number,
+      final_database_last_update,
+      max_database_update_timestamp
     ]
   }
 }
 
 explore: forecast_top20_opp_view {
+  hidden: yes
 
 }
 
 explore: market_expectation {
   label: "Forecast Market Expectation"
   required_access_grants: [can_view_all_tremor]
+}
+
+explore: fact_forecast_full_summary {
+  label: "Forecast Joined Teams"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
 }
 
 explore: dim_dsp_monthly_strategic_targets  {
@@ -84,7 +90,19 @@ explore: monthly_enterprise_targets_changes {
   label: "Monthly Enterprise Targets Changes"
 }
 
+
+####---fact_sfdb_forecast_snapshot-----####
 explore: fact_sfdb_forecast_snapshot {
+
+  access_filter: {
+    field: fact_sfdb_forecast_snapshot.Strat_Sales_RVP
+    user_attribute: forecast_strat
+  }
+  access_filter: {
+    field: fact_sfdb_forecast_snapshot.new_enterprise_team
+    user_attribute: forecast_enterprise
+  }
+
   required_access_grants: [can_view_all_tremor]
   label: "Fact sfdb Forecast Snapshot"
 
@@ -106,7 +124,15 @@ explore: fact_sfdb_forecast_snapshot {
   ;;
   }
 
+
+
 explore: fact_target_forecast_strategy_summary  {
+
+  access_filter: {
+    field: fact_target_forecast_strategy_summary.Strat_Sales_RVP
+    user_attribute: forecast_strat
+  }
+
   required_access_grants: [can_view_all_tremor]
   sql_always_where: ${Strat_Sales_Team}!='Unknown' ;;
 
@@ -118,16 +144,55 @@ explore: fact_target_forecast_strategy_summary  {
 
 }
 
-explore: fact_target_forecast_enterprise_summary  {
+# explore: fact_target_forecast_enterprise_summary  {
+#   required_access_grants: [can_view_all_tremor]
+#   sql_always_where: ${new_enterprise_team}!='Unknown' ;;
+
+#   join: forecast_dim_sfdb_user {
+#     type: left_outer
+#     sql_on: ${fact_target_forecast_enterprise_summary.generalist_name_key} = ${forecast_dim_sfdb_user.fullname_key} ;;
+#     relationship: many_to_one
+#   }
+
+# }
+
+
+# explore: fact_target_forecast_enterprise_summary  {
+#   required_access_grants: [can_view_all_tremor]
+#   sql_always_where: ${new_enterprise_team}!='Unknown' OR ${account_name} ILIKE ('Klick Health', '301 Digital Media', 'Good Karma Brands', 'Guru', 'Rescue Agency') ;;
+
+#   join: forecast_dim_sfdb_user {
+#     type: left_outer
+#     sql_on: ${fact_target_forecast_enterprise_summary.generalist_name_key} = ${forecast_dim_sfdb_user.fullname_key} ;;
+#     relationship: many_to_one
+#   }
+# }
+
+explore: fact_target_forecast_enterprise_summary {
+
+  access_filter: {
+    field: fact_target_forecast_enterprise_summary.new_enterprise_team
+    user_attribute: forecast_enterprise
+  }
+
   required_access_grants: [can_view_all_tremor]
-  sql_always_where: ${new_enterprise_team}!='Unknown' ;;
+  # UPDATED sql_always_where CLAUSE using ILIKE
+  sql_always_where: ${new_enterprise_team}!='Unknown' OR (
+    ${account_name} ILIKE '%Klick Health%' OR
+    ${account_name} ILIKE '%301 Digital Media%' OR
+    ${account_name} ILIKE '%Good Karma Brands%' OR
+    ${account_name} ILIKE '%Guru%' OR
+    ${account_name} ILIKE '%U.S. HealthConnect%' OR
+    ${account_name} ILIKE '%Active International%'OR
+    ${account_name} ILIKE '%Starcom - US%'OR
+    ${account_name} ILIKE '%Rescue Agency%'
+  ) ;;
 
   join: forecast_dim_sfdb_user {
     type: left_outer
     sql_on: ${fact_target_forecast_enterprise_summary.generalist_name_key} = ${forecast_dim_sfdb_user.fullname_key} ;;
     relationship: many_to_one
   }
-
 }
 
 #### FORECAST JOINED TABLE ####

@@ -167,12 +167,46 @@ view: fact_nexxen_dsp {
 
   dimension_group: date_key {
     type: time
+    label: "Date Key UTC"
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
     datatype: date
     sql: ${TABLE}.date_key ;;
-    hidden: yes
+    # hidden: yes
   }
+
+  dimension: date_key_year_month_utc {
+    type: string
+    label: "Year-Month (YYYY-MM) UTC"
+    sql: TO_CHAR(${date_key_raw}, 'YYYY-MM') ;;
+  }
+
+
+  dimension: date_key_year_number_utc {
+    type: number
+    label: "Year (Number) UTC"
+    sql: EXTRACT(YEAR FROM ${date_key_raw}) ;;
+  }
+
+
+  # dimension: date_key_utc {
+  #   label: "Date Key UTC Granularity"
+  #   sql:  CASE
+  #     WHEN {% parameter date_granularity %} = 'Day'
+  #       THEN ${date_key_date}
+  #     When {% parameter date_granularity %} ='Week'
+  #       THEN ${date_key_week}
+  #     WHEN {% parameter date_granularity %} = 'Month'
+  #       THEN ${date_key_month}
+  #     WHEN {% parameter date_granularity %} = 'Quarter'
+  #       THEN ${date_key_quarter}
+  #     WHEN {% parameter date_granularity %} = 'Year'
+  #       THEN ${date_key_year}
+  #     ELSE NULL
+  #   END ;;
+
+  #   hidden:  no
+  # }
 
 
   parameter: date_granularity {
@@ -391,14 +425,14 @@ dimension: inventory_source_key {
 
   measure: inv_cost {
     type: sum
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: ${TABLE}.inv_cost ;;
   }
 
 
   measure: Nexxen_Inv_Cost {
     type: sum
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inv_cost" else null end ;;
   }
 

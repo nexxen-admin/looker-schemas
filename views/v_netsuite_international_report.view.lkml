@@ -21,9 +21,10 @@ dimension: billing_clicks {
 
 dimension: billing_cost {
   type: number
-  sql: ${TABLE}.billing_cost ;;
+  sql: COALESCE(${TABLE}.billing_cost, 0) ;;
   label: "Cost"
 }
+
 
 dimension: booked_rate {
   type: number
@@ -74,11 +75,17 @@ dimension: line_item_name {
   sql: ${TABLE}.line_item_name ;;
 }
 
-dimension: netsuite_billing_revenue {
-  type: number
-  sql: ${TABLE}.netsuite_billing_revenue ;;
-  label: "NetSuite Billing Revenue"
-}
+  dimension: netsuite_billing_revenue {
+    type: number
+    sql: COALESCE(${TABLE}.netsuite_billing_revenue, 0) ;;
+    label: "NetSuite Billing Revenue"
+  }
+
+# dimension: netsuite_billing_revenue {
+#   type: number
+#   sql: ${TABLE}.netsuite_billing_revenue ;;
+#   label: "NetSuite Billing Revenue"
+# }
 
 dimension: netsuite_final_impressions {
   type: number

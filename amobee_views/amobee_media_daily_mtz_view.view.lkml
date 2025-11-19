@@ -172,7 +172,9 @@ view: amobee_media_daily_mtz_view {
   }
   dimension: deal_type {
     type: string
-    sql: CASE WHEN ${TABLE}.publisher_deal_object_id = -1 THEN 'Open' ELSE 'PMP' END ;;
+    sql: CASE WHEN ${TABLE}.line_item_name ilike '%_OE%' THEN 'Open'
+              WHEN ${TABLE}.line_item_name ilike '%_PMP%' THEN 'PMP'
+              ELSE 'Unknown' END ;;
   }
   dimension: deal_type_name {
     type: string

@@ -1,4 +1,4 @@
-connection: "vertica_iad"
+connection: "vertica_dm3"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"
@@ -322,6 +322,16 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
 
   }
+
+
+  # join: v_dim_dsp_date_utc {
+  #   type: inner
+  #   view_label: "Time UTC"
+  #   sql_on: ${v_dim_dsp_date_utc.date_key_raw} = ${fact_nexxen_dsp.date_key} ;;
+  #   relationship: many_to_one
+
+  # }
+
   join: dim_sfdb_legal_entity {
     type: inner
     view_label: "Legal Entity"

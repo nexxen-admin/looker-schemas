@@ -142,14 +142,19 @@ view: forecast_dim_sfdb_opportunity {
     sql: ${TABLE}.db_updated_date ;;
   }
 
+  dimension: db_updated_number {
+    type: number
+    # label: "Year (Number) UTC"
+    sql: EXTRACT(time FROM ${db_updated_time}) ;;
+  }
+
   measure: max_database_update_timestamp {
     type: max
-    sql: ${db_updated_time} ;;
+    sql: ${db_updated_number} ;;
     value_format: "yyyy-mm-dd hh:mm:ss"
     label: "Database Last Update"
-    # description: "The most recent timestamp recorded in the base table."
-
   }
+
 
 
   dimension: calculated_margin__c {

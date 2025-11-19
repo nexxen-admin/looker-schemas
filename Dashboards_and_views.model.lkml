@@ -230,6 +230,12 @@ explore: base_data_without_demand {
   hidden: yes
 }
 
+explore: base_data_retention_analysis {
+  label: "Base Data Retention Analysis"
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
+
 explore: ads_txt_domain_publisher {
   label: "ads_txt_domain_publisher"
   #required_access_grants: [can_view_all_tremor]
@@ -307,6 +313,12 @@ explore: new_revenue {
 
 explore: investor_kpi{
   label: "Investor KPI"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: investor_kpi_new{
+  label: "Investor KPI (New)"
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }

@@ -5,7 +5,8 @@ view: base_data_without_demand {
           to_char(Event_Month, 'mm') as month,
           to_char(Event_Month, 'yyyy') as year,
           upper(trim(Publisher)) as Publisher,
-          upper(Coalesce(bm.buyer_new,trm.billing_agency)) as Buyer,
+          case when {% parameter mapped_unmapped %} = 'mapped' then upper(Coalesce(bm.buyer_new,trm.billing_agency))
+                when {% parameter mapped_unmapped %} = 'unmapped' then upper(trm.billing_agency) end as Buyer,
           Upper(trim(Advertiser_Name)) as Advertiser,
           trim(upper(Device_Type)) as Device_Type,
           trim(upper(Impression_Type)) as Impression_Type,
@@ -20,6 +21,15 @@ view: base_data_without_demand {
       Where bm.buyer_new != 'DELETE'
       Group by 1, 2, 3, 4, 5, 6,7,8
        ;;
+  }
+
+  parameter: mapped_unmapped{
+    type: string
+    hidden: no
+    label: "Mapped/unmapped buyer:"
+    allowed_value: {label: "mapped" value: "mapped"}
+    allowed_value: {label: "unmapped" value: "unmapped"}
+    default_value: "mapped"
   }
 
   measure: count {

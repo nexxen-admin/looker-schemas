@@ -26,8 +26,17 @@ view: net_revenue_without_demand_ss_fees {
         coalesce(P2_E2E_Revenue,0) as P2_E2E_Revenue,
         coalesce(P2_E2E_cost,0) as P2_E2E_cost,
         coalesce(P2_E2E_Net,0) as P2_E2E_Net
-      From BI.SVC_TRMRCon_Net_Revenue_Retention
+      From {% parameter mapped_unmapped %}
        ;;
+  }
+
+  parameter: mapped_unmapped{
+    type: unquoted
+    hidden: no
+    label: "Mapped/unmapped buyer:"
+    allowed_value: {label: "mapped" value: "BI.SVC_TRMRCon_Net_Revenue_Retention"}
+    allowed_value: {label: "unmapped" value: "BI.SVC_TRMRCon_Net_Revenue_Retention_Unmapped"}
+    default_value: "BI.SVC_TRMRCon_Net_Revenue_Retention"
   }
 
   measure: count {

@@ -667,6 +667,7 @@ measure: Nexxen_Inv_Cost_Percent {
       ELSE SUM(${TABLE}.uncapped_revenue)
     END
   ;;
+    value_format: "#,##0.00"
   }
 
 

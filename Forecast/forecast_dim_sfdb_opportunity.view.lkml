@@ -142,14 +142,30 @@ view: forecast_dim_sfdb_opportunity {
     sql: ${TABLE}.db_updated_date ;;
   }
 
+# Convert the full timestamp to a sortable number (Unix seconds)
+  dimension: db_updated_number {
+    type: number
+    sql: EXTRACT(EPOCH FROM ${db_updated_raw}) ;;
+    label: "DB Updated Unix Time"
+    hidden: yes
+  }
+
   measure: max_database_update_timestamp {
     type: max
-    sql: ${db_updated_time} ;;
-    value_format: "yyyy-mm-dd hh:mm:ss"
-    label: "Database Last Update"
-    # description: "The most recent timestamp recorded in the base table."
-
+    sql: ${db_updated_number} ;;
+    label: "Max DB Update"
+    hidden: yes
   }
+
+
+  measure: final_database_last_update {
+    type: string # Must be string or number for this method
+    # Use a Vertica function to convert the max number (seconds) back to a formatted string
+    sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD HH24:MI:SS') ;;
+    label: "Database Last Update"
+  }
+
+
 
 
   dimension: calculated_margin__c {

@@ -170,10 +170,6 @@ explore: dim_dsp_market  {
   # hidden: yes
 #}
 
-explore: ncd_mapping_debugging {
-  label: "NCD Mapping Debugging"
-}
-
 explore: fact_reach_frequency {
   required_access_grants: [can_view_all_tremor]
   view_name: fact_reach_frequency

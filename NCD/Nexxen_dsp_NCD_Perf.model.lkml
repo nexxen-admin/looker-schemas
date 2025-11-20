@@ -89,3 +89,7 @@ explore: manual_valvoline{
   sql_always_where: ${dma} not ilike 'Unknown' and ${custom_customer_type} not ilike 'Unknown' and ${franchise} not ilike 'Unknown';;
   hidden: yes
 }
+
+explore: ncd_mapping_debugging {
+  label: "NCD Mapping Debugging"
+}

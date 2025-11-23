@@ -976,6 +976,7 @@ measure: Nexxen_Inv_Cost_Percent {
     type: number
     label: "Avg 3 Day Needed Imp"
     sql: (${hybrid_impressions_needed_yesterday} * 3) ;;
+    value_format: "#,##0.00"
   }
 
   measure: Last_3_day_impression_pacing {

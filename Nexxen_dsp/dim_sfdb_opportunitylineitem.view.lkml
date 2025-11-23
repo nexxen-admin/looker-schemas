@@ -549,7 +549,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: opportunity_link {
     type: string
-    sql: CONCAT('https://amobee-sfv.lightning.force.com/',${TABLE}.Opportunity_ID) ;;
+    sql: CONCAT('https://amobee-sfv.lightning.force.com/',${TABLE}.opportunityid) ;;
     html: <a href="{{ value }}"/>[SF Opportunity Link]</a> ;;
   }
 

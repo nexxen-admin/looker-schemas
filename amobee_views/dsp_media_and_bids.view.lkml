@@ -1451,6 +1451,15 @@ dimension: browser_type_name {
     sql: CASE WHEN ${deal_type_name} = '' THEN 'Open Auction' ELSE 'PMP' END ;;
   }
 
+  dimension: deal_type {
+    type: string
+    sql: CASE
+          WHEN LOWER(LOOKUP(CONCAT(line_item_id, ''), 'dsp_media_and_bids_line_item_name')) LIKE '%_oe%' THEN 'Open'
+          WHEN LOWER(LOOKUP(CONCAT(line_item_id, ''), 'dsp_media_and_bids_line_item_name')) LIKE '%_pmp%' THEN 'PMP'
+          ELSE 'Unknown'
+        END ;;
+  }
+
   dimension: amobee_business_unit {
     type: string
     label: "Amobee Business Unit"

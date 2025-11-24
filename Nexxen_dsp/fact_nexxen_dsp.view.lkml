@@ -168,6 +168,7 @@ view: fact_nexxen_dsp {
   dimension_group: date_key {
     type: time
     label: "Date Key UTC"
+    group_label: "Date UTC"
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
     datatype: date
@@ -178,6 +179,7 @@ view: fact_nexxen_dsp {
   dimension: date_key_year_month_utc {
     type: string
     label: "Year-Month (YYYY-MM) UTC"
+    group_label: "Date UTC"
     sql: TO_CHAR(${date_key_raw}, 'YYYY-MM') ;;
   }
 
@@ -185,28 +187,9 @@ view: fact_nexxen_dsp {
   dimension: date_key_year_number_utc {
     type: number
     label: "Year (Number) UTC"
+    group_label: "Date UTC"
     sql: EXTRACT(YEAR FROM ${date_key_raw}) ;;
   }
-
-
-  # dimension: date_key_utc {
-  #   label: "Date Key UTC Granularity"
-  #   sql:  CASE
-  #     WHEN {% parameter date_granularity %} = 'Day'
-  #       THEN ${date_key_date}
-  #     When {% parameter date_granularity %} ='Week'
-  #       THEN ${date_key_week}
-  #     WHEN {% parameter date_granularity %} = 'Month'
-  #       THEN ${date_key_month}
-  #     WHEN {% parameter date_granularity %} = 'Quarter'
-  #       THEN ${date_key_quarter}
-  #     WHEN {% parameter date_granularity %} = 'Year'
-  #       THEN ${date_key_year}
-  #     ELSE NULL
-  #   END ;;
-
-  #   hidden:  no
-  # }
 
 
   parameter: date_granularity {
@@ -222,7 +205,7 @@ view: fact_nexxen_dsp {
   }
 
   dimension: date {
-    group_label: "Deliverydate Granularity"
+    group_label: "Date Timezone"
     label: "Deliverydate Granularity"
     description: "For dynamic Delivery period Granularity. Use with Filter Date Granularity"
     #value_format: "%m/%d"
@@ -251,18 +234,21 @@ view: fact_nexxen_dsp {
     convert_tz: no
     datatype: date
     label: "Date in Timezone"
+    group_label: "Date Timezone"
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 
   dimension: date_key_year_number {
     type: number
     label: "Year (Number)"
+    group_label: "Date Timezone"
     sql: EXTRACT(YEAR FROM ${date_key_in_timezone_raw}) ;;
   }
 
   dimension: date_key_year_month {
     type: string
     label: "Year-Month (YYYY-MM)"
+    group_label: "Date Timezone"
     sql: TO_CHAR(${date_key_in_timezone_raw}, 'YYYY-MM') ;;
   }
 

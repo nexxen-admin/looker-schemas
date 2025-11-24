@@ -547,6 +547,12 @@ view: dim_sfdb_opportunitylineitem {
 
   }
 
+  dimension: opportunity_link {
+    type: string
+    sql: CONCAT('https://amobee-sfv.lightning.force.com/',${TABLE}.opportunityid) ;;
+    html: <a href="{{ value }}"/>[SF Opportunity Link]</a> ;;
+  }
+
   dimension: opportunitylineitem_aid__c {
     type: string
     label: "Case Safe OPP line item ID"

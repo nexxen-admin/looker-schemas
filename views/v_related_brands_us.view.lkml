@@ -42,6 +42,7 @@ view: v_related_brands_us {
   }
 
   dimension_group: date_key_in_timezone {
+    label: "Date"
     type: time
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
@@ -49,15 +50,18 @@ view: v_related_brands_us {
     sql: ${TABLE}.date_key_in_timezone ;;
   }
   dimension_group: end_date__c {
+    label: "End Date"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.end_date__c ;;
   }
   dimension: item_type__c {
+    label: "Item Type"
     type: string
     sql: ${TABLE}.item_type__c ;;
   }
   dimension: line_item_name__c {
+    label: "Line Item Name"
     type: string
     sql: ${TABLE}.line_item_name__c ;;
   }
@@ -93,10 +97,12 @@ view: v_related_brands_us {
     sql: ${TABLE}.price_type_name__c ;;
   }
   dimension: rate__c {
+    label: "Rate"
     type: number
     sql: ${TABLE}.rate__c ;;
   }
   dimension_group: start_date__c {
+    label: "Start Date"
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.start_date__c ;;

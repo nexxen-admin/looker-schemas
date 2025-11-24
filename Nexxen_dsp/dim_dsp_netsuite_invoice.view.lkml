@@ -28,6 +28,12 @@ view: dim_dsp_netsuite_invoice {
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
 
+  measure: Amount_Functional_Currency {
+    type: number
+    sql: ${TABLE}.Amount_Functional_Currency ;;
+    hidden: no
+  }
+
   dimension: netsuite_invoice_key {
     type: number
     sql: ${TABLE}.Netsuite_invoice_key ;;

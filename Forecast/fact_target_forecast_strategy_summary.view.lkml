@@ -140,11 +140,11 @@ view: fact_target_forecast_strategy_summary {
     type: string
     label: "Strategic Sales CS Region"
     sql: CASE
-          WHEN ${Strat_Sales_RVP} ILIKE '%East%' THEN 'Strat Sales CS East'
-          WHEN ${Strat_Sales_RVP} ILIKE '%South%' THEN 'Strat Sales CS South'
-          WHEN ${Strat_Sales_RVP} ILIKE '%West%' THEN 'Strat Sales CS West'
-          WHEN ${Strat_Sales_RVP} ILIKE '%Central%' THEN 'Strat Sales CS Central'
-          WHEN ${Strat_Sales_RVP} ILIKE '%Canada%' THEN 'Strat Sales CS Canada'
+          WHEN ${Strat_Sales_RVP} ILIKE '%East%' OR ${seller} = 'Strat Sales CS East' THEN 'Strat Sales CS East'
+          WHEN ${Strat_Sales_RVP} ILIKE '%South%' OR ${seller} = 'Strat Sales CS South' THEN 'Strat Sales CS South'
+          WHEN ${Strat_Sales_RVP} ILIKE '%West%' OR ${seller} = 'Strat Sales CS West' THEN 'Strat Sales CS West'
+          WHEN ${Strat_Sales_RVP} ILIKE '%Central%' OR ${seller} = 'Strat Sales CS Central' THEN 'Strat Sales CS Central'
+          WHEN ${Strat_Sales_RVP} ILIKE '%Canada%' OR ${seller} = 'Strat Sales CS Canada' THEN 'Strat Sales CS Canada'
           END;;
   }
 

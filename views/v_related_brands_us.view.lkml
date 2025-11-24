@@ -15,7 +15,8 @@ view: v_related_brands_us {
 
   dimension: is_live_campaign {
     type: string
-    sql: CASE WHEN  ${TABLE}.end_date__c_date >= current_date() THEN 'Live' ELSE 'Not Live' END ;;
+    sql: CASE WHEN  ${TABLE}.end_date__c >= current_date() THEN 'Live' ELSE 'Not Live' END ;;
+    suggestions: ["Live","Not Live"]
   }
 
   measure: data_fee_impressions {

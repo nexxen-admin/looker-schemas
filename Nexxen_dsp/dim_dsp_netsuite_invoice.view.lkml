@@ -56,6 +56,11 @@ view: dim_dsp_netsuite_invoice {
     sql: ${TABLE}.Amount_Functional_Currency ;;
   }
 
+  measure: Netsuite_Invoice_Amount {
+    type: sum
+    sql: ${TABLE}.Amount_Functional_Currency ;;
+  }
+
   dimension: ri_info {
     type: string
     sql: ${TABLE}.ri_info ;;

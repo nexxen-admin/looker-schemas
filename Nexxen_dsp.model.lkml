@@ -179,6 +179,13 @@ explore: fact_reach_frequency {
   hidden: yes
 }
 
+explore: v_related_brands_us {
+  required_access_grants: [can_view_all_tremor]
+  view_name: v_related_brands_us
+  label: "Related Brands Impressions Data"
+  persist_with: CleanCash_datagroup
+}
+
 explore: fact_nexxen_dsp  {
   required_access_grants: [can_view_all_tremor]
   view_name: fact_nexxen_dsp

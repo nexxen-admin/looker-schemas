@@ -133,7 +133,7 @@ explore: fact_target_forecast_strategy_summary  {
   }
 
   required_access_grants: [can_view_all_tremor]
-  sql_always_where: ${Strat_Sales_RVP}!='Unknown';;
+  sql_always_where: ${Strat_Sales_Team}!='Unknown';;
 
   join: forecast_dim_sfdb_user {
     type: left_outer

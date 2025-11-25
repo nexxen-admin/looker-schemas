@@ -87,6 +87,18 @@ view: v_related_brands_us {
     sql: ${TABLE}.product_level ;;
   }
 
+  dimension: po_name {
+    label: "PO Name"
+    type: string
+    sql: ${TABLE}.po_name ;;
+  }
+
+  dimension: po_number {
+    label: "PO Number"
+    type: string
+    sql: ${TABLE}.po_number ;;
+  }
+
   dimension: opportunity {
     label: "Opportunity"
     type: string

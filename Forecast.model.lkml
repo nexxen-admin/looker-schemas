@@ -133,13 +133,7 @@ explore: fact_target_forecast_strategy_summary  {
   }
 
   required_access_grants: [can_view_all_tremor]
-  sql_always_where: ${Strat_Sales_Team}!='Unknown' OR (
-  ${seller} = 'Strat Sales CS Canada' OR
-  ${seller} = 'Strat Sales CS Central' OR
-  ${seller} = 'Strat Sales CS East' OR
-  ${seller} = 'Strat Sales CS South' OR
-  ${seller} = 'Strat Sales CS West'
-  );;
+  sql_always_where: ${Strat_Sales_RVP}!='Unknown';;
 
   join: forecast_dim_sfdb_user {
     type: left_outer

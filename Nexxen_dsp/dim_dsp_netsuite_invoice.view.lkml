@@ -51,6 +51,11 @@ view: dim_dsp_netsuite_invoice {
     sql: ${TABLE}.quantity ;;
   }
 
+  dimension: Amount_Functional_Currency {
+    type: number
+    sql: ${TABLE}.Amount_Functional_Currency ;;
+  }
+
   dimension: ri_info {
     type: string
     sql: ${TABLE}.ri_info ;;

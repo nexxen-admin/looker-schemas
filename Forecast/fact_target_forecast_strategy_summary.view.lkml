@@ -123,6 +123,11 @@ view: fact_target_forecast_strategy_summary {
   dimension: Strat_Sales_Team {
     type: string
     sql: CASE WHEN COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team)='Strat Sales - Southwast' THEN 'Strat Sales - Southwest'
+    WHEN ${TABLE}.seller = 'Strat Sales CS East' THEN 'Strat Sales - East'
+              WHEN ${TABLE}.seller = 'Strat Sales CS Canada' THEN 'Strat Sales - Canada'
+              WHEN ${TABLE}.seller = 'Strat Sales CS South' THEN 'Strat Sales - South'
+              WHEN ${TABLE}.seller = 'Strat Sales CS West' THEN 'Strat Sales - West'
+              WHEN ${TABLE}.seller = 'Strat Sales CS Central' THEN 'Strat Sales - Central'
     ELSE COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team) END  ;;
   }
 

@@ -679,8 +679,9 @@ view: dim_sfdb_opportunity {
 
   dimension: record_type__c {
     type: string
+    label: "Opportunity Record Type"
     sql: ${TABLE}.record_type__c ;;
-    hidden: yes
+    hidden: no
   }
 
   dimension: recordtypeid {

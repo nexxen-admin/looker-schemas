@@ -19,6 +19,17 @@ view: v_related_brands_us {
     suggestions: ["Live","Not Live"]
   }
 
+  measure: maximum_date {
+    type: max
+    sql: ${date_key_in_timezone_date} ;;
+  }
+
+  measure: is_in_dates {
+    type: yesno
+    sql: ${end_date__c_date} >=  ${maximum_date}  ;;
+  }
+
+
   measure: data_fee_impressions {
     label: "Data Fee Impressions"
     type: sum

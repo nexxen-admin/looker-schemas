@@ -60,8 +60,7 @@ view: dim_dsp_netsuite_invoice {
 
   measure: netsuite_invoice_amount {
     type: sum
-    sql: COALESCE(${TABLE}.Amount_Functional_Currency,0) ;;
-    value_format_name: "usd"
+    sql: ${Amount_Functional_Currency} ;;
     hidden: no
   }
 

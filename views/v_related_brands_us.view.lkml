@@ -29,6 +29,11 @@ view: v_related_brands_us {
     sql: ${end_date__c_date} >=  ${maximum_date}  ;;
   }
 
+  measure: is_in_min_dates {
+    type: yesno
+    sql: min(${end_date__c_date}) >=  ${maximum_date}  ;;
+  }
+
 
   measure: data_fee_impressions {
     label: "Data Fee Impressions"

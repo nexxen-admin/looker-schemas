@@ -634,11 +634,11 @@ measure: Nexxen_Inv_Cost_Percent {
     filters: [date_key_in_timezone_date: "last month"]
   }
 
-  # measure: capped_revenue {
-  #   type: sum
-  #   sql: ${TABLE}.capped_revenue ;;
-  #   value_format: "$#,##0.00"
-  # }
+  measure: capped_revenue_do_not_use{
+    type: sum
+    sql: ${TABLE}.capped_revenue ;;
+    value_format: "$#,##0.00"
+  }
 
 
   measure: capped_revenue {

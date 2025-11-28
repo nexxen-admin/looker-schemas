@@ -301,13 +301,41 @@ explore: fact_nexxen_dsp  {
     sql_on: ${dim_dsp_monthly_manual_adjustment.manual_adjustment_key} = ${fact_nexxen_dsp.manual_adjustment_key};;
     relationship: many_to_one
   }
+####---old---###
+  # join: dim_dsp_netsuite_invoice{
+  #   type:left_outer
+  #   view_label: "Netsuite Billing Fields"
+  #   sql_on: ${dim_dsp_netsuite_invoice.netsuite_invoice_key} = ${fact_nexxen_dsp.netsuite_invoice_key};;
+  #   relationship: many_to_one
+  # }
 
-  join: dim_dsp_netsuite_invoice{
-    type:left_outer
+  ####---new---###
+  # join: dim_dsp_netsuite_invoice {
+  #   type: left_outer
+  #   view_label: "Netsuite Billing Fields"
+
+  #   sql_on:
+  #   ${fact_nexxen_dsp.opportunitylineitem_key} = ${dim_dsp_netsuite_invoice.opportunitylineitem_key}
+  #   AND CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_date}) AS DATE)
+  #     = TO_DATE(${dim_dsp_netsuite_invoice.event_month_month}, 'YYYY-MM-DD') ;;
+
+  #   relationship: many_to_one
+  # }
+
+
+  join: dim_dsp_netsuite_invoice {
+    type: left_outer
     view_label: "Netsuite Billing Fields"
-    sql_on: ${dim_dsp_netsuite_invoice.netsuite_invoice_key} = ${fact_nexxen_dsp.netsuite_invoice_key};;
-    relationship: many_to_one
-  }
+
+    sql_on:
+    ${fact_nexxen_dsp.opportunitylineitem_key} = ${dim_dsp_netsuite_invoice.opportunitylineitem_key}
+    AND CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_date}) AS DATE)
+      = TO_DATE(${dim_dsp_netsuite_invoice.event_month_month}, 'YYYY-MM') ;;
+
+      relationship: many_to_one
+    }
+
+
 
   join: dim_dsp_creative_file_tracking_url {
     type: left_outer

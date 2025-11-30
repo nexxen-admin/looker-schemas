@@ -158,15 +158,30 @@ view: forecast_dim_sfdb_opportunity {
   }
 
 
+  # measure: final_database_last_update {
+  #   type: string # Must be string or number for this method
+  #   # Use a Vertica function to convert the max number (seconds) back to a formatted string
+  #   sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD HH24:MI:SS') ;;
+  #   label: "Database Last Update"
+  # }
+
   measure: final_database_last_update {
-    type: string # Must be string or number for this method
-    # Use a Vertica function to convert the max number (seconds) back to a formatted string
+    type: string
     sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD HH24:MI:SS') ;;
-    label: "Database Last Update"
-  }
+    label: "SF DB update date"
 
-
-
+    # Add this HTML block
+  #   html:
+  #     <div style="font-family: 'Google Sans', 'Noto Sans', sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #FFFFFF;">
+  #       <span style="font-weight: normal;">SF DB update date</span><br>
+  #       {{ rendered_value }}
+  #     </div> ;;
+  # }
+    html:
+    <div style="font-family: 'Google Sans', 'Noto Sans', sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
+    <span style="font-weight: normal;">SF DB update date</span><br>
+    {{ rendered_value }}
+    </div> ;;}
 
   dimension: calculated_margin__c {
     type: number

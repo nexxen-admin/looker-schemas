@@ -327,6 +327,14 @@ dimension: inventory_source_key {
     filters: [date_key_in_timezone_date: "3 days ago for 3 days"]
   }
 
+
+  # measure: netsuite_invoice_amount {
+  #   type: sum
+  #   sql: ${dim_dsp_netsuite_invoice.Amount_Functional_Currency} ;;
+  #   hidden: no
+  # }
+
+
   measure: third_party_impressions {
     type: sum
     label: "3P Impressions"

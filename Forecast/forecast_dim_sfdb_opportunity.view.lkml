@@ -171,7 +171,7 @@ view: forecast_dim_sfdb_opportunity {
     label: "SF DB update date"
     html:
     <div style="font-family: Arial, sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
-      <span style="font-weight: normal; word-spacing: 4px;">SF DB update date</span><br>
+      <span style="font-weight: normal; word-spacing: 4px;">SF DB update date (UTC)</span><br>
       <span style="word-spacing: 15px;">{{ rendered_value }}</span>
     </div> ;;}
 

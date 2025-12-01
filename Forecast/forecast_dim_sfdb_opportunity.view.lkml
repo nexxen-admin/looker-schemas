@@ -169,19 +169,22 @@ view: forecast_dim_sfdb_opportunity {
     type: string
     sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD HH24:MI:SS') ;;
     label: "SF DB update date"
-
-    # Add this HTML block
-  #   html:
-  #     <div style="font-family: 'Google Sans', 'Noto Sans', sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #FFFFFF;">
-  #       <span style="font-weight: normal;">SF DB update date</span><br>
-  #       {{ rendered_value }}
-  #     </div> ;;
-  # }
     html:
-    <div style="font-family: 'Google Sans', 'Noto Sans', sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
-    <span style="font-weight: normal;">SF DB update date</span><br>
-    {{ rendered_value }}
+    <div style="font-family: Arial, sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
+      <span style="font-weight: normal; word-spacing: 4px;">SF DB update date</span><br>
+      <span style="word-spacing: 15px;">{{ rendered_value }}</span>
     </div> ;;}
+
+
+  # measure: final_database_last_update {
+  #   type: string
+  #   sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD    HH24:MI:SS') ;;
+  #   label: "SF DB update date"
+  #   html:
+  #   <div style="font-family: 'Google Sans', 'Noto Sans', sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
+  #   <span style="font-weight: normal; word-spacing: 4px;">SF DB update date</span><br>
+  #   {{ rendered_value }}
+  #   </div> ;;}
 
   dimension: calculated_margin__c {
     type: number

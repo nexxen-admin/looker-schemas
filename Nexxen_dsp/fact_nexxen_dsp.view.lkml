@@ -1370,6 +1370,13 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "#,##0.00"
   }
 
+  # measure: Net_evenue_FDW_cost {
+  #   type: number
+  #   label: "Net Revenue (FDW cost)"
+  #   sql: ${dim_dsp_netsuite_invoice.Amount_Functional_Currency}-${full_costs_fdw_cost} ;;
+  #   value_format: "#,##0.00"
+  # }
+
   measure: net_revenue_capped_rev_fdw_cost {
     type: number
     label: "Net Revenue (Capped Rev-Full Costs)"

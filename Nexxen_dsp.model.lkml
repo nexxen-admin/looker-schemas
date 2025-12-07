@@ -444,12 +444,21 @@ explore: fact_nexxen_dsp  {
   }
 
 
+  # join: dim_sfdb_user {
+  #   type: inner
+  #   view_label: "Employee - Account"
+  #   sql_on: ${dim_sfdb_user.user_key_id}=${fact_nexxen_dsp.user_key_id};;
+  #   relationship: many_to_one
+  # }
+
   join: dim_sfdb_user {
     type: inner
     view_label: "Employee - Account"
-    sql_on: ${dim_sfdb_user.user_key_id}=${fact_nexxen_dsp.user_key_id};;
+    sql_on:${dim_sfdb_user.id}=${dim_sfdb_opportunitylineitem.account_manager__c};;
     relationship: many_to_one
   }
+
+
 
   join: dim_sfdb_user_delivery {
     type: left_outer

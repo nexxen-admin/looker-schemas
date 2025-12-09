@@ -123,7 +123,6 @@ view: fact_target_forecast_strategy_summary {
   dimension: Strat_Sales_Team {
     type: string
     sql: CASE WHEN COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team)='Strat Sales - Southwast' THEN 'Strat Sales - Southwest'
-    WHEN ${TABLE}.seller IN ('Strat Sales CS East', 'Strat Sales - Canada', 'Strat Sales - South', 'Strat Sales - West', 'Strat Sales - Central') THEN 'Strat CS'
     ELSE COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team) END  ;;
   }
 
@@ -135,11 +134,6 @@ view: fact_target_forecast_strategy_summary {
   dimension: Strat_Sales_RVP {
     type: string
     sql: CASE WHEN ${TABLE}.seller='Taylor Kiefer' THEN 'Strat Sales - East'
-    WHEN ${TABLE}.seller = 'Strat Sales CS East' THEN 'Strat Sales - East'
-              WHEN ${TABLE}.seller = 'Strat Sales CS Canada' THEN 'Strat Sales - Canada'
-              WHEN ${TABLE}.seller = 'Strat Sales CS South' THEN 'Strat Sales - South'
-              WHEN ${TABLE}.seller = 'Strat Sales CS West' THEN 'Strat Sales - West'
-              WHEN ${TABLE}.seller = 'Strat Sales CS Central' THEN 'Strat Sales - Central'
     ELSE COALESCE(${forecast_dim_sfdb_user.RVP_Sales_team}, ${TABLE}.Strat_Sales_RVP) END;;
     drill_fields: [revenue_line, Strat_Sales_Team]
   }
@@ -148,11 +142,11 @@ view: fact_target_forecast_strategy_summary {
     type: string
     label: "Strategic Sales CS Region"
     sql: CASE
-          WHEN ${Strat_Sales_RVP} ILIKE '%East%' OR ${seller} = 'Strat Sales CS East' THEN 'Strat Sales CS East'
-          WHEN ${Strat_Sales_RVP} ILIKE '%South%' OR ${seller} = 'Strat Sales CS South' THEN 'Strat Sales CS South'
-          WHEN ${Strat_Sales_RVP} ILIKE '%West%' OR ${seller} = 'Strat Sales CS West' THEN 'Strat Sales CS West'
-          WHEN ${Strat_Sales_RVP} ILIKE '%Central%' OR ${seller} = 'Strat Sales CS Central' THEN 'Strat Sales CS Central'
-          WHEN ${Strat_Sales_RVP} ILIKE '%Canada%' OR ${seller} = 'Strat Sales CS Canada' THEN 'Strat Sales CS Canada'
+          WHEN ${Strat_Sales_RVP} ILIKE '%East%' THEN 'Strat Sales CS East'
+          WHEN ${Strat_Sales_RVP} ILIKE '%South%' THEN 'Strat Sales CS South'
+          WHEN ${Strat_Sales_RVP} ILIKE '%West%' THEN 'Strat Sales CS West'
+          WHEN ${Strat_Sales_RVP} ILIKE '%Central%' THEN 'Strat Sales CS Central'
+          WHEN ${Strat_Sales_RVP} ILIKE '%Canada%' THEN 'Strat Sales CS Canada'
           END;;
   }
 

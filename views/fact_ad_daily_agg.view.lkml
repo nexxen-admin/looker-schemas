@@ -2161,6 +2161,28 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: uid_source_key {
+    type: number
+    sql: ${TABLE}.uid_source_key ;;
+    # hidden: yes
+  }
+
+  dimension: schain_node_count{
+    type: number
+    label: "Inbound SChain Node Count"
+    group_label: "Request Attributes"
+    description: "Number of nodes/hops in supply chain for the request before reaching Nexxen."
+    sql: ${TABLE}.schain_node_count;;
+  }
+
+  dimension: schain_complete{
+    type: string
+    label: "SChain Complete"
+    group_label: "Request Attributes"
+    description: "Schain complete - 'true' = complete chain, 'false' = incomplete, 'null' = not provided"
+    sql: ${TABLE}.schain_complete;;
+  }
+
   filter: current_date_range {
     type: date
     view_label: "PoP"

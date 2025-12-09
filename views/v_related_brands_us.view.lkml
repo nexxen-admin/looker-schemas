@@ -19,6 +19,22 @@ view: v_related_brands_us {
     suggestions: ["Live","Not Live"]
   }
 
+  measure: maximum_date {
+    type: max
+    sql: ${date_key_in_timezone_date} ;;
+  }
+
+  measure: is_in_dates {
+    type: yesno
+    sql: ${end_date__c_date} >=  ${maximum_date}  ;;
+  }
+
+  measure: is_in_min_dates {
+    type: yesno
+    sql: min(${end_date__c_date}) >=  ${maximum_date}  ;;
+  }
+
+
   measure: data_fee_impressions {
     label: "Data Fee Impressions"
     type: sum
@@ -40,6 +56,14 @@ view: v_related_brands_us {
     type: sum
     value_format: "$#,##0.00"
     sql: ${TABLE}.data_fee_cost;;
+  }
+
+
+  measure: opp_data_fee_cost{
+    label: "Opp Data Fee Cost"
+    type: number
+    value_format: "$#,##0.00"
+    sql: ${data_fee_cost_meas} / coalesce(${num_of_ids},1);;
   }
 
   dimension_group: date_key_in_timezone {
@@ -120,6 +144,12 @@ view: v_related_brands_us {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.start_date__c ;;
   }
+
+  measure: num_of_ids {
+    type: count_distinct
+    sql: ${TABLE}.id ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [id]

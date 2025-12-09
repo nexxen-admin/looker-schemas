@@ -87,7 +87,7 @@ view: dim_dsp_package_budget_schedule {
   }
 
   dimension: package_id {
-    type: string
+    type: number
 
     sql: ${TABLE}.package_id ;;
   }

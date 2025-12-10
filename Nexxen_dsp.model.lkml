@@ -454,7 +454,7 @@ explore: fact_nexxen_dsp  {
   join: dim_sfdb_user {
     type: inner
     view_label: "Employee - Account"
-    sql_on:${dim_sfdb_user.id}=${dim_sfdb_opportunitylineitem.account_manager__c};;
+    sql_on:${dim_sfdb_user.id}=${dim_sfdb_opportunity.account_manager__c};;
     relationship: many_to_one
   }
 

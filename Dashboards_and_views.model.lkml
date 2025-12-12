@@ -30,7 +30,7 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
-access_grant: ssp_reconciliation_poc {
+access_grant: finance_reports {
   user_attribute: finance_reports
   allowed_values: ["Finance Reports All Access"]
 }
@@ -181,7 +181,7 @@ explore: bid_details_in_app {
 
 explore: ssp_revenue_reconciliation_poc {
   label: "SSP Revenue Reconciliation POC"
-  required_access_grants: [ssp_reconciliation_poc]
+  required_access_grants: [can_view_all_tremor]
   hidden: no
 }
 

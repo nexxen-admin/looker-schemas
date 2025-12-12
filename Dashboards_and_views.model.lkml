@@ -174,6 +174,12 @@ explore: bid_details_in_app {
   hidden: yes
 }
 
+explore: ssp_revenue_reconciliation_poc {
+  label: "SSP Revenue Reconciliation POC"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
 explore: spearad_fifa_view {
   label: "FIFA-SpearAd View"
   required_access_grants: [can_view_all_tremor]

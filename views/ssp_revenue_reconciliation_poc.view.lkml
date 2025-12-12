@@ -182,79 +182,79 @@ view: ssp_revenue_reconciliation_poc {
   }
 
   measure: gross_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.Gross_Revenue ;;
     value_format: "$#,##0.00"
   }
 
   measure: cogs {
-    type: number
+    type: sum
     sql: ${TABLE}.COGS ;;
     value_format: "$#,##0.00"
   }
 
   measure: traffic_source_fee {
-    type: number
+    type: sum
     sql: ${TABLE}.Traffic_Source_Fee ;;
     value_format: "$#,##0.00"
   }
 
   measure: pub_platform_fee {
-    type: number
+    type: sum
     sql: ${TABLE}.Pub_Platform_Fee ;;
     value_format: "$#,##0.00"
   }
 
   measure: deal_data_fee {
-    type: number
+    type: sum
     sql: ${TABLE}.Deal_Data_Fee ;;
     value_format: "$#,##0.00"
   }
 
   measure: currated_marketplace_fee {
-    type: number
+    type: sum
     sql: ${TABLE}.Currated_Marketplace_Fee ;;
     value_format: "$#,##0.00"
   }
 
   measure: barter_amount_fact {
-    type: number
+    type: sum
     sql: ${TABLE}.Barter_Amount_Fact ;;
     value_format: "$#,##0.00"
   }
 
   measure: ssp_platform_fee {
-    type: number
+    type: sum
     sql: ${TABLE}.SSP_Platform_Fee ;;
     value_format: "$#,##0.00"
   }
 
   measure: bidswitch_platform_cost {
-    type: number
+    type: sum
     sql: ${TABLE}.Bidswitch_Platform_Cost ;;
     value_format: "$#,##0.00"
   }
 
   measure: dsp_adj_revenue {
-    type: number
+    type: sum
     sql: ${TABLE}.DSP_Adj_Revenue ;;
     value_format: "$#,##0.00"
   }
 
   measure: dsp_adj_cogs {
-    type: number
+    type: sum
     sql: ${TABLE}.DSP_Adj_COGS ;;
     value_format: "$#,##0.00"
   }
 
   measure: barter_rebate_w_ddf {
-    type: number
+    type: sum
     sql: ${TABLE}.Barter_Rebate_W_DDF ;;
     value_format: "$#,##0.00"
   }
 
   measure: barter_rebate_wout_ddf {
-    type: number
+    type: sum
     sql: ${TABLE}.Barter_Rebate_Wout_DDF ;;
     value_format: "$#,##0.00"
   }

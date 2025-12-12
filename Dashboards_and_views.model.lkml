@@ -30,6 +30,11 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
+access_grant: ssp_reconciliation_poc {
+  user_attribute: finance_reports
+  allowed_values: ["Finance Reports All Acccess"]
+}
+
 access_grant: allowed_users_sam_lt {
   user_attribute: allowed_users_sam_lt
   allowed_values: ["Finance Reports All Access", "Chris Chandler Group", "Mike Padula Group"]
@@ -176,8 +181,8 @@ explore: bid_details_in_app {
 
 explore: ssp_revenue_reconciliation_poc {
   label: "SSP Revenue Reconciliation POC"
-  required_access_grants: [can_view_all_tremor]
-  hidden: yes
+  required_access_grants: [ssp_reconciliation_poc]
+  hidden: no
 }
 
 explore: spearad_fifa_view {

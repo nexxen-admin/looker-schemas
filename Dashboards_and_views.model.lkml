@@ -32,7 +32,7 @@ access_grant: can_view_pub_come_looker {
 
 access_grant: ssp_reconciliation_poc {
   user_attribute: finance_reports
-  allowed_values: ["Finance Reports All Acccess"]
+  allowed_values: ["Finance Reports All Access"]
 }
 
 access_grant: allowed_users_sam_lt {

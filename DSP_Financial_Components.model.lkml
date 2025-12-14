@@ -18,12 +18,17 @@ include: "/**/*.view.lkml"                 # include all views in this project
 #     sql_on: ${users.id} = ${orders.user_id} ;;
 #   }
 # }
-access_grant: can_view_all_tremor {
-  user_attribute: all_tremor
-  allowed_values: ["all_tremor"]
+# access_grant: can_view_all_tremor {
+#   user_attribute: all_tremor
+#   allowed_values: ["all_tremor"]
+# }
+
+access_grant: can_view_pub_come_looker {
+  user_attribute: admins
+  allowed_values: ["Looker_Admins"]
 }
 
 explore: ssot_v   {
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [can_view_pub_come_looker]
   # label: "Monthly Strategic Targets"
 }

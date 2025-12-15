@@ -275,8 +275,9 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.status ;;
   }
-  dimension: tac {
-    type: number
+  measure: tac {
+    type: sum
+    label: "TAC"
     sql: ${TABLE}.tac ;;
   }
   dimension: total_billable {
@@ -471,21 +472,21 @@ view: ssot_v {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	package_name,
-	customer_name,
-	sf_billing_account_name,
-	insertion_order_name,
-	sf_opportunity_line_item_name,
-	media_channel_name,
-	home_market_name,
-	country_name,
-	inventory_source_name,
-	sf_account_name,
-	sf_related_brand_name,
-	sf_opportunity_name,
-	publisher_name,
-	advertiser_name
-	]
+  package_name,
+  customer_name,
+  sf_billing_account_name,
+  insertion_order_name,
+  sf_opportunity_line_item_name,
+  media_channel_name,
+  home_market_name,
+  country_name,
+  inventory_source_name,
+  sf_account_name,
+  sf_related_brand_name,
+  sf_opportunity_name,
+  publisher_name,
+  advertiser_name
+  ]
   }
 
 }

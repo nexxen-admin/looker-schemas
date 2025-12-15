@@ -119,9 +119,10 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.inventory_carrying_cost ;;
   }
-  dimension: inventory_cost {
-    type: number
+  measure: inventory_cost {
+    type: sum
     sql: ${TABLE}.inventory_cost ;;
+    value_format: "$#,##0.00"
   }
   dimension: inventory_source_id {
     type: number

@@ -61,7 +61,6 @@ view: dim_dsp_netsuite_invoice {
   measure: netsuite_invoice_amount {
     type: sum
     sql: ${Amount_Functional_Currency} ;;
-    hidden: no
   }
 
 

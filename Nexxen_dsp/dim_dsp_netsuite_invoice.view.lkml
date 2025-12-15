@@ -57,13 +57,10 @@ view: dim_dsp_netsuite_invoice {
     sql: COALESCE(${TABLE}.Amount_Functional_Currency,0) ;;
   }
 
-
-  measure: netsuite_invoice_amount {
-    type: sum
-    sql: ${Amount_Functional_Currency} ;;
-  }
-
-
+measure: amount_functional_currency_commission {
+  type: max
+  sql: COALESCE(${TABLE}.Amount_Functional_Currency,0)  ;;
+}
 
   dimension: ri_info {
     type: string

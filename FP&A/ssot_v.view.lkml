@@ -72,9 +72,10 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.environment_id ;;
   }
-  dimension: exchange_fee {
-    type: number
+  measure: exchange_fee {
+    type: sum
     sql: ${TABLE}.exchange_fee ;;
+    value_format: "$#,##0.00"
   }
   dimension: exchange_line_item_id {
     type: string

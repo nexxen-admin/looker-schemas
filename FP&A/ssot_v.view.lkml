@@ -33,9 +33,10 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.category_id ;;
   }
-  dimension: content_data_cost {
-    type: number
+  measure: content_data_cost {
+    type: sum
     sql: ${TABLE}.content_data_cost ;;
+    value_format: "$#,##0.00"
   }
   dimension: country_code {
     type: string
@@ -336,37 +337,53 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.turn_bi_net ;;
   }
-  dimension: turn_brand_safety_contra {
-    type: number
+  measure: turn_brand_safety_contra {
+    type: sum
+    label: "Brand Safety Contra"
     sql: ${TABLE}.turn_brand_safety_contra ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_brand_safety_dc {
-    type: number
+  measure: turn_brand_safety_dc {
+    type: sum
+    label: "Client Content Data Cost"
     sql: ${TABLE}.turn_brand_safety_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_brand_safety_fee {
-    type: number
+  measure: turn_brand_safety_fee {
+    type: sum
+    label: "Brand Safety Fee"
     sql: ${TABLE}.turn_brand_safety_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_brand_safety_net {
-    type: number
+  measure: turn_brand_safety_net {
+    type: sum
+    label: "Brand Safety Data Cost Adjusted"
     sql: ${TABLE}.turn_brand_safety_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_contextual_contra {
-    type: number
+  measure: turn_contextual_contra {
+    type: sum
+    label: "Contextual Contra"
     sql: ${TABLE}.turn_contextual_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_contextual_dc {
-    type: number
+  measure: turn_contextual_dc {
+    type: sum
+    label: "Client Content Data Cost"
     sql: ${TABLE}.turn_contextual_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_contextual_fee {
-    type: number
+  measure: turn_contextual_fee {
+    type: sum
+    label: "Contextual Fee"
     sql: ${TABLE}.turn_contextual_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_contextual_net {
-    type: number
+  measure: turn_contextual_net {
+    type: sum
+    label: "Contextual Data Cost Adjusted"
     sql: ${TABLE}.turn_contextual_net ;;
+    value_format: "$#,##0.00"
   }
   dimension: turn_cross_device_contra {
     type: number

@@ -82,9 +82,11 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.exchange_line_item_id ;;
   }
-  dimension: first_party_cost {
-    type: number
+  measure: first_party_cost {
+    type: sum
+    label: "Client Total First Party Cost"
     sql: ${TABLE}.first_party_cost ;;
+    value_format: "$#,##0.00"
   }
   dimension: home_market_id {
     type: number
@@ -393,25 +395,35 @@ view: ssot_v {
     sql: ${TABLE}.turn_contextual_net ;;
     value_format: "$#,##0.00"
   }
-  dimension: turn_cross_device_contra {
-    type: number
+  measure: turn_cross_device_contra {
+    type: sum
+    label: "Cross Device Contra"
     sql: ${TABLE}.turn_cross_device_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_cross_device_dc {
-    type: number
+  measure: turn_cross_device_dc {
+    type: sum
+    label: "Cross Device First Party Cost"
     sql: ${TABLE}.turn_cross_device_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_cross_device_fee {
-    type: number
+  measure: turn_cross_device_fee {
+    type: sum
+    label: "Cross Device Fee"
     sql: ${TABLE}.turn_cross_device_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_cross_device_net {
-    type: number
+
+  measure: turn_cross_device_net {
+    type: sum
+    label: "Cross Device First Party Cost Adjusted"
     sql: ${TABLE}.turn_cross_device_net ;;
+    value_format: "$#,##0.00"
   }
   dimension: turn_ghost_bid_contra {
     type: number
     sql: ${TABLE}.turn_ghost_bid_contra ;;
+
   }
   dimension: turn_ghost_bid_dc {
     type: number
@@ -470,29 +482,37 @@ view: ssot_v {
   }
   measure: turn_page_quality_net {
     type: sum
-    label: "Page Quality Fee"
+    label: "Page Quality Data Cost Adjusted"
     sql: ${TABLE}.turn_page_quality_net ;;
     value_format: "$#,##0.00"
   }
-  dimension: turn_third_party_cost {
-    type: number
+  measure: turn_third_party_cost {
+    type: sum
+    label: "Client Turn Third Party Cost"
     sql: ${TABLE}.turn_third_party_cost ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_tpca_contra {
-    type: number
+  measure: turn_tpca_contra {
+    type: sum
+    label: "Turn Third Party cost Contra"
     sql: ${TABLE}.turn_tpca_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_tpca_dc {
-    type: number
+  measure: turn_tpca_dc {
+    type: sum
+    label: "Turn Third Party Cost"
     sql: ${TABLE}.turn_tpca_dc ;;
+    value_format: "$#,##0.00"
   }
   dimension: turn_tpca_fee {
     type: number
     sql: ${TABLE}.turn_tpca_fee ;;
   }
-  dimension: turn_tpca_net {
-    type: number
+  measure: turn_tpca_net {
+    type: sum
+    label: "Turn Third Party Cost Adjusted"
     sql: ${TABLE}.turn_tpca_net ;;
+    value_format: "$#,##0.00"
   }
   dimension: turn_viewability_contra {
     type: number

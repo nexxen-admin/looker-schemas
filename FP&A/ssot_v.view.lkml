@@ -290,25 +290,35 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.total_billable ;;
   }
-  dimension: turn_audience_contra {
-    type: number
+  measure: turn_audience_contra {
+    type: sum
+    label: "Audience Contra"
     sql: ${TABLE}.turn_audience_contra ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_audience_data_cost {
-    type: number
+  measure: turn_audience_data_cost {
+    type: sum
+    label: "Client Turn Pay Data Cost"
     sql: ${TABLE}.turn_audience_data_cost ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_audience_dc {
-    type: number
+  measure: turn_audience_dc {
+    type: sum
+    label: "Audience Data Cost"
     sql: ${TABLE}.turn_audience_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_audience_fee {
-    type: number
+  measure: turn_audience_fee {
+    type: sum
+    label: "Audience Fee"
     sql: ${TABLE}.turn_audience_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_audience_net {
-    type: number
+  measure: turn_audience_net {
+    type: sum
+    label: "Audience Data Cost Adjusted"
     sql: ${TABLE}.turn_audience_net ;;
+    value_format: "$#,##0.00"
   }
   dimension: turn_bi_contra {
     type: number
@@ -390,9 +400,10 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.turn_ghost_bid_net ;;
   }
-  dimension: turn_markup {
-    type: number
+  measure: turn_markup {
+    type: sum
     sql: ${TABLE}.turn_markup ;;
+    value_format: "#,##0.00"
   }
   dimension: turn_min_charge_adjustment {
     type: number

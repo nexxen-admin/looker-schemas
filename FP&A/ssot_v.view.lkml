@@ -325,9 +325,11 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.turn_bi_contra ;;
   }
-  dimension: turn_bi_dc {
-    type: number
+  measure: turn_bi_dc {
+    type: sum
+     # label: "Client Content Data Cost"
     sql: ${TABLE}.turn_bi_dc ;;
+    value_format: "#,##0.00"
   }
   dimension: turn_bi_fee {
     type: number
@@ -345,7 +347,7 @@ view: ssot_v {
   }
   measure: turn_brand_safety_dc {
     type: sum
-    label: "Client Content Data Cost"
+    # label: "Client Content Data Cost"
     sql: ${TABLE}.turn_brand_safety_dc ;;
     value_format: "$#,##0.00"
   }
@@ -369,7 +371,7 @@ view: ssot_v {
   }
   measure: turn_contextual_dc {
     type: sum
-    label: "Client Content Data Cost"
+    # label: "Client Content Data Cost"
     sql: ${TABLE}.turn_contextual_dc ;;
     value_format: "$#,##0.00"
   }
@@ -446,9 +448,11 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.turn_page_quality_contra ;;
   }
-  dimension: turn_page_quality_dc {
-    type: number
+  measure: turn_page_quality_dc {
+    type: sum
+     # label: "Client Content Data Cost"
     sql: ${TABLE}.turn_page_quality_dc ;;
+    value_format: "#,##0.00"
   }
   dimension: turn_page_quality_fee {
     type: number

@@ -112,13 +112,15 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.insertion_order_name ;;
   }
-  dimension: inventory_carry_fee {
-    type: number
+  measure: inventory_carry_fee {
+    type: sum
     sql: ${TABLE}.inventory_carry_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: inventory_carrying_cost {
-    type: number
+  measure: inventory_carrying_cost {
+    type: sum
     sql: ${TABLE}.inventory_carrying_cost ;;
+    value_format: "$#,##0.00"
   }
   measure: inventory_cost {
     type: sum
@@ -209,9 +211,11 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.publisher_name ;;
   }
-  dimension: reconciliation_factor {
-    type: number
+  measure: reconciliation_factor {
+    type: sum
+    label: "Recon Factor"
     sql: ${TABLE}.reconciliation_factor ;;
+    value_format: "$#,##0.00"
   }
   dimension: region {
     type: string

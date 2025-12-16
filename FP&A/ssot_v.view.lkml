@@ -321,9 +321,11 @@ view: ssot_v {
     sql: ${TABLE}.turn_audience_net ;;
     value_format: "$#,##0.00"
   }
-  dimension: turn_bi_contra {
-    type: number
+  measure: turn_bi_contra {
+    type: sum
+    label: "Brand Intelligence Contra"
     sql: ${TABLE}.turn_bi_contra ;;
+    value_format: "#,##0.00"
   }
   measure: turn_bi_dc {
     type: sum
@@ -331,13 +333,17 @@ view: ssot_v {
     sql: ${TABLE}.turn_bi_dc ;;
     value_format: "#,##0.00"
   }
-  dimension: turn_bi_fee {
-    type: number
+  measure: turn_bi_fee {
+    type: sum
+    label: "Brand Intelligence Fee"
     sql: ${TABLE}.turn_bi_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_bi_net {
-    type: number
+  measure: turn_bi_net {
+    type: sum
+    label: "Brand Intelligence Data Cost Adjusted"
     sql: ${TABLE}.turn_bi_net ;;
+    value_format: "$#,##0.00"
   }
   measure: turn_brand_safety_contra {
     type: sum
@@ -349,7 +355,7 @@ view: ssot_v {
     type: sum
     # label: "Client Content Data Cost"
     sql: ${TABLE}.turn_brand_safety_dc ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
   measure: turn_brand_safety_fee {
     type: sum
@@ -373,7 +379,7 @@ view: ssot_v {
     type: sum
     # label: "Client Content Data Cost"
     sql: ${TABLE}.turn_contextual_dc ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
   measure: turn_contextual_fee {
     type: sum
@@ -444,9 +450,11 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.turn_nielsen_targeting_net ;;
   }
-  dimension: turn_page_quality_contra {
-    type: number
+  measure: turn_page_quality_contra {
+    type: sum
+    label: "Page Quality Contra"
     sql: ${TABLE}.turn_page_quality_contra ;;
+    value_format: "#,##0.00"
   }
   measure: turn_page_quality_dc {
     type: sum
@@ -454,13 +462,17 @@ view: ssot_v {
     sql: ${TABLE}.turn_page_quality_dc ;;
     value_format: "#,##0.00"
   }
-  dimension: turn_page_quality_fee {
-    type: number
+  measure: turn_page_quality_fee {
+    type: sum
+    label: "Page Quality Fee"
     sql: ${TABLE}.turn_page_quality_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_page_quality_net {
-    type: number
+  measure: turn_page_quality_net {
+    type: sum
+    label: "Page Quality Fee"
     sql: ${TABLE}.turn_page_quality_net ;;
+    value_format: "$#,##0.00"
   }
   dimension: turn_third_party_cost {
     type: number

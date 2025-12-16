@@ -1,9 +1,11 @@
 view: ssot_v {
   sql_table_name: BI_DSP.ssot_v ;;
 
-  dimension: adv_invoice {
-    type: number
+  measure: adv_invoice {
+    type: sum
+    label: "Advertiser Invoice"
     sql: ${TABLE}.adv_invoice ;;
+    value_format: "$#,##0.00"
   }
   dimension: advertiser_id {
     type: number
@@ -202,9 +204,10 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.pmp_fee ;;
   }
-  dimension: publisher_cost {
-    type: number
+  measure: publisher_cost {
+    type: sum
     sql: ${TABLE}.publisher_cost ;;
+    value_format: "$#,##0.00"
   }
   dimension: publisher_id {
     type: string
@@ -289,9 +292,10 @@ view: ssot_v {
     label: "TAC"
     sql: ${TABLE}.tac ;;
   }
-  dimension: total_billable {
-    type: number
+  measure: total_billable {
+    type: sum
     sql: ${TABLE}.total_billable ;;
+    value_format: "#,##0.00"
   }
   measure: turn_audience_contra {
     type: sum
@@ -553,9 +557,10 @@ view: ssot_v {
     sql: ${TABLE}.turn_viewability_net ;;
     value_format: "$#,##0.00"
   }
-  dimension: vendor_cost {
-    type: number
+  measure: vendor_cost {
+    type: sum
     sql: ${TABLE}.vendor_cost ;;
+    value_format: "$#,##0.00"
   }
   measure: count {
     type: count

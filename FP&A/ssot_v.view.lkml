@@ -446,21 +446,29 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.turn_min_charge_adjustment ;;
   }
-  dimension: turn_nielsen_targeting_contra {
-    type: number
+  measure: turn_nielsen_targeting_contra {
+    type: sum
+    label: "Nielsen Targeting Contra"
     sql: ${TABLE}.turn_nielsen_targeting_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_nielsen_targeting_dc {
-    type: number
+  measure: turn_nielsen_targeting_dc {
+    type: sum
+    label: "Nielsen Targeting First Party Cost"
     sql: ${TABLE}.turn_nielsen_targeting_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_nielsen_targeting_fee {
-    type: number
+  measure: turn_nielsen_targeting_fee {
+    type: sum
+    label: "Nielsen Targeting Fee"
     sql: ${TABLE}.turn_nielsen_targeting_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_nielsen_targeting_net {
-    type: number
+  measure: turn_nielsen_targeting_net {
+    type: sum
+    label: "Display Nielsen Targeting Frist Party Cost Adjusted"
     sql: ${TABLE}.turn_nielsen_targeting_net ;;
+    value_format: "$#,##0.00"
   }
   measure: turn_page_quality_contra {
     type: sum

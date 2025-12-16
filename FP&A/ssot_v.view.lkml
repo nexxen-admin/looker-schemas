@@ -420,22 +420,29 @@ view: ssot_v {
     sql: ${TABLE}.turn_cross_device_net ;;
     value_format: "$#,##0.00"
   }
-  dimension: turn_ghost_bid_contra {
-    type: number
+  measure: turn_ghost_bid_contra {
+    type: sum
+    label: "Ghost Bid Contra"
     sql: ${TABLE}.turn_ghost_bid_contra ;;
-
+    value_format: "$#,##0.00"
   }
-  dimension: turn_ghost_bid_dc {
-    type: number
+  measure: turn_ghost_bid_dc {
+    type: sum
+    label: "Ghost Bid First Party Cost"
     sql: ${TABLE}.turn_ghost_bid_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_ghost_bid_fee {
-    type: number
+  measure: turn_ghost_bid_fee {
+    type: sum
+    label: "Ghost Bid Fee"
     sql: ${TABLE}.turn_ghost_bid_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_ghost_bid_net {
-    type: number
+  measure: turn_ghost_bid_net {
+    type: sum
+    label: "Ghost Bid First Party Cost Adjusted"
     sql: ${TABLE}.turn_ghost_bid_net ;;
+    value_format: "$#,##0.00"
   }
   measure: turn_markup {
     type: sum

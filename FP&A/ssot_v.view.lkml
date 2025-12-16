@@ -15,17 +15,20 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.advertiser_name ;;
   }
-  dimension: bid_saving_fee {
-    type: number
+  measure: bid_saving_fee {
+    type: sum
     sql: ${TABLE}.bid_saving_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: bid_saving_fee_calculated {
-    type: number
+  measure: bid_saving_fee_calculated {
+    type: sum
     sql: ${TABLE}.bid_saving_fee_calculated ;;
+    value_format: "$#,##0.00"
   }
-  dimension: billing_margin {
-    type: number
+  measure: billing_margin {
+    type: sum
     sql: ${TABLE}.billing_margin ;;
+    value_format: "$#,##0.00"
   }
   dimension: category {
     type: string
@@ -105,9 +108,10 @@ view: ssot_v {
     datatype: date
     sql: ${TABLE}.impression_date ;;
   }
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.impressions ;;
+    value_format: "#,##0.00"
   }
   dimension: insertion_order_id {
     type: number
@@ -144,17 +148,20 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.is_billable ;;
   }
-  dimension: managed_service_fee_cost {
-    type: number
+  measure: managed_service_fee_cost {
+    type: sum
+    label: "Managed Service Fee"
     sql: ${TABLE}.managed_service_fee_cost ;;
+    value_format: "$#,##0.00"
   }
   dimension: managed_service_fee_id {
     type: number
     sql: ${TABLE}.managed_service_fee_id ;;
   }
-  dimension: margin_on_inventory {
-    type: number
+  measure: margin_on_inventory {
+    type: sum
     sql: ${TABLE}.margin_on_inventory ;;
+    value_format: "#,##0.00"
   }
   dimension: market_inventory_source_id {
     type: number
@@ -200,9 +207,11 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.platform ;;
   }
-  dimension: pmp_fee {
-    type: number
+  measure: pmp_fee {
+    type: sum
+    label: "PMP Fee"
     sql: ${TABLE}.pmp_fee ;;
+    value_format: "$#,##0.00"
   }
   measure: publisher_cost {
     type: sum
@@ -453,9 +462,11 @@ view: ssot_v {
     sql: ${TABLE}.turn_markup ;;
     value_format: "#,##0.00"
   }
-  dimension: turn_min_charge_adjustment {
-    type: number
+  measure: turn_min_charge_adjustment {
+    type: sum
+    label: "Min Charge Adjustment"
     sql: ${TABLE}.turn_min_charge_adjustment ;;
+    value_format: "$#,##0.00"
   }
   measure: turn_nielsen_targeting_contra {
     type: sum

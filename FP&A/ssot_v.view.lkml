@@ -514,21 +514,29 @@ view: ssot_v {
     sql: ${TABLE}.turn_tpca_net ;;
     value_format: "$#,##0.00"
   }
-  dimension: turn_viewability_contra {
-    type: number
+  measure: turn_viewability_contra {
+    type: sum
+    label: "Viewability Contra"
     sql: ${TABLE}.turn_viewability_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_viewability_dc {
-    type: number
+  measure: turn_viewability_dc {
+    type: sum
+    label: "Viewability First Party cost"
     sql: ${TABLE}.turn_viewability_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_viewability_fee {
-    type: number
+  measure: turn_viewability_fee {
+    type: sum
+    label: "Viewability Fee"
     sql: ${TABLE}.turn_viewability_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_viewability_net {
-    type: number
+  measure: turn_viewability_net {
+    type: sum
+    label: "Viewability First Party Cost Adjusted"
     sql: ${TABLE}.turn_viewability_net ;;
+    value_format: "$#,##0.00"
   }
   dimension: vendor_cost {
     type: number

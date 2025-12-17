@@ -2168,7 +2168,7 @@ view: fact_ad_daily_agg {
   }
 
   dimension: uid_source_name {
-    type: number
+    type: string
     sql: ${TABLE}.uid_source ;;
     hidden: no
   }

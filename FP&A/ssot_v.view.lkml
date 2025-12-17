@@ -131,6 +131,8 @@ view: ssot_v {
     sql: ${TABLE}.inventory_carrying_cost ;;
     value_format: "$#,##0.00"
   }
+
+
   measure: inventory_cost {
     type: sum
     sql: ${TABLE}.inventory_cost ;;
@@ -179,10 +181,13 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.media_type ;;
   }
-  dimension: nexxen_fee {
-    type: number
+
+  measure: nexxen_fee {
+    type: sum
     sql: ${TABLE}.nexxen_fee ;;
+    value_format: "$#,##0.00"
   }
+
   dimension: ns_customer_id {
     type: number
     sql: ${TABLE}.ns_customer_id ;;

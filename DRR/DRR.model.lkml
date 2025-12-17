@@ -16,3 +16,8 @@ explore: DRR_Legacy {
   view_name: drr_legacy
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: DRR_DQ {
+  view_name: drr_dq
+  required_access_grants: [can_view_all_tremor]
+}

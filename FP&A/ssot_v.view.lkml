@@ -1,9 +1,11 @@
 view: ssot_v {
   sql_table_name: BI_DSP.ssot_v ;;
 
-  dimension: adv_invoice {
-    type: number
+  measure: adv_invoice {
+    type: sum
+    label: "Advertiser Invoice"
     sql: ${TABLE}.adv_invoice ;;
+    value_format: "$#,##0.00"
   }
   dimension: advertiser_id {
     type: number
@@ -13,17 +15,20 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.advertiser_name ;;
   }
-  dimension: bid_saving_fee {
-    type: number
+  measure: bid_saving_fee {
+    type: sum
     sql: ${TABLE}.bid_saving_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: bid_saving_fee_calculated {
-    type: number
+  measure: bid_saving_fee_calculated {
+    type: sum
     sql: ${TABLE}.bid_saving_fee_calculated ;;
+    value_format: "$#,##0.00"
   }
-  dimension: billing_margin {
-    type: number
+  measure: billing_margin {
+    type: sum
     sql: ${TABLE}.billing_margin ;;
+    value_format: "$#,##0.00"
   }
   dimension: category {
     type: string
@@ -33,9 +38,10 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.category_id ;;
   }
-  dimension: content_data_cost {
-    type: number
+  measure: content_data_cost {
+    type: sum
     sql: ${TABLE}.content_data_cost ;;
+    value_format: "$#,##0.00"
   }
   dimension: country_code {
     type: string
@@ -81,9 +87,11 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.exchange_line_item_id ;;
   }
-  dimension: first_party_cost {
-    type: number
+  measure: first_party_cost {
+    type: sum
+    label: "Client Total First Party Cost"
     sql: ${TABLE}.first_party_cost ;;
+    value_format: "$#,##0.00"
   }
   dimension: home_market_id {
     type: number
@@ -100,9 +108,10 @@ view: ssot_v {
     datatype: date
     sql: ${TABLE}.impression_date ;;
   }
-  dimension: impressions {
-    type: number
+  measure: impressions {
+    type: sum
     sql: ${TABLE}.impressions ;;
+    value_format: "#,##0.00"
   }
   dimension: insertion_order_id {
     type: number
@@ -112,14 +121,18 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.insertion_order_name ;;
   }
-  dimension: inventory_carry_fee {
-    type: number
+  measure: inventory_carry_fee {
+    type: sum
     sql: ${TABLE}.inventory_carry_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: inventory_carrying_cost {
-    type: number
+  measure: inventory_carrying_cost {
+    type: sum
     sql: ${TABLE}.inventory_carrying_cost ;;
+    value_format: "$#,##0.00"
   }
+
+
   measure: inventory_cost {
     type: sum
     sql: ${TABLE}.inventory_cost ;;
@@ -137,17 +150,20 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.is_billable ;;
   }
-  dimension: managed_service_fee_cost {
-    type: number
+  measure: managed_service_fee_cost {
+    type: sum
+    label: "Managed Service Fee"
     sql: ${TABLE}.managed_service_fee_cost ;;
+    value_format: "$#,##0.00"
   }
   dimension: managed_service_fee_id {
     type: number
     sql: ${TABLE}.managed_service_fee_id ;;
   }
-  dimension: margin_on_inventory {
-    type: number
+  measure: margin_on_inventory {
+    type: sum
     sql: ${TABLE}.margin_on_inventory ;;
+    value_format: "#,##0.00"
   }
   dimension: market_inventory_source_id {
     type: number
@@ -165,10 +181,13 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.media_type ;;
   }
-  dimension: nexxen_fee {
-    type: number
+
+  measure: nexxen_fee {
+    type: sum
     sql: ${TABLE}.nexxen_fee ;;
+    value_format: "$#,##0.00"
   }
+
   dimension: ns_customer_id {
     type: number
     sql: ${TABLE}.ns_customer_id ;;
@@ -193,13 +212,16 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.platform ;;
   }
-  dimension: pmp_fee {
-    type: number
+  measure: pmp_fee {
+    type: sum
+    label: "PMP Fee"
     sql: ${TABLE}.pmp_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: publisher_cost {
-    type: number
+  measure: publisher_cost {
+    type: sum
     sql: ${TABLE}.publisher_cost ;;
+    value_format: "$#,##0.00"
   }
   dimension: publisher_id {
     type: string
@@ -209,9 +231,11 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.publisher_name ;;
   }
-  dimension: reconciliation_factor {
-    type: number
+  measure: reconciliation_factor {
+    type: sum
+    label: "Recon Factor"
     sql: ${TABLE}.reconciliation_factor ;;
+    value_format: "$#,##0.00"
   }
   dimension: region {
     type: string
@@ -282,189 +306,277 @@ view: ssot_v {
     label: "TAC"
     sql: ${TABLE}.tac ;;
   }
-  dimension: total_billable {
-    type: number
+  measure: total_billable {
+    type: sum
     sql: ${TABLE}.total_billable ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_audience_contra {
-    type: number
+  measure: turn_audience_contra {
+    type: sum
+    label: "Audience Contra"
     sql: ${TABLE}.turn_audience_contra ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_audience_data_cost {
-    type: number
+  measure: turn_audience_data_cost {
+    type: sum
+    label: "Client Turn Pay Data Cost"
     sql: ${TABLE}.turn_audience_data_cost ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_audience_dc {
-    type: number
+  measure: turn_audience_dc {
+    type: sum
+    label: "Audience Data Cost"
     sql: ${TABLE}.turn_audience_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_audience_fee {
-    type: number
+  measure: turn_audience_fee {
+    type: sum
+    label: "Audience Fee"
     sql: ${TABLE}.turn_audience_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_audience_net {
-    type: number
+  measure: turn_audience_net {
+    type: sum
+    label: "Audience Data Cost Adjusted"
     sql: ${TABLE}.turn_audience_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_bi_contra {
-    type: number
+  measure: turn_bi_contra {
+    type: sum
+    label: "Brand Intelligence Contra"
     sql: ${TABLE}.turn_bi_contra ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_bi_dc {
-    type: number
+  measure: turn_bi_dc {
+    type: sum
+     # label: "Client Content Data Cost"
     sql: ${TABLE}.turn_bi_dc ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_bi_fee {
-    type: number
+  measure: turn_bi_fee {
+    type: sum
+    label: "Brand Intelligence Fee"
     sql: ${TABLE}.turn_bi_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_bi_net {
-    type: number
+  measure: turn_bi_net {
+    type: sum
+    label: "Brand Intelligence Data Cost Adjusted"
     sql: ${TABLE}.turn_bi_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_brand_safety_contra {
-    type: number
+  measure: turn_brand_safety_contra {
+    type: sum
+    label: "Brand Safety Contra"
     sql: ${TABLE}.turn_brand_safety_contra ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_brand_safety_dc {
-    type: number
+  measure: turn_brand_safety_dc {
+    type: sum
+    # label: "Client Content Data Cost"
     sql: ${TABLE}.turn_brand_safety_dc ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_brand_safety_fee {
-    type: number
+  measure: turn_brand_safety_fee {
+    type: sum
+    label: "Brand Safety Fee"
     sql: ${TABLE}.turn_brand_safety_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_brand_safety_net {
-    type: number
+  measure: turn_brand_safety_net {
+    type: sum
+    label: "Brand Safety Data Cost Adjusted"
     sql: ${TABLE}.turn_brand_safety_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_contextual_contra {
-    type: number
+  measure: turn_contextual_contra {
+    type: sum
+    label: "Contextual Contra"
     sql: ${TABLE}.turn_contextual_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_contextual_dc {
-    type: number
+  measure: turn_contextual_dc {
+    type: sum
+    # label: "Client Content Data Cost"
     sql: ${TABLE}.turn_contextual_dc ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_contextual_fee {
-    type: number
+  measure: turn_contextual_fee {
+    type: sum
+    label: "Contextual Fee"
     sql: ${TABLE}.turn_contextual_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_contextual_net {
-    type: number
+  measure: turn_contextual_net {
+    type: sum
+    label: "Contextual Data Cost Adjusted"
     sql: ${TABLE}.turn_contextual_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_cross_device_contra {
-    type: number
+  measure: turn_cross_device_contra {
+    type: sum
+    label: "Cross Device Contra"
     sql: ${TABLE}.turn_cross_device_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_cross_device_dc {
-    type: number
+  measure: turn_cross_device_dc {
+    type: sum
+    label: "Cross Device First Party Cost"
     sql: ${TABLE}.turn_cross_device_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_cross_device_fee {
-    type: number
+  measure: turn_cross_device_fee {
+    type: sum
+    label: "Cross Device Fee"
     sql: ${TABLE}.turn_cross_device_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_cross_device_net {
-    type: number
+
+  measure: turn_cross_device_net {
+    type: sum
+    label: "Cross Device First Party Cost Adjusted"
     sql: ${TABLE}.turn_cross_device_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_ghost_bid_contra {
-    type: number
+  measure: turn_ghost_bid_contra {
+    type: sum
+    label: "Ghost Bid Contra"
     sql: ${TABLE}.turn_ghost_bid_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_ghost_bid_dc {
-    type: number
+  measure: turn_ghost_bid_dc {
+    type: sum
+    label: "Ghost Bid First Party Cost"
     sql: ${TABLE}.turn_ghost_bid_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_ghost_bid_fee {
-    type: number
+  measure: turn_ghost_bid_fee {
+    type: sum
+    label: "Ghost Bid Fee"
     sql: ${TABLE}.turn_ghost_bid_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_ghost_bid_net {
-    type: number
+  measure: turn_ghost_bid_net {
+    type: sum
+    label: "Ghost Bid First Party Cost Adjusted"
     sql: ${TABLE}.turn_ghost_bid_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_markup {
-    type: number
+  measure: turn_markup {
+    type: sum
     sql: ${TABLE}.turn_markup ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_min_charge_adjustment {
-    type: number
+  measure: turn_min_charge_adjustment {
+    type: sum
+    label: "Min Charge Adjustment"
     sql: ${TABLE}.turn_min_charge_adjustment ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_nielsen_targeting_contra {
-    type: number
+  measure: turn_nielsen_targeting_contra {
+    type: sum
+    label: "Nielsen Targeting Contra"
     sql: ${TABLE}.turn_nielsen_targeting_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_nielsen_targeting_dc {
-    type: number
+  measure: turn_nielsen_targeting_dc {
+    type: sum
+    label: "Nielsen Targeting First Party Cost"
     sql: ${TABLE}.turn_nielsen_targeting_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_nielsen_targeting_fee {
-    type: number
+  measure: turn_nielsen_targeting_fee {
+    type: sum
+    label: "Nielsen Targeting Fee"
     sql: ${TABLE}.turn_nielsen_targeting_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_nielsen_targeting_net {
-    type: number
+  measure: turn_nielsen_targeting_net {
+    type: sum
+    label: "Display Nielsen Targeting Frist Party Cost Adjusted"
     sql: ${TABLE}.turn_nielsen_targeting_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_page_quality_contra {
-    type: number
+  measure: turn_page_quality_contra {
+    type: sum
+    label: "Page Quality Contra"
     sql: ${TABLE}.turn_page_quality_contra ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_page_quality_dc {
-    type: number
+  measure: turn_page_quality_dc {
+    type: sum
+     # label: "Client Content Data Cost"
     sql: ${TABLE}.turn_page_quality_dc ;;
+    value_format: "#,##0.00"
   }
-  dimension: turn_page_quality_fee {
-    type: number
+  measure: turn_page_quality_fee {
+    type: sum
+    label: "Page Quality Fee"
     sql: ${TABLE}.turn_page_quality_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_page_quality_net {
-    type: number
+  measure: turn_page_quality_net {
+    type: sum
+    label: "Page Quality Data Cost Adjusted"
     sql: ${TABLE}.turn_page_quality_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_third_party_cost {
-    type: number
+  measure: turn_third_party_cost {
+    type: sum
+    label: "Client Turn Third Party Cost"
     sql: ${TABLE}.turn_third_party_cost ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_tpca_contra {
-    type: number
+  measure: turn_tpca_contra {
+    type: sum
+    label: "Turn Third Party cost Contra"
     sql: ${TABLE}.turn_tpca_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_tpca_dc {
-    type: number
+  measure: turn_tpca_dc {
+    type: sum
+    label: "Turn Third Party Cost"
     sql: ${TABLE}.turn_tpca_dc ;;
+    value_format: "$#,##0.00"
   }
   dimension: turn_tpca_fee {
     type: number
     sql: ${TABLE}.turn_tpca_fee ;;
   }
-  dimension: turn_tpca_net {
-    type: number
+  measure: turn_tpca_net {
+    type: sum
+    label: "Turn Third Party Cost Adjusted"
     sql: ${TABLE}.turn_tpca_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_viewability_contra {
-    type: number
+  measure: turn_viewability_contra {
+    type: sum
+    label: "Viewability Contra"
     sql: ${TABLE}.turn_viewability_contra ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_viewability_dc {
-    type: number
+  measure: turn_viewability_dc {
+    type: sum
+    label: "Viewability First Party cost"
     sql: ${TABLE}.turn_viewability_dc ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_viewability_fee {
-    type: number
+  measure: turn_viewability_fee {
+    type: sum
+    label: "Viewability Fee"
     sql: ${TABLE}.turn_viewability_fee ;;
+    value_format: "$#,##0.00"
   }
-  dimension: turn_viewability_net {
-    type: number
+  measure: turn_viewability_net {
+    type: sum
+    label: "Viewability First Party Cost Adjusted"
     sql: ${TABLE}.turn_viewability_net ;;
+    value_format: "$#,##0.00"
   }
-  dimension: vendor_cost {
-    type: number
+  measure: vendor_cost {
+    type: sum
     sql: ${TABLE}.vendor_cost ;;
+    value_format: "$#,##0.00"
   }
   measure: count {
     type: count

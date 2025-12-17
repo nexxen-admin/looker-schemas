@@ -169,6 +169,7 @@ view: fact_nexxen_dsp {
     type: time
     label: "Date Key UTC"
     group_label: "Date UTC"
+    view_label: "Time Frame"
     timeframes: [raw, date, week, month, quarter, year]
     convert_tz: no
     datatype: date
@@ -235,6 +236,7 @@ view: fact_nexxen_dsp {
     datatype: date
     label: "Date in Timezone"
     group_label: "Date Timezone"
+    view_label: "Time Frame"
     sql: ${TABLE}.date_key_in_timezone ;;
   }
 

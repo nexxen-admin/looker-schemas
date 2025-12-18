@@ -1393,11 +1393,24 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "0.00%"
   }
 
+  # measure: primary_kpi_result {
+  #   label: "Primary KPI Result"
+  #   type: number
+  #   sql: ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN ${CTR_1P}*100
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN ${VCR_1P}*100
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN ${1P_CVR}*100
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${1P_CVR}
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN ${eCPA_1P}
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${pacing}*100
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${uncapped_revenue}/${actions}
+  #             ELSE 0 END,2);;
+  # }
+
   measure: primary_kpi_result {
     label: "Primary KPI Result"
     type: number
     sql: ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN ${CTR_1P}*100
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN ${VCR_1P}*100
+              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN ${VCR_3P}*100
               WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN ${1P_CVR}*100
               WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${1P_CVR}
               WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN ${eCPA_1P}

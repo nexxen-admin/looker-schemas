@@ -32,6 +32,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: calculated_margin__c {
     type: number
+    label: "Calculated Margin C (* Do Not Use)"
     sql: ${TABLE}.calculated_margin__c ;;
     hidden: no
   }

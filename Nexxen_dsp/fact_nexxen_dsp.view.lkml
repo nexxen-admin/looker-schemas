@@ -416,7 +416,7 @@ dimension: inventory_source_key {
     type: sum
     value_format: "$#,##0.00"
     sql: ${TABLE}.inventory_cost ;;
-    hidden: yes
+    # hidden: yes
   }
 
   measure: inv_cost {

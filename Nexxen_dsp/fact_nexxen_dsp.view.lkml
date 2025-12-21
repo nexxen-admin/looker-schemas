@@ -416,20 +416,27 @@ dimension: inventory_source_key {
     type: sum
     value_format: "$#,##0.00"
     sql: ${TABLE}.inventory_cost ;;
-    # hidden: yes
+    hidden: yes
   }
+
+  # measure: inv_cost {
+  #   type: sum
+  #   value_format: "$#,##0"
+  #   sql: ${TABLE}.inv_cost ;;
+  # }
 
   measure: inv_cost {
     type: sum
+    description: "Using inventory_cost"
     value_format: "$#,##0"
-    sql: ${TABLE}.inv_cost ;;
+    sql: ${TABLE}.inventory_cost  ;;
   }
 
 
   measure: Nexxen_Inv_Cost {
     type: sum
     value_format: "$#,##0"
-    sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inv_cost" else null end ;;
+    sql: case when ${dim_dsp_inventory_source.inventory_source_id}=158 then ${TABLE}."inventory_cost" else null end ;;
   }
 
   # measure: nexxen_inv_cost_percent {
@@ -443,7 +450,7 @@ measure: Nexxen_Inv_Cost_Percent {
   type: number
   label: "Nexxen Inv Cost %"
   value_format:  "0.00%"
-  sql: ${Nexxen_Inv_Cost}/nullif(${inv_cost},0);;
+  sql: ${Nexxen_Inv_Cost}/nullif(${inventory_cost},0);;
 }
 
 
@@ -735,7 +742,7 @@ measure: Nexxen_Inv_Cost_Percent {
   measure:  Last_day_inv_cost {
     label: "Yesterday Inv Cost"
     type: sum
-    sql: ${TABLE}.inv_cost ;;
+    sql: ${TABLE}.inventory_cost;;
     value_format: "$#,##0.00"
     filters: [date_key_in_timezone_date: "yesterday"]
   }

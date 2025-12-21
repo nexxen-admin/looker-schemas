@@ -14,8 +14,10 @@ view: dim_uid_source {
   dimension: ri_info {
     type: string
     sql: ${TABLE}.RI_Info ;;
+    hidden: yes
   }
   dimension: uid_source {
+    label: "Uid Source Name"
     type: string
     sql: ${TABLE}.uid_source ;;
   }

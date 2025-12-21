@@ -343,7 +343,6 @@ explore: extend_Inbound_Exchange {
   }
   join: dim_o_domain {
     type: inner
-
     view_label: "Domain"
     sql_on: ${dim_o_domain.o_domain_key}=${fact_ad_daily_agg.o_domain_key};;
     relationship: many_to_one
@@ -357,9 +356,9 @@ explore: extend_Inbound_Exchange {
 
 
   join: dim_uid_source {
-    type: left_outer
+    type: inner
     view_label: "Uid Source"
-    sql_on: ${dim_uid_source.uid_source_key}=${fact_ad_daily_agg.deal_key};;
+    sql_on: ${dim_uid_source.uid_source_key}=${fact_ad_daily_agg.uid_source_key};;
     relationship: many_to_one
   }
 

@@ -2164,14 +2164,14 @@ view: fact_ad_daily_agg {
   dimension: uid_source_key {
     type: number
     sql: ${TABLE}.uid_source_key ;;
-    # hidden: yes
+     hidden: yes
   }
 
-  dimension: uid_source {
-    type: string
-    sql: dim_uid_source.uid_source ;;
-    hidden: no
-  }
+  # dimension: uid_source {
+  #   type: string
+  #   sql: dim_uid_source.uid_source ;;
+  #   hidden: no
+  # }
 
 
   dimension: schain_node_count{

@@ -24,6 +24,7 @@ view: dim_uid_source {
   dimension: uid_source_key {
     type: number
     sql: ${TABLE}.uid_source_key ;;
+    hidden: yes
   }
   measure: count {
     type: count

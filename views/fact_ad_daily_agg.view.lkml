@@ -2167,12 +2167,6 @@ view: fact_ad_daily_agg {
      hidden: yes
   }
 
-  # dimension: uid_source {
-  #   type: string
-  #   sql: dim_uid_source.uid_source ;;
-  #   hidden: no
-  # }
-
 
   dimension: schain_node_count{
     type: number

@@ -355,13 +355,20 @@ explore: extend_Inbound_Exchange {
     relationship: many_to_one
   }
 
+
+  join: dim_uid_source {
+    type: left_outer
+    view_label: "Uid Source"
+    sql_on: ${dim_uid_source.uid_source_key}=${fact_ad_daily_agg.deal_key};;
+    relationship: many_to_one
+  }
+
+
   join: rx_dim_supply_publisher_deal_r {
     type: left_outer
     view_label: "supply publisher deal"
     sql_on: ${rx_dim_supply_publisher_deal_r.external_deal_id}=${dim_deal.deal_id} ;;
     relationship: many_to_one
-
-
   }
 
 

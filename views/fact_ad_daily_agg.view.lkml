@@ -2161,17 +2161,17 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
-  dimension: uid_source_key {
-    type: number
-    sql: ${TABLE}.uid_source_key ;;
-    hidden: yes
-  }
+  # dimension: uid_source_key {
+  #   type: number
+  #   sql: ${TABLE}.uid_source_key ;;
+  #   hidden: yes
+  # }
 
-  dimension: uid_source_name {
-    type: string
-    sql: ${TABLE}.uid_source ;;
-    hidden: no
-  }
+  # dimension: uid_source_name {
+  #   type: string
+  #   sql: ${TABLE}.uid_source ;;
+  #   hidden: no
+  # }
 
   dimension: schain_node_count{
     type: number

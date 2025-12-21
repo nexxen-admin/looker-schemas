@@ -356,7 +356,7 @@ explore: extend_Inbound_Exchange {
 
 
   join: dim_uid_source {
-    type: inner
+    type: left_outer
     view_label: "Uid Source"
     sql_on: ${dim_uid_source.uid_source_key}=${fact_ad_daily_agg.uid_source_key};;
     relationship: many_to_one

@@ -412,7 +412,7 @@ dimension: inventory_source_key {
     sql: ${TABLE}.zip_code ;;
   }
 
-   measure: inventory_cost {
+  measure: inventory_cost {
     type: sum
     value_format: "$#,##0.00"
     sql: ${TABLE}.inventory_cost ;;

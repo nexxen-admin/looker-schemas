@@ -355,12 +355,12 @@ explore: extend_Inbound_Exchange {
   }
 
 
-  join: dim_uid_source {
-    type: left_outer
-    view_label: "Uid Source"
-    sql_on: ${dim_uid_source.uid_source_key}=${fact_ad_daily_agg.uid_source_key};;
-    relationship: many_to_one
-  }
+  # join: dim_uid_source {
+  #   type: left_outer
+  #   view_label: "Uid Source"
+  #   sql_on: ${dim_uid_source.uid_source_key}=${fact_ad_daily_agg.uid_source_key};;
+  #   relationship: many_to_one
+  # }
 
 
   join: rx_dim_supply_publisher_deal_r {
@@ -545,6 +545,13 @@ explore: fact_ad_daily_agg{
     sql_on: ${v_dim_platformfee_type.platformfee_type_key}=${fact_ad_daily_agg.platformfee_type_key} ;;
     relationship: many_to_one
 
+  }
+
+  join: dim_uid_source {
+    type: left_outer
+    view_label: "Uid Source"
+    sql_on: ${dim_uid_source.uid_source_key}=${fact_ad_daily_agg.uid_source_key};;
+    relationship: many_to_one
   }
 
   join: dim_media_type {

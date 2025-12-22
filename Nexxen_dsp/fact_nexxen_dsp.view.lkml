@@ -1407,7 +1407,7 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "0.00%"
   }
 
-  # measure: primary_kpi_result {
+  # measure: primary_kpi_result_old {
   #   label: "Primary KPI Result"
   #   type: number
   #   sql: ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN ${CTR_1P}*100
@@ -1420,17 +1420,54 @@ measure: Nexxen_Inv_Cost_Percent {
   #             ELSE 0 END,2);;
   # }
 
+  # measure: primary_kpi_result {
+  #   label: "Primary KPI Result"
+  #   type: number
+  #   sql: ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN ${CTR_1P}*100
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN ${VCR_3P}*100
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN ${1P_CVR}*100
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${1P_CVR}
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN ${eCPA_1P}
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${pacing}*100
+  #             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${uncapped_revenue}/${actions}
+  #             ELSE 0 END,2);;
+  # }
+
+
   measure: primary_kpi_result {
     label: "Primary KPI Result"
     type: number
-    sql: ROUND(CASE WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN ${CTR_1P}*100
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN ${VCR_3P}*100
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN ${1P_CVR}*100
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${1P_CVR}
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN ${eCPA_1P}
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${pacing}*100
-              WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${uncapped_revenue}/${actions}
-              ELSE 0 END,2);;
+    sql: ROUND(CASE
+            WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN
+              CASE
+                WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${CTR_1P}
+                ELSE ${CTR_3P}
+              END * 100
+      -- Completion Rate (VCR) Logic
+      WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN
+      CASE
+      WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${VCR_1P}
+      -- Check 3P, fallback to 1P if 3P is NULL
+      ELSE COALESCE(${VCR_3P}, ${VCR_1P})
+      END * 100
+      -- CVR / Site Visit Rate Logic
+      WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN
+      CASE
+      WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${1P_CVR}
+      ELSE ${3P_CVR}
+      END * 100
+      -- eCPA Logic (Note: No *100)
+      WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('e ‘A', 'Cost Per Visit') THEN
+      CASE
+      WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${eCPA_1P}
+      ELSE ${eCPA_3P}
+      END
+      WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${1P_CVR}
+      WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${pacing}*100
+      WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${uncapped_revenue}/${actions}
+
+      ELSE 0
+      END,2);;
   }
 
   measure: yesterday_primary_kpi_result {

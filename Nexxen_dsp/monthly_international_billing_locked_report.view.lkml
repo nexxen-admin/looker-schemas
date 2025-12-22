@@ -285,10 +285,6 @@ view: monthly_international_billing_locked_report {
     type: number
     sql: ${TABLE}.inventory_cost ;;
   }
-  dimension: impressions {
-    type: number
-    sql: ${TABLE}.impressions ;;
-  }
   dimension: manual_discount {
     type: number
     sql: ${TABLE}.manual_discount ;;
@@ -451,11 +447,10 @@ view: monthly_international_billing_locked_report {
     sql: ${TABLE}.units_before_adj_ad_ops_override ;;
   }
 
-
-
-
-
-
+  measure: impressions {
+    type: sum
+    sql: ${TABLE}.impressions ;;
+  }
 
   measure: count {
     type: count

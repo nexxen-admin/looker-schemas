@@ -12,7 +12,7 @@ datagroup: CleanCash_datagroup {
   description: "Triggered when new date is added to ETL"
 }
 
-explore: billing_international_media_io {
+explore: billing_international_media_io_stg {
   label: "Billing International - STAGING"
   hidden: yes
 }

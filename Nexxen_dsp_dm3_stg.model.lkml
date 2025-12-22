@@ -20,6 +20,11 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
+explore: billing_international_media_io {
+  label: "Billing International - STAGING"
+  hidden: yes
+}
+
 explore:  monthly_international_billing_locked_report {
   label: "International Locked Report"
 }

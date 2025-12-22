@@ -54,6 +54,9 @@ explore: v_monthly_dato_billing_report_diff_on_locked {
 explore: monthly_billing_locked_report{
   label: "Locked Report"
 }
+explore:  monthly_international_billing_locked_report {
+  label: "International Locked Report"
+}
 
 #explore: v_monthly_billing_report_diff_live_locked {
 # required_access_grants: [billing_report_group]

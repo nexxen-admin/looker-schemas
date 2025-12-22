@@ -862,6 +862,13 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format_name: percent_2
   }
 
+  measure:Media_Margin_Vendor_cost {
+    type: number
+    label: "Media Margin (w/o Vendor cost)"
+    sql: (${capped_revenue} - ${fdw_cost})/${capped_revenue} ;;
+    value_format_name: percent_2
+  }
+
   measure: monthly_budget_breakout {
     type: sum
     sql: case when ${dim_sfdb_opportunitylineitem.gross_billable__c}-${TABLE}.uncapped_revenue<0

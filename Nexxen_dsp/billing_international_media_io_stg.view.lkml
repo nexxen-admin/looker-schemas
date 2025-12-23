@@ -56,7 +56,7 @@ view: billing_international_media_io_stg {
     label: "Finance revenue adj"
     type: sum
     sql: ${TABLE}.adjustment_billable_revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
 
   measure: adjustment_billable_video_completes {
@@ -77,20 +77,20 @@ view: billing_international_media_io_stg {
   #   sql: ${TABLE}.adv_invoice_after_ad_ops_override ;;
   # }
 
-  # measure: billable_percent_25_complete_events_after_finance_adj {
-  #   type: sum
-  #   sql: 0 ;;
-  # }
+  measure: billable_percent_25_complete_events_after_finance_adj {
+    type: sum
+    sql: ${TABLE}.finance_adj_percent_25_complete_events ;;
+  }
 
-  # measure: billable_percent_50_complete_events_after_finance_adj {
-  #   type: sum
-  #   sql: 0 ;;
-  # }
+  measure: billable_percent_50_complete_events_after_finance_adj {
+    type: sum
+    sql: ${TABLE}.finance_adj_percent_50_complete_events ;;
+  }
 
-  # measure: billable_percent_75_complete_events_after_finance_adj {
-  #   type: sum
-  #   sql: 0 ;;
-  # }
+  measure: billable_percent_75_complete_events_after_finance_adj {
+    type: sum
+    sql: ${TABLE}.finance_adj_percent_75_complete_events ;;
+  }
 
   dimension: billing_instructions {
     type: string
@@ -107,7 +107,7 @@ view: billing_international_media_io_stg {
     label: "Capped Revenue (Before finance Adj, after AdOps adj)"
     type: sum
     sql: ${TABLE}.capped_revenue_before_adj_with_override ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
 
   dimension: case_safe_opp_line_item_id {
@@ -137,27 +137,27 @@ view: billing_international_media_io_stg {
     sql: ${TABLE}.corp_entity ;;
   }
 
-  measure: discrepancy_between_1p_and_final_billable_revenue_after_adj {
+  dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj {
     label: "Discrepancy Between 1P and Final Billable Revenue After Adj"
-    type: average
+    type: number
     sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj ;;
   }
 
-  measure: discrepancy_between_1p_and_final_billable_revenue_after_adj_percent {
+  dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj_percent {
     label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj Percent"
-    type: average
+    type: number
     sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj_percent ;;
   }
 
-  measure: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd {
+  dimension: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd {
     label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj USD"
-    type: average
+    type: number
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd ;;
   }
 
-  measure: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent {
+  dimension: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent {
     label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj USD Percent"
-    type: average
+    type: number
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent ;;
   }
 
@@ -175,21 +175,21 @@ view: billing_international_media_io_stg {
   measure: expected_revenue {
     type: sum
     sql: ${TABLE}.Expected_Revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
 
   measure: final_billable_revenue_after_adj {
     label: "Final Billable Revenue After Finance Adj"
     type: sum
     sql: ${TABLE}.final_billable_revenue_after_adj ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
 
   measure: final_billable_revenue_after_adj_usd {
     label: "Final Billable Revenue After Finance Adj USD"
     type: sum
     sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
 
   dimension: final_billable_revenue_local_currency {
@@ -257,12 +257,12 @@ view: billing_international_media_io_stg {
 
   measure: margin_amount_percent_USD {
     label: "Margin Amount Precent USD"
-    type: average
+    type: sum
     sql: ${TABLE}.Margin_amount_percent_USD ;;
   }
 
   measure: margin_percent {
-    type: average
+    type: sum
     sql: ${TABLE}.Margin_Parcent ;;
   }
 
@@ -306,21 +306,21 @@ view: billing_international_media_io_stg {
   }
 
   measure: overall_discount {
-    type: average
+    type: sum
     sql: ${TABLE}.overall_discount ;;
   }
 
   measure: over_delivery_amount {
     type: sum
     sql: ${TABLE}.Over_delivery_Amount ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
 
   measure: over_delivery_amount_USD {
     label: "Over Delivery Amount USD"
     type: sum
     sql: ${TABLE}.Over_Delivery_Amount_USD ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
 
   measure: over_delivery_units {
@@ -331,7 +331,7 @@ view: billing_international_media_io_stg {
   measure: past_bill_amount {
     type: sum
     sql: ${TABLE}.past_bill_amount ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
 
   measure: past_bill_units {
@@ -403,13 +403,13 @@ view: billing_international_media_io_stg {
 
   # measure: remaining_diff_between_1P_to_billing_3P_vs_1P_discrepancy  {
   #   label: "Remaining Diff Between 1P  to Billing 3 P Vs 1 P Discrepancy"
-  #   type: average
+  #   type: sum
   #   sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy ;;
   # }
 
   # measure: remaining_diff_between_1P_to_billing_3P_vs_1P_discrepancy_usd  {
   #   label: "Remaining Diff Between 1P  to Billing 3 P Vs 1 P Discrepancy USD"
-  #   type: average
+  #   type: sum
   #   sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy_usd ;;
   # }
 

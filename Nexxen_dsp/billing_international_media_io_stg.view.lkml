@@ -460,14 +460,8 @@ view: billing_international_media_io_stg {
     sql: ${TABLE}.UncappeD_Revenue_adj_adops ;;
   }
 
-  measure: uncapped_revenue_before_ad_ops_override {
-    label: "Uncapped Revenue"
-    type: sum
-    sql: ${TABLE}.uncapped_revenue_bedore_AdOps_Override ;;
-  }
-
   measure: uncapped_revenue_before_ad_ops_override_staging {
-    label: "Uncapped Revenue (staging)"
+    label: "Uncapped Revenue"
     type: sum
     sql: ${TABLE}.uncapped_revenue_before_AdOps_Override ;;
   }

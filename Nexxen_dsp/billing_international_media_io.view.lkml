@@ -466,12 +466,6 @@ dimension: ns_remaining_amount {
     sql: ${TABLE}.uncapped_revenue_bedore_AdOps_Override ;;
   }
 
-  dimension: uncapped_revenue_before_ad_ops_override_staging {
-    label: "Uncapped Revenue (staging)"
-    type: number
-    sql: ${TABLE}.uncapped_revenue_before_AdOps_Override ;;
-  }
-
   dimension: uncapped_revenue_after_ad_ops_override {
     type: number
     sql: ${TABLE}.uncapped_revenue_after_AdOps_Override ;;

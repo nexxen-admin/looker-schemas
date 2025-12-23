@@ -714,6 +714,7 @@ measure: Nexxen_Inv_Cost_Percent {
     sql: IFNULL(${Last_day_1p_clicks}/nullif(${Last_day_1p_impressions},0),0) ;;
   }
 
+
   measure: CTR_3P {
     type: number
     value_format: "0.0%"
@@ -1235,6 +1236,13 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "#,##0.00"
   }
 
+  measure: yesterday_eCPA_3P {
+    label: "eCPA 3P"
+    type: number
+    sql: ${yesterday_capped_revenue}/nullif(${yesterday_3p_total_conversions},0) ;;
+    value_format: "#,##0.00"
+  }
+
   measure: eCPA_1P {
     label: "eCPA 1P"
     type: number
@@ -1264,6 +1272,22 @@ measure: Nexxen_Inv_Cost_Percent {
     type: number
     sql: ${3p_total_conversions}/nullif(${third_party_impressions},0) ;;
     value_format: "0.00%"
+  }
+
+  measure: yesterday_3P_CVR {
+    type: number
+    sql: ${yesterday_3p_total_conversions}/nullif(${Last_day_3p_impressions},0) ;;
+    value_format: "0.00%"
+    hidden: yes
+  }
+
+  measure:  yesterday_3p_total_conversions {
+    label: "Yesterday 3P Conversions"
+    type: sum
+    sql:${TABLE}.third_party_total_conversions  ;;
+    value_format: "#,##0"
+    filters: [date_key_in_timezone_date: "yesterday"]
+    hidden: yes
   }
 
   measure: third_party_media_measured_impressions {
@@ -1470,6 +1494,43 @@ measure: Nexxen_Inv_Cost_Percent {
       END,2);;
   }
 
+  # measure: yesterday_primary_kpi_result {
+  #   label: "Yesterday Primary KPI Result"
+  #   type: number
+  #   sql: ROUND(CASE
+  #           WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN
+  #             CASE
+  #               WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${Last_day_1P_CTR}
+  #               ELSE ${Last_day_3P_CTR}
+  #             END * 100
+  #     -- Completion Rate (VCR) Logic
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN
+  #     CASE
+  #     WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${Last_day_1P_VCR}
+  #     -- Check 3P, fallback to 1P if 3P is NULL
+  #     ELSE COALESCE(${Last_day_3P_VCR}, ${Last_day_1P_VCR})
+  #     END * 100
+  #     -- CVR / Site Visit Rate Logic
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN
+  #     CASE
+  #     WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${yesterday_1P_CVR}
+  #     ELSE ${yesterday_3P_CVR}
+  #     END * 100
+  #     -- eCPA Logic (Note: No *100)
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('e ‘A', 'Cost Per Visit') THEN
+  #     CASE
+  #     WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${yesterday_eCPA_1P}
+  #     ELSE ${yesterday_eCPA_3P}
+  #     END
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${yesterday_1P_CVR}
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${yesterday_pacing}*100
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${yesterday_uncapped_revenue}/${yesterday_actions}
+
+  #     ELSE 0
+  #     END,2);;
+  # }
+
+
   measure: yesterday_primary_kpi_result {
     label: "Yesterday Primary KPI Result"
     type: number
@@ -1498,6 +1559,9 @@ measure: Nexxen_Inv_Cost_Percent {
 
             ;;
   }
+
+
+
 
   measure: primary_kpi_check {
     label: "KPI Check"

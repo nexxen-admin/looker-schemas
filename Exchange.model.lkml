@@ -106,6 +106,17 @@ explore: IAS_Monthly_Usage {
   #hidden: yes
 }
 
+explore: pmp_stats_daily {
+  label: "PMP Stats Daily"
+  required_access_grants: [can_view_all_tremor]
+
+  join: rx_dim_deal  {
+    type: left_outer
+    sql_on: ${rx_dim_deal.deal_id_external}=${pmp_stats_daily.rx_deal_id} ;;
+    relationship: many_to_one
+  }
+}
+
 explore: v_fact_ad_daily {
   required_access_grants: [can_view_all_tremor]
   label: "Fact Ad Daily Exchange"

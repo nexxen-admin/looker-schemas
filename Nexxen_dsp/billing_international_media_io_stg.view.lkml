@@ -77,20 +77,20 @@ view: billing_international_media_io_stg {
   #   sql: ${TABLE}.adv_invoice_after_ad_ops_override ;;
   # }
 
-  # measure: billable_percent_25_complete_events_after_finance_adj {
-  #   type: sum
-  #   sql: 0 ;;
-  # }
+  measure: billable_percent_25_complete_events_after_finance_adj {
+    type: sum
+    sql: ${TABLE}.finance_adj_percent_25_complete_events ;;
+  }
 
-  # measure: billable_percent_50_complete_events_after_finance_adj {
-  #   type: sum
-  #   sql: 0 ;;
-  # }
+  measure: billable_percent_50_complete_events_after_finance_adj {
+    type: sum
+    sql: ${TABLE}.finance_adj_percent_50_complete_events ;;
+  }
 
-  # measure: billable_percent_75_complete_events_after_finance_adj {
-  #   type: sum
-  #   sql: 0 ;;
-  # }
+  measure: billable_percent_75_complete_events_after_finance_adj {
+    type: sum
+    sql: ${TABLE}.finance_adj_percent_75_complete_events ;;
+  }
 
   dimension: billing_instructions {
     type: string
@@ -137,27 +137,27 @@ view: billing_international_media_io_stg {
     sql: ${TABLE}.corp_entity ;;
   }
 
-  measure: discrepancy_between_1p_and_final_billable_revenue_after_adj {
+  dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj {
     label: "Discrepancy Between 1P and Final Billable Revenue After Adj"
-    type: average
+    type: number
     sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj ;;
   }
 
-  measure: discrepancy_between_1p_and_final_billable_revenue_after_adj_percent {
+  dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj_percent {
     label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj Percent"
-    type: average
+    type: number
     sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj_percent ;;
   }
 
-  measure: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd {
+  dimension: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd {
     label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj USD"
-    type: average
+    type: number
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd ;;
   }
 
-  measure: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent {
+  dimension: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent {
     label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj USD Percent"
-    type: average
+    type: number
     sql: ${TABLE}.discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd_percent ;;
   }
 

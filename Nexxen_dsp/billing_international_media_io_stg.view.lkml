@@ -134,7 +134,7 @@ view: billing_international_media_io_stg {
 
   dimension: corp_entity {
     type: string
-    sql: ${TABLE}.corp_entity ;;
+    sql: coalesce(${TABLE}.corp_entity,'Unknown') ;;
   }
 
   dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj {

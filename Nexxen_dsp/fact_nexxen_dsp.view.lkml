@@ -1214,6 +1214,20 @@ measure: Nexxen_Inv_Cost_Percent {
     hidden: yes
   }
 
+
+  measure: is_delivered_in_full {
+    type: string
+    label: "Is Delivered in Full"
+    description: "Returns 'Yes' if the campaign met or exceeded booked goals. 'No' indicates under-delivery."
+    sql: CASE
+           WHEN MAX(${dim_sfdb_opportunitylineitem.price_type_name__c}) = 'CPM'
+                AND ${delivered_units} >= MAX(${dim_sfdb_opportunitylineitem.units__c}) THEN 'Yes'
+           WHEN MAX(${dim_sfdb_opportunitylineitem.price_type_name__c}) = 'dCPM'
+                AND ${Delivered_Spend} >= MAX(${dim_sfdb_opportunitylineitem.gross_billable__c}) THEN 'Yes'
+           ELSE 'No'
+         END ;;
+  }
+
   measure: GP {
     type: number
     sql: ${capped_revenue}-${cogs} ;;

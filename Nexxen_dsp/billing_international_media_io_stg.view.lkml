@@ -72,10 +72,10 @@ view: billing_international_media_io_stg {
     value_format: "#,##0.00"
   }
 
-  dimension: adv_invoice_after_ad_ops_override {
-    type: string
-    sql: ${TABLE}.adv_invoice_after_ad_ops_override ;;
-  }
+  # dimension: adv_invoice_after_ad_ops_override {
+  #   type: string
+  #   sql: ${TABLE}.adv_invoice_after_ad_ops_override ;;
+  # }
 
   dimension: billable_percent_25_complete_events_after_finance_adj {
     type: number

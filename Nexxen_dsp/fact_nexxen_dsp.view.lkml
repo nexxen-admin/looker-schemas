@@ -857,6 +857,15 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "$#,##0.00"
   }
 
+  measure: is_internal_ecpm_greater_than_booked_rate {
+    type: string
+    label: "Internal eCPM > Booked Rate"
+    description: "Returns 'Yes' if Internal eCPM is greater than Booked Rate, else 'No'. Use for filtering."
+    sql: CASE WHEN ${internal_ecpm} > ${dim_sfdb_opportunitylineitem.booked_rate} THEN 'Yes' ELSE 'No' END ;;
+  }
+
+
+
   measure: media_margin {
     type: number
     sql: (${capped_revenue}-${cost})/nullif(${capped_revenue},0) ;;

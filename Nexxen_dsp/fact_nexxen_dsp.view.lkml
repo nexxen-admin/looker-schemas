@@ -155,6 +155,15 @@ view: fact_nexxen_dsp {
 
   }
 
+  measure: yesterday_cost {
+    type: sum
+    # label: "Adv Invoice"
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.cost;;
+    filters: [date_key_in_timezone_date: "yesterday"]
+    hidden: yes
+  }
+
 
   dimension: creative_id_key {
     type: number
@@ -854,6 +863,12 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: internal_ecpm {
     type: number
     sql: (${cost}/nullif(${impressions},0))*1000 ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: yesterday_internal_ecpm {
+    type: number
+    sql: (${yesterday_cost}/nullif(${Last_day_1p_impressions},0))*1000 ;;
     value_format: "$#,##0.00"
   }
 

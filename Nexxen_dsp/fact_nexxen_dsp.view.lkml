@@ -641,7 +641,7 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: uncapped_revenue {
     type: sum
     sql: ${TABLE}.uncapped_revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
 
 
@@ -649,21 +649,22 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: yesterday_uncapped_revenue {
     type: sum
     sql: ${TABLE}.uncapped_revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
     filters: [date_key_in_timezone_date: "yesterday"]
   }
 
   measure: prev_month_uncapped_revenue {
     type: sum
     sql: ${TABLE}.uncapped_revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
     filters: [date_key_in_timezone_date: "last month"]
   }
 
   measure: capped_revenue{
+    description: "Capped Revenue n Opp Local Currency"
     type: sum
     sql: ${TABLE}.capped_revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
   }
 
 
@@ -1962,7 +1963,7 @@ measure: Nexxen_Inv_Cost_Percent {
     type: sum
     description: "The current period's capped revenue"
     sql: ${TABLE}.capped_revenue;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
     filters: [period_filtered_measures: "this"]
   }
 
@@ -1971,7 +1972,7 @@ measure: Nexxen_Inv_Cost_Percent {
     type: sum
     description: "The previous period's capped revenue"
     sql:  ${TABLE}.capped_revenue;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
     filters: [period_filtered_measures: "last"]
   }
 
@@ -1980,7 +1981,7 @@ measure: Nexxen_Inv_Cost_Percent {
     type: sum
     description: "The current period's uncapped revenue"
     sql: ${TABLE}.uncapped_revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
     filters: [period_filtered_measures: "this"]
   }
 
@@ -1989,7 +1990,7 @@ measure: Nexxen_Inv_Cost_Percent {
     type: sum
     description: "The previous period's uncapped revenue"
     sql: ${TABLE}.uncapped_revenue ;;
-    value_format: "$#,##0.00"
+    value_format: "#,##0.00"
     filters: [period_filtered_measures: "last"]
   }
 

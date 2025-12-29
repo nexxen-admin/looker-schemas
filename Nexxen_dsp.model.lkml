@@ -295,6 +295,16 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+
+  join: media_io_billing_us {
+    type: left_outer
+    view_label: "Media IO Billing US"
+    relationship: many_to_one
+    sql_on: ${media_io_billing_us.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+      AND ${fact_nexxen_dsp.date_key_in_timezone_month} = ${media_io_billing_us.date_key_month};;
+  }
+
+
   join: dim_dsp_monthly_manual_adjustment {
     type:left_outer
     view_label: "Manual Billing ADJ"

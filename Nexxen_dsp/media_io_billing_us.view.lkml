@@ -130,19 +130,20 @@ view: media_io_billing_us {
     type: number
     sql: ${TABLE}.Expected_Revenue ;;
   }
-  dimension: final_billable_revenue_after_adj {
-    type: number
+  measure: final_billable_revenue_after_adj {
+    type: sum
     label: "Final Billable Revenue"
     description: "Billable Revenue after Adjustments in Opp Currency"
     sql: ${TABLE}.final_billable_revenue_after_adj ;;
   }
 
-  dimension: final_billable_revenue_after_adj_usd {
-    type: number
+  measure: final_billable_revenue_after_adj_usd {
+    type: sum
     label: "Final Billable Revenue USD"
     description: "Billable Revenue after Adjustments in USD"
     sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
   }
+
   dimension: final_billable_units_after_adj {
     type: number
     sql: ${TABLE}.final_billable_units_after_adj ;;

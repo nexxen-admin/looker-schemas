@@ -1,6 +1,5 @@
 view: media_io_billing_us {
-  sql_table_name: BI_DSP.media_IO_billing_US
-  hidden: yes;;
+  sql_table_name: BI_DSP.media_IO_billing_US ;;
 
 
   dimension: account_id {
@@ -133,10 +132,15 @@ view: media_io_billing_us {
   }
   dimension: final_billable_revenue_after_adj {
     type: number
+    label: "Final Billable Revenue"
+    description: "Billable Revenue after Adjustments in Opp Currency"
     sql: ${TABLE}.final_billable_revenue_after_adj ;;
   }
+
   dimension: final_billable_revenue_after_adj_usd {
     type: number
+    label: "Final Billable Revenue USD"
+    description: "Billable Revenue after Adjustments in USD"
     sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
   }
   dimension: final_billable_units_after_adj {

@@ -111,6 +111,7 @@ explore: pmp_stats_daily {
   required_access_grants: [can_view_all_tremor]
 
   join: rx_dim_deal  {
+    view_label: "Pmp Stats Daily"
     type: left_outer
     sql_on: ${rx_dim_deal.deal_id_external}=${pmp_stats_daily.rx_deal_id} ;;
     relationship: many_to_one

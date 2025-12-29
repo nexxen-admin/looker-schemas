@@ -47,6 +47,7 @@ view: rx_dim_deal {
     hidden: yes
   }
   dimension: deal_description {
+    label: "Deal Description (Now)"
     type: string
     sql: ${TABLE}.deal_description ;;
   }
@@ -106,6 +107,7 @@ view: rx_dim_deal {
     hidden: yes
   }
   dimension: name {
+    label: "Deal Name (Now)"
     type: string
     sql: ${TABLE}."name" ;;
   }

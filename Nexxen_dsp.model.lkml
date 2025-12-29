@@ -302,6 +302,7 @@ explore: fact_nexxen_dsp  {
     sql_on: ${media_io_billing_us.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
     AND ${fact_nexxen_dsp.date_key_in_timezone_month} = ${media_io_billing_us.date_key_month};;
     relationship: many_to_one
+    fields: []
   }
 
 

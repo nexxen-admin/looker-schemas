@@ -312,9 +312,8 @@ explore: fact_nexxen_dsp  {
     type: left_outer
     view_label: "Media IO Billing US"
     relationship: many_to_one
-    # Ensure this matches your date logic
     sql_on: ${media_io_billing_us.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
-      AND ${media_io_billing_us.date_key_month}= DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_month}) ;;
+      AND ${media_io_billing_us.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
   }
 
   join: dim_dsp_monthly_manual_adjustment {

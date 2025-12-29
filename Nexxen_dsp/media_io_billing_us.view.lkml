@@ -63,6 +63,7 @@ view: media_io_billing_us {
     sql: ${TABLE}.capped_revenue_before_adj_with_override ;;
   }
   dimension: case_safe_opp_line_item_id {
+    primary_key: yes
     type: string
     sql: ${TABLE}.case_safe_opp_line_item_id ;;
   }

@@ -296,17 +296,26 @@ explore: fact_nexxen_dsp  {
   }
 
 
+  # join: media_io_billing_us {
+  #   type: left_outer
+  #   view_label: "Media IO Billing US"
+  #   sql_on: ${media_io_billing_us.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+  #   AND ${fact_nexxen_dsp.date_key_in_timezone_month} = ${media_io_billing_us.date_key_month};;
+  #   relationship: many_to_one
+  #   fields: [media_io_billing_us.final_billable_revenue_after_adj
+  #             , media_io_billing_us.final_billable_revenue_after_adj_usd
+  #               ]
+  # }
+
+
   join: media_io_billing_us {
     type: left_outer
     view_label: "Media IO Billing US"
-    sql_on: ${media_io_billing_us.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
-    AND ${fact_nexxen_dsp.date_key_in_timezone_month} = ${media_io_billing_us.date_key_month};;
     relationship: many_to_one
-    fields: [media_io_billing_us.final_billable_revenue_after_adj
-              , media_io_billing_us.final_billable_revenue_after_adj_usd
-                ]
+    # Ensure this matches your date logic
+    sql_on: ${media_io_billing_us.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+      AND ${media_io_billing_us.date_key_month}= DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_month}) ;;
   }
-
 
   join: dim_dsp_monthly_manual_adjustment {
     type:left_outer

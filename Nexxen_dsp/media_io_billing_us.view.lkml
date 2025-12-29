@@ -1,5 +1,7 @@
 view: media_io_billing_us {
-  sql_table_name: BI_DSP.media_IO_billing_US ;;
+  sql_table_name: BI_DSP.media_IO_billing_US
+  hidden: yes;;
+
 
   dimension: account_id {
     type: string
@@ -399,14 +401,14 @@ view: media_io_billing_us {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	opportunity_owner_name,
-	account_manager_name,
-	line_item_name,
-	account_name,
-	price_type_name,
-	opportunity_name,
-	related_brand_name
-	]
+  opportunity_owner_name,
+  account_manager_name,
+  line_item_name,
+  account_name,
+  price_type_name,
+  opportunity_name,
+  related_brand_name
+  ]
   }
 
 }

@@ -7,7 +7,8 @@ view: media_io_billing_us {
     primary_key: yes
     hidden: yes
     type: string
-    sql: CONCAT(${case_safe_opp_line_item_id}, '-', ${date_key_month}) ;;
+    # using _month ensures it's a string, avoiding type errors in Vertica
+    sql: ${case_safe_opp_line_item_id} || '-' || ${date_key_month} ;;
   }
   dimension: account_id {
     type: string

@@ -3431,6 +3431,44 @@ hidden: yes
     description: "Barter rebate calculated by applying rebate % to net revenue (gross - data fee), A monetary incentive or discount to an agency or buyer in exchange for meeting specified spending thresholds or for directing a set volume of ad spend to their platform."
   }
 
+
+
+
+
+
+  measure: publisher_barter_fee {
+    label: "Publisher Barter Fee"
+    description: "Calculates 2% rebate on (Revenue - Deal Data Fee) for qualifying Publisher Deals. Effective starting Jan 1, 2026."
+    type: sum
+    value_format: "$#,##0.00"
+    sql:
+      CASE
+        -- 1. Effective Date Check: Must be on or after Jan 1, 2026
+        -- Use the _raw version of your date field for reliable comparison
+        WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01'
+
+      -- 2. Basic Qualification: Deal Type must be 'pub'
+      AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+
+      -- 3. Specific Qualification: Specific Seat OR Description Match
+      AND (
+      ${dim_dsp_seat.seat_id} = '2147'
+      OR
+      LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+      OR
+      LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+      OR
+      LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+      )
+
+      -- 4. The Calculation: 2% of (Revenue - Deal Data Fee)
+      THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
+
+      -- Default for non-qualifying rows or pre-2026 dates
+      ELSE 0
+      END ;;
+  }
+
   # measure: sum_user_matched {
   #   type: sum
   #   sql: case when dim_user_matched.user_matched = 1 then dim_user_matched.user_matched else 0 end;;

@@ -1497,34 +1497,78 @@ measure: Nexxen_Inv_Cost_Percent {
   # }
 
 
+  # measure: primary_kpi_result {
+  #   label: "Primary KPI Result"
+  #   type: number
+  #   sql: ROUND(CASE
+  #           WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN
+  #             CASE
+  #               WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${CTR_1P}
+  #               ELSE ${CTR_3P}
+  #             END * 100
+  #     -- Completion Rate (VCR) Logic
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN
+  #     CASE
+  #     WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${VCR_1P}
+  #     -- Check 3P, fallback to 1P if 3P is NULL
+  #     ELSE COALESCE(${VCR_3P}, ${VCR_1P})
+  #     END * 100
+  #     -- CVR / Site Visit Rate Logic
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN
+  #     CASE
+  #     WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${1P_CVR}
+  #     ELSE ${3P_CVR}
+  #     END * 100
+  #     -- eCPA Logic (Note: No *100)
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('e ‘A', 'Cost Per Visit') THEN
+  #     CASE
+  #     WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${eCPA_1P}
+  #     ELSE ${eCPA_3P}
+  #     END
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${1P_CVR}
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${pacing}*100
+  #     WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${uncapped_revenue}/${actions}
+
+  #     ELSE 0
+  #     END,2);;
+  # }
+
   measure: primary_kpi_result {
     label: "Primary KPI Result"
     type: number
     sql: ROUND(CASE
+            -- CTR Logic
             WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='CTR' THEN
               CASE
                 WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${CTR_1P}
-                ELSE ${CTR_3P}
+                -- Added Fallback for CTR
+                ELSE COALESCE(NULLIF(${CTR_3P}, 0), ${CTR_1P})
               END * 100
+
       -- Completion Rate (VCR) Logic
       WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Completion Rate' THEN
       CASE
       WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${VCR_1P}
-      -- Check 3P, fallback to 1P if 3P is NULL
-      ELSE COALESCE(${VCR_3P}, ${VCR_1P})
+      -- Existing Fallback (Fixed to handle 0)
+      ELSE COALESCE(NULLIF(${VCR_3P}, 0), ${VCR_1P})
       END * 100
+
       -- CVR / Site Visit Rate Logic
       WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('CVR', 'Site Visit Rate') THEN
       CASE
       WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${1P_CVR}
-      ELSE ${3P_CVR}
+      -- Added Fallback for CVR
+      ELSE COALESCE(NULLIF(${3P_CVR}, 0), ${1P_CVR})
       END * 100
+
       -- eCPA Logic (Note: No *100)
       WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('e ‘A', 'Cost Per Visit') THEN
       CASE
       WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${eCPA_1P}
-      ELSE ${eCPA_3P}
+      -- Added Fallback for eCPA
+      ELSE COALESCE(NULLIF(${eCPA_3P}, 0), ${eCPA_1P})
       END
+
       WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%Visit Rate: .08%' THEN ${1P_CVR}
       WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND LOWER(${dim_sfdb_opportunitylineitem.primary_kpi_metric__c}) LIKE '%pacing%' THEN ${pacing}*100
       WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c}='Custom' AND ${dim_sfdb_opportunitylineitem.primary_kpi_metric__c} LIKE '%CPBI $8%' THEN ${uncapped_revenue}/${actions}
@@ -1532,6 +1576,7 @@ measure: Nexxen_Inv_Cost_Percent {
       ELSE 0
       END,2);;
   }
+
 
   measure: yesterday_primary_kpi_result {
     label: "Yesterday Primary KPI Result"

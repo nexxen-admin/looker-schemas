@@ -11,6 +11,14 @@ view: monthly_billing_locked_report {
     # A dimension is a groupable field that can be used to filter query results.
     # This dimension will be called "Account ID" in Explore.
 
+  dimension: pk {
+    primary_key: yes
+    hidden: yes
+    type: string
+    # using _month ensures it's a string, avoiding type errors in Vertica
+    sql: ${case_safe_opp_line_item_id} || '-' || ${date_key_month} ;;
+  }
+
   dimension: account_id {
     type: string
     sql: ${TABLE}.account_id ;;

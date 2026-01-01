@@ -323,6 +323,7 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
     sql_on: ${monthly_billing_locked_report.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
       AND ${monthly_billing_locked_report.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
+      fields: [monthly_billing_locked_report.final_billable_revenue_after_adj_measure, monthly_billing_locked_report.final_billable_revenue_after_adj_usd_measure]
   }
 
   join: dim_dsp_monthly_manual_adjustment {
@@ -330,6 +331,7 @@ explore: fact_nexxen_dsp  {
     view_label: "Manual Billing ADJ"
     sql_on: ${dim_dsp_monthly_manual_adjustment.manual_adjustment_key} = ${fact_nexxen_dsp.manual_adjustment_key};;
     relationship: many_to_one
+
   }
 ####---old---###
   # join: dim_dsp_netsuite_invoice{

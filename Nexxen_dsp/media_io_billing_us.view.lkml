@@ -3,13 +3,14 @@ view: media_io_billing_us {
 
   # --- PRIMARY KEY (Critical for accurate sums) ---
   # We combine ID and Date to ensure every row is unique.
-  dimension: pk {
-    primary_key: yes
-    hidden: yes
-    type: string
-    # using _month ensures it's a string, avoiding type errors in Vertica
-    sql: ${case_safe_opp_line_item_id} || '-' || ${date_key_month} ;;
-  }
+
+  # dimension: pk {
+  #   primary_key: yes
+  #   hidden: yes
+  #   type: string
+  #   # using _month ensures it's a string, avoiding type errors in Vertica
+  #   sql: ${case_safe_opp_line_item_id} || '-' || ${date_key_month} ;;
+  # }
   dimension: account_id {
     type: string
     sql: ${TABLE}.account_id ;;

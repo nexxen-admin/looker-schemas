@@ -217,6 +217,20 @@ view: monthly_billing_locked_report {
     value_format: "#,##0.00"
   }
 
+  measure: final_billable_revenue_after_adj_measure {
+    type: sum
+    label: "Final Billable Revenue (Locked)"
+    description: "Billable Revenue after Adjustments in Opp Currency (Locked by Finance)"
+    sql: ${TABLE}.final_billable_revenue_after_adj ;;
+  }
+
+  measure: final_billable_revenue_after_adj_usd_measure {
+    type: sum
+    label: "Final Billable Revenue USD (Locked)"
+    description: "Billable Revenue after Adjustments in USD  (Locked by Finance)"
+    sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
+  }
+
   dimension: final_billable_units_after_adj {
     type: number
     sql: ${TABLE}.final_billable_units_after_adj ;;

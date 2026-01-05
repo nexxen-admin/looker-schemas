@@ -1398,6 +1398,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: fdw_cost {
     type: sum
+    description: "FDW US"
     label: "FDW Cost"
     value_format: "$#,##0.00"
     sql: ${TABLE}.fdw_cost ;;

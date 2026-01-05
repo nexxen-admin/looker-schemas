@@ -1406,6 +1406,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: yesterday_fdw_cost {
     type: sum
+    description: "FDW US"
     label: "Yesterday FDW Cost"
     value_format: "$#,##0.00"
     sql: ${TABLE}.fdw_cost ;;

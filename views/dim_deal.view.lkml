@@ -126,7 +126,7 @@ view: dim_deal {
   }
 
   dimension: deal_name {
-    description: "Deal Description"
+    description: "Publisher Deal Description; source field - andromeda.rx_dim_supply_publisher_deal.description; if NULL, falls back to andromeda.rx_dim_deal.deal_description"
     type: string
     sql: ${TABLE}.Deal_Name ;;
   }
@@ -227,7 +227,7 @@ dimension: deal_status {
 
 dimension: deal_external_name {
   type: string
-  description: "External Deal Name - includes details we can expose to clients"
+  description: "External Deal Name - includes details we can expose to clients; source field - rx_dim_deal.name"
   sql: ${TABLE}.deal_external_name ;;
 }
 

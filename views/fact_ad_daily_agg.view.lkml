@@ -3331,45 +3331,45 @@ hidden: yes
      hidden: yes
   }
 
-  # dimension: rebate_percent {
-  #   type: number
-  #   description: "Rebate % based on agency, deal type, revenue type, seat, and time. Logic switches to use fact-level barter fee on 2025-11-15."
-  #   # hidden: yes
-  #   sql:
-  #     CASE
-  #       -- CUTOFF DATE: 2025-11-15
-  #       -- NEW LOGIC: Applied on or after the cutoff date.
-  #       WHEN ${dim_date.date_key_raw} >= DATE '2025-11-15' THEN COALESCE(${sum_of_barter_fee_amount}, 0)
-  #       ELSE
-  #       -- OLD LOGIC: Applied before the cutoff date.
-  #         CASE
-  #           WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND (
-  #             ${dim_dsp_seat.seat_id} = '2147' OR ${tinuiti_deal_ids} is not NULL
-  #           ) THEN 0.02
-  #           WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' AND ${dim_date.date_key_raw} < DATE '2025-04-18'
-  #             AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%')
-  #             AND ${dim_dsp_deal_type.dsp_deal_type} != 'pub' AND ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN 0.075
-  #           ELSE
-  #             CASE
-  #               WHEN ${dim_deal_partner.deal_partner_id} = '2' AND ${dim_deal_type.deal_type_id} = 12 THEN 0.30
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_brand.deal_brand_id} = '1036' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.20
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.50
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%T-Mobile%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.25
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%lovesac%'AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.25
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.20
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Orion%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.24
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Agyle%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.15
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Evergreen%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.20
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Anchor%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.15
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%NYIAX%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.10
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Tingley Lane%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.15
-  #               WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%UM Technologies%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.10
-  #               ELSE 0
-  #             END
-  #         END
-  #     END;;
-  #   value_format: "#,##0.0000"
-  # }
+  dimension: rebate_percent_new {
+    type: number
+    description: "Rebate % based on agency, deal type, revenue type, seat, and time. Logic switches to use fact-level barter fee on 2025-11-15."
+    # hidden: yes
+    sql:
+      CASE
+        -- CUTOFF DATE: 2025-11-15
+        -- NEW LOGIC: Applied on or after the cutoff date.
+        WHEN ${dim_date.date_key_raw} >= DATE '2025-11-15' THEN COALESCE(${sum_of_barter_fee_amount}, 0)
+        ELSE
+        -- OLD LOGIC: Applied before the cutoff date.
+          CASE
+            WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND (
+              ${dim_dsp_seat.seat_id} = '2147' OR ${tinuiti_deal_ids} is not NULL
+            ) THEN 0.02
+            WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' AND ${dim_date.date_key_raw} < DATE '2025-04-18'
+              AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%')
+              AND ${dim_dsp_deal_type.dsp_deal_type} != 'pub' AND ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN 0.075
+            ELSE
+              CASE
+                WHEN ${dim_deal_partner.deal_partner_id} = '2' AND ${dim_deal_type.deal_type_id} = 12 THEN 0.30
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_brand.deal_brand_id} = '1036' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.20
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Involved%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.50
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%T-Mobile%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.25
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%lovesac%'AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.25
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%ICON%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.20
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Orion%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.24
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Agyle%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.15
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Evergreen%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.20
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Anchor%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.15
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%NYIAX%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.10
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%Tingley Lane%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.15
+                WHEN ${dim_deal_agency.deal_agency_name} ILIKE '%UM Technologies%' AND ${dim_deal_agency.deal_agency_name} ILIKE '%barter%' THEN 0.10
+                ELSE 0
+              END
+          END
+      END;;
+    value_format: "#,##0.0000"
+  }
 
 
   dimension: rebate_percent {

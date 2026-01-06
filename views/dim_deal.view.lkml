@@ -126,7 +126,7 @@ view: dim_deal {
   }
 
   dimension: deal_name {
-    description: "Publisher Deal Description; source field - andromeda.rx_dim_supply_publisher_deal.description; if NULL, falls back to andromeda.rx_dim_deal.deal_description"
+    description: "Deal Description; source field - andromeda.rx_dim_supply_publisher_deal.description; if NULL, falls back to andromeda.rx_dim_deal.deal_description"
     type: string
     sql: ${TABLE}.Deal_Name ;;
   }

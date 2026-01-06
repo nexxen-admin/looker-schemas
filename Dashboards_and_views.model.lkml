@@ -30,6 +30,11 @@ access_grant: can_view_pub_come_looker {
   allowed_values: ["Looker_Admins"]
 }
 
+access_grant: finance_reports {
+  user_attribute: finance_reports
+  allowed_values: ["Finance Reports All Access"]
+}
+
 access_grant: allowed_users_sam_lt {
   user_attribute: allowed_users_sam_lt
   allowed_values: ["Finance Reports All Access", "Chris Chandler Group", "Mike Padula Group"]
@@ -174,6 +179,12 @@ explore: bid_details_in_app {
   hidden: yes
 }
 
+explore: ssp_revenue_reconciliation_poc {
+  label: "SSP Revenue Reconciliation POC"
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
+
 explore: spearad_fifa_view {
   label: "FIFA-SpearAd View"
   required_access_grants: [can_view_all_tremor]
@@ -228,6 +239,12 @@ explore: base_data_without_demand {
   label: "Base Data Without Demand"
   required_access_grants: [can_view_all_tremor]
   hidden: yes
+}
+
+explore: base_data_retention_analysis {
+  label: "Base Data Retention Analysis"
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
 }
 
 explore: ads_txt_domain_publisher {
@@ -307,6 +324,12 @@ explore: new_revenue {
 
 explore: investor_kpi{
   label: "Investor KPI"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
+explore: investor_kpi_new{
+  label: "Investor KPI (New)"
   required_access_grants: [can_view_all_tremor]
   hidden: yes
 }

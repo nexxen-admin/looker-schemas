@@ -302,6 +302,30 @@ view: dim_dsp_package {
     sql: ${TABLE}.io_number ;;
   }
 
+  dimension: console_io {
+    type: string
+    sql: ${insertion_order_name} || '|' || ${insertion_order_id} ;;
+    hidden: yes
+  }
+
+  dimension: console_io_number {
+    type: string
+    sql: REGEXP_SUBSTR(${console_io}, '[^\\|]+$') ;;
+    hidden: yes
+  }
+
+
+  dimension: dsp_io_link {
+    type: string
+    sql:
+    CASE
+      WHEN ${console_io_number} IS NULL OR ${console_io_number} = ''
+      THEN NULL
+      ELSE 'https://platform.amobee.com/webapp/#/io-dashboard/' || ${console_io_number} || '/packages'
+    END ;;
+  }
+
+
   dimension_group: last_dist {
     type: time
     timeframes: [raw, date, week, month, quarter, year]

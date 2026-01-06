@@ -11,7 +11,7 @@ view: dim_dsp_netsuite_invoice {
     convert_tz: no
     datatype: date
     sql: ${TABLE}.event_month ;;
-    hidden: yes
+    # hidden: yes
   }
     # Here's what a typical dimension looks like in LookML.
     # A dimension is a groupable field that can be used to filter query results.
@@ -28,22 +28,23 @@ view: dim_dsp_netsuite_invoice {
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
 
+
   dimension: netsuite_invoice_key {
     type: number
     sql: ${TABLE}.Netsuite_invoice_key ;;
-    hidden: yes
+    # hidden: yes
   }
 
   dimension: opportunitylineitem {
     type: string
     sql: ${TABLE}.opportunitylineitem ;;
-    hidden: yes
+    # hidden: yes
   }
 
   dimension: opportunitylineitem_key {
     type: number
     sql: ${TABLE}.opportunitylineitem_key ;;
-    hidden: yes
+    # hidden: yes
   }
 
   dimension: quantity {
@@ -51,10 +52,20 @@ view: dim_dsp_netsuite_invoice {
     sql: ${TABLE}.quantity ;;
   }
 
+  dimension: Amount_Functional_Currency {
+    type: number
+    sql: COALESCE(${TABLE}.Amount_Functional_Currency,0) ;;
+  }
+
+measure: amount_functional_currency_commission {
+  type: max
+  sql: COALESCE(${TABLE}.Amount_Functional_Currency,0)  ;;
+}
+
   dimension: ri_info {
     type: string
     sql: ${TABLE}.ri_info ;;
-    hidden: yes
+    # hidden: yes
   }
 
   measure: passed_bill_amount_measure {

@@ -170,10 +170,6 @@ explore: dim_dsp_market  {
   # hidden: yes
 #}
 
-explore: ncd_mapping_debugging {
-  label: "NCD Mapping Debugging"
-}
-
 explore: fact_reach_frequency {
   required_access_grants: [can_view_all_tremor]
   view_name: fact_reach_frequency
@@ -181,6 +177,13 @@ explore: fact_reach_frequency {
   persist_with: CleanCash_datagroup
   view_label: "Measures"
   hidden: yes
+}
+
+explore: v_related_brands_us {
+  required_access_grants: [can_view_all_tremor]
+  view_name: v_related_brands_us
+  label: "Related Brands Impressions Data"
+  persist_with: CleanCash_datagroup
 }
 
 explore: fact_nexxen_dsp  {
@@ -292,19 +295,79 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+
+  # join: media_io_billing_us {
+  #   type: left_outer
+  #   view_label: "Media IO Billing US"
+  #   sql_on: ${media_io_billing_us.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+  #   AND ${fact_nexxen_dsp.date_key_in_timezone_month} = ${media_io_billing_us.date_key_month};;
+  #   relationship: many_to_one
+  #   fields: [media_io_billing_us.final_billable_revenue_after_adj
+  #             , media_io_billing_us.final_billable_revenue_after_adj_usd
+  #               ]
+  # }
+
+
+  # join: media_io_billing_us {
+  #   type: left_outer
+  #   view_label: "Media IO Billing US"
+  #   relationship: many_to_one
+  #   sql_on: ${media_io_billing_us.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+  #     AND ${media_io_billing_us.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
+  # }
+
+
+  join: monthly_billing_locked_report {
+    type: left_outer
+    view_label: "Locked Report"
+    relationship: many_to_one
+    sql_on: ${monthly_billing_locked_report.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+      AND ${monthly_billing_locked_report.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
+      fields: [monthly_billing_locked_report.final_billable_revenue_after_adj_measure, monthly_billing_locked_report.final_billable_revenue_after_adj_usd_measure]
+  }
+
   join: dim_dsp_monthly_manual_adjustment {
     type:left_outer
     view_label: "Manual Billing ADJ"
     sql_on: ${dim_dsp_monthly_manual_adjustment.manual_adjustment_key} = ${fact_nexxen_dsp.manual_adjustment_key};;
     relationship: many_to_one
-  }
 
-  join: dim_dsp_netsuite_invoice{
-    type:left_outer
-    view_label: "Netsuite Billing Fields"
-    sql_on: ${dim_dsp_netsuite_invoice.netsuite_invoice_key} = ${fact_nexxen_dsp.netsuite_invoice_key};;
-    relationship: many_to_one
   }
+####---old---###
+  # join: dim_dsp_netsuite_invoice{
+  #   type:left_outer
+  #   view_label: "Netsuite Billing Fields"
+  #   sql_on: ${dim_dsp_netsuite_invoice.netsuite_invoice_key} = ${fact_nexxen_dsp.netsuite_invoice_key};;
+  #   relationship: many_to_one
+  # }
+
+  ####---new---###
+  # join: dim_dsp_netsuite_invoice {
+  #   type: left_outer
+  #   view_label: "Netsuite Billing Fields"
+
+  #   sql_on:
+  #   ${fact_nexxen_dsp.opportunitylineitem_key} = ${dim_dsp_netsuite_invoice.opportunitylineitem_key}
+  #   AND CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_date}) AS DATE)
+  #     = TO_DATE(${dim_dsp_netsuite_invoice.event_month_month}, 'YYYY-MM-DD') ;;
+
+  #   relationship: many_to_one
+  # }
+
+
+  join: dim_dsp_netsuite_invoice {
+    type: left_outer
+    view_label: "Netsuite Billing Fields"
+
+    sql_on:
+    ${fact_nexxen_dsp.opportunitylineitem_key} = ${dim_dsp_netsuite_invoice.opportunitylineitem_key}
+    AND CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_date}) AS DATE)
+      = TO_DATE(${dim_dsp_netsuite_invoice.event_month_month}, 'YYYY-MM') ;;
+
+      relationship: many_to_one
+    }
+
+
 
   join: dim_dsp_creative_file_tracking_url {
     type: left_outer
@@ -413,12 +476,21 @@ explore: fact_nexxen_dsp  {
   }
 
 
+  # join: dim_sfdb_user {
+  #   type: inner
+  #   view_label: "Employee - Account"
+  #   sql_on: ${dim_sfdb_user.user_key_id}=${fact_nexxen_dsp.user_key_id};;
+  #   relationship: many_to_one
+  # }
+
   join: dim_sfdb_user {
     type: inner
     view_label: "Employee - Account"
-    sql_on: ${dim_sfdb_user.user_key_id}=${fact_nexxen_dsp.user_key_id};;
+    sql_on:${dim_sfdb_user.id}=${dim_sfdb_opportunity.account_manager__c};;
     relationship: many_to_one
   }
+
+
 
   join: dim_sfdb_user_delivery {
     type: left_outer

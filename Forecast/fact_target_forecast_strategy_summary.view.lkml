@@ -122,7 +122,8 @@ view: fact_target_forecast_strategy_summary {
 
   dimension: Strat_Sales_Team {
     type: string
-    sql: COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team)  ;;
+    sql: CASE WHEN COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team)='Strat Sales - Southwast' THEN 'Strat Sales - Southwest'
+    ELSE COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team) END  ;;
   }
 
   dimension: new_enterprise_team {
@@ -132,7 +133,8 @@ view: fact_target_forecast_strategy_summary {
 
   dimension: Strat_Sales_RVP {
     type: string
-    sql: CASE WHEN ${TABLE}.seller='Taylor Kiefer' THEN 'Strat Sales - East' ELSE COALESCE(${forecast_dim_sfdb_user.RVP_Sales_team}, ${TABLE}.Strat_Sales_RVP) END;;
+    sql: CASE WHEN ${TABLE}.seller='Taylor Kiefer' THEN 'Strat Sales - East'
+    ELSE COALESCE(${forecast_dim_sfdb_user.RVP_Sales_team}, ${TABLE}.Strat_Sales_RVP) END;;
     drill_fields: [revenue_line, Strat_Sales_Team]
   }
 

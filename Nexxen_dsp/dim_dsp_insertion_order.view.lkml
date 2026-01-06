@@ -31,17 +31,31 @@ view: dim_dsp_insertion_order {
     sql: ${TABLE}.overall_start_date ;;
   }
 
+  # dimension: campaign_live_status {
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN ${overall_start_date} <= CURRENT_DATE
+  #     AND ${overall_end_date} >= CURRENT_DATE THEN 'Live Now'
+  #     WHEN ${overall_end_date} = (CURRENT_DATE - INTERVAL '1 day') THEN 'Ended Yesterday'
+  #     WHEN ${overall_end_date} < (CURRENT_DATE - INTERVAL '1 day') THEN 'Ended Before Yesterday'
+  #     ELSE 'Future'
+  #   END ;;
+  # }
+
+
   dimension: campaign_live_status {
     type: string
     sql:
     CASE
-      WHEN ${overall_start_date} <= CURRENT_DATE
-       AND ${overall_end_date} >= CURRENT_DATE THEN 'Live Now'
-      WHEN ${overall_end_date} = (CURRENT_DATE - INTERVAL '1 day') THEN 'Ended Yesterday'
-      WHEN ${overall_end_date} < (CURRENT_DATE - INTERVAL '1 day') THEN 'Ended Before Yesterday'
+      WHEN ${overall_start_raw} <= CURRENT_DATE
+       AND ${overall_end_raw} >= CURRENT_DATE THEN 'Live Now'
+      WHEN ${overall_end_raw} = CURRENT_DATE - INTERVAL '1 day' THEN 'Ended Yesterday'
+      WHEN ${overall_end_raw} < CURRENT_DATE - INTERVAL '1 day' THEN 'Ended Before Yesterday'
       ELSE 'Future'
     END ;;
   }
+
 
   dimension: workflow_status_id {
     type: number

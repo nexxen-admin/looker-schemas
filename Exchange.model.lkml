@@ -106,6 +106,18 @@ explore: IAS_Monthly_Usage {
   #hidden: yes
 }
 
+explore: pmp_stats_daily {
+  label: "PMP Stats Daily"
+  required_access_grants: [can_view_all_tremor]
+
+  join: rx_dim_deal  {
+    view_label: "Pmp Stats Daily"
+    type: left_outer
+    sql_on: ${rx_dim_deal.deal_id_external}=${pmp_stats_daily.rx_deal_id} ;;
+    relationship: many_to_one
+  }
+}
+
 explore: v_fact_ad_daily {
   required_access_grants: [can_view_all_tremor]
   label: "Fact Ad Daily Exchange"
@@ -343,7 +355,6 @@ explore: extend_Inbound_Exchange {
   }
   join: dim_o_domain {
     type: inner
-
     view_label: "Domain"
     sql_on: ${dim_o_domain.o_domain_key}=${fact_ad_daily_agg.o_domain_key};;
     relationship: many_to_one
@@ -355,13 +366,20 @@ explore: extend_Inbound_Exchange {
     relationship: many_to_one
   }
 
+
+  # join: dim_uid_source {
+  #   type: left_outer
+  #   view_label: "Uid Source"
+  #   sql_on: ${dim_uid_source.uid_source_key}=${fact_ad_daily_agg.uid_source_key};;
+  #   relationship: many_to_one
+  # }
+
+
   join: rx_dim_supply_publisher_deal_r {
     type: left_outer
     view_label: "supply publisher deal"
     sql_on: ${rx_dim_supply_publisher_deal_r.external_deal_id}=${dim_deal.deal_id} ;;
     relationship: many_to_one
-
-
   }
 
 
@@ -539,6 +557,13 @@ explore: fact_ad_daily_agg{
     sql_on: ${v_dim_platformfee_type.platformfee_type_key}=${fact_ad_daily_agg.platformfee_type_key} ;;
     relationship: many_to_one
 
+  }
+
+  join: dim_uid_source {
+    type: left_outer
+    view_label: "Uid Source"
+    sql_on: ${dim_uid_source.uid_source_key}=${fact_ad_daily_agg.uid_source_key};;
+    relationship: many_to_one
   }
 
   join: dim_media_type {

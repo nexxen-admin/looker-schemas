@@ -213,7 +213,7 @@ view: forecast_data {
 
   dimension: strat_sales_team {
     type: string
-    sql: ${TABLE}.strat_sales_team ;;
+    sql: CASE WHEN ${TABLE}.strat_sales_team='Strat Sales - Southwast' THEN 'Strat Sales - Southwest' ELSE ${TABLE}.strat_sales_team END;;
   }
 
   dimension: strat_sales_cs_region {

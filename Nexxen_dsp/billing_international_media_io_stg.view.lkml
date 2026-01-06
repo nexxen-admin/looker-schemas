@@ -1,4 +1,4 @@
-view: billing_international_media_io {
+view: billing_international_media_io_stg {
   sql_table_name: BI_DSP.media_IO_billing_international ;;
 
   dimension: account_id {
@@ -18,17 +18,17 @@ view: billing_international_media_io {
 
   dimension: ad_ops_override_approving_manager {
     type: string
-    sql: '' ;;
+    sql: ${TABLE}.AdOps_OverrideApprovingManager ;;
   }
 
   dimension: ad_ops_override_reason {
     type: string
-    sql: '' ;;
+    sql: ${TABLE}.AdOps_OverrideReason ;;
   }
 
   dimension: adj_3p_cost {
     type: number
-    sql: 0 ;;
+    sql: ${TABLE}.Adj_3P_Cost ;;
   }
 
   dimension: adjustment_billable_actions {
@@ -72,24 +72,24 @@ view: billing_international_media_io {
     value_format: "#,##0.00"
   }
 
-  dimension: adv_invoice_after_ad_ops_override {
-    type: string
-    sql: '' ;;
-  }
+  # dimension: adv_invoice_after_ad_ops_override {
+  #   type: string
+  #   sql: ${TABLE}.adv_invoice_after_ad_ops_override ;;
+  # }
 
   dimension: billable_percent_25_complete_events_after_finance_adj {
     type: number
-    sql: 0 ;;
+    sql: ${TABLE}.finance_adj_percent_25_complete_events ;;
   }
 
   dimension: billable_percent_50_complete_events_after_finance_adj {
     type: number
-    sql: 0 ;;
+    sql: ${TABLE}.finance_adj_percent_50_complete_events  ;;
   }
 
   dimension: billable_percent_75_complete_events_after_finance_adj {
     type: number
-    sql: 0 ;;
+    sql: ${TABLE}.finance_adj_percent_75_complete_events  ;;
   }
 
   dimension: billing_instructions {
@@ -194,7 +194,7 @@ view: billing_international_media_io {
 
   dimension: final_billable_revenue_local_currency {
     type: string
-    sql: '' ;;
+    sql: ${TABLE}.final_billable_revenue_after_adj_local_currency ;;
   }
 
   dimension: final_billable_units_after_adj {
@@ -270,7 +270,7 @@ view: billing_international_media_io {
     type: string
     sql: ${TABLE}.modified_case_safe ;;
   }
-dimension: ns_remaining_amount {
+  dimension: ns_remaining_amount {
     type: number
     sql: ${TABLE}.ns_remaining_amount ;;
   }
@@ -463,7 +463,7 @@ dimension: ns_remaining_amount {
   dimension: uncapped_revenue_before_ad_ops_override {
     label: "Uncapped Revenue"
     type: number
-    sql: ${TABLE}.uncapped_revenue_bedore_AdOps_Override ;;
+    sql: ${TABLE}.uncapped_revenue_before_AdOps_Override ;;
   }
 
   dimension: uncapped_revenue_after_ad_ops_override {

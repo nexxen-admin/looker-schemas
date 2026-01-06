@@ -47,7 +47,8 @@ explore: forecast_data {
       loss_reason_details__c,
       db_updated_date,
       db_updated_time,
-      max_database_update_timestamp
+      db_updated_number,
+      final_database_last_update
     ]
   }
 }
@@ -66,6 +67,12 @@ explore: fact_forecast_full_summary {
   label: "Forecast Joined Teams"
   required_access_grants: [can_view_all_tremor]
   hidden: yes
+
+  join: forecast_dim_sfdb_user {
+    type: left_outer
+    sql_on: ${fact_forecast_full_summary.seller_key} = ${forecast_dim_sfdb_user.fullname_key} ;;
+    relationship: many_to_one
+  }
 }
 
 explore: dim_dsp_monthly_strategic_targets  {
@@ -132,7 +139,7 @@ explore: fact_target_forecast_strategy_summary  {
   }
 
   required_access_grants: [can_view_all_tremor]
-  sql_always_where: ${Strat_Sales_Team}!='Unknown' ;;
+  sql_always_where: ${Strat_Sales_Team}!='Unknown';;
 
   join: forecast_dim_sfdb_user {
     type: left_outer

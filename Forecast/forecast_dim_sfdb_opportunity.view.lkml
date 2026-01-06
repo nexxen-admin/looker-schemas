@@ -142,15 +142,49 @@ view: forecast_dim_sfdb_opportunity {
     sql: ${TABLE}.db_updated_date ;;
   }
 
-  measure: max_database_update_timestamp {
-    type: max
-    sql: ${db_updated_time} ;;
-    value_format: "yyyy-mm-dd hh:mm:ss"
-    label: "Database Last Update"
-    # description: "The most recent timestamp recorded in the base table."
-
+# Convert the full timestamp to a sortable number (Unix seconds)
+  dimension: db_updated_number {
+    type: number
+    sql: EXTRACT(EPOCH FROM ${db_updated_raw}) ;;
+    label: "DB Updated Unix Time"
+    hidden: yes
   }
 
+  measure: max_database_update_timestamp {
+    type: max
+    sql: ${db_updated_number} ;;
+    label: "Max DB Update"
+    hidden: yes
+  }
+
+
+  # measure: final_database_last_update {
+  #   type: string # Must be string or number for this method
+  #   # Use a Vertica function to convert the max number (seconds) back to a formatted string
+  #   sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD HH24:MI:SS') ;;
+  #   label: "Database Last Update"
+  # }
+
+  measure: final_database_last_update {
+    type: string
+    sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD HH24:MI:SS') ;;
+    label: "SF DB update date"
+    html:
+    <div style="font-family: Arial, sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
+      <span style="font-weight: normal; word-spacing: 4px;">SF DB update date (UTC)</span><br>
+      <span style="word-spacing: 15px;">{{ rendered_value }}</span>
+    </div> ;;}
+
+
+  # measure: final_database_last_update {
+  #   type: string
+  #   sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD    HH24:MI:SS') ;;
+  #   label: "SF DB update date"
+  #   html:
+  #   <div style="font-family: 'Google Sans', 'Noto Sans', sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
+  #   <span style="font-weight: normal; word-spacing: 4px;">SF DB update date</span><br>
+  #   {{ rendered_value }}
+  #   </div> ;;}
 
   dimension: calculated_margin__c {
     type: number

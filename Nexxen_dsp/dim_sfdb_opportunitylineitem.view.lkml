@@ -32,6 +32,7 @@ view: dim_sfdb_opportunitylineitem {
 
   dimension: calculated_margin__c {
     type: number
+    label: "Calculated Margin C (* Do Not Use)"
     sql: ${TABLE}.calculated_margin__c ;;
     hidden: no
   }
@@ -545,6 +546,12 @@ view: dim_sfdb_opportunitylineitem {
     label: "Opportunity ID"
     sql: ${TABLE}.opportunityid ;;
 
+  }
+
+  dimension: opportunity_link {
+    type: string
+    sql: CONCAT('https://amobee-sfv.lightning.force.com/',${TABLE}.opportunityid) ;;
+    html: <a href="{{ value }}"/>[SF Opportunity Link]</a> ;;
   }
 
   dimension: opportunitylineitem_aid__c {

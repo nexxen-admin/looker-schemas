@@ -16,6 +16,15 @@ view: fact_forecast_full_summary {
     type: string
     sql: ${TABLE}.Team ;;
   }
+  dimension: seller {
+    type: string
+    sql: ${TABLE}.Seller_key ;;
+  }
+  dimension: seller_key {
+    type: string
+    sql: LOWER(${TABLE}.Seller_key) ;;
+    hidden: yes
+  }
   measure: gross_revenue_booked {
     type: sum
     label: "GR Booked"
@@ -40,11 +49,17 @@ view: fact_forecast_full_summary {
     value_format: "$#,##0"
     sql: ${TABLE}.net_revenue_booked ;;
   }
+  dimension: nr_budget {
+    type: number
+    sql: CASE WHEN ${TABLE}.Team = 'Strategic Sales' AND (${forecast_dim_sfdb_user.RVP_Sales_team} IS NULL OR ${forecast_dim_sfdb_user.RVP_Sales_team}='Unknown') THEN 0
+    ELSE ${TABLE}.net_revenue_budget END;;
+    hidden: yes
+  }
   measure: net_revenue_budget {
     type: sum
     label: "NR Budget"
     value_format: "$#,##0"
-    sql: ${TABLE}.net_revenue_budget ;;
+    sql: ${nr_budget} ;;
   }
   measure: nr_pace {
     type: number

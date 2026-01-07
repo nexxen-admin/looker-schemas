@@ -3333,13 +3333,13 @@ hidden: yes
 
   dimension: rebate_percent {
     type: number
-    description: "Rebate % based on agency, deal type, revenue type, seat, and time. Logic switches to use fact-level barter fee on 2025-11-15."
+    description: "Rebate % based on agency, deal type, revenue type, seat, and time. Logic switches to use fact-level barter fee on 2026-01-01."
     # hidden: yes
     sql:
       CASE
         -- CUTOFF DATE: 2025-11-15
         -- NEW LOGIC: Applied on or after the cutoff date.
-        WHEN ${dim_date.date_key_raw} >= DATE '2025-11-15' THEN COALESCE(${sum_of_barter_fee_amount}, 0)
+        WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01' THEN COALESCE(${sum_of_barter_fee_amount}, 0)
         ELSE
         -- OLD LOGIC: Applied before the cutoff date.
           CASE

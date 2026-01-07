@@ -3372,7 +3372,7 @@ hidden: yes
   }
 
 
-  # dimension: rebate_percent {
+  # dimension: rebate_percent_old {
   #   type: number
   #   sql:
   #     CASE

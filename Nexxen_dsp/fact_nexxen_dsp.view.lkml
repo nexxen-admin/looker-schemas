@@ -1451,6 +1451,13 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "#,##0.00"
   }
 
+  measure:  net_revenue_fdw_cost_w_o_vendor_cost {
+    type: number
+    label: "Net Revenue (FDW Cost-w/o vendor cost)"
+    sql: ${capped_revenue} - ${fdw_cost} ;;
+    value_format: "#,##0.00"
+  }
+
   # measure: Net_evenue_FDW_cost {
   #   type: number
   #   label: "Net Revenue (FDW cost)"

@@ -7,7 +7,7 @@ view: pmp_stats_daily {
   }
   dimension: agency_name {
     type: string
-    sql: ${TABLE}.agency_name ;;
+    sql: COALESCE(${TABLE}.agency_name, '') ;;
   }
   dimension: auction_type {
     type: string
@@ -100,6 +100,7 @@ view: pmp_stats_daily {
   dimension: kpi_target_monthly_rev {
     label: "KPI Target Monthly Rev"
     type: number
+    value_format: "$#,##0.00"
     sql: ${TABLE}.kpi_target_monthly_rev ;;
   }
   dimension: name {
@@ -211,6 +212,7 @@ view: pmp_stats_daily {
 
   measure: barter_fee_amount {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.barter_fee_amount ;;
   }
   measure: clicks {
@@ -220,10 +222,12 @@ view: pmp_stats_daily {
   measure: cm_fee {
     label: "CM Fee"
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.cm_fee ;;
   }
   measure: cost {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.COST ;;
   }
   measure: ctr_calculated {
@@ -306,10 +310,12 @@ view: pmp_stats_daily {
   }
   measure: deal_data_fee {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.deal_data_fee ;;
   }
   measure: demand_margin {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.demand_margin ;;
   }
   measure: dsp_bids {
@@ -320,6 +326,7 @@ view: pmp_stats_daily {
   measure: dsp_fee {
     label: "DSP Fee"
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.dsp_fee ;;
   }
   measure: ias_ivt_impression {
@@ -360,6 +367,7 @@ view: pmp_stats_daily {
   }
   measure: pad_amount {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.pad_amount ;;
   }
   measure: pixel_impressions {
@@ -369,11 +377,13 @@ view: pmp_stats_daily {
   }
   measure: revenue {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.REVENUE ;;
   }
   measure: ssp_cost {
     label: "SSP Cost"
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.SSP_COST ;;
   }
   measure: ssp_requests {
@@ -383,6 +393,7 @@ view: pmp_stats_daily {
   }
   measure: traffic_source_fee {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${TABLE}.traffic_source_fee ;;
   }
   measure: quartile_1st_rate {

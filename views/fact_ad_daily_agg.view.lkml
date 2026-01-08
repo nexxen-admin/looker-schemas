@@ -2184,6 +2184,23 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.schain_complete;;
   }
 
+  dimension: supply_chain{
+    type: string
+    label: "Supply Chain"
+    view_label: "Request Attributes"
+    # description: "Schain complete - 'true' = complete chain, 'false' = incomplete, 'null' = not provided"
+    sql:      CASE
+                WHEN  ${TABLE}.schain_complete = true
+                THEN 'Complete'
+                WHEN  ${TABLE}.schain_complete = false
+                THEN 'Incomplete'
+                WHEN  ${TABLE}.schain_complete = null
+                THEN 'not provided'
+                ELSE ''
+                END
+           ;;
+  }
+
   filter: current_date_range {
     type: date
     view_label: "PoP"

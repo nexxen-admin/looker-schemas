@@ -1,4 +1,4 @@
-connection: "vertica_iad"
+connection: "vertica_dm3"
 
 #include: #"/views/third_party_reporting_fields_mapping.view"                # include all views in the views/ folder in this project
  include: "/**/*.view.lkml"                 # include all views in this project

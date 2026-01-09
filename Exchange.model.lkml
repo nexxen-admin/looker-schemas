@@ -1521,5 +1521,9 @@ explore: fact_ad_bid_request_daily_agg{
     sql_on: ${dim_deal.deal_partner_id}=${dim_deal_partner.deal_partner_id} ;;
     relationship: many_to_one
   }
+}
 
+explore: report_uid_source {
+  label: "Live Intent UID Source Reporting"
+  hidden: yes
 }

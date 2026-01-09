@@ -167,16 +167,19 @@ view: amobee_media_daily_mtz_view {
     sql: ${TABLE}.deal_name ;;
   }
   dimension: deal_type_number {
+    hidden: yes
     type: number
     sql: ${TABLE}.deal_type ;;
   }
   dimension: deal_type {
+    hidden: yes
     type: string
     sql: CASE WHEN ${TABLE}.line_item_name ilike '%_OE%' THEN 'Open'
               WHEN ${TABLE}.line_item_name ilike '%_PMP%' THEN 'PMP'
               ELSE 'Unknown' END ;;
   }
   dimension: deal_type_name {
+    hidden: yes
     type: string
     sql: ${TABLE}.deal_type_name ;;
   }

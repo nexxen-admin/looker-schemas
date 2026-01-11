@@ -366,10 +366,10 @@ view: forecast_data {
   measure: final_database_last_update_opportunitylineitem {
     type: string
     sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp_opportunitylineitem}), 'YYYY-MM-DD HH24:MI:SS') ;;
-    label: "SF Opportunity DB update date"
+    label: "Opportunity Line Item DB update date"
     html:
     <div style="font-family: Arial, sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
-      <span style="font-weight: normal; word-spacing: 4px;">SF Opportunity DB update date (UTC)</span><br>
+      <span style="font-weight: normal; word-spacing: 4px;">Opportunity Line Item DB update date (UTC)</span><br>
       <span style="word-spacing: 15px;">{{ rendered_value }}</span>
     </div> ;;}
 

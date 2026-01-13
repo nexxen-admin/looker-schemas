@@ -483,7 +483,7 @@ explore: fact_nexxen_dsp  {
     sql_on: ${dim_sfdb_opportunitylineitem.io_currency__c} = ${opportunity_exchange_rate.to_currency_iso}
         AND ${fact_nexxen_dsp.date_key_in_timezone_raw} = ${opportunity_exchange_rate.date_key_raw}
         AND ${opportunity_exchange_rate.to_currency_iso} = 'USD' ;;
-    fields: [exchange_rate]
+    fields: [exchange_rate, to_currency_iso, from_currency_iso]
   }
 
 

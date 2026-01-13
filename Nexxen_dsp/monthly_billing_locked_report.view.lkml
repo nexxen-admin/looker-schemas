@@ -11,6 +11,14 @@ view: monthly_billing_locked_report {
     # A dimension is a groupable field that can be used to filter query results.
     # This dimension will be called "Account ID" in Explore.
 
+  dimension: pk {
+    primary_key: yes
+    hidden: yes
+    type: string
+    # using _month ensures it's a string, avoiding type errors in Vertica
+    sql: ${case_safe_opp_line_item_id} || '-' || ${date_key_month} ;;
+  }
+
   dimension: account_id {
     type: string
     sql: ${TABLE}.account_id ;;
@@ -207,6 +215,20 @@ view: monthly_billing_locked_report {
     type: number
     sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
     value_format: "#,##0.00"
+  }
+
+  measure: final_billable_revenue_after_adj_measure {
+    type: sum
+    label: "Final Billable Revenue (Locked)"
+    description: "Billable Revenue after Adjustments in Opp Currency (Locked by Finance)"
+    sql: ${TABLE}.final_billable_revenue_after_adj ;;
+  }
+
+  measure: final_billable_revenue_after_adj_usd_measure {
+    type: sum
+    label: "Final Billable Revenue USD (Locked)"
+    description: "Billable Revenue after Adjustments in USD  (Locked by Finance)"
+    sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
   }
 
   dimension: final_billable_units_after_adj {

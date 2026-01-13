@@ -1,4 +1,4 @@
-connection: "vertica_dm3"
+connection: "vertica_dm3_staging"
 
 include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
 include: "/**/*.view.lkml"
@@ -12,81 +12,20 @@ datagroup: CleanCash_datagroup {
   description: "Triggered when new date is added to ETL"
 }
 
-access_grant: can_view_pub_come_looker {
-  user_attribute: admins
-  allowed_values: ["Looker_Admins"]
+explore: billing_international_media_io_stg {
+  label: "Billing International - STAGING"
+  hidden: yes
 }
 
-access_grant: billing_report_group {
-  user_attribute: billing_group
-  allowed_values: ["yes"]
-}
-
-
-access_grant: can_view_all_tremor {
-  user_attribute: all_tremor
-  allowed_values: ["all_tremor"]
-}
-
-explore: billing_temp_nov {
-  #required_access_grants: [billing_report_group]
-  label: "Billing US Final"
-  # hidden: yes
-}
-
-explore: monthly_billing_override_data {
-  required_access_grants: [billing_report_group]
-  label: "Monthly Billing Override Data"
-  # hidden: yes
-}
-explore: v_monthly_dato_billing_report_diff{
-  label: "Datorama Looker Diff"
-}
-
-explore: v_monthly_billing_report_diff_live_locked {
-  label: "Diff Report"
-}
-
-explore: v_monthly_dato_billing_report_diff_on_locked {
-  label: "Billing Diff Report Locked"
-}
-
-explore: monthly_billing_locked_report{
-  label: "Locked Report"
-}
 explore:  monthly_international_billing_locked_report {
-  label: "International Locked Report"
-}
-
-#explore: v_monthly_billing_report_diff_live_locked {
-# required_access_grants: [billing_report_group]
-#  label: "Monthly Billing Report Diff Live Locked"
-#  # hidden: yes
-#}
-
-#explore: monthly_billing_locked_report {
-#  required_access_grants: [billing_report_group]
-#  label: "Monthly billing locked report"
-# hidden: yes
-#}
-
-
-
-explore: fact_reach_frequency {
-  required_access_grants: [can_view_all_tremor]
-  view_name: fact_reach_frequency
-  label: "Nexxen dsp - Reach"
-  persist_with: CleanCash_datagroup
-  view_label: "Measures"
+  label: "International Locked Report - STAGING"
   hidden: yes
 }
 
 explore: fact_nexxen_dsp  {
-  required_access_grants: [can_view_all_tremor]
-  view_name: fact_nexxen_dsp
   persist_with: CleanCash_datagroup
-  label: "Nexxen dsp"
-  view_label: "Measures"
+  label: "Nexxen dsp - STAGING"
+  hidden: yes
 
   join: dim_dsp_format {
     type: left_outer
@@ -120,7 +59,7 @@ explore: fact_nexxen_dsp  {
     type: left_outer
     view_label: "Inventory Source"
     relationship: many_to_one
-    sql_on: ${fact_nexxen_dsp.inventory_source_key}=${dim_dsp_inventory_source.inventory_source_key} ;;
+    sql_on: ${fact_nexxen_dsp.inventory_source_key}=${dim_dsp_inventory_source.inventory_source_key};;
   }
 
   join: dim_dsp_monthly_manual_adjustment {
@@ -145,25 +84,21 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
-
   join: v_dim_dsp_date {
     type: inner
     view_label: "Time Frame"
     sql_on: ${v_dim_dsp_date.date_key_raw} = ${fact_nexxen_dsp.date_key_in_timezone_raw} ;;
     relationship: many_to_one
-
   }
+
   join: dim_sfdb_legal_entity {
     type: inner
     view_label: "Legal Entity"
     sql_on: ${dim_sfdb_legal_entity.id} = ${dim_sfdb_account.legal_entity__c} ;;
     relationship: many_to_one
-
   }
 
-
   join: dim_dsp_advertiser {
-
     type: inner
     view_label: "Advertiser"
     sql_on: ${dim_dsp_advertiser.advertiser_id_key} = ${fact_nexxen_dsp.advertiser_id_key} ;;
@@ -177,7 +112,6 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
-
   join: dim_dsp_package_budget_schedule {
     type: inner
     view_label: "DSP Flight & Package"
@@ -190,15 +124,13 @@ explore: fact_nexxen_dsp  {
     view_label: "Salesforce Account"
     sql_on: ${dim_sfdb_account.account_id_key} = ${fact_nexxen_dsp.account_id_key};;
     relationship: many_to_one
-
   }
-  join: dim_sfdb_po__c {
 
+  join: dim_sfdb_po__c {
     type: left_outer
     view_label: "Salesforce Purchase Order"
     sql_on: ${dim_sfdb_po__c.account_aid__c} = ${dim_sfdb_account.id} ;;
     relationship: many_to_one
-
   }
 
   join: dim_sfdb_opportunity {
@@ -208,45 +140,32 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
-  # join: v_dim_sfdb_opportunitylineitemschedule_looker {
-  #   type: inner
-  #   view_label: "Salesforce Opportunity Line Item Flight"
-  #   sql_on: ${v_dim_sfdb_opportunitylineitemschedule_looker.opportunitylineitem_key} = ${fact_nexxen_dsp.opportunitylineitem_key}
-  #   and ${fact_nexxen_dsp.date_key_in_timezone_raw}>= ${v_dim_sfdb_opportunitylineitemschedule_looker.scheduledate_raw} and
-  #   ${fact_nexxen_dsp.date_key_in_timezone_raw} <= ${v_dim_sfdb_opportunitylineitemschedule_looker.end_date__c_raw};;
-  #   relationship: many_to_one
-
-  # }
-
   join: dim_sfdb_opportunitylineitemschedule {
     type: inner
     view_label: "Salesforce Opportunity Line Item Flight"
     sql_on: ${dim_sfdb_opportunitylineitemschedule.opportunitylineitemschedule_key}=${fact_nexxen_dsp.opportunitylineitemschedule_key} ;;
     relationship: many_to_one
   }
+
   join:  dim_sfdb_opportunitylineitem {
     type: inner
     view_label: "Salesforce Opportunity Line Item"
     sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
     relationship: many_to_one
-
-
   }
 
   join: ncd_pacing {
     type: inner
     view_label: "Salesforce Opportunity Line Item"
-    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${v_dim_dsp_date.date_key_date};;
+    sql_on: ${ncd_pacing.opportunitylineitem_key}=${dim_sfdb_opportunitylineitem.opportunitylineitem_key} AND ${ncd_pacing.date_key_in_timezone_date}=${fact_nexxen_dsp.date_key_in_timezone_raw};;
     relationship: many_to_one
   }
 
   join: dim_sfdb_user {
-
     type: inner
     view_label: "Employee"
     sql_on: ${dim_sfdb_user.user_key_id}=${fact_nexxen_dsp.user_key_id};;
     relationship: many_to_one
-
   }
 
   join: datorama_dsp_third_party {
@@ -312,13 +231,4 @@ explore: fact_nexxen_dsp  {
     sql_on: ${fact_nexxen_dsp.opportunity_id_key}=${dim_sfdb_account_opportunity_billling_account_name.opportunity_id_key} ;;
     relationship: many_to_one
   }
-
-
-
-  # join: advertisers_email {
-  #   type: inner
-  #   sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;
-  #   relationship: many_to_one
-  # }
-
 }

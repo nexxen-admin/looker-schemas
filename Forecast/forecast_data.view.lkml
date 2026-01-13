@@ -342,6 +342,37 @@ view: forecast_data {
             END;;
   }
 
+  dimension_group: opportunitylineitem_db_update_date {
+    type: time
+    timeframes: [raw, time, date, week, month, quarter, year]
+    sql: ${TABLE}.opportunitylineitem_db_update_date ;;
+  }
+
+# Convert the full timestamp to a sortable number (Unix seconds)
+  dimension: db_updated_number_opportunitylineitem {
+    type: number
+    sql: EXTRACT(EPOCH FROM ${opportunitylineitem_db_update_date_raw}) ;;
+    label: "DB Updated Unix Time"
+    hidden: yes
+  }
+
+  measure: max_database_update_timestamp_opportunitylineitem {
+    type: max
+    sql: ${db_updated_number_opportunitylineitem} ;;
+    label: "Max DB Update"
+    hidden: yes
+  }
+
+  measure: final_database_last_update_opportunitylineitem {
+    type: string
+    sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp_opportunitylineitem}), 'YYYY-MM-DD HH24:MI:SS') ;;
+    label: "Opportunity Line Item DB update date"
+    html:
+    <div style="font-family: Arial, sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
+      <span style="font-weight: normal; word-spacing: 4px;">Opportunity Line Item DB update date (UTC)</span><br>
+      <span style="word-spacing: 15px;">{{ rendered_value }}</span>
+    </div> ;;}
+
   # dimension: full_pipeline {
   #   value_format: "$#,##0"
   #   type: number

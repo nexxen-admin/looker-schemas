@@ -14,4 +14,11 @@ access_grant: can_view_all_tremor {
 
 explore: amobee_media_daily_mtz_view {
   required_access_grants: [can_view_all_tremor]
+
+  join: sunflower_dim_deal {
+    type: left_outer
+    sql_on: ${amobee_media_daily_mtz_view.deal_id} = ${sunflower_dim_deal.deal_id} ;;
+    relationship: many_to_one
+  }
+
 }

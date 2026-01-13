@@ -295,11 +295,43 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+
+  # join: media_io_billing_us {
+  #   type: left_outer
+  #   view_label: "Media IO Billing US"
+  #   sql_on: ${media_io_billing_us.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+  #   AND ${fact_nexxen_dsp.date_key_in_timezone_month} = ${media_io_billing_us.date_key_month};;
+  #   relationship: many_to_one
+  #   fields: [media_io_billing_us.final_billable_revenue_after_adj
+  #             , media_io_billing_us.final_billable_revenue_after_adj_usd
+  #               ]
+  # }
+
+
+  # join: media_io_billing_us {
+  #   type: left_outer
+  #   view_label: "Media IO Billing US"
+  #   relationship: many_to_one
+  #   sql_on: ${media_io_billing_us.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+  #     AND ${media_io_billing_us.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
+  # }
+
+
+  join: monthly_billing_locked_report {
+    type: left_outer
+    view_label: "Locked Report"
+    relationship: many_to_one
+    sql_on: ${monthly_billing_locked_report.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+      AND ${monthly_billing_locked_report.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
+      fields: [monthly_billing_locked_report.final_billable_revenue_after_adj_measure, monthly_billing_locked_report.final_billable_revenue_after_adj_usd_measure]
+  }
+
   join: dim_dsp_monthly_manual_adjustment {
     type:left_outer
     view_label: "Manual Billing ADJ"
     sql_on: ${dim_dsp_monthly_manual_adjustment.manual_adjustment_key} = ${fact_nexxen_dsp.manual_adjustment_key};;
     relationship: many_to_one
+
   }
 ####---old---###
   # join: dim_dsp_netsuite_invoice{
@@ -439,9 +471,17 @@ explore: fact_nexxen_dsp  {
     view_label: "Salesforce Opportunity Line Item"
     sql_on: ${dim_sfdb_opportunitylineitem.opportunitylineitem_key} =${fact_nexxen_dsp.opportunitylineitem_key} ;;
     relationship: many_to_one
-
-
   }
+
+  # join: opportunity_exchange_rate {
+  #   from: v_dim_netsuite_daily_exchange_rate_usd_currency
+  #   view_label: "Opportunity Currency Conversion"
+  #   type: inner
+  #   relationship: many_to_one
+  #   sql_on: ${dim_sfdb_opportunitylineitem.io_currency__c} = ${opportunity_exchange_rate.to_currency_iso}
+  #       AND ${fact_nexxen_dsp.date_key_in_timezone_raw} = ${opportunity_exchange_rate.date_key_raw}
+  #       AND ${opportunity_exchange_rate.to_currency_iso} = 'USD' ;;
+  # }
 
 
   # join: dim_sfdb_user {

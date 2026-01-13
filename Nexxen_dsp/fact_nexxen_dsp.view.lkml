@@ -667,29 +667,30 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "#,##0.00"
   }
 
+  # measure: capped_revenue_usd {
+  #   label: "Capped Revenue USD"
+  #   type: sum
+  #   # Use raw SQL alias "opportunity_exchange_rate".
+  #   # Do NOT use ${opportunity_exchange_rate.exchange_rate} syntax.
+  #   sql: ${TABLE}.capped_revenue * opportunity_exchange_rate.exchange_rate ;;
+  #   value_format: "#,##0.00"
+  # }
+
   measure: capped_revenue_usd {
     label: "Capped Revenue USD"
     type: sum
-    # Use raw SQL alias "opportunity_exchange_rate".
-    # Do NOT use ${opportunity_exchange_rate.exchange_rate} syntax.
-    sql: ${TABLE}.capped_revenue * opportunity_exchange_rate.exchange_rate ;;
+    sql:
+      CASE
+        -- Optimization: If it's already USD, rate is 1.0
+        WHEN ${dim_sfdb_opportunitylineitem.io_currency__c} = 'USD' THEN ${TABLE}.capped_revenue
+        -- Use the rate if found
+        WHEN opportunity_exchange_rate.exchange_rate IS NOT NULL THEN ${TABLE}.capped_revenue * opportunity_exchange_rate.exchange_rate
+        -- Fallback for missing rates (optional: keeps original value or 0)
+        ELSE ${TABLE}.capped_revenue
+      END ;;
     value_format: "#,##0.00"
   }
 
-  # measure: capped_revenue {
-  #   type: number
-  #   sql:
-  #   CASE
-  #     WHEN
-  #       ${dim_sfdb_opportunitylineitem.total_booked_budget_meas} - ${dim_dsp_netsuite_invoice.passed_bill_amount_measure}
-  #       < SUM(${TABLE}.uncapped_revenue)
-  #     THEN
-  #       ${dim_sfdb_opportunitylineitem.total_booked_budget_meas} - ${dim_dsp_netsuite_invoice.passed_bill_amount_measure}
-  #     ELSE SUM(${TABLE}.uncapped_revenue)
-  #   END
-  # ;;
-  #   value_format: "#,##0.00"
-  # }
 
   measure: yesterday_capped_revenue {
     type: sum

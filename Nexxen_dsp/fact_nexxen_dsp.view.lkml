@@ -667,6 +667,14 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "#,##0.00"
   }
 
+  measure: capped_revenue_usd {
+    label: "Capped Revenue USD"
+    type: sum
+    # Use raw SQL alias "opportunity_exchange_rate".
+    # Do NOT use ${opportunity_exchange_rate.exchange_rate} syntax.
+    sql: ${TABLE}.capped_revenue * opportunity_exchange_rate.exchange_rate ;;
+    value_format: "#,##0.00"
+  }
 
   # measure: capped_revenue {
   #   type: number

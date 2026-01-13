@@ -473,15 +473,18 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
-  # join: opportunity_exchange_rate {
-  #   from: v_dim_netsuite_daily_exchange_rate_usd_currency
-  #   view_label: "Opportunity Currency Conversion"
-  #   type: inner
-  #   relationship: many_to_one
-  #   sql_on: ${dim_sfdb_opportunitylineitem.io_currency__c} = ${opportunity_exchange_rate.to_currency_iso}
-  #       AND ${fact_nexxen_dsp.date_key_in_timezone_raw} = ${opportunity_exchange_rate.date_key_raw}
-  #       AND ${opportunity_exchange_rate.to_currency_iso} = 'USD' ;;
-  # }
+
+  always_join: [opportunity_exchange_rate]
+  join: opportunity_exchange_rate {
+    from: v_dim_netsuite_daily_exchange_rate_usd_currency
+    view_label: "Opportunity Currency Conversion"
+    type: inner
+    relationship: many_to_one
+    sql_on: ${dim_sfdb_opportunitylineitem.io_currency__c} = ${opportunity_exchange_rate.to_currency_iso}
+        AND ${fact_nexxen_dsp.date_key_in_timezone_raw} = ${opportunity_exchange_rate.date_key_raw}
+        AND ${opportunity_exchange_rate.to_currency_iso} = 'USD' ;;
+    fields: [exchange_rate]
+  }
 
 
   # join: dim_sfdb_user {

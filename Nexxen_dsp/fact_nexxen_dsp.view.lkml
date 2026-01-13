@@ -1580,7 +1580,7 @@ measure: Nexxen_Inv_Cost_Percent {
       END * 100
 
       -- eCPA Logic (Note: No *100)
-      WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('e ‘A', 'Cost Per Visit') THEN
+      WHEN ${dim_sfdb_opportunitylineitem.primary_kpi__c} IN ('eCPA', 'Cost Per Visit') THEN
       CASE
       WHEN ${dim_sfdb_opportunitylineitem.reporting__c} IN ('Amobee', 'Nexxen') THEN ${eCPA_1P}
       -- Added Fallback for eCPA

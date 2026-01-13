@@ -2184,22 +2184,39 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.schain_complete;;
   }
 
-  dimension: supply_chain{
+  # dimension: supply_chain{
+  #   type: string
+  #   label: "Supply Chain"
+  #   view_label: "Request Attributes"
+  #   # description: "Schain complete - 'true' = complete chain, 'false' = incomplete, 'null' = not provided"
+  #   sql:      CASE
+  #               WHEN  ${TABLE}.schain_complete = true
+  #               THEN'Complete'
+  #               WHEN  ${TABLE}.schain_complete = false
+  #               THEN 'Incomplete'
+  #               WHEN  ${TABLE}.schain_complete = null
+  #               THEN 'not provided'
+  #               ELSE ''
+  #               END
+  #         ;;
+  # }
+
+  dimension: supply_chain {
     type: string
     label: "Supply Chain"
     view_label: "Request Attributes"
-    # description: "Schain complete - 'true' = complete chain, 'false' = incomplete, 'null' = not provided"
-    sql:      CASE
-                WHEN  ${TABLE}.schain_complete = true
-                THEN 'Complete'
-                WHEN  ${TABLE}.schain_complete = false
-                THEN 'Incomplete'
-                WHEN  ${TABLE}.schain_complete = null
-                THEN 'not provided'
-                ELSE ''
-                END
-           ;;
+    sql: CASE
+           WHEN ${TABLE}.schain_complete = true
+             OR (${dim_publisher_traffic_source.seller_type} = 'publisher' AND ${TABLE}.schain_node_count = 0)
+             THEN 'Complete'
+           WHEN ${TABLE}.schain_complete = false
+             THEN 'Incomplete'
+           WHEN ${TABLE}.schain_complete IS NULL
+             THEN 'not provided'
+           ELSE ''
+         END ;;
   }
+
 
   filter: current_date_range {
     type: date

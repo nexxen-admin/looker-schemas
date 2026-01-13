@@ -331,7 +331,7 @@ explore: investor_kpi{
 explore: investor_kpi_new{
   label: "Investor KPI (New)"
   required_access_grants: [can_view_all_tremor]
-  hidden: yes
+  hidden: no
 }
 
 explore: pubs_and_advertisers{

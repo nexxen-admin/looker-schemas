@@ -87,7 +87,7 @@ view: drr_dq {
                  , Cost_New
              from combined
              where (Revenue_New <> Revenue_Legacy or Cost_New <> Cost_Legacy)
-                and  Event_Date=(CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
+                and  Event_Date=(CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
              --order by cr.Event_Date, cr.File_record , cr.Region , cr.Category, cr.Subcategory
              UNION
              select 'DAILY' as Metric_Type
@@ -103,7 +103,7 @@ view: drr_dq {
                  , sum(Cost_Legacy) as Cost_Legacy
                  , sum(Cost_New) as Cost_New
              from combined
-             where Event_Date=(CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
+             where Event_Date=(CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
              group by Event_Date
                  , Region
                  , Category
@@ -123,7 +123,7 @@ view: drr_dq {
                  , sum(Cost_Legacy) as Cost_Legacy
                  , sum(Cost_New) as Cost_New
              from combined
-             where Event_Date >= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE - INTERVAL '6 DAYS' AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
+             where Event_Date >= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE - INTERVAL '6 DAYS' AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
              group by Event_Date
                  , Region
                  , Category
@@ -143,7 +143,7 @@ view: drr_dq {
                  , sum(Cost_Legacy) as Cost_Legacy
                  , sum(Cost_New) as Cost_New
              from combined
-             where Event_Date >= DATE_TRUNC('month', (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE)::date AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
+             where Event_Date >= DATE_TRUNC('month', (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE)::date AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
              group by Event_Date
                  , Region
                  , Category
@@ -163,7 +163,7 @@ view: drr_dq {
                  , sum(Cost_Legacy) as Cost_Legacy
                  , sum(Cost_New) as Cost_New
              from combined
-             where Event_Date >= DATE_TRUNC('quarter', (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE)::date AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
+             where Event_Date >= DATE_TRUNC('quarter', (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE)::date AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
              group by Event_Date
                  , Region
                  , Category
@@ -183,7 +183,7 @@ view: drr_dq {
                  , sum(Cost_Legacy) as Cost_Legacy
                  , sum(Cost_New) as Cost_New
              from combined
-             where Event_Date >= DATE_TRUNC('year', (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '2 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE)::date AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
+             where Event_Date >= DATE_TRUNC('year', (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE)::date AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
              group by Event_Date
                  , Region
                  , Category

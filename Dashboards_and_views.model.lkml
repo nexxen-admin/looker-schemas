@@ -334,6 +334,12 @@ explore: investor_kpi_new{
   hidden: no
 }
 
+explore: investor_kpi_dq{
+  label: "Investor KPI DQ"
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
+
 explore: pubs_and_advertisers{
   label: "Pubs and Advertisers"
   required_access_grants: [can_view_all_tremor]

@@ -473,6 +473,8 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+
+  # always_join: [opportunity_exchange_rate]
   # join: opportunity_exchange_rate {
   #   from: v_dim_netsuite_daily_exchange_rate_usd_currency
   #   view_label: "Opportunity Currency Conversion"
@@ -481,8 +483,24 @@ explore: fact_nexxen_dsp  {
   #   sql_on: ${dim_sfdb_opportunitylineitem.io_currency__c} = ${opportunity_exchange_rate.to_currency_iso}
   #       AND ${fact_nexxen_dsp.date_key_in_timezone_raw} = ${opportunity_exchange_rate.date_key_raw}
   #       AND ${opportunity_exchange_rate.to_currency_iso} = 'USD' ;;
+  #   fields: [exchange_rate, to_currency_iso, from_currency_iso]
   # }
 
+  always_join: [opportunity_exchange_rate]
+  join: opportunity_exchange_rate {
+    from: v_dim_netsuite_daily_exchange_rate_usd_currency
+    view_label: "Opportunity Currency Conversion"
+    # CHANGE 1: Use Left Outer to prevent data loss for USD rows
+    type: left_outer
+    relationship: many_to_one
+
+    # CHANGE 2: Fix the currency mapping (Source -> From, Target -> To)
+    sql_on: ${dim_sfdb_opportunitylineitem.io_currency__c} = ${opportunity_exchange_rate.from_currency_iso}
+        AND ${fact_nexxen_dsp.date_key_in_timezone_raw} = ${opportunity_exchange_rate.date_key_raw}
+        AND ${opportunity_exchange_rate.to_currency_iso} = 'USD' ;;
+
+      fields: [exchange_rate, to_currency_iso, from_currency_iso]
+    }
 
   # join: dim_sfdb_user {
   #   type: inner

@@ -41,10 +41,10 @@ view: v_dim_netsuite_daily_exchange_rate_usd_currency {
     sql: ${TABLE}.exchange_rate ;;
   }
 
-  dimension: exchange_rate_to_usd_currency_key {
-    type: number
-    sql: ${TABLE}.exchange_rate_to_usd_currency_key ;;
-  }
+  # dimension: exchange_rate_to_usd_currency_key {
+  #   type: number
+  #   sql: ${TABLE}.exchange_rate_to_usd_currency_key ;;
+  # }
 
 
 

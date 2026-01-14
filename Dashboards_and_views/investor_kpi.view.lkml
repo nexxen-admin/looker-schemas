@@ -64,7 +64,7 @@ view: investor_kpi {
 
   dimension: imp_type {
     type: string
-    sql: ${TABLE}.Imp_Type ;;
+    sql: case when ${TABLE}.Imp_Type in ('video', 'Video') then 'Video' else ${TABLE}.Imp_Type end ;;
   }
 
   measure: impressions {

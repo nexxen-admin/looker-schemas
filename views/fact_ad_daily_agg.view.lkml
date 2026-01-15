@@ -3479,39 +3479,88 @@ hidden: yes
 
   measure: barter_fee {
     type: sum
-    sql: (
-      (
-        COALESCE(${TABLE}.sum_of_revenue / (1 + CASE
-            WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
-              CASE
-                WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
-                  CASE
-                    WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
-                    WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
-                    WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
-                    ELSE 0
-                  END
-                WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
-                  CASE
-                    WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.008615
-                    WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.034746
-                    WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.034567
-                    ELSE 0
-                  END
-                ELSE 0
-              END
-            ELSE 0
-          END
-        ), 0)
-        - COALESCE(
-            CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
-            0
+    sql:
+      CASE
+        -- NEW LOGIC: Date >= 2026-01-01
+        -- rebate_percent now holds the ACTUAL AMOUNT (e.g., 50.00)
+        -- So we just take that value directly. We DO NOT multiply by Revenue.
+        WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01' THEN ${rebate_percent}
+
+        -- OLD LOGIC: Date < 2026-01-01
+        -- rebate_percent holds a PERCENTAGE (e.g., 0.02)
+        -- We multiply Revenue * Percentage
+        ELSE
+          (
+            (
+              COALESCE(${TABLE}.sum_of_revenue / (1 + CASE
+                  WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
+                    CASE
+                      WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
+                        CASE
+                          WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
+                          WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
+                          WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
+                          ELSE 0
+                        END
+                      WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
+                        CASE
+                          WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.008615
+                          WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.034746
+                          WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.034567
+                          ELSE 0
+                        END
+                      ELSE 0
+                    END
+                  ELSE 0
+                END
+              ), 0)
+              - COALESCE(
+                  CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
+                  0
+                )
+            ) * ${rebate_percent}
           )
-      ) * ${rebate_percent} * 1
-    ) ;;
+      END ;;
     value_format: "$#,##0.00"
-    description: "Barter rebate calculated by applying rebate % to net revenue (gross - data fee), A monetary incentive or discount to an agency or buyer in exchange for meeting specified spending thresholds or for directing a set volume of ad spend to their platform."
+    description: "Barter rebate. Uses direct fact fee for 2026+, calculated % for prior dates."
   }
+
+
+  # measure: barter_fee {
+  #   type: sum
+  #   sql: (
+  #     (
+  #       COALESCE(${TABLE}.sum_of_revenue / (1 + CASE
+  #           WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
+  #             CASE
+  #               WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
+  #                 CASE
+  #                   WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
+  #                   WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
+  #                   WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
+  #                   ELSE 0
+  #                 END
+  #               WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
+  #                 CASE
+  #                   WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.008615
+  #                   WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.034746
+  #                   WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.034567
+  #                   ELSE 0
+  #                 END
+  #               ELSE 0
+  #             END
+  #           ELSE 0
+  #         END
+  #       ), 0)
+  #       - COALESCE(
+  #           CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
+  #           0
+  #         )
+  #     ) * ${rebate_percent} * 1
+  #   ) ;;
+  #   value_format: "$#,##0.00"
+  #   description: "Barter rebate calculated by applying rebate % to net revenue (gross - data fee), A monetary incentive or discount to an agency or buyer in exchange for meeting specified spending thresholds or for directing a set volume of ad spend to their platform."
+  # }
 
 
 

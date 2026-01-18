@@ -678,6 +678,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: capped_revenue_usd {
     label: "Capped Revenue USD"
+    description: "Capped Revenue in USD ( USD daily FX rate)"
     type: sum
     sql:
       CASE

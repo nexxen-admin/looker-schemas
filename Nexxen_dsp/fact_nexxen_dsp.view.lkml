@@ -682,11 +682,8 @@ measure: Nexxen_Inv_Cost_Percent {
     type: sum
     sql:
       CASE
-        -- Optimization: If it's already USD, rate is 1.0
         WHEN ${dim_sfdb_opportunitylineitem.io_currency__c} = 'USD' THEN ${TABLE}.capped_revenue
-        -- Use the rate if found
         WHEN opportunity_exchange_rate.exchange_rate IS NOT NULL THEN ${TABLE}.capped_revenue * opportunity_exchange_rate.exchange_rate
-        -- Fallback for missing rates (optional: keeps original value or 0)
         ELSE ${TABLE}.capped_revenue
       END ;;
     value_format: "#,##0.00"

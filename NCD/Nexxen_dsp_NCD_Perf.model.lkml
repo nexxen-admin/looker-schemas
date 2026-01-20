@@ -1,4 +1,4 @@
-connection: "ncd_vertica"
+connection: "ncd_vertica_dm3"
 
 include: "/**/*.view.lkml"
 include: "/**/*.dashboard.lookml"

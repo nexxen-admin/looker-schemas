@@ -39,6 +39,21 @@ view: forecast_data {
     type: string
     sql: ${TABLE}.new_enterprise_team ;;
   }
+
+  dimension: enterprise_org_classification {
+    type: string
+    label: "Enterprise Org Classification"
+    # description:
+    sql: CASE
+           WHEN ${account_name} ILIKE '%Rescue Agency%'
+             OR ${account_name} ILIKE '%301 Digital Media%'
+             OR ${account_name} ILIKE '%Klick Health (CAN)%'
+             OR ${account_name} ILIKE '%Guru%'
+             THEN 'Strat Sales Accounts'
+           ELSE ${new_enterprise_team}
+         END ;;
+  }
+
   dimension_group: opportunity_end {
     type: time
     timeframes: [raw, date, week, month, quarter, year]

@@ -137,6 +137,21 @@ view: fact_target_forecast_enterprise_summary {
     sql: COALESCE(${forecast_dim_sfdb_user.new_enterprise_team}, ${TABLE}.new_enterprise_team) ;;
   }
 
+  dimension: enterprise_org_classification {
+    type: string
+    label: "Enterprise Org Classification"
+    # description:
+    sql: CASE
+           WHEN ${account_name} ILIKE '%Rescue Agency%'
+             OR ${account_name} ILIKE '%301 Digital Media%'
+             OR ${account_name} ILIKE '%Klick Health (CAN)%'
+             OR ${account_name} ILIKE '%Guru%'
+             THEN 'Strat Sales Accounts'
+           ELSE ${new_enterprise_team}
+         END ;;
+  }
+
+
   dimension: Strat_Sales_RVP {
     type: string
     sql: ${TABLE}.Strat_Sales_RVP ;;

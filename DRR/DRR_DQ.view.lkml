@@ -5,18 +5,12 @@ view: drr_dq {
                 , Region
                 , Category
                 , Subcategory
-                --, Media_type
                 , Device_Type
-                --, Impression_Type
                 , Record_Type
                 , File_record
-                --, round(Revenue)::int as Revenue_New
-                --, round(Cost)::int as Cost_New
                 , sum(Revenue)::int as Revenue_New
                 , sum(Cost)::int as Cost_New
             from BI.DRR_Daily_Revenue_Report
-            --where  Event_Date>=(TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'Y') - INTERVAL '90 DAY')
-              --Event_Date between '2025-12-14' and '2025-12-15'
             group by Event_Date
                 , Region
                 , Category
@@ -30,18 +24,12 @@ view: drr_dq {
                 , Region
                 , Category
                 , Subcategory
-                --, Media_type
                 , Device_Type
-                --, Impression_Type
                 , Record_Type
                 , File_record
-          --      , round(Revenue)::int as Revenue_Legacy
-          --      , round(Cost)::int as Cost_Legacy
                 , sum(Revenue)::int as Revenue_Legacy
                 , sum(Cost)::int as Cost_Legacy
             from BI.SVC_DRR_Daily_Revenue_Report
-            --where Event_Date>=(TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'Y') - INTERVAL '90 DAY')
-              --Event_Date between '2025-12-14' and '2025-12-15'
             group by Event_Date
               , Region
               , Category
@@ -67,11 +55,25 @@ view: drr_dq {
                                and nr.Region = cr.Region
                                and nr.Category = cr.Category
                                and nr.Subcategory = cr.Subcategory
-                               --and nr.Media_type = cr.Media_type
-                            and nr.Device_Type = cr.Device_Type
-                            --and nr.Impression_Type = cr.Impression_Type
+                               and nr.Device_Type = cr.Device_Type
                                and nr.Record_Type = cr.Record_Type
                                and nr.File_record = cr.File_record
+          )
+          , new_report_totals as (
+            select Event_Date
+                  , sum(Revenue_New) as Revenue_New_Total
+                  , sum(Cost_New) as Cost_New_Total
+            from new_rpt
+            where Event_Date >= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE - INTERVAL '6 DAYS' AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
+            group by Event_Date
+          )
+          , current_report_totals as (
+            select Event_Date
+                  , sum(Revenue_Legacy) as Revenue_Legacy_Total
+                  , sum(Cost_Legacy) as Cost_Legacy_Total
+            from current_rpt
+            where Event_Date >= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE - INTERVAL '6 DAYS' AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
+            group by Event_Date
           )
              select 'NOT EQUAL' as Metric_Type
                  , Event_Date
@@ -85,10 +87,13 @@ view: drr_dq {
                  , Revenue_New
                  , Cost_Legacy
                  , Cost_New
+                 , 0 as Revenue_New_Total
+                 , 0 as Cost_New_Total
+                 , 0 as Revenue_Legacy_Total
+                 , 0 as Cost_Legacy_Total
              from combined
              where (Revenue_New <> Revenue_Legacy or Cost_New <> Cost_Legacy)
                 and  Event_Date=(CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
-             --order by cr.Event_Date, cr.File_record , cr.Region , cr.Category, cr.Subcategory
              UNION
              select 'DAILY' as Metric_Type
                  , Event_Date
@@ -102,6 +107,10 @@ view: drr_dq {
                  , sum(Revenue_New) as Revenue_New
                  , sum(Cost_Legacy) as Cost_Legacy
                  , sum(Cost_New) as Cost_New
+                 , 0 as Revenue_New_Total
+                 , 0 as Cost_New_Total
+                 , 0 as Revenue_Legacy_Total
+                 , 0 as Cost_Legacy_Total
              from combined
              where Event_Date=(CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE
              group by Event_Date
@@ -109,6 +118,10 @@ view: drr_dq {
                  , Category
                  , Subcategory
                  , Device_Type
+                 , Revenue_New_Total
+                 , Cost_New_Total
+                 , Revenue_Legacy_Total
+                 , Cost_Legacy_Total
              UNION
              select 'WEEK' as Metric_Type
                  , Event_Date
@@ -122,6 +135,10 @@ view: drr_dq {
                  , sum(Revenue_New) as Revenue_New
                  , sum(Cost_Legacy) as Cost_Legacy
                  , sum(Cost_New) as Cost_New
+                 , 0 as Revenue_New_Total
+                 , 0 as Cost_New_Total
+                 , 0 as Revenue_Legacy_Total
+                 , 0 as Cost_Legacy_Total
              from combined
              where Event_Date >= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE - INTERVAL '6 DAYS' AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
              group by Event_Date
@@ -129,6 +146,10 @@ view: drr_dq {
                  , Category
                  , Subcategory
                  , Device_Type
+                 , Revenue_New_Total
+                 , Cost_New_Total
+                 , Revenue_Legacy_Total
+                 , Cost_Legacy_Total
             UNION
              select 'MTD' as Metric_Type
                  , Event_Date
@@ -142,6 +163,10 @@ view: drr_dq {
                  , sum(Revenue_New) as Revenue_New
                  , sum(Cost_Legacy) as Cost_Legacy
                  , sum(Cost_New) as Cost_New
+                 , 0 as Revenue_New_Total
+                 , 0 as Cost_New_Total
+                 , 0 as Revenue_Legacy_Total
+                 , 0 as Cost_Legacy_Total
              from combined
              where Event_Date >= DATE_TRUNC('month', (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE)::date AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
              group by Event_Date
@@ -149,6 +174,10 @@ view: drr_dq {
                  , Category
                  , Subcategory
                  , Device_Type
+                 , Revenue_New_Total
+                 , Cost_New_Total
+                 , Revenue_Legacy_Total
+                 , Cost_Legacy_Total
             UNION
              select 'QTD' as Metric_Type
                  , Event_Date
@@ -162,6 +191,10 @@ view: drr_dq {
                  , sum(Revenue_New) as Revenue_New
                  , sum(Cost_Legacy) as Cost_Legacy
                  , sum(Cost_New) as Cost_New
+                 , 0 as Revenue_New_Total
+                 , 0 as Cost_New_Total
+                 , 0 as Revenue_Legacy_Total
+                 , 0 as Cost_Legacy_Total
              from combined
              where Event_Date >= DATE_TRUNC('quarter', (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE)::date AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
              group by Event_Date
@@ -169,6 +202,10 @@ view: drr_dq {
                  , Category
                  , Subcategory
                  , Device_Type
+                 , Revenue_New_Total
+                 , Cost_New_Total
+                 , Revenue_Legacy_Total
+                 , Cost_Legacy_Total
             UNION
              select 'YTD' as Metric_Type
                  , Event_Date
@@ -182,6 +219,10 @@ view: drr_dq {
                  , sum(Revenue_New) as Revenue_New
                  , sum(Cost_Legacy) as Cost_Legacy
                  , sum(Cost_New) as Cost_New
+                 , 0 as Revenue_New_Total
+                 , 0 as Cost_New_Total
+                 , 0 as Revenue_Legacy_Total
+                 , 0 as Cost_Legacy_Total
              from combined
              where Event_Date >= DATE_TRUNC('year', (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE)::date AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
              group by Event_Date
@@ -189,6 +230,46 @@ view: drr_dq {
                  , Category
                  , Subcategory
                  , Device_Type
+                 , Revenue_New_Total
+                 , Cost_New_Total
+                 , Revenue_Legacy_Total
+                 , Cost_Legacy_Total
+            UNION
+             select 'TOTALS' as Metric_Type
+                 , Event_Date
+                 , '' as Region
+                 , '' as Category
+                 , '' as Subcategory
+                 , '' as Device_Type
+                 , '' as Record_Type
+                 , '' as File_record
+                 , 0 as Revenue_Legacy
+                 , 0 as Revenue_New
+                 , 0 as Cost_Legacy
+                 , 0 as Cost_New
+                 , Revenue_New_Total
+                 , Cost_New_Total
+                 , 0 as Revenue_Legacy_Total
+                 , 0 as Cost_Legacy_Total
+             from new_report_totals
+            UNION
+             select 'TOTALS' as Metric_Type
+                 , Event_Date
+                 , '' as Region
+                 , '' as Category
+                 , '' as Subcategory
+                 , '' as Device_Type
+                 , '' as Record_Type
+                 , '' as File_record
+                 , 0 as Revenue_Legacy
+                 , 0 as Revenue_New
+                 , 0 as Cost_Legacy
+                 , 0 as Cost_New
+                 , 0 as Revenue_New_Total
+                 , 0 as Cost_New_Total
+                 , Revenue_Legacy_Total
+                 , Cost_Legacy_Total
+             from current_report_totals
       ;;
   }
 
@@ -270,33 +351,6 @@ view: drr_dq {
     value_format: "$#,##0;($#,##0)"
   }
 
-  # measure: Gross_Revenue_Previous_Day {
-  #   type: sum
-  #   sql: ${TABLE}.LAG_Revenue ;;
-  #   value_format: "$#,##0;($#,##0)"
-  # }
-
-  # measure: Gross_Revenue_MTD {
-  #   type: sum
-  #   sql: ${TABLE}.Revenue_MTD ;;
-  #   value_format: "$#,##0;($#,##0)"
-  #   label: "Gross Rev MTD"
-  # }
-
-  # measure: Gross_Revenue_QTD {
-  #   type: sum
-  #   sql: ${TABLE}.Revenue_QTD ;;
-  #   value_format: "$#,##0;($#,##0)"
-  #   label: "Gross Rev QTD"
-  # }
-
-  # measure: Gross_Revenue_YTD {
-  #   type: sum
-  #   sql: ${TABLE}.Revenue_YTD ;;
-  #   value_format: "$#,##0;($#,##0)"
-  #   label: "Gross Rev YTD"
-  # }
-
   measure: Cost_Daily_New {
     description: "Total Cost across category, subcategory, region"
     label: "Cost New"
@@ -312,34 +366,6 @@ view: drr_dq {
     sql: ${TABLE}.Cost_Legacy;;
     value_format: "$#,##0;($#,##0)"
   }
-
-  # measure: Cost_Previous_Day {
-  #   label: "Cost Revenue Previous Day"
-  #   type: sum
-  #   sql: ${TABLE}.LAG_Cost ;;
-  #   value_format: "$#,##0;($#,##0)"
-  # }
-
-  # measure: Cost_MTD {
-  #   type: sum
-  #   sql: ${TABLE}.Cost_MTD ;;
-  #   value_format: "$#,##0;($#,##0)"
-  #   label: "Cost MTD"
-  # }
-
-  # measure: Cost_QTD {
-  #   type: sum
-  #   sql: ${TABLE}.Cost_QTD ;;
-  #   value_format: "$#,##0;($#,##0)"
-  #   label: "Cost QTD"
-  # }
-
-  # measure: Cost_YTD {
-  #   type: sum
-  #   sql: ${TABLE}.Cost_YTD ;;
-  #   value_format: "$#,##0;($#,##0)"
-  #   label: "Cost YTD"
-  # }
 
   measure: Net_Revenue_Daily_Legacy {
     description: "Total Net_Revenue across category, subcategory, region"
@@ -357,30 +383,57 @@ view: drr_dq {
     value_format: "$#,##0;($#,##0)"
   }
 
-  # measure: Net_Revenue_Previous_Day {
-  #   type: sum
-  #   sql: ${TABLE}.LAG_Net_Revenue ;;
-  #   value_format: "$#,##0;($#,##0)"
-  # }
 
-  # measure: Net_Revenue_MTD {
-  #   type: sum
-  #   sql: ${TABLE}.Net_Revenue_MTD ;;
-  #   value_format: "$#,##0;($#,##0)"
-  #   label: "Net Rev MTD"
-  # }
 
-  # measure: Net_Revenue_QTD {
-  #   type: sum
-  #   sql: ${TABLE}.Net_Revenue_QTD ;;
-  #   value_format: "$#,##0;($#,##0)"
-  #   label: "Net Rev QTD"
-  # }
 
-  # measure: Net_Revenue_YTD {
-  #   type: sum
-  #   sql: ${TABLE}.Net_Revenue_YTD ;;
-  #   value_format: "$#,##0;($#,##0)"
-  #   label: "Net Rev YTD"
-  # }
+
+  measure: Gross_Revenue_Totals_New {
+    description: "Total Revenue across event_date"
+    label: "GR New Total"
+    type: sum
+    sql: ${TABLE}.Revenue_New_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Gross_Revenue_Totals_Legacy {
+    description: "Total Revenue across event_date"
+    label: "GR Legacy Total"
+    type: sum
+    sql: ${TABLE}.Revenue_Legacy_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Cost_Totals_New {
+    description: "Total Cost across event_date"
+    label: "Cost New Total"
+    type: sum
+    sql: ${TABLE}.Cost_New_Total;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Cost_Totals_Legacy {
+    description: "Total Cost across event_date"
+    label: "Cost Legacy Total"
+    type: sum
+    sql: ${TABLE}.Cost_Legacy_Total;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Net_Revenue_Totals_Legacy {
+    description: "Total Net_Revenue across event_date"
+    label: "NR Legacy Total"
+    type: sum
+    sql: ${TABLE}.Revenue_Legacy_Total - ${TABLE}.Cost_Legacy_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Net_Revenue_Totals_New {
+    description: "Total Net_Revenue event_date"
+    label: "NR New Total"
+    type: sum
+    sql: ${TABLE}.Revenue_New_Total - ${TABLE}.Cost_New_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+
 }

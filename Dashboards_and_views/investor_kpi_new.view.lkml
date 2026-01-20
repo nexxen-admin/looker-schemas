@@ -67,6 +67,11 @@ view: investor_kpi_new {
     sql: EXTRACT(MONTH FROM ${event_month_date}) ;;
   }
 
+  dimension: event_year_number {
+    type: number
+    sql: ${event_month_year} ;;
+  }
+
   dimension: imp_type {
     type: string
     sql: ${TABLE}.Imp_Type ;;

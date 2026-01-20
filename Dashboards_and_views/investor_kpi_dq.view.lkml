@@ -26,6 +26,24 @@ view: investor_kpi_dq {
                     , Screen_type
                     , Imp_Type
           )
+          , new_report_totals as (
+            select Event_Month
+                  , sum(Total_revenue) as Revenue_New_Total
+                  , sum(Cost) as Cost_New_Total
+                  , sum(Bid_Requests) as Bid_Requests_New_Total
+                  , sum(Impressions) as Impressions_New_Total
+            from new_report
+            group by Event_Month
+          )
+          , legacy_report_totals as (
+            select Event_Month
+                  , sum(Total_revenue) as Revenue_Legacy_Total
+                  , sum(Cost) as Cost_Legacy_Total
+                  , sum(Bid_Requests) as Bid_Requests_Legacy_Total
+                  , sum(Impressions) as Impressions_Legacy_Total
+            from legacy_report
+            group by Event_Month
+          )
           select 'Not equal values' as DQ_Type
                 , nr.Event_Month
                 , nr.Screen_type
@@ -38,6 +56,14 @@ view: investor_kpi_dq {
                 , lr.Cost as Cost_legacy
                 , lr.Bid_Requests as Bid_Requests_legacy
                 , lr.Impressions as Impressions_legacy
+                , 0 as Revenue_New_Total
+                , 0 as Cost_New_Total
+                , 0 as Bid_Requests_New_Total
+                , 0 as Impressions_New_Total
+                , 0 as Revenue_Legacy_Total
+                , 0 as Cost_Legacy_Total
+                , 0 as Bid_Requests_Legacy_Total
+                , 0 as Impressions_Legacy_Total
           from new_report nr
           join legacy_report lr on lr.Event_Month = nr.Event_Month
                                 and lr.Screen_type  = nr.Screen_type
@@ -59,6 +85,14 @@ view: investor_kpi_dq {
                 , 0 as Cost
                 , 0 as Bid_Requests
                 , 0 as Impressions
+                , 0 as Revenue_New_Total
+                , 0 as Cost_New_Total
+                , 0 as Bid_Requests_New_Total
+                , 0 as Impressions_New_Total
+                , 0 as Revenue_Legacy_Total
+                , 0 as Cost_Legacy_Total
+                , 0 as Bid_Requests_Legacy_Total
+                , 0 as Impressions_Legacy_Total
           from new_report nr
           left join legacy_report lr on lr.Event_Month = nr.Event_Month
                                 and lr.Screen_type  = nr.Screen_type
@@ -77,12 +111,63 @@ view: investor_kpi_dq {
                 , 0 as Cost
                 , 0 as Bid_Requests
                 , 0 as Impressions
+                , 0 as Revenue_New_Total
+                , 0 as Cost_New_Total
+                , 0 as Bid_Requests_New_Total
+                , 0 as Impressions_New_Total
+                , 0 as Revenue_Legacy_Total
+                , 0 as Cost_Legacy_Total
+                , 0 as Bid_Requests_Legacy_Total
+                , 0 as Impressions_Legacy_Total
           from legacy_report lr
           left join new_report nr on lr.Event_Month = nr.Event_Month
                                 and lr.Screen_type  = nr.Screen_type
                                 and lr.Imp_Type = nr.Imp_Type
           where nr.Event_Month is null
-
+          UNION ALL
+          select 'Totals'
+                , nr.Event_Month
+                , '' as Screen_type
+                , '' as Imp_Type
+                , 0 as Total_revenue
+                , 0 as Cost
+                , 0 as Bid_Requests
+                , 0 as Impressions
+                , 0 as Total_revenue
+                , 0 as Cost
+                , 0 as Bid_Requests
+                , 0 as Impressions
+                , Revenue_New_Total
+                , Cost_New_Total
+                , Bid_Requests_New_Total
+                , Impressions_New_Total
+                , 0 as Revenue_Legacy_Total
+                , 0 as Cost_Legacy_Total
+                , 0 as Bid_Requests_Legacy_Total
+                , 0 as Impressions_Legacy_Total
+          from new_report_totals nr
+          UNION ALL
+          select 'Totals'
+                , cr.Event_Month
+                , '' as Screen_type
+                , '' as Imp_Type
+                , 0 as Total_revenue
+                , 0 as Cost
+                , 0 as Bid_Requests
+                , 0 as Impressions
+                , 0 as Total_revenue
+                , 0 as Cost
+                , 0 as Bid_Requests
+                , 0 as Impressions
+                , 0 as Revenue_New_Total
+                , 0 as Cost_New_Total
+                , 0 as Bid_Requests_New_Total
+                , 0 as Impressions_New_Total
+                , Revenue_Legacy_Total
+                , Cost_Legacy_Total
+                , Bid_Requests_Legacy_Total
+                , Impressions_Legacy_Total
+          from legacy_report_totals cr
       ;;
   }
 
@@ -230,4 +315,84 @@ view: investor_kpi_dq {
       type: count
       drill_fields: []
     }
+
+  measure: Gross_Revenue_Totals_New {
+    description: "Total Revenue across event_date"
+    label: "GR New Total"
+    type: sum
+    sql: ${TABLE}.Revenue_New_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Gross_Revenue_Totals_Legacy {
+    description: "Total Revenue across event_date"
+    label: "GR Legacy Total"
+    type: sum
+    sql: ${TABLE}.Revenue_Legacy_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Cost_Totals_New {
+    description: "Total Cost across event_date"
+    label: "Cost New Total"
+    type: sum
+    sql: ${TABLE}.Cost_New_Total;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Cost_Totals_Legacy {
+    description: "Total Cost across event_date"
+    label: "Cost Legacy Total"
+    type: sum
+    sql: ${TABLE}.Cost_Legacy_Total;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Net_Revenue_Totals_Legacy {
+    description: "Total Net_Revenue across event_date"
+    label: "NR Legacy Total"
+    type: sum
+    sql: ${TABLE}.Revenue_Legacy_Total - ${TABLE}.Cost_Legacy_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Net_Revenue_Totals_New {
+    description: "Total Net_Revenue event_date"
+    label: "NR New Total"
+    type: sum
+    sql: ${TABLE}.Revenue_New_Total - ${TABLE}.Cost_New_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Bid_Requests_Totals_New {
+    description: "Total Revenue across event_date"
+    label: "Bid_Requests New Total"
+    type: sum
+    sql: ${TABLE}.Bid_Requests_New_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Bid_Requests_Totals_Legacy {
+    description: "Total Revenue across event_date"
+    label: "Bid_Requests Legacy Total"
+    type: sum
+    sql: ${TABLE}.Bid_Requests_Legacy_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Impressions_Totals_New {
+    description: "Total Revenue across event_date"
+    label: "Impressions New Total"
+    type: sum
+    sql: ${TABLE}.Impressions_New_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
+
+  measure: Impressions_Totals_Legacy {
+    description: "Total Revenue across event_date"
+    label: "Impressions Legacy Total"
+    type: sum
+    sql: ${TABLE}.Impressions_Legacy_Total ;;
+    value_format: "$#,##0;($#,##0)"
+  }
 }

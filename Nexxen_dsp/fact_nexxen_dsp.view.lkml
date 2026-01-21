@@ -526,6 +526,15 @@ measure: Nexxen_Inv_Cost_Percent {
     hidden: yes
   }
 
+  dimension: modified_case_safe {
+    type: string
+    label: "Modified Case Safe ID"
+    sql: CASE
+           WHEN ${dim_sfdb_opportunitylineitem.opportunitylineitem_aid__c} = 'Unknown' THEN ${dim_dsp_package_budget_schedule.salesforce_line_item_id}
+           ELSE ${dim_sfdb_opportunitylineitem.opportunitylineitem_aid__c}
+         END ;;
+  }
+
   measure: tac {
     type: sum
     sql: ${TABLE}.tac ;;

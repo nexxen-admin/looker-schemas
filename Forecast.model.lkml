@@ -58,6 +58,10 @@ explore: forecast_top20_opp_view {
 
 }
 
+explore: linear_tv_summary {
+  hidden: yes
+}
+
 explore: market_expectation {
   label: "Forecast Market Expectation"
   required_access_grants: [can_view_all_tremor]

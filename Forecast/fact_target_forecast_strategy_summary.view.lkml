@@ -259,6 +259,17 @@ view: fact_target_forecast_strategy_summary {
     label: " % GR Booked to Forecast"
     view_label: "GR"
   }
+  measure: P_of_Target_GR_Booked {
+    type: number
+    label: "% of Target GR Booked"
+    sql: CASE
+          WHEN ${fact_target_forecast_strategy_summary.sum_gross_revenue_target} = 0 THEN 0
+          ELSE ${fact_target_forecast_strategy_summary.sum_booked_full_credit}
+          / NULLIF(${fact_target_forecast_strategy_summary.sum_gross_revenue_target}, 0)
+          END ;;
+    value_format: "0%"
+    view_label: "GR"
+  }
 
   measure: sum_nr_booked_to_forecast_delta {
     type: sum

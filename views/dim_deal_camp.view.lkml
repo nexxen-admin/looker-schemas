@@ -38,6 +38,7 @@ view: dim_deal_camp {
   }
 
   dimension: deal_campaign {
+    description: "A logical campaign identifier assigned at the deal level that groups one or more programmatic deals under a common campaign concept for planning, execution, and reporting purposes."
     type: string
     sql: ${TABLE}.deal_campaign ;;
   }

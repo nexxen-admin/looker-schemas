@@ -144,18 +144,39 @@ view: v_dim_employee_pub_ops {
   }
 
   dimension: team_unruly {
+    label: "Pub Team"
     type: string
     required_access_grants: [can_view_aniview]
     sql: case when ${TABLE}.Employee_Name='Itamar Bilu' OR ${TABLE}.Employee_Name='Stav Ezer' OR
-                   ${TABLE}.Employee_Name='Ashleigh Fisher' OR ${TABLE}.Employee_Name='Noa Krashniak' OR ${TABLE}.Employee_Name='Gonni Kern' OR
-                   ${TABLE}.Employee_Name='Hanoch Melamed Cohen' OR ${TABLE}.Employee_Name='Amit Mazor' OR ${TABLE}.Employee_Name='Sarah Herskovics' OR
-                   ${TABLE}.Employee_Name='Lihi Katabi' then 'In App'
-              when ${TABLE}.Employee_Name='Itzik Vaknin' OR ${TABLE}.Employee_Name='Yovel Modlin' OR ${TABLE}.Employee_Name='Bar Wolkowiski' OR ${TABLE}.Employee_Name='Noa Karako'
-              OR ${TABLE}.Employee_Name='Shir Elzam' OR ${TABLE}.Employee_Name='Shachar Laufer'
-              OR ${TABLE}.Employee_Name='Omri Lender' OR ${TABLE}.Employee_Name='Rom Lubianiker' then 'Web'
+                   ${TABLE}.Employee_Name='Ashleigh Fisher'  OR
+                   ${TABLE}.Employee_Name='Hanoch Melamed Cohen' then 'In App'
+
+              when ${TABLE}.Employee_Name='Itzik Vaknin' OR ${TABLE}.Employee_Name='Yovel Modlin' OR
+                   ${TABLE}.Employee_Name='Bar Wolkowiski' OR ${TABLE}.Employee_Name='Shir Elzam' then 'Web'
+
               when ${TABLE}.Employee_name='Mikayla Skarzynski' OR
-              ${TABLE}.Employee_name='Rachel Gargett' OR ${TABLE}.Employee_name='Hannah Quigley'
-              OR ${TABLE}.Employee_name='Raffaele Santambrogio' OR ${TABLE}.Employee_name='Andrew Styles' then 'UK'
+                   ${TABLE}.Employee_name='Rachel Gargett' OR ${TABLE}.Employee_name='Hannah Quigley' OR
+                   ${TABLE}.Employee_name='Raffaele Santambrogio'OR ${TABLE}.Employee_name='Andrew Styles' then 'UK'
+
+              when ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Noa Krashniak' then 'SDK'
+
+              when ${TABLE}.Employee_Name='Stav Ezer' OR ${TABLE}.Employee_Name='Sarah Herskovics' OR
+                   ${TABLE}.Employee_Name='Lihi Katabi' OR ${TABLE}.Employee_Name='Dana Nahshon' OR
+                   ${TABLE}.Employee_Name='Amit Mazor' OR ${TABLE}.Employee_Name='Yariv Aharon' then 'Channel Pubs'
+
+              when ${TABLE}.Employee_Name='Omri Lender & Ellen Rogan' OR ${TABLE}.Employee_Name='Noa Karako & Francesca Esposito' OR
+                   ${TABLE}.Employee_Name='Shachar Laufer & Daniel Werman' OR ${TABLE}.Employee_Name='Rom Lubianiker & Rory Brown' OR
+                   ${TABLE}.Employee_Name='Niv Shema' OR ${TABLE}.Employee_Name='Shachar Laufer' OR
+                   ${TABLE}.Employee_Name='Rom Lubianiker' OR ${TABLE}.Employee_Name='Omri Lender' OR
+                   ${TABLE}.Employee_Name='Noa Karako' then 'Direct'
+
+              when ${TABLE}.Employee_Name='RevOps' then 'RevOps'
+
+              when ${TABLE}.Employee_Name='Matthew De Palo' then 'AU'
+
+              when ${TABLE}.Employee_Name='Ally Appelbaum' OR ${TABLE}.Employee_Name='Caitlyn Murphy' OR
+                   ${TABLE}.Employee_Name='Eileen Lam' OR ${TABLE}.Employee_Name='Jason Vest' then 'CTV US'
+
               else 'null' end
  ;;
   }

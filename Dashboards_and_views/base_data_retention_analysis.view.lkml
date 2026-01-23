@@ -136,14 +136,14 @@ view: base_data_retention_analysis {
   }
 
   measure: P2_E2E_net {
-    label: "Previous Net"
+    label: "Current Net"
     type: sum
     value_format: "$#,##0"
     sql: ${TABLE}.P2_E2E_net ;;
   }
 
   measure: P1_E2E_net {
-    label: "Current Net"
+    label: "Previous Net"
     type: sum
     value_format: "$#,##0"
     sql: ${TABLE}.P1_E2E_net ;;

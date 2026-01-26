@@ -148,6 +148,12 @@ view: billing_temp_nov {
     type: number
     sql: ${TABLE}.impressions ;;
   }
+
+  measure: sum_impressions {
+    type: sum
+    sql: ${TABLE}.impressions ;;
+  }
+
   dimension: industry {
     type: string
     sql: ${TABLE}.industry ;;

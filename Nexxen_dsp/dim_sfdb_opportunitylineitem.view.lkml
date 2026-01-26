@@ -859,7 +859,7 @@ view: dim_sfdb_opportunitylineitem {
   dimension: booked_rate {
     type: number
     label: "Booked Rate"
-    sql: CASE WHEN ${TABLE}.free__c='Added Value' AND ${TABLE}.price_type_name__c='CPM' THEN 0 ELSE ${TABLE}.rate__c END  ;;
+    sql: CASE WHEN ${TABLE}.free__c IN ('Added Value', 'Make Good') AND ${TABLE}.price_type_name__c IN ('CPM', 'dCPM') THEN 0 ELSE ${TABLE}.rate__c END  ;;
   }
 
 }

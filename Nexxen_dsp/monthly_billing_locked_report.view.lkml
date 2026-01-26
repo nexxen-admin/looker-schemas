@@ -2,6 +2,22 @@
 view: monthly_billing_locked_report {
   # The sql_table_name parameter indicates the underlying database table
   # to be used for all fields in this view.
+
+  # Using a derived table to aggregate duplicates (e.g. 'Unknown' appearing 14 times)
+  # derived_table: {
+  #   sql: SELECT
+  #         case_safe_opp_line_item_id,
+  #         date_key,
+  #         -- We sum the metrics so 14 rows become 1 row with the total value
+  #         SUM(final_billable_revenue_after_adj) as final_billable_revenue_after_adj,
+  #         SUM(final_billable_revenue_after_adj_usd) as final_billable_revenue_after_adj_usd
+  #       FROM BI_DSP.monthly_billing_locked_report
+  #       GROUP BY 1, 2
+  #       ;;
+  # }
+
+
+
   sql_table_name: BI_DSP.monthly_billing_locked_report ;;
 
   # No primary key is defined for this view. In order to join this view in an Explore,

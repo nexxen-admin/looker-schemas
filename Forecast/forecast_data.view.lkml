@@ -298,10 +298,16 @@ view: forecast_data {
         END ;;
   }
 
+  # dimension: tv_team_y_n {
+  #   label: "TV Team"
+  #   type: string
+  #   sql: CASE WHEN ${TABLE}.opportunity_name ILIKE '%TV%' THEN 'yes' ELSE 'no' END ;;
+  # }
+
   dimension: tv_team_y_n {
     label: "TV Team"
     type: string
-    sql: CASE WHEN ${TABLE}.opportunity_name ILIKE '%TV%' THEN 'yes' ELSE 'no' END ;;
+    sql: CASE WHEN revenue_line ILIKE '%TV%' THEN 'yes' ELSE 'no' END ;;
   }
 
   dimension: forecast {

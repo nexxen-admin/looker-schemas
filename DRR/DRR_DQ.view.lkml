@@ -11,6 +11,7 @@ view: drr_dq {
                 , sum(Revenue)::int as Revenue_New
                 , sum(Cost)::int as Cost_New
             from BI.DRR_Daily_Revenue_Report
+            --where File_record <>'Amobee - Monthly LOB'
             group by Event_Date
                 , Region
                 , Category
@@ -30,6 +31,7 @@ view: drr_dq {
                 , sum(Revenue)::int as Revenue_Legacy
                 , sum(Cost)::int as Cost_Legacy
             from BI.SVC_DRR_Daily_Revenue_Report
+            --where File_record <>'Amobee - Monthly LOB'
             group by Event_Date
               , Region
               , Category
@@ -73,6 +75,24 @@ view: drr_dq {
                   , sum(Cost_Legacy) as Cost_Legacy_Total
             from current_rpt
             where Event_Date >= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE - INTERVAL '6 DAYS' AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
+            group by Event_Date
+          )
+          , new_report_totals_noMlob as (
+            select Event_Date
+                  , sum(Revenue_New) as Revenue_New_Total
+                  , sum(Cost_New) as Cost_New_Total
+            from new_rpt
+            where Event_Date >= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE - INTERVAL '6 DAYS' AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
+            and File_record <>'Amobee - Monthly LOB'
+            group by Event_Date
+          )
+          , current_report_totals_noMlob as (
+            select Event_Date
+                  , sum(Revenue_Legacy) as Revenue_Legacy_Total
+                  , sum(Cost_Legacy) as Cost_Legacy_Total
+            from current_rpt
+            where Event_Date >= (CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE - INTERVAL '6 DAYS' AND Event_Date <= CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE ELSE {% parameter Report_Run_Date %} END
+            and File_record <>'Amobee - Monthly LOB'
             group by Event_Date
           )
              select 'NOT EQUAL' as Metric_Type
@@ -270,6 +290,42 @@ view: drr_dq {
                  , Revenue_Legacy_Total
                  , Cost_Legacy_Total
              from current_report_totals
+            UNION
+             select 'TOTALS_NOMLOB' as Metric_Type
+                 , Event_Date
+                 , '' as Region
+                 , '' as Category
+                 , '' as Subcategory
+                 , '' as Device_Type
+                 , '' as Record_Type
+                 , '' as File_record
+                 , 0 as Revenue_Legacy
+                 , 0 as Revenue_New
+                 , 0 as Cost_Legacy
+                 , 0 as Cost_New
+                 , Revenue_New_Total
+                 , Cost_New_Total
+                 , 0 as Revenue_Legacy_Total
+                 , 0 as Cost_Legacy_Total
+             from new_report_totals_noMlob
+            UNION
+             select 'TOTALS_NOMLOB' as Metric_Type
+                 , Event_Date
+                 , '' as Region
+                 , '' as Category
+                 , '' as Subcategory
+                 , '' as Device_Type
+                 , '' as Record_Type
+                 , '' as File_record
+                 , 0 as Revenue_Legacy
+                 , 0 as Revenue_New
+                 , 0 as Cost_Legacy
+                 , 0 as Cost_New
+                 , 0 as Revenue_New_Total
+                 , 0 as Cost_New_Total
+                 , Revenue_Legacy_Total
+                 , Cost_Legacy_Total
+             from current_report_totals_noMlob
       ;;
   }
 

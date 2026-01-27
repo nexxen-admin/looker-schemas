@@ -147,11 +147,7 @@ view: v_dim_employee_pub_ops {
     label: "Pub Team"
     type: string
     required_access_grants: [can_view_aniview]
-    sql: case when ${TABLE}.Employee_name='Mikayla Skarzynski' OR
-                   ${TABLE}.Employee_name='Rachel Gargett' OR ${TABLE}.Employee_name='Hannah Quigley' OR
-                   ${TABLE}.Employee_name='Raffaele Santambrogio'OR ${TABLE}.Employee_name='Andrew Styles' then 'UK'
-
-              when ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Noa Krashniak' then 'SDK'
+    sql: case when ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Noa Krashniak' then 'SDK'
 
               when ${TABLE}.Employee_Name='Stav Ezer' OR ${TABLE}.Employee_Name='Sarah Herskovics' OR
                    ${TABLE}.Employee_Name='Lihi Katabi' OR ${TABLE}.Employee_Name='Dana Nahshon' OR

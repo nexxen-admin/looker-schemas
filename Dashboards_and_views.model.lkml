@@ -409,7 +409,7 @@ explore: tremor_to_unruly{
 explore: deal_commision_data {
   label: "Deal Commision Data"
   #required_access_grants: [allowed_users_sam_lt]
-  # hidden: yes
+  hidden: yes
 }
 
 explore: deal_commission_data_pivot {

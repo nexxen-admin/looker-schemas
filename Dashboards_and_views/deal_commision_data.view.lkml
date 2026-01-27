@@ -98,6 +98,38 @@ view: deal_commision_data {
     sql: ${TABLE}.event_date ;;
   }
 
+  dimension_group: db_update_date {
+    type: time
+    timeframes: [raw, time, date, week, month, quarter, year]
+    sql: ${TABLE}.db_updated_date ;;
+  }
+
+# Convert the full timestamp to a sortable number (Unix seconds)
+  dimension: db_updated_number {
+    type: number
+    sql: EXTRACT(EPOCH FROM ${db_update_date_raw}) ;;
+    label: "DB Updated Unix Time"
+    hidden: yes
+  }
+
+  measure: max_database_update_timestamp {
+    type: max
+    sql: ${db_updated_number} ;;
+    label: "Max DB Update"
+    hidden: yes
+  }
+
+
+  measure: final_database_last_update {
+    type: string
+    sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD HH24:MI:SS') ;;
+    label: "Deal Commision Data DB update date"
+    html:
+    <div style="font-family: Arial, sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
+      <span style="font-weight: normal; word-spacing: 4px;">SF Opportunity DB update date (UTC)</span><br>
+      <span style="word-spacing: 15px;">{{ rendered_value }}</span>
+    </div> ;;}
+
   measure: gross_revenue {
     type: sum
     value_format: "$#,##0.00"

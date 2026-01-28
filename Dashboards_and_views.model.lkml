@@ -539,6 +539,9 @@ explore: segment_syndication {
 explore: rx_fact_segments_usage_data {
   label: "Segments Usage Data"
   required_access_grants: [can_view_all_tremor]
+  always_filter: {
+    filters: [rx_fact_segments_usage_data.event_month_month: "this month"]
+  }
 }
 
 explore: segments_with_0_cost_in_rx {

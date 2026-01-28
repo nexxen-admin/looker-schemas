@@ -193,6 +193,9 @@ explore: fact_nexxen_dsp  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp"
   view_label: "Measures"
+  always_filter: {
+    filters: [v_dim_dsp_date.date_key_date: "1 day ago for 1 day"]
+  }
 
   join: dim_dsp_inventory_source {
     type: left_outer

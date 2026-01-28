@@ -34,5 +34,8 @@ explore: ifr_data_by_date{
 explore: ifr_data_margin{
   label: "IFR Data Margin"
   required_access_grants: [ifr_data]
+  always_filter: {
+    filters: [ifr_data_margin.impression_date_date: "1 day ago for 1 day"]
+  }
   #hidden: yes
 }

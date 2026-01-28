@@ -65,7 +65,7 @@ explore: impression_r {
   label: "Impression Raw Data"
   hidden: yes
   always_filter: {
-    filters:[impression_r.dspdealid: ""]
+    filters:[impression_r.dspdealid: "", impression_r.event_date: "1 day ago for 1 day"]
   }
 
   # join: dim_publisher_ssp {
@@ -109,6 +109,9 @@ explore: IAS_Monthly_Usage {
 explore: pmp_stats_daily {
   label: "PMP Stats Daily"
   required_access_grants: [can_view_all_tremor]
+  always_filter: {
+    filters: [pmp_stats_daily.event_date: "1 day ago for 1 day"]
+  }
 
   join: rx_dim_deal  {
     view_label: "Pmp Stats Daily"
@@ -506,14 +509,13 @@ explore: extend_Inbound_Exchange {
 
 explore: fact_ad_daily_agg{
   view_name: fact_ad_daily_agg
-
-  #always_filter: {
-  # filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
-  #}
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange"
   view_label: "Measures"
   required_access_grants: [can_view_all_tremor]
+  always_filter: {
+    filters: [dim_date.date_key_date: "1 day ago for 1 day"]
+  }
 
 
   join: dim_date {
@@ -934,15 +936,14 @@ explore: fact_ad_daily_agg{
 
 
 explore: fact_ad_hourly_agg{
-  # # always_filter: {
-  # #   filters: [dim_date_hourly.date_time_key_date: "last 10 days "]
 
-  # }
   required_access_grants: [can_view_all_tremor]
-
   persist_with: CleanCash_datagroup
   label: "Inbound Exchange Hourly"
   view_label: "Measures"
+  always_filter: {
+    filters: [dim_date_hourly.date_key_date: "1 day ago for 1 day"]
+  }
 
 
   join: dim_date_hourly {
@@ -1273,17 +1274,14 @@ explore: fact_ad_hourly_agg{
 
 
 explore: fact_ad_bid_request_daily_agg{
-  #always_filter: {
-   # filters: [dim_date.date_key_date: "last 14 days ago for 14 days"]
-  #}
-
-
-
 
   persist_with: CleanCash_datagroup
   label: "Outbound Exchange"
   view_label: "Measures"
   required_access_grants: [can_view_all_tremor]
+  always_filter: {
+    filters: [dim_date.date_key_date: "1 day ago for 1 day"]
+  }
 
   join: dim_dsp_data_center {
     type: inner

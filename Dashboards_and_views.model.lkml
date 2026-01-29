@@ -412,6 +412,11 @@ explore: deal_commision_data {
   hidden: yes
 }
 
+explore: deal_split_owner {
+  label: "Deal Split Owner"
+  hidden: yes
+}
+
 explore: deal_commission_data_pivot {
   label: "Deal Commision Data - Pivot"
   #required_access_grants: [allowed_users_sam_lt]

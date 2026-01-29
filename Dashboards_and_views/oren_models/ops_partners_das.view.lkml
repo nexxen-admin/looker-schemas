@@ -77,10 +77,16 @@ view: ops_partners_das {
     label: "Advertiser/Brand Name"
   }
 
-  dimension: source {
+  dimension: source_normalized {
     type: string
     sql: case when ${TABLE}.DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end ;;
-    label: "Source"
+    label: "Source (Normalized)"
+  }
+
+  dimension: source_raw {
+    type: string
+    sql: ${TABLE}.DATA_SOURCE ;;
+    label: "Source (Raw)"
   }
 
   dimension: REGION {
@@ -99,6 +105,18 @@ view: ops_partners_das {
     type: string
     sql: ${TABLE}.COUNTRY_NAME ;;
     label: "Country Name"
+  }
+
+  dimension: CONTRACT_ID {
+    type: string
+    sql: ${TABLE}.CONTRACT_ID ;;
+    label: "Contract ID"
+  }
+
+  dimension: CONTRACT_NAME {
+    type: string
+    sql: ${TABLE}.CONTRACT_NAME ;;
+    label: "Contract Name"
   }
 
 
@@ -163,7 +181,8 @@ set: detail {
     NS_VENDOR_ID,
     MARKET_NAME,
     ADVERTISER_NAME,
-    source,
+    source_normalized,
+    source_raw,
     ENVIRONMENT,
     PROVIDER_NAME,
     MARKET_ID,
@@ -172,6 +191,8 @@ set: detail {
     REGION,
     COUNTRY_ID,
     COUNTRY_NAME,
+    CONTRACT_ID,
+    CONTRACT_NAME,
     IMPRESSION,
     GROSS_REVENUE,
     ADJUSTED_NET_REVENUE,

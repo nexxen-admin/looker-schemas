@@ -152,6 +152,12 @@ view: dim_deal {
     sql: ${TABLE}.Deal_Start ;;
   }
 
+  dimension: deal_campaign {
+    type: string
+    description: "A logical campaign identifier assigned at the deal level that groups one or more programmatic deals under a common campaign concept for planning, execution, and reporting purposes. "
+    sql: ${TABLE}.Deal_Campaign ;;
+  }
+
   dimension: deal_time {
     type: number
     description: "Time period of deal"

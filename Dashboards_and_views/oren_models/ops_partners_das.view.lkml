@@ -77,10 +77,10 @@ view: ops_partners_das {
     label: "Advertiser/Brand Name"
   }
 
-  dimension: source_normalized {
+  dimension: source {
     type: string
     sql: case when ${TABLE}.DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end ;;
-    label: "Source (Normalized)"
+    label: "source"
   }
 
   dimension: source_raw {
@@ -181,7 +181,7 @@ set: detail {
     NS_VENDOR_ID,
     MARKET_NAME,
     ADVERTISER_NAME,
-    source_normalized,
+    source,
     source_raw,
     ENVIRONMENT,
     PROVIDER_NAME,

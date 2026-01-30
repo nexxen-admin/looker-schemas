@@ -14,7 +14,7 @@ view: tvi_discovery_provider_mapping {
   dimension: data_use {
     type: string
     sql: ${TABLE}.data_use ;;
-    hidden:  yes
+    hidden:  no
   }
   dimension: provider_id {
     type: number

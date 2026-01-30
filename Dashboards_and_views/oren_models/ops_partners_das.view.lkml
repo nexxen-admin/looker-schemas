@@ -40,6 +40,13 @@ view: ops_partners_das {
     label: "Provider Name"
   }
 
+  dimension: PROVIDER_ID {
+    type: number
+    sql: ${TABLE}.PROVIDER_ID ;;
+    label: "Provider ID"
+    hidden:  yes
+  }
+
   dimension: MARKET_ID {
     type: string
     sql: ${TABLE}.MARKET_ID ;;
@@ -185,6 +192,7 @@ set: detail {
     source_raw,
     ENVIRONMENT,
     PROVIDER_NAME,
+    PROVIDER_ID,
     MARKET_ID,
     CATEGORY,
     DATA_TYPE,

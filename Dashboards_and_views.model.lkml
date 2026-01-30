@@ -685,9 +685,21 @@ explore: scope3_processed {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: tvi_discovery_provider_mapping {
+  label: "tvi_discovery_provider_mapping"
+  required_access_grants: [can_view_all_tremor]
+  hidden:  yes
+
+}
 explore: ops_partners_das {
   label: "ops_partners_das"
   required_access_grants: [can_view_all_tremor]
+
+  join: tvi_discovery_provider_mapping {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${ops_partners_das.PROVIDER_ID} = ${tvi_discovery_provider_mapping.provider_id} ;;
+  }
 }
 
 explore: hisense_postal_code {

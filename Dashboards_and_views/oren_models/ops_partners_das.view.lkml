@@ -59,7 +59,6 @@ view: ops_partners_das {
     label: "Data Type"
   }
 
-
   dimension: NS_VENDOR_ID {
     type: string
     sql: ${TABLE}.NS_VENDOR_ID ;;

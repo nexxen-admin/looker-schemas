@@ -11,10 +11,15 @@ view: tvi_discovery_provider_mapping {
     sql: ${TABLE}.data_type ;;
     hidden: no
   }
+
   dimension: data_use {
     type: string
-    sql: ${TABLE}.data_use ;;
-    hidden:  no
+    sql:
+    CASE
+      WHEN ${TABLE}.data_use IS NULL THEN '3P Data'
+      ELSE ${TABLE}.data_use
+    END ;;
+    hidden: no
   }
   dimension: provider_id {
     type: number

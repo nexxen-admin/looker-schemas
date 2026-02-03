@@ -1,5 +1,5 @@
 view: ops_partners_das {
-  sql_table_name: bi_new.decom ;;
+  sql_table_name: bi_new.DECOM_V ;;
 
   dimension_group: time_frame {
     type: time
@@ -57,6 +57,25 @@ view: ops_partners_das {
     type: string
     sql: ${TABLE}.DATA_TYPE ;;
     label: "Data Type"
+  }
+
+  dimension: RESOLVED_DATA_TYPE {
+    type: string
+    sql: ${TABLE}.RESOLVED_DATA_TYPE ;;
+    label: "Resolved Data Type"
+  }
+
+  dimension: RESOLVED_DATA_USE {
+    type: string
+    sql: ${TABLE}.RESOLVED_DATA_USE ;;
+    label: "Resolved Data Use"
+  }
+
+
+  dimension: RESOLVED_DATA_SOURCE {
+    type: string
+    sql: ${TABLE}.RESOLVED_DATA_SOURCE ;;
+    label: "Resolved Data Source"
   }
 
   dimension: NS_VENDOR_ID {
@@ -195,6 +214,9 @@ set: detail {
     MARKET_ID,
     CATEGORY,
     DATA_TYPE,
+    RESOLVED_DATA_TYPE,
+    RESOLVED_DATA_SOURCE,
+    RESOLVED_DATA_USE,
     REGION,
     COUNTRY_ID,
     COUNTRY_NAME,

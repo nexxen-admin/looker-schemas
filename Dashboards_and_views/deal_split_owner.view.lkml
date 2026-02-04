@@ -80,6 +80,7 @@ view: deal_split_owner {
 
   dimension: rebate_percent {
     type: number
+    value_format: "0.0"
     sql: CASE WHEN ${TABLE}.gross_revenue_record_split=0 THEN 0 ELSE  ${TABLE}.barter_rebate_Record_Split/${TABLE}.gross_revenue_record_split END ;;
   }
 

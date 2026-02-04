@@ -6,58 +6,6 @@ view: deal_split_owner {
     sql: ${TABLE}.agency ;;
   }
 
-  measure: amsplit_cogs {
-    type: sum
-    value_format: "$#,##0.00"
-    sql: ${TABLE}.AMSplit_Cogs ;;
-  }
-
-  # dimension: deal_start {
-  #   type: date
-  #   sql: ${TABLE}.deal_start ;;
-  # }
-
-  # dimension: deal_end {
-  #   type: date
-  #   sql: ${TABLE}.deal_end ;;
-  # }
-
-  measure: amsplit_net_revenue {
-    type: sum
-    value_format: "$#,##0.00"
-    sql: ${TABLE}.AMSplit_Net_After_Barter ;;
-  }
-
-  measure: amsplit_revenue {
-    type: sum
-    value_format: "$#,##0.00"
-    sql: ${TABLE}.AMSplit_Gross_After_BR ;;
-  }
-
-  measure: amsplit_net_revenue_no_rebate {
-    type: sum
-    value_format: "$#,##0.00"
-    sql: ${TABLE}.AMSplit_Net_WithoutRebate ;;
-  }
-
-  measure: amsplit_revenue_no_rebate {
-    type: sum
-    value_format: "$#,##0.00"
-    sql: ${TABLE}.AMSplit_Gross_Revenue ;;
-  }
-
-  dimension: barter_rebate_dim {
-    type: number
-    sql: ${TABLE}.Unsplit_Barter_Rebate ;;
-  }
-
-  measure: barter_rebate {
-    type: sum
-    value_format: "$#,##0.00"
-    sql: ${TABLE}.Unsplit_Barter_Rebate ;;
-  }
-
-
   dimension: brand {
     type: string
     drill_fields: [agency]
@@ -68,12 +16,6 @@ view: deal_split_owner {
     type: string
     drill_fields: [brand, agency]
     sql: ${TABLE}.Buy_Type ;;
-  }
-
-  measure: cogs {
-    type: sum
-    value_format: "$#,##0.00"
-    sql: ${TABLE}.Unsplit_COGS ;;
   }
 
   dimension: deal_description {
@@ -126,7 +68,6 @@ view: deal_split_owner {
     hidden: yes
   }
 
-
   measure: final_database_last_update {
     type: string
     sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD HH24:MI:SS') ;;
@@ -137,24 +78,110 @@ view: deal_split_owner {
       <span style="word-spacing: 15px;">{{ rendered_value }}</span>
     </div> ;;}
 
-  measure: gross_revenue {
-    type: sum
-    value_format: "$#,##0.00"
-    label: "Gross (Deal) Revenue"
-    sql: ${TABLE}.Unsplit_Gross_After_Barter ;;
-  }
-
-  measure: net_revenue {
-    type: sum
-    value_format: "$#,##0.00"
-    label: "Net Revenue"
-    sql: ${TABLE}.Unsplit_Net_After_Barter ;;
+  dimension: rebate_percent {
+    type: number
+    sql: CASE WHEN ${TABLE}.gross_revenue_record_split=0 THEN 0 ELSE  ${TABLE}.barter_rebate_Record_Split/${TABLE}.gross_revenue_record_split END ;;
   }
 
   dimension: office {
     type: string
     sql: ${TABLE}.Office ;;
   }
+
+  dimension: personnel_name {
+    type: string
+    sql: ${TABLE}.rx_personnel_name ;;
+  }
+
+  dimension: personnel_role {
+    type: string
+    sql: ${TABLE}.rx_personnel_role ;;
+  }
+
+  dimension: deal_type {
+    type: string
+    sql: ${TABLE}.deal_type_detail ;;
+  }
+
+
+# -------------------------------UNSPLIT MEASURES-----------------------------------------
+
+  measure: gross_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    label: "Gross (Deal) Revenue"
+    sql: ${TABLE}.unsplit_gross_revenue ;;
+  }
+
+  measure: net_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    label: "Net Revenue"
+    description: "Total Revenue minus Cogs"
+    sql: ${TABLE}.Unsplit_Net_After_Barter ;;
+  }
+
+  measure: cogs {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.Unsplit_COGS ;;
+  }
+
+  measure: total_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    label: "Total Revenue"
+    description: "Unsplit Gross Revenue minus Barter Rebate"
+    sql: ${TABLE}.Unsplit_Gross_After_Barter ;;
+  }
+
+
+# -------------------------------AM SPLIT MEASURES-----------------------------------------
+
+  measure: amsplit_cogs {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.AMSplit_Cogs ;;
+  }
+
+  measure: amsplit_net_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.AMSplit_Net_After_Barter ;;
+  }
+
+  measure: amsplit_revenue {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.AMSplit_Gross_After_BR ;;
+  }
+
+  measure: amsplit_net_revenue_no_rebate {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.AMSplit_Net_WithoutRebate ;;
+  }
+
+  measure: amsplit_revenue_no_rebate {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.AMSplit_Gross_Revenue ;;
+  }
+
+  measure: barter_rebate {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.Unsplit_Barter_Rebate ;;
+  }
+
+  measure: split_barter_rebate {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.barter_rebate_Record_Split ;;
+  }
+
+
+# -------------------------------OPS SPLIT MEASURES-----------------------------------------
 
   measure: ops_split_cogs {
     type: sum
@@ -174,20 +201,19 @@ view: deal_split_owner {
     sql: ${TABLE}.OpsSplit_Gross_After_BR ;;
   }
 
-  dimension: personnel_name {
-    type: string
-    sql: ${TABLE}.rx_personnel_name ;;
+  measure: ops_split_net_revenue_no_rebate {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.OpsSplit_Net_WithoutRebate ;;
   }
 
-  dimension: personnel_role {
-    type: string
-    sql: ${TABLE}.rx_personnel_role ;;
+  measure: ops_split_revenue_no_rebate {
+    type: sum
+    value_format: "$#,##0.00"
+    sql: ${TABLE}.OpsSplit_Gross_Revenue ;;
   }
 
-  dimension: deal_type {
-    type: string
-    sql: ${TABLE}.deal_type_detail ;;
-  }
+# -------------------------------SALES SPLIT MEASURES-----------------------------------------
 
   measure: sales_split_barter_rebate {
     type: sum
@@ -225,11 +251,8 @@ view: deal_split_owner {
     sql: ${TABLE}.SalesSplit_Gross_Revenue ;;
   }
 
-  # measure: total_revenue {
-  #   type: sum
-  #   value_format: "$#,##0.00"
-  #   sql: ${TABLE}.TotalRevenue ;;
-  # }
+
+# -------------------------------MERGED MEASURES-----------------------------------------
 
   measure: split_revenue {
     type: sum
@@ -260,67 +283,5 @@ view: deal_split_owner {
     sql: case when ${TABLE}.rx_personnel_role='sales' then CAST(${TABLE}.SalesSplit_Net_WithoutRebate AS float)
       else null end  ;;
   }
-
-  # dimension: rebate_percent {
-  #   type: number
-  #   sql: ${TABLE}.rebate_percent;;
-  # }
-
-  # dimension: days_in_quarter{
-  #   type: number
-  #   sql:   datediff('day',${adjusted_delivered_start_date},case when ${deal_end} >=
-  #     '2024-12-31' then '2024-12-31' else ${deal_end} end)+1;;
-  # }
-
-  # dimension: yesterday_date {
-  #   type: date
-  #   sql: date_trunc('day',current_timestamp)-1 ;;
-  #   hidden: yes
-  # }
-
-  # dimension: adjusted_delivered_start_date {
-  #   type: date
-  #   sql: case when ${deal_start} > ${quarter_start} then ${deal_start} else ${quarter_start} end ;;
-  # }
-
-  # dimension: adjusted_delivered_end_date {
-  #   type: date
-  #   sql: case when ${deal_end} > ${yesterday_date} then
-  #     ${yesterday_date} else ${deal_end} end ;;
-  # }
-
-  # dimension: days_so_far {
-  #   type: number
-  #   sql: datediff('day',${adjusted_delivered_start_date},${adjusted_delivered_end_date})+1 ;;
-  # }
-
-  # measure: current_q_daily_run_rate {
-  #   type: number
-  #   sql: ${split_revenue} / nullif(${max_days_so_far},0) ;;
-  #   value_format: "$#,##0.00"
-  # }
-
-  # dimension: quarter_start {
-  #   type: date
-  #   sql: date_trunc('quarter',current_timestamp) ;;
-  # }
-
-  # measure: max_days_so_far {
-  #   type: max
-  #   sql: ${days_so_far} ;;
-  #   hidden: yes
-  # }
-
-  # measure: max_days_in_quarter {
-  #   type: max
-  #   sql: ${days_in_quarter} ;;
-  #   hidden: yes
-  # }
-
-  # measure: current_q_projected_split_rev {
-  #   type: number
-  #   sql: (${split_revenue} / nullif(${max_days_so_far},0))*${max_days_in_quarter} ;;
-  #   value_format: "$#,##0.00"
-  # }
 
  }

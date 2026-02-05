@@ -320,14 +320,14 @@ explore: fact_nexxen_dsp  {
   # }
 
 
-  join: monthly_billing_locked_report {
-    type: left_outer
-    view_label: "Locked Report"
-    relationship: many_to_one
-    sql_on: ${monthly_billing_locked_report.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
-      AND ${monthly_billing_locked_report.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
-      fields: [monthly_billing_locked_report.final_billable_revenue_after_adj_measure, monthly_billing_locked_report.final_billable_revenue_after_adj_usd_measure]
-  }
+  # join: monthly_billing_locked_report {
+  #   type: left_outer
+  #   view_label: "Locked Report"
+  #   relationship: many_to_one
+  #   sql_on: ${monthly_billing_locked_report.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+  #     AND ${monthly_billing_locked_report.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
+  #     fields: [monthly_billing_locked_report.final_billable_revenue_after_adj_measure, monthly_billing_locked_report.final_billable_revenue_after_adj_usd_measure]
+  # }
 
 
   join: v_billing_unified_revenue {

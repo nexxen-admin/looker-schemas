@@ -26,7 +26,7 @@ filter: account_name_filter {
 filter: advertiser_name_filter {
   type: string
 }
-
+#---------------------------------------------Dimensions---------------------------------------------------
 dimension: id {
   primary_key: yes
   type: string
@@ -51,16 +51,19 @@ dimension: advertiser_name {
   type: string
   sql: ${TABLE}.advertiser_name ;;
 }
+dimension: beacon_id {
+  type: string
+  label: "Beacon ID"
+  sql: ${TABLE}.beacon_id ;;
+}
+  dimension: beacon_name {
+    type: string
+    label: "Beacon Name"
+    sql: ${TABLE}.beacon_name ;;
+  }
 dimension: campaign {
   type: string
   sql: ${TABLE}.campaign ;;
-}
-
-measure: complete_events  {
-  type: sum
-  value_format: "#,##0"
-  description: "1 for events that were completed"
-  sql: ${TABLE}.complete_events  ;;
 }
 dimension: country_name {
   type: string
@@ -141,12 +144,6 @@ dimension: free__c {
   type: string
   sql: ${TABLE}.free__c ;;
   hidden: yes
-}
-measure: impressions {
-  type: sum
-  label: "1P Impressions"
-  value_format: "#,##0"
-  sql: ${TABLE}.impressions ;;
 }
 dimension: line_item_group_b {
   type: string
@@ -243,6 +240,21 @@ dimension: tactic {
           WHEN ${line_item_name__c} LIKE '%PMP%' THEN 'PMP'END ;;
 }
 
+#---------------------------------------------Measures---------------------------------------------------
+  measure: impressions {
+    type: sum
+    label: "1P Impressions"
+    value_format: "#,##0"
+    sql: ${TABLE}.impressions ;;
+  }
+
+  measure: complete_events  {
+    type: sum
+    value_format: "#,##0"
+    description: "1 for events that were completed"
+    sql: ${TABLE}.complete_events  ;;
+  }
+
 measure: delivered_units {
   type: sum
   sql: ${TABLE}.delivery_units ;;
@@ -322,6 +334,108 @@ measure: ncd_ctr {
   value_format: "0.00%"
   sql: IFNULL(${ncd_clicks}/NULLIF(${non_ctv_impressions},0),0) ;;
 }
+#---------------------------------------------Conversion Metrics---------------------------------------------------
+
+  measure: actions {
+    type: sum
+    value_format: "#,##0"
+    sql: ${TABLE}.actions ;;
+  }
+  measure: cta {
+    type: sum
+    label: "CTA"
+    description: "Click based actions"
+    value_format: "#,##0"
+    sql: ${TABLE}.CTV ;;
+  }
+  measure: vta {
+    type: sum
+    label: "VTA"
+    description: "View based actions"
+    value_format: "#,##0"
+    sql: ${TABLE}.VTA ;;
+  }
+  measure: shopping_cart {
+    type: sum
+    value_format: "#,##0"
+    sql: ${TABLE}.shopping_cart_value ;;
+  }
+  measure: shopping_cart_cta {
+    type: sum
+    label: "Shopping Cart CTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.shopping_cart_value_CTA ;;
+  }
+  measure: shopping_cart_vta {
+    type: sum
+    label: "Shopping Cart VTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.shopping_cart_VTA ;;
+  }
+  measure: cross_device_actions {
+    type: sum
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_actions ;;
+  }
+  measure: cross_device_cta {
+    type: sum
+    label: "Cross Device CTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_CTA ;;
+  }
+  measure: cross_device_vta {
+    type: sum
+    label: "Cross Device VTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_VTA ;;
+  }
+  measure: cross_device_shopping_cart_total {
+    type: sum
+    label: "Cross Device Shopping Cart Total"
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_shopping_cart_value_total ;;
+  }
+  measure: cross_device_shopping_cart_cta {
+    type: sum
+    label: "Cross Device Shopping Cart CTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_shopping_cart_value_CTA ;;
+  }
+  measure: cross_device_shopping_cart_vta {
+    type: sum
+    label: "Cross Device Shopping Cart VTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_shopping_cart_value_VTA ;;
+  }
+  measure: household_actions {
+    type: sum
+    value_format: "#,##0"
+    sql: ${TABLE}.household_actions ;;
+  }
+  measure: household_cta {
+    type: sum
+    label: "Household CTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.household_CTA ;;
+  }
+  measure: household_vta {
+    type: sum
+    label: "Household VTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.household_VTA ;;
+  }
+  measure: household_shopping_cart_cta {
+    type: sum
+    label: "Household Shopping Cart CTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.household_shopping_cart_value_CTA ;;
+  }
+  measure: household_shopping_cart_vta {
+    type: sum
+    label: "Household Shopping Cart VTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.household_shopping_cart_value_VTA ;;
+  }
 
 #--------------------------------------------------pop-------------------------------------------------------
 filter: current_date_range {

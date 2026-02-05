@@ -329,6 +329,16 @@ explore: fact_nexxen_dsp  {
       fields: [monthly_billing_locked_report.final_billable_revenue_after_adj_measure, monthly_billing_locked_report.final_billable_revenue_after_adj_usd_measure]
   }
 
+
+  join: v_billing_unified_revenue {
+    type: left_outer
+    view_label: "Unified Locked Report"
+    relationship: many_to_one
+    sql_on: ${v_billing_unified_revenue.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+      AND ${v_billing_unified_revenue.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
+    # fields: [monthly_billing_locked_report.final_billable_revenue_after_adj_measure, monthly_billing_locked_report.final_billable_revenue_after_adj_usd_measure]
+  }
+
   join: dim_dsp_monthly_manual_adjustment {
     type:left_outer
     view_label: "Manual Billing ADJ"

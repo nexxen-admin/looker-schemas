@@ -3750,6 +3750,18 @@ hidden: yes
       END ;;
   }
 
+
+  measure: total_barter_fee {
+    type: number
+    label: "Total Barter Fee"
+    description: "Aggregation of RX Deal Barter Fees + Publisher Deal Barter Fees"
+    sql: ${barter_fee} + ${publisher_barter_fee} ;;
+    value_format: "$#,##0.00"
+    hidden: no
+  }
+
+
+
   # measure: sum_user_matched {
   #   type: sum
   #   sql: case when dim_user_matched.user_matched = 1 then dim_user_matched.user_matched else 0 end;;

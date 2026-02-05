@@ -39,14 +39,14 @@ view: v_billing_unified_revenue {
     type: sum
     label: "Final Billable Revenue (Locked)"
     description: "Billable Revenue after Adjustments in Opp Currency (Locked by Finance)"
-    sql: ${TABLE}.final_billable_revenue_after_adj ;;
+    sql: ${TABLE}.locked_final_billable_revenue_after_adj ;;
   }
 
   measure: locked_final_billable_revenue_after_adj_usd_measure {
     type: sum
     label: "Final Billable Revenue USD (Locked)"
     description: "Billable Revenue after Adjustments in USD  (Locked by Finance)"
-    sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
+    sql: ${TABLE}.locked_final_billable_revenue_after_adj_usd ;;
   }
 
   dimension_group: max_live_db_update {

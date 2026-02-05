@@ -332,7 +332,7 @@ explore: fact_nexxen_dsp  {
 
   join: v_billing_unified_revenue {
     type: left_outer
-    view_label: "Unified Locked Report"
+    view_label: "Billing Unified Revenue"
     relationship: many_to_one
     sql_on: ${v_billing_unified_revenue.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
       AND ${v_billing_unified_revenue.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;

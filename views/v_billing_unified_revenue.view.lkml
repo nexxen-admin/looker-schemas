@@ -1,6 +1,14 @@
 view: v_billing_unified_revenue {
   sql_table_name: BI_DSP.v_billing_unified_revenue ;;
 
+  dimension: pk {
+    primary_key: yes
+    hidden: yes
+    type: string
+    # using _month ensures it's a string, avoiding type errors in Vertica
+    sql: ${case_safe_opp_line_item_id} || '-' || ${date_key_month} ;;
+  }
+
   dimension: case_safe_opp_line_item_id {
     type: string
     sql: ${TABLE}.case_safe_opp_line_item_id ;;
@@ -26,6 +34,21 @@ view: v_billing_unified_revenue {
     type: number
     sql: ${TABLE}.locked_final_billable_revenue_after_adj_usd ;;
   }
+
+  measure: locked_final_billable_revenue_after_adj_measure {
+    type: sum
+    label: "Final Billable Revenue (Locked)"
+    description: "Billable Revenue after Adjustments in Opp Currency (Locked by Finance)"
+    sql: ${TABLE}.final_billable_revenue_after_adj ;;
+  }
+
+  measure: locked_final_billable_revenue_after_adj_usd_measure {
+    type: sum
+    label: "Final Billable Revenue USD (Locked)"
+    description: "Billable Revenue after Adjustments in USD  (Locked by Finance)"
+    sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
+  }
+
   dimension_group: max_live_db_update {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]

@@ -44,7 +44,7 @@ view: ops_partners_das {
     type: number
     sql: ${TABLE}.PROVIDER_ID ;;
     label: "Provider ID"
-    hidden:  yes
+    hidden:  no
   }
 
   dimension: MARKET_ID {

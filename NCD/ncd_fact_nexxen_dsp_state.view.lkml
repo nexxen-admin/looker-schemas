@@ -935,6 +935,30 @@ measure: html_kpi_ctr {
             </div>;;
 }
 
+  measure: html_kpi_cta {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              CTA
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ cta._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: html_kpi_vta {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              VTA
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ vta._rendered_value }}
+              </div>
+            </div>;;
+  }
+
 #---------------------------------------NCD DEMO---------------------------
   measure: html_kpi_pacing_demo {
     type: count

@@ -2129,6 +2129,22 @@ measure: Nexxen_Inv_Cost_Percent {
     filters: [period_filtered_measures: "this"]
   }
 
+  measure: impressions_pop_change {
+    view_label: "PoP"
+    label: "Impressions Change"
+    type: number
+    sql: ${current_period_impressions} - ${previous_period_impressions} ;;
+    value_format: "+#,##0;-#,##0" # Adds a + sign for positive numbers
+  }
+
+  measure: impressions_pop_change_percent {
+    view_label: "PoP"
+    label: "Impressions Change %"
+    type: number
+    sql: 1.0 * (${current_period_impressions} - ${previous_period_impressions}) / NULLIF(${previous_period_impressions},0) ;;
+    value_format: "0.00%"
+  }
+
   measure: current_period_clicks {
     view_label: "PoP"
     type: sum

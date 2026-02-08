@@ -904,6 +904,12 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format_name: percent_2
   }
 
+  measure: number_of_media_margin {
+    type: number
+    sql: (${capped_revenue}-${cost}) ;;
+    value_format: "#,##0.00"
+  }
+
   measure:Media_Margin_Vendor_cost {
     type: number
     label: "Media Margin (w/o Vendor cost)"

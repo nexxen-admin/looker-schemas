@@ -236,6 +236,38 @@ view: fact_nexxen_dsp {
     hidden:  no
   }
 
+  parameter: top_x_rank_limit {
+    type: unquoted
+    label: "Top X Accounts"
+    view_label: "Dashboard Filters"
+    description: "Select number of top accounts to display"
+    default_value: "5"
+
+    allowed_value: {
+      label: "Top 5"
+      value: "5"
+    }
+    allowed_value: {
+      label: "Top 10"
+      value: "10"
+    }
+    allowed_value: {
+      label: "Top 15"
+      value: "15"
+    }
+    allowed_value: {
+      label: "Top 20"
+      value: "20"
+    }
+  }
+
+  # Helper dimension to pass the parameter value to the Explore
+  dimension: top_x_limit_value {
+    type: number
+    label: "Top X Limit Value"
+    #hidden: yes
+    sql: {% parameter top_x_rank_limit %} ;;
+  }
 
 
   dimension_group: date_key_in_timezone {

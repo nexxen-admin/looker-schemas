@@ -943,6 +943,23 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "#,##0.00"
   }
 
+  # measure: Margin_usd {
+  #   type: number
+  #   label: "Margin USD"
+  #   required_joins: [billing_unified_revenue]
+  #   sql: ((${billing_unified_revenue.locked_final_billable_revenue_after_adj_usd_measure} – ${inv_cost}– ${Total_Data_External_adserver_cost_USD})) ;;
+  #   value_format: "#,##0.00"
+  # }
+
+  # measure: Margin_usd {
+  #   type: number
+  #   label: "Margin USD"
+  #   required_joins: [billing_unified_revenue]
+
+  #   sql: ((${billing_unified_revenue.locked_final_billable_revenue_after_adj_usd_measure} – ${inv_cost}– ${Total_Data_External_adserver_cost_USD})) ;;
+  #   value_format: "#,##0.00"
+  # }
+
   measure:Media_Margin_Vendor_cost {
     type: number
     label: "Media Margin (w/o Vendor cost)"

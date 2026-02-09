@@ -3675,6 +3675,13 @@ hidden: yes
     description: "Barter rebate. Uses direct fact fee for 2026+, calculated % for prior dates."
   }
 
+  measure: traffic_source_fee {
+    type: sum
+    sql: ${TABLE}.sum_of_Traffic_Source_Fee ;;
+    value_format: "$#,##0.00"
+    description: "Cost to Nexxen, applied by specific Traffic Sources, for acquiring or supporting the traffic origin, regardless of which publisher ultimately serves it."
+  }
+
 
   # measure: barter_fee {
   #   type: sum

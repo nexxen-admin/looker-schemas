@@ -50,6 +50,7 @@ view: billing_unified_revenue {
     type: sum
     label: "Final Billable Revenue (Locked)"
     description: "Billable Revenue after Adjustments in Opp Currency (Locked by Finance)"
+    value_format: "$#,##0.00"
     sql: ${TABLE}.locked_final_billable_revenue_after_adj ;;
   }
 
@@ -57,6 +58,7 @@ view: billing_unified_revenue {
     type: sum
     label: "Final Billable Revenue USD (Locked)"
     description: "Billable Revenue after Adjustments in USD  (Locked by Finance)"
+    value_format: "$#,##0.00"
     sql: ${TABLE}.locked_final_billable_revenue_after_adj_usd ;;
   }
 

@@ -1526,7 +1526,7 @@ measure: Nexxen_Inv_Cost_Percent {
   measure:  net_revenue_fdw_cost_w_o_vendor_cost {
     type: number
     label: "Net Revenue (FDW Cost-w/o vendor cost)"
-    sql: ${capped_revenue} - ${fdw_cost} ;;
+    sql: ${capped_revenue_usd} - ${fdw_cost} ;;
     value_format: "#,##0.00"
   }
 
@@ -1540,14 +1540,14 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: net_revenue_capped_rev_fdw_cost {
     type: number
     label: "Net Revenue (Capped Rev-Full Costs)"
-    sql: ${capped_revenue} - ${full_costs_fdw_cost} ;;
+    sql: ${capped_revenue_usd} - ${full_costs_fdw_cost} ;;
     value_format: "#,##0.00"
   }
 
   measure: media_margin_overall {
     type: number
     label: "Media Margin (overall)"
-    sql: (${capped_revenue} - (${fdw_cost}+${vendor_cost}))/${capped_revenue};;
+    sql: (${capped_revenue_usd} - (${fdw_cost}+${vendor_cost}))/${capped_revenue};;
     value_format: "0.00%"
   }
 

@@ -936,9 +936,10 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format_name: percent_2
   }
 
-  measure: number_of_media_margin {
+  measure: Total_Data_External_adserver_cost_USD {
     type: number
-    sql: (${capped_revenue}-${cost}) ;;
+    label: "Total Data & External adserver cost USD"
+    sql: (${fdw_cost}-${inv_cost}) ;;
     value_format: "#,##0.00"
   }
 

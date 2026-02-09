@@ -159,7 +159,7 @@ view: v_dim_employee_pub_ops {
                    ${TABLE}.Employee_Name='Rom Lubianiker' OR ${TABLE}.Employee_Name='Omri Lender' OR
                    ${TABLE}.Employee_Name='Noa Karako' then 'Direct'
 
-              when ${TABLE}.Employee_Name='RevOps' then 'RevOps'
+              when ${TABLE}.Employee_Name='Revops' then 'Revops'
 
               when ${TABLE}.Employee_Name='Matthew De Palo' then 'AU'
 

@@ -586,4 +586,14 @@ view: dim_sfdb_account {
     drill_fields: [id, name]
     hidden: yes
   }
+
+  dimension: account_name_drill_to_related_brand {
+    type: string
+    label: "Account Name (Drill to Related Brand)"
+    description: "Click to drill down into Related Brand details"
+    # Reuses the SQL from the main name field
+    sql: ${name} ;;
+    # Only this specific field will have the drill behavior
+    drill_fields: [name, dim_sfdb_related_accounts.name]
+  }
 }

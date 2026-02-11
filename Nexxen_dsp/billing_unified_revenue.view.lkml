@@ -46,8 +46,25 @@ view: billing_unified_revenue {
     sql: ${TABLE}.locked_final_billable_revenue_after_adj_usd ;;
   }
 
+  # measure: locked_final_billable_revenue_after_adj_measure {
+  #   type: sum
+  #   label: "Final Billable Revenue (Locked)"
+  #   description: "Billable Revenue after Adjustments in Opp Currency (Locked by Finance)"
+  #   value_format: "$#,##0.00"
+  #   sql: ${TABLE}.locked_final_billable_revenue_after_adj ;;
+  # }
+
+  # measure: locked_final_billable_revenue_after_adj_usd_measure {
+  #   type: sum
+  #   label: "Final Billable Revenue USD (Locked)"
+  #   description: "Billable Revenue after Adjustments in USD  (Locked by Finance)"
+  #   value_format: "$#,##0.00"
+  #   sql: ${TABLE}.locked_final_billable_revenue_after_adj_usd ;;
+  # }
+
+
   measure: locked_final_billable_revenue_after_adj_measure {
-    type: sum
+    type: sum_distinct
     label: "Final Billable Revenue (Locked)"
     description: "Billable Revenue after Adjustments in Opp Currency (Locked by Finance)"
     value_format: "$#,##0.00"
@@ -55,7 +72,7 @@ view: billing_unified_revenue {
   }
 
   measure: locked_final_billable_revenue_after_adj_usd_measure {
-    type: sum
+    type: sum_distinct
     label: "Final Billable Revenue USD (Locked)"
     description: "Billable Revenue after Adjustments in USD  (Locked by Finance)"
     value_format: "$#,##0.00"

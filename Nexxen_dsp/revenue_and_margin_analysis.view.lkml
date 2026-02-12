@@ -69,6 +69,19 @@ view: revenue_and_margin_analysis {
     sql: ${TABLE}.related_brand_name ;;
   }
 
+  dimension: account_name_drill_to_related_brand {
+    type: string
+    label: "Account Name (Drill to Related Brand)"
+    description: "Click to drill down into Related Brand details"
+    sql: ${account_name} ;;
+    drill_fields: [
+      related_brand_name,
+      total_revenue,
+      margin_usd,
+      margin_percent
+    ]
+  }
+
   dimension: advertiser_name {
     type: string
     sql: ${TABLE}.advertiser_name ;;

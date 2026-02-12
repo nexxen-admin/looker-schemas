@@ -92,6 +92,40 @@ view: revenue_and_margin_analysis {
     sql: ${TABLE}.date_year ;;
   }
 
+  parameter: top_x_rank_limit {
+    type: unquoted
+    label: "Top X Accounts"
+    view_label: "Dashboard Filters"
+    description: "Select number of top accounts to display"
+    default_value: "5"
+
+    allowed_value: {
+      label: "Top 5"
+      value: "5"
+    }
+    allowed_value: {
+      label: "Top 10"
+      value: "10"
+    }
+    allowed_value: {
+      label: "Top 15"
+      value: "15"
+    }
+    allowed_value: {
+      label: "Top 20"
+      value: "20"
+    }
+  }
+
+  # Use a MEASURE (MAX) to prevent GROUP BY errors on this constant
+  measure: top_x_limit_value {
+    type: number
+    label: "Top X Limit Value"
+    hidden: yes
+    sql: MAX({% parameter top_x_rank_limit %}) ;;
+  }
+
+
   # --- MEASURES (Use SUM to aggregate the pre-calculated rows) ---
 
   measure: total_revenue {

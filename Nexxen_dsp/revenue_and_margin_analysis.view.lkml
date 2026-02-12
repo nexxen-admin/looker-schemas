@@ -121,7 +121,7 @@ view: revenue_and_margin_analysis {
   measure: top_x_limit_value {
     type: number
     label: "Top X Limit Value"
-    hidden: yes
+    #hidden: yes
     sql: MAX({% parameter top_x_rank_limit %}) ;;
   }
 

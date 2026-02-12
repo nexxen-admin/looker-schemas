@@ -1,10 +1,10 @@
 view: revenue_and_margin_analysis {
   derived_table: {
     # Trigger to rebuild this table daily (or whenever your ETL runs)
-    datagroup_trigger: CleanCash_datagroup
+    # datagroup_trigger: CleanCash_datagroup
 
     # Indexes for fast dashboard filtering
-    indexes: ["account_name", "date_month"]
+    # indexes: ["account_name", "date_month"]
 
     # The SQL query to build the table
     sql:

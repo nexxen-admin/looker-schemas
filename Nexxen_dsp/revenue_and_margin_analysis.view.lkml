@@ -44,7 +44,7 @@ view: revenue_and_margin_analysis {
       AND billing_unified_revenue.date_key = CAST(DATE_TRUNC('month', fact_nexxen_dsp.date_key_in_timezone) AS DATE)
 
       -- Filter: Adjust range as needed
-      WHERE fact_nexxen_dsp.date_key_in_timezone >= '2024-01-01'
+      WHERE fact_nexxen_dsp.date_key_in_timezone >= '2025-01-01'
 
       GROUP BY 1, 2, 3, 4, 5
       ;;

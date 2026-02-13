@@ -24,7 +24,7 @@ view: ops_partners_das {
   dimension: CATEGORY {
     type: string
     sql: ${TABLE}.CATEGORY ;;
-    label: "Category"
+    label: "Advertiser Vertical"
   }
 
 
@@ -51,6 +51,42 @@ view: ops_partners_das {
     type: string
     sql: ${TABLE}.MARKET_ID ;;
     label: "Market ID"
+  }
+
+  dimension: SEGMENT_ID {
+    type: number
+    sql: ${TABLE}.segment_id ;;
+    label: "Segment ID"
+  }
+
+  dimension: SEGMENT_NAME {
+    type: string
+    sql: ${TABLE}.segment_name ;;
+    label: "Segment Name"
+  }
+
+  dimension: DATA_CATEGORY_ID {
+    type: string
+    sql: ${TABLE}.data_category_id ;;
+    label: "Data Category ID"
+  }
+
+  dimension: DATA_CATEGORY_NAME {
+    type: string
+    sql: ${TABLE}.data_category_name ;;
+    label: "Data Category Name"
+  }
+
+  dimension: INSERTION_ORDER_ID  {
+    type: number
+    sql: ${TABLE}.insertion_order_id ;;
+    label: "Insertion Order ID"
+  }
+
+  dimension: INSERTION_ORDER_NAME  {
+    type: string
+    sql: ${TABLE}.insertion_order_name ;;
+    label: "Insertion Order Name"
   }
 
   dimension: DATA_TYPE {
@@ -157,7 +193,7 @@ measure: IMPRESSION {
     type: sum
     sql: ${TABLE}.GROSS_REVENUE - COALESCE(${TABLE}.CONTRA_REVENUE, 0) ;;
     value_format: "$#,##0"
-    label: "Gross Retained Revenue"
+    label: "Gross Data Spend"
     description: "Gross Retained Revenue, calculated as gross revenue less contra revenue (e.g., discounts, returns, or allowances)"
   }
 
@@ -165,14 +201,14 @@ measure: IMPRESSION {
     type: sum
     sql: ${TABLE}.ADJUSTED_NET_REVENUE ;;
     value_format: "$#,##0"
-    label: "Net Retained Revenue"
+    label: "Partner Revenue"
   }
 
   measure: TURN_FEE {
     type: sum
     sql: ${TABLE}.TURN_FEE ;;
     value_format: "$#,##0"
-    label: "Turn Fee"
+    label: "Nexxen Retained Revenue"
   }
 
   measure: rev_dev_gross_percentage {
@@ -187,7 +223,7 @@ measure: IMPRESSION {
         / NULLIF(SUM(${TABLE}.GROSS_REVENUE), 0))
       END ;;
     value_format: "0.0%"
-    label: "Net Retained Revenue / Gross Retained Revenue %"
+    label: "Partner Revenue / Gross Data Spend"
   }
 
   measure: CONTRA_REVENUE {
@@ -212,6 +248,12 @@ set: detail {
     PROVIDER_NAME,
     PROVIDER_ID,
     MARKET_ID,
+    SEGMENT_ID,
+    SEGMENT_NAME,
+    DATA_CATEGORY_ID,
+    DATA_CATEGORY_NAME,
+    INSERTION_ORDER_ID,
+    INSERTION_ORDER_NAME,
     CATEGORY,
     DATA_TYPE,
     RESOLVED_DATA_TYPE,

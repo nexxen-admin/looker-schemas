@@ -730,6 +730,18 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "#,##0.00"
   }
 
+  measure: uncapped_revenue_usd {
+    label: "Uncapped Revenue USD"
+    description: "Uncapped Revenue in USD ( USD daily FX rate)"
+    type: sum
+    sql:
+      CASE
+        WHEN ${dim_sfdb_opportunitylineitem.io_currency__c} = 'USD' THEN ${TABLE}.uncapped_revenue
+        WHEN opportunity_exchange_rate.exchange_rate IS NOT NULL THEN ${TABLE}.uncapped_revenue * opportunity_exchange_rate.exchange_rate
+        ELSE ${TABLE}.uncapped_revenue
+      END ;;
+    value_format: "#,##0.00"
+  }
 
   measure: yesterday_capped_revenue {
     type: sum
@@ -932,6 +944,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: media_margin {
     type: number
+    label: "Media Margin (Not USD)"
     sql: (${capped_revenue}-${cost})/nullif(${capped_revenue},0) ;;
     value_format_name: percent_2
   }

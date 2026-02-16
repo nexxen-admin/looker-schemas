@@ -73,7 +73,7 @@ view: deal_split_owner {
     sql: TO_CHAR(TO_TIMESTAMP(${max_database_update_timestamp}), 'YYYY-MM-DD HH24:MI:SS') ;;
     label: "Deal Commision Data DB Update Date"
     html:
-    <div style="font-family: Arial, sans-serif; font-size: 11px; line-height: 1.5; text-align: center; color: #000000;">
+    <div style="font-family: Arial, sans-serif; font-size: 12px; line-height: 1.5; text-align: center; color: #000000;">
       <span style="font-weight: normal; word-spacing: 4px;">Deal Commision Data DB Update Date (UTC)</span><br>
       <span style="word-spacing: 15px;">{{ rendered_value }}</span>
     </div> ;;}

@@ -9,18 +9,19 @@ view: revenue_and_margin_analysis {
           dim_sfdb_account."name" AS account_name,
           v_dim_sfdb_related_account."name" AS related_brand_name,
           dim_dsp_advertiser.advertiser_name AS advertiser_name,
+          dim_dsp_market.market_id AS market_id, -- <--- ADDED FIELD
 
-          -- DATE COLUMN FOR DIMENSION GROUP (Cast to DATE type)
-          CAST(DATE_TRUNC('month', fact_nexxen_dsp.date_key_in_timezone) AS DATE) AS join_date,
+      -- DATE COLUMN FOR DIMENSION GROUP (Cast to DATE type)
+      CAST(DATE_TRUNC('month', fact_nexxen_dsp.date_key_in_timezone) AS DATE) AS join_date,
 
-          -- Keep existing string columns if needed for specific logic, but dimension_group replaces them mostly
-          TO_CHAR(DATE_TRUNC('month', fact_nexxen_dsp.date_key_in_timezone), 'YYYY-MM') AS date_month,
+      -- Keep existing string columns if needed for specific logic
+      TO_CHAR(DATE_TRUNC('month', fact_nexxen_dsp.date_key_in_timezone), 'YYYY-MM') AS date_month,
 
-          -- Measures
-          COALESCE(SUM(fact_nexxen_dsp.inventory_cost), 0) AS inventory_cost,
-          COALESCE(SUM(fact_nexxen_dsp.fdw_cost), 0) AS fdw_cost,
-          COALESCE(SUM(fact_nexxen_dsp.impressions), 0) AS impressions,
-          SUM(billing_unified_revenue.locked_final_billable_revenue_after_adj_usd) AS revenue_usd
+      -- Measures
+      COALESCE(SUM(fact_nexxen_dsp.inventory_cost), 0) AS inventory_cost,
+      COALESCE(SUM(fact_nexxen_dsp.fdw_cost), 0) AS fdw_cost,
+      COALESCE(SUM(fact_nexxen_dsp.impressions), 0) AS impressions,
+      SUM(billing_unified_revenue.locked_final_billable_revenue_after_adj_usd) AS revenue_usd
 
       FROM BI_DSP.fact_nexxen_dsp AS fact_nexxen_dsp
 
@@ -29,6 +30,10 @@ view: revenue_and_margin_analysis {
 
       INNER JOIN BI_DSP.dim_dsp_advertiser AS dim_dsp_advertiser
       ON fact_nexxen_dsp.advertiser_id_key = dim_dsp_advertiser.advertiser_id_key
+
+      -- <--- ADDED JOIN TO MARKET TABLE
+      INNER JOIN BI_DSP.dim_dsp_market AS dim_dsp_market
+      ON fact_nexxen_dsp.market_id_key = dim_dsp_market.market_id_key
 
       INNER JOIN BI_DSP.dim_sfdb_opportunity AS dim_sfdb_opportunity
       ON fact_nexxen_dsp.opportunity_id_key = dim_sfdb_opportunity.opportunity_id_key
@@ -45,10 +50,16 @@ view: revenue_and_margin_analysis {
 
       -- Filter: Adjust range as needed
       WHERE fact_nexxen_dsp.date_key_in_timezone >= '2025-01-01'
+      AND (dim_dsp_market.market_id ) IN (-2, 58, 884, 1487, 1637, 1792, 2050, 2067, 2148, 2164, 2193, 2196, 2240)
 
-      GROUP BY 1, 2, 3, 4, 5
+      -- Updated Group By to include market_id (now 6 columns total in dimensions)
+      GROUP BY 1, 2, 3, 4, 5, 6
       ;;
   }
+
+
+
+
 
   # --- DIMENSIONS ---
 
@@ -90,6 +101,12 @@ view: revenue_and_margin_analysis {
       margin_usd,
       margin_percent
     ]
+  }
+
+  dimension: market_id {
+    type: number
+    label: "Market ID"
+    sql: ${TABLE}.market_id ;;
   }
 
   dimension: advertiser_name {

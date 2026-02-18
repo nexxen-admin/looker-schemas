@@ -1573,28 +1573,28 @@ measure: Nexxen_Inv_Cost_Percent {
     type: sum
     label: "TPCA"
     sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.TPCA ELSE 0 END ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
   }
 
   measure: FPCA {
     type: sum
     label: "FPCA"
      sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.FPCA ELSE 0 END ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
   }
 
   measure: audience_data_cost {
     type: sum
     label: "Audience Data Cost"
     sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.audience_data_cost ELSE 0 END ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
   }
 
   measure: content_data_cost {
     type: sum
     label: "Content Data Cost"
     sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.content_data_cost ELSE 0 END ;;
-    value_format: "$#,##0"
+    value_format: "$#,##0.00"
   }
 
   # measure: primary_kpi_result_old {

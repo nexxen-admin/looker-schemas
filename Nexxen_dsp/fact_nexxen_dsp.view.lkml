@@ -1572,6 +1572,7 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: TPCA {
     type: sum
     label: "TPCA"
+    description: "Turn Third Party Cost"
     sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.TPCA ELSE 0 END ;;
     value_format: "$#,##0.00"
   }
@@ -1579,6 +1580,7 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: FPCA {
     type: sum
     label: "FPCA"
+    description: "Turn First Party Cost"
      sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.FPCA ELSE 0 END ;;
     value_format: "$#,##0.00"
   }

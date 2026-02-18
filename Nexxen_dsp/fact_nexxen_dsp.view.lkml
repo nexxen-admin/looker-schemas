@@ -1599,6 +1599,14 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "$#,##0.00"
   }
 
+  measure: data_cost_adjustment_calculated {
+    type: sum
+    label: "Raw Adjusted Net Revenue"
+    description: "DCOM Adjusted Net Revenue"
+    sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.data_cost_adjustment_calculated ELSE 0 END ;;
+    value_format: "$#,##0.00"
+  }
+
   # measure: primary_kpi_result_old {
   #   label: "Primary KPI Result"
   #   type: number

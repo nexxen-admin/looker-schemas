@@ -1,6 +1,19 @@
 view: yearly_consolidated_revenue_by_region_with_amobee {
   derived_table: {
-    sql: Select  year as Year,
+    sql:
+
+    Select year as Year,
+          quarter as Quarter,
+          region,
+          category,
+          sum(revenue) as Revenue,
+          sum(cost) as Cost
+    From bi.svc_LOCKED_2025_yearly_consolidated_revenue_by_region_with_amobee
+    Group by 1, 2, 3, 4
+    Order by 1, 2, 3, 4
+
+  /*
+    Select  year as Year,
   quarter as Quarter,
   case when region not in ('Unknown','APAC','EMEA','Americas','Other') then 'Other'
         else region end as region,
@@ -111,7 +124,7 @@ Where event_date >= '2023-01-01'
   and event_date < CURRENT_DATE()
 Group by 1, 2, 3, 4
 Order by 1, 2, 3, 4
-
+*/
 
        ;;
   }

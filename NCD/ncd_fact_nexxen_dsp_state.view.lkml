@@ -341,6 +341,12 @@ measure: ncd_ctr {
     value_format: "#,##0"
     sql: ${TABLE}.actions ;;
   }
+  measure: rate{
+    type: number
+    description: "Actions divided by impressions"
+    value_format: "0.00"
+    sql: CASE WHEN ${impressions}=0 THEN 0 ELSE ${actions}/${impressions} END;;
+  }
   measure: cta {
     type: sum
     label: "CTA"
@@ -861,6 +867,18 @@ measure: html_kpi_delivered_units {
             </div>;;
 }
 
+  measure: html_kpi_impressions {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Delivered Impressions
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ impressions._rendered_value }}
+              </div>
+            </div>;;
+  }
+
 
 measure: html_kpi_vcr {
   type: count
@@ -935,26 +953,26 @@ measure: html_kpi_ctr {
             </div>;;
 }
 
-  measure: html_kpi_cta {
+  measure: html_kpi_actions {
     type: count
     hidden: yes
     html:
            <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-              CTA
+              RFI Actions
               <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
-                {{ cta._rendered_value }}
+                {{ actions._rendered_value }}
               </div>
             </div>;;
   }
 
-  measure: html_kpi_vta {
+  measure: html_kpi_rate {
     type: count
     hidden: yes
     html:
            <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
-              VTA
+              RFI Rate
               <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
-                {{ vta._rendered_value }}
+                {{ rate._rendered_value }}
               </div>
             </div>;;
   }

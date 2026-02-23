@@ -1651,7 +1651,7 @@ measure: Nexxen_Inv_Cost_Percent {
     label: "RevShare Data Cost"
     description: "Amount of revenue that is shared with a partner/data provider as part of a revenue-sharing agreement."
     value_format_name: usd
-    sql: (${TPCA} + ${ FPCA} + ${audience_data_cost} + ${content_data_cost}) - ${data_cost_adjustment_calculated} ;;
+    sql: (${TPCA}+${FPCA}+${audience_data_cost}+${content_data_cost})-${data_cost_adjustment_calculated} ;;
   }
 
 

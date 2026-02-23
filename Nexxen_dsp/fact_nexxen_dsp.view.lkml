@@ -1601,8 +1601,8 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: data_cost_adjustment_calculated {
     type: sum
-    label: "Raw Adjusted Net Revenue"
-    description: "DCOM Adjusted Net Revenue"
+    label: "Raw Net Data Cost"
+    description: "Data Cost after rev/share (DCOM Adjusted Net Revenue)"
     sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.data_cost_adjustment_calculated ELSE 0 END ;;
     value_format: "$#,##0.00"
   }
@@ -1617,25 +1617,25 @@ measure: Nexxen_Inv_Cost_Percent {
   #   label: "Net Revenue (Final Billable) USD"
   #   description: "Net Revenue in USD calculated based on Final Billable Revenue in USD (including Billing adjustments)"
   #   value_format_name: usd
-  #   sql: ${locked_final_billable_revenue_usd} - ${inventory_cost} - ${net_data_cost} ;;
+  #   sql: ${billing_unified_revenue.locked_final_billable_revenue_after_adj_usd_measure} - ${inventory_cost} - ${data_cost_adjustment_calculated} ;;
   # }
 
-  # measure: net_revenue_capped_usd {
-  #   type: number
-  #   label: "Net Revenue (Capped) USD"
-  #   description: "Net Revenue in USD calculated based on Capped Revenue in USD"
-  #   value_format_name: usd
-  #   sql: ${capped_revenue_usd} - ${inventory_cost} - ${net_data_cost} ;;
-  # }
+  measure: net_revenue_capped_usd {
+    type: number
+    label: "Net Revenue (Capped) USD"
+    description: "Net Revenue in USD calculated based on Capped Revenue in USD"
+    value_format_name: usd
+    sql: ${capped_revenue_usd} - ${inventory_cost} - ${data_cost_adjustment_calculated} ;;
+  }
 
-  # measure: margin_percent_capped {
-  #   type: number
-  #   label: "Margin % Capped"
-  #   description: "The profit margin calculated using the capped revenue amount"
-  #   value_format_name: percent_2
-  #   # Using NULLIF to prevent division by zero errors in SQL
-  #   sql: 1.0 * ${net_revenue_capped_usd} / NULLIF(${capped_revenue_usd}, 0) ;;
-  # }
+  measure: margin_percent_capped {
+    type: number
+    label: "Margin % Capped"
+    description: "The profit margin calculated using the capped revenue amount"
+    value_format_name: percent_2
+    # Using NULLIF to prevent division by zero errors in SQL
+    sql: 1.0 * ${net_revenue_capped_usd} / NULLIF(${capped_revenue_usd}, 0) ;;
+  }
 
   # measure: margin_percent_final {
   #   type: number
@@ -1643,16 +1643,16 @@ measure: Nexxen_Inv_Cost_Percent {
   #   description: "The profit margin calculated using the final billable revenue amount"
   #   value_format_name: percent_2
   #   # Using NULLIF to prevent division by zero errors in SQL
-  #   sql: 1.0 * ${net_revenue_final_billable_usd} / NULLIF(${final_billable_revenue_usd}, 0) ;;
+  #   sql: 1.0 * ${net_revenue_final_billable_usd} / NULLIF(${billing_unified_revenue.locked_final_billable_revenue_after_adj_usd_measure}, 0) ;;
   # }
 
-  # measure: revshare_data_cost {
-  #   type: number
-  #   label: "RevShare Data Cost"
-  #   description: "Amount of revenue that is shared with a partner/data provider as part of a revenue-sharing agreement."
-  #   value_format_name: usd
-  #   sql: (${tpca} + ${fpca} + ${audience_data_cost} + ${content_data_cost}) - ${net_data_cost} ;;
-  # }
+  measure: revshare_data_cost {
+    type: number
+    label: "RevShare Data Cost"
+    description: "Amount of revenue that is shared with a partner/data provider as part of a revenue-sharing agreement."
+    value_format_name: usd
+    sql: (${TPCA} + ${ FPCA} + ${audience_data_cost} + ${content_data_cost}) - ${data_cost_adjustment_calculated} ;;
+  }
 
 
 

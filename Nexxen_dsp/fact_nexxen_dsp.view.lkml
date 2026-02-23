@@ -1654,6 +1654,10 @@ measure: Nexxen_Inv_Cost_Percent {
   #   sql: (${tpca} + ${fpca} + ${audience_data_cost} + ${content_data_cost}) - ${net_data_cost} ;;
   # }
 
+
+
+
+
   # measure: primary_kpi_result_old {
   #   label: "Primary KPI Result"
   #   type: number

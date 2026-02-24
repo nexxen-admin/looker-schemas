@@ -344,8 +344,8 @@ measure: ncd_ctr {
   measure: rate{
     type: number
     description: "Actions divided by impressions"
-    value_format: "0.00"
-    sql: CASE WHEN ${impressions}=0 THEN 0 ELSE ${actions}/${impressions} END;;
+    value_format: "0.000%"
+    sql: CASE WHEN ${impressions}=0 THEN 0 ELSE ${actions}*100/${impressions} END;;
   }
   measure: cta {
     type: sum
@@ -441,6 +441,22 @@ measure: ncd_ctr {
     label: "Household Shopping Cart VTA"
     value_format: "#,##0"
     sql: ${TABLE}.household_shopping_cart_value_VTA ;;
+  }
+
+  measure: cpa {
+    type: number
+    label: "CPA"
+    description: "Cost per action - delivered spend (advertiser invoice) divided by actions."
+    value_format: "0.00"
+    sql: CASE WHEN ${actions}=0 THEN 0 ELSE ${Delivered_Spend}/${actions} END;;
+  }
+
+  measure: roas {
+    type: number
+    label: "ROAS"
+    description: "Cross device shopping cart value divided by delivered spend (advertiser invoice)."
+    value_format: "0.00"
+    sql: CASE WHEN ${Delivered_Spend}=0 THEN 0 ELSE ${cross_device_shopping_cart_total}/${Delivered_Spend} END ;;
   }
 
 #--------------------------------------------------pop-------------------------------------------------------
@@ -973,6 +989,30 @@ measure: html_kpi_ctr {
               RFI Rate
               <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
                 {{ rate._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: html_kpi_cpa {
+    type: count
+    # hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              CPA
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ cpa._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: html_kpi_roas {
+    type: count
+    # hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              ROAS
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ roas._rendered_value }}
               </div>
             </div>;;
   }

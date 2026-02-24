@@ -1607,6 +1607,12 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "$#,##0.00"
   }
 
+  measure: adjusted_net_revenue {
+    type: sum
+    label: "Adjusted Net Revenue"
+    sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.adjusted_net_revenue ELSE 0 END ;;
+    value_format: "$#,##0.00"
+  }
 
   # ==========================================
   # Margin Fields - Measures

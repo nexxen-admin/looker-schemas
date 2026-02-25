@@ -343,8 +343,9 @@ measure: ncd_ctr {
   }
   measure: rate{
     type: number
+    label: "RFI Rate"
     description: "Actions divided by impressions"
-    value_format: "0.000%"
+    value_format: "0.00%"
     sql: CASE WHEN ${impressions}=0 THEN 0 ELSE ${actions}*100/${impressions} END;;
   }
   measure: cta {
@@ -447,7 +448,7 @@ measure: ncd_ctr {
     type: number
     label: "CPA"
     description: "Cost per action - delivered spend (advertiser invoice) divided by actions."
-    value_format: "0.00"
+    value_format: "$0.00"
     sql: CASE WHEN ${actions}=0 THEN 0 ELSE ${Delivered_Spend}/${actions} END;;
   }
 
@@ -455,7 +456,7 @@ measure: ncd_ctr {
     type: number
     label: "ROAS"
     description: "Cross device shopping cart value divided by delivered spend (advertiser invoice)."
-    value_format: "0.00"
+    value_format: "0.00%"
     sql: CASE WHEN ${Delivered_Spend}=0 THEN 0 ELSE ${cross_device_shopping_cart_total}/${Delivered_Spend} END ;;
   }
 

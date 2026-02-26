@@ -69,7 +69,7 @@ dimension: day_of_campaign {
 
 dimension: daily_goal{
   type: number
-  sql: ${TABLE}.units__c/${campaign_length} ;;
+  sql: NULLIF(${TABLE}.units__c,0)/${campaign_length} ;;
   hidden: yes
 }
 

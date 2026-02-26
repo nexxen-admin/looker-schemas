@@ -38,6 +38,12 @@ explore: billing_international_media_io {
   label: "Billing International"
 }
 
+
+explore: media_io_billing_international {
+  label:"New Billing International"
+}
+
+
 explore: monthly_billing_override_data {
   required_access_grants: [billing_report_group]
   label: "Monthly Billing Override Data"

@@ -39,9 +39,9 @@ explore: billing_international_media_io {
 }
 
 
-explore: media_io_billing_international {
-  label:"New Billing International"
-}
+# explore: media_io_billing_international {
+#   label:"New Billing International"
+# }
 
 
 explore: monthly_billing_override_data {

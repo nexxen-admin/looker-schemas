@@ -134,6 +134,7 @@ view: fact_target_forecast_strategy_summary {
   dimension: Strat_Sales_RVP {
     type: string
     sql: CASE WHEN ${TABLE}.seller='Taylor Kiefer' THEN 'Strat Sales - East'
+    WHEN ${cs_sales_team} ILIKE '%Strat Services%' THEN ${cs_sales_team}
     ELSE CASE WHEN ${forecast_dim_sfdb_user.RVP_Sales_team}!='Unknown' THEN  ${forecast_dim_sfdb_user.RVP_Sales_team}
     ELSE ${TABLE}.Strat_Sales_RVP END END;;
     drill_fields: [revenue_line, Strat_Sales_Team]

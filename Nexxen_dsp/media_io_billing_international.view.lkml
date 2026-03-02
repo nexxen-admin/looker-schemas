@@ -323,6 +323,18 @@ view: media_io_billing_international {
     type: number
     sql: ${TABLE}.quantity ;;
   }
+  dimension: percent25_events {
+    type: number
+    sql: ${TABLE}.percent25_events ;;
+  }
+  dimension: percent50_events {
+    type: number
+    sql: ${TABLE}.percent50_events ;;
+  }
+  dimension: percent75_events {
+    type: number
+    sql: ${TABLE}.percent75_events ;;
+  }
   dimension: po_currency {
     type: string
     sql: ${TABLE}.po_currency ;;
@@ -447,7 +459,7 @@ view: media_io_billing_international {
     type: number
     sql: ${TABLE}.undiscounted_spend ;;
   }
-  dimension: unit_ad_ops_override_1_p {
+  dimension: unit_ad_ops_override_1p {
     label: "1P Unit after Ad Ops Override"
     type: number
     sql: ${TABLE}.Unit_AdOps_Override_1P ;;

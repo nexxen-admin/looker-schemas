@@ -267,14 +267,14 @@ view: media_io_billing_international {
     type: string
     sql: ${TABLE}.po_currency ;;
   }
-  dimension: po_name {
-    type: string
-    sql: ${TABLE}.po_name ;;
-  }
-  dimension: po_number {
-    type: string
-    sql: ${TABLE}.po_number ;;
-  }
+  # dimension: po_name {
+  #   type: string
+  #   sql: ${TABLE}.po_name ;;
+  # }
+  # dimension: po_number {
+  #   type: string
+  #   sql: ${TABLE}.po_number ;;
+  # }
   dimension: price_type_name {
     type: string
     sql: ${TABLE}.price_type_name ;;
@@ -315,14 +315,14 @@ view: media_io_billing_international {
     type: string
     sql: ${TABLE}.related_brand_name ;;
   }
-  dimension: remaining_diff_between_1_p_to_billing_3_p_vs_1_p_discrepancy {
-    type: number
-    sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy ;;
-  }
-  dimension: remaining_diff_between_1_p_to_billing_3_p_vs_1_p_discrepancy_usd {
-    type: number
-    sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy_usd ;;
-  }
+  # dimension: remaining_diff_between_1_p_to_billing_3_p_vs_1_p_discrepancy {
+  #   type: number
+  #   sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy ;;
+  # }
+  # dimension: remaining_diff_between_1_p_to_billing_3_p_vs_1_p_discrepancy_usd {
+  #   type: number
+  #   sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy_usd ;;
+  # }
   dimension: revenue_adj {
     type: number
     sql: ${TABLE}.revenue_adj ;;
@@ -355,7 +355,7 @@ view: media_io_billing_international {
     type: string
     sql: ${TABLE}."type" ;;
   }
-  dimension: uncappe_d_revenue_adj_adops {
+  dimension: uncapped_revenue_adj_adops {
     type: number
     sql: ${TABLE}.UncappeD_Revenue_adj_adops ;;
   }
@@ -363,10 +363,10 @@ view: media_io_billing_international {
     type: number
     sql: ${TABLE}.uncapped_revenue_after_AdOps_Override ;;
   }
-  dimension: uncapped_revenue_bedore_ad_ops_override {
-    type: number
-    sql: ${TABLE}.uncapped_revenue_bedore_AdOps_Override ;;
-  }
+  # dimension: uncapped_revenue_bedore_ad_ops_override {
+  #   type: number
+  #   sql: ${TABLE}.uncapped_revenue_bedore_AdOps_Override ;;
+  # }
   dimension: under_delivery_budget {
     type: number
     sql: ${TABLE}.under_delivery_budget ;;
@@ -407,15 +407,14 @@ view: media_io_billing_international {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	account_name,
-	opportunity_name,
-	related_brand_name,
-	price_type_name,
-	line_item_name,
-	account_manager_name,
-	po_name,
-	opportunity_owner_name
-	]
+  account_name,
+  opportunity_name,
+  related_brand_name,
+  price_type_name,
+  line_item_name,
+  account_manager_name,
+  opportunity_owner_name
+  ]
   }
 
 }

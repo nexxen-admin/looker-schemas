@@ -39,9 +39,15 @@ explore: billing_international_media_io {
 }
 
 
-# explore: media_io_billing_international {
-#   label:"New Billing International"
-# }
+explore: media_io_billing_international {
+  label:"New Billing International"
+  hidden: yes
+}
+
+explore: monthly_international_billing_locked_report {
+  label:"International Locked Report"
+  hidden: yes
+}
 
 
 explore: monthly_billing_override_data {

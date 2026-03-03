@@ -228,6 +228,48 @@ explore: fact_nexxen_dsp  {
     sql_on: ${fact_nexxen_dsp.environment_key}=${dim_dsp_environment.environment_key} ;;
   }
 
+  join: dim_dsp_adstxt_seller_status {
+    type: left_outer
+    view_label: "Adstxt Seller Status"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.adstxt_seller_status_key}=${dim_dsp_adstxt_seller_status.adstxt_seller_status_key} ;;
+  }
+
+  join: dim_dsp_adstxt_seller_relationship {
+    type: left_outer
+    view_label: "Adstxt Seller Relationship"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.adstxt_seller_relationship_key}=${dim_dsp_adstxt_seller_relationship.adstxt_seller_relationship_key} ;;
+  }
+
+  join: dim_dsp_os_type {
+    type: left_outer
+    view_label: "OS Type"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.os_type_key}=${dim_dsp_os_type.os_type_key} ;;
+  }
+
+  join: dim_dsp_exchange_line_item {
+    type: left_outer
+    view_label: "Exchange Line Item"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.exchange_line_item_key}=${dim_dsp_exchange_line_item.exchange_line_item_key} ;;
+  }
+
+  join: dim_dsp_app {
+    type: left_outer
+    view_label: "App"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.app_id_key}=${dim_dsp_app.app_id_key} ;;
+  }
+
+  join: dim_dsp_tld {
+    type: left_outer
+    view_label: "TLD"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.tld_key}=${dim_dsp_tld.tld_key} ;;
+  }
+
   join: dim_dsp_format {
     type: left_outer
     view_label: "Request Attributes"

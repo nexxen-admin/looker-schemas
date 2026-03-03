@@ -15,6 +15,7 @@ view: dim_dsp_device_type {
   }
   dimension: device_type {
     type: string
+    label: "Device Type"
     sql: ${TABLE}.device_type ;;
   }
   dimension: device_type_category {

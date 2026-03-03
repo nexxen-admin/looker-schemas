@@ -1,6 +1,16 @@
-view: dim_dsp_deal {
-  sql_table_name: BI_DSP.dim_dsp_deal ;;
+view: dim_dsp_adstxt_seller_relationship {
+  sql_table_name: BI_DSP.dim_dsp_adstxt_seller_relationship ;;
 
+  dimension: adstxt_seller_relationship {
+    type: string
+    label: "AdsTxt Seller Relationship"
+    sql: ${TABLE}.adstxt_seller_relationship ;;
+  }
+  dimension: adstxt_seller_relationship_key {
+    type: number
+    sql: ${TABLE}.adstxt_seller_relationship_key ;;
+    hidden: yes
+  }
   dimension_group: db_created {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
@@ -13,32 +23,10 @@ view: dim_dsp_deal {
     sql: ${TABLE}.db_updated_date ;;
     hidden: yes
   }
-  dimension: deal_id {
-    type: string
-    sql: ${TABLE}.deal_id ;;
-  }
-
-  dimension: deal_name {
-    type: string
-    label: "Deal Name"
-    sql: ${TABLE}.deal_name ;;
-  }
-
-  dimension: deal_type_name {
-    type: string
-    label: "Deal Type Name"
-    sql: ${TABLE}.deal_type_name ;;
-  }
-
-  dimension: deal_key {
-    type: number
-    sql: ${TABLE}.deal_key ;;
-    hidden: yes
-  }
   dimension: ri_info {
     type: string
     sql: ${TABLE}.ri_info ;;
-    hidden:  yes
+    hidden: yes
   }
   measure: count {
     type: count

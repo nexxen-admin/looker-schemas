@@ -32,6 +32,49 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: adstxt_seller_status_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.adstxt_seller_status_key ;;
+    hidden: yes
+  }
+
+  dimension: adstxt_seller_relationship_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.adstxt_seller_relationship_key ;;
+    hidden: yes
+  }
+
+  dimension: app_id_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.app_id_key ;;
+    hidden: yes
+  }
+
+  dimension: os_type_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.os_type_key ;;
+    hidden: yes
+  }
+
+  dimension: exchange_line_item_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.exchange_line_item_key ;;
+    hidden: yes
+  }
+
+  dimension: tld_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.tld_key ;;
+    hidden: yes
+  }
+
+
   dimension: creative_size_key {
     type: number
     value_format_name: id

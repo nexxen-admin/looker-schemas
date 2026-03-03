@@ -23,6 +23,7 @@ view: media_io_billing_international {
   }
   dimension: adj_3p_cost {
     type: number
+    label: "3P Cost Override"
     sql: ${TABLE}.Adj_3P_Cost ;;
   }
   dimension: adjustment_billable_actions {

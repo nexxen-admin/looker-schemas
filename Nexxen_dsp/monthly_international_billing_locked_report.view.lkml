@@ -161,6 +161,7 @@ view: monthly_international_billing_locked_report {
 
   dimension: adj_3p_cost {
     type: number
+    label: "3P Cost Override"
     sql: ${TABLE}.adj_3p_cost ;;
   }
   dimension: adjustment_billable_actions {

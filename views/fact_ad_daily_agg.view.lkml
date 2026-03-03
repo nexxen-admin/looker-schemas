@@ -48,6 +48,15 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_cm_fee ;;
   }
 
+  measure: platform_fee {
+    type: sum
+    label: "Exchange Platform Fee"
+    description: "Exchange Platform Fee represents the cost charged to third-party SSPs for use of Nexxen’s Exchange technology. The fee is calculated as a percentage of SSP Cost of Goods Sold (COGS) based on Supply Operations–configured rates and aligns with the Daily Revenue Report."
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_platform_fee ;;
+  }
+
   measure: Change_PubReq{
     type: number
     group_label: "Time Shifted Measures"

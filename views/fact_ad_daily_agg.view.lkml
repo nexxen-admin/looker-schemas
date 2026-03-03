@@ -57,6 +57,24 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_platform_fee ;;
   }
 
+  measure: cogs_adjustment {
+    type: sum
+    label: "Exchange COGS Adjustment"
+    description: "Represents a percentage-based cost (COGS) adjustment applied at the DSP account level to align reported Exchange costs with actual receivables. Adjustments are configured according to Finance and align with the Daily Revenue Report."
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_cogs_adjustment ;;
+  }
+
+  measure: revenue_adjustment {
+    type: sum
+    label: "Exchange Revenue Adjustment"
+    description: "Represents a percentage-based revenue adjustment applied at the DSP account level to align reported Exchange revenue with actual receivables. Adjustments are configured according to Finance and align with the Daily Revenue Report."
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_revenue_adjustment  ;;
+  }
+
   measure: Change_PubReq{
     type: number
     group_label: "Time Shifted Measures"

@@ -60,6 +60,13 @@ view: dim_deal {
     sql: ${TABLE}.Deal_Bid_Floor ;;
   }
 
+  dimension: barter_fee_pct {
+    type: number
+    description: "The percentage rate configured in the Exchange platform that determines how much of eligible media spend is assessed as a barter fee for a given deal"
+    sql: ${TABLE}.barter_fee_pct ;;
+    value_format: "0\%"
+  }
+
   dimension: deal_data_fee {
     description: "when creating a deal which take use of data targeting or 3rd party vendor,
                   there can be an extra charge to the cost of the bid"

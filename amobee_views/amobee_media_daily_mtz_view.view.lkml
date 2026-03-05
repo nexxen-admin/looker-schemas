@@ -1,11 +1,11 @@
 view: amobee_media_daily_mtz_view {
   sql_table_name: SunFlower.amobee_media_daily_mtz_view ;;
 
-  dimension_group: _ {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.__time ;;
-  }
+  # dimension_group: _ {
+  #   type: time
+  #   timeframes: [raw, time, date, week, month, quarter, year]
+  #   sql: ${TABLE}.__time ;;
+  # }
   dimension: acc_100pct_vis_aud_sec {
     type: number
     sql: ${TABLE}.acc_100pct_vis_aud_sec ;;
@@ -34,10 +34,10 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.ad_format_id ;;
   }
-  dimension: ad_group_id {
-    type: number
-    sql: ${TABLE}.ad_group_id ;;
-  }
+  # dimension: ad_group_id {
+  #   type: number
+  #   sql: ${TABLE}.ad_group_id ;;
+  # }
   dimension: ad_id {
     type: number
     sql: ${TABLE}.ad_id ;;
@@ -62,10 +62,10 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.advertiser_local_currency_id ;;
   }
-  dimension: advertiser_name {
-    type: string
-    sql: ${TABLE}.advertiser_name ;;
-  }
+  # dimension: advertiser_name {
+  #   type: string
+  #   sql: ${TABLE}.advertiser_name ;;
+  # }
   dimension: app_id {
     type: string
     sql: ${TABLE}.app_id ;;
@@ -98,14 +98,14 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.browser_type ;;
   }
-  dimension: campaign_id {
-    type: number
-    sql: ${TABLE}.campaign_id ;;
-  }
-  dimension: campaign_name {
-    type: string
-    sql: ${TABLE}.campaign_name ;;
-  }
+  # dimension: campaign_id {
+  #   type: number
+  #   sql: ${TABLE}.campaign_id ;;
+  # }
+  # dimension: campaign_name {
+  #   type: string
+  #   sql: ${TABLE}.campaign_name ;;
+  # }
   dimension: city_id {
     type: number
     sql: ${TABLE}.city_id ;;
@@ -126,22 +126,22 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.county_id ;;
   }
-  dimension: cpa_goal {
-    type: number
-    sql: ${TABLE}.cpa_goal ;;
-  }
-  dimension: cpc_goal {
-    type: number
-    sql: ${TABLE}.cpc_goal ;;
-  }
+  # dimension: cpa_goal {
+  #   type: number
+  #   sql: ${TABLE}.cpa_goal ;;
+  # }
+  # dimension: cpc_goal {
+  #   type: number
+  #   sql: ${TABLE}.cpc_goal ;;
+  # }
   dimension: creative_id {
     type: number
     sql: ${TABLE}.creative_id ;;
   }
-  dimension: creative_name {
-    type: string
-    sql: ${TABLE}.creative_name ;;
-  }
+  # dimension: creative_name {
+  #   type: string
+  #   sql: ${TABLE}.creative_name ;;
+  # }
   dimension: creative_size {
     type: string
     sql: ${TABLE}.creative_size ;;
@@ -162,27 +162,27 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.deal_id ;;
   }
-  dimension: deal_name {
-    type: string
-    sql: ${TABLE}.deal_name ;;
-  }
+  # dimension: deal_name {
+  #   type: string
+  #   sql: ${TABLE}.deal_name ;;
+  # }
   dimension: deal_type_number {
     hidden: yes
     type: number
     sql: ${TABLE}.deal_type ;;
   }
-  dimension: deal_type {
-    hidden: yes
-    type: string
-    sql: CASE WHEN ${TABLE}.line_item_name ilike '%_OE%' THEN 'Open'
-              WHEN ${TABLE}.line_item_name ilike '%_PMP%' THEN 'PMP'
-              ELSE 'Unknown' END ;;
-  }
-  dimension: deal_type_name {
-    hidden: yes
-    type: string
-    sql: ${TABLE}.deal_type_name ;;
-  }
+  # dimension: deal_type {
+  #   hidden: yes
+  #   type: string
+  #   sql: CASE WHEN ${TABLE}.line_item_name ilike '%_OE%' THEN 'Open'
+  #             WHEN ${TABLE}.line_item_name ilike '%_PMP%' THEN 'PMP'
+  #             ELSE 'Unknown' END ;;
+  # }
+  # dimension: deal_type_name {
+  #   hidden: yes
+  #   type: string
+  #   sql: ${TABLE}.deal_type_name ;;
+  # }
   dimension: device_manufacturer {
     type: string
     sql: ${TABLE}.device_manufacturer ;;
@@ -212,11 +212,11 @@ view: amobee_media_daily_mtz_view {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.event_time ;;
   }
-  dimension_group: event_time_mtz {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.event_time_mtz ;;
-  }
+  # dimension_group: event_time_mtz {
+  #   type: time
+  #   timeframes: [raw, time, date, week, month, quarter, year]
+  #   sql: ${TABLE}.event_time_mtz ;;
+  # }
   dimension: exchange_fee {
     type: number
     sql: ${TABLE}.exchange_fee ;;
@@ -233,14 +233,14 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.ext_app ;;
   }
-  dimension: external_package_id {
-    type: string
-    sql: ${TABLE}.external_package_id ;;
-  }
-  dimension: external_tpa_id {
-    type: string
-    sql: ${TABLE}.external_tpa_id ;;
-  }
+  # dimension: external_package_id {
+  #   type: string
+  #   sql: ${TABLE}.external_package_id ;;
+  # }
+  # dimension: external_tpa_id {
+  #   type: string
+  #   sql: ${TABLE}.external_tpa_id ;;
+  # }
   dimension: format {
     type: string
     sql: ${TABLE}."format" ;;
@@ -251,7 +251,7 @@ view: amobee_media_daily_mtz_view {
   }
   dimension: gross_video_ad_call {
     type: number
-    sql: ${TABLE}.gross_video_ad_call ;;
+    sql: ${TABLE}.gross_video_ad_call_events ;;
   }
   dimension: home_market_name {
     type: string
@@ -271,7 +271,7 @@ view: amobee_media_daily_mtz_view {
   }
   dimension: household_view_through_action {
     type: number
-    sql: ${TABLE}.household_view_through_action ;;
+    sql: ${TABLE}.household_view_through_actions ;;
   }
   dimension: household_vta_value {
     type: number
@@ -289,10 +289,10 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.insertion_order_id ;;
   }
-  dimension: insertion_order_name {
-    type: string
-    sql: ${TABLE}.insertion_order_name ;;
-  }
+  # dimension: insertion_order_name {
+  #   type: string
+  #   sql: ${TABLE}.insertion_order_name ;;
+  # }
   dimension: inventory_source_id {
     type: number
     sql: ${TABLE}.inventory_source_id ;;
@@ -301,32 +301,32 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.inventory_source_name ;;
   }
-  dimension: io_current_budget {
-    type: number
-    sql: ${TABLE}.io_current_budget ;;
-  }
-  dimension_group: io_end {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.io_end_date ;;
-  }
-  dimension_group: io_start {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.io_start_date ;;
-  }
-  dimension: is_budget_optimized {
-    type: number
-    sql: ${TABLE}.is_budget_optimized ;;
-  }
+  # dimension: io_current_budget {
+  #   type: number
+  #   sql: ${TABLE}.io_current_budget ;;
+  # }
+  # dimension_group: io_end {
+  #   type: time
+  #   timeframes: [raw, time, date, week, month, quarter, year]
+  #   sql: ${TABLE}.io_end_date ;;
+  # }
+  # dimension_group: io_start {
+  #   type: time
+  #   timeframes: [raw, time, date, week, month, quarter, year]
+  #   sql: ${TABLE}.io_start_date ;;
+  # }
+  # dimension: is_budget_optimized {
+  #   type: number
+  #   sql: ${TABLE}.is_budget_optimized ;;
+  # }
   dimension: line_item_id {
     type: number
     sql: ${TABLE}.line_item_id ;;
   }
-  dimension: line_item_name {
-    type: string
-    sql: ${TABLE}.line_item_name ;;
-  }
+  # dimension: line_item_name {
+  #   type: string
+  #   sql: ${TABLE}.line_item_name ;;
+  # }
   dimension: margin_on_inventory {
     type: number
     sql: ${TABLE}.margin_on_inventory ;;
@@ -359,14 +359,14 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.mobile_app_name ;;
   }
-  dimension: mobile_device_os_version {
-    type: number
-    sql: ${TABLE}.mobile_device_os_version ;;
-  }
-  dimension: mobile_device_type_id {
-    type: number
-    sql: ${TABLE}.mobile_device_type_id ;;
-  }
+  # dimension: mobile_device_os_version {
+  #   type: number
+  #   sql: ${TABLE}.mobile_device_os_version ;;
+  # }
+  # dimension: mobile_device_type_id {
+  #   type: number
+  #   sql: ${TABLE}.mobile_device_type_id ;;
+  # }
   dimension: os_type {
     type: string
     sql: ${TABLE}.os_type ;;
@@ -375,23 +375,23 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.os_version ;;
   }
-  dimension: os_version_name {
-    type: string
-    sql: ${TABLE}.os_version_name ;;
-  }
-  dimension: package_client_status {
-    type: string
-    sql: ${TABLE}.package_client_status ;;
-  }
-  dimension: package_current_budget {
-    type: number
-    sql: ${TABLE}.package_current_budget ;;
-  }
-  dimension_group: package_end {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.package_end_date ;;
-  }
+  # dimension: os_version_name {
+  #   type: string
+  #   sql: ${TABLE}.os_version_name ;;
+  # }
+  # dimension: package_client_status {
+  #   type: string
+  #   sql: ${TABLE}.package_client_status ;;
+  # }
+  # dimension: package_current_budget {
+  #   type: number
+  #   sql: ${TABLE}.package_current_budget ;;
+  # }
+  # dimension_group: package_end {
+  #   type: time
+  #   timeframes: [raw, time, date, week, month, quarter, year]
+  #   sql: ${TABLE}.package_end_date ;;
+  # }
   dimension: package_goal_amount {
     type: number
     sql: ${TABLE}.package_goal_amount ;;
@@ -404,15 +404,15 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.package_id ;;
   }
-  dimension: package_rpm {
-    type: number
-    sql: ${TABLE}.package_rpm ;;
-  }
-  dimension_group: package_start {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.package_start_date ;;
-  }
+  # dimension: package_rpm {
+  #   type: number
+  #   sql: ${TABLE}.package_rpm ;;
+  # }
+  # dimension_group: package_start {
+  #   type: time
+  #   timeframes: [raw, time, date, week, month, quarter, year]
+  #   sql: ${TABLE}.package_start_date ;;
+  # }
   dimension: partner_markup {
     type: number
     sql: ${TABLE}.partner_markup ;;
@@ -429,10 +429,10 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.postal_code ;;
   }
-  dimension: publisher_deal_object_id {
-    type: number
-    sql: ${TABLE}.publisher_deal_object_id ;;
-  }
+  # dimension: publisher_deal_object_id {
+  #   type: number
+  #   sql: ${TABLE}.publisher_deal_object_id ;;
+  # }
   dimension: publisher_id {
     type: number
     sql: ${TABLE}.publisher_id ;;
@@ -470,34 +470,34 @@ view: amobee_media_daily_mtz_view {
     type: number
     sql: ${TABLE}.tac ;;
   }
-  dimension: targeted_segment_id {
-    type: number
-    sql: ${TABLE}.targeted_segment_id ;;
-  }
-  dimension: third_party_cost_type {
-    type: string
-    sql: ${TABLE}.third_party_cost_type ;;
-  }
-  dimension: tier_id {
-    type: string
-    sql: ${TABLE}.tier_id ;;
-  }
+  # dimension: targeted_segment_id {
+  #   type: number
+  #   sql: ${TABLE}.targeted_segment_id ;;
+  # }
+  # dimension: third_party_cost_type {
+  #   type: string
+  #   sql: ${TABLE}.third_party_cost_type ;;
+  # }
+  # dimension: tier_id {
+  #   type: string
+  #   sql: ${TABLE}.tier_id ;;
+  # }
   dimension: tld {
     type: string
     sql: ${TABLE}.tld ;;
   }
-  dimension: tpa_cta {
-    type: number
-    sql: ${TABLE}.tpa_cta ;;
-  }
-  dimension: tpa_mta_action {
-    type: number
-    sql: ${TABLE}.tpa_mta_action ;;
-  }
-  dimension: tpa_vta {
-    type: number
-    sql: ${TABLE}.tpa_vta ;;
-  }
+  # dimension: tpa_cta {
+  #   type: number
+  #   sql: ${TABLE}.tpa_cta ;;
+  # }
+  # dimension: tpa_mta_action {
+  #   type: number
+  #   sql: ${TABLE}.tpa_mta_action ;;
+  # }
+  # dimension: tpa_vta {
+  #   type: number
+  #   sql: ${TABLE}.tpa_vta ;;
+  # }
   dimension: turn_ad_serving_charge {
     type: number
     sql: ${TABLE}.turn_ad_serving_charge ;;
@@ -564,32 +564,32 @@ view: amobee_media_daily_mtz_view {
   }
   dimension: win {
     type: number
-    sql: ${TABLE}.win ;;
+    sql: ${TABLE}.wins;;
   }
-  dimension: workflow_status_id {
-    type: number
-    sql: ${TABLE}.workflow_status_id ;;
-  }
-  dimension: xd_shopping_cart_value_cta {
-    type: number
-    sql: ${TABLE}.xd_shopping_cart_value_cta ;;
-  }
-  dimension: xd_shopping_cart_value_vta {
-    type: number
-    sql: ${TABLE}.xd_shopping_cart_value_vta ;;
-  }
+  # dimension: workflow_status_id {
+  #   type: number
+  #   sql: ${TABLE}.workflow_status_id ;;
+  # }
+  # dimension: xd_shopping_cart_value_cta {
+  #   type: number
+  #   sql: ${TABLE}.xd_shopping_cart_value_cta ;;
+  # }
+  # dimension: xd_shopping_cart_value_vta {
+  #   type: number
+  #   sql: ${TABLE}.xd_shopping_cart_value_vta ;;
+  # }
   dimension: zip_code {
     type: zipcode
     sql: ${TABLE}.zip_code ;;
   }
-  measure: count {
-    type: count
-    drill_fields: [detail*]
-  }
+  # measure: count {
+  #   type: count
+  #   drill_fields: [detail*]
+  # }
 
   measure: action {
     type: sum
-    sql: ${TABLE}."action" ;;
+    sql: ${TABLE}.actions ;;
   }
   measure: audio_mute_events {
     type: sum
@@ -609,15 +609,15 @@ view: amobee_media_daily_mtz_view {
   }
   measure: bid {
     type: sum
-    sql: ${TABLE}.bid ;;
+    sql: ${TABLE}.bids ;;
   }
   measure: click {
     type: sum
-    sql: ${TABLE}.click ;;
+    sql: ${TABLE}.clicks ;;
   }
   measure: click_through_action {
     type: sum
-    sql: ${TABLE}.click_through_action ;;
+    sql: ${TABLE}.click_through_actions ;;
   }
   measure: cogs {
     type: sum
@@ -631,10 +631,10 @@ view: amobee_media_daily_mtz_view {
     type: sum
     sql: ${TABLE}.complete_events ;;
   }
-  measure: concatenated_brand_intelligence_data_cost {
-    type: sum
-    sql: ${TABLE}.concatenated_brand_intelligence_data_cost ;;
-  }
+  # measure: concatenated_brand_intelligence_data_cost {
+  #   type: sum
+  #   sql: ${TABLE}.concatenated_brand_intelligence_data_cost ;;
+  # }
   measure: content_data_cost {
     type: sum
     sql: ${TABLE}.content_data_cost ;;
@@ -654,57 +654,57 @@ view: amobee_media_daily_mtz_view {
   }
   measure: cross_device_action {
     type: sum
-    sql: ${TABLE}.cross_device_action ;;
+    sql: ${TABLE}.cross_device_actions ;;
   }
-  measure: cross_device_assigned_cpa_action {
-    type: sum
-    sql: ${TABLE}.cross_device_assigned_cpa_action ;;
-  }
+  # measure: cross_device_assigned_cpa_action {
+  #   type: sum
+  #   sql: ${TABLE}.cross_device_assigned_cpa_action ;;
+  # }
   measure: cross_device_click_through_action {
     type: sum
-    sql: ${TABLE}.cross_device_click_through_action ;;
+    sql: ${TABLE}.cross_device_click_through_actions ;;
   }
   measure: cross_device_view_through_action {
     type: sum
-    sql: ${TABLE}.cross_device_view_through_action ;;
+    sql: ${TABLE}.cross_device_view_through_actions ;;
   }
-  measure: current_bid_price {
-    type: sum
-    sql: ${TABLE}.current_bid_price ;;
-  }
-  measure: deal_floor_price {
-    type: sum
-    sql: ${TABLE}.deal_floor_price ;;
-  }
+  # measure: current_bid_price {
+  #   type: sum
+  #   sql: ${TABLE}.current_bid_price ;;
+  # }
+  # measure: deal_floor_price {
+  #   type: sum
+  #   sql: ${TABLE}.deal_floor_price ;;
+  # }
   measure: expand_events {
     type: sum
     sql: ${TABLE}.expand_events ;;
   }
-  measure: first_party_cost {
-    type: sum
-    sql: ${TABLE}.first_party_cost ;;
-  }
+  # measure: first_party_cost {
+  #   type: sum
+  #   sql: ${TABLE}.first_party_cost ;;
+  # }
   measure: groupm_viewable_imp {
     type: sum
     sql: ${TABLE}.groupm_viewable_imp ;;
   }
   measure: household_action {
     type: sum
-    sql: ${TABLE}.household_action ;;
+    sql: ${TABLE}.household_actions ;;
   }
   measure: household_click_through_action {
     type: sum
-    sql: ${TABLE}.household_click_through_action ;;
+    sql: ${TABLE}.household_click_through_actions ;;
   }
   measure: impression {
     type: sum
-    sql: ${TABLE}.impression ;;
+    sql: ${TABLE}.impressions ;;
   }
-  measure: inv_cost {
-    type: sum
-    value_format: "#,##0.00"
-    sql: ${TABLE}.inv_cost ;;
-  }
+  # measure: inv_cost {
+  #   type: sum
+  #   value_format: "#,##0.00"
+  #   sql: ${TABLE}.inv_cost ;;
+  # }
   measure: inventory_cost {
     type: sum
     value_format: "#,##0.00"
@@ -775,7 +775,7 @@ view: amobee_media_daily_mtz_view {
   }
   measure: view_through_action {
     type: sum
-    sql: ${TABLE}.view_through_action ;;
+    sql: ${TABLE}.view_through_actions ;;
   }
   measure: viewability_video_duration {
     type: sum
@@ -784,32 +784,6 @@ view: amobee_media_daily_mtz_view {
   measure: viewable_imp {
     type: sum
     sql: ${TABLE}.viewable_imp ;;
-  }
-
-
-  # ----- Sets of fields for drilling ------
-  set: detail {
-    fields: [
-  region_name,
-  country_name,
-  iab_category_name,
-  deal_name,
-  city_name,
-  advertiser_name,
-  deal_type_name,
-  publisher_name,
-  insertion_order_name,
-  mobile_app_name,
-  home_market_name,
-  exchange_publisher_name,
-  os_version_name,
-  campaign_name,
-  inventory_source_name,
-  line_item_name,
-  creative_name,
-  media_channel_name,
-  dma_name
-  ]
   }
 
 }

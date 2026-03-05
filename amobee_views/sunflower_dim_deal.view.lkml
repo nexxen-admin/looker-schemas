@@ -37,17 +37,8 @@ view: sunflower_dim_deal {
     type: string
     sql: ${TABLE}.deal_type_name ;;
   }
-  dimension_group: last_modified {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.last_modified_date ;;
-  }
   dimension: publisher_deal_id {
     type: number
     sql: ${TABLE}.publisher_deal_id ;;
-  }
-  measure: count {
-    type: count
-    drill_fields: [deal_name, deal_type_name]
   }
 }

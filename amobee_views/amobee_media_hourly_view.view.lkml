@@ -69,10 +69,10 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.advertiser_id ;;
     }
-    dimension: advertiser_local_currency_exchange_rate {
-      type: number
-      sql: ${TABLE}.advertiser_local_currency_exchange_rate ;;
-    }
+    # dimension: advertiser_local_currency_exchange_rate {
+    #   type: number
+    #   sql: ${TABLE}.advertiser_local_currency_exchange_rate ;;
+    # }
     dimension: advertiser_local_currency_id {
       type: string
       sql: ${TABLE}.advertiser_local_currency_id ;;
@@ -253,6 +253,11 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.custom_event_name ;;
     }
+
+      dimension: custom_events {
+      type: number
+      sql: ${TABLE}.custom_events ;;
+    }
     dimension: data_center_id {
       type: string
       sql: ${TABLE}.data_center_id ;;
@@ -309,6 +314,11 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.dma_name ;;
     }
+    dimension: dynamic_pricing {
+      type: number
+      sql: ${TABLE}.dynamic_pricing ;;
+    }
+
     dimension: environment {
       type: string
       sql: ${TABLE}.environment ;;
@@ -333,6 +343,10 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.external_advertiser_id ;;
     }
+    dimension: ext_app {
+      type: number
+      sql: ${TABLE}.ext_app ;;
+    }
     dimension: format {
       type: string
       sql: ${TABLE}."format" ;;
@@ -340,6 +354,10 @@ view: amobee_media_hourly_view {
     dimension: format_id {
       type: string
       sql: ${TABLE}.format_id ;;
+    }
+      dimension: full_impression {
+      type: number
+       sql: ${TABLE}.full_impression ;;
     }
     dimension: goal_adjustment_model_id {
       type: string
@@ -385,6 +403,11 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.inventory_source_name ;;
     }
+
+  dimension: ip_mismatch {
+    type: number
+    sql: ${TABLE}.ip_mismatch ;;
+  }
     dimension: is_advanced_creative {
       type: yesno
       sql: ${TABLE}.is_advanced_creative = 1 ;;
@@ -401,10 +424,10 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.line_item_id ;;
     }
-    dimension: market_default_local_currency_exchange_rate {
-      type: number
-      sql: ${TABLE}.market_default_local_currency_exchange_rate ;;
-    }
+    # dimension: market_default_local_currency_exchange_rate {
+    #   type: number
+    #   sql: ${TABLE}.market_default_local_currency_exchange_rate ;;
+    # }
     dimension: market_default_local_currency_id {
       type: string
       sql: ${TABLE}.market_default_local_currency_id ;;
@@ -433,6 +456,10 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.mobile_app_name ;;
     }
+  dimension: multi_goal_types {
+    type: number
+    sql: ${TABLE}.multi_goal_types ;;
+  }
     dimension: net_connection_speed {
       type: string
       sql: ${TABLE}.net_connection_speed ;;
@@ -457,6 +484,10 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.os_version_id ;;
     }
+  dimension: package_goal_amount {
+    type: number
+    sql: ${TABLE}.package_goal_amount ;;
+  }
     dimension: package_goal_type_id {
       type: string
       sql: ${TABLE}.package_goal_type_id ;;
@@ -497,6 +528,10 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.region_name ;;
     }
+  dimension: selected_deal_request_floor_price {
+    type: number
+    sql: ${TABLE}.selected_deal_request_floor_price ;;
+  }
     dimension: state_district_id {
       type: string
       sql: ${TABLE}.state_district_id ;;
@@ -505,6 +540,18 @@ view: amobee_media_hourly_view {
       type: number
       sql: ${TABLE}.time_zone_offset ;;
     }
+  dimension: throttle_by_model_based_early_exit {
+    type: number
+    sql: ${TABLE}.throttle_by_model_based_early_exit ;;
+  }
+  dimension: throttle_by_rule_based_early_exit {
+    type: number
+    sql: ${TABLE}.throttle_by_rule_based_early_exit ;;
+  }
+  dimension: total_bid_multiplier_factor {
+    type: number
+    sql: ${TABLE}.total_bid_multiplier_factor ;;
+  }
     dimension: tld {
       type: string
       sql: ${TABLE}.tld ;;
@@ -512,10 +559,12 @@ view: amobee_media_hourly_view {
     dimension: unique_devices_sketch {
       type: string
       sql: ${TABLE}.unique_devices_sketch ;;
+
     }
     dimension: unique_households_sketch {
       type: string
-      sql: ${TABLE}.unique_households_sketch ;;
+      sql: CAST(${TABLE}.unique_households_sketch AS VARCHAR) ;;
+
     }
     dimension: unique_persons_sketch {
       type: string
@@ -553,6 +602,14 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.video_player_size ;;
     }
+  dimension: video_player_height {
+    type: number
+    sql: ${TABLE}.video_player_height ;;
+  }
+  dimension: video_player_width {
+    type: number
+    sql: ${TABLE}.video_player_width ;;
+  }
     dimension: video_player_size_id {
       type: string
       sql: ${TABLE}.video_player_size_id ;;
@@ -573,6 +630,14 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.view_event_platform_id ;;
     }
+  dimension: viewability_video_height {
+    type: number
+    sql: ${TABLE}.viewability_video_height ;;
+  }
+  dimension: viewability_video_width {
+    type: number
+    sql: ${TABLE}.viewability_video_width ;;
+  }
     dimension: zip_code {
       type: zipcode
       sql: ${TABLE}.zip_code ;;
@@ -638,6 +703,11 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.audio_unmute_events ;;
     }
+
+  measure: advertiser_local_currency_exchange_rate {
+    type: sum
+    sql: ${TABLE}.advertiser_local_currency_exchange_rate ;;
+  }
     measure: avoc_imp {
       type: sum
       sql: ${TABLE}.avoc_imp ;;
@@ -767,10 +837,10 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.cta_value ;;
     }
-    measure: custom_events {
-      type: sum
-      sql: ${TABLE}.custom_events ;;
-    }
+    # measure: custom_events {
+    #   type: sum
+    #   sql: ${TABLE}.custom_events ;;
+    # }
     measure: data_cost {
       type: sum
       sql: ${TABLE}.data_cost ;;
@@ -791,10 +861,10 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.display_viewability_first_party_cost ;;
     }
-    measure: dynamic_pricing {
-      type: sum
-      sql: ${TABLE}.dynamic_pricing ;;
-    }
+    # measure: dynamic_pricing {
+    #   type: sum
+    #   sql: ${TABLE}.dynamic_pricing ;;
+    # }
     measure: exchange_fee {
       type: sum
       sql: ${TABLE}.exchange_fee ;;
@@ -803,18 +873,18 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.expand_events ;;
     }
-    measure: ext_app {
-      type: sum
-      sql: ${TABLE}.ext_app ;;
-    }
+    # measure: ext_app {
+    #   type: sum
+    #   sql: ${TABLE}.ext_app ;;
+    # }
     measure: first_party_cost {
       type: sum
       sql: ${TABLE}.first_party_cost ;;
     }
-    measure: full_impression {
-      type: sum
-      sql: ${TABLE}.full_impression ;;
-    }
+    # measure: full_impression {
+    #   type: sum
+    #   sql: ${TABLE}.full_impression ;;
+    # }
     measure: fv_measurable_imps {
       type: sum
       sql: ${TABLE}.fv_measurable_imps ;;
@@ -855,6 +925,10 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.household_cta_value ;;
     }
+  # measure: household_id_sketch {
+  #   type: sum
+  #   sql: ${TABLE}.household_id_sketch ;;
+  # }
     measure: household_shopping_cart_value {
       type: sum
       sql: ${TABLE}.household_shopping_cart_value ;;
@@ -904,10 +978,10 @@ view: amobee_media_hourly_view {
       sql: ${TABLE}.inventory_cost ;;
       value_format: "#,##0.00"
     }
-    measure: ip_mismatch {
-      type: sum
-      sql: ${TABLE}.ip_mismatch ;;
-    }
+    # measure: ip_mismatch {
+    #   type: sum
+    #   sql: ${TABLE}.ip_mismatch ;;
+    # }
     measure: margin_on_inventory {
       type: sum
       sql: ${TABLE}.margin_on_inventory ;;
@@ -917,6 +991,11 @@ view: amobee_media_hourly_view {
       sql: ${TABLE}.market_audience_data_cost ;;
       value_format: "#,##0.00"
     }
+
+  measure: market_default_local_currency_exchange_rate {
+    type: sum
+    sql: ${TABLE}.market_default_local_currency_exchange_rate ;;
+  }
     measure: market_third_party_cost {
       type: sum
       sql: ${TABLE}.market_third_party_cost ;;
@@ -938,10 +1017,10 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.mta_actions ;;
     }
-    measure: multi_goal_types {
-      type: sum
-      sql: ${TABLE}.multi_goal_types ;;
-    }
+    # measure: multi_goal_types {
+    #   type: sum
+    #   sql: ${TABLE}.multi_goal_types ;;
+    # }
     measure: nexxen_health_first_party_cost {
       type: sum
       sql: ${TABLE}.nexxen_health_first_party_cost ;;
@@ -958,10 +1037,10 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.on_target_imp ;;
     }
-    measure: package_goal_amount {
-      type: sum
-      sql: ${TABLE}.package_goal_amount ;;
-    }
+    # measure: package_goal_amount {
+    #   type: sum
+    #   sql: ${TABLE}.package_goal_amount ;;
+    # }
     measure: page_quality_data_cost {
       type: sum
       sql: ${TABLE}.page_quality_data_cost ;;
@@ -1035,10 +1114,10 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.rtbexchange_bid_price_unsampled ;;
     }
-    measure: selected_deal_request_floor_price {
-      type: sum
-      sql: ${TABLE}.selected_deal_request_floor_price ;;
-    }
+    # measure: selected_deal_request_floor_price {
+    #   type: sum
+    #   sql: ${TABLE}.selected_deal_request_floor_price ;;
+    # }
     measure: shopping_cart_value {
       type: sum
       sql: ${TABLE}.shopping_cart_value ;;
@@ -1067,18 +1146,18 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.third_party_mta_actions ;;
     }
-    measure: throttle_by_model_based_early_exit {
-      type: sum
-      sql: ${TABLE}.throttle_by_model_based_early_exit ;;
-    }
-    measure: throttle_by_rule_based_early_exit {
-      type: sum
-      sql: ${TABLE}.throttle_by_rule_based_early_exit ;;
-    }
-    measure: total_bid_multiplier_factor {
-      type: sum
-      sql: ${TABLE}.total_bid_multiplier_factor ;;
-    }
+    # measure: throttle_by_model_based_early_exit {
+    #   type: sum
+    #   sql: ${TABLE}.throttle_by_model_based_early_exit ;;
+    # }
+    # measure: throttle_by_rule_based_early_exit {
+    #   type: sum
+    #   sql: ${TABLE}.throttle_by_rule_based_early_exit ;;
+    # }
+    # measure: total_bid_multiplier_factor {
+    #   type: sum
+    #   sql: ${TABLE}.total_bid_multiplier_factor ;;
+    # }
     measure: tpa_click_based_actions {
       type: sum
       sql: ${TABLE}.tpa_click_based_actions ;;
@@ -1179,14 +1258,14 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.video_min_duration ;;
     }
-    measure: video_player_height {
-      type: sum
-      sql: ${TABLE}.video_player_height ;;
-    }
-    measure: video_player_width {
-      type: sum
-      sql: ${TABLE}.video_player_width ;;
-    }
+    # measure: video_player_height {
+    #   type: sum
+    #   sql: ${TABLE}.video_player_height ;;
+    # }
+    # measure: video_player_width {
+    #   type: sum
+    #   sql: ${TABLE}.video_player_width ;;
+    # }
     measure: video_viewability_first_party_cost {
       type: sum
       sql: ${TABLE}.video_viewability_first_party_cost ;;
@@ -1203,14 +1282,14 @@ view: amobee_media_hourly_view {
       type: sum
       sql: ${TABLE}.viewability_video_duration ;;
     }
-    measure: viewability_video_height {
-      type: sum
-      sql: ${TABLE}.viewability_video_height ;;
-    }
-    measure: viewability_video_width {
-      type: sum
-      sql: ${TABLE}.viewability_video_width ;;
-    }
+    # measure: viewability_video_height {
+    #   type: sum
+    #   sql: ${TABLE}.viewability_video_height ;;
+    # }
+    # measure: viewability_video_width {
+    #   type: sum
+    #   sql: ${TABLE}.viewability_video_width ;;
+    # }
     measure: viewable_imp {
       type: sum
       sql: ${TABLE}.viewable_imp ;;

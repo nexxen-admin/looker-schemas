@@ -721,7 +721,7 @@ view: amobee_media_hourly_view {
     measure: cost {
       type: sum
       sql: ${TABLE}.cost ;;
-      value_format_name: usd
+      value_format: "$#,##0.00"
     }
     measure: creative_engagement_events {
       type: sum
@@ -774,7 +774,6 @@ view: amobee_media_hourly_view {
     measure: data_cost {
       type: sum
       sql: ${TABLE}.data_cost ;;
-      value_format_name: usd
     }
     measure: dcpm_cost {
       type: sum
@@ -903,7 +902,7 @@ view: amobee_media_hourly_view {
     measure: inventory_cost {
       type: sum
       sql: ${TABLE}.inventory_cost ;;
-      value_format_name: usd
+      value_format: "#,##0.00"
     }
     measure: ip_mismatch {
       type: sum
@@ -916,10 +915,12 @@ view: amobee_media_hourly_view {
     measure: market_audience_data_cost {
       type: sum
       sql: ${TABLE}.market_audience_data_cost ;;
+      value_format: "#,##0.00"
     }
     measure: market_third_party_cost {
       type: sum
       sql: ${TABLE}.market_third_party_cost ;;
+      value_format: "#,##0.00"
     }
     measure: measurable_imp {
       type: sum
@@ -964,6 +965,7 @@ view: amobee_media_hourly_view {
     measure: page_quality_data_cost {
       type: sum
       sql: ${TABLE}.page_quality_data_cost ;;
+      value_format: "#,##0.00"
     }
     measure: partner_fee {
       type: sum

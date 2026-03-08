@@ -23,12 +23,12 @@ explore: amobee_media_daily_mtz_view {
     sql_on: ${amobee_media_daily_mtz_view.deal_id} = ${sunflower_dim_deal.deal_id} ;;
     relationship: many_to_one
   }
+  }
 
-#   explore: amobee_media_hourly_view {
-#     required_access_grants: [can_view_all_tremor]
-#     always_filter: {
-#       filters: [amobee_media_hourly_view.event_time: "1 day ago for 1 day"]
-#     }
-# }
 
+  explore: amobee_media_hourly_view {
+    required_access_grants: [can_view_all_tremor]
+    always_filter: {
+      filters: [amobee_media_hourly_view.event_time: "1 day ago for 1 day"]
+    }
 }

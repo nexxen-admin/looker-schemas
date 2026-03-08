@@ -11,14 +11,14 @@ view: amobee_media_hourly_view {
     type: time
     timeframes: [raw, time, hour, date, week, month, quarter, year]
     sql: ${TABLE}.event_time ;;
-    group_label: "01. Time Dates" # Puts this folder at the very top of the Explore
+    label: "  Event Time"
   }
 
   dimension_group: event_time_mtz {
     type: time
     timeframes: [raw, time, hour, date, week, month, quarter, year]
     sql: ${TABLE}.event_time_mtz ;;
-    group_label: "01. Time Dates"
+    label: " Event Time MTZ"
   }
 
     # =================================================================

@@ -929,6 +929,13 @@ view: amobee_media_hourly_view {
   #   type: sum
   #   sql: ${TABLE}.household_id_sketch ;;
   # }
+
+  # measure: unique_households {
+  #   type: number
+  #   label: "Household Id Sketch"
+  #   sql: HLL_ESTIMATE(${TABLE}.household_id_sketch) ;;
+  #   value_format_name: decimal_0
+  # }
     measure: household_shopping_cart_value {
       type: sum
       sql: ${TABLE}.household_shopping_cart_value ;;

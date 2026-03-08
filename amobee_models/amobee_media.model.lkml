@@ -24,4 +24,11 @@ explore: amobee_media_daily_mtz_view {
     relationship: many_to_one
   }
 
+#   explore: amobee_media_hourly_view {
+#     required_access_grants: [can_view_all_tremor]
+#     always_filter: {
+#       filters: [amobee_media_hourly_view.event_time: "1 day ago for 1 day"]
+#     }
+# }
+
 }

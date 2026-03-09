@@ -26,7 +26,7 @@ filter: account_name_filter {
 filter: advertiser_name_filter {
   type: string
 }
-
+#---------------------------------------------Dimensions---------------------------------------------------
 dimension: id {
   primary_key: yes
   type: string
@@ -51,16 +51,19 @@ dimension: advertiser_name {
   type: string
   sql: ${TABLE}.advertiser_name ;;
 }
+dimension: beacon_id {
+  type: string
+  label: "Beacon ID"
+  sql: ${TABLE}.beacon_id ;;
+}
+  dimension: beacon_name {
+    type: string
+    label: "Beacon Name"
+    sql: ${TABLE}.beacon_name ;;
+  }
 dimension: campaign {
   type: string
   sql: ${TABLE}.campaign ;;
-}
-
-measure: complete_events  {
-  type: sum
-  value_format: "#,##0"
-  description: "1 for events that were completed"
-  sql: ${TABLE}.complete_events  ;;
 }
 dimension: country_name {
   type: string
@@ -141,12 +144,6 @@ dimension: free__c {
   type: string
   sql: ${TABLE}.free__c ;;
   hidden: yes
-}
-measure: impressions {
-  type: sum
-  label: "1P Impressions"
-  value_format: "#,##0"
-  sql: ${TABLE}.impressions ;;
 }
 dimension: line_item_group_b {
   type: string
@@ -243,6 +240,21 @@ dimension: tactic {
           WHEN ${line_item_name__c} LIKE '%PMP%' THEN 'PMP'END ;;
 }
 
+#---------------------------------------------Measures---------------------------------------------------
+  measure: impressions {
+    type: sum
+    label: "1P Impressions"
+    value_format: "#,##0"
+    sql: ${TABLE}.impressions ;;
+  }
+
+  measure: complete_events  {
+    type: sum
+    value_format: "#,##0"
+    description: "1 for events that were completed"
+    sql: ${TABLE}.complete_events  ;;
+  }
+
 measure: delivered_units {
   type: sum
   sql: ${TABLE}.delivery_units ;;
@@ -322,6 +334,131 @@ measure: ncd_ctr {
   value_format: "0.00%"
   sql: IFNULL(${ncd_clicks}/NULLIF(${non_ctv_impressions},0),0) ;;
 }
+#---------------------------------------------Conversion Metrics---------------------------------------------------
+
+  measure: actions {
+    type: sum
+    value_format: "#,##0"
+    sql: ${TABLE}.actions ;;
+  }
+  measure: rate{
+    type: number
+    label: "RFI Rate"
+    description: "Actions divided by impressions"
+    value_format: "0.00%"
+    sql: CASE WHEN ${impressions}=0 THEN 0 ELSE ${actions}*100/${impressions} END;;
+  }
+  measure: cta {
+    type: sum
+    label: "CTA"
+    description: "Click based actions"
+    value_format: "#,##0"
+    sql: ${TABLE}.CTV ;;
+  }
+  measure: vta {
+    type: sum
+    label: "VTA"
+    description: "View based actions"
+    value_format: "#,##0"
+    sql: ${TABLE}.VTA ;;
+  }
+  measure: shopping_cart {
+    type: sum
+    value_format: "#,##0"
+    sql: ${TABLE}.shopping_cart_value ;;
+  }
+  measure: shopping_cart_cta {
+    type: sum
+    label: "Shopping Cart CTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.shopping_cart_value_CTA ;;
+  }
+  measure: shopping_cart_vta {
+    type: sum
+    label: "Shopping Cart VTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.shopping_cart_VTA ;;
+  }
+  measure: cross_device_actions {
+    type: sum
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_actions ;;
+  }
+  measure: cross_device_cta {
+    type: sum
+    label: "Cross Device CTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_CTA ;;
+  }
+  measure: cross_device_vta {
+    type: sum
+    label: "Cross Device VTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_VTA ;;
+  }
+  measure: cross_device_shopping_cart_total {
+    type: sum
+    label: "Cross Device Shopping Cart Total"
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_shopping_cart_value_total ;;
+  }
+  measure: cross_device_shopping_cart_cta {
+    type: sum
+    label: "Cross Device Shopping Cart CTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_shopping_cart_value_CTA ;;
+  }
+  measure: cross_device_shopping_cart_vta {
+    type: sum
+    label: "Cross Device Shopping Cart VTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.cross_device_shopping_cart_value_VTA ;;
+  }
+  measure: household_actions {
+    type: sum
+    value_format: "#,##0"
+    sql: ${TABLE}.household_actions ;;
+  }
+  measure: household_cta {
+    type: sum
+    label: "Household CTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.household_CTA ;;
+  }
+  measure: household_vta {
+    type: sum
+    label: "Household VTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.household_VTA ;;
+  }
+  measure: household_shopping_cart_cta {
+    type: sum
+    label: "Household Shopping Cart CTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.household_shopping_cart_value_CTA ;;
+  }
+  measure: household_shopping_cart_vta {
+    type: sum
+    label: "Household Shopping Cart VTA"
+    value_format: "#,##0"
+    sql: ${TABLE}.household_shopping_cart_value_VTA ;;
+  }
+
+  measure: cpa {
+    type: number
+    label: "CPA"
+    description: "Cost per action - delivered spend (advertiser invoice) divided by actions."
+    value_format: "$0.00"
+    sql: CASE WHEN ${actions}=0 THEN 0 ELSE ${Delivered_Spend}/${actions} END;;
+  }
+
+  measure: roas {
+    type: number
+    label: "ROAS"
+    description: "Cross device shopping cart value divided by delivered spend (advertiser invoice)."
+    value_format: "0.00%"
+    sql: CASE WHEN ${Delivered_Spend}=0 THEN 0 ELSE ${cross_device_shopping_cart_total}/${Delivered_Spend} END ;;
+  }
 
 #--------------------------------------------------pop-------------------------------------------------------
 filter: current_date_range {
@@ -747,6 +884,18 @@ measure: html_kpi_delivered_units {
             </div>;;
 }
 
+  measure: html_kpi_impressions {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              Delivered Impressions
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ impressions._rendered_value }}
+              </div>
+            </div>;;
+  }
+
 
 measure: html_kpi_vcr {
   type: count
@@ -820,6 +969,54 @@ measure: html_kpi_ctr {
               </div>
             </div>;;
 }
+
+  measure: html_kpi_actions {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              RFI Actions
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ actions._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: html_kpi_rate {
+    type: count
+    hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              RFI Rate
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ rate._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: html_kpi_cpa {
+    type: count
+    # hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              CPA
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ cpa._rendered_value }}
+              </div>
+            </div>;;
+  }
+
+  measure: html_kpi_roas {
+    type: count
+    # hidden: yes
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+              ROAS
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500;">
+                {{ roas._rendered_value }}
+              </div>
+            </div>;;
+  }
 
 #---------------------------------------NCD DEMO---------------------------
   measure: html_kpi_pacing_demo {

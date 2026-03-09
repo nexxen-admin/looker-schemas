@@ -32,6 +32,49 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: adstxt_seller_status_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.adstxt_seller_status_key ;;
+    hidden: yes
+  }
+
+  dimension: adstxt_seller_relationship_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.adstxt_seller_relationship_key ;;
+    hidden: yes
+  }
+
+  dimension: app_id_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.app_id_key ;;
+    hidden: yes
+  }
+
+  dimension: os_type_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.os_type_key ;;
+    hidden: yes
+  }
+
+  dimension: exchange_line_item_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.exchange_line_item_key ;;
+    hidden: yes
+  }
+
+  dimension: tld_key {
+    type: number
+    value_format_name: id
+    sql: ${TABLE}.tld_key ;;
+    hidden: yes
+  }
+
+
   dimension: creative_size_key {
     type: number
     value_format_name: id
@@ -236,6 +279,38 @@ view: fact_nexxen_dsp {
     hidden:  no
   }
 
+  parameter: top_x_rank_limit {
+    type: unquoted
+    label: "Top X Accounts"
+    view_label: "Dashboard Filters"
+    description: "Select number of top accounts to display"
+    default_value: "5"
+
+    allowed_value: {
+      label: "Top 5"
+      value: "5"
+    }
+    allowed_value: {
+      label: "Top 10"
+      value: "10"
+    }
+    allowed_value: {
+      label: "Top 15"
+      value: "15"
+    }
+    allowed_value: {
+      label: "Top 20"
+      value: "20"
+    }
+  }
+
+  # Helper dimension to pass the parameter value to the Explore
+  dimension: top_x_limit_value {
+    type: number
+    label: "Top X Limit Value"
+    #hidden: yes
+    sql: {% parameter top_x_rank_limit %} ;;
+  }
 
 
   dimension_group: date_key_in_timezone {
@@ -698,6 +773,18 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "#,##0.00"
   }
 
+  measure: uncapped_revenue_usd {
+    label: "Uncapped Revenue USD"
+    description: "Uncapped Revenue in USD ( USD daily FX rate)"
+    type: sum
+    sql:
+      CASE
+        WHEN ${dim_sfdb_opportunitylineitem.io_currency__c} = 'USD' THEN ${TABLE}.uncapped_revenue
+        WHEN opportunity_exchange_rate.exchange_rate IS NOT NULL THEN ${TABLE}.uncapped_revenue * opportunity_exchange_rate.exchange_rate
+        ELSE ${TABLE}.uncapped_revenue
+      END ;;
+    value_format: "#,##0.00"
+  }
 
   measure: yesterday_capped_revenue {
     type: sum
@@ -900,14 +987,41 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: media_margin {
     type: number
+    label: "Media Margin (Not USD)"
+    description: "not in USD"
     sql: (${capped_revenue}-${cost})/nullif(${capped_revenue},0) ;;
     value_format_name: percent_2
   }
 
+  measure: Total_Data_External_adserver_cost_USD {
+    type: number
+    label: "Total Data & External adserver cost USD"
+    sql: (${fdw_cost}-${inv_cost}) ;;
+    value_format: "#,##0.00"
+  }
+
+  # measure: Margin_usd {
+  #   type: number
+  #   label: "Margin USD"
+  #   required_joins: [billing_unified_revenue]
+  #   sql: ((${billing_unified_revenue.locked_final_billable_revenue_after_adj_usd_measure} – ${inv_cost}– ${Total_Data_External_adserver_cost_USD})) ;;
+  #   value_format: "#,##0.00"
+  # }
+
+  # measure: Margin_usd {
+  #   type: number
+  #   label: "Margin USD"
+  #   required_joins: [billing_unified_revenue]
+
+  #   sql: ((${billing_unified_revenue.locked_final_billable_revenue_after_adj_usd_measure} – ${inv_cost}– ${Total_Data_External_adserver_cost_USD})) ;;
+  #   value_format: "#,##0.00"
+  # }
+
   measure:Media_Margin_Vendor_cost {
     type: number
     label: "Media Margin (w/o Vendor cost)"
-    sql: (${capped_revenue} - ${fdw_cost})/${capped_revenue} ;;
+    description: "in USD"
+    sql: (${capped_revenue_usd} - ${fdw_cost})/${capped_revenue_usd} ;;
     value_format_name: percent_2
   }
 
@@ -1470,7 +1584,8 @@ measure: Nexxen_Inv_Cost_Percent {
   measure:  net_revenue_fdw_cost_w_o_vendor_cost {
     type: number
     label: "Net Revenue (FDW Cost-w/o vendor cost)"
-    sql: ${capped_revenue} - ${fdw_cost} ;;
+    description: "in USD"
+    sql: ${capped_revenue_usd} - ${fdw_cost} ;;
     value_format: "#,##0.00"
   }
 
@@ -1484,16 +1599,113 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: net_revenue_capped_rev_fdw_cost {
     type: number
     label: "Net Revenue (Capped Rev-Full Costs)"
-    sql: ${capped_revenue} - ${full_costs_fdw_cost} ;;
+    description: "in USD"
+    sql: ${capped_revenue_usd} - ${full_costs_fdw_cost} ;;
     value_format: "#,##0.00"
   }
 
   measure: media_margin_overall {
     type: number
     label: "Media Margin (overall)"
-    sql: (${capped_revenue} - (${fdw_cost}+${vendor_cost}))/${capped_revenue};;
+    description: "in USD"
+    sql: (${capped_revenue_usd} - (${fdw_cost}+${vendor_cost}))/${capped_revenue};;
     value_format: "0.00%"
   }
+
+  measure: TPCA {
+    type: sum
+    label: "TPCA"
+    description: "Turn Third Party Cost"
+    sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.TPCA ELSE 0 END ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: FPCA {
+    type: sum
+    label: "FPCA"
+    description: "Turn First Party Cost"
+     sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.FPCA ELSE 0 END ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: audience_data_cost {
+    type: sum
+    label: "Audience Data Cost"
+    sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.audience_data_cost ELSE 0 END ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: content_data_cost {
+    type: sum
+    label: "Content Data Cost"
+    sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.content_data_cost ELSE 0 END ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: data_cost_adjustment_calculated {
+    type: sum
+    label: "Raw Net Data Cost"
+    description: "Data Cost after rev/share (DCOM Adjusted Net Revenue)"
+    sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.data_cost_adjustment_calculated ELSE 0 END ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: adjusted_net_revenue {
+    type: sum
+    label: "Net Data Cost"
+    sql: CASE WHEN ${date_key_in_timezone_date} >= '2025-10-01' THEN ${TABLE}.adjusted_net_revenue ELSE 0 END ;;
+    value_format: "$#,##0.00"
+  }
+
+  # ==========================================
+  # Margin Fields - Measures
+  # ==========================================
+
+  # measure: net_revenue_final_billable_usd {
+  #   type: number
+  #   label: "Net Revenue (Final Billable) USD"
+  #   description: "Net Revenue in USD calculated based on Final Billable Revenue in USD (including Billing adjustments)"
+  #   value_format_name: usd
+  #   sql: ${billing_unified_revenue.locked_final_billable_revenue_after_adj_usd_measure} - ${inventory_cost} - ${data_cost_adjustment_calculated} ;;
+  # }
+
+  measure: net_revenue_capped_usd {
+    type: number
+    label: "Net Revenue (Capped) USD"
+    description: "Net Revenue in USD calculated based on Capped Revenue in USD"
+    value_format_name: usd
+    sql: ${capped_revenue_usd} - ${inventory_cost} - ${data_cost_adjustment_calculated} ;;
+  }
+
+  measure: margin_percent_capped {
+    type: number
+    label: "Margin % Capped"
+    description: "The profit margin calculated using the capped revenue amount"
+    value_format_name: percent_2
+    # Using NULLIF to prevent division by zero errors in SQL
+    sql: 1.0 * ${net_revenue_capped_usd} / NULLIF(${capped_revenue_usd}, 0) ;;
+  }
+
+  # measure: margin_percent_final {
+  #   type: number
+  #   label: "Margin % Final"
+  #   description: "The profit margin calculated using the final billable revenue amount"
+  #   value_format_name: percent_2
+  #   # Using NULLIF to prevent division by zero errors in SQL
+  #   sql: 1.0 * ${net_revenue_final_billable_usd} / NULLIF(${billing_unified_revenue.locked_final_billable_revenue_after_adj_usd_measure}, 0) ;;
+  # }
+
+  measure: revshare_data_cost {
+    type: number
+    label: "RevShare Data Cost"
+    description: "Amount of revenue that is shared with a partner/data provider as part of a revenue-sharing agreement."
+    value_format_name: usd
+    sql: (${TPCA}+${FPCA}+${audience_data_cost}+${content_data_cost})-${data_cost_adjustment_calculated} ;;
+  }
+
+
+
+
 
   # measure: primary_kpi_result_old {
   #   label: "Primary KPI Result"
@@ -2127,6 +2339,22 @@ measure: Nexxen_Inv_Cost_Percent {
     sql:  ${TABLE}.impressions ;;
     value_format: "#,##0"
     filters: [period_filtered_measures: "this"]
+  }
+
+  measure: impressions_pop_change {
+    view_label: "PoP"
+    label: "Impressions Change"
+    type: number
+    sql: ${current_period_impressions} - ${previous_period_impressions} ;;
+    value_format: "+#,##0;-#,##0" # Adds a + sign for positive numbers
+  }
+
+  measure: impressions_pop_change_percent {
+    view_label: "PoP"
+    label: "Impressions Change %"
+    type: number
+    sql: 1.0 * (${current_period_impressions} - ${previous_period_impressions}) / NULLIF(${previous_period_impressions},0) ;;
+    value_format: "0.00%"
   }
 
   measure: current_period_clicks {

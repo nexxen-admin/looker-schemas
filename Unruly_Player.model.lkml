@@ -31,6 +31,9 @@ explore: unruly_player_demands {
   view_name: unruly_player_demands
   label: "Unruly Player Demands"
   required_access_grants: [can_view_aniview]
+  always_filter: {
+    filters: [unruly_player_demands.current_date_date: "1 day ago for 1 day"]
+  }
   # access_filter: {
   #   field: dim_employee.employee_name
   #   user_attribute: unruly_player

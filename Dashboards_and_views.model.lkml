@@ -259,11 +259,11 @@ explore: unruly_pmp {
   hidden: yes
 }
 
-explore: deal_splits_owner_report {
-  label: "Deal_splits_owner_report"
-  #required_access_grants: [can_view_all_tremor]
-  hidden: yes
-}
+# explore: deal_splits_owner_report {
+#   label: "Deal_splits_owner_report"
+#   #required_access_grants: [can_view_all_tremor]
+#   hidden: yes
+# }
 
 explore: active_inactive_publishers {
   label: "Active Inactive Publishers"
@@ -412,6 +412,11 @@ explore: deal_commision_data {
   hidden: yes
 }
 
+explore: deal_split_owner {
+  label: "Deal Split Owner"
+  hidden: yes
+}
+
 explore: deal_commission_data_pivot {
   label: "Deal Commision Data - Pivot"
   #required_access_grants: [allowed_users_sam_lt]
@@ -539,6 +544,9 @@ explore: segment_syndication {
 explore: rx_fact_segments_usage_data {
   label: "Segments Usage Data"
   required_access_grants: [can_view_all_tremor]
+  always_filter: {
+    filters: [rx_fact_segments_usage_data.event_month_month: "this month"]
+  }
 }
 
 explore: segments_with_0_cost_in_rx {
@@ -677,9 +685,21 @@ explore: scope3_processed {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: tvi_discovery_provider_mapping {
+  label: "tvi_discovery_provider_mapping"
+  required_access_grants: [can_view_all_tremor]
+  hidden:  yes
+
+}
 explore: ops_partners_das {
   label: "ops_partners_das"
   required_access_grants: [can_view_all_tremor]
+
+  #join: tvi_discovery_provider_mapping {
+   # type: left_outer
+    #relationship: many_to_one
+    #sql_on: ${ops_partners_das.PROVIDER_ID} = ${tvi_discovery_provider_mapping.provider_id} ;;
+  #}
 }
 
 explore: hisense_postal_code {

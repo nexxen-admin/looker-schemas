@@ -300,6 +300,15 @@ view: fact_ad_hourly_agg {
     #hidden: yes
   }
 
+
+  measure: deal_data_fee {
+    type: sum
+    label: "Deal Data Fee"
+    value_format: "$#,##0.00"
+    group_label: "Hourly Measures"
+    sql: ${TABLE}.sum_of_deal_data_fee;;
+  }
+
   dimension: sum_of_dsp_count {
     type: number
     sql: ${TABLE}.sum_of_dsp_count ;;

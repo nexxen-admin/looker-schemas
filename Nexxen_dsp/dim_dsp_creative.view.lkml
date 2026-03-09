@@ -42,7 +42,7 @@ view: dim_dsp_creative {
   }
 
   dimension: creative_id {
-    type: string
+    type: number
     label: "Creative ID"
     sql: ${TABLE}.creative_id ;;
   }

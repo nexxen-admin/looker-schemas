@@ -1,5 +1,5 @@
-view: dim_dsp_deal {
-  sql_table_name: BI_DSP.dim_dsp_deal ;;
+view: dim_dsp_exchange_line_item {
+  sql_table_name: BI_DSP.dim_dsp_exchange_line_item ;;
 
   dimension_group: db_created {
     type: time
@@ -13,32 +13,21 @@ view: dim_dsp_deal {
     sql: ${TABLE}.db_updated_date ;;
     hidden: yes
   }
-  dimension: deal_id {
+  dimension: exchange_line_item_id {
     type: string
-    sql: ${TABLE}.deal_id ;;
+    label: "Exchange Line Item ID"
+    sql: ${TABLE}.exchange_line_item_id ;;
+    hidden: no
   }
-
-  dimension: deal_name {
-    type: string
-    label: "Deal Name"
-    sql: ${TABLE}.deal_name ;;
-  }
-
-  dimension: deal_type_name {
-    type: string
-    label: "Deal Type Name"
-    sql: ${TABLE}.deal_type_name ;;
-  }
-
-  dimension: deal_key {
+  dimension: exchange_line_item_key {
     type: number
-    sql: ${TABLE}.deal_key ;;
+    sql: ${TABLE}.exchange_line_item_key ;;
     hidden: yes
   }
   dimension: ri_info {
     type: string
     sql: ${TABLE}.ri_info ;;
-    hidden:  yes
+    hidden: yes
   }
   measure: count {
     type: count

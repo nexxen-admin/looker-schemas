@@ -134,20 +134,23 @@ view: fact_target_forecast_strategy_summary {
   dimension: Strat_Sales_RVP {
     type: string
     sql: CASE WHEN ${TABLE}.seller='Taylor Kiefer' THEN 'Strat Sales - East'
+    WHEN ${cs_sales_team} ILIKE '%Strat Services%' THEN ${cs_sales_team}
     ELSE CASE WHEN ${forecast_dim_sfdb_user.RVP_Sales_team}!='Unknown' THEN  ${forecast_dim_sfdb_user.RVP_Sales_team}
     ELSE ${TABLE}.Strat_Sales_RVP END END;;
     drill_fields: [revenue_line, Strat_Sales_Team]
+  }
+
+  dimension: cs_sales_team {
+    type: string
+    sql: ${TABLE}.sales_team ;;
+    label: "CS Team"
   }
 
   dimension: strategic_sales_cs_region {
     type: string
     label: "Strategic Sales CS Region"
     sql: CASE
-          WHEN ${Strat_Sales_RVP} ILIKE '%East%' THEN 'Strat Sales CS East'
-          WHEN ${Strat_Sales_RVP} ILIKE '%South%' THEN 'Strat Sales CS South'
-          WHEN ${Strat_Sales_RVP} ILIKE '%West%' THEN 'Strat Sales CS West'
-          WHEN ${Strat_Sales_RVP} ILIKE '%Central%' THEN 'Strat Sales CS Central'
-          WHEN ${Strat_Sales_RVP} ILIKE '%Canada%' THEN 'Strat Sales CS Canada'
+          WHEN ${cs_sales_team} ILIKE '%Strat Services%' THEN ${cs_sales_team}
           END;;
   }
 

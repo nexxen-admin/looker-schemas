@@ -39,6 +39,41 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  measure: cm_fee {
+    type: sum
+    label: "Curated Marketplace Fee"
+    description: "Curated Marketplace Fee represents the portion of demand-side margin retained by Nexxen for curated marketplace deals. Values align with the Daily Revenue Report."
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_cm_fee ;;
+  }
+
+  measure: platform_fee {
+    type: sum
+    label: "Exchange Platform Fee"
+    description: "Exchange Platform Fee represents the cost charged to third-party SSPs for use of Nexxen’s Exchange technology. The fee is calculated as a percentage of SSP Cost of Goods Sold (COGS) based on Supply Operations–configured rates and aligns with the Daily Revenue Report."
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_platform_fee ;;
+  }
+
+  measure: cogs_adjustment {
+    type: sum
+    label: "Exchange COGS Adjustment"
+    description: "Represents a percentage-based cost (COGS) adjustment applied at the DSP account level to align reported Exchange costs with actual receivables. Adjustments are configured according to Finance and align with the Daily Revenue Report."
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_cogs_adjustment ;;
+  }
+
+  measure: revenue_adjustment {
+    type: sum
+    label: "Exchange Revenue Adjustment"
+    description: "Represents a percentage-based revenue adjustment applied at the DSP account level to align reported Exchange revenue with actual receivables. Adjustments are configured according to Finance and align with the Daily Revenue Report."
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_revenue_adjustment  ;;
+  }
 
   measure: Change_PubReq{
     type: number
@@ -3675,6 +3710,13 @@ hidden: yes
     description: "Barter rebate. Uses direct fact fee for 2026+, calculated % for prior dates."
   }
 
+  measure: traffic_source_fee {
+    type: sum
+    sql: ${TABLE}.sum_of_Traffic_Source_Fee ;;
+    value_format: "$#,##0.00"
+    description: "Cost to Nexxen, applied by specific Traffic Sources, for acquiring or supporting the traffic origin, regardless of which publisher ultimately serves it."
+  }
+
 
   # measure: barter_fee {
   #   type: sum
@@ -3749,6 +3791,18 @@ hidden: yes
       ELSE 0
       END ;;
   }
+
+
+  measure: total_barter_fee {
+    type: number
+    label: "Total Barter Fee"
+    description: "Aggregation of RX Deal Barter Fees + Publisher Deal Barter Fees"
+    sql: ${barter_fee} + ${publisher_barter_fee} ;;
+    value_format: "$#,##0.00"
+    hidden: no
+  }
+
+
 
   # measure: sum_user_matched {
   #   type: sum

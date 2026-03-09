@@ -38,6 +38,18 @@ explore: billing_international_media_io {
   label: "Billing International"
 }
 
+
+explore: media_io_billing_international {
+  label:"New Billing International"
+  hidden: yes
+}
+
+explore: monthly_international_billing_locked_report {
+  label:"International Locked Report"
+  hidden: yes
+}
+
+
 explore: monthly_billing_override_data {
   required_access_grants: [billing_report_group]
   label: "Monthly Billing Override Data"
@@ -57,6 +69,11 @@ explore: v_monthly_dato_billing_report_diff_on_locked {
 
 explore: monthly_billing_locked_report{
  label: "Locked Report"
+}
+
+
+explore: revenue_and_margin_analysis {
+  label: "Revenue and Margin Analysis"
 }
 
 explore: netsuite_revenue_us  {
@@ -193,6 +210,9 @@ explore: fact_nexxen_dsp  {
   persist_with: CleanCash_datagroup
   label: "Nexxen dsp"
   view_label: "Measures"
+  always_filter: {
+    filters: [v_dim_dsp_date.date_key_date: "1 day ago for 1 day"]
+  }
 
   join: dim_dsp_inventory_source {
     type: left_outer
@@ -206,6 +226,48 @@ explore: fact_nexxen_dsp  {
     view_label: "Environment"
     relationship: many_to_one
     sql_on: ${fact_nexxen_dsp.environment_key}=${dim_dsp_environment.environment_key} ;;
+  }
+
+  join: dim_dsp_adstxt_seller_status {
+    type: left_outer
+    view_label: "Adstxt Seller Status"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.adstxt_seller_status_key}=${dim_dsp_adstxt_seller_status.adstxt_seller_status_key} ;;
+  }
+
+  join: dim_dsp_adstxt_seller_relationship {
+    type: left_outer
+    view_label: "Adstxt Seller Relationship"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.adstxt_seller_relationship_key}=${dim_dsp_adstxt_seller_relationship.adstxt_seller_relationship_key} ;;
+  }
+
+  join: dim_dsp_os_type {
+    type: left_outer
+    view_label: "OS Type"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.os_type_key}=${dim_dsp_os_type.os_type_key} ;;
+  }
+
+  join: dim_dsp_exchange_line_item {
+    type: left_outer
+    view_label: "Exchange Line Item"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.exchange_line_item_key}=${dim_dsp_exchange_line_item.exchange_line_item_key} ;;
+  }
+
+  join: dim_dsp_app {
+    type: left_outer
+    view_label: "App"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.app_id_key}=${dim_dsp_app.app_id_key} ;;
+  }
+
+  join: dim_dsp_tld {
+    type: left_outer
+    view_label: "TLD"
+    relationship: many_to_one
+    sql_on: ${fact_nexxen_dsp.tld_key}=${dim_dsp_tld.tld_key} ;;
   }
 
   join: dim_dsp_format {
@@ -317,13 +379,32 @@ explore: fact_nexxen_dsp  {
   # }
 
 
-  join: monthly_billing_locked_report {
+  # join: monthly_billing_locked_report {
+  #   type: left_outer
+  #   view_label: "Locked Report"
+  #   relationship: many_to_one
+  #   sql_on: ${monthly_billing_locked_report.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+  #     AND ${monthly_billing_locked_report.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
+  #     fields: [monthly_billing_locked_report.final_billable_revenue_after_adj_measure, monthly_billing_locked_report.final_billable_revenue_after_adj_usd_measure]
+  # }
+
+
+  # join: v_billing_unified_revenue {
+  #   type: left_outer
+  #   view_label: "Billing Unified Revenue"
+  #   relationship: many_to_one
+  #   sql_on: ${v_billing_unified_revenue.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+  #     AND ${v_billing_unified_revenue.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
+  #   fields: [v_billing_unified_revenue.locked_final_billable_revenue_after_adj_measure, v_billing_unified_revenue.locked_final_billable_revenue_after_adj_usd_measure]
+  # }
+
+  join: billing_unified_revenue {
     type: left_outer
-    view_label: "Locked Report"
+    view_label: "Billing Unified Revenue"
     relationship: many_to_one
-    sql_on: ${monthly_billing_locked_report.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
-      AND ${monthly_billing_locked_report.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
-      fields: [monthly_billing_locked_report.final_billable_revenue_after_adj_measure, monthly_billing_locked_report.final_billable_revenue_after_adj_usd_measure]
+    sql_on: ${billing_unified_revenue.case_safe_opp_line_item_id} = ${dim_sfdb_opportunitylineitem.id}
+      AND ${billing_unified_revenue.date_key_raw} = CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_raw}) AS DATE) ;;
+    fields: [billing_unified_revenue.locked_final_billable_revenue_after_adj_measure, billing_unified_revenue.locked_final_billable_revenue_after_adj_usd_measure]
   }
 
   join: dim_dsp_monthly_manual_adjustment {

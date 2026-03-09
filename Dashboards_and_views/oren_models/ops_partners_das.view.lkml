@@ -1,5 +1,5 @@
 view: ops_partners_das {
-  sql_table_name: bi_new.decom ;;
+  sql_table_name: bi_new.DECOM_V ;;
 
   dimension_group: time_frame {
     type: time
@@ -24,7 +24,7 @@ view: ops_partners_das {
   dimension: CATEGORY {
     type: string
     sql: ${TABLE}.CATEGORY ;;
-    label: "Category"
+    label: "Advertiser Vertical"
   }
 
 
@@ -40,10 +40,53 @@ view: ops_partners_das {
     label: "Provider Name"
   }
 
+  dimension: PROVIDER_ID {
+    type: number
+    sql: ${TABLE}.PROVIDER_ID ;;
+    label: "Provider ID"
+    hidden:  no
+  }
+
   dimension: MARKET_ID {
     type: string
     sql: ${TABLE}.MARKET_ID ;;
     label: "Market ID"
+  }
+
+  dimension: SEGMENT_ID {
+    type: number
+    sql: ${TABLE}.segment_id ;;
+    label: "Segment ID"
+  }
+
+  dimension: SEGMENT_NAME {
+    type: string
+    sql: ${TABLE}.segment_name ;;
+    label: "Segment Name"
+  }
+
+  dimension: DATA_CATEGORY_ID {
+    type: string
+    sql: ${TABLE}.data_category_id ;;
+    label: "Data Category ID"
+  }
+
+  dimension: DATA_CATEGORY_NAME {
+    type: string
+    sql: ${TABLE}.data_category_name ;;
+    label: "Data Category Name"
+  }
+
+  dimension: INSERTION_ORDER_ID  {
+    type: number
+    sql: ${TABLE}.insertion_order_id ;;
+    label: "Insertion Order ID"
+  }
+
+  dimension: INSERTION_ORDER_NAME  {
+    type: string
+    sql: ${TABLE}.insertion_order_name ;;
+    label: "Insertion Order Name"
   }
 
   dimension: DATA_TYPE {
@@ -52,6 +95,24 @@ view: ops_partners_das {
     label: "Data Type"
   }
 
+  dimension: RESOLVED_DATA_TYPE {
+    type: string
+    sql: ${TABLE}.RESOLVED_DATA_TYPE ;;
+    label: "Resolved Data Type"
+  }
+
+  dimension: RESOLVED_DATA_USE {
+    type: string
+    sql: ${TABLE}.RESOLVED_DATA_USE ;;
+    label: "Resolved Data Use"
+  }
+
+
+  dimension: RESOLVED_DATA_SOURCE {
+    type: string
+    sql: ${TABLE}.RESOLVED_DATA_SOURCE ;;
+    label: "Resolved Data Source"
+  }
 
   dimension: NS_VENDOR_ID {
     type: string
@@ -80,7 +141,13 @@ view: ops_partners_das {
   dimension: source {
     type: string
     sql: case when ${TABLE}.DATA_SOURCE = 'SSP' then 'SSP' else 'DSP' end ;;
-    label: "Source"
+    label: "source"
+  }
+
+  dimension: source_raw {
+    type: string
+    sql: ${TABLE}.DATA_SOURCE ;;
+    label: "Source (Raw)"
   }
 
   dimension: REGION {
@@ -101,6 +168,18 @@ view: ops_partners_das {
     label: "Country Name"
   }
 
+  dimension: CONTRACT_ID {
+    type: string
+    sql: ${TABLE}.CONTRACT_ID ;;
+    label: "Contract ID"
+  }
+
+  dimension: CONTRACT_NAME {
+    type: string
+    sql: ${TABLE}.CONTRACT_NAME ;;
+    label: "Contract Name"
+  }
+
 
 measure: IMPRESSION {
   type: sum
@@ -114,7 +193,7 @@ measure: IMPRESSION {
     type: sum
     sql: ${TABLE}.GROSS_REVENUE - COALESCE(${TABLE}.CONTRA_REVENUE, 0) ;;
     value_format: "$#,##0"
-    label: "Gross Retained Revenue"
+    label: "Gross Data Spend"
     description: "Gross Retained Revenue, calculated as gross revenue less contra revenue (e.g., discounts, returns, or allowances)"
   }
 
@@ -122,14 +201,14 @@ measure: IMPRESSION {
     type: sum
     sql: ${TABLE}.ADJUSTED_NET_REVENUE ;;
     value_format: "$#,##0"
-    label: "Net Retained Revenue"
+    label: "Partner Revenue"
   }
 
   measure: TURN_FEE {
     type: sum
     sql: ${TABLE}.TURN_FEE ;;
     value_format: "$#,##0"
-    label: "Turn Fee"
+    label: "Nexxen Retained Revenue"
   }
 
   measure: rev_dev_gross_percentage {
@@ -144,7 +223,7 @@ measure: IMPRESSION {
         / NULLIF(SUM(${TABLE}.GROSS_REVENUE), 0))
       END ;;
     value_format: "0.0%"
-    label: "Net Retained Revenue / Gross Retained Revenue %"
+    label: "Partner Revenue / Gross Data Spend"
   }
 
   measure: CONTRA_REVENUE {
@@ -164,14 +243,27 @@ set: detail {
     MARKET_NAME,
     ADVERTISER_NAME,
     source,
+    source_raw,
     ENVIRONMENT,
     PROVIDER_NAME,
+    PROVIDER_ID,
     MARKET_ID,
+    SEGMENT_ID,
+    SEGMENT_NAME,
+    DATA_CATEGORY_ID,
+    DATA_CATEGORY_NAME,
+    INSERTION_ORDER_ID,
+    INSERTION_ORDER_NAME,
     CATEGORY,
     DATA_TYPE,
+    RESOLVED_DATA_TYPE,
+    RESOLVED_DATA_SOURCE,
+    RESOLVED_DATA_USE,
     REGION,
     COUNTRY_ID,
     COUNTRY_NAME,
+    CONTRACT_ID,
+    CONTRACT_NAME,
     IMPRESSION,
     GROSS_REVENUE,
     ADJUSTED_NET_REVENUE,

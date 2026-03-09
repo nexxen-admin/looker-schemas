@@ -1,4 +1,4 @@
-connection: "vertica_iad"
+connection: "vertica_dm3"
 
 include: "/amobee_views/*.view.lkml"
 
@@ -14,11 +14,21 @@ access_grant: can_view_all_tremor {
 
 explore: amobee_media_daily_mtz_view {
   required_access_grants: [can_view_all_tremor]
+  always_filter: {
+    filters: [amobee_media_daily_mtz_view.event_time: "1 day ago for 1 day"]
+  }
 
   join: sunflower_dim_deal {
     type: left_outer
     sql_on: ${amobee_media_daily_mtz_view.deal_id} = ${sunflower_dim_deal.deal_id} ;;
     relationship: many_to_one
   }
+  }
 
+
+  explore: amobee_media_hourly_view {
+    required_access_grants: [can_view_all_tremor]
+    always_filter: {
+      filters: [amobee_media_hourly_view.event_time_date: "1 day ago for 1 day"]
+    }
 }

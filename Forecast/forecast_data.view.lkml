@@ -238,18 +238,11 @@ view: forecast_data {
           WHEN ${account_name} LIKE '%Guru%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
           WHEN ${account_name} LIKE '%301 Digital%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
           WHEN ${account_name} LIKE '%Rescue Agency%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
-
-          WHEN ${strat_sales_rvp} LIKE '%East%' THEN 'Strat Sales CS East'
-          WHEN ${strat_sales_rvp} LIKE '%West%' THEN 'Strat Sales CS West'
-          WHEN ${strat_sales_rvp} LIKE '%Central%' THEN 'Strat Sales CS Central'
-          WHEN ${strat_sales_rvp} LIKE '%Canada%' THEN 'Strat Sales CS Canada'
-          WHEN ${strat_sales_rvp} LIKE '%South%' THEN 'Strat Sales CS South'
-
-          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % East%' THEN 'Strat Sales CS East'
-          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % West%' THEN 'Strat Sales CS West'
-          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % Central%' THEN 'Strat Sales CS Central'
-          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % Canada%' THEN 'Strat Sales CS Canada'
-          WHEN ${account_manager_sales_team} LIKE 'Strat Sales % South%' THEN 'Strat Sales CS South'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Services % East%' THEN 'Strat Sales CS East'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Services % West%' THEN 'Strat Sales CS West'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Services % Central%' THEN 'Strat Sales CS Central'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Services % Canada%' THEN 'Strat Sales CS Canada'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Services % South%' THEN 'Strat Sales CS South'
         ELSE NULL
         END ;;
     label: "Strategic Sales CS Region"
@@ -263,6 +256,11 @@ view: forecast_data {
   dimension: account_manager {
     type: string
     sql: ${TABLE}.account_manager ;;
+  }
+
+  dimension: TV_Specialist {
+    type: string
+    sql: ${TABLE}.TV_Specialist ;;
   }
 
   dimension: numbered_stage {

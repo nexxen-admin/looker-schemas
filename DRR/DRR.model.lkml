@@ -21,3 +21,8 @@ explore: DRR_DQ {
   view_name: drr_dq
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: DRR_DQ_flags {
+  view_name: drr_dq_flags
+  required_access_grants: [can_view_all_tremor]
+}

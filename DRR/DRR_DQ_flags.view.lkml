@@ -82,7 +82,7 @@ view: drr_dq_flags {
 
   measure: ind_dq {
     type: sum
-    sql: case when ${TABLE}.indicator_Revenue = 1 and ${TABLE}.indicator_Cost = 1 then 1 else 0 end ;;
+    sql: case when ${TABLE}.indicator_Revenue = 0 or ${TABLE}.indicator_Cost = 0 then 1 else 0 end ;;
     label: "indicator_dq"
   }
 

@@ -41,12 +41,12 @@ explore: billing_international_media_io {
 
 explore: media_io_billing_international {
   label:"New Billing International"
-  hidden: yes
+   hidden: yes
 }
 
 explore: monthly_international_billing_locked_report {
   label:"International Locked Report"
-  # hidden: yes
+   hidden: yes
 }
 
 

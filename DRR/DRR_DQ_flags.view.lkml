@@ -69,7 +69,7 @@ view: drr_dq_flags {
   }
 
   measure: indicator_Cost {
-    type: number
+    type:  number
     sql: ${TABLE}.indicator_Cost ;;
     label: "indicator_Cost"
   }
@@ -80,6 +80,10 @@ view: drr_dq_flags {
     label: "indicator_Revenue"
   }
 
-
+  measure: ind_dq {
+    type: sum
+    sql: case when ${TABLE}.indicator_Revenue = 1 and ${TABLE}.indicator_Cost = 1 then 1 else 0 end ;;
+    label: "indicator_dq"
+  }
 
 }

@@ -498,6 +498,10 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.package_id ;;
     }
+  dimension: page_quality_concept_id {
+    type: number
+    sql: ${TABLE}.page_quality_concept_id ;;
+  }
     dimension: placement_id {
       type: string
       sql: ${TABLE}.placement_id ;;
@@ -538,6 +542,10 @@ view: amobee_media_hourly_view {
       type: string
       sql: ${TABLE}.state_district_id ;;
     }
+  dimension: targeted_behavior_id {
+    type: number
+    sql: ${TABLE}.targeted_behavior_id ;;
+  }
     dimension: time_zone_offset {
       type: number
       sql: ${TABLE}.time_zone_offset ;;
@@ -549,6 +557,11 @@ view: amobee_media_hourly_view {
   dimension: throttle_by_rule_based_early_exit {
     type: number
     sql: ${TABLE}.throttle_by_rule_based_early_exit ;;
+  }
+
+  dimension: throttle_reason_id {
+    type: number
+    sql: ${TABLE}.throttle_reason_id ;;
   }
   dimension: total_bid_multiplier_factor {
     type: number

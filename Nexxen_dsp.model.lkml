@@ -46,7 +46,7 @@ explore: media_io_billing_international {
 
 explore: monthly_international_billing_locked_report {
   label:"International Locked Report"
-  hidden: yes
+  # hidden: yes
 }
 
 

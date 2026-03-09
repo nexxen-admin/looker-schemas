@@ -264,10 +264,12 @@ view: amobee_media_daily_mtz_view {
   dimension: household_id_sketch {
     type: string
     sql: ${TABLE}.household_id_sketch ;;
+    hidden: yes
   }
   dimension: household_person_id_sketch {
     type: string
     sql: ${TABLE}.household_person_id_sketch ;;
+    hidden: yes
   }
   dimension: household_view_through_action {
     type: number
@@ -533,6 +535,7 @@ view: amobee_media_daily_mtz_view {
   dimension: user_id_sketch {
     type: string
     sql: ${TABLE}.user_id_sketch ;;
+    hidden: yes
   }
   dimension: video_max_duration {
     type: number

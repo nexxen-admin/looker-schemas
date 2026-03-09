@@ -374,10 +374,12 @@ view: amobee_media_hourly_view {
     dimension: household_id_sketch {
       type: string
       sql: ${TABLE}.household_id_sketch ;;
+      hidden: yes
     }
     dimension: household_person_id_sketch {
       type: string
       sql: ${TABLE}.household_person_id_sketch ;;
+      hidden: yes
     }
     dimension: iab_category_id {
       type: string
@@ -573,6 +575,7 @@ view: amobee_media_hourly_view {
     dimension: user_id_sketch {
       type: string
       sql: ${TABLE}.user_id_sketch ;;
+      hidden: yes
     }
     dimension: video_duration_bucket {
       type: string

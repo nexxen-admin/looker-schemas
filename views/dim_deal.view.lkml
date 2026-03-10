@@ -188,6 +188,13 @@ view: dim_deal {
     hidden: yes
   }
 
+  dimension: demand_margin_opti {
+    type: yesno
+    label: "Demand Margin Optimization"
+    description: "Indicates whether demand margin optimization is enabled for the corresponding deal."
+    sql: ${TABLE}.demand_margin_opti ;;
+  }
+
 
   dimension: internal_deal_id {
     type: number
@@ -249,6 +256,13 @@ dimension: deal_partner_id {
   label: "Deal Partner ID"
   sql: ${TABLE}.deal_partner_id ;;
   hidden: yes
+}
+
+dimension: dsp_seats {
+  type: string
+  label: "Buyer DSP Seats"
+  description: "An array of DSP seat IDs that the deal is explicitly targeted to (i.e., whitelisted DSP seats)."
+  sql: ${TABLE}.DSP_Seat ;;
 }
 
   measure: count {

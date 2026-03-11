@@ -2484,14 +2484,14 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: yesno
     sql:  (EXTRACT(DAY FROM ${date_in_period_date}) < EXTRACT(DAY FROM GETDATE())
-                    OR
+                    /*OR
                 (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
                 EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
                     OR
                 (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
                 EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
-                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
-    description: "Filters the data to be only month to date"
+                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE()))*/)  ;;
+    description: "Filters the data to be only month to date (today's data excluded)"
   }
 
   dimension: qtd_only {
@@ -2507,17 +2507,17 @@ view: fact_ad_daily_agg {
   dimension: ytd_only {
     group_label: "To-Date Filters"
     label: "YTD"
-    description: "Filters the data to be only year to date"
+    description: "Filters the data to be only year to date (today's data excluded)"
     view_label: "PoP"
     type: yesno
     sql:  (EXTRACT(DOY FROM ${date_in_period_date}) < EXTRACT(DOY FROM GETDATE())
-                    OR
+                    /*OR
                 (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
                 EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
                     OR
                 (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
                 EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
-                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
+                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE()))*/)  ;;
   }
 
   dimension: order_for_period {

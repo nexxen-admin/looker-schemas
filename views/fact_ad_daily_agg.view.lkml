@@ -90,7 +90,7 @@ view: fact_ad_daily_agg {
     description: "Comprehensive net revenue calculation including all platform fees, costs, rebates, and adjustments currently included in the Daily Revenue Report. Note:  This measure includes all barter rebates whereas the DRR excludes rebates from Tinuiti."
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${revenue} + ${platform_fee} - ${traffic_source_fee} + ${pub_platform_fee} - ${barter_fee} - ${publisher_barter_fee} + ${revenue_adjustment} + ${cogs_adjustment} +${cm_fee} - ${cogs} ;;
+    sql: ${revenue} + ${platform_fee} - ${traffic_source_fee} + ${platform_cost} + ${pub_platform_fee} - ${barter_fee} - ${publisher_barter_fee} + ${revenue_adjustment} + ${cogs_adjustment} +${cm_fee} - ${cogs} ;;
 
   }
 

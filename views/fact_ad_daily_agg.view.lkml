@@ -75,6 +75,15 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_revenue_adjustment  ;;
   }
 
+  measure: platform_cost {
+    type: sum
+    label: "Exchange Platform Cost"
+    description: "Exchange Platform Cost represents a revenue-based platform fee applied to buyer-connect fee partners (A9 and Adelphic) transacting via Bidswitch. The cost is calculated as 4% of gross revenue and reflects the net revenue terms under which these buyers operate. Values align with the Daily Revenue Report."
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_platform_cost  ;;
+  }
+
   measure: net_revenue_post_fees {
     type: number
     label: "Net Revenue (Post Fees)"
@@ -2027,7 +2036,7 @@ view: fact_ad_daily_agg {
 
   measure: pub_platform_fee {
     type: sum
-    label: "pub_platform_fee"
+    label: "Pub Platform Fee"
     description: "A fee the publisher pays to use our platform"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
@@ -2214,12 +2223,16 @@ view: fact_ad_daily_agg {
     type: average
     sql: ${TABLE}.avg_of_ssp_bid_price;;
     value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    label: "SSP Bid Price"
   }
 
   measure: ssp_rev {
     type: sum
     sql: ${TABLE}.avg_of_ssp_bid_price * ${TABLE}.sum_of_impression_pixel /1000 ;;
     value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    label: "SSP Rev"
   }
 
   dimension: win_price {
@@ -3718,12 +3731,14 @@ hidden: yes
       END ;;
     value_format: "$#,##0.00"
     description: "Barter rebate. Uses direct fact fee for 2026+, calculated % for prior dates."
+    group_label: "Daily Measures"
   }
 
   measure: traffic_source_fee {
     type: sum
     sql: ${TABLE}.sum_of_Traffic_Source_Fee ;;
     value_format: "$#,##0.00"
+    group_label: "Daily Measures"
     description: "Cost to Nexxen, applied by specific Traffic Sources, for acquiring or supporting the traffic origin, regardless of which publisher ultimately serves it."
   }
 
@@ -3773,6 +3788,7 @@ hidden: yes
     label: "Publisher Barter Fee"
     description: "Calculates 2% rebate on (Revenue - Deal Data Fee) for qualifying Publisher Deals. Effective starting Jan 1, 2026."
     type: sum
+    group_label: "Daily Measures"
     value_format: "$#,##0.00"
     sql:
       CASE
@@ -3806,6 +3822,7 @@ hidden: yes
   measure: total_barter_fee {
     type: number
     label: "Total Barter Fee"
+    group_label: "Daily Measures"
     description: "Aggregation of RX Deal Barter Fees + Publisher Deal Barter Fees"
     sql: ${barter_fee} + ${publisher_barter_fee} ;;
     value_format: "$#,##0.00"

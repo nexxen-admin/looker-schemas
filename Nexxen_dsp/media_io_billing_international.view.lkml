@@ -26,6 +26,7 @@ view: media_io_billing_international {
   dimension: adj_3p_cost {
     type: number
     label: "3P Cost Override"
+    description: "Manually corrected 3P Cost , entry from Ad Ops override table"
     sql: ${TABLE}.Adj_3P_Cost ;;
   }
   dimension: adjustment_billable_actions {
@@ -71,14 +72,17 @@ view: media_io_billing_international {
   }
   dimension: billable_percent_25_complete_events_after_finance_adj {
     type: number
+    description: "Manually adjusted 25% video completions, From Finance manual adjustment upload"
     sql: ${TABLE}.finance_adj_percent_25_complete_events ;;
   }
   dimension: billable_percent_50_complete_events_after_finance_adj {
     type: number
+    description: "Manually adjusted 50% video completions, From Finance manual adjustment upload"
     sql: ${TABLE}.finance_adj_percent_50_complete_events  ;;
   }
   dimension: billable_percent_75_complete_events_after_finance_adj {
     type: number
+    description: "Manually adjusted 75% video completions, From Finance manual adjustment upload"
     sql: ${TABLE}.finance_adj_percent_75_complete_events  ;;
   }
   dimension: billing_instructions {
@@ -269,6 +273,7 @@ view: media_io_billing_international {
 
   dimension: margin_percent {
     type: number
+    description: "If Final Billable Revenue is 0, then NULL. Otherwise: Margin Amount ÷ Final Billable Revenue After Adj"
     sql: ${TABLE}.Margin_Parcent ;;
   }
   dimension: modified_case_safe {

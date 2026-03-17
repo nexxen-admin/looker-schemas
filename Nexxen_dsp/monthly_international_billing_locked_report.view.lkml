@@ -163,6 +163,7 @@ view: monthly_international_billing_locked_report {
 
   dimension: adj_3p_cost {
     type: number
+    description: "Manually corrected 3P Cost , entry from Ad Ops override table"
     label: "3P Cost Override"
     sql: ${TABLE}.adj_3p_cost ;;
   }
@@ -208,14 +209,17 @@ view: monthly_international_billing_locked_report {
   }
   dimension: billable_percent_25_complete_events_after_finance_adj {
     type: number
+    description: "Manually adjusted 25% video completions, From Finance manual adjustment upload"
     sql: ${TABLE}.billable_percent_25_complete_events_after_finance_adj ;;
   }
   dimension: billable_percent_50_complete_events_after_finance_adj {
     type: number
+    description: "Manually adjusted 50% video completions, From Finance manual adjustment upload"
     sql: ${TABLE}.billable_percent_50_complete_events_after_finance_adj ;;
   }
   dimension: billable_percent_75_complete_events_after_finance_adj {
     type: number
+    description: "Manually adjusted 75% video completions, From Finance manual adjustment upload"
     sql: ${TABLE}.billable_percent_75_complete_events_after_finance_adj ;;
   }
   dimension: booked_units {
@@ -333,6 +337,7 @@ view: monthly_international_billing_locked_report {
   }
   dimension: margin_percent {
     type: number
+    description: "If Final Billable Revenue is 0, then NULL. Otherwise: Margin Amount ÷ Final Billable Revenue After Adj"
     sql: ${TABLE}.margin_percent ;;
   }
   dimension: ns_remaining_amount {

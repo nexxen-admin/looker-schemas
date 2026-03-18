@@ -1538,3 +1538,9 @@ explore: report_uid_source {
   label: "Live Intent UID Source Reporting"
   hidden: yes
 }
+
+explore: dim_dsp_seat_mapping{
+  persist_with: CleanCash_datagroup
+  label: "DSP Seat Mapping Audit"
+  required_access_grants: [can_view_all_tremor]
+  }

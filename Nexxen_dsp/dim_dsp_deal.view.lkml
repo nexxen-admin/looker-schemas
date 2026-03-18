@@ -30,6 +30,12 @@ view: dim_dsp_deal {
     sql: ${TABLE}.deal_type_name ;;
   }
 
+  dimension: deal_vs_pmp {
+    type: string
+    label: "Deal vs. PMP"
+    sql: CASE WHEN ${deal_type_name} = '' THEN 'Open Auction' ELSE 'PMP' END ;;
+  }
+
   dimension: deal_key {
     type: number
     sql: ${TABLE}.deal_key ;;

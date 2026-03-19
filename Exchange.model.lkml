@@ -864,11 +864,11 @@ explore: fact_ad_daily_agg{
       ${dim_dsp_seat_hold_co.seat_id} = ${dim_dsp_seat.seat_id};;
     relationship: many_to_one
   }
-  join: dim_dsp_seat_mapping  {
+  join: v_dim_dsp_seat_mapping  {
     type: left_outer
     view_label: "DSP Seat Mapping"
-    sql_on: ${dim_dsp_seat_mapping.dsp_account_id} = ${dim_dsp_account.dsp_account_id} AND
-      ${dim_dsp_seat_mapping.dsp_seat_id} = ${dim_dsp_seat.seat_id};;
+    sql_on: ${v_dim_dsp_seat_mapping.dsp_account_id} = ${dim_dsp_account.dsp_account_id} AND
+      ${v_dim_dsp_seat_mapping.dsp_seat_id} = ${dim_dsp_seat.seat_id};;
     relationship: many_to_one
   }
   join: dim_seat {
@@ -1237,11 +1237,11 @@ explore: fact_ad_hourly_agg{
     sql_on: ${dim_dsp_seat.dsp_seat_key}=${fact_ad_hourly_agg.dsp_seat_key};;
     relationship: many_to_one
   }
-  join: dim_dsp_seat_mapping  {
+  join: v_dim_dsp_seat_mapping  {
     type: left_outer
     view_label: "DSP Seat Mapping"
-    sql_on: ${dim_dsp_seat_mapping.dsp_account_id} = ${dim_dsp_account.dsp_account_id} AND
-      ${dim_dsp_seat_mapping.dsp_seat_id} = ${dim_dsp_seat.seat_id};;
+    sql_on: ${v_dim_dsp_seat_mapping.dsp_account_id} = ${dim_dsp_account.dsp_account_id} AND
+      ${v_dim_dsp_seat_mapping.dsp_seat_id} = ${dim_dsp_seat.seat_id};;
     relationship: many_to_one
   }
   join: dim_seat {

@@ -123,6 +123,8 @@ view: dim_dsp_market {
 
   }
 
+
+
   dimension: ri_info {
     type: string
     sql: ${TABLE}.ri_info ;;

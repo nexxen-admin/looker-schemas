@@ -46,7 +46,7 @@ explore: media_io_billing_international {
 
 explore: monthly_international_billing_locked_report {
   label:"International Locked Report"
-   hidden: yes
+  # hidden: yes
 }
 
 
@@ -706,5 +706,19 @@ explore: fact_nexxen_dsp  {
   #   sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;
   #   relationship: many_to_one
   # }
+
+}
+
+explore: fact_dsp_dv_sivt_reporting {
+  required_access_grants: [can_view_all_tremor]
+  label: "DSP DV SIVT Reporting"
+
+  join: dim_dsp_inventory_source {
+    type: left_outer
+    view_label: "Inventory Source"
+    relationship: many_to_one
+    sql_on: ${fact_dsp_dv_sivt_reporting.inventory_source_key}=${dim_dsp_inventory_source.inventory_source_key} ;;
+  }
+
 
 }

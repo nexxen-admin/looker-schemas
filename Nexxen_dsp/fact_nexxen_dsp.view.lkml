@@ -413,6 +413,13 @@ dimension: inventory_source_key {
     filters: [date_key_in_timezone_date: "3 days ago for 3 days"]
   }
 
+  measure: last_day_impression {
+    type: sum
+    label: "Impression Current Day "
+    value_format: "#,##0"
+    sql: ${TABLE}.impressions ;; # Reference the underlying column
+    filters: [date_key_in_timezone_date: "last 1 day ago for 1 day"]
+  }
 
   # measure: netsuite_invoice_amount {
   #   type: sum

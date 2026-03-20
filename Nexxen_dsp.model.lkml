@@ -708,3 +708,17 @@ explore: fact_nexxen_dsp  {
   # }
 
 }
+
+explore: fact_dsp_dv_sivt_reporting {
+  required_access_grants: [can_view_all_tremor]
+  label: "DSP DV SIVT Reporting"
+
+  join: dim_dsp_inventory_source {
+    type: left_outer
+    view_label: "Inventory Source"
+    relationship: many_to_one
+    sql_on: ${fact_dsp_dv_sivt_reporting.inventory_source_key}=${dim_dsp_inventory_source.inventory_source_key} ;;
+  }
+
+
+}

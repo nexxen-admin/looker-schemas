@@ -920,7 +920,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_cogs ;;
   }
 
-  measure:: cost {
+  measure: cost {
     label: "Cost"
     type: sum
     value_format: "$#,##0.00"

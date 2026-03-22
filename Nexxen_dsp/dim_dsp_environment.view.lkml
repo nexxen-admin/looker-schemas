@@ -20,7 +20,7 @@ view: dim_dsp_environment {
   dimension: environment_id {
     type: number
     sql: ${TABLE}.environment_id ;;
-    hidden: yes
+    # hidden: yes
   }
   dimension: environment_key {
     type: number

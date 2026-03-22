@@ -93,6 +93,8 @@ view: dim_dsp_market {
     label: "Market ID"
     description: "ID of the DSP market to which the Advertiser belongs"
     sql: ${TABLE}.market_id ;;
+    value_format_name: id
+
   }
 
 

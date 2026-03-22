@@ -208,6 +208,36 @@ view: fact_nexxen_dsp {
   }
 
 
+  measure:  last_day_cost {
+    label: "Inv Cost Yesterday "
+    type: sum
+    description: "Yesterday's cost"
+    sql: ${TABLE}.inv_cost ;;
+    # group_label: "Time Shifted Measures"
+    # value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date :  "last 1 day ago for 1 day"]
+  }
+
+  measure:  unruly_last_day_cost {
+    label: "Inv Cost Nexxen - Yesterday "
+    type: sum
+    description: "Unruly's yesterday's cost"
+    sql: CASE WHEN ${dim_dsp_inventory_source.inventory_source_id} = 158 THEN ${TABLE}.inv_cost ELSE NULL END ;;
+    # group_label: "Time Shifted Measures"
+    # value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date :  "last 1 day ago for 1 day"]
+  }
+
+  measure: unruly_last_day_impression {
+    label: "Impression Nexxen Current Day "
+    type: sum
+    description: "Unruly's yesterday's impressions"
+    sql: CASE WHEN${dim_dsp_inventory_source.inventory_source_id} = 158 THEN ${TABLE}.impressions ELSE NULL END ;;
+    # group_label: "Time Shifted Measures"
+    # value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date :  "last 1 day ago for 1 day"]
+  }
+
   dimension: creative_id_key {
     type: number
     value_format_name: id
@@ -417,7 +447,7 @@ dimension: inventory_source_key {
     type: sum
     label: "Impression Current Day "
     value_format: "#,##0"
-    sql: ${TABLE}.impressions ;; # Reference the underlying column
+    sql: ${TABLE}.impressions ;;
     filters: [date_key_in_timezone_date: "last 1 day ago for 1 day"]
   }
 
@@ -1964,6 +1994,11 @@ measure: Nexxen_Inv_Cost_Percent {
     type: unquoted
 
     allowed_value: {
+      label: "Previous Period"
+      value: "Period"
+    }
+
+    allowed_value: {
       label: "Previous Month"
       value: "Month"
     }
@@ -2524,6 +2559,31 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "0.00%"
   }
 
+  measure: current_period_inv_cost {
+    view_label: "PoP"
+    type: sum
+    sql: ${TABLE}.inv_cost ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_inv_cost {
+    view_label: "PoP"
+    type: sum
+    sql: ${TABLE}.inv_cost ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: inv_cost_pop_change {
+    view_label: "PoP"
+    label: "Total Inv Cost period-over-period % change"
+    type: number
+    sql: CASE WHEN ${current_period_inv_cost} = 0
+                 THEN NULL
+                 ELSE (1.0 * ${current_period_inv_cost} / NULLIF(${previous_period_inv_cost} ,0)) - 1 END ;;
+    value_format_name: percent_2
+  }
 
 
 #---------------------------------------------NCD Specifics---------------------------------------------------

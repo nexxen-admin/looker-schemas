@@ -274,6 +274,17 @@ view: fact_nexxen_dsp {
     sql: EXTRACT(YEAR FROM ${date_key_raw}) ;;
   }
 
+  # dimension_group: event_time_et {
+  #   type: time
+  #   label: "Event Time ET"
+  #   group_label: "Date ET"
+  #   view_label: "Time Frame"
+  #   timeframes: [raw, hour, date, week, month, quarter, year]
+  #   convert_tz: no
+  #   datatype: timestamp
+  #   # Converts the UTC timestamp to Eastern Time, automatically handling DST (Daylight Saving Time)
+  #   sql: ${TABLE}.event_time AT TIME ZONE 'UTC' AT TIME ZONE 'America/New_York' ;;
+  # }
 
   parameter: date_granularity {
 

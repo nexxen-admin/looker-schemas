@@ -863,14 +863,6 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_dsp_seat.dsp_seat_key}=${fact_ad_daily_agg.dsp_seat_key};;
     relationship: many_to_one
   }
-
-  join: dim_dsp_seat_hold_co  {
-    type: inner
-    view_label: "DSP"
-    sql_on: ${dim_dsp_seat_hold_co.dsp_account_id} = ${dim_dsp_account.dsp_account_id} AND
-      ${dim_dsp_seat_hold_co.seat_id} = ${dim_dsp_seat.seat_id};;
-    relationship: many_to_one
-  }
   join: v_dim_dsp_seat_mapping  {
     type: left_outer
     view_label: "DSP Seat Mapping"

@@ -898,6 +898,24 @@ measure: Nexxen_Inv_Cost_Percent {
     filters: [date_key_in_timezone_date: "yesterday"]
   }
 
+  measure:  Previous_day_cost {
+    label: "Inv Cost Previous Day "
+    type: sum
+    sql: ${TABLE}.inv_cost ;;
+    description: "Cost from 2 days ago"
+    # group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "2 days ago"]
+  }
+
+  measure: Inv_Cost_Change {
+    type: number
+    #value_format: "0.0%"
+    description: "The inventort cost change from 2 days ago to yesterday"
+    sql: case when ${Last_day_inv_cost} = 0 then 0 else
+      (${Last_day_inv_cost}-${Previous_day_cost})/${Last_day_inv_cost} end;;
+    value_format_name: percent_2
+  }
   measure: yesterday_units {
     description: "The number of units delivered on the campaign yesterday."
     type: sum

@@ -911,6 +911,12 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: derived_imp_type_key {
+    type: number
+    sql: ${TABLE}.derived_imp_type_key ;;
+    hidden: yes
+  }
+
   measure:: cogs {
     label: "Cogs"
     description: "Media Cost (3rd Party SSP or Publisher Cost) - align to cost in CTRL platform"

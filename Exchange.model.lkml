@@ -553,6 +553,13 @@ explore: fact_ad_daily_agg{
     relationship: many_to_one
   }
 
+  join: dim_derived_imp_type {
+    type: left_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_derived_imp_type.derived_imp_type_key}=${fact_ad_daily_agg.derived_imp_type_key};;
+    relationship: many_to_one
+  }
+
   join: v_dim_platformfee_type {
     type: inner
     view_label: "Platform Fee Type"

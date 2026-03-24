@@ -21,6 +21,14 @@ view: amobee_media_hourly_view {
     label: " Event Time MTZ"
   }
 
+  dimension_group: event_time_et {
+    type: time
+    timeframes: [raw, time, hour, date, week, month, quarter, year]
+    label: " Event Time ET"
+    description: "Event timestamp converted to America/New_York (handles DST)."
+    sql: (${TABLE}.event_time AT TIME ZONE 'UTC') AT TIME ZONE 'America/New_York' ;;
+  }
+
     # =================================================================
     # DIMENSIONS
     # =================================================================

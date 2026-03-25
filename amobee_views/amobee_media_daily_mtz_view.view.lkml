@@ -249,7 +249,6 @@ view: amobee_media_daily_mtz_view {
   dimension: format {
     type: string
     sql: ${TABLE}."format" ;;
-    hidden: yes
   }
   dimension: format_calc {
     type: string

@@ -442,10 +442,12 @@ explore: fact_nexxen_dsp  {
 
     sql_on:
     ${fact_nexxen_dsp.opportunitylineitem_key} = ${dim_dsp_netsuite_invoice.opportunitylineitem_key}
-    AND CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_date}) AS DATE)
-      = TO_DATE(${dim_dsp_netsuite_invoice.event_month_month}, 'YYYY-MM') ;;
+    AND CAST(DATE_TRUNC('month', (DATE(fact_nexxen_dsp.date_key_in_timezone ))) AS DATE) <= TO_DATE((TO_CHAR(DATE_TRUNC('month', dim_dsp_netsuite_invoice.event_month ), 'YYYY-MM')), 'YYYY-MM');;
 
-      relationship: many_to_one
+   ## ${fact_nexxen_dsp.opportunitylineitem_key} = ${dim_dsp_netsuite_invoice.opportunitylineitem_key}
+  ##  AND CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_date}) AS DATE)
+    ##  = TO_DATE(${dim_dsp_netsuite_invoice.event_month_month}, 'YYYY-MM') ;;
+     relationship: many_to_one
     }
 
 

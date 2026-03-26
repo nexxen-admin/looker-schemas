@@ -3786,6 +3786,69 @@ hidden: yes
     group_label: "Daily Measures"
   }
 
+
+  measure: barter_fee_fpa {
+    label: "Barter Fee (FP&A)"
+    type: sum
+    value_format: "$#,##0.00"
+    description: "Barter rebate. Uses direct fact fee for 2026+, calculated % for prior dates. Excluding Tinuiti."
+    group_label: "Daily Measures"
+    sql:
+      CASE
+        -- Exclude Tinuiti DSP Seat on Firstparty revenue
+        WHEN (${dim_dsp_seat.seat_id} = '2147' AND ${dim_revenue_type.revenue_type_name} = 'firstparty') THEN 0
+        -- Exclude Tinuiti Barter Agency
+        WHEN ${dim_deal_agency.deal_agency_id} = '1194' THEN 0
+
+        -- STANDARD BARTER FEE LOGIC
+        ELSE (
+          CASE
+            -- NEW LOGIC: Date >= 2026-01-01
+            -- rebate_percent now holds the ACTUAL AMOUNT (e.g., 50.00)
+            -- So we just take that value directly. We DO NOT multiply by Revenue.
+            WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01' THEN ${rebate_percent}
+
+      -- OLD LOGIC: Date < 2026-01-01
+      -- rebate_percent holds a PERCENTAGE (e.g., 0.02)
+      -- We multiply Revenue * Percentage
+      ELSE
+      (
+      (
+      COALESCE(${TABLE}.sum_of_revenue / (1 + CASE
+      WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
+      CASE
+      WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
+      CASE
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
+      ELSE 0
+      END
+      WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
+      CASE
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.008615
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.034746
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.034567
+      ELSE 0
+      END
+      ELSE 0
+      END
+      ELSE 0
+      END
+      ), 0)
+      - COALESCE(
+      CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
+      0
+      )
+      ) * ${rebate_percent}
+      )
+      END
+      )
+      END ;;
+  }
+
+
+
   measure: traffic_source_fee {
     type: sum
     sql: ${TABLE}.sum_of_Traffic_Source_Fee ;;
@@ -3867,6 +3930,46 @@ hidden: yes
 
       -- Default for non-qualifying rows or pre-2026 dates
       ELSE 0
+      END ;;
+  }
+
+
+  measure: publisher_barter_fee_fpa {
+    label: "Publisher Barter Fee (FP&A)"
+    description: "Calculates 2% rebate on (Revenue - Deal Data Fee) for qualifying Publisher Deals. Effective starting Jan 1, 2026. Excluding Tinuiti."
+    type: sum
+    group_label: "Daily Measures"
+    value_format: "$#,##0.00"
+    sql:
+      CASE
+        -- Exclude Tinuiti DSP Seat on Firstparty revenue
+        WHEN (${dim_dsp_seat.seat_id} = '2147' AND ${dim_revenue_type.revenue_type_name} = 'firstparty') THEN 0
+
+        -- STANDARD PUBLISHER BARTER FEE LOGIC
+        ELSE (
+          CASE
+            -- 1. Effective Date Check: Must be on or after Jan 1, 2026
+            -- Use the _raw version of your date field for reliable comparison
+            WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01'
+
+      -- 2. Basic Qualification: Deal Type must be 'pub'
+      AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+
+      -- 3. Specific Qualification: Specific Seat OR Description Match
+      AND (
+      ${dim_dsp_seat.seat_id} = '2147'
+      OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+      OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+      OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+      )
+
+      -- 4. The Calculation: 2% of (Revenue - Deal Data Fee)
+      THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
+
+      -- Default for non-qualifying rows or pre-2026 dates
+      ELSE 0
+      END
+      )
       END ;;
   }
 

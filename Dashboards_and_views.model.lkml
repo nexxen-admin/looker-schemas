@@ -415,6 +415,12 @@ explore: deal_commision_data {
 explore: deal_split_owner {
   label: "Deal Split Owner"
   hidden: yes
+
+  join: rx_dim_deal {
+    type: left_outer
+    sql_on: UPPER(${deal_split_owner.deal_id})=${rx_dim_deal.deal_id_external};;
+    relationship: many_to_one
+  }
 }
 
 explore: deal_commission_data_pivot {

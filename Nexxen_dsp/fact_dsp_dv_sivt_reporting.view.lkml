@@ -136,10 +136,10 @@ view: fact_dsp_dv_sivt_reporting {
     sql: ${TABLE}.sivt_impressions_scaled ;;
   }
   measure: sivt_rate {
-    type: sum
+    type: number
     label: "SIVT Rate"
     value_format: "0.00%"
-    sql: ${TABLE}.sivt_rate ;;
+    sql:CASE WHEN ${impressions}=0 THEN 0 ELSE ${sivt_impressions_scaled}/${impressions} END;;
   }
 
 }

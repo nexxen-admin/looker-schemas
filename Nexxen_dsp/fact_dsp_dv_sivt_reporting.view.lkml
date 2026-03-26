@@ -139,10 +139,7 @@ view: fact_dsp_dv_sivt_reporting {
     type: number
     label: "SIVT Rate"
     value_format: "0.00%"
-    sql:CASE WHEN ${environment} ILIKE 'CTV%' and ${dv_net_ads}!=0  THEN ${sivt_impressions_measured} / ${dv_net_ads}
-        ELSE CASE WHEN ${impressions}!=0 AND ROUND(${dv_net_ads} / ${impressions} , 3)>0.12 AND ${dv_net_ads}!=0  THEN  ${sivt_impressions_measured} / ${dv_net_ads}
-              ELSE 0 END
-        END ;;
+    sql:CASE WHEN ${impressions}=0 THEN 0 ELSE ${sivt_impressions_scaled}/${impressions} END;;
   }
 
 }

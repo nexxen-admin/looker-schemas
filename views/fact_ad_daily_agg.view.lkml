@@ -3974,6 +3974,27 @@ hidden: yes
   }
 
 
+  measure: net_revenue_fpa {
+    label: "Net Revenue (FP&A)"
+    group_label: "Daily Measures" # Or whichever folder makes sense
+    description: "Comprehensive net revenue calculation including all platform fees, costs, rebates, and adjustments used within the Daily Revenue Report. Notes: Exchange Platform Cost is excluded. Barter rebates exclude those from Tinuiti."
+    type: number
+    value_format_name: usd
+    sql:
+      COALESCE(${revenue}, 0)
+      + COALESCE(${platform_fee}, 0)
+      - COALESCE(${traffic_source_fee}, 0)
+      + COALESCE(${pub_platform_fee}, 0)
+      - COALESCE(${barter_fee_fpa}, 0)
+      - COALESCE(${publisher_barter_fee_fpa}, 0)
+      + COALESCE(${revenue_adjustment}, 0)
+      + COALESCE(${cogs_adjustment}, 0)
+      + COALESCE(${cm_fee}, 0)
+      - COALESCE(${cogs}, 0) ;;
+  }
+
+
+
   measure: total_barter_fee {
     type: number
     label: "Total Barter Fee"

@@ -94,52 +94,6 @@ view: fact_ad_daily_agg {
 
   }
 
-  measure: 1p_revenue {
-    type: sum
-    hidden: yes
-    value_format: "$#,##0.00"
-    label: "1P Revenue"
-    group_label: "Daily Measures"
-    sql: CASE WHEN ${dim_seat.1p_demand_type}='Unclassified' THEN 0 ELSE ${TABLE}.sum_of_revenue END;;
-  }
-
-  measure: 1p_revenue_share {
-    type: number
-    value_format: "0.00%"
-    label: "1P Revenue Share"
-    group_label: "Daily Measures"
-    sql: CASE WHEN ${revenue}=0 THEN 0 ELSE ${1p_revenue}/${revenue} END;;
-  }
-
-  measure: 1p_revenue_ms {
-    type: sum
-    hidden: yes
-    value_format: "$#,##0.00"
-    label: "1P Revenue Managed Service"
-    group_label: "Daily Measures"
-    sql: CASE WHEN ${dim_seat.1p_demand_type}='1P DSP Managed Service' THEN ${TABLE}.sum_of_revenue ELSE 0 END;;
-  }
-
-  measure: 1p_revenue_ss {
-    type: sum
-    hidden: yes
-    value_format: "$#,##0.00"
-    label: "1P Revenue Self Service"
-    group_label: "Daily Measures"
-    sql: CASE WHEN ${dim_seat.1p_demand_type}='1P DSP Self Service' THEN ${TABLE}.sum_of_revenue ELSE 0 END;;
-  }
-
-  measure: revenue_by_1p_demand_type {
-    type: number
-    description: "Percentage of revenue attributed to each 1P Demand Type relative to total revenue."
-    value_format: "0.00%"
-    label: "% Revenue by 1P Demand Type"
-    group_label: "Daily Measures"
-    sql: CASE WHEN ${revenue}=0 THEN 0
-          WHEN ${dim_seat.1p_demand_type}='1P DSP Managed Service' THEN ${1p_revenue_ms}/${revenue}
-          WHEN ${dim_seat.1p_demand_type}='1P DSP Self Service'  THEN ${1p_revenue_ss}/${revenue} END;;
-  }
-
   measure: Change_PubReq{
     type: number
     group_label: "Time Shifted Measures"

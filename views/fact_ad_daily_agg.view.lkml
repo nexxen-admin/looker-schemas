@@ -3888,6 +3888,46 @@ hidden: yes
   }
 
 
+  # measure: publisher_barter_fee_fpa {
+  #   label: "Publisher Barter Fee (FP&A)"
+  #   description: "Calculates 2% rebate on (Revenue - Deal Data Fee) for qualifying Publisher Deals. Effective starting Jan 1, 2026. Excluding Tinuiti."
+  #   type: sum
+  #   group_label: "Daily Measures"
+  #   value_format: "$#,##0.00"
+  #   sql:
+  #     CASE
+  #       -- Exclude Tinuiti DSP Seat on Firstparty revenue
+  #       WHEN (${dim_dsp_seat.seat_id} = '2147' AND ${dim_revenue_type.revenue_type_name} = 'firstparty') THEN 0
+
+  #       -- STANDARD PUBLISHER BARTER FEE LOGIC
+  #       ELSE (
+  #         CASE
+  #           -- 1. Effective Date Check: Must be on or after Jan 1, 2026
+  #           -- Use the _raw version of your date field for reliable comparison
+  #           WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01'
+
+  #     -- 2. Basic Qualification: Deal Type must be 'pub'
+  #     AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+
+  #     -- 3. Specific Qualification: Specific Seat OR Description Match
+  #     AND (
+  #     ${dim_dsp_seat.seat_id} = '2147'
+  #     OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+  #     OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+  #     OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+  #     )
+
+  #     -- 4. The Calculation: 2% of (Revenue - Deal Data Fee)
+  #     THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
+
+  #     -- Default for non-qualifying rows or pre-2026 dates
+  #     ELSE 0
+  #     END
+  #     )
+  #     END ;;
+  # }
+
+
   measure: publisher_barter_fee_fpa {
     label: "Publisher Barter Fee (FP&A)"
     description: "Calculates 2% rebate on (Revenue - Deal Data Fee) for qualifying Publisher Deals. Effective starting Jan 1, 2026. Excluding Tinuiti."
@@ -3896,37 +3936,29 @@ hidden: yes
     value_format: "$#,##0.00"
     sql:
       CASE
-        -- Exclude Tinuiti DSP Seat on Firstparty revenue
-        WHEN (${dim_dsp_seat.seat_id} = '2147' AND ${dim_revenue_type.revenue_type_name} = 'firstparty') THEN 0
+        -- EXCLUDE TINUITI LOGIC
+        WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+         AND (
+             ${dim_dsp_seat.seat_id} = '2147'
+             OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+             OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+             OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+         ) THEN 0
 
         -- STANDARD PUBLISHER BARTER FEE LOGIC
         ELSE (
           CASE
-            -- 1. Effective Date Check: Must be on or after Jan 1, 2026
-            -- Use the _raw version of your date field for reliable comparison
+            -- 1. Effective Date Check
             WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01'
-
-      -- 2. Basic Qualification: Deal Type must be 'pub'
-      AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
-
-      -- 3. Specific Qualification: Specific Seat OR Description Match
-      AND (
-      ${dim_dsp_seat.seat_id} = '2147'
-      OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
-      OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
-      OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
-      )
-
-      -- 4. The Calculation: 2% of (Revenue - Deal Data Fee)
-      THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
-
-      -- Default for non-qualifying rows or pre-2026 dates
-      ELSE 0
-      END
-      )
+            -- 2. Must be a Publisher Deal
+            AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+            -- 3. Calculate 2% (The Tinuiti checks are removed here!)
+            THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
+            ELSE 0
+          END
+        )
       END ;;
   }
-
 
   measure: net_revenue_fpa {
     label: "Net Revenue (FP&A)"

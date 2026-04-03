@@ -30,7 +30,7 @@ access_grant: can_view_pub_come_looker {
 
 access_grant: can_view_finance_reports {
   user_attribute: finance_reports
-  allowed_values: ["%,NULL"]
+  allowed_values: ["Finance Reports All Access"]
 }
 
 explore: ssot_v   {

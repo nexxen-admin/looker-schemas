@@ -34,6 +34,6 @@ access_grant: can_view_finance_reports {
 }
 
 explore: ssot_v   {
-  required_access_grants: [can_view_pub_come_looker, can_view_finance_reports]
+  required_access_grants: [can_view_finance_reports]
   # label: "Monthly Strategic Targets"
 }

@@ -17,6 +17,12 @@ view: fact_dsp_dv_sivt_reporting {
     datatype: date
     sql: ${TABLE}.date_key ;;
   }
+  dimension: domain_app {
+    type: string
+    label: "Domain \ App Id"
+    description: "This columns merges info about TLD and app id, if app is unknown, TLD is showed."
+    sql: CASE WHEN ${app_id}='Unknown' THEN ${tld} ELSE ${app_id} END ;;
+  }
   dimension: environment {
     type: string
     sql: ${TABLE}.environment ;;

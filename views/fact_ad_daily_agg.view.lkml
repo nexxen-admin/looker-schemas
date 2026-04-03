@@ -94,52 +94,6 @@ view: fact_ad_daily_agg {
 
   }
 
-  measure: 1p_revenue {
-    type: sum
-    hidden: yes
-    value_format: "$#,##0.00"
-    label: "1P Revenue"
-    group_label: "Daily Measures"
-    sql: CASE WHEN ${dim_seat.1p_demand_type}='Unclassified' THEN 0 ELSE ${TABLE}.sum_of_revenue END;;
-  }
-
-  measure: 1p_revenue_share {
-    type: number
-    value_format: "0.00%"
-    label: "1P Revenue Share"
-    group_label: "Daily Measures"
-    sql: CASE WHEN ${revenue}=0 THEN 0 ELSE ${1p_revenue}/${revenue} END;;
-  }
-
-  measure: 1p_revenue_ms {
-    type: sum
-    hidden: yes
-    value_format: "$#,##0.00"
-    label: "1P Revenue Managed Service"
-    group_label: "Daily Measures"
-    sql: CASE WHEN ${dim_seat.1p_demand_type}='1P DSP Managed Service' THEN ${TABLE}.sum_of_revenue ELSE 0 END;;
-  }
-
-  measure: 1p_revenue_ss {
-    type: sum
-    hidden: yes
-    value_format: "$#,##0.00"
-    label: "1P Revenue Self Service"
-    group_label: "Daily Measures"
-    sql: CASE WHEN ${dim_seat.1p_demand_type}='1P DSP Self Service' THEN ${TABLE}.sum_of_revenue ELSE 0 END;;
-  }
-
-  measure: revenue_by_1p_demand_type {
-    type: number
-    description: "Percentage of revenue attributed to each 1P Demand Type relative to total revenue."
-    value_format: "0.00%"
-    label: "% Revenue by 1P Demand Type"
-    group_label: "Daily Measures"
-    sql: CASE WHEN ${revenue}=0 THEN 0
-          WHEN ${dim_seat.1p_demand_type}='1P DSP Managed Service' THEN ${1p_revenue_ms}/${revenue}
-          WHEN ${dim_seat.1p_demand_type}='1P DSP Self Service'  THEN ${1p_revenue_ss}/${revenue} END;;
-  }
-
   measure: Change_PubReq{
     type: number
     group_label: "Time Shifted Measures"
@@ -3934,6 +3888,46 @@ hidden: yes
   }
 
 
+  # measure: publisher_barter_fee_fpa {
+  #   label: "Publisher Barter Fee (FP&A)"
+  #   description: "Calculates 2% rebate on (Revenue - Deal Data Fee) for qualifying Publisher Deals. Effective starting Jan 1, 2026. Excluding Tinuiti."
+  #   type: sum
+  #   group_label: "Daily Measures"
+  #   value_format: "$#,##0.00"
+  #   sql:
+  #     CASE
+  #       -- Exclude Tinuiti DSP Seat on Firstparty revenue
+  #       WHEN (${dim_dsp_seat.seat_id} = '2147' AND ${dim_revenue_type.revenue_type_name} = 'firstparty') THEN 0
+
+  #       -- STANDARD PUBLISHER BARTER FEE LOGIC
+  #       ELSE (
+  #         CASE
+  #           -- 1. Effective Date Check: Must be on or after Jan 1, 2026
+  #           -- Use the _raw version of your date field for reliable comparison
+  #           WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01'
+
+  #     -- 2. Basic Qualification: Deal Type must be 'pub'
+  #     AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+
+  #     -- 3. Specific Qualification: Specific Seat OR Description Match
+  #     AND (
+  #     ${dim_dsp_seat.seat_id} = '2147'
+  #     OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+  #     OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+  #     OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+  #     )
+
+  #     -- 4. The Calculation: 2% of (Revenue - Deal Data Fee)
+  #     THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
+
+  #     -- Default for non-qualifying rows or pre-2026 dates
+  #     ELSE 0
+  #     END
+  #     )
+  #     END ;;
+  # }
+
+
   measure: publisher_barter_fee_fpa {
     label: "Publisher Barter Fee (FP&A)"
     description: "Calculates 2% rebate on (Revenue - Deal Data Fee) for qualifying Publisher Deals. Effective starting Jan 1, 2026. Excluding Tinuiti."
@@ -3942,36 +3936,49 @@ hidden: yes
     value_format: "$#,##0.00"
     sql:
       CASE
-        -- Exclude Tinuiti DSP Seat on Firstparty revenue
-        WHEN (${dim_dsp_seat.seat_id} = '2147' AND ${dim_revenue_type.revenue_type_name} = 'firstparty') THEN 0
+        -- EXCLUDE TINUITI LOGIC
+        WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+         AND (
+             ${dim_dsp_seat.seat_id} = '2147'
+             OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+             OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+             OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+         ) THEN 0
 
         -- STANDARD PUBLISHER BARTER FEE LOGIC
         ELSE (
           CASE
-            -- 1. Effective Date Check: Must be on or after Jan 1, 2026
-            -- Use the _raw version of your date field for reliable comparison
+            -- 1. Effective Date Check
             WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01'
-
-      -- 2. Basic Qualification: Deal Type must be 'pub'
-      AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
-
-      -- 3. Specific Qualification: Specific Seat OR Description Match
-      AND (
-      ${dim_dsp_seat.seat_id} = '2147'
-      OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
-      OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
-      OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
-      )
-
-      -- 4. The Calculation: 2% of (Revenue - Deal Data Fee)
-      THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
-
-      -- Default for non-qualifying rows or pre-2026 dates
-      ELSE 0
-      END
-      )
+            -- 2. Must be a Publisher Deal
+            AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+            -- 3. Calculate 2% (The Tinuiti checks are removed here!)
+            THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
+            ELSE 0
+          END
+        )
       END ;;
   }
+
+  measure: net_revenue_fpa {
+    label: "Net Revenue (FP&A)"
+    group_label: "Daily Measures" # Or whichever folder makes sense
+    description: "Comprehensive net revenue calculation including all platform fees, costs, rebates, and adjustments used within the Daily Revenue Report. Notes: Exchange Platform Cost is excluded. Barter rebates exclude those from Tinuiti."
+    type: number
+    value_format_name: usd
+    sql:
+      COALESCE(${revenue}, 0)
+      + COALESCE(${platform_fee}, 0)
+      - COALESCE(${traffic_source_fee}, 0)
+      + COALESCE(${pub_platform_fee}, 0)
+      - COALESCE(${barter_fee_fpa}, 0)
+      - COALESCE(${publisher_barter_fee_fpa}, 0)
+      + COALESCE(${revenue_adjustment}, 0)
+      + COALESCE(${cogs_adjustment}, 0)
+      + COALESCE(${cm_fee}, 0)
+      - COALESCE(${cogs}, 0) ;;
+  }
+
 
 
   measure: total_barter_fee {

@@ -3935,29 +3935,28 @@ hidden: yes
     group_label: "Daily Measures"
     value_format: "$#,##0.00"
     sql:
-      CASE
-        -- EXCLUDE TINUITI LOGIC
-        WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
-         AND (
-             ${dim_dsp_seat.seat_id} = '2147'
-             OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
-             OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
-             OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
-         ) THEN 0
-
-        -- STANDARD PUBLISHER BARTER FEE LOGIC
-        ELSE (
-          CASE
-            -- 1. Effective Date Check
-            WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01'
-            -- 2. Must be a Publisher Deal
-            AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
-            -- 3. Calculate 2% (The Tinuiti checks are removed here!)
-            THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
-            ELSE 0
-          END
-        )
-      END ;;
+    CASE
+      -- 1. Effective Date Check
+      WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01'
+      -- 2. Must be a Publisher Deal
+      AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+      -- 3. Must qualify as a publisher barter deal (same as original)
+      AND (
+        ${dim_dsp_seat.seat_id} = '2147'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+      )
+      -- 4. Exclude Tinuiti (FP&A exclusion)
+      AND NOT (
+        ${dim_dsp_seat.seat_id} = '2147'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+      )
+      THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
+      ELSE 0
+    END ;;
   }
 
   measure: net_revenue_fpa {

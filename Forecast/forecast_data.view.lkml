@@ -345,10 +345,12 @@ view: forecast_data {
     label: "Sales Team (Chance Org)"
     sql: CASE WHEN ${new_enterprise_team} ILIKE '%Enterprise Sales%' THEN ${new_enterprise_team}
               WHEN ${new_enterprise_team} ILIKE '%Enterprise Services - National%' THEN 'Enterprise Sales'
+              WHEN ${new_enterprise_team} ILIKE '%Enterprise Channel Partnership%' THEN 'Enterprise Sales'
               WHEN  ${new_enterprise_team} ILIKE '%Political%' THEN 'Enterprise Sales - Political'
               WHEN ${strat_sales_team}  ILIKE '%Barter Direct%' THEN ${strat_sales_team}
-            WHEN ${strat_sales_rvp} ILIKE '%Strat Sales%' THEN ${strat_sales_rvp}
-            ELSE 'Unknown' END ;;
+              WHEN ${strat_sales_rvp} ILIKE '%Strat Sales%' THEN ${strat_sales_rvp}
+              ELSE 'Unknown'
+              END ;;
   }
 
   dimension: chance_team {

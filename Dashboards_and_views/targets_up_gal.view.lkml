@@ -51,6 +51,12 @@ view: targets_up_gal {
     value_format: "$#,##0"
   }
 
+  measure: net_revenue_post_fees {
+    type: sum
+    sql: ${TABLE}.net_revenue_post_fees ;;
+    value_format: "$#,##0"
+  }
+
   measure: revenue {
     type: sum
     label: "Gross Revenue"
@@ -74,8 +80,8 @@ view: targets_up_gal {
   measure: net_net {
     label: "Net Net"
     type: sum
-    sql: case when ${TABLE}.population ='Team Shir In App' or ${TABLE}.population='Team Shir Web' then ${TABLE}.Net_Revenue
-    else ${TABLE}.Net_Revenue + ${TABLE}.net_emea end;;
+    sql: case when ${TABLE}.population ='Team Shir In App' or ${TABLE}.population='Team Shir Web' then ${TABLE}.net_revenue_post_fees
+    else ${TABLE}.net_revenue_post_fees + ${TABLE}.net_emea end;;
     value_format: "$#,##0"
   }
 

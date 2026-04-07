@@ -238,11 +238,11 @@ view: forecast_data {
           WHEN ${account_name} LIKE '%Guru%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
           WHEN ${account_name} LIKE '%301 Digital%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
           WHEN ${account_name} LIKE '%Rescue Agency%' AND ${revenue_line} = 'DSP (Self-Service & Managed)' THEN NULL
-          WHEN ${account_manager_sales_team} LIKE 'Strat Services % East%' THEN 'Strat Sales CS East'
-          WHEN ${account_manager_sales_team} LIKE 'Strat Services % West%' THEN 'Strat Sales CS West'
-          WHEN ${account_manager_sales_team} LIKE 'Strat Services % Central%' THEN 'Strat Sales CS Central'
-          WHEN ${account_manager_sales_team} LIKE 'Strat Services % Canada%' THEN 'Strat Sales CS Canada'
-          WHEN ${account_manager_sales_team} LIKE 'Strat Services % South%' THEN 'Strat Sales CS South'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Services % East%' THEN 'Strat Services - East'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Services % West%' THEN 'Strat Services - West'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Services % Central%' THEN 'Strat Services - Central'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Services % Canada%' THEN 'Strat Services - Canada'
+          WHEN ${account_manager_sales_team} LIKE 'Strat Services % South%' THEN 'Strat Services - South'
         ELSE NULL
         END ;;
     label: "Strategic Sales CS Region"
@@ -345,10 +345,12 @@ view: forecast_data {
     label: "Sales Team (Chance Org)"
     sql: CASE WHEN ${new_enterprise_team} ILIKE '%Enterprise Sales%' THEN ${new_enterprise_team}
               WHEN ${new_enterprise_team} ILIKE '%Enterprise Services - National%' THEN 'Enterprise Sales'
+              WHEN ${new_enterprise_team} ILIKE '%Enterprise Channel Partnership%' THEN 'Enterprise Sales'
               WHEN  ${new_enterprise_team} ILIKE '%Political%' THEN 'Enterprise Sales - Political'
               WHEN ${strat_sales_team}  ILIKE '%Barter Direct%' THEN ${strat_sales_team}
-            WHEN ${strat_sales_rvp} ILIKE '%Strat Sales%' THEN ${strat_sales_rvp}
-            ELSE 'Unknown' END ;;
+              WHEN ${strat_sales_rvp} ILIKE '%Strat Sales%' THEN ${strat_sales_rvp}
+              ELSE 'Unknown'
+              END ;;
   }
 
   dimension: chance_team {

@@ -30,6 +30,22 @@ view: dim_dsp_deal {
     sql: ${TABLE}.deal_type_name ;;
   }
 
+  # dimension: deal_vs_pmp {
+  #   type: string
+  #   label: "Deal vs. PMP"
+  #   sql: CASE WHEN ${deal_type_name} = '' THEN 'Open Auction' ELSE 'PMP' END ;;
+  # }
+
+  dimension: deal_vs_pmp {
+    type: string
+    label: "Deal vs. PMP"
+    sql: CASE
+            WHEN ${deal_type_name} IN ('PrivateAuction', 'UnreservedFixed') THEN 'PMP'
+            WHEN ${deal_type_name} IS NOT NULL AND ${deal_type_name} != 'Unknown' AND ${deal_type_name} != '' THEN 'Deal - Other'
+            ELSE 'OMP'
+         END ;;
+  }
+
   dimension: deal_key {
     type: number
     sql: ${TABLE}.deal_key ;;

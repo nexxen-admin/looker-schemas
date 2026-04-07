@@ -98,6 +98,11 @@ view: amobee_media_daily_mtz_view {
     type: string
     sql: ${TABLE}.browser_type ;;
   }
+  dimension: buy_type {
+    type: string
+    view_label: "Custom Dimensions"
+    sql:  CASE WHEN ${sunflower_dim_deal.deal_type_calc} IN ('OMP', 'Guaranteed') THEN ${sunflower_dim_deal.deal_type_calc} ELSE 'PMP' END;;
+  }
   # dimension: campaign_id {
   #   type: number
   #   sql: ${TABLE}.campaign_id ;;
@@ -244,6 +249,14 @@ view: amobee_media_daily_mtz_view {
   dimension: format {
     type: string
     sql: ${TABLE}."format" ;;
+  }
+  dimension: format_calc {
+    type: string
+    label: "Format"
+    sql: CASE WHEN ${TABLE}.format IN ('Audio', 'Display') THEN  ${TABLE}.format
+              WHEN ${TABLE}.environment='Ctv App' THEN 'CTV'
+            ELSE 'OLV' END;;
+    view_label: "Custom Dimensions"
   }
   dimension: format_id {
     type: number

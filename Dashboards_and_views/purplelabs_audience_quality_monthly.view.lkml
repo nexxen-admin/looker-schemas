@@ -33,6 +33,8 @@ Group by 1, 2, 3, 4, 5, 6, 7
                    ELSE REPLACE(coverage, '%', '')::FLOAT / 100
               END) AS coverage,
           SUM(CASE WHEN unique_patient_count = 'Too small to measure' THEN 0
+                   when unique_patient_count = 'There is not enough unique patients to m' THEN 0
+                   WHEN unique_patient_count = 'There is not enough unique patients to measure (min unique patients count: 25)' THEN 0
                    ELSE unique_patient_count::INT
               END) AS unique_patient_count
         FROM SunFlower.purplelab_audience_quality_monthly

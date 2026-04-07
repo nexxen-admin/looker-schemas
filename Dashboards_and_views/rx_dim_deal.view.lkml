@@ -54,7 +54,6 @@ view: rx_dim_deal {
   dimension: deal_end {
     type: string
     sql: ${TABLE}.deal_end ;;
-    hidden: yes
   }
   dimension: deal_id_external {
     type: string
@@ -69,7 +68,6 @@ view: rx_dim_deal {
   dimension: deal_start {
     type: string
     sql: ${TABLE}.deal_start ;;
-    hidden: yes
   }
   dimension: deal_supply_margin_pct {
     type: number

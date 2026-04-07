@@ -41,7 +41,7 @@ explore: billing_international_media_io {
 
 explore: media_io_billing_international {
   label:"New Billing International"
-  hidden: yes
+  # hidden: yes
 }
 
 explore: monthly_international_billing_locked_report {
@@ -442,10 +442,12 @@ explore: fact_nexxen_dsp  {
 
     sql_on:
     ${fact_nexxen_dsp.opportunitylineitem_key} = ${dim_dsp_netsuite_invoice.opportunitylineitem_key}
-    AND CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_date}) AS DATE)
-      = TO_DATE(${dim_dsp_netsuite_invoice.event_month_month}, 'YYYY-MM') ;;
+    AND CAST(DATE_TRUNC('month', (DATE(fact_nexxen_dsp.date_key_in_timezone ))) AS DATE) <= TO_DATE((TO_CHAR(DATE_TRUNC('month', dim_dsp_netsuite_invoice.event_month ), 'YYYY-MM')), 'YYYY-MM');;
 
-      relationship: many_to_one
+   ## ${fact_nexxen_dsp.opportunitylineitem_key} = ${dim_dsp_netsuite_invoice.opportunitylineitem_key}
+  ##  AND CAST(DATE_TRUNC('month', ${fact_nexxen_dsp.date_key_in_timezone_date}) AS DATE)
+    ##  = TO_DATE(${dim_dsp_netsuite_invoice.event_month_month}, 'YYYY-MM') ;;
+     relationship: many_to_one
     }
 
 
@@ -706,5 +708,19 @@ explore: fact_nexxen_dsp  {
   #   sql_on: ${dim_dsp_advertiser.advertiser_id}=${advertisers_email.advertiser_id} ;;
   #   relationship: many_to_one
   # }
+
+}
+
+explore: fact_dsp_dv_sivt_reporting {
+  required_access_grants: [can_view_all_tremor]
+  label: "DSP DV SIVT Reporting"
+
+  join: dim_dsp_inventory_source {
+    type: left_outer
+    view_label: "Inventory Source"
+    relationship: many_to_one
+    sql_on: ${fact_dsp_dv_sivt_reporting.inventory_source_key}=${dim_dsp_inventory_source.inventory_source_key} ;;
+  }
+
 
 }

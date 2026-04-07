@@ -75,13 +75,22 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_revenue_adjustment  ;;
   }
 
+  measure: platform_cost {
+    type: sum
+    label: "Exchange Platform Cost"
+    description: "Exchange Platform Cost represents a revenue-based platform fee applied to buyer-connect fee partners (A9 and Adelphic) transacting via Bidswitch. The cost is calculated as 4% of gross revenue and reflects the net revenue terms under which these buyers operate. Values align with the Daily Revenue Report."
+    value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    sql: ${TABLE}.sum_of_platform_cost  ;;
+  }
+
   measure: net_revenue_post_fees {
     type: number
     label: "Net Revenue (Post Fees)"
     description: "Comprehensive net revenue calculation including all platform fees, costs, rebates, and adjustments currently included in the Daily Revenue Report. Note:  This measure includes all barter rebates whereas the DRR excludes rebates from Tinuiti."
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
-    sql: ${revenue} + ${platform_fee} - ${traffic_source_fee} + ${pub_platform_fee} - ${barter_fee} - ${publisher_barter_fee} + ${revenue_adjustment} + ${cogs_adjustment} +${cm_fee} - ${cogs} ;;
+    sql: ${revenue} + ${platform_fee} - ${traffic_source_fee} + ${platform_cost} + ${pub_platform_fee} - ${barter_fee} - ${publisher_barter_fee} + ${revenue_adjustment} + ${cogs_adjustment} +${cm_fee} - ${cogs} ;;
 
   }
 
@@ -902,6 +911,12 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: derived_imp_type_key {
+    type: number
+    sql: ${TABLE}.derived_imp_type_key ;;
+    hidden: yes
+  }
+
   measure:: cogs {
     label: "Cogs"
     description: "Media Cost (3rd Party SSP or Publisher Cost) - align to cost in CTRL platform"
@@ -911,7 +926,7 @@ view: fact_ad_daily_agg {
     sql: ${TABLE}.sum_of_cogs ;;
   }
 
-  measure:: cost {
+  measure: cost {
     label: "Cost"
     type: sum
     value_format: "$#,##0.00"
@@ -2027,7 +2042,7 @@ view: fact_ad_daily_agg {
 
   measure: pub_platform_fee {
     type: sum
-    label: "pub_platform_fee"
+    label: "Pub Platform Fee"
     description: "A fee the publisher pays to use our platform"
     value_format: "$#,##0.00"
     group_label: "Daily Measures"
@@ -2214,12 +2229,16 @@ view: fact_ad_daily_agg {
     type: average
     sql: ${TABLE}.avg_of_ssp_bid_price;;
     value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    label: "SSP Bid Price"
   }
 
   measure: ssp_rev {
     type: sum
     sql: ${TABLE}.avg_of_ssp_bid_price * ${TABLE}.sum_of_impression_pixel /1000 ;;
     value_format: "$#,##0.00"
+    group_label: "Daily Measures"
+    label: "SSP Rev"
   }
 
   dimension: win_price {
@@ -2484,14 +2503,14 @@ view: fact_ad_daily_agg {
     view_label: "PoP"
     type: yesno
     sql:  (EXTRACT(DAY FROM ${date_in_period_date}) < EXTRACT(DAY FROM GETDATE())
-                    OR
+                    /*OR
                 (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
                 EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
                     OR
                 (EXTRACT(DAY FROM ${date_in_period_date}) = EXTRACT(DAY FROM GETDATE()) AND
                 EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
-                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
-    description: "Filters the data to be only month to date"
+                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE()))*/)  ;;
+    description: "Filters the data to be only month to date (today's data excluded)"
   }
 
   dimension: qtd_only {
@@ -2507,17 +2526,17 @@ view: fact_ad_daily_agg {
   dimension: ytd_only {
     group_label: "To-Date Filters"
     label: "YTD"
-    description: "Filters the data to be only year to date"
+    description: "Filters the data to be only year to date (today's data excluded)"
     view_label: "PoP"
     type: yesno
     sql:  (EXTRACT(DOY FROM ${date_in_period_date}) < EXTRACT(DOY FROM GETDATE())
-                    OR
+                    /*OR
                 (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
                 EXTRACT(HOUR FROM ${date_in_period_date}) < EXTRACT(HOUR FROM GETDATE()))
                     OR
                 (EXTRACT(DOY FROM ${date_in_period_date}) = EXTRACT(DOY FROM GETDATE()) AND
                 EXTRACT(HOUR FROM ${date_in_period_date}) <= EXTRACT(HOUR FROM GETDATE()) AND
-                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE())))  ;;
+                EXTRACT(MINUTE FROM ${date_in_period_date}) < EXTRACT(MINUTE FROM GETDATE()))*/)  ;;
   }
 
   dimension: order_for_period {
@@ -3718,12 +3737,77 @@ hidden: yes
       END ;;
     value_format: "$#,##0.00"
     description: "Barter rebate. Uses direct fact fee for 2026+, calculated % for prior dates."
+    group_label: "Daily Measures"
   }
+
+
+  measure: barter_fee_fpa {
+    label: "Barter Fee (FP&A)"
+    type: sum
+    value_format: "$#,##0.00"
+    description: "Barter rebate. Uses direct fact fee for 2026+, calculated % for prior dates. Excluding Tinuiti."
+    group_label: "Daily Measures"
+    sql:
+      CASE
+        -- Exclude Tinuiti DSP Seat on Firstparty revenue
+        WHEN (${dim_dsp_seat.seat_id} = '2147' AND ${dim_revenue_type.revenue_type_name} = 'firstparty') THEN 0
+        -- Exclude Tinuiti Barter Agency
+        WHEN ${dim_deal_agency.deal_agency_id} = '1194' THEN 0
+
+        -- STANDARD BARTER FEE LOGIC
+        ELSE (
+          CASE
+            -- NEW LOGIC: Date >= 2026-01-01
+            -- rebate_percent now holds the ACTUAL AMOUNT (e.g., 50.00)
+            -- So we just take that value directly. We DO NOT multiply by Revenue.
+            WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01' THEN ${rebate_percent}
+
+      -- OLD LOGIC: Date < 2026-01-01
+      -- rebate_percent holds a PERCENTAGE (e.g., 0.02)
+      -- We multiply Revenue * Percentage
+      ELSE
+      (
+      (
+      COALESCE(${TABLE}.sum_of_revenue / (1 + CASE
+      WHEN ${dim_revenue_type.revenue_type_name} = 'firstparty' THEN
+      CASE
+      WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'rx' AND (${dim_dsp_seat.seat_id} = '2147' OR ${dim_deal_agency.deal_agency_name} ILIKE '%Icon Tinuiti%') THEN
+      CASE
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.051742
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.041740
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.042947
+      ELSE 0
+      END
+      WHEN ${dim_dsp_deal_type.dsp_deal_type} = 'pub' AND ${dim_dsp_seat.seat_id} = '2147' THEN
+      CASE
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-03-01' THEN -0.008615
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-02-01' THEN -0.034746
+      WHEN ${dim_date.date_key_raw} >= DATE '2025-01-01' THEN -0.034567
+      ELSE 0
+      END
+      ELSE 0
+      END
+      ELSE 0
+      END
+      ), 0)
+      - COALESCE(
+      CASE WHEN ${dim_date.date_key_raw} >= DATE '2025-04-01' THEN COALESCE(${TABLE}.sum_of_deal_data_fee, 0) ELSE 0 END,
+      0
+      )
+      ) * ${rebate_percent}
+      )
+      END
+      )
+      END ;;
+  }
+
+
 
   measure: traffic_source_fee {
     type: sum
     sql: ${TABLE}.sum_of_Traffic_Source_Fee ;;
     value_format: "$#,##0.00"
+    group_label: "Daily Measures"
     description: "Cost to Nexxen, applied by specific Traffic Sources, for acquiring or supporting the traffic origin, regardless of which publisher ultimately serves it."
   }
 
@@ -3773,6 +3857,7 @@ hidden: yes
     label: "Publisher Barter Fee"
     description: "Calculates 2% rebate on (Revenue - Deal Data Fee) for qualifying Publisher Deals. Effective starting Jan 1, 2026."
     type: sum
+    group_label: "Daily Measures"
     value_format: "$#,##0.00"
     sql:
       CASE
@@ -3803,9 +3888,102 @@ hidden: yes
   }
 
 
+  # measure: publisher_barter_fee_fpa {
+  #   label: "Publisher Barter Fee (FP&A)"
+  #   description: "Calculates 2% rebate on (Revenue - Deal Data Fee) for qualifying Publisher Deals. Effective starting Jan 1, 2026. Excluding Tinuiti."
+  #   type: sum
+  #   group_label: "Daily Measures"
+  #   value_format: "$#,##0.00"
+  #   sql:
+  #     CASE
+  #       -- Exclude Tinuiti DSP Seat on Firstparty revenue
+  #       WHEN (${dim_dsp_seat.seat_id} = '2147' AND ${dim_revenue_type.revenue_type_name} = 'firstparty') THEN 0
+
+  #       -- STANDARD PUBLISHER BARTER FEE LOGIC
+  #       ELSE (
+  #         CASE
+  #           -- 1. Effective Date Check: Must be on or after Jan 1, 2026
+  #           -- Use the _raw version of your date field for reliable comparison
+  #           WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01'
+
+  #     -- 2. Basic Qualification: Deal Type must be 'pub'
+  #     AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+
+  #     -- 3. Specific Qualification: Specific Seat OR Description Match
+  #     AND (
+  #     ${dim_dsp_seat.seat_id} = '2147'
+  #     OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+  #     OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+  #     OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+  #     )
+
+  #     -- 4. The Calculation: 2% of (Revenue - Deal Data Fee)
+  #     THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
+
+  #     -- Default for non-qualifying rows or pre-2026 dates
+  #     ELSE 0
+  #     END
+  #     )
+  #     END ;;
+  # }
+
+
+  measure: publisher_barter_fee_fpa {
+    label: "Publisher Barter Fee (FP&A)"
+    description: "Calculates 2% rebate on (Revenue - Deal Data Fee) for qualifying Publisher Deals. Effective starting Jan 1, 2026. Excluding Tinuiti."
+    type: sum
+    group_label: "Daily Measures"
+    value_format: "$#,##0.00"
+    sql:
+    CASE
+      -- 1. Effective Date Check
+      WHEN ${dim_date.date_key_raw} >= DATE '2026-01-01'
+      -- 2. Must be a Publisher Deal
+      AND ${dim_dsp_deal_type.dsp_deal_type} = 'pub'
+      -- 3. Must qualify as a publisher barter deal (same as original)
+      AND (
+        ${dim_dsp_seat.seat_id} = '2147'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+      )
+      -- 4. Exclude Tinuiti (FP&A exclusion)
+      AND NOT (
+        ${dim_dsp_seat.seat_id} = '2147'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tinuiti%'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%tnt%'
+        OR LOWER(${rx_dim_supply_publisher_deal_r.description}) LIKE '%bpm%'
+      )
+      THEN (COALESCE(${TABLE}.sum_of_revenue,0) - COALESCE(${TABLE}.sum_of_deal_data_fee,0)) * 0.02
+      ELSE 0
+    END ;;
+  }
+
+  measure: net_revenue_fpa {
+    label: "Net Revenue (FP&A)"
+    group_label: "Daily Measures" # Or whichever folder makes sense
+    description: "Comprehensive net revenue calculation including all platform fees, costs, rebates, and adjustments used within the Daily Revenue Report. Notes: Exchange Platform Cost is excluded. Barter rebates exclude those from Tinuiti."
+    type: number
+    value_format_name: usd
+    sql:
+      COALESCE(${revenue}, 0)
+      + COALESCE(${platform_fee}, 0)
+      - COALESCE(${traffic_source_fee}, 0)
+      + COALESCE(${pub_platform_fee}, 0)
+      - COALESCE(${barter_fee_fpa}, 0)
+      - COALESCE(${publisher_barter_fee_fpa}, 0)
+      + COALESCE(${revenue_adjustment}, 0)
+      + COALESCE(${cogs_adjustment}, 0)
+      + COALESCE(${cm_fee}, 0)
+      - COALESCE(${cogs}, 0) ;;
+  }
+
+
+
   measure: total_barter_fee {
     type: number
     label: "Total Barter Fee"
+    group_label: "Daily Measures"
     description: "Aggregation of RX Deal Barter Fees + Publisher Deal Barter Fees"
     sql: ${barter_fee} + ${publisher_barter_fee} ;;
     value_format: "$#,##0.00"

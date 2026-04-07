@@ -553,6 +553,13 @@ explore: fact_ad_daily_agg{
     relationship: many_to_one
   }
 
+  join: dim_derived_imp_type {
+    type: left_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_derived_imp_type.derived_imp_type_key}=${fact_ad_daily_agg.derived_imp_type_key};;
+    relationship: many_to_one
+  }
+
   join: v_dim_platformfee_type {
     type: inner
     view_label: "Platform Fee Type"
@@ -856,12 +863,11 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_dsp_seat.dsp_seat_key}=${fact_ad_daily_agg.dsp_seat_key};;
     relationship: many_to_one
   }
-
-  join: dim_dsp_seat_hold_co  {
-    type: inner
-    view_label: "DSP"
-    sql_on: ${dim_dsp_seat_hold_co.dsp_account_id} = ${dim_dsp_account.dsp_account_id} AND
-      ${dim_dsp_seat_hold_co.seat_id} = ${dim_dsp_seat.seat_id};;
+  join: v_dim_dsp_seat_mapping  {
+    type: left_outer
+    view_label: "DSP Seat Mapping"
+    sql_on: ${v_dim_dsp_seat_mapping.dsp_account_id} = ${dim_dsp_account.dsp_account_id} AND
+      ${v_dim_dsp_seat_mapping.dsp_seat_id} = ${dim_dsp_seat.seat_id};;
     relationship: many_to_one
   }
   join: dim_seat {
@@ -1229,7 +1235,13 @@ explore: fact_ad_hourly_agg{
     view_label: "DSP"
     sql_on: ${dim_dsp_seat.dsp_seat_key}=${fact_ad_hourly_agg.dsp_seat_key};;
     relationship: many_to_one
-
+  }
+  join: v_dim_dsp_seat_mapping  {
+    type: left_outer
+    view_label: "DSP Seat Mapping"
+    sql_on: ${v_dim_dsp_seat_mapping.dsp_account_id} = ${dim_dsp_account.dsp_account_id} AND
+      ${v_dim_dsp_seat_mapping.dsp_seat_id} = ${dim_dsp_seat.seat_id};;
+    relationship: many_to_one
   }
   join: dim_seat {
     type: inner
@@ -1525,3 +1537,9 @@ explore: report_uid_source {
   label: "Live Intent UID Source Reporting"
   hidden: yes
 }
+
+explore: dim_dsp_seat_mapping{
+  persist_with: CleanCash_datagroup
+  label: "DSP Seat Mapping Audit"
+  required_access_grants: [can_view_all_tremor]
+  }

@@ -157,7 +157,8 @@ view: v_dim_employee_pub_ops {
                    ${TABLE}.Employee_Name='Shachar Laufer & Daniel Werman' OR ${TABLE}.Employee_Name='Rom Lubianiker & Rory Brown' OR
                    ${TABLE}.Employee_Name='Niv Shema' OR ${TABLE}.Employee_Name='Shachar Laufer' OR
                    ${TABLE}.Employee_Name='Rom Lubianiker' OR ${TABLE}.Employee_Name='Omri Lender' OR
-                   ${TABLE}.Employee_Name='Noa Karako' then 'Direct'
+                   ${TABLE}.Employee_Name='Noa Karako' OR
+                   ${TABLE}.Employee_Name='Niv Shema & Matthew De Palo' then 'Direct'
 
               when ${TABLE}.Employee_Name='Revops' then 'Revops'
 

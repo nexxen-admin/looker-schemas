@@ -208,6 +208,36 @@ view: fact_nexxen_dsp {
   }
 
 
+  measure:  last_day_cost {
+    label: "Inv Cost Yesterday "
+    type: sum
+    description: "Yesterday's cost"
+    sql: ${TABLE}.inv_cost ;;
+    # group_label: "Time Shifted Measures"
+    # value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date :  "last 1 day ago for 1 day"]
+  }
+
+  measure:  unruly_last_day_cost {
+    label: "Inv Cost Nexxen - Yesterday "
+    type: sum
+    description: "Unruly's yesterday's cost"
+    sql: CASE WHEN ${dim_dsp_inventory_source.inventory_source_id} = 158 THEN ${TABLE}.inv_cost ELSE NULL END ;;
+    # group_label: "Time Shifted Measures"
+    # value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date :  "last 1 day ago for 1 day"]
+  }
+
+  measure: unruly_last_day_impression {
+    label: "Impression Nexxen Current Day "
+    type: sum
+    description: "Unruly's yesterday's impressions"
+    sql: CASE WHEN${dim_dsp_inventory_source.inventory_source_id} = 158 THEN ${TABLE}.impressions ELSE NULL END ;;
+    # group_label: "Time Shifted Measures"
+    # value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date :  "last 1 day ago for 1 day"]
+  }
+
   dimension: creative_id_key {
     type: number
     value_format_name: id
@@ -244,6 +274,17 @@ view: fact_nexxen_dsp {
     sql: EXTRACT(YEAR FROM ${date_key_raw}) ;;
   }
 
+  # dimension_group: event_time_et {
+  #   type: time
+  #   label: "Event Time ET"
+  #   group_label: "Date ET"
+  #   view_label: "Time Frame"
+  #   timeframes: [raw, hour, date, week, month, quarter, year]
+  #   convert_tz: no
+  #   datatype: timestamp
+  #   # Converts the UTC timestamp to Eastern Time, automatically handling DST (Daylight Saving Time)
+  #   sql: ${TABLE}.event_time AT TIME ZONE 'UTC' AT TIME ZONE 'America/New_York' ;;
+  # }
 
   parameter: date_granularity {
 
@@ -413,6 +454,13 @@ dimension: inventory_source_key {
     filters: [date_key_in_timezone_date: "3 days ago for 3 days"]
   }
 
+  measure: last_day_impression {
+    type: sum
+    label: "Impression Current Day "
+    value_format: "#,##0"
+    sql: ${TABLE}.impressions ;;
+    filters: [date_key_in_timezone_date: "last 1 day ago for 1 day"]
+  }
 
   # measure: netsuite_invoice_amount {
   #   type: sum
@@ -861,6 +909,24 @@ measure: Nexxen_Inv_Cost_Percent {
     filters: [date_key_in_timezone_date: "yesterday"]
   }
 
+  measure:  Previous_day_cost {
+    label: "Inv Cost Previous Day "
+    type: sum
+    sql: ${TABLE}.inv_cost ;;
+    description: "Cost from 2 days ago"
+    # group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+    filters: [date_key_in_timezone_date: "2 days ago"]
+  }
+
+  measure: Inv_Cost_Change {
+    type: number
+    #value_format: "0.0%"
+    description: "The inventort cost change from 2 days ago to yesterday"
+    sql: case when ${Last_day_inv_cost} = 0 then 0 else
+      (${Last_day_inv_cost}-${Previous_day_cost})/${Last_day_inv_cost} end;;
+    value_format_name: percent_2
+  }
   measure: yesterday_units {
     description: "The number of units delivered on the campaign yesterday."
     type: sum
@@ -1528,7 +1594,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: fdw_cost {
     type: sum
-    description: "FDW US"
+    description: "FDW Costs in USD"
     label: "FDW Cost"
     value_format: "$#,##0.00"
     sql: ${TABLE}.fdw_cost ;;
@@ -1536,7 +1602,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: yesterday_fdw_cost {
     type: sum
-    description: "FDW US"
+    description: "FDW Costs in USD"
     label: "Yesterday FDW Cost"
     value_format: "$#,##0.00"
     sql: ${TABLE}.fdw_cost ;;
@@ -1608,7 +1674,7 @@ measure: Nexxen_Inv_Cost_Percent {
     type: number
     label: "Media Margin (overall)"
     description: "in USD"
-    sql: (${capped_revenue_usd} - (${fdw_cost}+${vendor_cost}))/${capped_revenue};;
+    sql: (${capped_revenue_usd} - (${fdw_cost}+${vendor_cost}))/${capped_revenue_usd};;
     value_format: "0.00%"
   }
 
@@ -1955,6 +2021,11 @@ measure: Nexxen_Inv_Cost_Percent {
     description: "Select the templated previous period you would like to compare to. Must be used with Current Date Range filter"
     label: "Compare To:"
     type: unquoted
+
+    allowed_value: {
+      label: "Previous Period"
+      value: "Period"
+    }
 
     allowed_value: {
       label: "Previous Month"
@@ -2517,6 +2588,31 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "0.00%"
   }
 
+  measure: current_period_inv_cost {
+    view_label: "PoP"
+    type: sum
+    sql: ${TABLE}.inv_cost ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "this"]
+  }
+
+  measure: previous_period_inv_cost {
+    view_label: "PoP"
+    type: sum
+    sql: ${TABLE}.inv_cost ;;
+    value_format: "#,##0"
+    filters: [period_filtered_measures: "last"]
+  }
+
+  measure: inv_cost_pop_change {
+    view_label: "PoP"
+    label: "Total Inv Cost period-over-period % change"
+    type: number
+    sql: CASE WHEN ${current_period_inv_cost} = 0
+                 THEN NULL
+                 ELSE (1.0 * ${current_period_inv_cost} / NULLIF(${previous_period_inv_cost} ,0)) - 1 END ;;
+    value_format_name: percent_2
+  }
 
 
 #---------------------------------------------NCD Specifics---------------------------------------------------

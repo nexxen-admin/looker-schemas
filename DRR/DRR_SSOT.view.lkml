@@ -14,7 +14,7 @@ view: drr_ssot {
                                , TRUNC(Event_Date, 'Y')::date AS Year_Start
                       FROM sandbox.DRR_Daily_Revenue_Report drr
                       WHERE Event_Date>=(TRUNC((CASE WHEN {% parameter Report_Run_Date %} IS NULL THEN CURRENT_DATE - INTERVAL '1 DAY' ELSE {% parameter Report_Run_Date %} END)::DATE, 'Y') - INTERVAL '90 DAY')
-                        AND file_record not in ('Amobee DSP - Base Metrics','Amobee DSP - Offset')
+                       -- AND file_record not in ('Amobee DSP - Base Metrics','Amobee DSP - Offset')
                       GROUP BY Event_Date, Region, Category, Subcategory, Device_Type
                 )
                 --SELECT * FROM BASE_DATA;

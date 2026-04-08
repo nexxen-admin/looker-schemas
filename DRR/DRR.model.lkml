@@ -12,6 +12,11 @@ explore: DRR {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: DRR_SSOT {
+  view_name: drr_ssot
+  required_access_grants: [can_view_all_tremor]
+}
+
 explore: DRR_Legacy {
   view_name: drr_legacy
   required_access_grants: [can_view_all_tremor]

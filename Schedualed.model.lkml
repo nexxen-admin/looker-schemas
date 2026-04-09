@@ -63,11 +63,6 @@ explore: omp_gross_net_by_month {
   hidden: yes
 }
 
-explore: california_tobacco_control_program_06_01_22 {
-  required_access_grants: [can_view_pub_come_looker]
-  label: "California Tobacco Control Program"
-  hidden: yes
-}
 
 explore: QPSxRPM {
   required_access_grants: [can_view_pub_come_looker]

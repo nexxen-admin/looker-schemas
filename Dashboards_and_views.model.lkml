@@ -382,11 +382,6 @@ explore: publisher_90_day_revenue{
   hidden: yes
 }
 
-explore: bliss_point_media_margin_profile{
-  label: "BPM Margin Profile"
-  #required_access_grants: [can_view_all_tremor]
-  hidden: yes
-}
 
 explore: holdco_revenue_report{
   label: "HoldCo Revenue View"

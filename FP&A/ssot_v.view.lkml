@@ -578,6 +578,40 @@ view: ssot_v {
     sql: ${TABLE}.vendor_cost ;;
     value_format: "$#,##0.00"
   }
+
+  measure: data_cost {
+    label: "Data Costs"
+    type: number
+    sql: COALESCE(SUM(${TABLE}.turn_audience_net), 0) +
+       COALESCE(SUM(${TABLE}.turn_page_quality_net), 0) +
+       COALESCE(SUM(${TABLE}.turn_brand_safety_net), 0) +
+       COALESCE(SUM(${TABLE}.turn_contextual_net), 0) +
+       COALESCE(SUM(${TABLE}.turn_bi_net), 0) +
+       COALESCE(SUM(${TABLE}.turn_cross_device_net), 0) +
+       COALESCE(SUM(${TABLE}.turn_ghost_bid_net), 0) +
+       COALESCE(SUM(${TABLE}.turn_nielsen_targeting_net), 0) +
+       COALESCE(SUM(${TABLE}.turn_viewability_net), 0) +
+       COALESCE(SUM(${TABLE}.turn_tpca_net), 0) ;;
+    value_format: "$#,##0.00"
+    hidden: no
+  }
+
+  measure: total_cost {
+    label: "Total Costs"
+    type: number
+    sql: COALESCE(SUM(${TABLE}.publisher_cost), 0) +
+       COALESCE(${data_cost}, 0) +
+       COALESCE(SUM(${TABLE}.vendor_cost), 0) ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: net_revenue {
+    label: "Net Revenue"
+    type: number
+    sql: COALESCE(SUM(${TABLE}.total_billable), 0) - ${total_cost} ;;
+    value_format: "$#,##0.00"
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]

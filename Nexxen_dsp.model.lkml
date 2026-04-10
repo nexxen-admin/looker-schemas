@@ -605,7 +605,7 @@ explore: fact_nexxen_dsp  {
     type: left_outer
     from: dim_sfdb_user
     view_label: "Employee - Delivery"
-    sql_on: ${dim_sfdb_user_delivery.id}=${dim_sfdb_opportunitylineitem.delivery_manager__c};;
+    sql_on: ${dim_sfdb_user_delivery.id}=${dim_sfdb_opportunity.delivery_manager__c};;
     relationship: many_to_one
   }
 

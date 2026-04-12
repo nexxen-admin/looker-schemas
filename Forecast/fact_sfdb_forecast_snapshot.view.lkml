@@ -235,6 +235,21 @@ view: fact_sfdb_forecast_snapshot {
     sql: ${TABLE}.new_enterprise_team ;;
   }
 
+  # dimension: enterprise_org_classification {
+  #   type: string
+  #   label: "Enterprise Org Classification"
+  #   # description:
+  #   sql: CASE
+  #         WHEN ${account_name} ILIKE '%Rescue Agency%'
+  #           OR ${account_name} ILIKE '%301 Digital Media%'
+  #           OR ${account_name} ILIKE '%Klick Health (CAN)%'
+  #           OR ${account_name} ILIKE '%Guru%'
+  #           THEN 'Strat Sales Accounts'
+  #         ELSE ${new_enterprise_team}
+  #       END ;;
+  # }
+
+
   dimension: enterprise_org_classification {
     type: string
     label: "Enterprise Org Classification"
@@ -242,13 +257,16 @@ view: fact_sfdb_forecast_snapshot {
     sql: CASE
            WHEN ${account_name} ILIKE '%Rescue Agency%'
              OR ${account_name} ILIKE '%301 Digital Media%'
-             OR ${account_name} ILIKE '%Klick Health (CAN)%'
              OR ${account_name} ILIKE '%Guru%'
+             OR ${account_name} ILIKE '%Sasquatch%'
+             OR ${account_name} ILIKE '%Active International%'
+             OR ${account_name} ILIKE '%Revolution%'
+             OR ${account_name} ILIKE '%Coegi%'
+             OR ${account_name} ILIKE '%Conveyor Media%'
              THEN 'Strat Sales Accounts'
            ELSE ${new_enterprise_team}
          END ;;
   }
-
 
   dimension: Snapshot_Forecast_Checkbox  {
     type: number

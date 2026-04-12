@@ -184,17 +184,33 @@ explore: fact_target_forecast_enterprise_summary {
     user_attribute: forecast_enterprise
   }
 
+  # required_access_grants: [can_view_all_tremor]
+  # # UPDATED sql_always_where CLAUSE using ILIKE
+  # sql_always_where: ${new_enterprise_team}!='Unknown' OR (
+  #   ${account_name} ILIKE '%Klick Health%' OR
+  #   ${account_name} ILIKE '%301 Digital Media%' OR
+  #   ${account_name} ILIKE '%Good Karma Brands%' OR
+  #   ${account_name} ILIKE '%Guru%' OR
+  #   ${account_name} ILIKE '%U.S. HealthConnect%' OR
+  #   ${account_name} ILIKE '%Active International%'OR
+  #   ${account_name} ILIKE '%Starcom - US%'OR
+  #   ${account_name} ILIKE '%Rescue Agency%'
+  # ) ;;
+
   required_access_grants: [can_view_all_tremor]
   # UPDATED sql_always_where CLAUSE using ILIKE
   sql_always_where: ${new_enterprise_team}!='Unknown' OR (
-    ${account_name} ILIKE '%Klick Health%' OR
     ${account_name} ILIKE '%301 Digital Media%' OR
     ${account_name} ILIKE '%Good Karma Brands%' OR
     ${account_name} ILIKE '%Guru%' OR
     ${account_name} ILIKE '%U.S. HealthConnect%' OR
-    ${account_name} ILIKE '%Active International%'OR
-    ${account_name} ILIKE '%Starcom - US%'OR
-    ${account_name} ILIKE '%Rescue Agency%'
+    ${account_name} ILIKE '%Active International%' OR
+    ${account_name} ILIKE '%Starcom - US%' OR
+    ${account_name} ILIKE '%Rescue Agency%' OR
+    ${account_name} ILIKE '%Sasquatch%' OR
+    ${account_name} ILIKE '%Revolution%' OR
+    ${account_name} ILIKE '%Coegi%' OR
+    ${account_name} ILIKE '%Conveyor Media%'
   ) ;;
 
   join: forecast_dim_sfdb_user {

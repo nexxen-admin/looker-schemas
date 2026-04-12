@@ -175,6 +175,14 @@ view: sam_lt_comm {
     value_format: "$#,##0.00"
   }
 
+  measure: cm_fee {
+    type: sum
+    sql: ${TABLE}.cm_fee ;;
+    label: "Curated Marketplace Fee"
+    description: "Curated Marketplace Fee represents the portion of demand-side margin retained by Nexxen for curated marketplace deals. Values align with the Daily Revenue Report."
+    value_format: "$#,##0.00"
+  }
+
   #dimension: is_gam {
   #  type: string
    # sql:

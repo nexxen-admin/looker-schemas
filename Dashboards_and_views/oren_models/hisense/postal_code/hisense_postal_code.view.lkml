@@ -2,6 +2,7 @@ view: hisense_postal_code {
     derived_table: {
       sql: SELECT DISTINCT DATE(viewing_start_utc) as date,
                            bb.call_letters as networks,
+                           LOWER(bb.call_letters) AS networks_normalized,
                            postal_code
           FROM dragon.viewership_content_sessions_combined_daily aa
           LEFT JOIN dragon.station_info bb
@@ -21,6 +22,12 @@ view: hisense_postal_code {
     dimension: networks {
       type: string
       sql: ${TABLE}.networks ;;
+    }
+
+    dimension: networks_filter {
+      type: string
+      suggestable: yes
+      sql: ${TABLE}.networks_normalized ;;
     }
 
   dimension: postal_code {

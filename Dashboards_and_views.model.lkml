@@ -129,6 +129,12 @@ explore: sam_lt_comm {
 }
 
 
+explore: e2e_revenue_classified {
+  label: "E2E Revenue (Classified)"
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
+
 explore: sam_performance_monitor_v2 {
   access_filter: {
     field: sam_performance_monitor_v2.sam
@@ -891,6 +897,8 @@ access_filter: {
   #   sql_on: ${dim_deal_brand.deal_brand_key}=${dim_deal.deal_brand_key};;
   #   relationship: many_to_one
   # }
+
+
 
 
 }

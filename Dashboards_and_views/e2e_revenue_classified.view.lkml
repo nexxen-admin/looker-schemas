@@ -35,7 +35,7 @@ view: e2e_revenue_classified {
       GROUP BY 1, 2, 3, 4, 5
       ;;
 
-    datagroup_trigger: your_etl_datagroup
+    # datagroup_trigger: your_etl_datagroup
   }
 
 # --- Dimensions ---

@@ -2,6 +2,7 @@ view: hisense_brand_postal_code {
   derived_table: {
     sql: select DISTINCT DATE(viewing_start_utc) as date,
                 DD.name AS brand_name,
+                LOWER(DD.name) AS brand_name_normalized,
                 postal_code
         from dragon.viewership_ad_sessions_daily AA
         INNER JOIN dragon.ad_fingerprint BB
@@ -29,6 +30,13 @@ view: hisense_brand_postal_code {
   dimension: brand_name {
     type: string
     sql: ${TABLE}.brand_name ;;
+  }
+
+  dimension: brand_name_filter {
+    hidden: yes
+    type: string
+    suggestable: yes
+    sql: ${TABLE}.brand_name_normalized ;;
   }
 
   dimension: postal_code {

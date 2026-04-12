@@ -68,6 +68,9 @@ view: e2e_revenue_classified {
     sql: ${TABLE}.impression_type ;;
   }
 
+
+# --- MeasureS ---
+
   # --- 1P Supply / 3P Demand ---
   measure: 1p_supply_3p_demand_gross {
     label: "1P Supply - 3P Demand Gross"

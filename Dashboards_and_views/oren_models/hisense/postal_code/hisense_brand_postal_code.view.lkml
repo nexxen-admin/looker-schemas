@@ -33,7 +33,6 @@ view: hisense_brand_postal_code {
   }
 
   dimension: brand_name_filter {
-    hidden: yes
     type: string
     suggestable: yes
     sql: ${TABLE}.brand_name_normalized ;;

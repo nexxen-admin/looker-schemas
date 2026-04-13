@@ -123,6 +123,7 @@ view: fact_target_forecast_strategy_summary {
   dimension: Strat_Sales_Team {
     type: string
     sql: CASE WHEN ${TABLE}.seller='TBH - Strat Sales West 2' THEN 'Strat Sales - Haddow'
+    WHEN ${TABLE}.seller='TBH - Strat Sales West 1' THEN 'Strat Sales - Doherty'
     WHEN COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team)='Strat Sales - Southwast' THEN 'Strat Sales - Southwest'
     ELSE COALESCE(${forecast_dim_sfdb_user.strat_sales_team}, ${TABLE}.Strat_Sales_Team) END  ;;
   }
@@ -135,7 +136,7 @@ view: fact_target_forecast_strategy_summary {
   dimension: Strat_Sales_RVP {
     type: string
     sql: CASE WHEN ${TABLE}.seller='Taylor Kiefer' THEN 'Strat Sales - East'
-    WHEN ${TABLE}.seller='TBH - Strat Sales West 2' THEN 'Strat Sales - West'
+    WHEN ${TABLE}.seller IN ('TBH - Strat Sales West 1' , 'TBH - Strat Sales West 2') THEN 'Strat Sales - West'
     WHEN ${cs_sales_team} ILIKE '%Strat Services%' THEN ${cs_sales_team}
     ELSE CASE WHEN ${forecast_dim_sfdb_user.RVP_Sales_team}!='Unknown' THEN  ${forecast_dim_sfdb_user.RVP_Sales_team}
     ELSE ${TABLE}.Strat_Sales_RVP END END;;

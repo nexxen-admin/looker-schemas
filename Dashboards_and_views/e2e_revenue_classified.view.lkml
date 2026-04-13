@@ -40,7 +40,7 @@ view: e2e_revenue_classified {
 
   dimension_group: event_month {
     type: time
-    timeframes: [month, quarter, year]
+    timeframes: [month, quarter, year, date]
     sql: ${TABLE}.event_month ;;
     datatype: date
   }
@@ -147,15 +147,47 @@ view: e2e_revenue_classified {
     value_format: "$#,##0.00"
   }
 
-  # # --- Totals for reconciliation ---
 
+  measure: total_net_e2e_revenue {
+    label: "Total Net E2E Revenue"
+    description: "Sum of net revenue across all three classification categories"
+    type: number
+    sql: ${1p_supply_3p_demand_net}
+          + ${1p_demand_1p_supply_net}
+          + ${1p_demand_3p_supply_net} ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: 1p_supply_3p_demand_net_pct {
+    label: "1P Supply – 3P Demand Net %"
+    description: "Share of revenue generated from 3rd-party demand on 1st-party supply. Calculated as 1P Supply-3P Demand Net / Total Net E2E Revenue."
+    type: number
+    sql: ${1p_supply_3p_demand_net} / NULLIF(${total_net_e2e_revenue}, 0) ;;
+    value_format: "0.00%"
+  }
+
+  measure: 1p_demand_1p_supply_net_pct {
+    label: "1P Demand – 1P Supply Net %"
+    description: "Share of revenue generated from 1st-party demand on 1st-party supply. Calculated as 1P Demand-1P Supply Net / Total Net E2E Revenue."
+    type: number
+    sql: ${1p_demand_1p_supply_net} / NULLIF(${total_net_e2e_revenue}, 0) ;;
+    value_format: "0.00%"
+  }
+
+  measure: 1p_demand_3p_supply_net_pct {
+    label: "1P Demand – 3P Supply Net %"
+    description: "Share of revenue generated from 1st-party demand on 3rd-party supply. Calculated as 1P Demand-3P Supply Net / Total Net E2E Revenue."
+    type: number
+    sql: ${1p_demand_3p_supply_net} / NULLIF(${total_net_e2e_revenue}, 0) ;;
+    value_format: "0.00%"
+  }
   # measure: total_gross {
   #   label: "Total Gross Revenue"
   #   type: number
   #   sql: ${1p_supply_3p_demand_gross}
   #     + ${1p_demand_1p_supply_gross}
   #     + ${1p_demand_3p_supply_gross} ;;
-  #   value_format_name: usd_2
+  #    value_format: "$#,##0.00"
   # }
 
   # measure: total_cost {
@@ -164,16 +196,9 @@ view: e2e_revenue_classified {
   #   sql: ${1p_supply_3p_demand_cost}
   #     + ${1p_demand_1p_supply_cost}
   #     + ${1p_demand_3p_supply_cost} ;;
-  #   value_format_name: usd_2
+  #    value_format: "$#,##0.00"
   # }
 
-  # measure: total_net {
-  #   label: "Total Net Revenue"
-  #   type: number
-  #   sql: ${1p_supply_3p_demand_net}
-  #     + ${1p_demand_1p_supply_net}
-  #     + ${1p_demand_3p_supply_net} ;;
-  #   value_format_name: usd_2
-  # }
+
 
 }

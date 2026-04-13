@@ -1,5 +1,5 @@
 view: dim_country {
-  sql_table_name: BI_New.V_Dim_Country ;;
+  sql_table_name: BI_New.Dim_Country ;;
 
   dimension: continent {
     type: string
@@ -63,6 +63,13 @@ view: dim_country {
     description: "A region is an area of land that has common features, each country belong to specific area"
     type: string
     sql: ${TABLE}.Region ;;
+  }
+
+  dimension: sales_region {
+    label: "Sales Region"
+    description: "FP&A-specific regional groupings"
+    type: string
+    sql: ${TABLE}.Sales_Region ;;
   }
 
   dimension: ri_info {

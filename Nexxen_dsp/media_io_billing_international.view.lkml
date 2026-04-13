@@ -145,11 +145,12 @@ view: media_io_billing_international {
   }
 
   dimension: discrepancy_between_1p_and_final_billable_revenue_after_adj_percent {
-    label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj Percent"
+    label: "Discrepancy In Between 1p and Final Billable Revenue After Adj Percent"
     description: "Difference between system revenue and billing in %. If Final Billable Revenue is 0, then 0%. Otherwise: (Final Billable Revenue - 1P Revenue) ÷ Final Billable Revenue"
     type: number
     sql: ${TABLE}.Discrepancy_between_1P_and_final_Billable_revenue_after_adj_percent ;;
   }
+
   dimension: discrepancy_in_between_1p_usd_and_final_billable_revenue_after_adj_usd {
     label: "Discrepancy In Between 1p USD and Final Billable Revenue After Adj USD"
     description: "Final Billable Revenue After Adj USD - 1st Party Revenue USD"

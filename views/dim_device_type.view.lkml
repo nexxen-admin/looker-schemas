@@ -54,7 +54,8 @@ view: dim_device_type {
 
   measure: count {
     type: count
+    label: "Device Type Count"
     drill_fields: []
-    hidden: yes
+    hidden: no
   }
 }

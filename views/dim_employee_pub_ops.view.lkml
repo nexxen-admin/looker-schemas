@@ -147,11 +147,11 @@ view: v_dim_employee_pub_ops {
     label: "Pub Team"
     type: string
     required_access_grants: [can_view_aniview]
-    sql: case when ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Noa Krashniak' then 'SDK'
+    sql: case when ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Amit Mazor' then 'SDK'
 
               when ${TABLE}.Employee_Name='Stav Ezer' OR ${TABLE}.Employee_Name='Sarah Herskovics' OR
                    ${TABLE}.Employee_Name='Lihi Katabi' OR ${TABLE}.Employee_Name='Dana Nahshon' OR
-                   ${TABLE}.Employee_Name='Amit Mazor' OR ${TABLE}.Employee_Name='Yariv Aharon' then 'Channel Pubs'
+                   ${TABLE}.Employee_Name='Yariv Aharon' then 'Channel Pubs'
 
               when ${TABLE}.Employee_Name='Omri Lender & Ellen Rogan' OR ${TABLE}.Employee_Name='Noa Karako & Francesca Esposito' OR
                    ${TABLE}.Employee_Name='Shachar Laufer & Daniel Werman' OR ${TABLE}.Employee_Name='Rom Lubianiker & Rory Brown' OR

@@ -10,6 +10,7 @@ view: purple_labs_audience_quality {
       li.line_item_name as line_item_name,
       amd.insertion_order_id,
       io.insertion_order_name as insertion_order_name,
+      amd.market_id,
       sum(amd.impressions) as impressions,
       sum(amd.cost) as Cost
    From SunFlower.amobee_media_daily_mtz_ui amd
@@ -20,7 +21,7 @@ Where amd.event_time >= '2025-05-01'
   and amd.event_time < CURRENT_DATE
   and (amd.impressions > 0 or amd.cost >0)
   and amd.market_id = 2139
-Group by 1, 2, 3, 4, 5, 6, 7
+Group by 1, 2, 3, 4, 5, 6, 7, 8
 ),
 
 agg_purplelabs_data AS (
@@ -47,6 +48,7 @@ SELECT
   f.advertiser_name,
   f.insertion_order_id,
   f.insertion_order_name,
+  f.market_id,
   p.grouper_value,
   f.line_item_name,
   p.client_id,
@@ -111,6 +113,12 @@ LEFT JOIN firstp_data f
   dimension: execution_id {
     type: number
     sql: ${TABLE}.execution_id ;;
+  }
+
+  dimension: market_id {
+    type: string
+    sql: ${TABLE}.market_id ;;
+    hidden: yes
   }
 
   measure: coverage {

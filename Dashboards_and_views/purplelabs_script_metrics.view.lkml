@@ -10,6 +10,7 @@ view: purplelabs_script_metrics {
       li.line_item_name as line_item_name,
       amd.insertion_order_id,
       io.insertion_order_name as insertion_order_name,
+      amd.market_id,
       sum(amd.impressions) as impressions,
       sum(amd.cost) as Cost,
       sum(amd.clicks) as Clicks,
@@ -22,7 +23,7 @@ Where amd.event_time >= '2025-05-01'
   and amd.event_time < CURRENT_DATE
   and (amd.impressions > 0 or amd.cost >0)
   and amd.market_id = 2139
-Group by 1, 2, 3, 4, 5, 6, 7
+Group by 1, 2, 3, 4, 5, 6, 7, 8
 ),
 
       agg_purplelabs_data AS (
@@ -57,6 +58,7 @@ Group by 1, 2, 3, 4, 5, 6, 7
         f.advertiser_name,
         f.insertion_order_id,
         f.insertion_order_name,
+        f.market_id,
         coalesce(p.adgroup_id,f.line_item_id) as adgroup_id,
         f.line_item_name,
         f.line_item_id,
@@ -128,6 +130,12 @@ Group by 1, 2, 3, 4, 5, 6, 7
   dimension: campaign_id {
     type: number
     sql: ${TABLE}.campaign_id ;;
+  }
+
+  dimension: market_id {
+    type: string
+    sql: ${TABLE}.market_id ;;
+    hidden: yes
   }
 
   measure: new_prescribers {

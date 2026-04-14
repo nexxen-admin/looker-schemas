@@ -29,3 +29,21 @@ explore: purplelabs_script_metrics {
     user_attribute: purple_labs
   }
 }
+
+explore: purple_labs_audience_quality_nebo {
+  label: "Purple Labs Audience Quality - Nebo"
+  hidden: no
+  access_filter: {
+    field: purple_labs_audience_quality_nebo.market_id
+    user_attribute: purple_labs
+  }
+}
+
+explore: purple_labs_script_metrics_nebo {
+  label: "Purple Labs Script Metrics - Nebo"
+  hidden: no
+  access_filter: {
+    field: purple_labs_script_metrics_nebo.market_id
+    user_attribute: purple_labs
+  }
+}

@@ -46,6 +46,7 @@ view: e2e_revenue_classified {
   }
 
   dimension: buyer {
+    description: "Original Buyer"
     type: string
     sql: ${TABLE}.buyer ;;
   }
@@ -75,7 +76,7 @@ view: e2e_revenue_classified {
     description: "Gross revenue of 3P demand running through the exchange (monetized on 1P Supply)"
     type: sum
     sql: ${TABLE}.Exch_3PD_Gross ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
 
   }
 
@@ -84,7 +85,7 @@ view: e2e_revenue_classified {
     description: "Cost of 3P demand running through the exchange"
     type: sum
     sql: ${TABLE}.Exch_3PD_Cost ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
   measure: 1p_supply_3p_demand_net {
@@ -92,7 +93,7 @@ view: e2e_revenue_classified {
     description: "Net of 3P demand running through the exchange"
     type: sum
     sql: ${TABLE}.Exch_3PD_Net ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
   # --- 1P Demand / 1P Supply ---
@@ -102,7 +103,7 @@ view: e2e_revenue_classified {
     description: "Gross revenue for 1P demand running on 1P supply (this is the revenue recognized by the DSP)"
     type: sum
     sql: ${TABLE}."1PD_1PS_Gross" ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
   measure: 1p_demand_1p_supply_cost {
@@ -110,7 +111,7 @@ view: e2e_revenue_classified {
     description: "Cost for 1P demand running on 1P supply (this is the cost recognized by the Exchange)"
     type: sum
     sql: ${TABLE}."1PD_1PS_Cost" ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
   measure: 1p_demand_1p_supply_net {
@@ -118,7 +119,7 @@ view: e2e_revenue_classified {
     description: "Net of 1P demand running on 1P supply"
     type: sum
     sql: ${TABLE}."1PD_1PS_Net" ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
   # --- 1P Demand / 3P Supply ---
@@ -128,7 +129,7 @@ view: e2e_revenue_classified {
     description: "Gross revenue for 1P demand running with 3P supply"
     type: sum
     sql: ${TABLE}.DMND_3PS_Gross ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
   measure: 1p_demand_3p_supply_cost {
@@ -136,7 +137,7 @@ view: e2e_revenue_classified {
     description: "Cost of 1P demand running with 3P supply"
     type: sum
     sql: ${TABLE}.DMND_3PS_Cost ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
   measure: 1p_demand_3p_supply_net {
@@ -144,7 +145,7 @@ view: e2e_revenue_classified {
     description: "Net of 1P demand running on 3P supply"
     type: sum
     sql: ${TABLE}.DMND_3PS_Net ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
 
@@ -155,7 +156,7 @@ view: e2e_revenue_classified {
     sql: ${1p_supply_3p_demand_net}
           + ${1p_demand_1p_supply_net}
           + ${1p_demand_3p_supply_net} ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
   }
 
   measure: 1p_supply_3p_demand_net_pct {
@@ -181,23 +182,23 @@ view: e2e_revenue_classified {
     sql: ${1p_demand_3p_supply_net} / NULLIF(${total_net_e2e_revenue}, 0) ;;
     value_format: "0.00%"
   }
-  # measure: total_gross {
-  #   label: "Total Gross Revenue"
-  #   type: number
-  #   sql: ${1p_supply_3p_demand_gross}
-  #     + ${1p_demand_1p_supply_gross}
-  #     + ${1p_demand_3p_supply_gross} ;;
-  #    value_format: "$#,##0.00"
-  # }
+  measure: total_gross {
+    label: "Total Gross Revenue"
+    type: number
+    sql: ${1p_supply_3p_demand_gross}
+      + ${1p_demand_1p_supply_gross}
+      + ${1p_demand_3p_supply_gross} ;;
+      value_format: "$#,##0"
+  }
 
-  # measure: total_cost {
-  #   label: "Total Cost"
-  #   type: number
-  #   sql: ${1p_supply_3p_demand_cost}
-  #     + ${1p_demand_1p_supply_cost}
-  #     + ${1p_demand_3p_supply_cost} ;;
-  #    value_format: "$#,##0.00"
-  # }
+  measure: total_cost {
+    label: "Total Cost"
+    type: number
+    sql: ${1p_supply_3p_demand_cost}
+      + ${1p_demand_1p_supply_cost}
+      + ${1p_demand_3p_supply_cost} ;;
+      value_format: "$#,##0"
+  }
 
 
 

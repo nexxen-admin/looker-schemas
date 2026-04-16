@@ -1340,6 +1340,32 @@ view: fact_ad_daily_agg {
     hidden: yes
   }
 
+  dimension: rtb_device_type_id {
+    type: number
+    sql: ${TABLE}.rtb_device_type_id ;;
+    hidden: yes
+  }
+
+  # dimension: rtb_device_type {
+  #   group_label: "Request Attributes"
+  #   label: "Device Type (RTB)"
+  #   description: "Device Type Mapping (Per AdCOM Spec)"
+  #   type: string
+  #   sql:
+  #   CASE ${TABLE}.rtb_device_type_id
+  #     WHEN 1 THEN 'Mobile/Tablet'
+  #     WHEN 2 THEN 'Personal Computer'
+  #     WHEN 3 THEN 'Connected TV'
+  #     WHEN 4 THEN 'Phone'
+  #     WHEN 5 THEN 'Tablet'
+  #     WHEN 6 THEN 'Connected Device'
+  #     WHEN 7 THEN 'Set Top Box'
+  #     WHEN 8 THEN 'OOH Device'
+  #     WHEN 0 THEN 'Unknown'
+  #     ELSE 'Unknown'
+  #   END ;;
+  # }
+
   measure: impression_pixel {
     type: sum
     label: "Impressions"

@@ -703,6 +703,14 @@ explore: fact_ad_daily_agg{
     sql_on: ${dim_device_type.device_type_key}= ${fact_ad_daily_agg.device_type_key};;
     relationship: many_to_one
   }
+
+  join: dim_rtb_device_type {
+    type: left_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_rtb_device_type.rtb_device_type_id} = ${fact_ad_daily_agg.rtb_device_type_id} ;;
+    relationship: many_to_one
+  }
+
   join: dim_imp_type {
     type: inner
     view_label: "Request Attributes"

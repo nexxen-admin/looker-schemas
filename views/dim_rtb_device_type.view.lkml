@@ -24,7 +24,7 @@ view: dim_rtb_device_type {
   # }
 
   dimension: rtb_device_type_name {
-    group_label: "Request Attributes"
+    # group_label: "Request Attributes"
     label: "Device Type (RTB)"
     description: "OpenRTB device type per IAB AdCOM v1.0 specification."
     type: string

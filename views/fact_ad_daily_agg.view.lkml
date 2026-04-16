@@ -953,7 +953,14 @@ view: fact_ad_daily_agg {
     #hidden: yes
   }
 
-
+  measure: active_device_type_count {
+    type: count_distinct
+    label: "Active Device Type Count"
+    description: "Count of distinct device types where impressions are greater than 0"
+    group_label: "Daily Measures"
+    sql:
+    CASE WHEN ${TABLE}.sum_of_impression_pixel > 0 THEN ${TABLE}.Device_Type_Key ELSE NULL END ;;
+  }
 
   measure:: ias_measurable_impression {
     type: sum

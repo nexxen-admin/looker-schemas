@@ -134,7 +134,10 @@ view: fact_target_forecast_enterprise_summary {
 
   dimension: new_enterprise_team {
     type: string
-    sql: COALESCE(${forecast_dim_sfdb_user.new_enterprise_team}, ${TABLE}.new_enterprise_team) ;;
+    sql: CASE WHEN ${TABLE}.new_enterprise_team = 'East' THEN 'Enterprise Sales - East'
+              WHEN ${TABLE}.new_enterprise_team = 'West' THEN 'Enterprise Sales - West'
+              WHEN ${TABLE}.new_enterprise_team = 'Central' THEN 'Enterprise Sales - Central'
+         ELSE COALESCE(${forecast_dim_sfdb_user.new_enterprise_team}, ${TABLE}.new_enterprise_team) END;;
   }
 
   # dimension: enterprise_org_classification {

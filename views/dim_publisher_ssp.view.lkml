@@ -66,6 +66,16 @@ view: dim_publisher_ssp {
     sql: ${TABLE}.SSP_name ;;
     hidden: yes
   }
+  dimension: native_tv_supply_source {
+    type: string
+    label: "Native TV Supply Source"
+    sql:   CASE WHEN ${TABLE}.PUB_ID = '78345' THEN 'LG'
+                WHEN ${TABLE}.PUB_ID = '106233' THEN 'TCL'
+                WHEN ${TABLE}.PUB_ID = '103128' THEN 'VIDAA'
+            ELSE 'TBD' END ;;
+    hidden: yes
+  }
+
 
   measure: count {
     type: count

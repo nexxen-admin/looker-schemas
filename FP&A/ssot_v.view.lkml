@@ -181,6 +181,15 @@ view: ssot_v {
     type: string
     sql: ${TABLE}.media_type ;;
   }
+  dimension: native_tv_supply_source {
+    type: string
+    label: "Native TV Supply Source"
+    sql: CASE WHEN ${TABLE}.inventory_source_id = 158 AND ${TABLE}.exchange_line_item_id = '78345' THEN 'LG'
+              WHEN ${TABLE}.inventory_source_id = 158 AND ${TABLE}.exchange_line_item_id = '6869972056128673857' THEN 'TCL'
+              WHEN ${TABLE}.inventory_source_id = 158 AND ${TABLE}.exchange_line_item_id = '434015705' THEN 'VIDAA'
+          ELSE 'TBD' END ;;
+    hidden: yes
+  }
 
   measure: nexxen_fee {
     type: sum

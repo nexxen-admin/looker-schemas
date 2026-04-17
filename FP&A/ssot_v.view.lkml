@@ -319,7 +319,8 @@ view: ssot_v {
   }
   measure: turn_audience_data_cost {
     type: sum
-    label: "Client Turn Pay Data Cost"
+    label: "Audience Data Cost, Client"
+    group_label: "Data Costs, Client"
     sql: ${TABLE}.turn_audience_data_cost ;;
     value_format: "$#,##0.00"
   }
@@ -332,12 +333,14 @@ view: ssot_v {
   measure: turn_audience_fee {
     type: sum
     label: "Audience Fee"
+    group_label: "Margin on Data (DVA)"
     sql: ${TABLE}.turn_audience_fee ;;
     value_format: "$#,##0.00"
   }
   measure: turn_audience_net {
     type: sum
-    label: "Audience Data Cost Adjusted"
+    label: "Audience Data Cost, Nexxen"
+    group_label: "Data Costs, Nexxen"
     sql: ${TABLE}.turn_audience_net ;;
     value_format: "$#,##0.00"
   }
@@ -349,19 +352,22 @@ view: ssot_v {
   }
   measure: turn_bi_dc {
     type: sum
-     # label: "Client Content Data Cost"
+    label: "Brand Intelligence Data Cost, Client"
+    group_label: "Data Costs, Client"
     sql: ${TABLE}.turn_bi_dc ;;
     value_format: "#,##0.00"
   }
   measure: turn_bi_fee {
     type: sum
     label: "Brand Intelligence Fee"
+    group_label: "Margin on Data (DVA)"
     sql: ${TABLE}.turn_bi_fee ;;
     value_format: "$#,##0.00"
   }
   measure: turn_bi_net {
     type: sum
-    label: "Brand Intelligence Data Cost Adjusted"
+    label: "Brand Intelligence Data Cost, Nexxen"
+    group_label: "Data Costs, Nexxen"
     sql: ${TABLE}.turn_bi_net ;;
     value_format: "$#,##0.00"
   }
@@ -373,19 +379,22 @@ view: ssot_v {
   }
   measure: turn_brand_safety_dc {
     type: sum
-    # label: "Client Content Data Cost"
+    label: "Brand Safety Data Cost, Client"
+    group_label: "Data Costs, Client"
     sql: ${TABLE}.turn_brand_safety_dc ;;
     value_format: "#,##0.00"
   }
   measure: turn_brand_safety_fee {
     type: sum
     label: "Brand Safety Fee"
+    group_label: "Margin on Data (DVA)"
     sql: ${TABLE}.turn_brand_safety_fee ;;
     value_format: "$#,##0.00"
   }
   measure: turn_brand_safety_net {
     type: sum
-    label: "Brand Safety Data Cost Adjusted"
+    label: "Brand Safety Data Cost, Nexxen"
+    group_label: "Data Costs, Nexxen"
     sql: ${TABLE}.turn_brand_safety_net ;;
     value_format: "$#,##0.00"
   }
@@ -397,19 +406,22 @@ view: ssot_v {
   }
   measure: turn_contextual_dc {
     type: sum
-    # label: "Client Content Data Cost"
+    label: "Contextual Data Cost, Client"
+    group_label: "Data Costs, Client"
     sql: ${TABLE}.turn_contextual_dc ;;
     value_format: "#,##0.00"
   }
   measure: turn_contextual_fee {
     type: sum
     label: "Contextual Fee"
+    group_label: "Margin on Data (DVA)"
     sql: ${TABLE}.turn_contextual_fee ;;
     value_format: "$#,##0.00"
   }
   measure: turn_contextual_net {
     type: sum
-    label: "Contextual Data Cost Adjusted"
+    label: "Contextual Data Cost, Nexxen"
+    group_label: "Data Costs, Nexxen"
     sql: ${TABLE}.turn_contextual_net ;;
     value_format: "$#,##0.00"
   }
@@ -421,20 +433,23 @@ view: ssot_v {
   }
   measure: turn_cross_device_dc {
     type: sum
-    label: "Cross Device First Party Cost"
+    label: "Cross Device First Party Cost, Client"
+    group_label: "Data Costs, Client"
     sql: ${TABLE}.turn_cross_device_dc ;;
     value_format: "$#,##0.00"
   }
   measure: turn_cross_device_fee {
     type: sum
     label: "Cross Device Fee"
+    group_label: "Margin on Data (DVA)"
     sql: ${TABLE}.turn_cross_device_fee ;;
     value_format: "$#,##0.00"
   }
 
   measure: turn_cross_device_net {
     type: sum
-    label: "Cross Device First Party Cost Adjusted"
+    label: "Cross Device First Party Cost, Nexxen"
+    group_label: "Data Costs, Nexxen"
     sql: ${TABLE}.turn_cross_device_net ;;
     value_format: "$#,##0.00"
   }
@@ -446,19 +461,22 @@ view: ssot_v {
   }
   measure: turn_ghost_bid_dc {
     type: sum
-    label: "Ghost Bid First Party Cost"
+    label: "Ghost Bid First Party Cost, Client"
+    group_label: "Data Costs, Client"
     sql: ${TABLE}.turn_ghost_bid_dc ;;
     value_format: "$#,##0.00"
   }
   measure: turn_ghost_bid_fee {
     type: sum
     label: "Ghost Bid Fee"
+    group_label: "Margin on Data (DVA)"
     sql: ${TABLE}.turn_ghost_bid_fee ;;
     value_format: "$#,##0.00"
   }
   measure: turn_ghost_bid_net {
     type: sum
-    label: "Ghost Bid First Party Cost Adjusted"
+    label: "Ghost Bid First Party Cost, Nexxen"
+    group_label: "Data Costs, Nexxen"
     sql: ${TABLE}.turn_ghost_bid_net ;;
     value_format: "$#,##0.00"
   }
@@ -481,19 +499,22 @@ view: ssot_v {
   }
   measure: turn_nielsen_targeting_dc {
     type: sum
-    label: "Nielsen Targeting First Party Cost"
+    label: "Display Nielsen Targeting First Party Cost, Client"
+    group_label: "Data Costs, Client"
     sql: ${TABLE}.turn_nielsen_targeting_dc ;;
     value_format: "$#,##0.00"
   }
   measure: turn_nielsen_targeting_fee {
     type: sum
     label: "Nielsen Targeting Fee"
+    group_label: "Margin on Data (DVA)"
     sql: ${TABLE}.turn_nielsen_targeting_fee ;;
     value_format: "$#,##0.00"
   }
   measure: turn_nielsen_targeting_net {
     type: sum
-    label: "Display Nielsen Targeting Frist Party Cost Adjusted"
+    label: "Display Nielsen Targeting Frist Party Cost, Nexxen"
+    group_label: "Data Costs, Nexxen"
     sql: ${TABLE}.turn_nielsen_targeting_net ;;
     value_format: "$#,##0.00"
   }
@@ -505,19 +526,22 @@ view: ssot_v {
   }
   measure: turn_page_quality_dc {
     type: sum
-     # label: "Client Content Data Cost"
+     label: "Page Quality Data Cost, Client"
+    group_label: "Data Costs, Client"
     sql: ${TABLE}.turn_page_quality_dc ;;
     value_format: "#,##0.00"
   }
   measure: turn_page_quality_fee {
     type: sum
     label: "Page Quality Fee"
+    group_label: "Margin on Data (DVA)"
     sql: ${TABLE}.turn_page_quality_fee ;;
     value_format: "$#,##0.00"
   }
   measure: turn_page_quality_net {
     type: sum
-    label: "Page Quality Data Cost Adjusted"
+    label: "Page Quality Data Cost, Nexxen"
+    group_label: "Data Costs, Nexxen"
     sql: ${TABLE}.turn_page_quality_net ;;
     value_format: "$#,##0.00"
   }
@@ -535,17 +559,21 @@ view: ssot_v {
   }
   measure: turn_tpca_dc {
     type: sum
-    label: "Turn Third Party Cost"
+    label: "Third Party Cost Client"
+    group_label: "Data Costs, Client"
     sql: ${TABLE}.turn_tpca_dc ;;
     value_format: "$#,##0.00"
   }
-  dimension: turn_tpca_fee {
+  measure: turn_tpca_fee {
     type: number
+    label: "Third Party Fee"
+    group_label: "Margin on Data (DVA)"
     sql: ${TABLE}.turn_tpca_fee ;;
   }
   measure: turn_tpca_net {
     type: sum
-    label: "Turn Third Party Cost Adjusted"
+    label: "Third Party Cost, Nexxen"
+    group_label: "Data Costs, Nexxen"
     sql: ${TABLE}.turn_tpca_net ;;
     value_format: "$#,##0.00"
   }
@@ -557,19 +585,22 @@ view: ssot_v {
   }
   measure: turn_viewability_dc {
     type: sum
-    label: "Viewability First Party cost"
+    label: "Viewability First Party Cost, Client"
+    group_label: "Data Costs, Client"
     sql: ${TABLE}.turn_viewability_dc ;;
     value_format: "$#,##0.00"
   }
   measure: turn_viewability_fee {
     type: sum
     label: "Viewability Fee"
+    group_label: "Margin on Data (DVA)"
     sql: ${TABLE}.turn_viewability_fee ;;
     value_format: "$#,##0.00"
   }
   measure: turn_viewability_net {
     type: sum
-    label: "Viewability First Party Cost Adjusted"
+    label: "Viewability First Party Cost, Nexxen"
+    group_label: "Data Costs, Nexxen"
     sql: ${TABLE}.turn_viewability_net ;;
     value_format: "$#,##0.00"
   }
@@ -580,8 +611,9 @@ view: ssot_v {
   }
 
   measure: data_cost {
-    label: "Data Costs"
+    label: "Data Costs (Nexxen)"
     type: number
+    group_label: "Data Costs, Nexxen"
     sql: COALESCE(SUM(${TABLE}.turn_audience_net), 0) +
        COALESCE(SUM(${TABLE}.turn_page_quality_net), 0) +
        COALESCE(SUM(${TABLE}.turn_brand_safety_net), 0) +
@@ -592,6 +624,42 @@ view: ssot_v {
        COALESCE(SUM(${TABLE}.turn_nielsen_targeting_net), 0) +
        COALESCE(SUM(${TABLE}.turn_viewability_net), 0) +
        COALESCE(SUM(${TABLE}.turn_tpca_net), 0) ;;
+    value_format: "$#,##0.00"
+    hidden: no
+  }
+
+  measure: data_costs_client {
+    label: "Data Costs (Client)"
+    type: number
+    group_label: "Data Costs, Client"
+    sql: COALESCE(SUM(${TABLE}.turn_audience_data_cost), 0) +
+       COALESCE(SUM(${TABLE}.turn_page_quality_dc), 0) +
+       COALESCE(SUM(${TABLE}.turn_brand_safety_dc), 0) +
+       COALESCE(SUM(${TABLE}.turn_contextual_dc), 0) +
+       COALESCE(SUM(${TABLE}.turn_bi_dc), 0) +
+       COALESCE(SUM(${TABLE}.turn_cross_device_dc), 0) +
+       COALESCE(SUM(${TABLE}.turn_ghost_bid_dc), 0) +
+       COALESCE(SUM(${TABLE}.turn_nielsen_targeting_dc), 0) +
+       COALESCE(SUM(${TABLE}.turn_viewability_dc), 0) +
+       COALESCE(SUM(${TABLE}.turn_tpca_dc), 0) ;;
+    value_format: "$#,##0.00"
+    hidden: no
+  }
+
+  measure: margin_on_data_dva {
+    label: "Margin on Data (DVA)"
+    type: number
+    group_label: "Margin on Data (DVA)"
+    sql: COALESCE(SUM(${TABLE}.turn_audience_fee), 0) +
+       COALESCE(SUM(${TABLE}.turn_page_quality_fee), 0) +
+       COALESCE(SUM(${TABLE}.turn_brand_safety_fee), 0) +
+       COALESCE(SUM(${TABLE}.turn_contextual_fee), 0) +
+       COALESCE(SUM(${TABLE}.turn_bi_fee), 0) +
+       COALESCE(SUM(${TABLE}.turn_cross_device_fee), 0) +
+       COALESCE(SUM(${TABLE}.turn_ghost_bid_fee), 0) +
+       COALESCE(SUM(${TABLE}.turn_nielsen_targeting_fee), 0) +
+       COALESCE(SUM(${TABLE}.turn_viewability_fee), 0) +
+       COALESCE(SUM(${TABLE}.turn_tpca_fee), 0) ;;
     value_format: "$#,##0.00"
     hidden: no
   }

@@ -725,12 +725,6 @@ explore: fact_dsp_dv_sivt_reporting {
 
 }
 
-explore: ssp_model_readiness {
-  required_access_grants: [can_view_all_tremor]
-  label: "SSP Model Readiness"
-
-}
-
 
 explore: dsp_model_readiness {
   required_access_grants: [can_view_all_tremor]

@@ -266,6 +266,13 @@ view: fact_nexxen_dsp {
     sql: TO_CHAR(${date_key_raw}, 'YYYY-MM') ;;
   }
 
+  dimension: date_key_quarter_utc {
+    type: string
+    label: "Year-Quarter (YYYY-QN) UTC"
+    group_label: "Date UTC"
+    sql: TO_CHAR(${date_key_raw}, 'YYYY') || '-Q' || TO_CHAR(CEIL(EXTRACT(MONTH FROM ${date_key_raw}) / 3), 'FM9') ;;
+  }
+
 
   dimension: date_key_year_number_utc {
     type: number

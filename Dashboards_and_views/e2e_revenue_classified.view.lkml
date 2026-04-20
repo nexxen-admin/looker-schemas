@@ -32,6 +32,7 @@ view: e2e_revenue_classified {
       ON UPPER(bm.buyer_original) = UPPER(
       CASE WHEN tc.Billing_Agency ILIKE '%bidswitch%'
       THEN 'Bidswitch' ELSE tc.Billing_Agency END)
+      WHERE bm.buyer_new != 'DELETE'
       GROUP BY 1, 2, 3, 4, 5
       ;;
   }

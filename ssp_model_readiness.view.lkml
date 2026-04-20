@@ -1,5 +1,5 @@
-view: dsp_model_readiness {
-  sql_table_name: BI_DSP.V_model_readiness ;;
+view: ssp_model_readiness {
+  sql_table_name: BI_NEW.V_model_readiness_bi_new ;;
 
   dimension_group: last_business {
     type: time

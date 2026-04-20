@@ -751,7 +751,11 @@ explore: bid_opti_all_models_summary_no_opti_pubcost {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: ssp_model_readiness {
+  required_access_grants: [can_view_all_tremor]
+  label: "SSP Model Readiness"
 
+}
 
 
 explore: buyer_mapping_master {

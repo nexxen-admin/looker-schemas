@@ -284,10 +284,10 @@ explore: supply_signals_audit_daily {
 }
 
 
-explore:  exchange_daily_report_component{
-  label: "Exchange Daily Report Component"
-  #required_access_grants: [can_view_all_tremor]
-  hidden: yes
+
+explore: exchange_daily_report_component {
+  label: "Daily Revenue Report Components"
+  hidden:  yes
 }
 
 

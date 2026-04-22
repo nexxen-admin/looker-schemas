@@ -495,6 +495,13 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_advertiser_local_currency {
+    type: inner
+    view_label: "Advertiser"
+    sql_on: ${dim_dsp_advertiser_local_currency.advertiser_local_currency_key} = ${fact_nexxen_dsp.advertiser_local_currency_key} ;;
+    relationship: many_to_one
+  }
+
   join: dim_dsp_market {
     type: inner
     view_label: "Market"

@@ -287,22 +287,49 @@ hidden: yes
     hidden: yes
   }
 
+  dimension: days_passed_in_week {
+    type: number
+    sql: ${day_number_in_week}-1;;
+  }
+
+  dimension: days_passed_in_month {
+    type: number
+    sql: ${day_number_in_month}-1 ;;
+  }
+
 
   dimension: days_passed_in_quarter {
     type: number
-    sql: case when ${quarter}='1' and month(current_date)='1' then day(current_date)
-              when ${quarter}='1' and month(current_date)='2' then 31+day(current_date)
-              when ${quarter}='1' and month(current_date)='3' then 59+day(current_date)
-              when ${quarter}='2' and month(current_date)='4' then day(current_date)
-              when ${quarter}='2' and month(current_date)='5' then 30+day(current_date)
-              when ${quarter}='2' and month(current_date)='6' then 61+day(current_date)
-              when ${quarter}='3' and month(current_date)='7' then day(current_date)
-              when ${quarter}='3' and month(current_date)='8' then 31+day(current_date)
-              when ${quarter}='3' and month(current_date)='9' then 62+day(current_date)
-              when ${quarter}='4' and month(current_date)='10' then day(current_date)
-              when ${quarter}='4' and month(current_date)='11' then 31+day(current_date)
-              when ${quarter}='4' and month(current_date)='12' then 61+day(current_date)
-              end ;;
+    sql: DATEDIFF('day', TRUNC(${date}, 'Q'), ${date}) ;;
+  }
+
+  dimension: days_passed_in_halfyear {
+    type: number
+    label: "Days Passed in Half-Year"
+    sql: CASE WHEN month(${date}) between 1 and 6 THEN ${day_number_in_year}-1
+          ELSE DATEDIFF('day', CONCAT(YEAR(${date}), '-07-01')::date, ${date}) END;;
+  }
+
+  dimension: days_remaining_in_week {
+    type: number
+    sql: 7-${days_passed_in_week};;
+  }
+
+  dimension: days_remaining_in_month {
+    type: number
+    sql: ${month_length}-${days_passed_in_month} ;;
+  }
+
+
+  dimension: days_remaining_in_quarter {
+    type: number
+    sql: ${quarter_length}-${days_passed_in_quarter} ;;
+  }
+
+  dimension: days_remaining_in_halfyear {
+    type: number
+    label: "Days Remaining in Half-Year"
+    sql: ${halfyear_length}-${days_passed_in_halfyear};;
   }
 
   dimension: quarter_length {
@@ -319,9 +346,11 @@ hidden: yes
   }
 
   dimension: halfyear_length {
-    label: "Half-year length"
+    label: "Half-year Length"
     type: number
-    sql: CASE WHEN month(${date}) between 1 and 6 THEN DATEDIFF('day', CONCAT(YEAR(${date}), '-01-01')::date, CONCAT(YEAR(${date}), '-07-01')::date) ELSE DATEDIFF('day', CONCAT(YEAR(${date}), '-07-01')::date, CONCAT(YEAR(${date})+1, '-01-01')::date) END ;;
+    sql: CASE
+          WHEN month(${date}) between 1 and 6 THEN DATEDIFF('day', CONCAT(YEAR(${date}), '-01-01')::date, CONCAT(YEAR(${date}), '-07-01')::date)
+          ELSE DATEDIFF('day', CONCAT(YEAR(${date}), '-07-01')::date, CONCAT(YEAR(${date})+1, '-01-01')::date) END ;;
   }
 
 

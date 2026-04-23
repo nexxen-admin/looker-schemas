@@ -256,6 +256,15 @@ explore: fact_nexxen_dsp  {
     sql_on: ${fact_nexxen_dsp.exchange_line_item_key}=${dim_dsp_exchange_line_item.exchange_line_item_key} ;;
   }
 
+  join: dim_dsp_inventory_seller_name {
+    type: left_outer
+    relationship: many_to_one
+    sql_on:
+      ${fact_nexxen_dsp.inventory_source_key} = ${dim_dsp_inventory_seller_name.inventory_source_key}
+      AND ${fact_nexxen_dsp.exchange_line_item_key} = ${dim_dsp_inventory_seller_name.exchange_line_item_key} ;;
+  }
+
+
   join: dim_dsp_app {
     type: left_outer
     view_label: "App"

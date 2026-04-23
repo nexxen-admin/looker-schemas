@@ -573,6 +573,19 @@ dimension: inventory_source_key {
     sql: ${TABLE}.zip_code ;;
   }
 
+
+  # dimension: seller_name {
+  #   label: "Seller Name"
+  #   type: string
+  #   description: "Publisher/Seller name. For 1P Nexxen supply (inventory_source_id = 158), uses SSP Publisher Name. For all other supply, uses Seller.json mapping."
+  #   sql:
+  #     CASE
+  #       WHEN ${dim_dsp_inventory_source.inventory_source_id} = 158
+  #         THEN ${dim_ssp_publisher_metadata.publisher_name}
+  #       ELSE ${dim_dsp_inventory_seller_name.seller_name}
+  #     END ;;
+  # }
+
   measure: inventory_cost {
     type: sum
     value_format: "$#,##0.00"

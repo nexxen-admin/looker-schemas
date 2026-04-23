@@ -312,6 +312,19 @@ hidden: yes
               when month(${date_key_month})='4' OR month(${date_key_month})='5' OR month(${date_key_month})='6' then '91'
               else '92' end;;
   }
+
+  dimension: month_length {
+    type: number
+    sql: DAY(LAST_DAY(${date}));;
+  }
+
+  dimension: halfyear_length {
+    label: "Half-year length"
+    type: number
+    sql: CASE WHEN month(${date}) between 1 and 6 THEN DATEDIFF('day', CONCAT(YEAR(${date}), '-01-01')::date, CONCAT(YEAR(${date}), '-07-01')::date) ELSE DATEDIFF('day', CONCAT(YEAR(${date}), '-07-01')::date, CONCAT(YEAR(${date})+1, '-01-01')::date) END ;;
+  }
+
+
   # parameter: chosen_date {
   #   type: date
   #   label: "Chosen Date"

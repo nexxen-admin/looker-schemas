@@ -466,6 +466,7 @@ view: billing_temp_nov {
     type: sum
     description: "Sum of Final Billable Revenue. If Finance uploaded a manual adjustment with a value greater than 0, we use that. Otherwise, we use the Capped Revenue."
     sql: ${TABLE}.final_billable_revenue_after_adj ;;
+    value_format: "#,##0.00"
   }
   measure: sum_final_billable_revenue_after_adj_usd {
     type: sum
@@ -495,6 +496,7 @@ view: billing_temp_nov {
     type: sum
     description: "Sum of Final Billable Revenue After Adj - Inventory Cost"
     sql: ${TABLE}.Margin_amount ;;
+    value_format: "#,##0.00"
   }
   measure: sum_margin_amount_usd {
     type: sum

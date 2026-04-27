@@ -462,6 +462,11 @@ view: billing_temp_nov {
     sql: ${TABLE}.final_billable_units_after_adj ;;
     value_format: "#,##0.00"
   }
+  measure: sum_final_billable_revenue_after_adj {
+    type: sum
+    description: "Sum of Final Billable Revenue. If Finance uploaded a manual adjustment with a value greater than 0, we use that. Otherwise, we use the Capped Revenue."
+    sql: ${TABLE}.final_billable_revenue_after_adj ;;
+  }
   measure: sum_final_billable_revenue_after_adj_usd {
     type: sum
     description: "Sum of Final Billable Revenue After Adj multiplied by Exchange Rate USD"
@@ -486,11 +491,11 @@ view: billing_temp_nov {
     sql: ${TABLE}.inv_cost ;;
     value_format: "#,##0.00"
   }
-  # measure: sum_margin_amount {
-  #   type: sum
-  #   description: "Sum of Final Billable Revenue After Adj - Inventory Cost"
-  #   sql: ${TABLE}.Margin_amount ;;
-  # }
+  measure: sum_margin_amount {
+    type: sum
+    description: "Sum of Final Billable Revenue After Adj - Inventory Cost"
+    sql: ${TABLE}.Margin_amount ;;
+  }
   measure: sum_margin_amount_usd {
     type: sum
     description: "Sum of Final Billable Revenue After Adj USD minus (Inventory Cost × Exchange Rate USD)"

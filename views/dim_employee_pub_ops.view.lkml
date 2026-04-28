@@ -143,59 +143,73 @@ view: v_dim_employee_pub_ops {
     hidden: yes
   }
 
-#   dimension: team_unruly {
-#     label: "Pub Team"
-#     type: string
-#     required_access_grants: [can_view_aniview]
-#     sql: case when ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Amit Mazor' then 'SDK'
-
-#               when ${TABLE}.Employee_Name='Stav Ezer' OR ${TABLE}.Employee_Name='Sarah Herskovics' OR
-#                   ${TABLE}.Employee_Name='Lihi Katabi' OR ${TABLE}.Employee_Name='Dana Nahshon' OR
-#                   ${TABLE}.Employee_Name='Yariv Aharon' then 'Channel Pubs'
-
-#               when ${TABLE}.Employee_Name='Omri Lender & Ellen Rogan' OR ${TABLE}.Employee_Name='Noa Karako & Francesca Esposito' OR
-#                   ${TABLE}.Employee_Name='Shachar Laufer & Daniel Werman' OR ${TABLE}.Employee_Name='Rom Lubianiker & Rory Brown' OR
-#                   ${TABLE}.Employee_Name='Niv Shema' OR ${TABLE}.Employee_Name='Shachar Laufer' OR
-#                   ${TABLE}.Employee_Name='Rom Lubianiker' OR ${TABLE}.Employee_Name='Omri Lender' OR
-#                   ${TABLE}.Employee_Name='Noa Karako' OR
-#                   ${TABLE}.Employee_Name='Niv Shema & Matthew De Palo' then 'Direct'
-
-#               when ${TABLE}.Employee_Name='Revops' then 'Revops'
-
-#               when ${TABLE}.Employee_Name='Matthew De Palo' then 'AU'
-
-#               when ${TABLE}.Employee_Name='Ally Appelbaum' OR ${TABLE}.Employee_Name='Caitlyn Murphy' OR
-#                   ${TABLE}.Employee_Name='Eileen Lam' OR ${TABLE}.Employee_Name='Jason Vest' then 'CTV US'
-
-#               else 'null' end
-# ;;
-#   }
-
   dimension: team_unruly {
     label: "Pub Team"
     type: string
     required_access_grants: [can_view_aniview]
-    sql: case when ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Noa Krashniak' then 'SDK'
-            when ${TABLE}.Employee_Name='Stav Ezer' OR ${TABLE}.Employee_Name='Sarah Herskovics' OR
-                 ${TABLE}.Employee_Name='Lihi Katabi' OR ${TABLE}.Employee_Name='Dana Nahshon' OR
-                 ${TABLE}.Employee_Name='Amit Mazor' OR ${TABLE}.Employee_Name='Yariv Aharon' then 'Channel Pubs'
-            when ${TABLE}.Employee_Name='Omri Lender & Ellen Rogan' OR ${TABLE}.Employee_Name='Noa Karako & Francesca Esposito' OR
-                 ${TABLE}.Employee_Name='Shachar Laufer & Daniel Werman' OR ${TABLE}.Employee_Name='Rom Lubianiker & Rory Brown' OR
-                 ${TABLE}.Employee_Name='Niv Shema' OR ${TABLE}.Employee_Name='Shachar Laufer' OR
-                 ${TABLE}.Employee_Name='Rom Lubianiker' OR ${TABLE}.Employee_Name='Omri Lender' OR
-                 ${TABLE}.Employee_Name='Noa Karako' OR
-                 ${TABLE}.Employee_Name='Niv Shema & Matthew De Palo' then 'Direct'
-            when ${TABLE}.Employee_Name='Revops' OR ${TABLE}.Employee_Name='RevOps' then 'RevOps'
-            when ${TABLE}.Employee_Name='Matthew De Palo' OR ${TABLE}.Employee_Name='Jean Tang' OR
-                 ${TABLE}.Employee_Name='Ryota Yamauchi' then 'APAC'
-            when ${TABLE}.Employee_Name='Mike Padula' OR ${TABLE}.Employee_Name='Jas Dedovic' OR
-                 ${TABLE}.Employee_Name='Ellen Rogan' OR ${TABLE}.Employee_Name='Jacob Comanse' then 'NAM'
-            when ${TABLE}.Employee_Name='Mikayla Skarzynski' then 'EMEA'
-            when ${TABLE}.Employee_Name='Ally Appelbaum' OR ${TABLE}.Employee_Name='Caitlyn Murphy' OR
-                 ${TABLE}.Employee_Name='Eileen Lam' OR ${TABLE}.Employee_Name='Jason Vest' then 'CTV US'
-            else 'Unassigned' end
-  ;;
+    sql: case when ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Amit Mazor' then 'SDK'
+
+              when ${TABLE}.Employee_Name='Stav Ezer' OR ${TABLE}.Employee_Name='Sarah Herskovics' OR
+                  ${TABLE}.Employee_Name='Lihi Katabi' OR ${TABLE}.Employee_Name='Dana Nahshon' OR
+                  ${TABLE}.Employee_Name='Yariv Aharon' then 'Channel Pubs'
+
+              when ${TABLE}.Employee_Name='Omri Lender & Ellen Rogan' OR ${TABLE}.Employee_Name='Noa Karako & Francesca Esposito' OR
+                  ${TABLE}.Employee_Name='Shachar Laufer & Daniel Werman' OR ${TABLE}.Employee_Name='Rom Lubianiker & Rory Brown' OR
+                  ${TABLE}.Employee_Name='Niv Shema' OR ${TABLE}.Employee_Name='Shachar Laufer' OR
+                  ${TABLE}.Employee_Name='Rom Lubianiker' OR ${TABLE}.Employee_Name='Omri Lender' OR
+                  ${TABLE}.Employee_Name='Noa Karako' OR
+                  ${TABLE}.Employee_Name='Niv Shema & Matthew De Palo' then 'Direct'
+
+              when ${TABLE}.Employee_Name='Revops' then 'Revops'
+
+              when ${TABLE}.Employee_Name='Matthew De Palo' then 'AU'
+
+              when ${TABLE}.Employee_Name='Ally Appelbaum' OR ${TABLE}.Employee_Name='Caitlyn Murphy' OR
+                  ${TABLE}.Employee_Name='Eileen Lam' OR ${TABLE}.Employee_Name='Jason Vest' then 'CTV US'
+
+              else 'null' end
+;;
   }
+
+  dimension: office_group {
+    label: "Office Group"
+    type: string
+    required_access_grants: [can_view_aniview]
+    sql: case when ${team_unruly} = 'SDK' then 'SDK'
+              when ${team_unruly} = 'Channel Pubs' then 'Channel Pubs'
+              when ${team_unruly} = 'Direct' then 'Direct'
+              when ${team_unruly} = 'Revops' then 'RevOps'
+              when ${team_unruly} = 'AU' then 'APAC'
+              when ${TABLE}.Employee_Name IN ('Mike Padula','Jas Dedovic','Ellen Rogan','Jacob Comanse') then 'United States (NAM)'
+              when ${TABLE}.Employee_Name = 'Mikayla Skarzynski' then 'United Kingdom (EMEA)'
+              when ${TABLE}.Employee_Name IN ('Jean Tang','Ryota Yamauchi') then 'APAC'
+              when ${TABLE}.Employee_Name = 'Noa Krashniak' then 'SDK'
+              else 'Unassigned' end
+    ;;
+  }
+
+  # dimension: office_group {
+  #   label: "Office Group"
+  #   type: string
+  #   required_access_grants: [can_view_aniview]
+  #   sql: case when ${TABLE}.Employee_Name='Mike Padula' OR ${TABLE}.Employee_Name='Jas Dedovic' OR
+  #                 ${TABLE}.Employee_Name='Ellen Rogan' OR ${TABLE}.Employee_Name='Jacob Comanse' then 'United States (NAM)'
+  #             when ${TABLE}.Employee_Name='Mikayla Skarzynski' then 'United Kingdom (EMEA)'
+  #             when ${TABLE}.Employee_Name='Matthew De Palo' OR ${TABLE}.Employee_Name='Jean Tang' OR
+  #                 ${TABLE}.Employee_Name='Ryota Yamauchi' then 'APAC'
+  #             when ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Noa Krashniak' then 'SDK'
+  #             when ${TABLE}.Employee_Name='Stav Ezer' OR ${TABLE}.Employee_Name='Sarah Herskovics' OR
+  #                 ${TABLE}.Employee_Name='Lihi Katabi' OR ${TABLE}.Employee_Name='Dana Nahshon' OR
+  #                 ${TABLE}.Employee_Name='Amit Mazor' OR ${TABLE}.Employee_Name='Yariv Aharon' then 'Channel Pubs'
+  #             when ${TABLE}.Employee_Name='Omri Lender & Ellen Rogan' OR ${TABLE}.Employee_Name='Noa Karako & Francesca Esposito' OR
+  #                 ${TABLE}.Employee_Name='Shachar Laufer & Daniel Werman' OR ${TABLE}.Employee_Name='Rom Lubianiker & Rory Brown' OR
+  #                 ${TABLE}.Employee_Name='Niv Shema' OR ${TABLE}.Employee_Name='Shachar Laufer' OR
+  #                 ${TABLE}.Employee_Name='Rom Lubianiker' OR ${TABLE}.Employee_Name='Omri Lender' OR
+  #                 ${TABLE}.Employee_Name='Noa Karako' then 'Direct'
+  #             when ${TABLE}.Employee_Name='Revops' OR ${TABLE}.Employee_Name='RevOps' then 'RevOps'
+  #             else 'Unassigned' end
+  #   ;;
+  # }
 
   # dimension: team_unruly_new {
   #   label: "New Pub Team"

@@ -128,7 +128,7 @@ explore: sam_lt_comm {
   hidden: yes
 
   join: v_dim_employee_pub_ops {
-    fields: [v_dim_employee_pub_ops.team_unruly]
+    fields: [v_dim_employee_pub_ops.office_group]
     type: left_outer
     relationship: many_to_one
     sql_on: CAST(${sam_lt_comm.operations_owner_id} AS INT) = ${v_dim_employee_pub_ops.employee_id} ;;

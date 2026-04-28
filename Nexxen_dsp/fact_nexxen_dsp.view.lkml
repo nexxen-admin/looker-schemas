@@ -214,8 +214,8 @@ view: fact_nexxen_dsp {
 
   measure: cost_exchanged{
     type: sum
-    label: "Adv Invoice (with exchange rate)"
-    value_format: "$#,##0.00"
+    label: "Adv Invoice (in advertiser Local currency)"
+    value_format: "#,##0.00"
     sql: ${TABLE}.cost * ${TABLE}.advertiser_local_currency_exchange_rate ;;
 
   }
@@ -609,8 +609,8 @@ dimension: inventory_source_key {
   measure: inv_cost_exchanged {
     type: sum
     description: "Using inventory_cost"
-    label: "Inv cost (with exchange rate)"
-    value_format: "$#,##0"
+    label: "Inv cost (in advertiser Local currency)"
+    value_format: "#,##0"
     sql: ${TABLE}.inventory_cost * ${TABLE}.advertiser_local_currency_exchange_rate  ;;
   }
 
@@ -741,8 +741,8 @@ measure: Nexxen_Inv_Cost_Percent {
     type: sum
     sql: ${TABLE}.cogs * ${TABLE}.advertiser_local_currency_exchange_rate;;
     description: "Inventory cost plus third party cost"
-    label: "Cogs (with exchange rate)"
-    value_format: "$#,##0.00"
+    label: "Cogs (in advertiser Local currency)"
+    value_format: "#,##0.00"
   }
 
   measure: 3p_in_view_impressions {

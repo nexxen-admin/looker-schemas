@@ -837,7 +837,8 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: ad_serving_cost {
     type: sum
     sql: ${TABLE}.ad_serving_cost ;;
-    value_format: "$#,##0.00"
+    label: "Ad Serving Cost (SF Currency)"
+    value_format: "#,##0.00"
     description: "Represents the cost associated with campaigns that use external ad-serving vendors to deliver, verify, or manage ad creatives, calculated based on the vendor pricing model and campaign 1P delivery data."
   }
 

@@ -126,6 +126,13 @@ explore: sam_lt_comm {
   #required_access_grants: [allowed_sales]
   required_access_grants: [allowed_users_sam_lt]
   hidden: yes
+
+  join: v_dim_employee_pub_ops {
+    fields: [v_dim_employee_pub_ops.team_unruly]
+    type: left_outer
+    relationship: many_to_one
+    sql_on: CAST(${sam_lt_comm.operations_owner_id} AS INT) = ${v_dim_employee_pub_ops.employee_id} ;;
+  }
 }
 
 

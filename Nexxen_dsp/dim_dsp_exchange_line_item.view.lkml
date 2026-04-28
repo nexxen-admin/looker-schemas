@@ -29,6 +29,16 @@ view: dim_dsp_exchange_line_item {
     sql: ${TABLE}.ri_info ;;
     hidden: yes
   }
+  dimension: ssp_publisher_id {
+    type: number
+    sql: ${TABLE}.ssp_publisher_id ;;
+    hidden: yes
+  }
+  dimension: ssp_publisher_name {
+    type: string
+    sql: ${TABLE}.ssp_publisher_name ;;
+    hidden: yes
+  }
   measure: count {
     type: count
     hidden: yes

@@ -576,14 +576,14 @@ dimension: inventory_source_key {
 
   # dimension: seller_name {
   #   label: "Seller Name"
+  #   # description: "Publisher/Seller name. For inventory_source_id=158 (Nexxen 1P) sourced from SSP publisher metadata; otherwise from dim_dsp_inventory_seller_name (seller.json mapping)."
   #   type: string
-  #   description: "Publisher/Seller name. For 1P Nexxen supply (inventory_source_id = 158), uses SSP Publisher Name. For all other supply, uses Seller.json mapping."
   #   sql:
-  #     CASE
-  #       WHEN ${dim_dsp_inventory_source.inventory_source_id} = 158
-  #         THEN ${dim_ssp_publisher_metadata.publisher_name}
-  #       ELSE ${dim_dsp_inventory_seller_name.seller_name}
-  #     END ;;
+  #   CASE
+  #     WHEN ${fact_nexxen_dsp.inventory_source_id} = 158
+  #       THEN ${dim_dsp_exchange_line_item.ssp_publisher_name}
+  #     ELSE ${dim_dsp_inventory_seller_name.seller_name}
+  #   END ;;
   # }
 
   measure: inventory_cost {

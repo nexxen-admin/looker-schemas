@@ -580,7 +580,7 @@ dimension: inventory_source_key {
   #   type: string
   #   sql:
   #   CASE
-  #     WHEN ${fact_nexxen_dsp.inventory_source_id} = 158
+  #     WHEN ${dim_dsp_inventory_source.inventory_source_id} = 158
   #       THEN ${dim_dsp_exchange_line_item.ssp_publisher_name}
   #     ELSE ${dim_dsp_inventory_seller_name.seller_name}
   #   END ;;

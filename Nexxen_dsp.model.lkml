@@ -748,3 +748,17 @@ explore: dsp_model_readiness {
 
 
 }
+
+view: +fact_nexxen_dsp {
+  dimension: seller_name {
+    label: "Seller Name"
+    # description: "Publisher/Seller name. For inventory_source_id=158 (Nexxen 1P) sourced from SSP publisher metadata; otherwise from dim_dsp_inventory_seller_name (seller.json mapping)."
+    type: string
+    sql:
+      CASE
+        WHEN ${dim_dsp_inventory_source.inventory_source_id} = 158
+          THEN ${dim_dsp_exchange_line_item.ssp_publisher_name}
+        ELSE ${dim_dsp_inventory_seller_name.seller_name}
+      END ;;
+  }
+}

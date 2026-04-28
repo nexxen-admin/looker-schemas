@@ -842,6 +842,19 @@ measure: Nexxen_Inv_Cost_Percent {
     description: "Represents the cost associated with campaigns that use external ad-serving vendors to deliver, verify, or manage ad creatives, calculated based on the vendor pricing model and campaign 1P delivery data."
   }
 
+  measure: ad_serving_cost_usd {
+    label: "Ad Serving Cost USD"
+    description: "Represents the cost associated with campaigns that use external ad-serving vendors to deliver, verify, or manage ad creatives, calculated based on the vendor pricing model and campaign 1P delivery data."
+    type: sum
+    sql:
+      CASE
+        WHEN ${dim_sfdb_opportunitylineitem.io_currency__c} = 'USD' THEN ${TABLE}.ad_serving_cost
+        WHEN opportunity_exchange_rate.exchange_rate IS NOT NULL THEN ${TABLE}.ad_serving_cost * opportunity_exchange_rate.exchange_rate
+        ELSE ${TABLE}.ad_serving_cost
+      END ;;
+    value_format: "$#,##0.00"
+  }
+
 
 
   measure: yesterday_uncapped_revenue {

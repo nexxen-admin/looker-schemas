@@ -125,7 +125,7 @@ explore: sam_lt_comm {
   #required_access_grants: [allowed_users_sam_lt,allowed_sales]
   #required_access_grants: [allowed_sales]
   required_access_grants: [allowed_users_sam_lt]
-  # hidden: yes
+  hidden: yes
 
   join: v_dim_employee_pub_ops {
     fields: [v_dim_employee_pub_ops.office_group]

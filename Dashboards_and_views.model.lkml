@@ -129,6 +129,7 @@ explore: sam_lt_comm {
 
   join: v_dim_employee_pub_ops {
     fields: [v_dim_employee_pub_ops.office_group]
+    view_label: "Employee"
     type: left_outer
     relationship: many_to_one
     sql_on: CAST(${sam_lt_comm.operations_owner_id} AS INT) = ${v_dim_employee_pub_ops.employee_id} ;;

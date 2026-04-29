@@ -546,7 +546,7 @@ dimension: inventory_source_key {
     hidden: yes
 
   }
-
+  # dimension: seller_name is at the bottom of Nexxen_dsp.model
 
 
   dimension: package_budget_schedule_key {

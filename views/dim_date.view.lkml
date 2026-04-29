@@ -289,25 +289,25 @@ hidden: yes
 
   dimension: days_passed_in_week {
     type: number
-    sql: ${day_number_in_week}-1;;
+    sql: DAYOFWEEK(CURRENT_DATE())-1;;
   }
 
   dimension: days_passed_in_month {
     type: number
-    sql: ${day_number_in_month}-1 ;;
+    sql: DATEDIFF('day', TRUNC(${date}, 'MM'), CURRENT_DATE()) ;;
   }
 
 
   dimension: days_passed_in_quarter {
     type: number
-    sql: DATEDIFF('day', TRUNC(${date}, 'Q'), ${date}) ;;
+    sql: DATEDIFF('day', TRUNC(${date}, 'Q'), CURRENT_DATE()) ;;
   }
 
   dimension: days_passed_in_halfyear {
     type: number
     label: "Days Passed in Half-Year"
-    sql: CASE WHEN month(${date}) between 1 and 6 THEN ${day_number_in_year}-1
-          ELSE DATEDIFF('day', CONCAT(YEAR(${date}), '-07-01')::date, ${date}) END;;
+    sql: CASE WHEN month(CURRENT_DATE()) between 1 and 6 THEN DAYOFYEAR(CURRENT_DATE())-1
+          ELSE DATEDIFF('day', CONCAT(YEAR(CURRENT_DATE()), '-07-01')::date, CURRENT_DATE()) END;;
   }
 
   dimension: days_remaining_in_week {

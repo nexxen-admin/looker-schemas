@@ -303,6 +303,28 @@ view: fact_nexxen_dsp {
     sql: EXTRACT(YEAR FROM ${date_key_raw}) ;;
   }
 
+  dimension: date_utc_dynamic {
+    group_label: "Date UTC"
+    label: "Dynamic Date Granularity (UTC)"
+    description: "Dynamically buckets by Day / Week / Month / Quarter / Year based on the Date Granularity Filter parameter. Uses the UTC date_key column."
+    type: string
+    sql:
+    CASE
+      WHEN {% parameter date_granularity %} = 'Day'
+        THEN TO_CHAR(${date_key_raw}, 'YYYY-MM-DD')
+      WHEN {% parameter date_granularity %} = 'Week'
+        THEN TO_CHAR(DATE_TRUNC('week', ${date_key_raw}), 'YYYY-MM-DD')
+      WHEN {% parameter date_granularity %} = 'Month'
+        THEN TO_CHAR(DATE_TRUNC('month', ${date_key_raw}), 'YYYY-MM')
+      WHEN {% parameter date_granularity %} = 'Quarter'
+        THEN TO_CHAR(${date_key_raw}, 'YYYY') || '-Q' ||
+             TO_CHAR(CEIL(EXTRACT(MONTH FROM ${date_key_raw})::numeric / 3), 'FM9')
+      WHEN {% parameter date_granularity %} = 'Year'
+        THEN TO_CHAR(${date_key_raw}, 'YYYY')
+      ELSE TO_CHAR(${date_key_raw}, 'YYYY-MM')
+    END ;;
+  }
+
   # dimension_group: event_time_et {
   #   type: time
   #   label: "Event Time ET"
@@ -348,6 +370,29 @@ view: fact_nexxen_dsp {
 
     hidden:  no
   }
+
+  # dimension: date {
+  #   group_label: "Date Timezone"
+  #   label: "Deliverydate Granularity"
+  #   description: "For dynamic Delivery period Granularity. Use with Filter Date Granularity"
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN {% parameter date_granularity %} = 'Day'
+  #       THEN TO_CHAR(${date_key_in_timezone_raw}, 'YYYY-MM-DD')
+  #     WHEN {% parameter date_granularity %} = 'Week'
+  #       THEN TO_CHAR(DATE_TRUNC('week', ${date_key_in_timezone_raw}), 'YYYY-MM-DD')
+  #     WHEN {% parameter date_granularity %} = 'Month'
+  #       THEN TO_CHAR(DATE_TRUNC('month', ${date_key_in_timezone_raw}), 'YYYY-MM')
+  #     WHEN {% parameter date_granularity %} = 'Quarter'
+  #       THEN TO_CHAR(${date_key_in_timezone_raw}, 'YYYY') || '-Q' ||
+  #           TO_CHAR(CEIL(EXTRACT(MONTH FROM ${date_key_in_timezone_raw})::numeric / 3), 'FM9')
+  #     WHEN {% parameter date_granularity %} = 'Year'
+  #       THEN TO_CHAR(${date_key_in_timezone_raw}, 'YYYY')
+  #     ELSE TO_CHAR(${date_key_in_timezone_raw}, 'YYYY-MM')
+  #   END ;;
+  #   hidden: no
+  # }
 
   parameter: top_x_rank_limit {
     type: unquoted

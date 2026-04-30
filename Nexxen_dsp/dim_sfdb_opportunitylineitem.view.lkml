@@ -22,6 +22,7 @@ view: dim_sfdb_opportunitylineitem {
   dimension: account_manager__c {
     type: string
     sql: ${TABLE}.account_manager__c ;;
+    hidden: yes
   }
 
   dimension: affects_net_of_related_line_items__c {

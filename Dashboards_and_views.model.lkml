@@ -771,6 +771,10 @@ explore: buyer_mapping_master {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: dim_segment_data_apprdb_all_segments {
+  required_access_grants: [can_view_all_tremor]
+  hidden: no
+}
 
 explore: v_dim_publisher_commission_metadata {
   label: "BD COMM NEW"

@@ -1,4 +1,4 @@
-view: exchange_daily_report_component {
+view:exchange_daily_report_component{
   derived_table: {
     sql: Select event_date::date as event_date,
       to_char(event_date, 'yy') as year,
@@ -13,7 +13,7 @@ view: exchange_daily_report_component {
       Impression_Type,
       sum(revenue) as Revenue,
       sum(cost) as Cost
-    From BI.SVC_DRR_Daily_Revenue_Report
+    From bi.DRR_Daily_Revenue_Report
     where event_date>= '2022-01-01' and event_date< current_date()-1
     --event_date >= date_trunc('quarter',timestampadd('month',-2,date_trunc('month',current_date())))
      -- and event_date < date_trunc('month',current_date())

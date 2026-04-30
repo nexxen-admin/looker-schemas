@@ -2102,6 +2102,15 @@ view: fact_ad_daily_agg {
     filters: [date_key_date: "7 days ago for 7 days"]
   }
 
+  measure: Last_7_Days_Revenue_avg{
+    label: "Revenue Last 7 Days (average)"
+    type: number
+    description: "The average revenue of the last 7 days"
+    sql: ${Last_7_Days_Revenue}/7;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+  }
+
   measure: Prior_Week_Revenue{
     label: "Revenue Prior Week"
     type: sum

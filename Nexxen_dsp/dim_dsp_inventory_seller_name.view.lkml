@@ -1,5 +1,5 @@
-view: dim_dsp_exchange_line_item {
-  sql_table_name: BI_DSP.dim_dsp_exchange_line_item ;;
+view: dim_dsp_inventory_seller_name {
+  sql_table_name: BI_DSP.dim_dsp_inventory_seller_name ;;
 
   dimension_group: db_created {
     type: time
@@ -7,40 +7,35 @@ view: dim_dsp_exchange_line_item {
     sql: ${TABLE}.db_created_date ;;
     hidden: yes
   }
-  dimension_group: db_updated {
-    type: time
-    timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.db_updated_date ;;
-    hidden: yes
-  }
   dimension: exchange_line_item_id {
     type: string
-    label: "Exchange Line Item ID"
     sql: ${TABLE}.exchange_line_item_id ;;
-    hidden: no
+    hidden: yes
   }
   dimension: exchange_line_item_key {
     type: number
     sql: ${TABLE}.exchange_line_item_key ;;
     hidden: yes
   }
-  dimension: ri_info {
-    type: string
-    sql: ${TABLE}.ri_info ;;
-    hidden: yes
-  }
-  dimension: ssp_publisher_id {
+  dimension: inventory_source_id {
     type: number
-    sql: ${TABLE}.ssp_publisher_id ;;
+    sql: ${TABLE}.inventory_source_id ;;
     hidden: yes
   }
-  dimension: ssp_publisher_name {
+  dimension: inventory_source_key {
+    type: number
+    sql: ${TABLE}.inventory_source_key ;;
+    hidden: yes
+  }
+  dimension: seller_name {
     type: string
-    sql: ${TABLE}.ssp_publisher_name ;;
+    sql: ${TABLE}.seller_name ;;
     hidden: yes
   }
+
   measure: count {
     type: count
+    drill_fields: [seller_name]
     hidden: yes
   }
 }

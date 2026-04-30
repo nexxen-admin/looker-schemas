@@ -256,6 +256,15 @@ explore: fact_nexxen_dsp  {
     sql_on: ${fact_nexxen_dsp.exchange_line_item_key}=${dim_dsp_exchange_line_item.exchange_line_item_key} ;;
   }
 
+  join: dim_dsp_inventory_seller_name {
+    type: left_outer
+    relationship: many_to_one
+    sql_on:
+      ${fact_nexxen_dsp.inventory_source_key} = ${dim_dsp_inventory_seller_name.inventory_source_key}
+      AND ${fact_nexxen_dsp.exchange_line_item_key} = ${dim_dsp_inventory_seller_name.exchange_line_item_key} ;;
+  }
+
+
   join: dim_dsp_app {
     type: left_outer
     view_label: "App"
@@ -495,6 +504,13 @@ explore: fact_nexxen_dsp  {
     relationship: many_to_one
   }
 
+  join: dim_dsp_advertiser_local_currency {
+    type: inner
+    view_label: "Advertiser"
+    sql_on: ${dim_dsp_advertiser_local_currency.advertiser_local_currency_key} = ${fact_nexxen_dsp.advertiser_local_currency_key} ;;
+    relationship: many_to_one
+  }
+
   join: dim_dsp_market {
     type: inner
     view_label: "Market"
@@ -725,16 +741,24 @@ explore: fact_dsp_dv_sivt_reporting {
 
 }
 
-explore: ssp_model_readiness {
-  required_access_grants: [can_view_all_tremor]
-  label: "SSP Model Readiness"
-
-}
-
 
 explore: dsp_model_readiness {
   required_access_grants: [can_view_all_tremor]
   label: "DSP Model Readiness"
 
 
+}
+
+view: +fact_nexxen_dsp {
+  dimension: seller_name {
+    label: "Seller Name"
+    # description: "Publisher/Seller name. For inventory_source_id=158 (Nexxen 1P) sourced from SSP publisher metadata; otherwise from dim_dsp_inventory_seller_name (seller.json mapping)."
+    type: string
+    sql:
+      CASE
+        WHEN ${dim_dsp_inventory_source.inventory_source_id} = 158
+          THEN ${dim_dsp_exchange_line_item.ssp_publisher_name}
+        ELSE ${dim_dsp_inventory_seller_name.seller_name}
+      END ;;
+  }
 }

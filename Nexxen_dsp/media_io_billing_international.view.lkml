@@ -547,10 +547,92 @@ view: media_io_billing_international {
     description: "Billable units before Finance Adjustment, If there's an Ad Ops override, use that value. Otherwise, use the sum of delivered units (fconsider price types)"
     sql: ${TABLE}.units_before_adj_AdOps_override ;;
   }
+
+  ###---MEASURES----###
+
+  measure: sum_impressions {
+    type: sum
+    description: "Sum of 1P impressions from DSP platform "
+    sql: ${TABLE}.impressions ;;
+  }
+  measure: sum_final_billable_units_after_adj {
+    type: sum
+    description: "Sum of Final Billable Units. If Finance uploaded a manual adjustment, we use that number. Otherwise, for dCPM we use impressions; for all other price types we use the Total Billable Units Before Ad"
+    sql: ${TABLE}.final_billable_units_after_adj ;;
+    value_format: "#,##0.00"
+  }
+  measure: sum_final_billable_revenue_after_adj {
+    type: sum
+    description: "Sum of Final Billable Revenue. If Finance uploaded a manual adjustment with a value greater than 0, we use that. Otherwise, we use the Capped Revenue."
+    sql: ${TABLE}.final_billable_revenue_after_adj ;;
+    value_format: "#,##0.00"
+  }
+  measure: sum_final_billable_revenue_after_adj_usd {
+    type: sum
+    description: "Sum of Final Billable Revenue After Adj multiplied by Exchange Rate USD"
+    sql: ${TABLE}.final_billable_revenue_after_adj_usd ;;
+    value_format: "#,##0.00"
+  }
+  measure: sum_expected_revenue {
+    type: sum
+    description: "Sum of Revenue Expected for this month based on schedule ( from Opportunity line Schedule in SF)"
+    sql: ${TABLE}.Expected_Revenue ;;
+    value_format: "#,##0.00"
+  }
+  measure: sum_Uncapped_Revenue {
+    type: sum
+    description: "Sum of Uncapped Revenue"
+    sql: ${TABLE}.Uncapped_Revenue_Before_adops_Override ;;
+    value_format: "#,##0.00"
+  }
+  measure: sum_inv_cost {
+    type: sum
+    description: "Sum of inventory cost from  DSP platform"
+    sql: ${TABLE}.inv_cost ;;
+    value_format: "#,##0.00"
+  }
+  measure: sum_margin_amount {
+    type: sum
+    description: "Sum of Final Billable Revenue After Adj - Inventory Cost"
+    sql: ${TABLE}.Margin_amount ;;
+    value_format: "#,##0.00"
+  }
+  measure: sum_margin_amount_usd {
+    type: sum
+    description: "Sum of Final Billable Revenue After Adj USD minus (Inventory Cost × Exchange Rate USD)"
+    sql: ${TABLE}.margin_amount_usd ;;
+    value_format: "#,##0.00"
+  }
+  # measure: sum_remaining_diff_between_1_p_to_billing_3_p_vs_1_p_discrepancy_usd {
+  #   type: sum
+  #   description: "Same as Remaining Diff Between 1 P to Billing 3 P Vs 1 P Discrepancy in USD"
+  #   sql: ${TABLE}.Remaining_diff_between_1P_to_Billing_3P_VS_1P_discrepancy_usd ;;
+  #   value_format: "#,##0.00"
+  # }
+
+  measure: max_exchange_rate_usd {
+    type: max
+    sql: ${TABLE}.exchange_rate_usd ;;
+    hidden: yes
+  }
+  measure: sum_margin_amount_percent_usd {
+    type: number
+    sql:
+    CASE
+      WHEN COALESCE(${sum_final_billable_revenue_after_adj_usd}, 0) = 0 THEN NULL
+      ELSE (
+        (${sum_final_billable_revenue_after_adj_usd} - ${sum_inv_cost} * COALESCE(${max_exchange_rate_usd}, 1))
+        / NULLIF(${sum_final_billable_revenue_after_adj_usd}, 0)
+      )
+    END ;;
+    value_format_name: percent_2
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
   }
+
 
   # ----- Sets of fields for drilling ------
   set: detail {

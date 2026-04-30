@@ -254,6 +254,11 @@ view: ssot_v {
     type: number
     sql: ${TABLE}.region_id ;;
   }
+
+  dimension: salesforce_region {
+    type: string
+    sql: ${TABLE}.salesforce_region ;;
+  }
   dimension: revenue_category {
     type: string
     sql: ${TABLE}.revenue_category ;;

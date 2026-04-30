@@ -67,6 +67,20 @@ view: fact_nexxen_dsp {
     hidden: yes
   }
 
+  dimension: advertiser_local_currency_key {
+    type: number
+    sql: ${TABLE}.advertiser_local_currency_key ;;
+    hidden: yes
+  }
+
+  dimension: advertiser_local_currency_exchange_rate {
+    type: number
+    description: "The exchange rate provided by the DSP used to convert amounts from USD to the advertiser’s local currency. This rate is applied for advertisers whose reporting currency is not USD."
+    label: "DSP Advertiser local currency exchange rate"
+    view_label: "Advertiser"
+    sql: ${TABLE}.advertiser_local_currency_exchange_rate ;;
+  }
+
   dimension: tld_key {
     type: number
     value_format_name: id
@@ -198,6 +212,14 @@ view: fact_nexxen_dsp {
 
   }
 
+  measure: cost_exchanged{
+    type: sum
+    label: "Adv Invoice (in advertiser Local currency)"
+    value_format: "#,##0.00"
+    sql: ${TABLE}.cost * ${TABLE}.advertiser_local_currency_exchange_rate ;;
+
+  }
+
   measure: yesterday_cost {
     type: sum
     # label: "Adv Invoice"
@@ -266,12 +288,41 @@ view: fact_nexxen_dsp {
     sql: TO_CHAR(${date_key_raw}, 'YYYY-MM') ;;
   }
 
+  dimension: date_key_quarter_utc {
+    type: string
+    label: "Year-Quarter (YYYY-QN) UTC"
+    group_label: "Date UTC"
+    sql: TO_CHAR(${date_key_raw}, 'YYYY') || '-Q' || TO_CHAR(CEIL(EXTRACT(MONTH FROM ${date_key_raw}) / 3), 'FM9') ;;
+  }
+
 
   dimension: date_key_year_number_utc {
     type: number
     label: "Year (Number) UTC"
     group_label: "Date UTC"
     sql: EXTRACT(YEAR FROM ${date_key_raw}) ;;
+  }
+
+  dimension: date_utc_dynamic {
+    group_label: "Date UTC"
+    label: "Dynamic Date Granularity (UTC)"
+    description: "Dynamically buckets by Day / Week / Month / Quarter / Year based on the Date Granularity Filter parameter. Uses the UTC date_key column."
+    type: string
+    sql:
+    CASE
+      WHEN {% parameter date_granularity %} = 'Day'
+        THEN TO_CHAR(${date_key_raw}, 'YYYY-MM-DD')
+      WHEN {% parameter date_granularity %} = 'Week'
+        THEN TO_CHAR(DATE_TRUNC('week', ${date_key_raw}), 'YYYY-MM-DD')
+      WHEN {% parameter date_granularity %} = 'Month'
+        THEN TO_CHAR(DATE_TRUNC('month', ${date_key_raw}), 'YYYY-MM')
+      WHEN {% parameter date_granularity %} = 'Quarter'
+        THEN TO_CHAR(${date_key_raw}, 'YYYY') || '-Q' ||
+             TO_CHAR(CEIL(EXTRACT(MONTH FROM ${date_key_raw})::numeric / 3), 'FM9')
+      WHEN {% parameter date_granularity %} = 'Year'
+        THEN TO_CHAR(${date_key_raw}, 'YYYY')
+      ELSE TO_CHAR(${date_key_raw}, 'YYYY-MM')
+    END ;;
   }
 
   # dimension_group: event_time_et {
@@ -319,6 +370,29 @@ view: fact_nexxen_dsp {
 
     hidden:  no
   }
+
+  # dimension: date {
+  #   group_label: "Date Timezone"
+  #   label: "Deliverydate Granularity"
+  #   description: "For dynamic Delivery period Granularity. Use with Filter Date Granularity"
+  #   type: string
+  #   sql:
+  #   CASE
+  #     WHEN {% parameter date_granularity %} = 'Day'
+  #       THEN TO_CHAR(${date_key_in_timezone_raw}, 'YYYY-MM-DD')
+  #     WHEN {% parameter date_granularity %} = 'Week'
+  #       THEN TO_CHAR(DATE_TRUNC('week', ${date_key_in_timezone_raw}), 'YYYY-MM-DD')
+  #     WHEN {% parameter date_granularity %} = 'Month'
+  #       THEN TO_CHAR(DATE_TRUNC('month', ${date_key_in_timezone_raw}), 'YYYY-MM')
+  #     WHEN {% parameter date_granularity %} = 'Quarter'
+  #       THEN TO_CHAR(${date_key_in_timezone_raw}, 'YYYY') || '-Q' ||
+  #           TO_CHAR(CEIL(EXTRACT(MONTH FROM ${date_key_in_timezone_raw})::numeric / 3), 'FM9')
+  #     WHEN {% parameter date_granularity %} = 'Year'
+  #       THEN TO_CHAR(${date_key_in_timezone_raw}, 'YYYY')
+  #     ELSE TO_CHAR(${date_key_in_timezone_raw}, 'YYYY-MM')
+  #   END ;;
+  #   hidden: no
+  # }
 
   parameter: top_x_rank_limit {
     type: unquoted
@@ -517,7 +591,7 @@ dimension: inventory_source_key {
     hidden: yes
 
   }
-
+  # dimension: seller_name is at the bottom of Nexxen_dsp.model
 
 
   dimension: package_budget_schedule_key {
@@ -544,6 +618,7 @@ dimension: inventory_source_key {
     sql: ${TABLE}.zip_code ;;
   }
 
+
   measure: inventory_cost {
     type: sum
     value_format: "$#,##0.00"
@@ -562,6 +637,14 @@ dimension: inventory_source_key {
     description: "Using inventory_cost"
     value_format: "$#,##0"
     sql: ${TABLE}.inventory_cost  ;;
+  }
+
+  measure: inv_cost_exchanged {
+    type: sum
+    description: "Using inventory_cost"
+    label: "Inv cost (in advertiser Local currency)"
+    value_format: "#,##0"
+    sql: ${TABLE}.inventory_cost * ${TABLE}.advertiser_local_currency_exchange_rate  ;;
   }
 
 
@@ -687,6 +770,14 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "$#,##0.00"
   }
 
+  measure: cogs_exchanged {
+    type: sum
+    sql: ${TABLE}.cogs * ${TABLE}.advertiser_local_currency_exchange_rate;;
+    description: "Inventory cost plus third party cost"
+    label: "Cogs (in advertiser Local currency)"
+    value_format: "#,##0.00"
+  }
+
   measure: 3p_in_view_impressions {
     type: sum
     sql: ${TABLE}.third_party_in_view_impressions ;;
@@ -779,8 +870,22 @@ measure: Nexxen_Inv_Cost_Percent {
   measure: ad_serving_cost {
     type: sum
     sql: ${TABLE}.ad_serving_cost ;;
-    value_format: "$#,##0.00"
+    label: "Ad Serving Cost (SF Currency)"
+    value_format: "#,##0.00"
     description: "Represents the cost associated with campaigns that use external ad-serving vendors to deliver, verify, or manage ad creatives, calculated based on the vendor pricing model and campaign 1P delivery data."
+  }
+
+  measure: ad_serving_cost_usd {
+    label: "Ad Serving Cost USD"
+    description: "Represents the cost associated with campaigns that use external ad-serving vendors to deliver, verify, or manage ad creatives, calculated based on the vendor pricing model and campaign 1P delivery data."
+    type: sum
+    sql:
+      CASE
+        WHEN ${dim_sfdb_opportunitylineitem.io_currency__c} = 'USD' THEN ${TABLE}.ad_serving_cost
+        WHEN opportunity_exchange_rate.exchange_rate IS NOT NULL THEN ${TABLE}.ad_serving_cost * opportunity_exchange_rate.exchange_rate
+        ELSE ${TABLE}.ad_serving_cost
+      END ;;
+    value_format: "$#,##0.00"
   }
 
 

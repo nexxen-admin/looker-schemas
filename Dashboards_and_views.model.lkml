@@ -126,6 +126,14 @@ explore: sam_lt_comm {
   #required_access_grants: [allowed_sales]
   required_access_grants: [allowed_users_sam_lt]
   hidden: yes
+
+  join: v_dim_employee_pub_ops {
+    fields: [v_dim_employee_pub_ops.office_group]
+    view_label: "Employee"
+    type: left_outer
+    relationship: many_to_one
+    sql_on: CAST(${sam_lt_comm.operations_owner_id} AS INT) = ${v_dim_employee_pub_ops.employee_id} ;;
+  }
 }
 
 
@@ -284,10 +292,10 @@ explore: supply_signals_audit_daily {
 }
 
 
-explore:  exchange_daily_report_component{
-  label: "Exchange Daily Report Component"
-  #required_access_grants: [can_view_all_tremor]
-  hidden: yes
+
+explore: exchange_daily_report_component {
+  label: "Daily Revenue Report Components"
+  hidden:  yes
 }
 
 
@@ -751,7 +759,11 @@ explore: bid_opti_all_models_summary_no_opti_pubcost {
   required_access_grants: [can_view_all_tremor]
 }
 
+explore: ssp_model_readiness {
+  required_access_grants: [can_view_all_tremor]
+  label: "SSP Model Readiness"
 
+}
 
 
 explore: buyer_mapping_master {

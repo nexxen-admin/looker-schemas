@@ -668,6 +668,13 @@ measure: Nexxen_Inv_Cost_Percent {
   sql: ${Nexxen_Inv_Cost}/nullif(${inventory_cost},0);;
 }
 
+  measure: third_party_ssp_inv_cost {
+    label: "3P SSP Inv Cost"
+    description: "Inventory cost outside of Nexxen (Inventory Cost − Nexxen Inventory Cost)."
+    type: number
+    sql: ${inventory_cost} - ${Nexxen_Inv_Cost} ;;
+    value_format: "$#,##0"
+  }
 
 #   measure: inv_cost {
 #     type: sum

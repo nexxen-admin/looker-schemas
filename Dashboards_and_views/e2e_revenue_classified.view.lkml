@@ -46,16 +46,27 @@ view: e2e_revenue_classified {
     datatype: date
   }
 
+#   dimension: buyer {
+#     description: "Original Buyer"
+#     type: string
+#     sql: ${TABLE}.buyer ;;
+#   }
+
+#   dimension: mapped_buyer {
+#     type: string
+#     sql: ${TABLE}.mapped_buyer ;;
+# }
+
   dimension: buyer {
-    description: "Original Buyer"
+    label: "Original Customer"
+    description: "Original Customer"
     type: string
     sql: ${TABLE}.buyer ;;
   }
-
   dimension: mapped_buyer {
+    label: "Mapped Customer"
     type: string
     sql: ${TABLE}.mapped_buyer ;;
-
   }
 
   dimension: device_type {

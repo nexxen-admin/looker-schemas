@@ -212,6 +212,51 @@ view: e2e_revenue_classified {
       value_format: "$#,##0"
   }
 
+# --- Demand Classification Totals (1P Demand-1P Supply + 1P Demand-3P Supply) ---
 
+  measure: demand_total_revenue_gross {
+    label: "Demand Total Revenue Gross"
+    description: "Gross revenue across all 1P Demand classifications: 1P Demand-1P Supply Gross + 1P Demand-3P Supply Gross"
+    type: number
+    sql: ${1p_demand_1p_supply_gross} + ${1p_demand_3p_supply_gross} ;;
+    value_format: "$#,##0"
+  }
+  measure: demand_total_cost {
+    label: "Demand Total Cost"
+    description: "Total cost across all 1P Demand classifications: 1P Demand-1P Supply Cost + 1P Demand-3P Supply Cost"
+    type: number
+    sql: ${1p_demand_1p_supply_cost} + ${1p_demand_3p_supply_cost} ;;
+    value_format: "$#,##0"
+  }
+  measure: demand_total_net {
+    label: "Demand Total Net"
+    description: "Total net revenue across all 1P Demand classifications: 1P Demand-1P Supply Net + 1P Demand-3P Supply Net"
+    type: number
+    sql: ${1p_demand_1p_supply_net} + ${1p_demand_3p_supply_net} ;;
+    value_format: "$#,##0"
+  }
+
+# --- Supply Classification Totals (1P Demand-1P Supply + 1P Supply-3P Demand) ---
+  measure: supply_total_revenue_gross {
+    label: "Supply Total Revenue Gross"
+    description: "Gross revenue across all 1P Supply classifications: 1P Demand-1P Supply Gross + 1P Supply-3P Demand Gross"
+    type: number
+    sql: ${1p_demand_1p_supply_gross} + ${1p_supply_3p_demand_gross} ;;
+    value_format: "$#,##0"
+  }
+  measure: supply_total_cost {
+    label: "Supply Total Cost"
+    description: "Total cost across all 1P Supply classifications: 1P Demand-1P Supply Cost + 1P Supply-3P Demand Cost"
+    type: number
+    sql: ${1p_demand_1p_supply_cost} + ${1p_supply_3p_demand_cost} ;;
+    value_format: "$#,##0"
+  }
+  measure: supply_total_net {
+    label: "Supply Total Net"
+    description: "Total net revenue across all 1P Supply classifications: 1P Demand-1P Supply Net + 1P Supply-3P Demand Net"
+    type: number
+    sql: ${1p_demand_1p_supply_net} + ${1p_supply_3p_demand_net} ;;
+    value_format: "$#,##0"
+  }
 
 }

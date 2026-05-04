@@ -13,10 +13,10 @@ view: dim_segment_data_apprdb_all_segments {
     type: number
     sql: ${TABLE}.CONTRACT_CPM ;;
   }
-  dimension_group: created {
+  dimension_group: first_syndicated {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.CREATED_DATE ;;
+    sql: ${TABLE}.FIRST_SYNDICATION ;;
   }
   dimension: data_contract_id {
     type: number
@@ -71,10 +71,10 @@ view: dim_segment_data_apprdb_all_segments {
     type: yesno
     sql: ${TABLE}.IS_UNIQUE ;;
   }
-  dimension_group: last_modified {
+  dimension_group: last_syndicated {
     type: time
     timeframes: [raw, time, date, week, month, quarter, year]
-    sql: ${TABLE}.LAST_MODIFIED_DATE ;;
+    sql: ${TABLE}.LAST_SYNDICATION ;;
   }
   dimension: market_id {
     type: number
@@ -111,21 +111,33 @@ view: dim_segment_data_apprdb_all_segments {
 
   dimension: amplified_segment {
     label: "Amplified Segment"
-    type: yesno
-    sql: (${segment_type_id} IN (21,23,24,26,27,29,30,31,32,34,36,38,39)
-      OR ${segment_type_id} >= 42) ;;
+    type: string
+    sql:
+      CASE
+        WHEN (${segment_type_id} IN (21,23,24,26,27,29,30,31,32,34,36,38,39)
+          OR ${segment_type_id} >= 42)
+        THEN 'Yes' ELSE 'No'
+      END ;;
   }
 
   dimension: custom_segment {
     label: "Custom Segment"
-    type: yesno
-    sql: ${segment_type_id} IN (1,34,35,36,37,39,41,58,59,60,61,64,65,66,67,68,69,70,71) ;;
+    type: string
+    sql:
+      CASE
+        WHEN ${segment_type_id} IN (1,34,35,36,37,39,41,58,59,60,61,64,65,66,67,68,69,70,71)
+        THEN 'Yes' ELSE 'No'
+      END ;;
   }
 
   dimension: tv_amplified_segment {
     label: "TV Amplified Segment"
-    type: yesno
-    sql: ${segment_type_id} IN (21,24,32,34,36,38,39,42,43,44,45,56,57,58,59,60,61,62,63,64,65) ;;
+    type: string
+    sql:
+      CASE
+        WHEN ${segment_type_id} IN (21,24,32,34,36,38,39,42,43,44,45,56,57,58,59,60,61,62,63,64,65)
+        THEN 'Yes' ELSE 'No'
+      END ;;
   }
 
   measure: count {

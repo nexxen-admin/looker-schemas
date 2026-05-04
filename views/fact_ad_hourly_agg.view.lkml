@@ -150,6 +150,12 @@ view: fact_ad_hourly_agg {
     hidden: yes
   }
 
+  dimension: derived_imp_type_key {
+    type: number
+    sql: ${TABLE}.derived_imp_type_key ;;
+    hidden: yes
+  }
+
   dimension: os_key {
     type: number
     sql: ${TABLE}.OS_Key ;;

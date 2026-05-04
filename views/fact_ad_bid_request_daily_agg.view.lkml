@@ -128,6 +128,12 @@ dimension: dynamic_pub_deal_name {
     hidden: yes
   }
 
+  dimension: derived_imp_type_key {
+    type: number
+    sql: ${TABLE}.derived_imp_type_key ;;
+    hidden: yes
+  }
+
   dimension: dsp_deal_type_key {
     type: number
     sql: ${TABLE}.DSP_Deal_Type_Key ;;

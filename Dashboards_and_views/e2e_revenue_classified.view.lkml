@@ -259,4 +259,139 @@ view: e2e_revenue_classified {
     value_format: "$#,##0"
   }
 
+# ============================================================
+# --- PoP (Period over Period) — Net Revenue Comparison ---
+# ============================================================
+
+
+  filter: last_period_range {
+    type: date
+    view_label: "PoP"
+    label: "Last Period (Date Range)"
+    description: "Select the most recent period for the PoP comparison. Use together with Previous Period (Date Range)."
+    sql: ${period_filtered_measures} IS NOT NULL ;;
+  }
+
+  filter: previous_period_range {
+    type: date
+    view_label: "PoP"
+    label: "Previous Period (Date Range)"
+    description: "Select the earlier period to compare against. Use together with Last Period (Date Range)."
+    sql: ${period_filtered_measures} IS NOT NULL ;;
+  }
+
+# Helper dimension: tags each row as 'last', 'previous', or NULL
+  dimension: period_filtered_measures {
+    hidden: yes
+    type: string
+    sql:
+    CASE
+      WHEN {% condition last_period_range %} ${event_month_date} {% endcondition %} THEN 'last'
+      WHEN {% condition previous_period_range %} ${event_month_date} {% endcondition %} THEN 'previous'
+      ELSE NULL
+    END ;;
+  }
+
+# Optional pivot dimension — pivot on this to see Last vs Previous side-by-side
+  dimension: period_label {
+    view_label: "PoP"
+    label: "Period"
+    description: "Pivot me to see Last vs Previous side-by-side"
+    type: string
+    sql:
+    CASE
+      WHEN ${period_filtered_measures} = 'last' THEN 'Last Period'
+      WHEN ${period_filtered_measures} = 'previous' THEN 'Previous Period'
+      ELSE NULL
+    END ;;
+  }
+
+# --- Per-classification filtered sums (hidden) ---
+# These are the building blocks. Reused by Phase 5 trend view.
+
+# Last Period
+  measure: last_period_1p_supply_3p_demand_net {
+    hidden: yes
+    type: sum
+    sql: ${TABLE}.Exch_3PD_Net ;;
+    filters: [period_filtered_measures: "last"]
+  }
+  measure: last_period_1p_demand_1p_supply_net {
+    hidden: yes
+    type: sum
+    sql: ${TABLE}."1PD_1PS_Net" ;;
+    filters: [period_filtered_measures: "last"]
+  }
+  measure: last_period_1p_demand_3p_supply_net {
+    hidden: yes
+    type: sum
+    sql: ${TABLE}.DMND_3PS_Net ;;
+    filters: [period_filtered_measures: "last"]
+  }
+
+# Previous Period
+  measure: previous_period_1p_supply_3p_demand_net {
+    hidden: yes
+    type: sum
+    sql: ${TABLE}.Exch_3PD_Net ;;
+    filters: [period_filtered_measures: "previous"]
+  }
+  measure: previous_period_1p_demand_1p_supply_net {
+    hidden: yes
+    type: sum
+    sql: ${TABLE}."1PD_1PS_Net" ;;
+    filters: [period_filtered_measures: "previous"]
+  }
+  measure: previous_period_1p_demand_3p_supply_net {
+    hidden: yes
+    type: sum
+    sql: ${TABLE}.DMND_3PS_Net ;;
+    filters: [period_filtered_measures: "previous"]
+  }
+
+# --- Visible per-period Net Revenue totals ---
+# Mirror total_net_e2e_revenue's structure (sum of the 3 classification nets).
+
+  measure: last_period_net_revenue {
+    view_label: "PoP"
+    label: "Last Period Net Revenue"
+    description: "Total Net E2E Revenue for the user-selected Last Period range. Sum of all 3 classification nets."
+    type: number
+    sql: ${last_period_1p_supply_3p_demand_net}
+       + ${last_period_1p_demand_1p_supply_net}
+       + ${last_period_1p_demand_3p_supply_net} ;;
+    value_format: "$#,##0"
+  }
+
+  measure: previous_period_net_revenue {
+    view_label: "PoP"
+    label: "Previous Period Net Revenue"
+    description: "Total Net E2E Revenue for the user-selected Previous Period range. Sum of all 3 classification nets."
+    type: number
+    sql: ${previous_period_1p_supply_3p_demand_net}
+       + ${previous_period_1p_demand_1p_supply_net}
+       + ${previous_period_1p_demand_3p_supply_net} ;;
+    value_format: "$#,##0"
+  }
+
+# --- Delta with green/red conditional formatting ---
+
+  measure: net_revenue_delta {
+    view_label: "PoP"
+    label: "Net Revenue Delta (Last − Previous)"
+    description: "Last Period Net Revenue minus Previous Period Net Revenue. Green = increase, Red = decrease."
+    type: number
+    sql: ${last_period_net_revenue} - ${previous_period_net_revenue} ;;
+    value_format: "$#,##0"
+    html:
+    {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+      {% assign indicator = "red,▼" | split: ',' %}
+    {% else %}
+      {% assign indicator = "black,▬" | split: ',' %}
+    {% endif %}
+    <font color="{{indicator[0]}}">{{indicator[1]}} {{rendered_value}}</font> ;;
+  }
+
 }

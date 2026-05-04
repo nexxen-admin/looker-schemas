@@ -1034,6 +1034,14 @@ explore: fact_ad_hourly_agg{
     relationship: many_to_one
 
   }
+
+  join: dim_derived_imp_type {
+    type: left_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_derived_imp_type.derived_imp_type_key}=${fact_ad_hourly_agg.derived_imp_type_key};;
+    relationship: many_to_one
+  }
+
   join: dim_deal_brand {
     type: full_outer
     view_label: "Deal"
@@ -1386,6 +1394,13 @@ explore: fact_ad_bid_request_daily_agg{
     sql_on: ${dim_os.os_key}=${fact_ad_bid_request_daily_agg.os_key} ;;
     relationship: many_to_one
 
+  }
+
+  join: dim_derived_imp_type {
+    type: left_outer
+    view_label: "Request Attributes"
+    sql_on: ${dim_derived_imp_type.derived_imp_type_key}=${fact_ad_bid_request_daily_agg.derived_imp_type_key};;
+    relationship: many_to_one
   }
 
 

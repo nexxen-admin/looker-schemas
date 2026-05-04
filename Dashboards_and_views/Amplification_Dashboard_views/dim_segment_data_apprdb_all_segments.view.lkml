@@ -108,6 +108,26 @@ view: dim_segment_data_apprdb_all_segments {
     type: string
     sql: ${TABLE}.segment_type_name ;;
   }
+
+  dimension: amplified_segment {
+    label: "Amplified Segment"
+    type: yesno
+    sql: (${segment_type_id} IN (21,23,24,26,27,29,30,31,32,34,36,38,39)
+      OR ${segment_type_id} >= 42) ;;
+  }
+
+  dimension: custom_segment {
+    label: "Custom Segment"
+    type: yesno
+    sql: ${segment_type_id} IN (1,34,35,36,37,39,41,58,59,60,61,64,65,66,67,68,69,70,71) ;;
+  }
+
+  dimension: tv_amplified_segment {
+    label: "TV Amplified Segment"
+    type: yesno
+    sql: ${segment_type_id} IN (21,24,32,34,36,38,39,42,43,44,45,56,57,58,59,60,61,62,63,64,65) ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [detail*]
@@ -116,14 +136,14 @@ view: dim_segment_data_apprdb_all_segments {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	market_name,
-	full_path_name,
-	data_contract_name,
-	segment_type_name,
-	data_provider_name,
-	category_name,
-	segment_name
-	]
+  market_name,
+  full_path_name,
+  data_contract_name,
+  segment_type_name,
+  data_provider_name,
+  category_name,
+  segment_name
+  ]
   }
 
 }

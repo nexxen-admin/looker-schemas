@@ -710,6 +710,12 @@ explore: ops_partners_das {
   label: "ops_partners_das"
   required_access_grants: [can_view_all_tremor]
 
+  join: dim_segment_data_apprdb_all_segments {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${ops_partners_das.SEGMENT_ID} = ${dim_segment_data_apprdb_all_segments.segment_id} ;;
+  }
+
   #join: tvi_discovery_provider_mapping {
    # type: left_outer
     #relationship: many_to_one

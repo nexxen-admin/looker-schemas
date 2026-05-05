@@ -24,7 +24,7 @@ view: base_data_retention_analysis {
                             else ADD_MONTHS({% parameter period_start %}::DATE, -12) end as previous_period_start,
                       case when {% parameter period_end %} is null then DATE(DATE_TRUNC('quarter', CURRENT_DATE) - INTERVAL '1 day' - INTERVAL '1 year')
                             else ADD_MONTHS({% parameter period_end %}::DATE, -12) end as previous_period_end
-                  From BI.SVC_TRMRCon_Consolidated
+                  From BI.SVC_TRMRCon_Consolidated trm
                   left outer join BI.SVC_Buyer_Mapping_Master bm on upper(bm.buyer_original) = upper(trm.billing_agency)
                   Where event_month >= case when {% parameter period_start %} is null then DATE(DATE_TRUNC('quarter', CURRENT_DATE - INTERVAL '2 year')) else ADD_MONTHS({% parameter period_start %}::DATE, -12) end
                       and event_month < case when {% parameter period_end %} is null then DATE(DATE_TRUNC('quarter', CURRENT_DATE) - INTERVAL '1 day') else {% parameter period_end %}::DATE end

@@ -394,4 +394,37 @@ view: e2e_revenue_classified {
     <font color="{{indicator[0]}}">{{indicator[1]}} {{rendered_value}}</font> ;;
   }
 
+# ============================================================
+# --- Trend View — 12-month rolling per customer ---
+# ============================================================
+
+  filter: trend_anchor_month_filter {
+    type: date
+    view_label: "Trend"
+    label: "Trend Anchor Month"
+    description: "Pick the latest month of the 12-month trend window. Chart shows this month plus the 11 prior months."
+    sql: ${in_trend_window} ;;
+  }
+
+  dimension: in_trend_window {
+    hidden: yes
+    view_label: "Trend"
+    type: yesno
+    description: "TRUE when the row's event_month falls in the 12-month window ending at the Trend Anchor Month."
+    sql:
+    {% if trend_anchor_month_filter._is_filtered %}
+      ${event_month_date} >= ADD_MONTHS(TRUNC(CAST({% date_end trend_anchor_month_filter %} AS DATE), 'MM'), -11)
+      AND ${event_month_date} <= TRUNC(CAST({% date_end trend_anchor_month_filter %} AS DATE), 'MM')
+    {% else %}
+      FALSE
+    {% endif %} ;;
+  }
+
+  dimension: mapped_buyer_drill {
+    label: "Mapped Customer Drill"
+    type: string
+    sql: ${TABLE}.mapped_buyer ;;
+    drill_fields: [event_month_month, demand_total_net, supply_total_net]
+  }
+
 }

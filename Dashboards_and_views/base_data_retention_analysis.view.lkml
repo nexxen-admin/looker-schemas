@@ -2,7 +2,12 @@ view: base_data_retention_analysis {
   derived_table: {
     sql: With NRR_data as (
                   Select event_month,
-                      Upper(Billing_Agency) as Billing_Agency,
+                      case
+                          when bm.buyer_new = 'DELETE' then 'DELETE'
+                          when Billing_agency ilike 'client direct%'
+                          and bm.buyer_new is NULL Then upper(trm.advertiser_name)
+                          Else upper(trm.billing_agency)
+                      end as Billing_Agency,
                       sum(exchange_revenue) as exchange_revenue,
                       sum(exchange_cost) as exchange_cost,
                       sum(coalesce(Demand_Revenue,0)) --+ sum(coalesce(DMND_SS_Platform_Revenue,0))
@@ -20,6 +25,7 @@ view: base_data_retention_analysis {
                       case when {% parameter period_end %} is null then DATE(DATE_TRUNC('quarter', CURRENT_DATE) - INTERVAL '1 day' - INTERVAL '1 year')
                             else ADD_MONTHS({% parameter period_end %}::DATE, -12) end as previous_period_end
                   From BI.SVC_TRMRCon_Consolidated
+                  left outer join BI.SVC_Buyer_Mapping_Master bm on upper(bm.buyer_original) = upper(trm.billing_agency)
                   Where event_month >= case when {% parameter period_start %} is null then DATE(DATE_TRUNC('quarter', CURRENT_DATE - INTERVAL '2 year')) else ADD_MONTHS({% parameter period_start %}::DATE, -12) end
                       and event_month < case when {% parameter period_end %} is null then DATE(DATE_TRUNC('quarter', CURRENT_DATE) - INTERVAL '1 day') else {% parameter period_end %}::DATE end
                       and LENGTH(Billing_Agency) != 0

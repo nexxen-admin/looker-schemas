@@ -413,8 +413,8 @@ view: e2e_revenue_classified {
     description: "TRUE when the row's event_month falls in the 12-month window ending at the Trend Anchor Month."
     sql:
     {% if trend_anchor_month_filter._is_filtered %}
-      ${event_month_date} >= ADD_MONTHS(TRUNC(CAST({% date_end trend_anchor_month_filter %} AS DATE), 'MM'), -11)
-      AND ${event_month_date} <= TRUNC(CAST({% date_end trend_anchor_month_filter %} AS DATE), 'MM')
+      ${event_month_date} >= ADD_MONTHS(TRUNC(CAST({% date_end trend_anchor_month_filter %} AS DATE) - 1, 'MM'), -11)
+      AND ${event_month_date} <= TRUNC(CAST({% date_end trend_anchor_month_filter %} AS DATE) - 1, 'MM')
     {% else %}
       FALSE
     {% endif %} ;;

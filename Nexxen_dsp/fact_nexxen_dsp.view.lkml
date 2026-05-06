@@ -634,7 +634,7 @@ dimension: inventory_source_key {
 
   measure: inv_cost {
     type: sum
-    description: "Using inventory_cost"
+    description: "Using inventory cost in USD"
     value_format: "$#,##0"
     sql: ${TABLE}.inventory_cost  ;;
   }

@@ -1,6 +1,33 @@
 view: base_data_without_demand {
   derived_table: {
-    sql: Select
+    sql: With pre_agg as (
+Select
+          Event_Month,
+          to_char(Event_Month, 'mm') as month,
+          to_char(Event_Month, 'yyyy') as year,
+          upper(trim(Publisher)) as Publisher,
+      case
+        when bm.buyer_new = 'DELETE' then 'DELETE'
+        when Billing_agency ilike 'client direct%'
+        and bm.buyer_new is NULL
+            Then upper(trm.advertiser_name)
+        Else upper(trm.billing_agency)
+      end as Buyer,
+          Upper(trim(Advertiser_Name)) as Advertiser,
+          trim(upper(Device_Type)) as Device_Type,
+          trim(upper(Impression_Type)) as Impression_Type,
+          sum(Exchange_Revenue) as Exchange_Revenue,
+          sum(Exchange_Cost) as Exchange_Cost,
+          sum(Demand_Revenue) as Demand_Revenue,
+          sum(Demand_Cost) as Demand_Cost,
+          sum(E2E_Revenue) as E2E_Revenue,
+          sum(E2E_Cost) as E2E_Cost
+      From BI.SVC_TRMRCon_Consolidated trm
+        left outer join BI.SVC_Buyer_Mapping_Master bm on upper(bm.buyer_original) = upper(trm.Billing_Agency)
+      Group by 1, 2, 3, 4, 5, 6,7,8
+)
+
+Select
           Event_Month,
           to_char(Event_Month, 'mm') as month,
           to_char(Event_Month, 'yyyy') as year,
@@ -16,7 +43,7 @@ view: base_data_without_demand {
           sum(Demand_Cost) as Demand_Cost,
           sum(E2E_Revenue) as E2E_Revenue,
           sum(E2E_Cost) as E2E_Cost
-      From BI.SVC_TRMRCon_Consolidated trm
+      From pre_agg trm
         left outer join BI.SVC_Buyer_Mapping_Master bm on upper(bm.buyer_original) = upper(trm.Billing_Agency)
       Where bm.buyer_new != 'DELETE'
       Group by 1, 2, 3, 4, 5, 6,7,8

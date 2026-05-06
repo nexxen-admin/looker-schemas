@@ -1921,6 +1921,24 @@ view: fact_ad_daily_agg {
 
   }
 
+  measure: Last_7_Days_net_Revenue{
+    label: "Net Revenue Last 7 Days"
+    type: number
+    description: "The difference between revenue an cogs of the last 7 days"
+    sql: ${Last_7_Days_Revenue} - ${Last_7_Days_Cogs} + ${Last_7_days_pub_platform_fee};;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+  }
+
+  measure: Last_7_Days_net_Revenue_avg{
+    label: "Net Revenue Last 7 Days (average)"
+    type: number
+    description: "The average difference between revenue an cogs of the last 7 days"
+    sql: ${Last_7_Days_net_Revenue}/7;;
+    group_label: "Time Shifted Measures"
+    value_format: "$#,##0.00"
+  }
+
   measure:  last_week_Requests {
     label: "Requests last week "
     type: sum
@@ -2198,6 +2216,15 @@ view: fact_ad_daily_agg {
     group_label: "Time Shifted Measures"
     sql: ${TABLE}.sum_of_pub_platform_fee;;
     filters: [date_key_date: "last 1 day ago for 1 day"]
+  }
+
+  measure: Last_7_days_pub_platform_fee {
+    type: sum
+    label: "pub_platform_fee Last 7 Days"
+    value_format: "$#,##0.00"
+    group_label: "Time Shifted Measures"
+    sql: ${TABLE}.sum_of_pub_platform_fee;;
+    filters: [date_key_date: "last 7 days ago for 7 days"]
   }
 
   measure: Last_day_bids {

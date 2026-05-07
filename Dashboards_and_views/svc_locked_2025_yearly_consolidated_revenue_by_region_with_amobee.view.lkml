@@ -3,29 +3,55 @@ view: svc_locked_2025_yearly_consolidated_revenue_by_region_with_amobee {
 
   dimension: category {
     type: string
+    label: "Category"
     sql: ${TABLE}.category ;;
   }
-  dimension: cost {
-    type: number
-    sql: ${TABLE}.Cost ;;
-  }
+
   dimension: quarter {
     type: number
+    label: "Quarter"
     sql: ${TABLE}.Quarter ;;
   }
   dimension: region {
     type: string
+    label: "Region"
     sql: ${TABLE}.region ;;
   }
-  dimension: revenue {
-    type: number
-    sql: ${TABLE}.Revenue ;;
-  }
+
   dimension: year {
     type: number
-    sql: ${TABLE}."Year" ;;
+    label: "Year"
+    sql: ${TABLE}.Year ;;
   }
+  ###MEASURES####
+
+  measure: cost {
+    type: sum
+    value_format: "$#,##0"
+    label: "Cost"
+    sql: ${TABLE}.Cost ;;
+  }
+
+  measure: revenue {
+    type: sum
+    value_format: "$#,##0"
+    label: "Revenue"
+    sql: ${TABLE}.Revenue ;;
+  }
+
   measure: count {
     type: count
+    drill_fields: [detail*]
+  }
+
+  set: detail {
+    fields: [
+      year,
+      quarter,
+      region,
+      category,
+      revenue,
+      cost
+    ]
   }
 }

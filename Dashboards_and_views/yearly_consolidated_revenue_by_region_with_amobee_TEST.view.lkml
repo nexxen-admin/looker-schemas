@@ -152,6 +152,33 @@ view: yearly_consolidated_revenue_by_region_with_amobee_TEST {
       AND (File_record = 'Amobee DSP - Base Metrics'
       OR category = 'Exchange')
       GROUP BY 1, 2, 3, 4
+
+      UNION ALL
+
+      -- ============================================================
+      -- LIVE FY2026+ : DAILY REVENUE REPORT
+      -- (Everything except Amobee DSP base / Exchange / Interco)
+      -- Note: Americas → America - US in this block (different from Country Consolidation)
+      -- ============================================================
+      SELECT
+      YEAR(event_date) AS Year,
+      QUARTER(event_date) AS Quarter,
+      CASE
+      WHEN region = 'Americas' THEN 'America - US'
+      WHEN region NOT IN ('Unknown','APAC','EMEA','Americas') THEN 'Other'
+      ELSE region
+      END AS region,
+      category,
+      SUM(CASE WHEN event_date >= '2022-01-01' AND record_type = 'Interco' THEN 0
+      ELSE revenue END) AS Revenue,
+      SUM(CASE WHEN event_date >= '2022-01-01' AND record_type = 'Interco' THEN 0
+      ELSE cost END) AS Cost
+      FROM BI.DRR_Daily_Revenue_Report
+      WHERE event_date >= '2026-01-01'
+      AND event_date < current_date()
+      AND File_record <> 'Amobee DSP - Base Metrics'
+      AND category NOT IN ('Exchange','Interco')
+      GROUP BY 1, 2, 3, 4
       ;;
   }
 

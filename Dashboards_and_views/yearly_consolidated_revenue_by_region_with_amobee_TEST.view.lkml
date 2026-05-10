@@ -179,6 +179,28 @@ view: yearly_consolidated_revenue_by_region_with_amobee_TEST {
       AND File_record <> 'Amobee DSP - Base Metrics'
       AND category NOT IN ('Exchange','Interco')
       GROUP BY 1, 2, 3, 4
+
+      UNION ALL
+
+    -- ============================================================
+    -- LIVE FY2026+ : EXCHANGE INTERCO
+    -- ============================================================
+    SELECT
+        YEAR(event_date) AS Year,
+        QUARTER(event_date) AS Quarter,
+        CASE
+            WHEN country = 'United States' THEN 'America - US'
+            WHEN geo_region = 'Americas' THEN 'America - ROW'
+            WHEN geo_region NOT IN ('Unknown','APAC','EMEA','Americas') THEN 'Other'
+            ELSE geo_region
+        END AS region,
+        'Exchange' AS category,
+        SUM(revenue) AS Revenue,
+        SUM(cost) AS Cost
+    FROM BI.DRR_Exch_1P_Demand_Offset
+    WHERE event_date >= '2026-01-01'
+      AND event_date < current_date()
+    GROUP BY 1, 2, 3, 4
       ;;
   }
 

@@ -1,64 +1,127 @@
- view: yearly_consolidated_revenue_by_region_with_amobee_TEST {
+view: yearly_consolidated_revenue_by_region_with_amobee_TEST {
 
-    derived_table: {
-      sql:
-      -- Locked FY2025 and prior (from locked table)
-      SELECT Year, Quarter, region, category, Revenue, Cost
-      FROM bi.svc_LOCKED_2025_yearly_consolidated_revenue_by_region_with_amobee
-      ;;
-    }
+#     derived_table: {
+#       sql:
+#       -- Locked FY2025 and prior (from locked table)
+#       SELECT Year, Quarter, region, category, Revenue, Cost
+#       FROM bi.svc_LOCKED_2025_yearly_consolidated_revenue_by_region_with_amobee
+#       ;;
+#     }
 
-    measure: count {
-      type: count
-      drill_fields: [detail*]
-    }
+#     measure: count {
+#       type: count
+#       drill_fields: [detail*]
+#     }
 
-    dimension: year {
-      type: number
-      label: "Year"
-      sql: ${TABLE}.Year ;;
-    }
+#     dimension: year {
+#       type: number
+#       label: "Year"
+#       sql: ${TABLE}.Year ;;
+#     }
 
-    dimension: quarter {
-      type: number
-      label: "Quarter"
-      sql: ${TABLE}.Quarter ;;
-    }
+#     dimension: quarter {
+#       type: number
+#       label: "Quarter"
+#       sql: ${TABLE}.Quarter ;;
+#     }
 
-    dimension: region {
-      type: string
-      label: "Region"
-      sql: ${TABLE}.region ;;
-    }
+#     dimension: region {
+#       type: string
+#       label: "Region"
+#       sql: ${TABLE}.region ;;
+#     }
 
-    dimension: category {
-      type: string
-      label: "Category"
-      sql: ${TABLE}.category ;;
-    }
+#     dimension: category {
+#       type: string
+#       label: "Category"
+#       sql: ${TABLE}.category ;;
+#     }
 
-    measure: revenue {
-      type: sum
-      value_format: "$#,##0"
-      label: "Revenue"
-      sql: ${TABLE}.Revenue ;;
-    }
+#     measure: revenue {
+#       type: sum
+#       value_format: "$#,##0"
+#       label: "Revenue"
+#       sql: ${TABLE}.Revenue ;;
+#     }
 
-    measure: cost {
-      type: sum
-      value_format: "$#,##0"
-      label: "Cost"
-      sql: ${TABLE}.Cost ;;
-    }
+#     measure: cost {
+#       type: sum
+#       value_format: "$#,##0"
+#       label: "Cost"
+#       sql: ${TABLE}.Cost ;;
+#     }
 
-    set: detail {
-      fields: [
-        year,
-        quarter,
-        region,
-        category,
-        revenue,
-        cost
-      ]
-    }
-  }
+#     set: detail {
+#       fields: [
+#         year,
+#         quarter,
+#         region,
+#         category,
+#         revenue,
+#         cost
+#       ]
+#     }
+#   }
+derived_table: {
+  sql:
+    -- ============================================================
+    -- LOCKED FY2025 AND PRIOR (from locked table)
+    -- ============================================================
+    SELECT Year, Quarter, region, category, Revenue, Cost
+    FROM bi.svc_LOCKED_2025_yearly_consolidated_revenue_by_region_with_amobee
+
+    UNION ALL
+
+    -- ============================================================
+    -- LIVE FY2026+ : AMOBEE DSP
+    -- Cost distributed across regions using Exchange revenue weights
+    -- ============================================================
+    (WITH exchange_region_revenue AS (
+    SELECT
+    YEAR(event_date) AS year,
+    QUARTER(event_date) AS quarter,
+    CASE
+    WHEN country = 'United States' THEN 'America - US'
+    WHEN geo_region = 'Americas' THEN 'America - ROW'
+    WHEN geo_region NOT IN ('Unknown','APAC','EMEA','Americas') THEN 'Other'
+    ELSE geo_region
+    END AS region,
+    SUM(revenue) AS revenue
+    FROM BI.DRR_Exch_1P_Demand_Offset
+    WHERE event_date >= '2026-01-01'
+    AND event_date < current_date()
+    GROUP BY 1, 2, 3
+    ),
+    exchange_distribution AS (
+    SELECT
+    year, quarter, region,
+    revenue / NULLIF(SUM(revenue) OVER (PARTITION BY year, quarter), 0) AS region_pct
+    FROM exchange_region_revenue
+    ),
+    dsp_quarterly AS (
+    SELECT
+    YEAR(event_date) AS year,
+    QUARTER(event_date) AS quarter,
+    'DSP' AS category,
+    SUM(0) AS revenue,
+    SUM(Tremor_Cost * -1) AS cost
+    FROM BI.DRR_AmobeeDSP_Base_Metrics d
+    WHERE event_date >= '2026-01-01'
+    AND event_date < current_date()
+    AND ABS(tremor_cost) > 0
+    GROUP BY 1, 2, 3
+    )
+    SELECT
+    d.year,
+    d.quarter,
+    x.region,
+    d.category,
+    d.revenue,
+    d.cost * x.region_pct AS cost
+    FROM dsp_quarterly d
+    INNER JOIN exchange_distribution x
+    ON x.year = d.year AND x.quarter = d.quarter
+    ORDER BY d.quarter, x.region)
+    ;;
+}
+}

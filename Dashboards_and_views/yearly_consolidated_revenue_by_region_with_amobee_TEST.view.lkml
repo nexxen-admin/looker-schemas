@@ -75,7 +75,6 @@ view: yearly_consolidated_revenue_by_region_with_amobee_TEST {
 
       -- ============================================================
       -- LIVE FY2026+ : AMOBEE DSP
-      -- Cost distributed across regions using Exchange revenue weights
       -- ============================================================
       (WITH exchange_region_revenue AS (
       SELECT
@@ -128,7 +127,6 @@ view: yearly_consolidated_revenue_by_region_with_amobee_TEST {
 
       -- ============================================================
       -- LIVE FY2026+ : COUNTRY CONSOLIDATION
-      -- (Amobee DSP base records + Exchange records)
       -- ============================================================
       SELECT
       YEAR(event_date) AS Year,
@@ -157,7 +155,6 @@ view: yearly_consolidated_revenue_by_region_with_amobee_TEST {
 
       -- ============================================================
       -- LIVE FY2026+ : DAILY REVENUE REPORT
-      -- (Everything except Amobee DSP base / Exchange / Interco)
       -- Note: Americas → America - US in this block (different from Country Consolidation)
       -- ============================================================
       SELECT
@@ -206,7 +203,6 @@ view: yearly_consolidated_revenue_by_region_with_amobee_TEST {
 
     -- ============================================================
     -- LIVE FY2026+ : GOOGLE SOW
-    -- (Adjustment table — currently 0 rows for FY2026, expected per Derek)
     -- ============================================================
     SELECT
         YEAR(event_date) AS Year,
@@ -228,7 +224,6 @@ view: yearly_consolidated_revenue_by_region_with_amobee_TEST {
 
     -- ============================================================
     -- LIVE FY2026+ : DATA ALLOCATION MCvI
-    -- (Adjustment table — currently 0 rows for FY2026, expected per Derek)
     -- ============================================================
     SELECT
         YEAR(event_date) AS Year,

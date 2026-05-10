@@ -201,6 +201,28 @@ view: yearly_consolidated_revenue_by_region_with_amobee_TEST {
     WHERE event_date >= '2026-01-01'
       AND event_date < current_date()
     GROUP BY 1, 2, 3, 4
+
+    UNION ALL
+
+    -- ============================================================
+    -- LIVE FY2026+ : GOOGLE SOW
+    -- (Adjustment table — currently 0 rows for FY2026, expected per Derek)
+    -- ============================================================
+    SELECT
+        YEAR(event_date) AS Year,
+        QUARTER(event_date) AS Quarter,
+        CASE
+            WHEN region = 'Americas' THEN 'America - US'
+            WHEN region NOT IN ('Unknown','APAC','EMEA','Americas') THEN 'Other'
+            ELSE region
+        END AS region,
+        Subcategory AS category,
+        SUM(Revenue) AS Revenue,
+        SUM(cost) AS Cost
+    FROM BI.SVC_DRR_Google_SOW
+    WHERE event_date >= '2026-01-01'
+      AND event_date < current_date()
+    GROUP BY 1, 2, 3, 4
       ;;
   }
 

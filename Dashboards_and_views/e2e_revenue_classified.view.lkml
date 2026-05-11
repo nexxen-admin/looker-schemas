@@ -306,6 +306,90 @@ view: e2e_revenue_classified {
     END ;;
   }
 
+
+# ============================================================
+# --- Demand Classification PoP measures ---
+# ============================================================
+
+  measure: last_period_demand_net_revenue {
+    view_label: "PoP"
+    label: "Demand Last Period Net Revenue"
+    description: "Demand Total Net Revenue (1P Demand-1P Supply Net + 1P Demand-3P Supply Net) for the user-selected Last Period range."
+    type: number
+    sql: ${last_period_1p_demand_1p_supply_net}
+      + ${last_period_1p_demand_3p_supply_net} ;;
+    value_format: "$#,##0"
+  }
+
+  measure: previous_period_demand_net_revenue {
+    view_label: "PoP"
+    label: "Demand Previous Period Net Revenue"
+    description: "Demand Total Net Revenue (1P Demand-1P Supply Net + 1P Demand-3P Supply Net) for the user-selected Previous Period range."
+    type: number
+    sql: ${previous_period_1p_demand_1p_supply_net}
+      + ${previous_period_1p_demand_3p_supply_net} ;;
+    value_format: "$#,##0"
+  }
+
+  measure: demand_net_revenue_delta {
+    view_label: "PoP"
+    label: "Demand Net Revenue Delta (Last − Previous)"
+    description: "Demand Last Period Net Revenue minus Demand Previous Period Net Revenue. Green = increase, Red = decrease."
+    type: number
+    sql: ${last_period_demand_net_revenue} - ${previous_period_demand_net_revenue} ;;
+    value_format: "$#,##0"
+    html:
+    {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+      {% assign indicator = "red,▼" | split: ',' %}
+    {% else %}
+      {% assign indicator = "black,▬" | split: ',' %}
+    {% endif %}
+    <font color="{{indicator[0]}}">{{indicator[1]}} {{rendered_value}}</font> ;;
+  }
+
+# ============================================================
+# --- Supply Classification PoP measures ---
+# ============================================================
+
+  measure: last_period_supply_net_revenue {
+    view_label: "PoP"
+    label: "Supply Last Period Net Revenue"
+    description: "Supply Total Net Revenue (1P Demand-1P Supply Net + 1P Supply-3P Demand Net) for the user-selected Last Period range."
+    type: number
+    sql: ${last_period_1p_demand_1p_supply_net}
+      + ${last_period_1p_supply_3p_demand_net} ;;
+    value_format: "$#,##0"
+  }
+
+  measure: previous_period_supply_net_revenue {
+    view_label: "PoP"
+    label: "Supply Previous Period Net Revenue"
+    description: "Supply Total Net Revenue (1P Demand-1P Supply Net + 1P Supply-3P Demand Net) for the user-selected Previous Period range."
+    type: number
+    sql: ${previous_period_1p_demand_1p_supply_net}
+      + ${previous_period_1p_supply_3p_demand_net} ;;
+    value_format: "$#,##0"
+  }
+
+  measure: supply_net_revenue_delta {
+    view_label: "PoP"
+    label: "Supply Net Revenue Delta (Last − Previous)"
+    description: "Supply Last Period Net Revenue minus Supply Previous Period Net Revenue. Green = increase, Red = decrease."
+    type: number
+    sql: ${last_period_supply_net_revenue} - ${previous_period_supply_net_revenue} ;;
+    value_format: "$#,##0"
+    html:
+    {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+      {% assign indicator = "red,▼" | split: ',' %}
+    {% else %}
+      {% assign indicator = "black,▬" | split: ',' %}
+    {% endif %}
+    <font color="{{indicator[0]}}">{{indicator[1]}} {{rendered_value}}</font> ;;
+  }
 # --- Per-classification filtered sums (hidden) ---
 # These are the building blocks. Reused by Phase 5 trend view.
 
@@ -394,6 +478,33 @@ view: e2e_revenue_classified {
     <font color="{{indicator[0]}}">{{indicator[1]}} {{rendered_value}}</font> ;;
   }
 
+
+# --- PoP Date Order Validation ---
+
+# Returns 1 when Previous Period is later than Last Period (invalid input).
+# Used by a warning tile on the PoP dashboards.
+  measure: pop_inverted_dates_flag {
+    view_label: "PoP"
+    label: "PoP Period Validation"
+    description: "1 when Previous Period start is later than Last Period start (invalid setup). 0 otherwise."
+    type: number
+    sql:
+    {% if last_period_range._is_filtered and previous_period_range._is_filtered %}
+      CASE
+        WHEN CAST({% date_start previous_period_range %} AS DATE) > CAST({% date_start last_period_range %} AS DATE)
+        THEN 1
+        ELSE 0
+      END
+    {% else %}
+      0
+    {% endif %} ;;
+    html:
+    {% if value > 0 %}
+    <div style="background-color: #fee2e2; border: 1px solid #dc2626; border-radius: 4px; padding: 6px 12px; color: #991b1b; font-size: 13px; text-align: center; font-family: 'Open Sans', sans-serif;">
+    ⚠️ <strong>Invalid period selection:</strong> "Previous Period" cannot be later than "Last Period". Please swap your filter values.
+    </div>
+    {% endif %} ;;
+  }
 # ============================================================
 # --- Trend View — 12-month rolling per customer ---
 # ============================================================

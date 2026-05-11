@@ -8,10 +8,10 @@ Select
           upper(trim(Publisher)) as Publisher,
       case
         when bm.buyer_new = 'DELETE' then 'DELETE'
-        when Billing_agency ilike 'client direct%'
+        when trm.Billing_Agency ILIKE 'client direct%'
         and bm.buyer_new is NULL
-            Then upper(trm.advertiser_name)
-        Else upper(trm.billing_agency)
+        Then upper(trm.advertiser_name)
+        Else upper(trm.Billing_Agency)
       end as Buyer,
           Upper(trim(Advertiser_Name)) as Advertiser,
           trim(upper(Device_Type)) as Device_Type,
@@ -32,9 +32,9 @@ Select
           to_char(Event_Month, 'mm') as month,
           to_char(Event_Month, 'yyyy') as year,
           upper(trim(Publisher)) as Publisher,
-          case when {% parameter mapped_unmapped %} = 'mapped' then upper(Coalesce(bm.buyer_new,trm.billing_agency))
-                when {% parameter mapped_unmapped %} = 'unmapped' then upper(trm.billing_agency) end as Buyer,
-          Upper(trim(Advertiser_Name)) as Advertiser,
+          case when {% parameter mapped_unmapped %} = 'mapped' then upper(Coalesce(bm.buyer_new,trm.Buyer))
+                when {% parameter mapped_unmapped %} = 'unmapped' then upper(trm.Buyer) end as Buyer,
+          Upper(trim(Advertiser)) as Advertiser,
           trim(upper(Device_Type)) as Device_Type,
           trim(upper(Impression_Type)) as Impression_Type,
           sum(Exchange_Revenue) as Exchange_Revenue,
@@ -44,7 +44,7 @@ Select
           sum(E2E_Revenue) as E2E_Revenue,
           sum(E2E_Cost) as E2E_Cost
       From pre_agg trm
-        left outer join BI.SVC_Buyer_Mapping_Master bm on upper(bm.buyer_original) = upper(trm.Billing_Agency)
+        left outer join BI.SVC_Buyer_Mapping_Master bm on upper(bm.buyer_original) = upper(trm.Buyer)
       Where bm.buyer_new != 'DELETE'
       Group by 1, 2, 3, 4, 5, 6,7,8
        ;;

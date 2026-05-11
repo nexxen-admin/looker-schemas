@@ -500,10 +500,9 @@ view: e2e_revenue_classified {
     {% endif %} ;;
     html:
     {% if value > 0 %}
-      <div style="background-color: #fee2e2; border: 2px solid #dc2626; border-radius: 6px; padding: 16px; color: #991b1b; font-weight: bold; font-size: 15px; text-align: center; font-family: 'Open Sans', sans-serif;">
-        ⚠️ Invalid period selection<br>
-        <span style="font-weight: normal; font-size: 13px;">"Previous Period" cannot be later than "Last Period". Please swap your filter values.</span>
-      </div>
+    <div style="background-color: #fee2e2; border: 1px solid #dc2626; border-radius: 4px; padding: 6px 12px; color: #991b1b; font-size: 13px; text-align: center; font-family: 'Open Sans', sans-serif;">
+    ⚠️ <strong>Invalid period selection:</strong> "Previous Period" cannot be later than "Last Period". Please swap your filter values.
+    </div>
     {% endif %} ;;
   }
 # ============================================================

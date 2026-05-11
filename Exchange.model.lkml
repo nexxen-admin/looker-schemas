@@ -61,6 +61,10 @@ explore: ani_view_data {
   required_access_grants: [can_view_aniview]
 }
 
+explore: dim_sdk_fixed_fees {
+  hidden: yes
+}
+
 explore: impression_r {
   label: "Impression Raw Data"
   hidden: yes

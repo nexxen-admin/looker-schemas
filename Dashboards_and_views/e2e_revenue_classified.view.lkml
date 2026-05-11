@@ -306,6 +306,90 @@ view: e2e_revenue_classified {
     END ;;
   }
 
+
+# ============================================================
+# --- Demand Classification PoP measures ---
+# ============================================================
+
+  measure: last_period_demand_net_revenue {
+    view_label: "PoP"
+    label: "Demand Last Period Net Revenue"
+    description: "Demand Total Net Revenue (1P Demand-1P Supply Net + 1P Demand-3P Supply Net) for the user-selected Last Period range."
+    type: number
+    sql: ${last_period_1p_demand_1p_supply_net}
+      + ${last_period_1p_demand_3p_supply_net} ;;
+    value_format: "$#,##0"
+  }
+
+  measure: previous_period_demand_net_revenue {
+    view_label: "PoP"
+    label: "Demand Previous Period Net Revenue"
+    description: "Demand Total Net Revenue (1P Demand-1P Supply Net + 1P Demand-3P Supply Net) for the user-selected Previous Period range."
+    type: number
+    sql: ${previous_period_1p_demand_1p_supply_net}
+      + ${previous_period_1p_demand_3p_supply_net} ;;
+    value_format: "$#,##0"
+  }
+
+  measure: demand_net_revenue_delta {
+    view_label: "PoP"
+    label: "Demand Net Revenue Delta (Last − Previous)"
+    description: "Demand Last Period Net Revenue minus Demand Previous Period Net Revenue. Green = increase, Red = decrease."
+    type: number
+    sql: ${last_period_demand_net_revenue} - ${previous_period_demand_net_revenue} ;;
+    value_format: "$#,##0"
+    html:
+    {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+      {% assign indicator = "red,▼" | split: ',' %}
+    {% else %}
+      {% assign indicator = "black,▬" | split: ',' %}
+    {% endif %}
+    <font color="{{indicator[0]}}">{{indicator[1]}} {{rendered_value}}</font> ;;
+  }
+
+# ============================================================
+# --- Supply Classification PoP measures ---
+# ============================================================
+
+  measure: last_period_supply_net_revenue {
+    view_label: "PoP"
+    label: "Supply Last Period Net Revenue"
+    description: "Supply Total Net Revenue (1P Demand-1P Supply Net + 1P Supply-3P Demand Net) for the user-selected Last Period range."
+    type: number
+    sql: ${last_period_1p_demand_1p_supply_net}
+      + ${last_period_1p_supply_3p_demand_net} ;;
+    value_format: "$#,##0"
+  }
+
+  measure: previous_period_supply_net_revenue {
+    view_label: "PoP"
+    label: "Supply Previous Period Net Revenue"
+    description: "Supply Total Net Revenue (1P Demand-1P Supply Net + 1P Supply-3P Demand Net) for the user-selected Previous Period range."
+    type: number
+    sql: ${previous_period_1p_demand_1p_supply_net}
+      + ${previous_period_1p_supply_3p_demand_net} ;;
+    value_format: "$#,##0"
+  }
+
+  measure: supply_net_revenue_delta {
+    view_label: "PoP"
+    label: "Supply Net Revenue Delta (Last − Previous)"
+    description: "Supply Last Period Net Revenue minus Supply Previous Period Net Revenue. Green = increase, Red = decrease."
+    type: number
+    sql: ${last_period_supply_net_revenue} - ${previous_period_supply_net_revenue} ;;
+    value_format: "$#,##0"
+    html:
+    {% if value > 0 %}
+      {% assign indicator = "green,▲" | split: ',' %}
+    {% elsif value < 0 %}
+      {% assign indicator = "red,▼" | split: ',' %}
+    {% else %}
+      {% assign indicator = "black,▬" | split: ',' %}
+    {% endif %}
+    <font color="{{indicator[0]}}">{{indicator[1]}} {{rendered_value}}</font> ;;
+  }
 # --- Per-classification filtered sums (hidden) ---
 # These are the building blocks. Reused by Phase 5 trend view.
 

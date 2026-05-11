@@ -478,6 +478,34 @@ view: e2e_revenue_classified {
     <font color="{{indicator[0]}}">{{indicator[1]}} {{rendered_value}}</font> ;;
   }
 
+
+# --- PoP Date Order Validation ---
+
+# Returns 1 when Previous Period is later than Last Period (invalid input).
+# Used by a warning tile on the PoP dashboards.
+  measure: pop_inverted_dates_flag {
+    view_label: "PoP"
+    label: "PoP Period Validation"
+    description: "1 when Previous Period start is later than Last Period start (invalid setup). 0 otherwise."
+    type: number
+    sql:
+    {% if last_period_range._is_filtered and previous_period_range._is_filtered %}
+      CASE
+        WHEN CAST({% date_start previous_period_range %} AS DATE) > CAST({% date_start last_period_range %} AS DATE)
+        THEN 1
+        ELSE 0
+      END
+    {% else %}
+      0
+    {% endif %} ;;
+    html:
+    {% if value > 0 %}
+      <div style="background-color: #fee2e2; border: 2px solid #dc2626; border-radius: 6px; padding: 16px; color: #991b1b; font-weight: bold; font-size: 15px; text-align: center; font-family: 'Open Sans', sans-serif;">
+        ⚠️ Invalid period selection<br>
+        <span style="font-weight: normal; font-size: 13px;">"Previous Period" cannot be later than "Last Period". Please swap your filter values.</span>
+      </div>
+    {% endif %} ;;
+  }
 # ============================================================
 # --- Trend View — 12-month rolling per customer ---
 # ============================================================

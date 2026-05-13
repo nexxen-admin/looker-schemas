@@ -37,3 +37,7 @@ explore: ssot_v   {
   required_access_grants: [can_view_finance_reports]
   # label: "Monthly Strategic Targets"
 }
+
+explore: ssot_drr_v {
+  required_access_grants: [can_view_finance_reports]
+}

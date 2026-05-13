@@ -493,7 +493,7 @@ view: e2e_revenue_classified {
   measure: pop_inverted_dates_flag {
     view_label: "PoP"
     label: "PoP Period Validation"
-    description: "1 when Previous Period start is later than Last Period start (invalid setup). 0 otherwise."
+    description: "1 when Previous Period start is later than Current Period start (invalid setup). 0 otherwise."
     type: number
     sql:
     {% if last_period_range._is_filtered and previous_period_range._is_filtered %}
@@ -508,7 +508,7 @@ view: e2e_revenue_classified {
     html:
     {% if value > 0 %}
     <div style="background-color: #fee2e2; border: 1px solid #dc2626; border-radius: 4px; padding: 6px 12px; color: #991b1b; font-size: 13px; text-align: center; font-family: 'Open Sans', sans-serif;">
-    ⚠️ <strong>Invalid period selection:</strong> "Previous Period" cannot be later than "Last Period". Please swap your filter values.
+    ⚠️ <strong>Invalid period selection:</strong> "Previous Period" cannot be later than "Current Period". Please swap your filter values.
     </div>
     {% endif %} ;;
   }

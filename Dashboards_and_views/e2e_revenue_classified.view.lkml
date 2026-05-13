@@ -4,7 +4,14 @@ view: e2e_revenue_classified {
     sql:
       SELECT
         tc.event_month,
-        UPPER(tc.Billing_Agency) AS buyer,
+        /*UPPER(tc.Billing_Agency) AS buyer,*/
+        CASE
+          WHEN bm.buyer_new = 'DELETE' THEN 'DELETE'
+          WHEN tc.Billing_Agency ILIKE 'client direct%'
+          AND bm.buyer_new IS NULL
+          THEN UPPER(tc.advertiser_name)
+          ELSE UPPER(tc.Billing_Agency)
+        END AS buyer,
         bm.buyer_new AS mapped_buyer,
         tc.device_type,
         tc.impression_type,

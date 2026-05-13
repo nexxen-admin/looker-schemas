@@ -385,7 +385,7 @@ explore: extend_Inbound_Exchange {
   join: rx_dim_supply_publisher_deal_r {
     type: left_outer
     view_label: "supply publisher deal"
-    sql_on: ${rx_dim_supply_publisher_deal_r.external_deal_id}=${dim_deal.deal_id} ;;
+    sql_on: lower(${rx_dim_supply_publisher_deal_r.external_deal_id}) = lower(${dim_deal.deal_id}) ;;
     relationship: many_to_one
   }
 
@@ -770,7 +770,7 @@ explore: fact_ad_daily_agg{
   join: rx_dim_supply_publisher_deal_r {
     type: left_outer
     view_label: "supply publisher deal"
-    sql_on: ${rx_dim_supply_publisher_deal_r.external_deal_id}=${dim_deal.deal_id} ;;
+    sql_on: lower(${rx_dim_supply_publisher_deal_r.external_deal_id}) = lower(${dim_deal.deal_id}) ;;
     relationship: many_to_one
 
 

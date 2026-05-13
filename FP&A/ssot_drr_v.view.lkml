@@ -90,6 +90,7 @@ view: ssot_drr_v {
   measure: net_revenue_perc {
     type: number
     sql: ${net_revenue}/${revenue} ;;
+    label: "Net %"
     value_format: "0.0%"
   }
 

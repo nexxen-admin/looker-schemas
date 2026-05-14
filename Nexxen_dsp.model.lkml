@@ -748,6 +748,17 @@ explore: dsp_model_readiness {
 
 }
 
+explore: media_shift_top_publishers {
+  required_access_grants: [can_view_all_tremor]
+  label: "Media Shift - Top Publishers"
+  view_name: media_shift_top_publishers
+
+  sql_always_where:
+    ${media_shift_top_publishers.rank} <= {% parameter media_shift_top_publishers.top_x %}
+  ;;
+}
+
+
 view: +fact_nexxen_dsp {
   dimension: seller_name {
     label: "Publisher Name"

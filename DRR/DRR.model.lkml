@@ -34,3 +34,8 @@ explore: DRR_DQ_flags {
   view_name: drr_dq_flags
   required_access_grants: [can_view_all_tremor]
 }
+
+explore: drr_daily_revenue_report_base {
+  label: "Daily Revenue Report - Base Table"
+  required_access_grants: [can_view_all_tremor]
+}

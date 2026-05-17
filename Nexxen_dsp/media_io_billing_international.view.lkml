@@ -25,7 +25,7 @@ view: media_io_billing_international {
   }
   dimension: adj_3p_cost {
     type: number
-    label: "3P Cost Override"
+    label: "Adj 3p Cost"
     description: "Manually corrected 3P Cost , entry from Ad Ops override table"
     sql: ${TABLE}.Adj_3P_Cost ;;
   }
@@ -267,7 +267,7 @@ view: media_io_billing_international {
   }
 
   dimension: margin_amount_percent_USD {
-    label: "Margin Amount Percent USD"
+    label: "Margin Amount Precent USD"
     type: number
     sql: ${TABLE}.Margin_amount_percent_USD ;;
   }

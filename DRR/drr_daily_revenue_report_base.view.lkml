@@ -18,7 +18,7 @@ view: drr_daily_revenue_report_base {
   }
   dimension_group: event {
     type: time
-    timeframes: [raw, date, week, month, quarter, year]
+    timeframes: [raw, date, day_of_week, week, month, quarter, year]
     convert_tz: no
     datatype: date
     sql: ${TABLE}.Event_Date ;;

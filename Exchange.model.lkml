@@ -96,6 +96,12 @@ explore: appsflyer_agg{
   required_access_grants: [can_view_Taptica]
 }
 
+explore: buyer_mapping_latest {
+  label: "FP&A Buyer Mapping"
+  required_access_grants: [can_view_all_tremor]
+  hidden: yes
+}
+
 
 
 explore: publishers_report_monthly_for_finance {

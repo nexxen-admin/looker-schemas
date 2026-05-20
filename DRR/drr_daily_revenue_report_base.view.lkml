@@ -215,6 +215,8 @@ view: drr_daily_revenue_report_base {
     sql:  ${TABLE}.Revenue ;;
     value_format: "$#,##0.00"
     filters: [period_filtered_measures: "this", mtd_only: "Yes"]
+    html:
+    <a style="color: black; text-decoration:none;" href="https://tremor.cloud.looker.com/dashboards/4385">{{rendered_value}} </a>;;
   }
 
   measure: mtd_revenue_last_month{
@@ -430,6 +432,27 @@ view: drr_daily_revenue_report_base {
     {% endif %}
     </font>
     {{rendered_value}} vs same period LY ;;
+  }
+
+  measure: mtd_revenue_comparison_all {
+    type: count
+    view_label: "PoP"
+    group_label: "MTD Revenue"
+    label: "All in one"
+    html:
+           <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
+                <a style="color: black; text-decoration:none;" href="https://tremor.cloud.looker.com/dashboards/4385">Revenue </a>
+              <div style=" line-height: 15px; font-size: 23px; font-weight: 500; margin-top: 20px;">
+                {{ mtd_revenue._rendered_value }}
+              </div>
+              <div style=" line-height: 15px; font-size: 15px; color:  #BFBFBF; margin-top: 15px;">
+                {{ mtd_revenue_comparison_previous_month._rendered_value }} vs previous month
+              </div>
+               <div style=" line-height: 15px; font-size: 15px; color:  #BFBFBF; margin-top: 15px;">
+                {{ mtd_revenue_comparison_previous_year._rendered_value }}  vs same period LY
+              </div>
+
+            </div>;;
   }
 
 

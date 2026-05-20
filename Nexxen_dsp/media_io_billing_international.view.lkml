@@ -64,12 +64,19 @@ view: media_io_billing_international {
     sql: ${TABLE}.adjustment_billable_video_completes ;;
     value_format: "#,##0"
   }
+  dimension: advertiser_invoice_override {
+    type: number
+    sql: ${TABLE}.advertiser_invoice_override ;;
+    value_format: "#,##0.00"
+  }
+
   dimension: adv_invoice {
     type: number
     description: "Advertisrr invoice amount (cost) from DSP"
     sql: ${TABLE}.adv_invoice ;;
     value_format: "#,##0.00"
   }
+
   dimension: billable_percent_25_complete_events_after_finance_adj {
     type: number
     description: "Manually adjusted 25% video completions, From Finance manual adjustment upload"

@@ -66,6 +66,8 @@ view: media_io_billing_international {
   }
   dimension: advertiser_invoice_override {
     type: number
+    label: "Adv Invoice Ad Ops Override"
+    description: "Manually corrected Adv Invoice , entry from Ad Ops override table"
     sql: ${TABLE}.advertiser_invoice_override ;;
     value_format: "#,##0.00"
   }

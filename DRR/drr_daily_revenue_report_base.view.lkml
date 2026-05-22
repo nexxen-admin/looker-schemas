@@ -284,6 +284,8 @@ view: drr_daily_revenue_report_base {
     type: number
     sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_revenue_complete_month} ELSE ${mtd_revenue} END ;;
     value_format: "$#,##0.00"
+    html:
+    <a style="color: black; text-decoration:none;" href="https://tremor.cloud.looker.com/dashboards/4385">{{rendered_value}} </a>;;
   }
 
   measure: mtd_revenue_last_month_final {
@@ -346,8 +348,6 @@ view: drr_daily_revenue_report_base {
     sql:  ${TABLE}.Revenue -  ${TABLE}.Cost;;
     value_format: "$#,##0.00"
     filters: [period_filtered_measures: "this"]
-    html:
-    <a style="color: black; text-decoration:none;" href="https://tremor.cloud.looker.com/dashboards/4385">{{rendered_value}} </a>;;
   }
 
   measure: mtd_net_revenue_last_month_complete_month{
@@ -437,8 +437,6 @@ view: drr_daily_revenue_report_base {
     type: number
     sql:  ${mtd_net_revenue_final}/${mtd_revenue_final};;
     value_format: "0.00%"
-    html:
-    <a style="color: black; text-decoration:none;" href="https://tremor.cloud.looker.com/dashboards/4385">{{rendered_value}} </a>;;
   }
 
   measure: mtd_margin_last_month_complete_month{
@@ -468,6 +466,8 @@ view: drr_daily_revenue_report_base {
     type: number
     sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_margin_complete_month} ELSE ${mtd_margin} END ;;
     value_format: "0.00%"
+    html:
+    <a style="color: black; text-decoration:none;" href="https://tremor.cloud.looker.com/dashboards/4407">{{rendered_value}} </a>;;
   }
 
   measure: mtd_margin_last_month_final {

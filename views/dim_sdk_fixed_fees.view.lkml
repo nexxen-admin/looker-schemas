@@ -2,16 +2,44 @@ view: dim_sdk_fixed_fees {
 
   derived_table: {
     sql:
-      WITH quarterly AS (
+      WITH monthly AS (
+        SELECT
+            dim_traffic_source.TS_Display_Name  AS "traffic_source",
+            dim_date.Month_Number  AS "month_number",
+            dim_date.Quarter_Number  AS "quarter_number",
+            DATEDIFF('day', TRUNC(CURRENT_DATE(), 'Q'), CURRENT_DATE()) AS "days_passed_in_quarter",
+            CASE WHEN MONTH(dim_date.Date_Key) IN (1,2, 3) THEN 90
+                WHEN MONTH(dim_date.Date_Key) IN (4, 5, 6) THEN 91
+                ELSE 92 END AS "quarter_length",
+            dim_date.Year_Number  AS "year_number",
+             MAX(dim_date.Date_Key) as "max_date",
+            CASE WHEN  dim_traffic_source.TS_Display_Name='Unity SSP' AND  dim_date.Month_Number IN (4, 5, 6) THEN 100000
+                  WHEN  dim_traffic_source.TS_Display_Name='Unity SSP' AND  dim_date.Month_Number IN (7, 8, 9) THEN 300000
+                  WHEN  dim_traffic_source.TS_Display_Name='Unity SSP' AND  dim_date.Month_Number IN (10, 11, 12) THEN 500000
+                WHEN  dim_traffic_source.TS_Display_Name='BidMachine' THEN 150000
+                WHEN  dim_traffic_source.TS_Display_Name='Verve ORTB' THEN 85000
+                ELSE 0 END as monthly_fee,
+            ROW_NUMBER() OVER (PARTITION BY dim_traffic_source.TS_Display_Name, dim_date.Year_Number, dim_date.Quarter_Number ORDER BY dim_date.Month_Number DESC) AS rn_q,
+            ROW_NUMBER() OVER (PARTITION BY dim_traffic_source.TS_Display_Name, dim_date.Year_Number ORDER BY dim_date.Month_Number DESC) AS rn_y
+        FROM BI_New.V_Fact_Ad_Daily_Agg  AS fact_ad_daily_agg
+        INNER JOIN BI_New.V_Dim_Date  AS dim_date ON dim_date.Date_Key=fact_ad_daily_agg.Date_Key
+        INNER JOIN BI_New.v_Dim_Placement  AS dim_placement ON dim_placement.Placement_Key=fact_ad_daily_agg.Placement_Key
+        INNER JOIN BI_New.V_Dim_Publisher_Traffic_Source  AS dim_publisher_traffic_source ON dim_publisher_traffic_source.PUB_TS_Key=dim_placement.PUB_TS_Key
+        INNER JOIN BI_New.V_Dim_Traffic_Source  AS dim_traffic_source ON dim_traffic_source.Ts_Key=dim_publisher_traffic_source.TS_Key
+        INNER JOIN BI_New.V_Dim_Publisher_SSP  AS dim_publisher_ssp ON dim_publisher_ssp.PUB_SSP_Key=fact_ad_daily_agg.PUB_SSP_Key
+        INNER JOIN BI_New.V_Dim_Publisher  AS dim_publisher ON dim_publisher.PUB_Key=dim_publisher_ssp.PUB_Key
+        WHERE YEAR(dim_date.Date_Key)=2026
+          AND (dim_traffic_source.TS_Display_Name ) IN ('BidMachine', 'Verve ORTB', 'Unity SSP')
+          AND ((dim_publisher.PUB_Name) <> 'verve group europe gmbh'
+              AND (dim_publisher.PUB_Name) <> 'smaato, inc ortb'
+              AND (dim_publisher.PUB_Name) <> 'bidmachine inc' AND (dim_publisher.PUB_Name) <> 'unity technologies sf' OR (dim_publisher.PUB_Name) IS NULL)
+        GROUP BY
+            1, 2, 3, 4, 5, 6, 8),
+     quarterly AS (
     SELECT
         dim_traffic_source.TS_Display_Name  AS "traffic_source",
-        DATEDIFF('day', TRUNC(CURRENT_DATE(), 'Q'), CURRENT_DATE()) AS "days_passed_in_quarter",
-        CASE WHEN MONTH(dim_date.Date_Key) IN (1,2, 3) THEN 90
-            WHEN MONTH(dim_date.Date_Key) IN (4, 5, 6) THEN 91
-            ELSE 92 END AS "quarter_length",
         dim_date.Quarter_Number  AS "quarter_number",
         dim_date.Year_Number  AS "year_number",
-        MAX(dim_date.Date_Key) AS "max_date",
         COALESCE(SUM(fact_ad_daily_agg.sum_of_cogs ), 0) AS "quarter_cogs",
         COALESCE(SUM(fact_ad_daily_agg.sum_of_revenue),0) AS "quarter_revenue",
         COALESCE(SUM(fact_ad_daily_agg.sum_of_revenue), 0) + COALESCE(SUM(fact_ad_daily_agg.sum_of_platform_fee ), 0) - COALESCE(SUM(fact_ad_daily_agg.sum_of_Traffic_Source_Fee ), 0) + COALESCE(SUM(fact_ad_daily_agg.sum_of_platform_cost  ), 0) + COALESCE(SUM(fact_ad_daily_agg.sum_of_pub_platform_fee ), 0) - COALESCE(SUM(CASE
@@ -144,9 +172,9 @@ view: dim_sdk_fixed_fees {
       AND (dim_traffic_source.TS_Display_Name ) IN ('BidMachine',  'Unity SSP', 'Verve ORTB')
       AND ((dim_publisher.PUB_Name) <> 'verve group europe gmbh'
           AND (dim_publisher.PUB_Name) <> 'smaato, inc ortb'
-          AND (dim_publisher.PUB_Name) <> 'bidmachine inc' OR (dim_publisher.PUB_Name) IS NULL)
+          AND (dim_publisher.PUB_Name) <> 'bidmachine inc' AND (dim_publisher.PUB_Name) <> 'unity technologies sf' OR (dim_publisher.PUB_Name) IS NULL)
     GROUP BY
-        1, 2, 3, 4, 5),
+        1, 2, 3),
  yearly AS (
 SELECT
     dim_traffic_source.TS_Display_Name  AS "traffic_source",
@@ -163,28 +191,24 @@ WHERE YEAR(dim_date.Date_Key)=YEAR(CURRENT_DATE())
   AND (dim_traffic_source.TS_Display_Name ) = 'Verve ORTB'
   AND ((dim_publisher.PUB_Name) <> 'verve group europe gmbh'
       AND (dim_publisher.PUB_Name) <> 'smaato, inc ortb'
-      AND (dim_publisher.PUB_Name) <> 'bidmachine inc' OR (dim_publisher.PUB_Name) IS NULL)
+      AND (dim_publisher.PUB_Name) <> 'bidmachine inc' AND (dim_publisher.PUB_Name) <> 'unity technologies sf' OR (dim_publisher.PUB_Name) IS NULL)
 GROUP BY
     1, 2)
 
-SELECT quarterly.traffic_source,
+SELECT monthly.traffic_source,
         quarterly.quarter_number,
-        quarterly.quarter_length,
-        quarterly.days_passed_in_quarter,
+        monthly.quarter_length,
+        monthly.days_passed_in_quarter,
         quarterly.year_number,
-        quarterly.max_date,
+        monthly.max_date,
         CURRENT_DATE() AS "current_date",
-        CASE WHEN  quarterly.traffic_source='Unity SSP' AND  quarterly.quarter_number=2 THEN 300000
-            WHEN  quarterly.traffic_source='Unity SSP' AND  quarterly.quarter_number=3 THEN 900000
-            WHEN  quarterly.traffic_source='Unity SSP' AND  quarterly.quarter_number=4 THEN 1500000
-            WHEN  quarterly.traffic_source='BidMachine' THEN 450000
-            WHEN  quarterly.traffic_source='Verve ORTB' THEN 255000
-        ELSE 0 END  AS "sdk_fixed_monthly_fee",
+        monthly.monthly_fee AS sdk_fixed_monthly_fee,
         quarter_cogs,
         quarter_revenue,
         quarter_net_revenue_post_fees,
         year_cogs
-FROM quarterly LEFT JOIN yearly ON quarterly.traffic_source=yearly.traffic_source AND quarterly.year_number=yearly.year_number;;
+FROM monthly LEFT JOIN quarterly ON monthly.traffic_source=quarterly.traffic_source AND monthly.quarter_number=quarterly.quarter_number AND monthly.rn_q=1
+        LEFT JOIN yearly ON monthly.traffic_source=yearly.traffic_source AND monthly.year_number=yearly.year_number AND monthly.rn_y=1;;
   }
 
   dimension: max_date {

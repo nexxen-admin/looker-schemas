@@ -208,6 +208,7 @@ view: drr_daily_revenue_report_base {
 
 
   measure: mtd_revenue {
+    hidden: yes
     view_label: "PoP"
     group_label: "MTD Revenue"
     label: "MTD Revenue - Current Month"
@@ -220,6 +221,7 @@ view: drr_daily_revenue_report_base {
   }
 
   measure: mtd_revenue_last_month{
+    hidden: yes
     view_label: "PoP"
     group_label: "MTD Revenue"
     label: "MTD Revenue - Previous Month"
@@ -230,6 +232,7 @@ view: drr_daily_revenue_report_base {
   }
 
   measure: mtd_revenue_last_year{
+    hidden: yes
     view_label: "PoP"
     group_label: "MTD Revenue"
     label: "MTD Revenue - Previous Year"
@@ -239,7 +242,70 @@ view: drr_daily_revenue_report_base {
     filters: [period_filtered_measures: "previous_year", mtd_only: "Yes"]
   }
 
+  measure: mtd_revenue_complete_month {
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Revenue"
+    label: "MTD Revenue - Current Month"
+    type: sum
+    sql:  ${TABLE}.Revenue ;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "this"]
+    html:
+    <a style="color: black; text-decoration:none;" href="https://tremor.cloud.looker.com/dashboards/4385">{{rendered_value}} </a>;;
+  }
+
+  measure: mtd_revenue_last_month_complete_month{
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Revenue"
+    label: "MTD Revenue - Previous Month"
+    type: sum
+    sql: ${TABLE}.Revenue ;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "previous_month"]
+  }
+
+  measure: mtd_revenue_last_year_complete_month{
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Revenue"
+    label: "MTD Revenue - Previous Year"
+    type: sum
+    sql: ${TABLE}.Revenue ;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "previous_year"]
+  }
+
+  measure: mtd_revenue_final {
+    view_label: "PoP"
+    group_label: "MTD Revenue"
+    label: "MTD Revenue - Current Month"
+    type: number
+    sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_revenue_complete_month} ELSE ${mtd_revenue} END ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: mtd_revenue_last_month_final {
+    view_label: "PoP"
+    group_label: "MTD Revenue"
+    label: "MTD Revenue - Previous Month"
+    type: number
+    sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_revenue_last_month_complete_month} ELSE ${mtd_revenue_last_month} END ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: mtd_revenue_last_year_final {
+    view_label: "PoP"
+    group_label: "MTD Revenue"
+    label: "MTD Revenue - Previous Year"
+    type: number
+    sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_revenue_last_year_complete_month} ELSE ${mtd_revenue_last_year} END ;;
+    value_format: "$#,##0.00"
+  }
+
   measure: mtd_net_revenue {
+    hidden: yes
     view_label: "PoP"
     group_label: "MTD Net Revenue"
     label: "MTD Net Revenue - Current Month"
@@ -250,6 +316,7 @@ view: drr_daily_revenue_report_base {
   }
 
   measure: mtd_net_revenue_last_month{
+    hidden: yes
     view_label: "PoP"
     group_label: "MTD Net Revenue"
     label: "MTD Net Revenue - Previous Month"
@@ -260,6 +327,7 @@ view: drr_daily_revenue_report_base {
   }
 
   measure: mtd_net_revenue_last_year{
+    hidden: yes
     view_label: "PoP"
     group_label: "MTD Net Revenue"
     label: "MTD Net Revenue - Previous Year"
@@ -269,7 +337,70 @@ view: drr_daily_revenue_report_base {
     filters: [period_filtered_measures: "previous_year", mtd_only: "Yes"]
   }
 
+  measure: mtd_net_revenue_complete_month {
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Net Revenue"
+    label: "MTD Net Revenue - Current Month"
+    type: sum
+    sql:  ${TABLE}.Revenue -  ${TABLE}.Cost;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "this"]
+    html:
+    <a style="color: black; text-decoration:none;" href="https://tremor.cloud.looker.com/dashboards/4385">{{rendered_value}} </a>;;
+  }
+
+  measure: mtd_net_revenue_last_month_complete_month{
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Net Revenue"
+    label: "MTD Net Revenue - Previous Month"
+    type: sum
+    sql: ${TABLE}.Revenue -  ${TABLE}.Cost;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "previous_month"]
+  }
+
+  measure: mtd_net_revenue_last_year_complete_month{
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Net Revenue"
+    label: "MTD Net Revenue - Previous Year"
+    type: sum
+    sql: ${TABLE}.Revenue -  ${TABLE}.Cost ;;
+    value_format: "$#,##0.00"
+    filters: [period_filtered_measures: "previous_year"]
+  }
+
+  measure: mtd_net_revenue_final {
+    view_label: "PoP"
+    group_label: "MTD Net Revenue"
+    label: "MTD Net Revenue - Current Month"
+    type: number
+    sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_net_revenue_complete_month} ELSE ${mtd_net_revenue} END ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: mtd_net_revenue_last_month_final {
+    view_label: "PoP"
+    group_label: "MTD Net Revenue"
+    label: "MTD Net Revenue - Previous Month"
+    type: number
+    sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_net_revenue_last_month_complete_month} ELSE ${mtd_net_revenue_last_month} END ;;
+    value_format: "$#,##0.00"
+  }
+
+  measure: mtd_net_revenue_last_year_final {
+    view_label: "PoP"
+    group_label: "MTD Net Revenue"
+    label: "MTD Net Revenue - Previous Year"
+    type: number
+    sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_net_revenue_last_year_complete_month} ELSE ${mtd_net_revenue_last_year} END ;;
+    value_format: "$#,##0.00"
+  }
+
   measure: mtd_margin {
+    hidden: yes
     view_label: "PoP"
     group_label: "MTD Margin"
     label: "MTD Margin - Current Month"
@@ -279,6 +410,7 @@ view: drr_daily_revenue_report_base {
   }
 
   measure: mtd_margin_last_month{
+    hidden: yes
     view_label: "PoP"
     group_label: "MTD Margin"
     label: "MTD Margin - Previous Month"
@@ -288,6 +420,7 @@ view: drr_daily_revenue_report_base {
   }
 
   measure: mtd_margin_last_year{
+    hidden: yes
     view_label: "PoP"
     group_label: "MTD Margin"
     label: "MTD Margin - Previous Year"
@@ -296,12 +429,71 @@ view: drr_daily_revenue_report_base {
     value_format: "0.00%"
   }
 
+  measure: mtd_margin_complete_month {
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Margin"
+    label: "MTD Margin - Current Month"
+    type: number
+    sql:  ${mtd_net_revenue_final}/${mtd_revenue_final};;
+    value_format: "0.00%"
+    html:
+    <a style="color: black; text-decoration:none;" href="https://tremor.cloud.looker.com/dashboards/4385">{{rendered_value}} </a>;;
+  }
+
+  measure: mtd_margin_last_month_complete_month{
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Margin"
+    label: "MTD Margin - Previous Month"
+    type: number
+    sql:  ${mtd_net_revenue_last_month_final}/${mtd_revenue_last_month_final};;
+    value_format: "0.00%"
+  }
+
+  measure: mtd_margin_last_year_complete_month{
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Margin"
+    label: "MTD Margin - Previous Year"
+    type: number
+    sql:  ${mtd_net_revenue_last_year_final}/${mtd_revenue_last_year_final};;
+    value_format: "0.00%"
+  }
+
+  measure: mtd_margin_final {
+    view_label: "PoP"
+    group_label: "MTD Margin"
+    label: "MTD Margin - Current Month"
+    type: number
+    sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_margin_complete_month} ELSE ${mtd_margin} END ;;
+    value_format: "0.00%"
+  }
+
+  measure: mtd_margin_last_month_final {
+    view_label: "PoP"
+    group_label: "MTD Margin"
+    label: "MTD Margin - Previous Month"
+    type: number
+    sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_margin_last_month_complete_month} ELSE ${mtd_margin_last_month} END ;;
+    value_format: "0.00%"
+  }
+
+  measure: mtd_margin_last_year_final {
+    view_label: "PoP"
+    group_label: "MTD Margin"
+    label: "MTD Margin - Previous Year"
+    type: number
+    sql: CASE WHEN {% date_end current_date_range %}<CURRENT_DATE() THEN ${mtd_margin_last_year_complete_month} ELSE ${mtd_margin_last_year} END ;;
+    value_format: "0.00%"
+  }
+
   measure: mtd_revenue_comparison_previous_month {
     view_label: "PoP"
     group_label: "MTD Revenue"
     label: "MTD Revenue - Comparison to Previous Month"
     type: number
-    sql: (${mtd_revenue}/${mtd_revenue_last_month}) - 1 ;;
+    sql: (${mtd_revenue_final}/${mtd_revenue_last_month_final}) - 1 ;;
     value_format: "0.00%"
     html:
     {% if value > 0 %}
@@ -324,7 +516,7 @@ view: drr_daily_revenue_report_base {
     group_label: "MTD Revenue"
     label: "MTD Revenue - Comparison to Previous Year"
     type: number
-    sql: (${mtd_revenue}/${mtd_revenue_last_year}) - 1 ;;
+    sql: (${mtd_revenue_final}/${mtd_revenue_last_year_final}) - 1 ;;
     value_format: "0.00%"
     html:
     {% if value > 0 %}
@@ -347,7 +539,7 @@ view: drr_daily_revenue_report_base {
     group_label: "MTD Net Revenue"
     label: "MTD Net Revenue - Comparison to Previous Month"
     type: number
-    sql: (${mtd_net_revenue}/${mtd_net_revenue_last_month}) - 1 ;;
+    sql: (${mtd_net_revenue_final}/${mtd_net_revenue_last_month_final}) - 1 ;;
     value_format: "0.00%"
     html:
     {% if value > 0 %}
@@ -370,7 +562,7 @@ view: drr_daily_revenue_report_base {
     group_label: "MTD Net Revenue"
     label: "MTD Net Revenue - Comparison to Previous Year"
     type: number
-    sql: (${mtd_net_revenue}/${mtd_net_revenue_last_year}) - 1 ;;
+    sql: (${mtd_net_revenue_final}/${mtd_net_revenue_last_year_final}) - 1 ;;
     value_format: "0.00%"
     html:
     {% if value > 0 %}
@@ -393,7 +585,7 @@ view: drr_daily_revenue_report_base {
     group_label: "MTD Margin"
     label: "MTD Margin - Comparison to Previous Month"
     type: number
-    sql: (${mtd_margin}/${mtd_margin_last_month}) - 1 ;;
+    sql: (${mtd_margin_final}/${mtd_margin_last_month_final}) - 1 ;;
     value_format: "0.00%"
     html:
     {% if value > 0 %}
@@ -416,7 +608,7 @@ view: drr_daily_revenue_report_base {
     group_label: "MTD Margin"
     label: "MTD Margin - Comparison to Previous Year"
     type: number
-    sql: (${mtd_margin}/${mtd_margin_last_year}) - 1 ;;
+    sql: (${mtd_margin_final}/${mtd_margin_last_year_final}) - 1 ;;
     value_format: "0.00%"
     html:
     {% if value > 0 %}
@@ -443,7 +635,7 @@ view: drr_daily_revenue_report_base {
            <div style=" display: inline-block; font-size: 15px; letter-spacing: 0.01em;">
                 <a style="color: black; text-decoration:none;" href="https://tremor.cloud.looker.com/dashboards/4385">Revenue </a>
               <div style=" line-height: 15px; font-size: 23px; font-weight: 500; margin-top: 20px;">
-                {{ mtd_revenue._rendered_value }}
+                {{ mtd_revenue_final._rendered_value }}
               </div>
               <div style=" line-height: 15px; font-size: 15px; color:  #BFBFBF; margin-top: 15px;">
                 {{ mtd_revenue_comparison_previous_month._rendered_value }} vs previous month

@@ -206,4 +206,10 @@ view: media_shift_top_publishers {
     sql: NULLIF(${TABLE}.nexxen_inventory_cost, 0) ;;
     html: {% if value == 0 or value == null %}N/A{% else %}{{ rendered_value }}{% endif %} ;;
   }
+
+  measure: dynamic_title {
+    label: "Title"
+    type: string
+    sql: 'Media Shift - Top ' || {% parameter top_x %} || ' Publishers Drilldown' ;;
+  }
 }

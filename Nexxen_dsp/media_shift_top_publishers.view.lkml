@@ -211,5 +211,6 @@ view: media_shift_top_publishers {
     label: "Title"
     type: string
     sql: 'Media Shift - Top ' || {% parameter top_x %} || ' Publishers Drilldown' ;;
+    html: <div style="font-size: 22px; font-weight: 600; text-align: center;">{{ value }}</div> ;;
   }
 }

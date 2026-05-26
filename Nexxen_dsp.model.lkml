@@ -772,3 +772,8 @@ view: +fact_nexxen_dsp {
       END ;;
   }
 }
+
+explore: dim_dsp_mapping_report {
+  required_access_grants: [can_view_all_tremor]
+  label: "Ingestion Mapping Table"
+  }

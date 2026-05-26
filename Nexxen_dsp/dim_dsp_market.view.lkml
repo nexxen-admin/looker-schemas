@@ -66,14 +66,36 @@ view: dim_dsp_market {
       WHEN ${market_id} in (9999) THEN 'Other' ELSE 'Unknown' END ;;
   }
 
-  dimension: LOB  {
+  # dimension: LOB  {
+  #   type: string
+  #   label: "LOB"
+  #   sql: case when ${amobee_business_unit} = 'ACCESS' then 'MS'
+  #             when ${amobee_business_unit} = 'Enterprise' then 'SS'
+  #             else 'Other' end;;
+  # }
+
+  dimension: market_service_classification {
     type: string
-    label: "LOB"
-    sql: case when ${amobee_business_unit} = 'ACCESS' then 'MS'
-              when ${amobee_business_unit} = 'Enterprise' then 'SS'
-              else 'Other' end;;
+    label: "Market Service Classification"
+    sql: CASE
+          WHEN ${market_id} IN (58,884,961,1008,1090,1487,1577,1637,1792,2050,2067,2148,2164,2193,2196,2230,2240,2290) THEN 'Managed'
+          WHEN ${market_id} IN (141,175,681,861,1069,1079,1356,1371,1407,1472,1477,1480,1602,1608,1778,1990,2011,2048,2058,2069,2073,2086,2099,2127,2133,2139,2143,2145,2147,2151,2158,2159,2165,2169,2172,2174,2175,2181,2183,2184,2187,2188,2190,2192,2201,2202,2205,2207,2208,2215,2220,2222,2226,2227,2228,2229,2233,2235,2239,2241,2254,2258,2259,2262,2263,2267,2277,2283,2285,2286,2298) THEN 'Campaign Suite'
+          WHEN ${market_id} IN (1204,1677,2045,2166,2203,2231,2247,2256,2266,2270,2272,2273,2276,2278,2282,2287,2288,2292,2302,2304,2306,2307,2311) THEN 'Hybrid'
+          WHEN ${market_id} IN (1,2197) THEN 'DSP Internal / Defaults'
+          ELSE NULL
+        END ;;
   }
 
+  dimension: LOB {
+    type: string
+    label: "LOB"
+    sql: CASE
+          WHEN ${market_service_classification} = 'Managed' THEN 'MS'
+          WHEN ${market_service_classification} = 'Campaign Suite' THEN 'SS'
+          WHEN ${market_service_classification} = 'Hybrid' THEN 'Hybrid'
+          ELSE 'Other'
+        END ;;
+  }
 
   dimension: is_deleted {
     type: number

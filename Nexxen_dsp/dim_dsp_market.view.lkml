@@ -86,15 +86,46 @@ view: dim_dsp_market {
         END ;;
   }
 
+  # dimension: LOB {
+  #   type: string
+  #   label: "LOB"
+  #   sql: CASE
+  #         WHEN ${market_service_classification} = 'Managed' THEN 'MS'
+  #         WHEN ${market_service_classification} = 'Campaign Suite' THEN 'SS'
+  #         WHEN ${market_service_classification} = 'Hybrid' THEN 'Hybrid'
+  #         ELSE 'Other'
+  #       END ;;
+  # }
+
+  parameter: lob_view {
+    type: unquoted
+    label: "LOB View"
+    default_value: "FPA"
+    allowed_value: { label: "FP&A"   value: "FPA" }
+    allowed_value: { label: "Finance" value: "Finance" }
+  }
+
   dimension: LOB {
     type: string
     label: "LOB"
-    sql: CASE
-          WHEN ${market_service_classification} = 'Managed' THEN 'MS'
-          WHEN ${market_service_classification} = 'Campaign Suite' THEN 'SS'
-          WHEN ${market_service_classification} = 'Hybrid' THEN 'Hybrid'
-          ELSE 'Other'
-        END ;;
+    sql:
+    {% if lob_view._parameter_value == 'FPA' %}
+      CASE
+        WHEN ${market_service_classification} = 'Managed'        THEN 'MS'
+        WHEN ${market_service_classification} = 'Campaign Suite' THEN 'SS'
+        WHEN ${market_service_classification} = 'Hybrid'         THEN 'Hybrid'
+        ELSE 'Other'
+      END
+    {% else %}
+      CASE
+        WHEN ${market_service_classification} = 'Managed'        THEN 'MS'
+        WHEN ${market_service_classification} = 'Campaign Suite' THEN 'SS'
+        WHEN ${market_service_classification} = 'Hybrid'
+             AND ${market_id} IN (2288, 2278)                    THEN 'MS'
+        WHEN ${market_service_classification} = 'Hybrid'         THEN 'SS'
+        ELSE 'Other'
+      END
+    {% endif %} ;;
   }
 
   dimension: is_deleted {

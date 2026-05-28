@@ -2,47 +2,101 @@ view: e2e_revenue_classified {
 
   derived_table: {
     sql:
-      SELECT
-        tc.event_month,
-        /*UPPER(tc.Billing_Agency) AS buyer,*/
-        CASE
-          WHEN bm.buyer_new = 'DELETE' THEN 'DELETE'
-          WHEN tc.Billing_Agency ILIKE 'client direct%'
-          AND bm.buyer_new IS NULL
-          THEN UPPER(tc.advertiser_name)
-          ELSE UPPER(tc.Billing_Agency)
-        END AS buyer,
-        bm.buyer_new AS mapped_buyer,
-        tc.device_type,
-        tc.impression_type,
-
-      -- 1P Supply / 3P Demand
-      SUM(CASE WHEN tc.category = 'Exch_3P_Demand' THEN tc.E2E_Revenue ELSE 0 END) AS Exch_3PD_Gross,
-      SUM(CASE WHEN tc.category = 'Exch_3P_Demand' THEN tc.E2E_Cost ELSE 0 END) AS Exch_3PD_Cost,
-      SUM(CASE WHEN tc.category = 'Exch_3P_Demand' THEN tc.E2E_Revenue ELSE 0 END)
-      - SUM(CASE WHEN tc.category = 'Exch_3P_Demand' THEN tc.E2E_Cost ELSE 0 END) AS Exch_3PD_Net,
-
-      -- 1P Demand / 1P Supply
-      SUM(CASE WHEN tc.category = 'Amobee - Non1058' AND tc.SSP = 'Nexxen' THEN tc.E2E_Revenue ELSE 0 END) AS "1PD_1PS_Gross",
-      SUM(CASE WHEN tc.category = 'Exchange - Amobee_Non1058' THEN tc.E2E_Cost ELSE 0 END) AS "1PD_1PS_Cost",
-      SUM(CASE WHEN tc.category = 'Amobee - Non1058' AND tc.SSP = 'Nexxen' THEN tc.E2E_Revenue ELSE 0 END)
-      - SUM(CASE WHEN tc.category = 'Exchange - Amobee_Non1058' THEN tc.E2E_Cost ELSE 0 END) AS "1PD_1PS_Net",
-
-      -- 1P Demand / 3P Supply
-      SUM(CASE WHEN tc.category = 'Amobee - Non1058' AND tc.SSP != 'Nexxen' THEN tc.E2E_Revenue ELSE 0 END) AS DMND_3PS_Gross,
-      SUM(CASE WHEN tc.category = 'Amobee - Non1058' THEN tc.E2E_Cost ELSE 0 END) AS DMND_3PS_Cost,
-      SUM(CASE WHEN tc.category = 'Amobee - Non1058' AND tc.SSP != 'Nexxen' THEN tc.E2E_Revenue ELSE 0 END)
-      - SUM(CASE WHEN tc.category = 'Amobee - Non1058' THEN tc.E2E_Cost ELSE 0 END) AS DMND_3PS_Net
-
-      FROM BI.SVC_TRMRCon_Consolidated tc
-      LEFT OUTER JOIN BI.SVC_Buyer_Mapping_Master bm
-      ON UPPER(bm.buyer_original) = UPPER(
+    WITH pre_agg AS (
+  SELECT
+    tc.event_month,
+    CASE
+      WHEN bm.buyer_new = 'DELETE' THEN 'DELETE'
+      WHEN tc.Billing_Agency ILIKE 'client direct%'
+        AND bm.buyer_new IS NULL
+      THEN UPPER(tc.advertiser_name)
+      ELSE UPPER(tc.Billing_Agency)
+    END AS buyer,
+    tc.SSP,
+    tc.category,
+    tc.device_type,
+    tc.impression_type,
+    SUM(tc.E2E_Revenue) AS E2E_Revenue,
+    SUM(tc.E2E_Cost) AS E2E_Cost
+  FROM BI.SVC_TRMRCon_Consolidated tc
+  LEFT OUTER JOIN BI.SVC_Buyer_Mapping_Master bm
+    ON UPPER(bm.buyer_original) = UPPER(
       CASE WHEN tc.Billing_Agency ILIKE '%bidswitch%'
-      THEN 'Bidswitch' ELSE tc.Billing_Agency END)
-      WHERE bm.buyer_new != 'DELETE'
-      GROUP BY 1, 2, 3, 4, 5
-      ;;
-  }
+        THEN 'Bidswitch' ELSE tc.Billing_Agency END)
+  GROUP BY 1, 2, 3, 4, 5, 6
+)
+SELECT
+  pa.event_month,
+  pa.buyer,
+  bm.buyer_new AS mapped_buyer,
+  pa.device_type,
+  pa.impression_type,
+  -- 1P Supply / 3P Demand
+  SUM(CASE WHEN pa.category = 'Exch_3P_Demand' THEN pa.E2E_Revenue ELSE 0 END) AS Exch_3PD_Gross,
+  SUM(CASE WHEN pa.category = 'Exch_3P_Demand' THEN pa.E2E_Cost ELSE 0 END) AS Exch_3PD_Cost,
+  SUM(CASE WHEN pa.category = 'Exch_3P_Demand' THEN pa.E2E_Revenue ELSE 0 END)
+    - SUM(CASE WHEN pa.category = 'Exch_3P_Demand' THEN pa.E2E_Cost ELSE 0 END) AS Exch_3PD_Net,
+  -- 1P Demand / 1P Supply
+  SUM(CASE WHEN pa.category = 'Amobee - Non1058' AND pa.SSP = 'Nexxen' THEN pa.E2E_Revenue ELSE 0 END) AS "1PD_1PS_Gross",
+  SUM(CASE WHEN pa.category = 'Exchange - Amobee_Non1058' THEN pa.E2E_Cost ELSE 0 END) AS "1PD_1PS_Cost",
+  SUM(CASE WHEN pa.category = 'Amobee - Non1058' AND pa.SSP = 'Nexxen' THEN pa.E2E_Revenue ELSE 0 END)
+    - SUM(CASE WHEN pa.category = 'Exchange - Amobee_Non1058' THEN pa.E2E_Cost ELSE 0 END) AS "1PD_1PS_Net",
+  -- 1P Demand / 3P Supply
+  SUM(CASE WHEN pa.category = 'Amobee - Non1058' AND pa.SSP != 'Nexxen' THEN pa.E2E_Revenue ELSE 0 END) AS DMND_3PS_Gross,
+  SUM(CASE WHEN pa.category = 'Amobee - Non1058' THEN pa.E2E_Cost ELSE 0 END) AS DMND_3PS_Cost,
+  SUM(CASE WHEN pa.category = 'Amobee - Non1058' AND pa.SSP != 'Nexxen' THEN pa.E2E_Revenue ELSE 0 END)
+    - SUM(CASE WHEN pa.category = 'Amobee - Non1058' THEN pa.E2E_Cost ELSE 0 END) AS DMND_3PS_Net
+FROM pre_agg pa
+LEFT OUTER JOIN BI.SVC_Buyer_Mapping_Master bm
+  ON UPPER(bm.buyer_original) = UPPER(
+    CASE WHEN pa.buyer ILIKE '%BIDSWITCH%'
+      THEN 'Bidswitch' ELSE pa.buyer END)
+WHERE bm.buyer_new != 'DELETE'
+GROUP BY 1, 2, 3, 4, 5
+;;
+   }
+
+  #     SELECT
+  #       tc.event_month,
+  #       /*UPPER(tc.Billing_Agency) AS buyer,*/
+  #       CASE
+  #         WHEN bm.buyer_new = 'DELETE' THEN 'DELETE'
+  #         WHEN tc.Billing_Agency ILIKE 'client direct%'
+  #         AND bm.buyer_new IS NULL
+  #         THEN UPPER(tc.advertiser_name)
+  #         ELSE UPPER(tc.Billing_Agency)
+  #       END AS buyer,
+  #       bm.buyer_new AS mapped_buyer,
+  #       tc.device_type,
+  #       tc.impression_type,
+
+  #     -- 1P Supply / 3P Demand
+  #     SUM(CASE WHEN tc.category = 'Exch_3P_Demand' THEN tc.E2E_Revenue ELSE 0 END) AS Exch_3PD_Gross,
+  #     SUM(CASE WHEN tc.category = 'Exch_3P_Demand' THEN tc.E2E_Cost ELSE 0 END) AS Exch_3PD_Cost,
+  #     SUM(CASE WHEN tc.category = 'Exch_3P_Demand' THEN tc.E2E_Revenue ELSE 0 END)
+  #     - SUM(CASE WHEN tc.category = 'Exch_3P_Demand' THEN tc.E2E_Cost ELSE 0 END) AS Exch_3PD_Net,
+
+  #     -- 1P Demand / 1P Supply
+  #     SUM(CASE WHEN tc.category = 'Amobee - Non1058' AND tc.SSP = 'Nexxen' THEN tc.E2E_Revenue ELSE 0 END) AS "1PD_1PS_Gross",
+  #     SUM(CASE WHEN tc.category = 'Exchange - Amobee_Non1058' THEN tc.E2E_Cost ELSE 0 END) AS "1PD_1PS_Cost",
+  #     SUM(CASE WHEN tc.category = 'Amobee - Non1058' AND tc.SSP = 'Nexxen' THEN tc.E2E_Revenue ELSE 0 END)
+  #     - SUM(CASE WHEN tc.category = 'Exchange - Amobee_Non1058' THEN tc.E2E_Cost ELSE 0 END) AS "1PD_1PS_Net",
+
+  #     -- 1P Demand / 3P Supply
+  #     SUM(CASE WHEN tc.category = 'Amobee - Non1058' AND tc.SSP != 'Nexxen' THEN tc.E2E_Revenue ELSE 0 END) AS DMND_3PS_Gross,
+  #     SUM(CASE WHEN tc.category = 'Amobee - Non1058' THEN tc.E2E_Cost ELSE 0 END) AS DMND_3PS_Cost,
+  #     SUM(CASE WHEN tc.category = 'Amobee - Non1058' AND tc.SSP != 'Nexxen' THEN tc.E2E_Revenue ELSE 0 END)
+  #     - SUM(CASE WHEN tc.category = 'Amobee - Non1058' THEN tc.E2E_Cost ELSE 0 END) AS DMND_3PS_Net
+
+  #     FROM BI.SVC_TRMRCon_Consolidated tc
+  #     LEFT OUTER JOIN BI.SVC_Buyer_Mapping_Master bm
+  #     ON UPPER(bm.buyer_original) = UPPER(
+  #     CASE WHEN tc.Billing_Agency ILIKE '%bidswitch%'
+  #     THEN 'Bidswitch' ELSE tc.Billing_Agency END)
+  #     WHERE bm.buyer_new != 'DELETE'
+  #     GROUP BY 1, 2, 3, 4, 5
+  #     ;;
+
 
   # --- Dimensions ---
 

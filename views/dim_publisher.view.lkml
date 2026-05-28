@@ -284,6 +284,13 @@ view: dim_publisher {
       sql: ${TABLE}.Publisher_Account_Type ;;
     }
 
+  dimension: bcat{
+    label: "BCat"
+    description: "List of IAB categories defined by the publisher that indicate which advertiser categories are blocked from serving ads on their inventory."
+    type: string
+    sql: ${TABLE}.bcat ;;
+  }
+
 
     dimension: ri_info {
       type: string

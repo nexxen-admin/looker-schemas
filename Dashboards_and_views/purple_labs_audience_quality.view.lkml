@@ -31,6 +31,7 @@ agg_purplelabs_data AS (
     MAX(client_id) AS client_id,
     MAX(execution_id) AS execution_id,
     AVG(CASE WHEN coverage = 'Less than 100 patients in CG' THEN NULL
+             WHEN coverage = "There is not enough unique patients in g" THEN NULL
              ELSE REPLACE(coverage, '%', '')::FLOAT / 100
         END) AS coverage,
     SUM(CASE WHEN unique_patient_count = 'Too small to measure' THEN 0

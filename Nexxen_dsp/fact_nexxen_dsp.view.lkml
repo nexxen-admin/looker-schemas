@@ -856,6 +856,12 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "0.00%"
   }
 
+  measure: padding_percent {
+    type: number
+    sql: (${third_party_impressions}-${impressions})/NULLIF(${third_party_impressions},0) ;;
+    value_format: "0.00%"
+  }
+
   measure: clicks_discrepancy {
     type: number
     sql: (${third_party_clicks}-${clicks})/nullif(${clicks},0) ;;

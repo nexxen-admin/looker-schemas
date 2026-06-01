@@ -64,6 +64,10 @@ view: drr_daily_revenue_report_base {
     type: sum
     value_format: "$#,##0.00"
     sql: ${TABLE}.Revenue -  ${TABLE}.Cost ;;
+    link: {
+      label: "Show by day"
+      url: "https://tremor.cloud.looker.com/looks/4908"
+      }
   }
   measure: margin {
     type: number

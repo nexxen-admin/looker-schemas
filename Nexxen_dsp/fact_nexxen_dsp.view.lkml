@@ -858,7 +858,7 @@ measure: Nexxen_Inv_Cost_Percent {
 
   measure: padding_percent {
     type: number
-    sql: (${third_party_impressions}-${impressions})/NULLIF(${third_party_impressions},0) ;;
+    sql: CASE WHEN ${dim_sfdb_opportunitylineitem.reporting__c}='Nexxen' THEN null ELSE (${third_party_impressions}-${impressions})/NULLIF(${third_party_impressions},0) END ;;
     value_format: "0.00%"
   }
 

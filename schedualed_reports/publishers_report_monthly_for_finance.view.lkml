@@ -10,7 +10,7 @@ view: publishers_report_monthly_for_finance {
        SUM(ssd.pub_requests) as pub_requests,
         SUM(ssd.slot_requests) as slot_requests,
         SUM(ssd.rx_requests) as rx_requests,
-       SUM(ssd.opportunities) as opportunities,
+      /*SUM(ssd.opportunities) as opportunities,*/
        SUM(ssd.bids) as bids,
        SUM(ssd.slot_attempts) as slot_attempts,
        SUM(ssd.attempts) as attempts,
@@ -96,10 +96,10 @@ view: publishers_report_monthly_for_finance {
     sql: ${TABLE}.rx_requests ;;
   }
 
-  measure: opportunities {
-    type: sum
-    sql: ${TABLE}.opportunities ;;
-  }
+  # measure: opportunities {
+  #   type: sum
+  #   sql: ${TABLE}.opportunities ;;
+  # }
 
   measure: bids {
     type: sum
@@ -183,7 +183,7 @@ view: publishers_report_monthly_for_finance {
       pub_requests,
       slot_requests,
       rx_requests,
-      opportunities,
+      # opportunities,
       bids,
       slot_attempts,
       attempts,

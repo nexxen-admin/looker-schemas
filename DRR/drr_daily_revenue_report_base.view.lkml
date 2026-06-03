@@ -66,6 +66,7 @@ view: drr_daily_revenue_report_base {
     sql: ${TABLE}.Revenue -  ${TABLE}.Cost ;;
     link: {
       label: "Show by day"
+      # url: "/dashboards/4447?Date={{ event_month._value }}"
       url: "https://tremor.cloud.looker.com/looks/4908"
       }
   }

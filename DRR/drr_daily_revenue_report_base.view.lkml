@@ -501,6 +501,16 @@ view: drr_daily_revenue_report_base {
     value_format: "0.00%"
   }
 
+  measure: mtd_revenue_comparison_previous_month_value {
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Revenue"
+    label: "MTD Revenue - Comparison to Previous Month"
+    type: number
+    sql: (${mtd_revenue_final}/${mtd_revenue_last_month_final}) - 1 ;;
+    value_format: "0.00%"
+  }
+
   measure: mtd_revenue_comparison_previous_month {
     view_label: "PoP"
     group_label: "MTD Revenue"
@@ -522,6 +532,16 @@ view: drr_daily_revenue_report_base {
     {% endif %}
     </font>
     {{rendered_value}} vs previous month ;;
+  }
+
+  measure: mtd_revenue_comparison_previous_year_value {
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Revenue"
+    label: "MTD Revenue - Comparison to Previous Year"
+    type: number
+    sql: (${mtd_revenue_final}/${mtd_revenue_last_year_final}) - 1 ;;
+    value_format: "0.00%"
   }
 
   measure: mtd_revenue_comparison_previous_year {

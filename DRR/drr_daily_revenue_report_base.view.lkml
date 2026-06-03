@@ -70,6 +70,35 @@ view: drr_daily_revenue_report_base {
       url: "https://tremor.cloud.looker.com/looks/4908"
       }
   }
+
+  # measure: net_revenue {
+  #   type: sum
+  #   value_format: "$#,##0.00"
+  #   sql: ${TABLE}.Revenue -  ${TABLE}.Cost ;;
+  #   drill_fields: [event_date, net_revenue, margin]
+  #   link: {
+  #     label: "Show as daily chart"
+  #     url: "
+  #     {% assign vis_config = '{
+  #     \"type\":\"looker_column\",
+  #     \"stacking\":\"\",
+  #     \"x_axis_scale\":\"ordinal\",
+  #     \"y_axis_combined\":false,
+  #     \"show_view_names\":false,
+  #     \"show_value_labels\":false,
+  #     \"limit_displayed_rows\":false,
+  #     \"colors\":[\"#3d00ac\",\"#8CF585\"],
+  #     \"series_types\":{\"drr_daily_revenue_report_base.margin\":\"line\"},
+  #     \"y_axes\":[
+  #     {\"label\":\"Net Revenue\",\"orientation\":\"left\",\"series\":[{\"id\":\"drr_daily_revenue_report_base.net_revenue\",\"name\":\"Net Revenue\"}],\"type\":\"linear\",\"valueFormat\":\"$#,##0\"},
+  #     {\"label\":\"Margin (Take rate)\",\"orientation\":\"right\",\"series\":[{\"id\":\"drr_daily_revenue_report_base.margin\",\"name\":\"Margin (Take rate)\"}],\"type\":\"linear\",\"valueFormat\":\"0.00%\"}
+  #     ]
+  #     }' %}
+  #     {{ link }}&vis_config={{ vis_config | encode_uri }}&toggle=dat,pik,vis&limit=500"
+  #   }
+  # }
+
+
   measure: margin {
     type: number
     label: "Margin (Take rate)"

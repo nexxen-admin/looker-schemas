@@ -901,6 +901,12 @@ measure: Nexxen_Inv_Cost_Percent {
     value_format: "$#,##0.00"
   }
 
+  measure: ad_serving_units {
+    type: sum
+    sql: ${TABLE}.ad_serving_cost_units ;;
+    description: "Sum of 1P Impressions per Opportunity for all Opportunity line items that are not “ Third Party services”."
+  }
+
 
 
   measure: yesterday_uncapped_revenue {

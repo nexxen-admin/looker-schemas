@@ -596,6 +596,16 @@ view: drr_daily_revenue_report_base {
     {{rendered_value}} vs same period LY ;;
   }
 
+  measure: mtd_net_revenue_comparison_previous_month_value {
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Net Revenue"
+    label: "MTD Net Revenue - Comparison to Previous Month"
+    type: number
+    sql: (${mtd_net_revenue_final}/${mtd_net_revenue_last_month_final}) - 1 ;;
+    value_format: "0.00%"
+  }
+
   measure: mtd_net_revenue_comparison_previous_month {
     view_label: "PoP"
     group_label: "MTD Net Revenue"
@@ -617,6 +627,16 @@ view: drr_daily_revenue_report_base {
     {% endif %}
     </font>
     {{rendered_value}} vs previous month ;;
+  }
+
+  measure: mtd_net_revenue_comparison_previous_year_value {
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Net Revenue"
+    label: "MTD Net Revenue - Comparison to Previous Year"
+    type: number
+    sql: (${mtd_net_revenue_final}/${mtd_net_revenue_last_year_final}) - 1 ;;
+    value_format: "0.00%"
   }
 
   measure: mtd_net_revenue_comparison_previous_year {
@@ -642,6 +662,16 @@ view: drr_daily_revenue_report_base {
     {{rendered_value}} vs same period LY ;;
   }
 
+  measure: mtd_margin_comparison_previous_month_value {
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Margin"
+    label: "MTD Margin - Comparison to Previous Month"
+    type: number
+    sql: (${mtd_margin_final}/${mtd_margin_last_month_final}) - 1 ;;
+    value_format: "0.00%"
+  }
+
   measure: mtd_margin_comparison_previous_month {
     view_label: "PoP"
     group_label: "MTD Margin"
@@ -664,6 +694,17 @@ view: drr_daily_revenue_report_base {
     </font>
     {{rendered_value}} vs previous month ;;
   }
+
+  measure: mtd_margin_comparison_previous_year_value {
+    hidden: yes
+    view_label: "PoP"
+    group_label: "MTD Margin"
+    label: "MTD Margin - Comparison to Previous Year"
+    type: number
+    sql: (${mtd_margin_final}/${mtd_margin_last_year_final}) - 1 ;;
+    value_format: "0.00%"
+  }
+
 
   measure: mtd_margin_comparison_previous_year {
     view_label: "PoP"

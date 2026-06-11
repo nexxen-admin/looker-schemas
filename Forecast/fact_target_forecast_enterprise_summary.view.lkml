@@ -77,7 +77,9 @@ view: fact_target_forecast_enterprise_summary {
   dimension: percent_of_target_nr_forecast {
     type: number
     sql: ${TABLE}.percent_of_target_nr_forecast ;;
+    hidden: yes
   }
+
   dimension: region {
     type: string
     sql: ${TABLE}.region ;;

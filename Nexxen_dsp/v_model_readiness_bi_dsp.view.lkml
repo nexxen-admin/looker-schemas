@@ -3,9 +3,9 @@ view: dsp_model_readiness {
 
   dimension_group: last_business {
     type: time
-    timeframes: [raw, date, week, month, quarter, year]
+    timeframes: [raw,time, date, week, month, quarter, year]
     convert_tz: no
-    datatype: date
+    # datatype: date
     sql: ${TABLE}.last_business_date ;;
   }
 

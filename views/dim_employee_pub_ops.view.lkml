@@ -150,7 +150,7 @@ view: v_dim_employee_pub_ops {
     sql: case when ${TABLE}.Employee_Name='Gonni Kern' OR ${TABLE}.Employee_Name='Amit Mazor' then 'SDK'
               when ${TABLE}.Employee_Name='Stav Ezer' OR ${TABLE}.Employee_Name='Sarah Herskovics' OR
                   ${TABLE}.Employee_Name='Lihi Katabi' OR ${TABLE}.Employee_Name='Dana Nahshon' OR
-                  ${TABLE}.Employee_Name='Yariv Aharon' then 'Channel Pubs'
+                  ${TABLE}.Employee_Name='Yariv Aharon' OR ${TABLE}.Employee_Name='Pablo Castro' then 'Channel Pubs'
               when ${TABLE}.Employee_Name='Omri Lender & Ellen Rogan' OR ${TABLE}.Employee_Name='Noa Karako & Francesca Esposito' OR
                   ${TABLE}.Employee_Name='Shachar Laufer & Daniel Werman' OR ${TABLE}.Employee_Name='Rom Lubianiker & Rory Brown' OR
                   ${TABLE}.Employee_Name='Niv Shema' OR ${TABLE}.Employee_Name='Shachar Laufer' OR

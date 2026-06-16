@@ -6,6 +6,7 @@ view: drr_revenue_investigation_report {
     dimension: category {
       type: string
       sql: ${TABLE}.Category ;;
+      drill_fields: [subcategory]
     }
     dimension: create_timestamp {
       type: number
@@ -42,13 +43,16 @@ view: drr_revenue_investigation_report {
     dimension: region {
       type: string
       sql: ${TABLE}.Region ;;
+      drill_fields: [file_record]
     }
     dimension: subcategory {
       type: string
       sql: ${TABLE}.Subcategory ;;
+      drill_fields: [region]
     }
 
     parameter: dimension_value_parameter {
+      hidden: yes
       label: "Dimension"
       type: unquoted
       allowed_value: {
@@ -69,6 +73,7 @@ view: drr_revenue_investigation_report {
     }
 
     dimension: dimension_from_parameter {
+      hidden: yes
       type: string
       label_from_parameter: dimension_value_parameter
       sql: {% if dimension_value_parameter._parameter_value == "category" %} ${category}
@@ -77,6 +82,43 @@ view: drr_revenue_investigation_report {
           {%elsif dimension_value_parameter._parameter_value == "file_record" %} ${file_record}
       {% endif %};;
     }
+
+  parameter: measure_value_parameter {
+    hidden: yes
+    label: "Measure for variance analysis"
+    type: unquoted
+    allowed_value: {
+      value:"net_rev"
+      label:"Net Revenue"
+    }
+    allowed_value: {
+      value:"rev"
+      label:"Revenue"
+    }
+    allowed_value: {
+      value:"cost"
+      label:"Cost"
+    }
+  }
+
+  measure: measure_from_parameter_var {
+    hidden: yes
+    type: number
+    label: "Absolute Dollar Variance Threshold"
+    sql: {% if measure_value_parameter._parameter_value == "net_rev" %} ${net_revenue_var}
+          {%elsif measure_value_parameter._parameter_value == "rev" %} ${revenue_var}
+          {%elsif measure_value_parameter._parameter_value == "cost" %} ${cost_var}
+      {% endif %};;
+  }
+
+  measure: measure_from_parameter_var_perc {
+    type: number
+    label: "Percentage Variance Threshold"
+    sql: {% if measure_value_parameter._parameter_value == "net_rev" %} ${net_revenue_var_perc}
+          {%elsif measure_value_parameter._parameter_value == "rev" %} ${revenue_var_perc}
+          {%elsif measure_value_parameter._parameter_value == "cost" %} ${cost_var_perc}
+      {% endif %};;
+  }
 
 #--------------------------------------------------POP-------------------------------------------------------
     filter: current_date_range {

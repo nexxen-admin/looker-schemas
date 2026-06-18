@@ -36,6 +36,8 @@ explore: billing_temp_nov {
 
 explore: billing_international_media_io {
   label: "Billing International"
+  required_access_grants: [can_view_pub_come_looker]
+  hidden: yes
 }
 
 

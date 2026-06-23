@@ -29,9 +29,9 @@ view: daily_publisher_report_pluto {
 
       from Andromeda.ad_data_daily add2
       inner join (select add3.event_time, rx_deal_id, count(distinct adomain) adv_count from Andromeda.ad_data_daily add3
-      where-- add3.event_time >= :start_date
-      --and add3.event_time < :end_date
-      --and
+      where add3.event_time >= {% date_start date_filter %}
+      and add3.event_time < {% date_end date_filter %}
+      and
       {% condition select_pub_id %}
       pub_id {% endcondition %}
       --pub_id in ('78614','104062','106369')
@@ -41,9 +41,9 @@ view: daily_publisher_report_pluto {
       left outer join Andromeda.rx_dim_deal rdd on add2.rx_deal_id = rdd.deal_id_external
       left outer join Andromeda.rx_dim_supply_publisher_deal rdspd on add2.rx_deal_id =rdspd.external_deal_id
       left outer join Andromeda.rx_dim_deal_brand rddb on rdd.brand_id = rddb.id
-      where --add2.event_time >=:start_date
-      --and add2.event_time < :end_date
-      --and
+      where add2.event_time >={% date_start date_filter %}
+      and add2.event_time < {% date_end date_filter %}
+      and
        {% condition select_pub_id %}
       pub_id {% endcondition %}
      -- pub_id in ('78614','104062','106369')
@@ -75,9 +75,9 @@ view: daily_publisher_report_pluto {
       (sum(cogs)/sum(impression_pixel))*1000 as eCPM,
       (sum(ssp_win_price*impression_pixel)/sum(impression_pixel)) as Bid_CPM
       from Andromeda.ad_data_daily add2
-      where --add2.event_time >=:start_date
-      --and add2.event_time < :end_date
-      --and
+      where add2.event_time >= {% date_start date_filter %}
+      and add2.event_time < {% date_end date_filter %}
+      and
        {% condition select_pub_id %}
       pub_id {% endcondition %}
       --pub_id in ('78614','104062','106369')
@@ -110,9 +110,9 @@ view: daily_publisher_report_pluto {
       (sum(cogs)/sum(impression_pixel))*1000 as eCPM,
       (sum(ssp_win_price*impression_pixel)/sum(impression_pixel)) as Bid_CPM
       from Andromeda.ad_data_daily add2
-      where --add2.event_time >=:start_date
-      --and add2.event_time < :end_date
-      --and
+      where add2.event_time >={% date_start date_filter %}
+      and add2.event_time < {% date_end date_filter %}
+      and
        {% condition select_pub_id %}
       pub_id {% endcondition %}
       --pub_id in ('78614','104062','106369')
@@ -152,9 +152,9 @@ view: daily_publisher_report_pluto {
       (sum(ssp_win_price*impression_pixel)/sum(impression_pixel)) as Bid_CPM
       from Andromeda.ad_data_daily add2
       inner join (select add3.event_time, rx_deal_id, count(distinct adomain) adv_count from Andromeda.ad_data_daily add3
-      where --add3.event_time >=:start_date
-      --and add3.event_time < :end_date
-      --and
+      where add3.event_time >= {% date_start date_filter %}
+      and add3.event_time < {% date_end date_filter %}
+      and
        {% condition select_pub_id %}
       pub_id {% endcondition %}
       --pub_id in ('78614','104062','106369')
@@ -164,9 +164,9 @@ view: daily_publisher_report_pluto {
       left outer join Andromeda.rx_dim_deal rdd on add2.rx_deal_id = rdd.deal_id_external
       left outer join Andromeda.rx_dim_supply_publisher_deal rdspd on add2.rx_deal_id =rdspd.external_deal_id
       left outer join Andromeda.rx_dim_deal_brand rddb on rdd.brand_id = rddb.id
-      where --add2.event_time >=:start_date
-      --and add2.event_time < :end_date
-      --and
+      where add2.event_time >={% date_start date_filter %}
+      and add2.event_time < {% date_end date_filter %}
+      and
        {% condition select_pub_id %}
       pub_id {% endcondition %}
       --pub_id in ('78614','104062','106369')
@@ -181,6 +181,10 @@ view: daily_publisher_report_pluto {
   filter: select_pub_id {
     type: string
     suggest_dimension: pub_id
+  }
+
+  filter: date_filter {
+    type: date
   }
 
   measure: count {

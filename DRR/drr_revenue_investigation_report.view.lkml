@@ -148,6 +148,27 @@ view: drr_revenue_investigation_report {
         ;;
     }
 
+  dimension_group: date_in_period {
+    description: "Use this as your grouping dimension when comparing periods. Aligns the previous periods onto the current period"
+    label: "Current Period"
+    type: time
+    sql: TIMESTAMPADD(DAY, ${day_in_period} - 1, CAST({% date_start current_date_range %} AS TIMESTAMP)) ;;
+    timeframes: [
+      date,
+      hour_of_day,
+      day_of_week,
+      day_of_week_index,
+      day_of_month,
+      day_of_year,
+      week_of_year,
+      week,
+      month,
+      quarter,
+      month_name,
+      month_num,
+      year]
+  }
+
     dimension: order_for_period {
       hidden: yes
       type: number
@@ -180,6 +201,13 @@ view: drr_revenue_investigation_report {
           WHEN {% condition previous_date_range %} ${event_raw} {% endcondition %} THEN 'previous'END;;
     }
 
+  filter: mtd_only {
+    label: "MTD"
+    type: yesno
+    sql:  EXTRACT(DAY FROM ${date_in_period_date}) < EXTRACT(DAY FROM GETDATE()) ;;
+    description: "Filters the data to be only month to date"
+  }
+
 # Filtered measures
 
 
@@ -188,7 +216,7 @@ view: drr_revenue_investigation_report {
       label: "Revenue - Cohort 1"
       type: sum
       sql:  ${TABLE}.Revenue ;;
-      value_format: "$#,##0.00"
+      value_format: "$#,##0"
       filters: [period_filtered_measures: "this"]
     }
 
@@ -197,7 +225,7 @@ view: drr_revenue_investigation_report {
       label: "Revenue - Cohort 2"
       type: sum
       sql: ${TABLE}.Revenue ;;
-      value_format: "$#,##0.00"
+      value_format: "$#,##0"
       filters: [period_filtered_measures: "previous"]
     }
 
@@ -205,15 +233,15 @@ view: drr_revenue_investigation_report {
       group_label: "Revenue"
       label: "Revenue Dollar Variance"
       type: number
-      sql: ${revenue_second}-${revenue_first} ;;
-      value_format: "$#,##0.00"
+      sql: ${revenue_first}-${revenue_second} ;;
+      value_format: "$#,##0"
     }
 
   measure: revenue_var_perc {
     group_label: "Revenue"
     label: "Revenue % Variance"
     type: number
-    sql: ${revenue_second}/${revenue_first} -1;;
+    sql: ${revenue_first}/${revenue_second} -1;;
     value_format: "0.00%"
   }
 
@@ -222,7 +250,7 @@ view: drr_revenue_investigation_report {
     label: "Cost - Cohort 1"
     type: sum
     sql:  ${TABLE}.Cost ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [period_filtered_measures: "this"]
   }
 
@@ -231,7 +259,7 @@ view: drr_revenue_investigation_report {
     label: "Cost - Cohort 2"
     type: sum
     sql: ${TABLE}.Cost ;;
-    value_format: "$#,##0.00"
+    value_format: "$#,##0"
     filters: [period_filtered_measures: "previous"]
   }
 
@@ -239,15 +267,15 @@ view: drr_revenue_investigation_report {
     group_label: "Cost"
     label: "Cost Dollar Variance"
     type: number
-    sql: ${cost_second}-${cost_first} ;;
-    value_format: "$#,##0.00"
+    sql: ${cost_first}-${cost_second} ;;
+    value_format: "$#,##0"
   }
 
   measure: cost_var_perc {
     group_label: "Cost"
     label: "Cost % Variance"
     type: number
-    sql: ${cost_second}/${cost_first} -1 ;;
+    sql: ${cost_first}/${cost_second} -1 ;;
     value_format: "0.00%"
   }
 
@@ -256,7 +284,7 @@ view: drr_revenue_investigation_report {
       label: "Net Revenue - Cohort 1"
       type: sum
       sql:  ${TABLE}.Revenue -  ${TABLE}.Cost ;;
-      value_format: "$#,##0.00"
+      value_format: "$#,##0"
       filters: [period_filtered_measures: "this"]
     }
 
@@ -265,7 +293,7 @@ view: drr_revenue_investigation_report {
       label: "Net Revenue - Cohort 2"
       type: sum
       sql: ${TABLE}.Revenue -  ${TABLE}.Cost ;;
-      value_format: "$#,##0.00"
+      value_format: "$#,##0"
       filters: [period_filtered_measures: "previous"]
     }
 
@@ -273,15 +301,15 @@ view: drr_revenue_investigation_report {
     group_label: "Net Revenue"
     label: "Net Revenue Dollar Variance"
     type: number
-    sql: ${net_revenue_second}-${net_revenue_first} ;;
-    value_format: "$#,##0.00"
+    sql: ${net_revenue_first}-${net_revenue_second} ;;
+    value_format: "$#,##0"
   }
 
   measure: net_revenue_var_perc {
     group_label: "Net Revenue"
     label: "Net Revenue % Variance"
     type: number
-    sql: ${net_revenue_second}/${net_revenue_first} -1 ;;
+    sql: ${net_revenue_first}/${net_revenue_second} -1 ;;
     value_format: "0.00%"
   }
 
@@ -305,7 +333,7 @@ view: drr_revenue_investigation_report {
     group_label: "GP %"
     label: "GP % Variance"
     type: number
-    sql: ${gp_second}-${gp_first} ;;
+    sql: ${gp_first}-${gp_second} ;;
     value_format: "0.00%"
   }
 
@@ -313,7 +341,7 @@ view: drr_revenue_investigation_report {
     group_label: "GP %"
     label: "GP % % Variance"
     type: number
-    sql: ${gp_second}/${gp_first} -1 ;;
+    sql: ${gp_first}/${gp_second} -1 ;;
     value_format: "0.00%"
   }
 

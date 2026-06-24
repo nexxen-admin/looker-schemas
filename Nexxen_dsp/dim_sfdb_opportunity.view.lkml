@@ -453,13 +453,13 @@ view: dim_sfdb_opportunity {
   dimension: loss_reason__c {
     type: string
     sql: ${TABLE}.loss_reason__c ;;
-    hidden: yes
+    hidden: no
   }
 
   dimension: loss_reason_details__c {
     type: string
     sql: ${TABLE}.loss_reason_details__c ;;
-    hidden: yes
+    hidden: no
   }
 
   dimension: market__c {

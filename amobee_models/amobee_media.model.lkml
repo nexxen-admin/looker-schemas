@@ -29,6 +29,19 @@ explore: amobee_media_daily_mtz_view {
     sql_on: ${amobee_media_daily_mtz_view.beacon_poi_id} = ${sunflower_dim_poi.poi_id} ;;
     relationship: many_to_one
   }
+
+  join: dim_advertiser {
+    type: left_outer
+    sql_on: ${amobee_media_daily_mtz_view.advertiser_id} = ${dim_advertiser.advertiser_id} ;;
+    relationship: many_to_one
+  }
+
+  join: dim_creative {
+    type: left_outer
+    sql_on: ${amobee_media_daily_mtz_view.creative_id} = ${dim_creative.creative_id} ;;
+    relationship: many_to_one
+  }
+
   }
 
 

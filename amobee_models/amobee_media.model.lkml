@@ -23,6 +23,12 @@ explore: amobee_media_daily_mtz_view {
     sql_on: ${amobee_media_daily_mtz_view.deal_id} = ${sunflower_dim_deal.deal_id} ;;
     relationship: many_to_one
   }
+
+  join: sunflower_dim_poi {
+    type: left_outer
+    sql_on: ${amobee_media_daily_mtz_view.beacon_poi_id} = ${sunflower_dim_poi.poi_id} ;;
+    relationship: many_to_one
+  }
   }
 
 

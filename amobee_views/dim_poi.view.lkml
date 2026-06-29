@@ -19,5 +19,6 @@ view:sunflower_dim_poi {
   }
   measure: count {
     type: count
+    hidden: yes
   }
 }

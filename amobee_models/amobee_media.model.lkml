@@ -50,4 +50,16 @@ explore: amobee_media_daily_mtz_view {
     always_filter: {
       filters: [amobee_media_hourly_view.event_time_date: "1 day ago for 1 day"]
     }
+    join: dim_advertiser {
+      type: left_outer
+      sql_on: ${amobee_media_hourly_view.advertiser_id} = ${dim_advertiser.advertiser_id} ;;
+      relationship: many_to_one
+    }
+
+    join: dim_creative {
+      type: left_outer
+      sql_on: ${amobee_media_hourly_view.creative_id} = ${dim_creative.creative_id} ;;
+      relationship: many_to_one
+    }
+
 }

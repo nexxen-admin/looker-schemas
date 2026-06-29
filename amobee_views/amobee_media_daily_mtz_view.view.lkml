@@ -598,6 +598,12 @@ view: amobee_media_daily_mtz_view {
     type: zipcode
     sql: ${TABLE}.zip_code ;;
   }
+
+  dimension: beacon_poi_id {
+    type: number
+    sql: ${TABLE}.beacon_poi_id ;;
+  }
+
   # measure: count {
   #   type: count
   #   drill_fields: [detail*]

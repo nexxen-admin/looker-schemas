@@ -12,8 +12,13 @@ access_grant: can_view_all_tremor {
   allowed_values: ["all_tremor"]
 }
 
+access_grant: marketing_898 {
+  user_attribute: marketing_898
+  allowed_values: ["898_marketing"]
+}
+
 explore: amobee_media_daily_mtz_view {
-  required_access_grants: [can_view_all_tremor]
+  required_access_grants: [can_view_all_tremor, marketing_898]
   always_filter: {
     filters: [amobee_media_daily_mtz_view.event_time: "1 day ago for 1 day"]
   }

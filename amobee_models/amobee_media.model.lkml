@@ -20,8 +20,8 @@ access_grant: marketing_898 {
 explore: amobee_media_daily_mtz_view {
   ##required_access_grants: [can_view_all_tremor, marketing_898]
   sql_always_where:
-  '{{ _user_attributes["all_tremor"] }}' = 'all_tremor'
-  OR '{{ _user_attributes["marketing_898"] }}' = '898_marketing'
+  ('{{ _user_attributes["all_tremor"] }}' = 'all_tremor')
+  OR ('{{ _user_attributes["marketing_898"] }}' = '898_marketing' AND ${amobee_media_daily_mtz_view.market_id} = 2307)
   ;;
   always_filter: {
     filters: [amobee_media_daily_mtz_view.event_time: "1 day ago for 1 day"]
